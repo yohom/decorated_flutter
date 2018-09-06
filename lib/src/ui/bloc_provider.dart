@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:framework/framework.dart';
 
-import '../../app/bloc/bloc.dart';
-
-class BlocProvider extends StatefulWidget {
+class BlocProvider<B extends Bloc> extends StatefulWidget {
   final Widget child;
-  final Bloc bloc;
+  final B bloc;
 
   BlocProvider({
     Key key,
@@ -37,8 +36,8 @@ class _BlocProviderState extends State<BlocProvider> {
   }
 }
 
-class _BlocProvider extends InheritedWidget {
-  final Bloc bloc;
+class _BlocProvider<B extends Bloc> extends InheritedWidget {
+  final B bloc;
 
   _BlocProvider({
     Key key,

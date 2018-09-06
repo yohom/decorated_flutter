@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:framework/framework.dart';
 import 'package:meta/meta.dart';
 
-import '../framework.dart';
 import 'error.widget.dart' as ui;
 
 typedef Widget FutureWidgetBuilder<DATA>(DATA data);

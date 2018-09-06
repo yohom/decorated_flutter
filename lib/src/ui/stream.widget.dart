@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:framework/framework.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../framework.dart';
 import '../ui/error.widget.dart' as error;
 
 typedef Widget StreamWidgetBuilder<DATA>(DATA data);

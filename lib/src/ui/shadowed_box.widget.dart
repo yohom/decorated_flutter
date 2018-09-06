@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../framework.dart';
+import 'package:framework/framework.dart';
 
 class ShadowedBox extends StatelessWidget {
   /// 内部Container的width

@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../res/strings.dart';
+const fetchCaptcha = '获取验证码';
+const refetchCaptcha = '重新获取';
 
 typedef Widget _Builder(VoidCallback onPressed, String title);
 
@@ -19,8 +20,8 @@ class CountDownBuilder extends StatefulWidget {
     Key key,
     @required this.onFetchCaptcha,
     this.duration = const Duration(seconds: 60),
-    this.beforeFetchTitle = S.fetchCaptcha,
-    this.refetchTitle = S.refetchCaptcha,
+    this.beforeFetchTitle = fetchCaptcha,
+    this.refetchTitle = refetchCaptcha,
     this.builder,
   }) : super(key: key);
 
