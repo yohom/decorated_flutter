@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:framework/framework.dart';
-import 'package:meta/meta.dart';
 
 class HttpUtils {
   static String baseUrl;
@@ -15,9 +14,10 @@ class HttpUtils {
   ///
   static String map2Url(
     Object data, {
-    @required String baseUrl,
     String path = '',
   }) {
+    assert(isNotEmpty(baseUrl));
+
     String result = '';
 
     if (data is FormData) {
