@@ -1,13 +1,22 @@
 import 'package:dio/dio.dart';
+import 'package:framework/framework.dart';
+import 'package:meta/meta.dart';
 
-class Convert {
+class HttpUtils {
+  static String baseUrl;
+
+  static void init(String url) {
+    assert(isNotEmpty(url));
+    baseUrl = url;
+  }
+
   ///
   /// Map转成http请求参数的形式
   ///
   static String map2Url(
     Object data, {
-    String baseUrl = kBaseUrl,
-    String path = kPath,
+    @required String baseUrl,
+    String path = '',
   }) {
     String result = '';
 
