@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:framework/framework.dart';
 
 class HttpUtils {
+  HttpUtils._();
+
   static String baseUrl;
 
   static void init(String url) {
