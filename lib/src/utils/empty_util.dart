@@ -11,6 +11,10 @@ bool isEmpty(dynamic object) {
     return object.isEmpty;
   }
 
+  if (object is Map) {
+    return object.isEmpty;
+  }
+
   return true;
 }
 
