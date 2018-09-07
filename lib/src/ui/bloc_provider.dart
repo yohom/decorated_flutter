@@ -12,21 +12,21 @@ class BLoCProvider<B extends BLoC> extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _BlocProviderState createState() => _BlocProviderState();
+  _BLoCProviderState createState() => _BLoCProviderState();
 
   static B of<B extends BLoC>(BuildContext context, [bool rebuild = true]) {
     return (rebuild
-            ? context.inheritFromWidgetOfExactType(_BlocProvider)
-                as _BlocProvider
-            : context.ancestorWidgetOfExactType(_BlocProvider) as _BlocProvider)
+            ? context.inheritFromWidgetOfExactType(_BLoCProvider)
+                as _BLoCProvider
+            : context.ancestorWidgetOfExactType(_BLoCProvider) as _BLoCProvider)
         .bloc;
   }
 }
 
-class _BlocProviderState extends State<BLoCProvider> {
+class _BLoCProviderState extends State<BLoCProvider> {
   @override
   Widget build(BuildContext context) {
-    return _BlocProvider(bloc: widget.bloc, child: widget.child);
+    return _BLoCProvider(bloc: widget.bloc, child: widget.child);
   }
 
   @override
@@ -36,15 +36,15 @@ class _BlocProviderState extends State<BLoCProvider> {
   }
 }
 
-class _BlocProvider<B extends BLoC> extends InheritedWidget {
+class _BLoCProvider<B extends BLoC> extends InheritedWidget {
   final B bloc;
 
-  _BlocProvider({
+  _BLoCProvider({
     Key key,
     @required this.bloc,
     @required Widget child,
   }) : super(key: key, child: child);
 
   @override
-  bool updateShouldNotify(_BlocProvider old) => bloc != old.bloc;
+  bool updateShouldNotify(_BLoCProvider old) => bloc != old.bloc;
 }
