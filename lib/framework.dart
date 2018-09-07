@@ -27,6 +27,7 @@ export 'src/utils/base_param.dart';
 export 'src/utils/bloc.dart';
 export 'src/utils/device_info.dart';
 export 'src/utils/empty_util.dart';
+export 'src/utils/enums.dart';
 export 'src/utils/event.dart';
 export 'src/utils/functions.dart';
 export 'src/utils/global.dart';
