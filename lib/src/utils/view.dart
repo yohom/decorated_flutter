@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:framework/framework.dart';
-
+import 'package:framework/src/utils/enums.dart';
 
 ///
 /// 显示信息底层方法, 当需要动态选择是错误还是正常信息时, 调用这个方法
@@ -11,15 +11,28 @@ import 'package:framework/framework.dart';
 Future<SnackBarClosedReason> showMessage(
   BuildContext context,
   String content, {
-  bool isError = true, // 是否错误消息
+  ErrorLevel errorLevel = ErrorLevel.none,
   bool isExit = false, // show完了是否退出本页
 }) {
   L.d('messge: $content');
+  Color color;
+  switch (errorLevel) {
+    case ErrorLevel.none:
+      color = Theme.of(context).primaryColor;
+      break;
+    case ErrorLevel.warn:
+      color = Colors.yellowAccent;
+      break;
+    case ErrorLevel.severe:
+    case ErrorLevel.fatal:
+      color = Colors.red;
+      break;
+  }
   return Scaffold.of(context)
       .showSnackBar(
         SnackBar(
           content: Text(content),
-          backgroundColor: isError ? Colors.red : Colors.blueAccent,
+          backgroundColor: color,
           duration: Duration(seconds: 2),
         ),
       )
@@ -38,7 +51,12 @@ Future<SnackBarClosedReason> showError(
   bool isExit = false, // show完了是否退出本页
 }) {
   L.d('messge: $content');
-  return showMessage(context, content, isError: true, isExit: isExit);
+  return showMessage(
+    context,
+    content,
+    errorLevel: ErrorLevel.severe,
+    isExit: isExit,
+  );
 }
 
 ///
@@ -50,7 +68,12 @@ Future<SnackBarClosedReason> showInfo(
   bool isExit = false, // show完了是否退出本页
 }) {
   L.d('messge: $content');
-  return showMessage(context, content, isError: false, isExit: isExit);
+  return showMessage(
+    context,
+    content,
+    errorLevel: ErrorLevel.none,
+    isExit: isExit,
+  );
 }
 
 ///
@@ -62,18 +85,12 @@ Future<SnackBarClosedReason> showWarn(
   bool isExit = false, // show完了是否退出本页
 }) {
   L.d('messge: $content');
-  return Scaffold.of(context)
-      .showSnackBar(
-        SnackBar(
-          content: Text(content),
-          backgroundColor: Colors.yellowAccent,
-          duration: Duration(seconds: 2),
-        ),
-      )
-      .closed
-      .then((_) {
-    if (isExit) Router.pop(context);
-  });
+  return showMessage(
+    context,
+    content,
+    errorLevel: ErrorLevel.warn,
+    isExit: isExit,
+  );
 }
 
 ///
