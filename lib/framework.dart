@@ -28,6 +28,7 @@ export 'src/utils/bloc.dart';
 export 'src/utils/device_info.dart';
 export 'src/utils/empty_util.dart';
 export 'src/utils/event.dart';
+export 'src/utils/functions.dart';
 export 'src/utils/global.dart';
 export 'src/utils/http_utils.dart';
 export 'src/utils/lists.dart';
