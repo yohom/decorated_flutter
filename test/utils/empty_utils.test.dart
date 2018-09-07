@@ -16,10 +16,10 @@ void main() {
       expect(util.isEmpty({}), true);
     });
 
-    test('传入空`[\'test\']` ==> 返回false', () {
+    test('传入`[\'test\']` ==> 返回false', () {
       expect(util.isEmpty(['test']), false);
     });
-    test('传入空`{\'key\': \'value\'}` ==> 返回false', () {
+    test('传入`{\'key\': \'value\'}` ==> 返回false', () {
       expect(util.isEmpty({'key': 'value'}), false);
     });
   });
