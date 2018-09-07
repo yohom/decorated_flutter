@@ -1,3 +1,3 @@
-abstract class Bloc {
+abstract class BLoC {
   void close();
 }

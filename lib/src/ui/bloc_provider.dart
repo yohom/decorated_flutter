@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:framework/framework.dart';
 
-class BlocProvider<B extends Bloc> extends StatefulWidget {
+class BLoCProvider<B extends BLoC> extends StatefulWidget {
   final Widget child;
   final B bloc;
 
-  BlocProvider({
+  BLoCProvider({
     Key key,
     @required this.child,
     @required this.bloc,
@@ -14,7 +14,7 @@ class BlocProvider<B extends Bloc> extends StatefulWidget {
   @override
   _BlocProviderState createState() => _BlocProviderState();
 
-  static B of<B extends Bloc>(BuildContext context, [bool rebuild = true]) {
+  static B of<B extends BLoC>(BuildContext context, [bool rebuild = true]) {
     return (rebuild
             ? context.inheritFromWidgetOfExactType(_BlocProvider)
                 as _BlocProvider
@@ -23,7 +23,7 @@ class BlocProvider<B extends Bloc> extends StatefulWidget {
   }
 }
 
-class _BlocProviderState extends State<BlocProvider> {
+class _BlocProviderState extends State<BLoCProvider> {
   @override
   Widget build(BuildContext context) {
     return _BlocProvider(bloc: widget.bloc, child: widget.child);
@@ -36,7 +36,7 @@ class _BlocProviderState extends State<BlocProvider> {
   }
 }
 
-class _BlocProvider<B extends Bloc> extends InheritedWidget {
+class _BlocProvider<B extends BLoC> extends InheritedWidget {
   final B bloc;
 
   _BlocProvider({
