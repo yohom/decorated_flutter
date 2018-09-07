@@ -19,6 +19,7 @@ dependencies:
   fluttertoast: ^2.0.7
 
 dev_dependencies:
+  mockito: 3.0.0
   flutter_test:
     sdk: flutter
 
