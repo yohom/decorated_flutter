@@ -24,6 +24,7 @@ const SPACE_GIANT = SizedBox(width: kSpaceGiant, height: kSpaceGiant);
 
 const kDividerTiny = Divider(height: kSpaceTiny);
 const kDividerSmall = Divider(height: kSpaceSmall);
+const kDividerNormal = Divider();
 //endregion
 
 //region text
