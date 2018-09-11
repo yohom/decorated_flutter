@@ -39,12 +39,10 @@ Future<SnackBarClosedReason> showMessage(
       )
       .closed
       .then((_) {
-    if (isExit) {
-      if (isEmpty(exitTo)) {
-        Router.pop(context);
-      } else {
-        Router.popTo(context, exitTo);
-      }
+    if (isNotEmpty(exitTo)) {
+      Router.popTo(context, exitTo);
+    } else if (isExit) {
+      Router.pop(context);
     }
   });
 }
