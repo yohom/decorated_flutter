@@ -13,6 +13,7 @@ Future<SnackBarClosedReason> showMessage(
   String content, {
   ErrorLevel errorLevel = ErrorLevel.none,
   bool isExit = false, // show完了是否退出本页
+  Type exitTo, // 退出到对应页面
 }) {
   L.d('messge: $content');
   Color color;
@@ -38,7 +39,13 @@ Future<SnackBarClosedReason> showMessage(
       )
       .closed
       .then((_) {
-    if (isExit) Router.pop(context);
+    if (isExit) {
+      if (isEmpty(exitTo)) {
+        Router.pop(context);
+      } else {
+        Router.popTo(context, exitTo);
+      }
+    }
   });
 }
 
@@ -49,6 +56,7 @@ Future<SnackBarClosedReason> showError(
   BuildContext context,
   String content, {
   bool isExit = false, // show完了是否退出本页
+  Type exitTo, // 退出到对应页面
 }) {
   L.d('messge: $content');
   return showMessage(
@@ -56,6 +64,7 @@ Future<SnackBarClosedReason> showError(
     content,
     errorLevel: ErrorLevel.severe,
     isExit: isExit,
+    exitTo: exitTo,
   );
 }
 
@@ -66,6 +75,7 @@ Future<SnackBarClosedReason> showInfo(
   BuildContext context,
   String content, {
   bool isExit = false, // show完了是否退出本页
+  Type exitTo, // 退出到对应页面
 }) {
   L.d('messge: $content');
   return showMessage(
@@ -73,6 +83,7 @@ Future<SnackBarClosedReason> showInfo(
     content,
     errorLevel: ErrorLevel.none,
     isExit: isExit,
+    exitTo: exitTo,
   );
 }
 
@@ -83,6 +94,7 @@ Future<SnackBarClosedReason> showWarn(
   BuildContext context,
   String content, {
   bool isExit = false, // show完了是否退出本页
+  Type exitTo, // 退出到对应页面
 }) {
   L.d('messge: $content');
   return showMessage(
@@ -90,6 +102,7 @@ Future<SnackBarClosedReason> showWarn(
     content,
     errorLevel: ErrorLevel.warn,
     isExit: isExit,
+    exitTo: exitTo,
   );
 }
 
