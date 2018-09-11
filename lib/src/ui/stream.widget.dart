@@ -3,8 +3,6 @@ import 'package:framework/framework.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../ui/error.widget.dart' as error;
-
 typedef Widget StreamWidgetBuilder<DATA>(DATA data);
 
 class StreamWidget<T> extends StatelessWidget {
@@ -39,7 +37,7 @@ class StreamWidget<T> extends StatelessWidget {
       stream: stream,
       builder: (ctx, snapshot) {
         if (snapshot.hasError) {
-          return error.ErrorWidget(message: snapshot.error.toString());
+          return ErrorWidget(snapshot.error.toString());
         }
 
         if (snapshot.hasData) {

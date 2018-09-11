@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:framework/framework.dart';
 import 'package:meta/meta.dart';
 
-import 'error.widget.dart' as ui;
-
 typedef Widget FutureWidgetBuilder<DATA>(DATA data);
 
 class FutureWidget<T> extends StatelessWidget {
@@ -31,7 +29,7 @@ class FutureWidget<T> extends StatelessWidget {
       future: future,
       builder: (ctx, snapshot) {
         if (snapshot.hasError) {
-          return ui.ErrorWidget(message: snapshot.error.toString());
+          return ErrorWidget(snapshot.error.toString());
         }
 
         if (snapshot.hasData) {
