@@ -56,7 +56,6 @@ Future<SnackBarClosedReason> showError(
   bool isExit = false, // show完了是否退出本页
   Type exitTo, // 退出到对应页面
 }) {
-  L.d('messge: $content');
   return showMessage(
     context,
     content,
@@ -75,7 +74,6 @@ Future<SnackBarClosedReason> showInfo(
   bool isExit = false, // show完了是否退出本页
   Type exitTo, // 退出到对应页面
 }) {
-  L.d('messge: $content');
   return showMessage(
     context,
     content,
@@ -94,7 +92,6 @@ Future<SnackBarClosedReason> showWarn(
   bool isExit = false, // show完了是否退出本页
   Type exitTo, // 退出到对应页面
 }) {
-  L.d('messge: $content');
   return showMessage(
     context,
     content,

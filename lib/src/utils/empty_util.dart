@@ -1,4 +1,4 @@
-bool isEmpty(dynamic object) {
+bool isEmpty(Object object) {
   if (object == null) {
     return true;
   }
@@ -15,9 +15,9 @@ bool isEmpty(dynamic object) {
     return object.isEmpty;
   }
 
-  return true;
+  return false;
 }
 
-bool isNotEmpty(dynamic object) {
+bool isNotEmpty(Object object) {
   return !isEmpty(object);
 }
