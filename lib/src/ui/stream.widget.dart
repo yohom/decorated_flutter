@@ -19,14 +19,14 @@ class StreamWidget<T> extends StatelessWidget {
   ///
   /// 占位Widget是否要expand
   ///
-  final isExpanded;
+  final bool isExpanded;
 
   const StreamWidget({
     Key key,
     @required this.stream,
     @required this.builder,
     this.showLoading = true,
-    this.isExpanded = true,
+    @Deprecated('不推荐使用, 已无效果') this.isExpanded = true,
     this.initData,
   }) : super(key: key);
 
@@ -44,8 +44,6 @@ class StreamWidget<T> extends StatelessWidget {
           return builder(snapshot.data);
         } else if (showLoading) {
           return LoadingWidget();
-        } else if (isExpanded) {
-          return Expanded(child: EmptyWidget());
         } else {
           return EmptyWidget();
         }
