@@ -20,7 +20,6 @@ Future<SnackBarClosedReason> showMessage(
   Color color;
   switch (errorLevel) {
     case ErrorLevel.none:
-      color = Theme.of(context).primaryColor;
       break;
     case ErrorLevel.warn:
       color = Colors.yellowAccent;
