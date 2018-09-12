@@ -14,6 +14,7 @@ Future<SnackBarClosedReason> showMessage(
   ErrorLevel errorLevel = ErrorLevel.none,
   bool isExit = false, // show完了是否退出本页
   Type exitTo, // 退出到对应页面
+  Duration duration = const Duration(milliseconds: 1500),
 }) {
   L.d('messge: $content');
   Color color;
@@ -34,7 +35,7 @@ Future<SnackBarClosedReason> showMessage(
         SnackBar(
           content: Text(content),
           backgroundColor: color,
-          duration: Duration(seconds: 2),
+          duration: duration,
         ),
       )
       .closed
@@ -55,6 +56,7 @@ Future<SnackBarClosedReason> showError(
   String content, {
   bool isExit = false, // show完了是否退出本页
   Type exitTo, // 退出到对应页面
+  Duration duration = const Duration(milliseconds: 1500),
 }) {
   return showMessage(
     context,
@@ -62,6 +64,7 @@ Future<SnackBarClosedReason> showError(
     errorLevel: ErrorLevel.severe,
     isExit: isExit,
     exitTo: exitTo,
+    duration: duration,
   );
 }
 
@@ -73,6 +76,7 @@ Future<SnackBarClosedReason> showInfo(
   String content, {
   bool isExit = false, // show完了是否退出本页
   Type exitTo, // 退出到对应页面
+  Duration duration = const Duration(milliseconds: 1500),
 }) {
   return showMessage(
     context,
@@ -80,6 +84,7 @@ Future<SnackBarClosedReason> showInfo(
     errorLevel: ErrorLevel.none,
     isExit: isExit,
     exitTo: exitTo,
+    duration: duration,
   );
 }
 
@@ -91,6 +96,7 @@ Future<SnackBarClosedReason> showWarn(
   String content, {
   bool isExit = false, // show完了是否退出本页
   Type exitTo, // 退出到对应页面
+  Duration duration = const Duration(milliseconds: 1500),
 }) {
   return showMessage(
     context,
@@ -98,6 +104,7 @@ Future<SnackBarClosedReason> showWarn(
     errorLevel: ErrorLevel.warn,
     isExit: isExit,
     exitTo: exitTo,
+    duration: duration,
   );
 }
 
