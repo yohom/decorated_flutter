@@ -780,7 +780,6 @@ class DateTimePickerAdapter extends PickerAdapter<DateTime> {
           } else {
             if (h < 12) h = h + 12;
           }
-          ;
         }
         break;
       case 7:

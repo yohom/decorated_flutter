@@ -22,6 +22,8 @@ class Global {
   static Color kPrimaryColor;
   static Color kPrimaryColorDark;
 
+  static bool kIsIphoneX;
+
   static init(BuildContext context) {
     final media = MediaQuery.of(context);
     kScreenWidth = media.size.width;
@@ -32,5 +34,7 @@ class Global {
     kTextTheme = kAppTheme.textTheme;
     kPrimaryColor = kAppTheme.primaryColor;
     kPrimaryColorDark = kAppTheme.primaryColorDark;
+
+    kIsIphoneX = media.size.height == 812;
   }
 }
