@@ -5,6 +5,7 @@ import 'package:rxdart/rxdart.dart';
 
 const fetchCaptcha = '获取验证码';
 const refetchCaptcha = '重新获取';
+const countDown = '倒计时%s秒';
 
 typedef Widget _Builder(VoidCallback onPressed, String title);
 
@@ -15,6 +16,7 @@ class CountDownBuilder extends StatefulWidget {
   final Duration duration;
   final String beforeFetchTitle;
   final String refetchTitle;
+  final String countDownLabel;
 
   const CountDownBuilder({
     Key key,
@@ -22,6 +24,7 @@ class CountDownBuilder extends StatefulWidget {
     this.duration = const Duration(seconds: 60),
     this.beforeFetchTitle = fetchCaptcha,
     this.refetchTitle = refetchCaptcha,
+    this.countDownLabel = countDown,
     this.builder,
   }) : super(key: key);
 
@@ -53,7 +56,7 @@ class _CountDownState extends State<CountDownBuilder> {
 
       subscription = timer.listen((count) {
         setState(() {
-          _title = '倒计时$count秒';
+          _title = countDown.replaceFirst('%s', count.toString());
           _onPressed = null;
         });
       }, onDone: () {
