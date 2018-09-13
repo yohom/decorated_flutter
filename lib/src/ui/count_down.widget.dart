@@ -56,7 +56,7 @@ class _CountDownState extends State<CountDownBuilder> {
 
       subscription = timer.listen((count) {
         setState(() {
-          _title = countDown.replaceFirst('%s', count.toString());
+          _title = widget.countDownLabel.replaceFirst('%s', count.toString());
           _onPressed = null;
         });
       }, onDone: () {
