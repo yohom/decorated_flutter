@@ -22,6 +22,7 @@ export 'src/ui/primary_icon.widget.dart';
 export 'src/ui/rating_bar.widget.dart';
 export 'src/ui/shadowed_box.widget.dart';
 export 'src/ui/stream.widget.dart';
+export 'src/ui/tap_tooltip.widget.dart';
 
 export 'src/utils/base_param.dart';
 export 'src/utils/bloc.dart';
