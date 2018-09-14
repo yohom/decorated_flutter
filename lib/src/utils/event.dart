@@ -13,14 +13,13 @@ class Event<T> {
     this.isDistinct = false,
     this.seedValue,
     this.acceptNull = false,
-
-    /// 是否同步发射数据, 传递给内部的[_subject]
-    bool sync = true,
-
-    /// 是否使用BehaviorSubject, 如果使用, 那么Event内部的[_subject]会保存最近一次的值
-    /// 默认为false
-    bool isBehavior = false,
+    this.sync = true,
+    this.isBehavior = false,
   }) {
+    _init();
+  }
+
+  void _init() {
     _subject = isBehavior
         ? BehaviorSubject<T>(seedValue: seedValue, sync: sync)
         : PublishSubject<T>(sync: sync);
@@ -33,6 +32,7 @@ class Event<T> {
 
   T latest;
   Observable<T> stream;
+
   AsObservableFuture<T> get first => stream.first;
 
   /// 判断新值与旧值是否相同
@@ -47,9 +47,21 @@ class Event<T> {
   /// 是否接受null
   bool acceptNull;
 
+  /// 是否使用BehaviorSubject, 如果使用, 那么Event内部的[_subject]会保存最近一次的值
+  /// 默认为false
+  bool isBehavior;
+
+  /// 是否同步发射数据, 传递给内部的[_subject]
+  bool sync = true;
+
   Subject<T> _subject;
 
   void add(T data) {
+    if (_subject.isClosed) {
+      L.p('Observable.add:重新创建已关闭的Subject}');
+      _init();
+    }
+
     L.p('Event接收到${data.runtimeType}数据: $data');
 
     // 如果需要distinct的话, 就判断是否相同; 如果不需要distinct, 直接发射数据
@@ -74,6 +86,11 @@ class Event<T> {
   }
 
   Observable<T> addStream(Stream<T> source, {bool cancelOnError: true}) {
+    if (_subject.isClosed) {
+      L.p('Observable.addStream:重新创建已关闭的Subject}');
+      _init();
+    }
+
     return Observable<T>(
       _subject..addStream(source, cancelOnError: cancelOnError),
     );
@@ -81,6 +98,11 @@ class Event<T> {
 
   AsObservableFuture<T> addFuture(Future<T> source,
       {bool cancelOnError: true}) {
+    if (_subject.isClosed) {
+      L.p('Observable.addFuture:重新创建已关闭的Subject}');
+      _init();
+    }
+
     return Observable.fromFuture((_subject
               ..addStream(source.asStream(), cancelOnError: cancelOnError))
             .first)
@@ -93,6 +115,11 @@ class Event<T> {
     void onDone(),
     bool cancelOnError,
   }) {
+    if (_subject.isClosed) {
+      L.p('Observable.listen:重新创建已关闭的Subject}');
+      _init();
+    }
+
     stream.listen(
       (data) {
         if (data == null && acceptNull) {
@@ -108,14 +135,27 @@ class Event<T> {
   }
 
   Observable<S> map<S>(S convert(T event)) {
+    if (_subject.isClosed) {
+      L.p('Observable.map:重新创建已关闭的Subject}');
+      _init();
+    }
     return _subject.map(convert);
   }
 
   Observable<T> where(bool test(T event)) {
+    if (_subject.isClosed) {
+      L.p('Observable.where:重新创建已关闭的Subject}');
+      _init();
+    }
     return _subject.where(test);
   }
 
   void clear() {
+    if (_subject.isClosed) {
+      L.p('Observable.clear:重新创建已关闭的Subject}');
+      _init();
+    }
+
     latest = seedValue;
     _subject.add(seedValue);
   }
