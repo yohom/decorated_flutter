@@ -21,6 +21,7 @@ export 'src/ui/loading.widget.dart';
 export 'src/ui/primary_icon.widget.dart';
 export 'src/ui/rating_bar.widget.dart';
 export 'src/ui/shadowed_box.widget.dart';
+export 'src/ui/snap_list.widget.dart';
 export 'src/ui/stream.widget.dart';
 export 'src/ui/tap_tooltip.widget.dart';
 
