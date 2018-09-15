@@ -59,9 +59,9 @@ class FlatText extends StatelessWidget {
   final String debugLabel;
   //endregion
 
-  const FlatText({
+  const FlatText(
+    this.data, {
     Key key,
-    this.data,
     this.textSpan,
     this.textAlign,
     this.textDirection,
