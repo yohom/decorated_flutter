@@ -14,6 +14,7 @@ export 'src/ui/count_down.widget.dart';
 export 'src/ui/debounce_text_field.widget.dart';
 export 'src/ui/dot_indicator.widget.dart';
 export 'src/ui/empty.widget.dart';
+export 'src/ui/flat_text.widget.dart';
 export 'src/ui/flex_dialog.widget.dart';
 export 'src/ui/future.widget.dart';
 export 'src/ui/image.widget.dart';
