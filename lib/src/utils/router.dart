@@ -18,6 +18,17 @@ class Router {
   }
 
   ///
+  /// 通过bottom sheet显示新界面, 通过这种方式, 新的界面会在父界面的节点下面, 而不是像
+  /// [navigate]系列一样和父界面同级.
+  ///
+  static PersistentBottomSheetController<T> navigateBottomSheet<T>(
+    BuildContext context,
+    Widget widget,
+  ) {
+    return showBottomSheet(context: context, builder: (context) => widget);
+  }
+
+  ///
   /// 不保留源页面的跳转
   ///
   static void navigateReplace(BuildContext context, Widget widget) {
