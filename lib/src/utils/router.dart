@@ -39,16 +39,16 @@ class Router {
   }
 
   /// 提供BLoC的导航
-  static void navigateWithBLoC<T extends BLoC>(
+  static Future<R> navigateWithBLoC<B extends BLoC, R>(
     BuildContext context,
     Widget widget, {
-    InitAction<T> init,
+    InitAction<B> init,
   }) {
-    final bloc = kiwi.Container().resolve<T>();
-    Navigator.of(context).push(
+    final bloc = kiwi.Container().resolve<B>();
+    return Navigator.of(context).push<R>(
       MaterialPageRoute(
         builder: (context) {
-          return BLoCProvider<T>(
+          return BLoCProvider<B>(
             bloc: bloc,
             child: Builder(
               builder: (context) {
