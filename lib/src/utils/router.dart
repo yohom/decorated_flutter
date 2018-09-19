@@ -39,7 +39,7 @@ class Router {
   }
 
   /// 提供BLoC的导航
-  static void navigateBLoC<T extends BLoC>(
+  static void navigateWithBLoC<T extends BLoC>(
     BuildContext context,
     Widget widget, {
     InitAction<T> init,
