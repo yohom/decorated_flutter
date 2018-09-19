@@ -42,7 +42,7 @@ class Router {
   static void navigateBLoC<T extends BLoC>(
     BuildContext context,
     Widget widget, {
-    InitAction init,
+    InitAction<T> init,
   }) {
     final bloc = kiwi.Container().resolve<T>();
     Navigator.of(context).push(
