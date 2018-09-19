@@ -52,7 +52,7 @@ class Router {
             bloc: bloc,
             child: Builder(
               builder: (context) {
-                init(bloc);
+                if (init != null) init(bloc);
                 return widget;
               },
             ),
