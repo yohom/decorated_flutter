@@ -41,7 +41,7 @@ class Router {
     BuildContext context,
     Widget widget,
   ) {
-    Navigator.of(context).pushReplacement(
+    Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) {
           return BLoCProvider<T>(
