@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:framework/framework.dart';
+import 'package:kiwi/kiwi.dart' as kiwi;
 
 import '../ui/loading.widget.dart';
 
@@ -29,6 +31,24 @@ class Router {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) => widget,
+        settings: RouteSettings(name: widget.runtimeType.toString()),
+      ),
+    );
+  }
+
+  /// 提供BLoC的导航
+  static void navigateBLoC<T extends BLoC>(
+    BuildContext context,
+    Widget widget,
+  ) {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) {
+          return BLoCProvider<T>(
+            bloc: kiwi.Container().resolve<T>(),
+            child: widget,
+          );
+        },
         settings: RouteSettings(name: widget.runtimeType.toString()),
       ),
     );
