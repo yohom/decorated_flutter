@@ -6,6 +6,8 @@ import 'package:kiwi/kiwi.dart' as kiwi;
 
 import '../ui/loading.widget.dart';
 
+typedef void InitAction<T extends BLoC>(T bloc);
+
 class Router {
   /// 导航
   static Future<T> navigate<T>(BuildContext context, Widget widget) {
@@ -39,14 +41,21 @@ class Router {
   /// 提供BLoC的导航
   static void navigateBLoC<T extends BLoC>(
     BuildContext context,
-    Widget widget,
-  ) {
+    Widget widget, {
+    InitAction init,
+  }) {
+    final bloc = kiwi.Container().resolve<T>();
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) {
           return BLoCProvider<T>(
-            bloc: kiwi.Container().resolve<T>(),
-            child: widget,
+            bloc: bloc,
+            child: Builder(
+              builder: (context) {
+                init(bloc);
+                return widget;
+              },
+            ),
           );
         },
         settings: RouteSettings(name: widget.runtimeType.toString()),
