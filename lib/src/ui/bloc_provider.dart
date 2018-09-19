@@ -6,7 +6,7 @@ class BLoCProvider<T extends BLoC> extends StatefulWidget {
     Key key,
     @required this.child,
     @required this.bloc,
-  }): super(key: key);
+  }) : super(key: key);
 
   final T bloc;
   final Widget child;
@@ -14,7 +14,7 @@ class BLoCProvider<T extends BLoC> extends StatefulWidget {
   @override
   _BlocProviderState<T> createState() => _BlocProviderState<T>();
 
-  static T of<T extends BLoC>(BuildContext context){
+  static T of<T extends BLoC>(BuildContext context) {
     final type = _typeOf<BLoCProvider<T>>();
     BLoCProvider<T> provider = context.ancestorWidgetOfExactType(type);
     return provider.bloc;
@@ -23,15 +23,15 @@ class BLoCProvider<T extends BLoC> extends StatefulWidget {
   static Type _typeOf<T>() => T;
 }
 
-class _BlocProviderState<T> extends State<BLoCProvider<BLoC>>{
+class _BlocProviderState<T> extends State<BLoCProvider<BLoC>> {
   @override
-  void dispose(){
+  void dispose() {
     widget.bloc.close();
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return widget.child;
   }
 }
