@@ -13,7 +13,7 @@ class Router {
   static Future<T> navigate<T>(BuildContext context, Widget widget) {
     return Navigator.of(context).push<T>(
       MaterialPageRoute(
-        builder: (context) => widget,
+        builder: (context) => AutoCloseKeyboard(child: widget),
         settings: RouteSettings(name: widget.runtimeType.toString()),
       ),
     );
@@ -50,11 +50,13 @@ class Router {
         builder: (context) {
           return BLoCProvider<B>(
             bloc: bloc,
-            child: Builder(
-              builder: (context) {
-                if (init != null) init(bloc);
-                return widget;
-              },
+            child: AutoCloseKeyboard(
+              child: Builder(
+                builder: (context) {
+                  if (init != null) init(bloc);
+                  return widget;
+                },
+              ),
             ),
           );
         },
