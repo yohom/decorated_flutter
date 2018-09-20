@@ -16,10 +16,14 @@ StreamSubscription<int> subscription;
 
 typedef Widget _Builder(VoidCallback onPressed, String title);
 
+/// [OnFetchCaptcha]的返回值代表身份继续获取, 因为有时候需要检查参数, 如果参数不符合要求就不能
+/// 获取验证码
+typedef bool OnFetchCaptcha();
+
 /// 倒计时控件
 class CountDownBuilder extends StatefulWidget {
   final _Builder builder;
-  final VoidCallback onFetchCaptcha;
+  final OnFetchCaptcha onFetchCaptcha;
   final Duration duration;
   final String beforeFetchTitle;
   final String refetchTitle;
@@ -52,18 +56,17 @@ class _CountDownState extends State<CountDownBuilder> {
     _title = widget.beforeFetchTitle;
 
     _onActivePressed = () {
-      widget.onFetchCaptcha();
-
-      subscription = timer.listen((count) {
-        setState(() {
-          _title = widget.countDownLabel.replaceFirst('%s', count.toString());
-          _onPressed = null;
+      if (!widget.onFetchCaptcha())
+        return subscription = timer.listen((count) {
+          setState(() {
+            _title = widget.countDownLabel.replaceFirst('%s', count.toString());
+            _onPressed = null;
+          });
+        }, onDone: () {
+          subscription.cancel();
+          _title = widget.refetchTitle;
+          setState(() => _onPressed = _onActivePressed);
         });
-      }, onDone: () {
-        subscription.cancel();
-        _title = widget.refetchTitle;
-        setState(() => _onPressed = _onActivePressed);
-      });
     };
 
     _onPressed = _onActivePressed;
