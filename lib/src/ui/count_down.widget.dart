@@ -7,6 +7,13 @@ const fetchCaptcha = '获取验证码';
 const refetchCaptcha = '重新获取';
 const countDown = '倒计时%s秒';
 
+Observable<int> get timer => Observable<int>.periodic(
+      Duration(seconds: 1),
+      (data) => 59 - data,
+    ).take(60);
+
+StreamSubscription<int> subscription;
+
 typedef Widget _Builder(VoidCallback onPressed, String title);
 
 /// 倒计时控件
@@ -35,13 +42,6 @@ class CountDownBuilder extends StatefulWidget {
 }
 
 class _CountDownState extends State<CountDownBuilder> {
-  static Observable<int> get timer => Observable<int>.periodic(
-        Duration(seconds: 1),
-        (data) => 59 - data,
-      ).take(60);
-
-  static StreamSubscription<int> subscription;
-
   VoidCallback _onPressed;
   VoidCallback _onActivePressed;
   String _title;
