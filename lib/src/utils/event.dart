@@ -31,7 +31,8 @@ class Event<T> {
 
     _subject.listen((data) {
       latest = data;
-      L.p('当前${semantics ??= data.runtimeType.toString()} latest: $latest');
+      L.p('当前${semantics ??= data.runtimeType.toString()} latest: $latest'
+          '\n++++++++++++++++++++++++++++');
     });
   }
 
@@ -57,7 +58,7 @@ class Event<T> {
   Subject<T> _subject;
 
   void add(T data) {
-    L.p('Event接收到${semantics ??= data.runtimeType.toString()}数据: $data');
+    L.p('++++++++++++++++++++++++++++\nEvent接收到${semantics ??= data.runtimeType.toString()}数据: $data');
 
     // 如果需要distinct的话, 就判断是否相同; 如果不需要distinct, 直接发射数据
     if (isDistinct) {
@@ -129,7 +130,7 @@ class Event<T> {
 
   void close() {
     L.p('${semantics ??= runtimeType.toString()} closed '
-        '\n -------------------------------');
+        '\n-------------------------------');
     _subject.close();
   }
 
