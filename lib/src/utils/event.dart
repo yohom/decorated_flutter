@@ -123,4 +123,9 @@ class Event<T> {
   void close() {
     _subject.close();
   }
+
+  @override
+  String toString() {
+    return 'Event{latest: $latest, stream: $stream, test: $test, isDistinct: $isDistinct, seedValue: $seedValue, acceptNull: $acceptNull, _subject: $_subject}';
+  }
 }
