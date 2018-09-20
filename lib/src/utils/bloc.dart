@@ -1,3 +1,9 @@
+import 'package:framework/framework.dart';
+import 'package:meta/meta.dart';
+
 abstract class BLoC {
-  void close();
+  @mustCallSuper
+  void close() {
+    L.p('$runtimeType closed');
+  }
 }

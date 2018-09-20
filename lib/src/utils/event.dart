@@ -121,6 +121,7 @@ class Event<T> {
   }
 
   void close() {
+    L.p('$runtimeType closed');
     _subject.close();
   }
 
