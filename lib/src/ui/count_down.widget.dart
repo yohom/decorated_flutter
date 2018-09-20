@@ -80,7 +80,7 @@ class _CountDownState extends State<CountDownBuilder> {
 
   @override
   void dispose() {
-    subscription.cancel();
+    subscription?.cancel();
     super.dispose();
   }
 }
