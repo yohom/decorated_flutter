@@ -28,7 +28,10 @@ class Event<T> {
 
     latest = seedValue;
 
-    _subject.listen((data) => latest = data);
+    _subject.listen((data) {
+      latest = data;
+      L.p('当前$runtimeType latest: $latest');
+    });
   }
 
   T latest;
