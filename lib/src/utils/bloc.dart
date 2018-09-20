@@ -8,7 +8,8 @@ abstract class BLoC {
 
   @mustCallSuper
   void close() {
-    L.p('${semantics ??= runtimeType.toString()} closed '
-        '\n==================================');
+    L.p('=============================================\n'
+        '${semantics ??= runtimeType.toString()} closed '
+        '\n=============================================');
   }
 }

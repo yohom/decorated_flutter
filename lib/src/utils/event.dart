@@ -130,7 +130,8 @@ class Event<T> {
   }
 
   void close() {
-    L.p('${semantics ??= runtimeType.toString()}事件 closed '
+    L.p('-------------------------------\n'
+        '${semantics ??= runtimeType.toString()}事件 closed '
         '\n-------------------------------');
     _subject.close();
   }
