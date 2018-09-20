@@ -77,4 +77,10 @@ class _CountDownState extends State<CountDownBuilder> {
   Widget build(BuildContext context) {
     return widget.builder(_onPressed, _title);
   }
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
+  }
 }
