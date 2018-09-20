@@ -56,17 +56,18 @@ class _CountDownState extends State<CountDownBuilder> {
     _title = widget.beforeFetchTitle;
 
     _onActivePressed = () {
-      if (!widget.onFetchCaptcha())
-        return subscription = timer.listen((count) {
-          setState(() {
-            _title = widget.countDownLabel.replaceFirst('%s', count.toString());
-            _onPressed = null;
-          });
-        }, onDone: () {
-          subscription.cancel();
-          _title = widget.refetchTitle;
-          setState(() => _onPressed = _onActivePressed);
+      if (!widget.onFetchCaptcha()) return;
+
+      subscription = timer.listen((count) {
+        setState(() {
+          _title = widget.countDownLabel.replaceFirst('%s', count.toString());
+          _onPressed = null;
         });
+      }, onDone: () {
+        subscription.cancel();
+        _title = widget.refetchTitle;
+        setState(() => _onPressed = _onActivePressed);
+      });
     };
 
     _onPressed = _onActivePressed;
