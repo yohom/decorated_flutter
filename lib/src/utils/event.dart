@@ -58,7 +58,8 @@ class Event<T> {
   Subject<T> _subject;
 
   void add(T data) {
-    L.p('++++++++++++++++++++++++++++\nEvent接收到${semantics ??= data.runtimeType.toString()}数据: $data');
+    L.p('++++++++++++++++++++++++++++\n'
+        'Event接收到${semantics ??= data.runtimeType.toString()}数据: $data');
 
     // 如果需要distinct的话, 就判断是否相同; 如果不需要distinct, 直接发射数据
     if (isDistinct) {
@@ -66,17 +67,17 @@ class Event<T> {
       // 不停地发送通知(但是值又是一样)的情况
       if (test != null) {
         if (!test(latest, data)) {
-          L.p('Event转发${semantics ??= data.runtimeType.toString()}数据: $data');
+          L.p('Event转发出${semantics ??= data.runtimeType.toString()}数据: $data');
           _subject.add(data);
         }
       } else {
         if (data != latest) {
-          L.p('Event转发${semantics ??= data.runtimeType.toString()}数据: $data');
+          L.p('Event转发出${semantics ??= data.runtimeType.toString()}数据: $data');
           _subject.add(data);
         }
       }
     } else {
-      L.p('Event转发${semantics ??= data.runtimeType.toString()}数据: $data');
+      L.p('Event转发出${semantics ??= data.runtimeType.toString()}数据: $data');
       _subject.add(data);
     }
   }
@@ -129,7 +130,7 @@ class Event<T> {
   }
 
   void close() {
-    L.p('${semantics ??= runtimeType.toString()} closed '
+    L.p('${semantics ??= runtimeType.toString()}事件 closed '
         '\n-------------------------------');
     _subject.close();
   }
