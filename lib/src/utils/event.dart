@@ -13,6 +13,7 @@ class Event<T> {
     this.isDistinct = false,
     this.seedValue,
     this.acceptNull = false,
+    this.semantics,
 
     /// 是否同步发射数据, 传递给内部的[_subject]
     bool sync = true,
@@ -30,7 +31,7 @@ class Event<T> {
 
     _subject.listen((data) {
       latest = data;
-      L.p('当前$runtimeType latest: $latest');
+      L.p('当前${semantics ??= data.runtimeType.toString()} latest: $latest');
     });
   }
 
@@ -50,10 +51,13 @@ class Event<T> {
   /// 是否接受null
   bool acceptNull;
 
+  /// Event代表的语义
+  String semantics;
+
   Subject<T> _subject;
 
   void add(T data) {
-    L.p('Event接收到${data.runtimeType}数据: $data');
+    L.p('Event接收到${semantics ??= data.runtimeType.toString()}数据: $data');
 
     // 如果需要distinct的话, 就判断是否相同; 如果不需要distinct, 直接发射数据
     if (isDistinct) {
@@ -61,17 +65,17 @@ class Event<T> {
       // 不停地发送通知(但是值又是一样)的情况
       if (test != null) {
         if (!test(latest, data)) {
-          L.p('Event发送${data.runtimeType}数据: $data');
+          L.p('Event转发${semantics ??= data.runtimeType.toString()}数据: $data');
           _subject.add(data);
         }
       } else {
         if (data != latest) {
-          L.p('Event发送${data.runtimeType}数据: $data');
+          L.p('Event转发${semantics ??= data.runtimeType.toString()}数据: $data');
           _subject.add(data);
         }
       }
     } else {
-      L.p('Event发送${data.runtimeType}数据: $data');
+      L.p('Event转发${semantics ??= data.runtimeType.toString()}数据: $data');
       _subject.add(data);
     }
   }
@@ -124,12 +128,12 @@ class Event<T> {
   }
 
   void close() {
-    L.p('$runtimeType closed');
+    L.p('${semantics ??= runtimeType.toString()} closed');
     _subject.close();
   }
 
   @override
   String toString() {
-    return 'Event{latest: $latest, stream: $stream, test: $test, isDistinct: $isDistinct, seedValue: $seedValue, acceptNull: $acceptNull, _subject: $_subject}';
+    return 'Event{latest: $latest, stream: $stream, test: $test, isDistinct: $isDistinct, seedValue: $seedValue, acceptNull: $acceptNull, semantics: $semantics, _subject: $_subject}';
   }
 }
