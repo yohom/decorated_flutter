@@ -1,18 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:rxdart/rxdart.dart';
+import 'package:quiver/async.dart';
 
 const fetchCaptcha = '获取验证码';
 const refetchCaptcha = '重新获取';
 const countDown = '倒计时%s秒';
 
-Observable<int> get timer => Observable<int>.periodic(
-      Duration(seconds: 1),
-      (data) => 59 - data,
-    ).take(60);
-
-StreamSubscription<int> subscription;
+StreamSubscription<CountdownTimer> subscription;
 
 typedef Widget _Builder(VoidCallback onPressed, String title);
 
@@ -22,14 +17,8 @@ typedef bool OnFetchCaptcha();
 
 /// 倒计时控件
 class CountDownBuilder extends StatefulWidget {
-  final _Builder builder;
-  final OnFetchCaptcha onFetchCaptcha;
-  final Duration duration;
-  final String beforeFetchTitle;
-  final String refetchTitle;
-  final String countDownLabel;
-
-  const CountDownBuilder({
+  const CountDownBuilder(
+    this.timer, {
     Key key,
     @required this.onFetchCaptcha,
     this.duration = const Duration(seconds: 60),
@@ -38,6 +27,14 @@ class CountDownBuilder extends StatefulWidget {
     this.countDownLabel = countDown,
     this.builder,
   }) : super(key: key);
+
+  final CountdownTimer timer;
+  final _Builder builder;
+  final OnFetchCaptcha onFetchCaptcha;
+  final Duration duration;
+  final String beforeFetchTitle;
+  final String refetchTitle;
+  final String countDownLabel;
 
   @override
   _CountDownState createState() {
@@ -58,7 +55,7 @@ class _CountDownState extends State<CountDownBuilder> {
     _onActivePressed = () {
       if (!widget.onFetchCaptcha()) return;
 
-      subscription = timer.listen((count) {
+      subscription = widget.timer.listen((count) {
         setState(() {
           _title = widget.countDownLabel.replaceFirst('%s', count.toString());
           _onPressed = null;
