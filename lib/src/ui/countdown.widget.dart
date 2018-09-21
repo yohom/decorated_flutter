@@ -7,8 +7,6 @@ const fetchCaptcha = '获取验证码';
 const refetchCaptcha = '重新获取';
 const countDown = '倒计时%s秒';
 
-StreamSubscription<CountdownTimer> subscription;
-
 typedef Widget _Builder(VoidCallback onPressed, String title);
 
 /// [OnFetchCaptcha]的返回值代表身份继续获取, 因为有时候需要检查参数, 如果参数不符合要求就不能
@@ -46,6 +44,7 @@ class _CountDownState extends State<CountdownBuilder> {
   VoidCallback _onPressed;
   VoidCallback _onActivePressed;
   String _title;
+  StreamSubscription<CountdownTimer> _subscription;
 
   @override
   void initState() {
@@ -55,13 +54,13 @@ class _CountDownState extends State<CountdownBuilder> {
     _onActivePressed = () {
       if (!widget.onFetchCaptcha()) return;
 
-      subscription = widget.timer.listen((count) {
+      _subscription = widget.timer.listen((count) {
         setState(() {
           _title = widget.countDownLabel.replaceFirst('%s', count.toString());
           _onPressed = null;
         });
       }, onDone: () {
-        subscription.cancel();
+        _subscription.cancel();
         _title = widget.refetchTitle;
         setState(() => _onPressed = _onActivePressed);
       });
@@ -77,7 +76,7 @@ class _CountDownState extends State<CountdownBuilder> {
 
   @override
   void dispose() {
-    subscription?.cancel();
+    _subscription?.cancel();
     super.dispose();
   }
 }
