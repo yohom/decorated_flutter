@@ -10,7 +10,7 @@ export 'src/ui/picker/picker_item.dart';
 export 'src/ui/auto_close_keyboard.widget.dart';
 export 'src/ui/bloc_provider.dart';
 export 'src/ui/carousel.widget.dart';
-export 'src/ui/count_down.widget.dart';
+export 'src/ui/countdown.widget.dart';
 export 'src/ui/debounce_text_field.widget.dart';
 export 'src/ui/dot_indicator.widget.dart';
 export 'src/ui/empty.widget.dart';

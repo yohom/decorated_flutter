@@ -16,8 +16,8 @@ typedef Widget _Builder(VoidCallback onPressed, String title);
 typedef bool OnFetchCaptcha();
 
 /// 倒计时控件
-class CountDownBuilder extends StatefulWidget {
-  const CountDownBuilder(
+class CountdownBuilder extends StatefulWidget {
+  const CountdownBuilder(
     this.timer, {
     Key key,
     @required this.onFetchCaptcha,
@@ -42,7 +42,7 @@ class CountDownBuilder extends StatefulWidget {
   }
 }
 
-class _CountDownState extends State<CountDownBuilder> {
+class _CountDownState extends State<CountdownBuilder> {
   VoidCallback _onPressed;
   VoidCallback _onActivePressed;
   String _title;
