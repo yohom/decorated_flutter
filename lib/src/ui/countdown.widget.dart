@@ -35,9 +35,7 @@ class CountdownBuilder extends StatefulWidget {
   final String countDownLabel;
 
   @override
-  _CountDownState createState() {
-    return _CountDownState();
-  }
+  _CountDownState createState() => _CountDownState();
 }
 
 class _CountDownState extends State<CountdownBuilder> {
@@ -56,7 +54,10 @@ class _CountDownState extends State<CountdownBuilder> {
 
       _subscription = widget.timer.listen((count) {
         setState(() {
-          _title = widget.countDownLabel.replaceFirst('%s', count.toString());
+          _title = widget.countDownLabel.replaceFirst(
+            '%s',
+            count.remaining.inSeconds.toString(),
+          );
           _onPressed = null;
         });
       }, onDone: () {
