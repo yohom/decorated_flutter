@@ -5,7 +5,7 @@ const _kInitLabel = '获取验证码';
 const _kRefetchLabel = '重新获取';
 const _kLabelTemplate = '倒计时%s秒';
 
-typedef Widget Builder(bool enabled, String label);
+typedef Widget _Builder(bool enabled, String label);
 
 /// 倒计时控件
 /// 目标:
@@ -37,7 +37,7 @@ class CaptchaBuilder extends StatefulWidget {
   final String refetchLabel;
 
   /// 根据是否enable, 拼凑出来的label新建一个目标Widget
-  final Builder builder;
+  final _Builder builder;
 
   @override
   _CaptchaBuilderState createState() => _CaptchaBuilderState();
