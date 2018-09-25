@@ -54,7 +54,7 @@ class _CaptchaBuilderState extends State<CaptchaBuilder> {
     widget.controller.disposed = false;
 
     if (widget.controller.started) {
-      _enabled = widget.controller.remain == kDuration;
+      _enabled = widget.controller.remain == kTotalDuration;
       _label = widget.labelTemplate
           .replaceFirst('%s', widget.controller.remain.toString());
     } else {
@@ -69,7 +69,7 @@ class _CaptchaBuilderState extends State<CaptchaBuilder> {
             _enabled = true;
             _label = widget.refetchLabel;
           } else {
-            _enabled = widget.controller.remain == kDuration;
+            _enabled = widget.controller.remain == kTotalDuration;
             _label = widget.labelTemplate
                 .replaceFirst('%s', widget.controller.remain.toString());
           }

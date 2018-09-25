@@ -3,7 +3,7 @@ import 'dart:ui';
 
 import 'package:rxdart/rxdart.dart';
 
-const int kDuration = 60;
+const int kTotalDuration = 60;
 
 /// 负责控制倒计时的类
 class CaptchaController {
@@ -28,7 +28,7 @@ class CaptchaController {
   bool done = false;
   bool disposed = false;
 
-  int remain = kDuration;
+  int remain = kTotalDuration;
 
   Timer _timer;
 
@@ -37,7 +37,7 @@ class CaptchaController {
     if (done || _timer == null) {
       done = false;
       _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-        remain = kDuration - 1 - timer.tick;
+        remain = kTotalDuration - timer.tick;
         callback();
 
         if (remain == 0) {
