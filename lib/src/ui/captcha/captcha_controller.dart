@@ -36,7 +36,7 @@ class CaptchaController {
     started = true;
     if (done || _timer == null) {
       done = false;
-      _timer = Timer.periodic(Duration(seconds: kDuration), (timer) {
+      _timer = Timer.periodic(Duration(seconds: 1), (timer) {
         remain = kDuration - 1 - timer.tick;
         callback();
 
@@ -44,6 +44,7 @@ class CaptchaController {
           done = true;
           started = false;
           callback();
+          _timer.cancel();
         }
       });
     }
