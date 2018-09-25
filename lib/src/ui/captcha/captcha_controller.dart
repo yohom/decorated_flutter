@@ -3,7 +3,7 @@ import 'dart:ui';
 
 import 'package:rxdart/rxdart.dart';
 
-const int kTotalDuration = 60;
+const int kDuration = 60;
 
 /// 负责控制倒计时的类
 class CaptchaController {
@@ -28,24 +28,26 @@ class CaptchaController {
   bool done = false;
   bool disposed = false;
 
-  int remain = kTotalDuration;
+  int remain = kDuration;
 
-  Timer _timer;
+  StreamSubscription<int> _subscription;
+  Observable<int> _timer;
 
   void start() {
     started = true;
-    if (done || _timer == null) {
+    if (done || _subscription == null) {
       done = false;
-      _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-        remain = kTotalDuration - timer.tick;
+      _timer = Observable.periodic(Duration(seconds: 1), (data) {
+        return kDuration - 1 - data;
+      }).take(kDuration).doOnDone(() {
+        done = true;
+        started = false;
         callback();
-
-        if (remain == 0) {
-          done = true;
-          started = false;
-          callback();
-          _timer.cancel();
-        }
+        _subscription?.cancel();
+      });
+      _subscription = _timer.listen((tick) {
+        remain = tick;
+        callback();
       });
     }
   }
@@ -54,7 +56,7 @@ class CaptchaController {
     this.callback = callback;
   }
 
-  void dispose() {
-    _timer.cancel();
+  void dispose() async {
+    await _subscription?.cancel();
   }
 }
