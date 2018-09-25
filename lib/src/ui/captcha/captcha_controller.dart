@@ -30,23 +30,21 @@ class CaptchaController {
 
   int remain = kDuration;
 
-  StreamSubscription<int> _subscription;
-  Observable<int> _timer;
+  Timer _timer;
 
   void start() {
     started = true;
-    if (done || _subscription == null) {
+    if (done || _timer == null) {
       done = false;
-      _timer = Observable.periodic(Duration(seconds: 1), (data) {
-        return kDuration - 1 - data;
-      }).take(kDuration).asBroadcastStream().doOnDone(() {
-        done = true;
-        started = false;
+      _timer = Timer.periodic(Duration(seconds: kDuration), (timer) {
+        remain = kDuration - 1 - timer.tick;
         callback();
-      });
-      _subscription = _timer.listen((tick) {
-        remain = tick;
-        callback();
+
+        if (remain == 0) {
+          done = true;
+          started = false;
+          callback();
+        }
       });
     }
   }
@@ -56,6 +54,6 @@ class CaptchaController {
   }
 
   void dispose() {
-    _subscription?.cancel();
+    _timer.cancel();
   }
 }
