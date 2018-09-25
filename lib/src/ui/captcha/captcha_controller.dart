@@ -19,7 +19,7 @@ class CaptchaController {
   static final controllerMap = Map<Type, CaptchaController>();
 
   static void disposeAll() {
-    controllerMap.forEach((_, controller) => controller.dispose());
+    controllerMap.forEach((_, controller) async => await controller.dispose());
   }
 
   VoidCallback callback;
@@ -31,18 +31,20 @@ class CaptchaController {
   int remain = kDuration;
 
   StreamSubscription<int> _subscription;
+  Observable<int> _timer;
 
   void start() {
     started = true;
     if (done || _subscription == null) {
       done = false;
-      _subscription = Observable.periodic(Duration(seconds: 1), (data) {
+      _timer = Observable.periodic(Duration(seconds: 1), (data) {
         return kDuration - 1 - data;
       }).take(kDuration).asBroadcastStream().doOnDone(() {
         done = true;
         started = false;
         callback();
-      }).listen((tick) {
+      });
+      _subscription = _timer.listen((tick) {
         remain = tick;
         callback();
       });
@@ -53,7 +55,7 @@ class CaptchaController {
     this.callback = callback;
   }
 
-  void dispose() async {
-    await _subscription?.cancel();
+  Future dispose() async {
+    return await _subscription?.cancel();
   }
 }
