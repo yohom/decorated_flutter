@@ -53,8 +53,7 @@ class CaptchaController {
     this.callback = callback;
   }
 
-  void dispose() {
-    _subscription?.cancel();
-    _subscription?.pause();
+  void dispose() async {
+    await _subscription?.cancel();
   }
 }
