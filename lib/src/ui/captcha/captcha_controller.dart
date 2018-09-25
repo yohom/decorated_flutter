@@ -19,7 +19,7 @@ class CaptchaController {
   static final controllerMap = Map<Type, CaptchaController>();
 
   static void disposeAll() {
-    controllerMap.forEach((_, controller) async => await controller.dispose());
+    controllerMap.forEach((_, controller) => controller.dispose());
   }
 
   VoidCallback callback;
@@ -55,7 +55,7 @@ class CaptchaController {
     this.callback = callback;
   }
 
-  Future dispose() async {
-    return await _subscription?.cancel();
+  void dispose() {
+    _subscription?.cancel();
   }
 }
