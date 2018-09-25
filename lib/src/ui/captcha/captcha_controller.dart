@@ -1,6 +1,6 @@
+import 'dart:async';
 import 'dart:ui';
 
-import 'package:framework/framework.dart';
 import 'package:rxdart/rxdart.dart';
 
 const int kDuration = 60;
@@ -18,6 +18,10 @@ class CaptchaController {
 
   static final controllerMap = Map<Type, CaptchaController>();
 
+  static void disposeAll() {
+    controllerMap.forEach((key, value) => value.dispose());
+  }
+
   VoidCallback callback;
 
   bool started = false;
@@ -26,27 +30,30 @@ class CaptchaController {
 
   int remain = kDuration;
 
-  Observable<int> _timer;
+  StreamSubscription<int> _subscription;
 
   void start() {
     started = true;
-    if (done || _timer == null) {
+    if (done || _subscription == null) {
       done = false;
-      _timer = Observable.periodic(Duration(seconds: 1), (data) {
+      _subscription = Observable.periodic(Duration(seconds: 1), (data) {
         return kDuration - 1 - data;
       }).take(kDuration).asBroadcastStream().doOnDone(() {
         done = true;
         started = false;
         callback();
-      })
-        ..listen((tick) {
-          remain = tick;
-          callback();
-        });
+      }).listen((tick) {
+        remain = tick;
+        callback();
+      });
     }
   }
 
   void addListener(VoidCallback callback) {
     this.callback = callback;
+  }
+
+  void dispose() {
+    _subscription?.cancel();
   }
 }
