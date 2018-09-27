@@ -15,6 +15,11 @@ class BLoCBuilder<B extends BLoC> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BLoCProvider(child: builder(context, bloc), bloc: bloc);
+    return AutoCloseKeyboard(
+      child: BLoCProvider(
+        child: builder(context, bloc),
+        bloc: bloc,
+      ),
+    );
   }
 }
