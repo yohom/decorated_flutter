@@ -10,7 +10,7 @@ class BLoCBuilder<B extends BLoC> extends StatelessWidget {
     this.bloc,
   }) : super(key: key);
 
-  final _Builder builder;
+  final _Builder<B> builder;
   final B bloc;
 
   @override
