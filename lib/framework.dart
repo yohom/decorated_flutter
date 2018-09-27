@@ -10,6 +10,7 @@ export 'src/ui/picker/picker_item.dart';
 export 'src/ui/captcha/captcha.widget.dart';
 export 'src/ui/captcha/captcha_controller.dart';
 export 'src/ui/auto_close_keyboard.widget.dart';
+export 'src/ui/bloc_builder.widget.dart';
 export 'src/ui/bloc_provider.dart';
 export 'src/ui/carousel.widget.dart';
 export 'src/ui/countdown.widget.dart';
