@@ -6,8 +6,8 @@ typedef Widget _Builder<B extends BLoC>(BuildContext context, B bloc);
 class BLoCBuilder<B extends BLoC> extends StatelessWidget {
   const BLoCBuilder({
     Key key,
-    this.builder,
-    this.bloc,
+    @required this.builder,
+    @required this.bloc,
   }) : super(key: key);
 
   final _Builder<B> builder;
