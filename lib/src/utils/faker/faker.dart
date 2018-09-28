@@ -12,16 +12,19 @@ class Faker {
     return data.name[_random.nextInt(data.name.length)];
   }
 
+  /// 随机时间, 以[base]为基准, [delta]为范围进行随机
   static int time() {
     return _random.nextInt(DateTime.now().millisecondsSinceEpoch);
   }
 
-  static int price() {
-    return _random.nextInt(100000);
+  /// 随机价格, 以[base]为基准, [delta]为范围进行随机
+  static double price({double base = 0.0, double delta = 100000.0}) {
+    return base + _random.nextDouble() * delta;
   }
 
-  static int distance() {
-    return _random.nextInt(100000);
+  /// 随机距离, 以[base]为基准, [delta]为范围进行随机
+  static double distance({double base = 0.0, double delta = 100000.0}) {
+    return base + _random.nextDouble() * delta;
   }
 
   static T custom<T>(List<T> data) {
