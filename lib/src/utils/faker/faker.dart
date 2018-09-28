@@ -4,6 +4,8 @@ import 'data.dart' as data;
 final _random = Random();
 
 class Faker {
+  Faker._();
+
   static String city() {
     return data.city[_random.nextInt(data.city.length)];
   }
