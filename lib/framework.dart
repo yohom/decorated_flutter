@@ -29,6 +29,7 @@ export 'src/ui/snap_list.widget.dart';
 export 'src/ui/stream.widget.dart';
 export 'src/ui/tap_tooltip.widget.dart';
 
+export 'src/utils/faker/faker.dart';
 export 'src/utils/base_param.dart';
 export 'src/utils/bloc.dart';
 export 'src/utils/device_info.dart';
