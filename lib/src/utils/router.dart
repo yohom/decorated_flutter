@@ -31,7 +31,7 @@ class Router {
     bool fullScreenDialog = false,
     Duration transitionDuration = const Duration(milliseconds: 600),
     Color barrierColor,
-    bool barrierDismissible,
+    bool barrierDismissible = false,
     String barrierLabel,
   }) {
     return Navigator.of(context).push<T>(
