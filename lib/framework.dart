@@ -5,6 +5,9 @@ export 'src/bean/empty.dart';
 export 'src/res/color.dart';
 export 'src/res/dimens.dart';
 
+export 'src/router/router.dart';
+export 'src/router/route/custom_material.route.dart';
+
 export 'src/ui/picker/picker.dart';
 export 'src/ui/picker/picker_item.dart';
 export 'src/ui/captcha/captcha.widget.dart';
@@ -41,5 +44,4 @@ export 'src/utils/global.dart';
 export 'src/utils/http_utils.dart';
 export 'src/utils/lists.dart';
 export 'src/utils/log.dart';
-export 'package:framework/src/router/router.dart';
 export 'src/utils/view.dart';

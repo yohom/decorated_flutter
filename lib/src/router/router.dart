@@ -36,9 +36,9 @@ class Router {
 
   /// 自定义route的导航
   static Future<T> navigateRouteBuilder<T>({
-    BuildContext context,
-    _RouteBuilder builder,
-    Widget child,
+    @required BuildContext context,
+    @required _RouteBuilder builder,
+    @required Widget child,
     bool fullScreenDialog = false,
     Duration transitionDuration = const Duration(milliseconds: 600),
     Color barrierColor,
@@ -64,7 +64,7 @@ class Router {
         barrierColor: barrierColor,
         barrierDismissible: barrierDismissible,
         barrierLabel: barrierLabel,
-        settings: RouteSettings(name: builder.runtimeType.toString()),
+        settings: RouteSettings(name: child.runtimeType.toString()),
       ),
     );
   }
