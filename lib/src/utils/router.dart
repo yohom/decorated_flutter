@@ -13,7 +13,7 @@ class Router {
   static Future<T> navigate<T>(
     BuildContext context,
     Widget widget, {
-    bool fullScreenDialog,
+    bool fullScreenDialog = false,
   }) {
     return Navigator.of(context).push<T>(
       MaterialPageRoute(
@@ -37,7 +37,7 @@ class Router {
   static void navigateReplace(
     BuildContext context,
     Widget widget, {
-    bool fullScreenDialog,
+    bool fullScreenDialog = false,
   }) {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
@@ -53,7 +53,7 @@ class Router {
     BuildContext context,
     Widget widget, {
     InitAction<B> init,
-    bool fullScreenDialog,
+    bool fullScreenDialog = false,
   }) {
     final bloc = kiwi.Container().resolve<B>();
     return Navigator.of(context).push<R>(
