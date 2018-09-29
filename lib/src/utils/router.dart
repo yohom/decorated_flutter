@@ -24,6 +24,39 @@ class Router {
     );
   }
 
+  /// 自定义route的导航
+  static Future<T> navigateRouteBuilder<T>(
+    BuildContext context,
+    Widget widget, {
+    bool fullScreenDialog = false,
+    Duration transitionDuration = const Duration(milliseconds: 600),
+    Color barrierColor,
+    bool barrierDismissible,
+    String barrierLabel,
+  }) {
+    return Navigator.of(context).push<T>(
+      PageRouteBuilder<Null>(
+        pageBuilder: (
+          BuildContext context,
+          Animation<double> animation,
+          Animation<double> secondaryAnimation,
+        ) {
+          return AnimatedBuilder(
+            animation: animation,
+            builder: (BuildContext context, Widget child) {
+              return widget;
+            },
+          );
+        },
+        transitionDuration: transitionDuration,
+        barrierColor: barrierColor,
+        barrierDismissible: barrierDismissible,
+        barrierLabel: barrierLabel,
+        settings: RouteSettings(name: widget.runtimeType.toString()),
+      ),
+    );
+  }
+
   /// 通过bottom sheet显示新界面, 通过这种方式, 新的界面会在父界面的节点下面, 而不是像
   /// [navigate]系列一样和父界面同级.
   static PersistentBottomSheetController<T> navigateBottomSheet<T>(
