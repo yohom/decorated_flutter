@@ -83,7 +83,7 @@ class CustomMaterialRoute<T> extends PageRoute<T> {
       duration ?? const Duration(milliseconds: 300);
 
   @override
-  Color get barrierColor => Colors.transparent;
+  Color get barrierColor => null;
 
   @override
   String get barrierLabel => null;
