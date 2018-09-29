@@ -7,6 +7,11 @@ import 'package:kiwi/kiwi.dart' as kiwi;
 import '../ui/loading.widget.dart';
 
 typedef void InitAction<T extends BLoC>(T bloc);
+typedef Widget _RouteBuilder(
+  BuildContext context,
+  Widget child,
+  Animation<double> animation,
+);
 
 class Router {
   /// 导航
@@ -25,15 +30,16 @@ class Router {
   }
 
   /// 自定义route的导航
-  static Future<T> navigateRouteBuilder<T>(
+  static Future<T> navigateRouteBuilder<T>({
     BuildContext context,
-    Widget widget, {
+    _RouteBuilder builder,
+    Widget child,
     bool fullScreenDialog = false,
     Duration transitionDuration = const Duration(milliseconds: 600),
     Color barrierColor,
     bool barrierDismissible = false,
     String barrierLabel,
-  }) {
+  }) async {
     return Navigator.of(context).push<T>(
       PageRouteBuilder<Null>(
         pageBuilder: (
@@ -43,8 +49,9 @@ class Router {
         ) {
           return AnimatedBuilder(
             animation: animation,
+            child: child,
             builder: (BuildContext context, Widget child) {
-              return widget;
+              return builder(context, child, animation);
             },
           );
         },
@@ -52,7 +59,7 @@ class Router {
         barrierColor: barrierColor,
         barrierDismissible: barrierDismissible,
         barrierLabel: barrierLabel,
-        settings: RouteSettings(name: widget.runtimeType.toString()),
+        settings: RouteSettings(name: builder.runtimeType.toString()),
       ),
     );
   }
