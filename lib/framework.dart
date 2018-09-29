@@ -41,5 +41,5 @@ export 'src/utils/global.dart';
 export 'src/utils/http_utils.dart';
 export 'src/utils/lists.dart';
 export 'src/utils/log.dart';
-export 'src/utils/router.dart';
+export 'package:framework/src/router/router.dart';
 export 'src/utils/view.dart';

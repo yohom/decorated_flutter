@@ -29,6 +29,11 @@ class Router {
     );
   }
 
+  /// 自定义导航
+  static Future<T> navigateCustom<T>(BuildContext context, PageRoute<T> route) {
+    return Navigator.of(context).push<T>(route);
+  }
+
   /// 自定义route的导航
   static Future<T> navigateRouteBuilder<T>({
     BuildContext context,
