@@ -10,9 +10,14 @@ typedef void InitAction<T extends BLoC>(T bloc);
 
 class Router {
   /// 导航
-  static Future<T> navigate<T>(BuildContext context, Widget widget) {
+  static Future<T> navigate<T>(
+    BuildContext context,
+    Widget widget, {
+    bool fullScreenDialog,
+  }) {
     return Navigator.of(context).push<T>(
       MaterialPageRoute(
+        fullscreenDialog: fullScreenDialog,
         builder: (context) => AutoCloseKeyboard(child: widget),
         settings: RouteSettings(name: widget.runtimeType.toString()),
       ),
@@ -29,9 +34,14 @@ class Router {
   }
 
   /// 不保留源页面的跳转
-  static void navigateReplace(BuildContext context, Widget widget) {
+  static void navigateReplace(
+    BuildContext context,
+    Widget widget, {
+    bool fullScreenDialog,
+  }) {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
+        fullscreenDialog: fullScreenDialog,
         builder: (context) => widget,
         settings: RouteSettings(name: widget.runtimeType.toString()),
       ),
@@ -43,10 +53,12 @@ class Router {
     BuildContext context,
     Widget widget, {
     InitAction<B> init,
+    bool fullScreenDialog,
   }) {
     final bloc = kiwi.Container().resolve<B>();
     return Navigator.of(context).push<R>(
       MaterialPageRoute(
+        fullscreenDialog: fullScreenDialog,
         builder: (context) {
           return BLoCProvider<B>(
             bloc: bloc,

@@ -14,7 +14,6 @@ class Faker {
     return data.name[_random.nextInt(data.name.length)];
   }
 
-  /// 随机时间, 以[base]为基准, [delta]为范围进行随机
   static int time() {
     return _random.nextInt(DateTime.now().millisecondsSinceEpoch);
   }
