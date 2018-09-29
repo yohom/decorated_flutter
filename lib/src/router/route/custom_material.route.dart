@@ -46,10 +46,10 @@ class _MountainViewPageTransition extends StatelessWidget {
 class CustomMaterialRoute<T> extends PageRoute<T> {
   CustomMaterialRoute({
     @required this.builder,
-    RouteSettings settings,
     this.maintainState = true,
-    bool fullscreenDialog = false,
     this.duration,
+    RouteSettings settings,
+    bool fullscreenDialog = false,
   })  : assert(builder != null),
         super(settings: settings, fullscreenDialog: fullscreenDialog) {
     assert(opaque);
