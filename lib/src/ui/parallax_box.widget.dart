@@ -5,7 +5,7 @@ class ParallaxBox extends StatefulWidget {
     Key key,
     this.background,
     this.foreground,
-    this.overlay,
+    this.overlay = const SizedBox.shrink(),
     this.alignment = AlignmentDirectional.topCenter,
     this.fit = StackFit.loose,
     this.overflow = Overflow.clip,
