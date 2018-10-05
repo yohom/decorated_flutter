@@ -3,16 +3,18 @@ import 'package:framework/framework.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
-typedef Widget StreamWidgetBuilder<DATA>(DATA data);
+typedef Widget _StreamWidgetBuilder<DATA>(DATA data);
 
 class StreamWidget<T> extends StatelessWidget {
   final Observable<T> stream;
-  final StreamWidgetBuilder<T> builder;
+  final _StreamWidgetBuilder<T> builder;
 
   /// 是否显示loading
   final bool showLoading;
 
   final T initData;
+  final Widget emptyWidget;
+  final Widget errorWidget;
 
   const StreamWidget({
     Key key,
@@ -20,6 +22,8 @@ class StreamWidget<T> extends StatelessWidget {
     @required this.builder,
     this.showLoading = true,
     this.initData,
+    this.emptyWidget,
+    this.errorWidget,
   }) : super(key: key);
 
   @override
@@ -29,7 +33,7 @@ class StreamWidget<T> extends StatelessWidget {
       stream: stream,
       builder: (ctx, snapshot) {
         if (snapshot.hasError) {
-          return ErrorWidget(snapshot.error.toString());
+          return errorWidget ?? ErrorWidget(snapshot.error.toString());
         }
 
         if (snapshot.hasData) {
@@ -37,7 +41,7 @@ class StreamWidget<T> extends StatelessWidget {
         } else if (showLoading) {
           return LoadingWidget();
         } else {
-          return EmptyWidget();
+          return emptyWidget ?? EmptyWidget();
         }
       },
     );

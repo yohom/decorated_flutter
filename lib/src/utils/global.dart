@@ -10,31 +10,31 @@ class Global {
   ///   Manifest.xml activity节点设置android:screenOrientation为portrait
   /// ios:
   ///   点击项目, General标签, Device Orientation只选择Portrait
-  static double kScreenWidth;
-  static double kScreenHeight;
+  static double screenWidth;
+  static double screenHeight;
 
   /// 一个物理像素, 不建议使用, 渲染会有问题
-  static double kOnePixel;
+  static double onePixel;
 
   /// 全局的theme
-  static ThemeData kAppTheme;
-  static TextTheme kTextTheme;
-  static Color kPrimaryColor;
-  static Color kPrimaryColorDark;
+  static ThemeData appTheme;
+  static TextTheme textTheme;
+  static Color primaryColor;
+  static Color primaryColorDark;
 
-  static bool kIsIphoneX;
+  static bool isIphoneX;
 
   static init(BuildContext context) {
     final media = MediaQuery.of(context);
-    kScreenWidth = media.size.width;
-    kScreenHeight = media.size.height;
-    kOnePixel = 1 / media.devicePixelRatio;
+    screenWidth = media.size.width;
+    screenHeight = media.size.height;
+    onePixel = 1 / media.devicePixelRatio;
 
-    kAppTheme = Theme.of(context);
-    kTextTheme = kAppTheme.textTheme;
-    kPrimaryColor = kAppTheme.primaryColor;
-    kPrimaryColorDark = kAppTheme.primaryColorDark;
+    appTheme = Theme.of(context);
+    textTheme = appTheme.textTheme;
+    primaryColor = appTheme.primaryColor;
+    primaryColorDark = appTheme.primaryColorDark;
 
-    kIsIphoneX = media.size.height == 812;
+    isIphoneX = media.size.height == 812;
   }
 }

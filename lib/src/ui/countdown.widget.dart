@@ -15,6 +15,7 @@ typedef Widget _Builder(VoidCallback onPressed, String title);
 typedef bool OnFetchCaptcha();
 
 /// 倒计时控件
+@Deprecated('用captcha代替')
 class CountdownBuilder extends StatefulWidget {
   const CountdownBuilder(
     this._timer, {

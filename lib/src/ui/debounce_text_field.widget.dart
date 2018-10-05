@@ -2,22 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rxdart/rxdart.dart';
 
-///
 /// 可以设置在停止接收到[TextField]的[onChanged]方法多久后再触发[DebounceTextField]的
 /// [onChanged]方法
 /// 适用场景: [TextField]一边输入内容, 一边根据内容进行网络请求(或其他耗资源的操作), 这时需要
 /// 根据输入的节奏来调整网络请求的次数, [duration]参数可以设置在用户停止输入多久之后, 开始网络
 /// 请求(或其他耗资源操作).
-///
 class DebounceTextField extends StatefulWidget {
-  ///
   /// change触发方法
-  ///
   final ValueChanged<String> onChanged;
 
-  ///
   /// 延迟多少时间触发[onChanged]方法
-  ///
   final Duration duration;
 
   // 以下属性为TextField的属性
@@ -70,9 +64,7 @@ class DebounceTextField extends StatefulWidget {
         super(key: key);
 
   @override
-  _DebounceTextFieldState createState() {
-    return _DebounceTextFieldState();
-  }
+  _DebounceTextFieldState createState() => _DebounceTextFieldState();
 }
 
 class _DebounceTextFieldState extends State<DebounceTextField> {

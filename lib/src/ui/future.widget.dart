@@ -12,6 +12,8 @@ class FutureWidget<T> extends StatelessWidget {
   final bool showLoading;
   final T initialData;
   final bool isExpanded;
+  final Widget emptyWidget;
+  final Widget errorWidget;
 
   const FutureWidget({
     Key key,
@@ -20,6 +22,8 @@ class FutureWidget<T> extends StatelessWidget {
     this.showLoading = true,
     this.isExpanded = false,
     this.initialData,
+    this.emptyWidget,
+    this.errorWidget,
   }) : super(key: key);
 
   @override
@@ -29,7 +33,7 @@ class FutureWidget<T> extends StatelessWidget {
       future: future,
       builder: (ctx, snapshot) {
         if (snapshot.hasError) {
-          return ErrorWidget(snapshot.error.toString());
+          return errorWidget ?? ErrorWidget(snapshot.error.toString());
         }
 
         if (snapshot.hasData) {
@@ -39,7 +43,7 @@ class FutureWidget<T> extends StatelessWidget {
         } else if (isExpanded) {
           return Expanded(child: EmptyWidget());
         } else {
-          return EmptyWidget();
+          return emptyWidget ?? EmptyWidget();
         }
       },
     );

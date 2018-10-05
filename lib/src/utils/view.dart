@@ -5,9 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:framework/framework.dart';
 import 'package:framework/src/utils/enums.dart';
 
-///
 /// 显示信息底层方法, 当需要动态选择是错误还是正常信息时, 调用这个方法
-///
 Future<SnackBarClosedReason> showMessage(
   BuildContext context,
   String content, {
@@ -47,9 +45,7 @@ Future<SnackBarClosedReason> showMessage(
   });
 }
 
-///
 /// 显示错误信息
-///
 Future<SnackBarClosedReason> showError(
   BuildContext context,
   String content, {
@@ -67,9 +63,7 @@ Future<SnackBarClosedReason> showError(
   );
 }
 
-///
 /// 显示普通信息
-///
 Future<SnackBarClosedReason> showInfo(
   BuildContext context,
   String content, {
@@ -87,9 +81,7 @@ Future<SnackBarClosedReason> showInfo(
   );
 }
 
-///
 /// 显示警告信息
-///
 Future<SnackBarClosedReason> showWarn(
   BuildContext context,
   String content, {
@@ -107,9 +99,7 @@ Future<SnackBarClosedReason> showWarn(
   );
 }
 
-///
 /// 无差别全局显示toast
-///
 void showToast(
   String content, {
   bool isError = false,

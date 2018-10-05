@@ -11,9 +11,7 @@ class HttpUtils {
     baseUrl = url;
   }
 
-  ///
   /// Map转成http请求参数的形式
-  ///
   static String map2Url(
     Object data, {
     String path = '',
