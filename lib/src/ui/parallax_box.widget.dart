@@ -5,6 +5,10 @@ class ParallaxBox extends StatefulWidget {
     Key key,
     this.background,
     this.foreground,
+    this.overlay,
+    this.alignment = AlignmentDirectional.topCenter,
+    this.fit = StackFit.loose,
+    this.overflow = Overflow.clip,
     this.parallaxRate = 0.2,
   })  : assert(parallaxRate > 0.0),
         super(key: key);
@@ -14,6 +18,18 @@ class ParallaxBox extends StatefulWidget {
 
   /// 前景
   final Widget foreground;
+
+  /// overlay, 建议使用[Position]来控制布局
+  final Widget overlay;
+
+  /// 内部[Stack]的[alignment]
+  final AlignmentDirectional alignment;
+
+  /// 内部[Stack]的[fit]
+  final StackFit fit;
+
+  /// 内部[Stack]的[overflow]
+  final Overflow overflow;
 
   /// 视差率, 也就是前景移动时, 背景移动的速率
   final double parallaxRate;
@@ -40,6 +56,8 @@ class _ParallaxBoxState extends State<ParallaxBox> {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      alignment: widget.alignment,
+      fit: widget.fit,
       children: <Widget>[
         Transform.translate(
           offset: Offset(0.0, _parallaxOffset),
@@ -49,6 +67,7 @@ class _ParallaxBoxState extends State<ParallaxBox> {
           controller: _controller,
           child: widget.foreground,
         ),
+        widget.overlay,
       ],
     );
   }
