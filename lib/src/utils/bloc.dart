@@ -6,6 +6,7 @@ abstract class BLoC {
 
   BLoC([this.semantics]);
 
+  /// 对应[State]的[reassemble]方法
   void reassemble() {}
 
   @mustCallSuper
