@@ -6,6 +6,8 @@ abstract class BLoC {
 
   BLoC([this.semantics]);
 
+  void reassemble() {}
+
   @mustCallSuper
   void close() {
     L.p('=============================================\n'
