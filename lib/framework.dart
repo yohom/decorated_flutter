@@ -25,6 +25,7 @@ export 'src/ui/flex_dialog.widget.dart';
 export 'src/ui/future.widget.dart';
 export 'src/ui/image.widget.dart';
 export 'src/ui/loading.widget.dart';
+export 'src/ui/parallax_box.widget.dart';
 export 'src/ui/primary_icon.widget.dart';
 export 'src/ui/rating_bar.widget.dart';
 export 'src/ui/shadowed_box.widget.dart';
