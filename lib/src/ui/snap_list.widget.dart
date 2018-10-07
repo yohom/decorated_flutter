@@ -28,32 +28,26 @@ class SnapList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-      print('''
-      constraints---> 
-      minWidth: ${constraints.minWidth}
-      maxWidth: ${constraints.maxWidth}
-      minHeight: ${constraints.minHeight}
-      maxHeight: ${constraints.maxHeight}
-      ''');
-      final itemWidth =
-          (constraints.maxWidth - padding.horizontal) * viewportFraction;
-      final itemHeight = itemWidth * aspectRatio;
-      return Container(
-        height: itemHeight,
-        child: ListView.custom(
-          scrollDirection: Axis.horizontal,
-          controller: PageController(
-            initialPage: initialPage,
-            viewportFraction: viewportFraction,
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final itemWidth =
+            (constraints.maxWidth - padding.horizontal) * viewportFraction;
+        final itemHeight = itemWidth * aspectRatio;
+        return Container(
+          height: itemHeight,
+          child: ListView.custom(
+            scrollDirection: Axis.horizontal,
+            controller: PageController(
+              initialPage: initialPage,
+              viewportFraction: viewportFraction,
+            ),
+            physics: const PageScrollPhysics(),
+            padding: padding,
+            itemExtent: itemWidth + (padding.horizontal * viewportFraction),
+            childrenDelegate: childrenDelegate,
           ),
-          physics: const PageScrollPhysics(),
-          padding: padding,
-          itemExtent: itemWidth + (padding.horizontal * viewportFraction),
-          childrenDelegate: childrenDelegate,
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
 
