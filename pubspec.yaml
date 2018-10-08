@@ -16,7 +16,6 @@ dependencies:
   cached_network_image: ^0.4.2
   shared_preferences: ^0.4.1
   intl: ^0.15.6
-  fluttertoast: ^2.0.7
   kiwi: ^0.1.0
 
 dev_dependencies:

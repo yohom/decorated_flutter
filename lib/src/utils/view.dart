@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:framework/framework.dart';
 import 'package:framework/src/utils/enums.dart';
 
@@ -96,19 +95,5 @@ Future<SnackBarClosedReason> showWarn(
     isExit: isExit,
     exitTo: exitTo,
     duration: duration,
-  );
-}
-
-/// 无差别全局显示toast
-void showToast(
-  String content, {
-  bool isError = false,
-  ToastGravity gravity = ToastGravity.BOTTOM,
-}) {
-  Fluttertoast.showToast(
-    msg: content,
-    gravity: gravity,
-    bgcolor: isError ? '#FFFF0000' : '#FF999999',
-    textcolor: '#FFFFFFFF',
   );
 }

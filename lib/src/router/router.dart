@@ -6,7 +6,7 @@ import 'package:kiwi/kiwi.dart' as kiwi;
 
 import '../ui/loading.widget.dart';
 
-typedef void InitAction<T extends BLoC>(T bloc);
+typedef void _InitAction<T extends BLoC>(T bloc);
 typedef Widget _RouteBuilder(
   BuildContext context,
   Widget child,
@@ -97,7 +97,7 @@ class Router {
   static Future<R> navigateWithBLoC<B extends BLoC, R>(
     BuildContext context,
     Widget widget, {
-    InitAction<B> init,
+    _InitAction<B> init,
     bool fullScreenDialog = false,
   }) {
     final bloc = kiwi.Container().resolve<B>();
