@@ -45,4 +45,5 @@ export 'src/utils/global.dart';
 export 'src/utils/http_utils.dart';
 export 'src/utils/lists.dart';
 export 'src/utils/log.dart';
+export 'src/utils/misc.dart';
 export 'src/utils/view.dart';
