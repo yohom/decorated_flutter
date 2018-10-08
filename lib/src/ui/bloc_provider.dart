@@ -12,7 +12,7 @@ class BLoCProvider<T extends BLoC> extends StatefulWidget {
   final Widget child;
 
   @override
-  _BlocProviderState<T> createState() => _BlocProviderState<T>();
+  _BLoCProviderState<T> createState() => _BLoCProviderState<T>();
 
   static T of<T extends BLoC>(BuildContext context) {
     final type = _typeOf<BLoCProvider<T>>();
@@ -23,10 +23,14 @@ class BLoCProvider<T extends BLoC> extends StatefulWidget {
   static Type _typeOf<T>() => T;
 }
 
-class _BlocProviderState<T> extends State<BLoCProvider<BLoC>> {
+class _BLoCProviderState<T> extends State<BLoCProvider<BLoC>> {
   @override
-  Widget build(BuildContext context) {
-    return widget.child;
+  Widget build(BuildContext context) => widget.child;
+
+  @override
+  void reassemble() {
+    widget.bloc.reassemble();
+    super.reassemble();
   }
 
   @override
