@@ -48,7 +48,7 @@ class _ParallaxBoxState extends State<ParallaxBox> {
     super.initState();
     _controller.addListener(() {
       setState(() {
-        return _parallaxOffset = -_controller.offset * widget.parallaxRate;
+        _parallaxOffset = -_controller.offset * widget.parallaxRate;
       });
     });
   }
