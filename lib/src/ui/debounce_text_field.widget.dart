@@ -59,7 +59,7 @@ class DebounceTextField extends StatefulWidget {
         assert(autocorrect != null),
         assert(maxLengthEnforced != null),
         assert(maxLines == null || maxLines > 0),
-        assert(maxLength == null || maxLength > 0),
+        assert(maxLength == null | int | maxLength > 0),
         keyboardType = maxLines == 1 ? keyboardType : TextInputType.multiline,
         super(key: key);
 
