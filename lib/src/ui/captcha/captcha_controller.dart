@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:framework/framework.dart';
 import 'package:rxdart/rxdart.dart';
 
 const int kDuration = 60;
@@ -20,6 +21,7 @@ class CaptchaController {
 
   static void disposeAll() {
     controllerMap.forEach((_, controller) => controller.dispose());
+    L.p('关闭所有验证码定时器');
   }
 
   VoidCallback callback;
