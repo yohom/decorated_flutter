@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:framework/src/utils/bloc.dart';
+import 'package:framework/src/bloc/bloc.dart';
 
 class BLoCProvider<T extends BLoC> extends StatefulWidget {
   BLoCProvider({
