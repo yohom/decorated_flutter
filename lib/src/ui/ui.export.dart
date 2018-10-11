@@ -1,6 +1,7 @@
 export 'auto_close_keyboard.widget.dart';
 export 'captcha/captcha.widget.dart';
 export 'captcha/captcha_controller.dart';
+export 'captcha/captcha_manager.mixin.dart';
 export 'carousel.widget.dart';
 export 'countdown.widget.dart';
 export 'debounce_text_field.widget.dart';
