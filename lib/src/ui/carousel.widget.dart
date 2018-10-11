@@ -40,7 +40,7 @@ class _CarouselState extends State<Carousel> {
             double value = 1.0;
             if (_controller.position.haveDimensions) {
               value = _controller.page - index;
-              value = (1 - (value.abs() * .5)).clamp(0.5, 1.0);
+              value = (1 - (value.abs() * .5)).clamp(0.5, 1.0) as double;
             } else if (index == 1) {
               // 如果是首次加载, 由于haveDimensions为false, 会导致index为1处的item
               // 的value也会是1, 这里手动调整一下value.
