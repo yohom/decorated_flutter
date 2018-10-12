@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:framework/framework.dart';
 import 'package:framework/src/bloc/bloc.dart';
+
+typedef void _Init<B extends BLoC>(B bloc);
 
 class BLoCProvider<T extends BLoC> extends StatefulWidget {
   BLoCProvider({
     Key key,
     @required this.child,
     @required this.bloc,
+    this.init,
   }) : super(key: key);
 
   final T bloc;
+  final _Init<T> init;
   final Widget child;
 
   @override
@@ -24,6 +29,13 @@ class BLoCProvider<T extends BLoC> extends StatefulWidget {
 }
 
 class _BLoCProviderState<T> extends State<BLoCProvider<BLoC>> {
+  @override
+  void initState() {
+    super.initState();
+
+    if (isNotEmpty(widget.init)) widget.init(widget.bloc);
+  }
+
   @override
   Widget build(BuildContext context) => widget.child;
 
