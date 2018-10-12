@@ -28,9 +28,7 @@ class Router {
       fullscreenDialog: fullScreenDialog,
       maintainState: maintainState,
       builder: (context) {
-        if (B is! BLoC) {
-          return AutoCloseKeyboard(child: widget);
-        } else {
+        if (B is BLoC) {
           final bloc = kiwi.Container().resolve<B>();
           return BLoCProvider<B>(
             bloc: bloc,
@@ -43,6 +41,8 @@ class Router {
               ),
             ),
           );
+        } else {
+          return AutoCloseKeyboard(child: widget);
         }
       },
       settings: RouteSettings(name: widget.runtimeType.toString()),
