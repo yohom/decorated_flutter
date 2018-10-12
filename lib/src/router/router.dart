@@ -22,13 +22,13 @@ class Router {
     bool maintainState = true,
     PageRoute<T> route,
     bool replace = false,
-    _InitAction init,
+    _InitAction<B> init,
   }) {
     route ??= MaterialPageRoute(
       fullscreenDialog: fullScreenDialog,
       maintainState: maintainState,
       builder: (context) {
-        if (B is BLoC) {
+        if (B != null) {
           final bloc = kiwi.Container().resolve<B>();
           return BLoCProvider<B>(
             bloc: bloc,
