@@ -15,26 +15,54 @@ typedef Widget _RouteBuilder(
 
 class Router {
   /// 导航
-  static Future<T> navigate<T>(
+  static Future<T> navigate<B extends BLoC, T>(
     BuildContext context,
     Widget widget, {
     bool fullScreenDialog = false,
+    bool maintainState = true,
+    PageRoute<T> route,
+    bool replace = false,
+    _InitAction init,
   }) {
-    return Navigator.of(context).push<T>(
-      MaterialPageRoute(
-        fullscreenDialog: fullScreenDialog,
-        builder: (context) => AutoCloseKeyboard(child: widget),
-        settings: RouteSettings(name: widget.runtimeType.toString()),
-      ),
+    route ??= MaterialPageRoute(
+      fullscreenDialog: fullScreenDialog,
+      maintainState: maintainState,
+      builder: (context) {
+        if (B is! BLoC) {
+          return AutoCloseKeyboard(child: widget);
+        } else {
+          final bloc = kiwi.Container().resolve<B>();
+          return BLoCProvider<B>(
+            bloc: bloc,
+            child: AutoCloseKeyboard(
+              child: Builder(
+                builder: (context) {
+                  if (init != null) init(bloc);
+                  return widget;
+                },
+              ),
+            ),
+          );
+        }
+      },
+      settings: RouteSettings(name: widget.runtimeType.toString()),
     );
+
+    if (replace) {
+      return Navigator.of(context).pushReplacement(route);
+    } else {
+      return Navigator.of(context).push<T>(route);
+    }
   }
 
   /// 自定义导航
+  @Deprecated('用navigate代替')
   static Future<T> navigateCustom<T>(BuildContext context, PageRoute<T> route) {
     return Navigator.of(context).push<T>(route);
   }
 
   /// 自定义route的导航
+  @Deprecated('用navigate代替')
   static Future<T> navigateRouteBuilder<T>({
     @required BuildContext context,
     @required _RouteBuilder builder,
@@ -69,16 +97,8 @@ class Router {
     );
   }
 
-  /// 通过bottom sheet显示新界面, 通过这种方式, 新的界面会在父界面的节点下面, 而不是像
-  /// [navigate]系列一样和父界面同级.
-  static PersistentBottomSheetController<T> navigateBottomSheet<T>(
-    BuildContext context,
-    Widget widget,
-  ) {
-    return showBottomSheet(context: context, builder: (context) => widget);
-  }
-
   /// 不保留源页面的跳转
+  @Deprecated('用navigate代替')
   static void navigateReplace(
     BuildContext context,
     Widget widget, {
@@ -94,6 +114,7 @@ class Router {
   }
 
   /// 提供BLoC的导航
+  @Deprecated('用navigate代替')
   static Future<R> navigateWithBLoC<B extends BLoC, R>(
     BuildContext context,
     Widget widget, {
