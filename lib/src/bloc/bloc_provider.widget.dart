@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:framework/framework.dart';
 import 'package:framework/src/bloc/bloc.dart';
 
-typedef void _Init<B extends BLoC>(B bloc);
+typedef void _Init<T extends BLoC>(T bloc);
 
 class BLoCProvider<T extends BLoC> extends StatefulWidget {
   BLoCProvider({
@@ -28,7 +28,7 @@ class BLoCProvider<T extends BLoC> extends StatefulWidget {
   static Type _typeOf<T>() => T;
 }
 
-class _BLoCProviderState<T> extends State<BLoCProvider<BLoC>> {
+class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
   @override
   void initState() {
     super.initState();
