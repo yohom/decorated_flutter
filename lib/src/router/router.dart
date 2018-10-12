@@ -42,7 +42,7 @@ class Router {
       fullscreenDialog: fullScreenDialog,
       maintainState: maintainState,
       builder: (context) {
-        if (B != null) {
+        if (B != BLoC) {
           final bloc = kiwi.Container().resolve<B>();
           return BLoCProvider<B>(
             bloc: bloc,
