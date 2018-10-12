@@ -16,12 +16,26 @@ typedef Widget _RouteBuilder(
 class Router {
   /// 导航
   static Future<T> navigate<B extends BLoC, T>(
+    /// context
     BuildContext context, {
-    Widget widget,
-    bool fullScreenDialog = false,
-    bool maintainState = true,
-    PageRoute<T> route,
+
+    /// 是否替换route
     bool replace = false,
+
+    /// 自定义的PageRoute, 如果传入了这个参数, 那么就不再使用本方法构造的[MaterialPageRoute]
+    /// 并且以下参数均不再有效
+    PageRoute<T> route,
+
+    /// 子widget
+    Widget widget,
+
+    /// 是否全屏dialog, 传递给[MaterialPageRoute]
+    bool fullScreenDialog = false,
+
+    /// 是否maintain state, 传递给[MaterialPageRoute]
+    bool maintainState = true,
+
+    /// 初始化方法
     _InitAction<B> init,
   }) {
     route ??= MaterialPageRoute(
