@@ -3,6 +3,7 @@ import 'package:framework/framework.dart';
 
 typedef Widget _Builder<B extends BLoC>(BuildContext context, B bloc);
 
+/// 作用与[BLoCProvider]一致, 只不过提供了一个带有bloc参数的方法来实例化
 class BLoCBuilder<B extends BLoC> extends StatelessWidget {
   const BLoCBuilder({
     Key key,
