@@ -16,8 +16,8 @@ typedef Widget _RouteBuilder(
 class Router {
   /// 导航
   static Future<T> navigate<B extends BLoC, T>(
-    BuildContext context,
-    Widget widget, {
+    BuildContext context, {
+    Widget widget,
     bool fullScreenDialog = false,
     bool maintainState = true,
     PageRoute<T> route,
