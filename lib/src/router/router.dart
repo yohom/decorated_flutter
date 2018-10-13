@@ -43,6 +43,7 @@ class Router {
       maintainState: maintainState,
       builder: (context) {
         if (B != BLoC) {
+          // 说明泛型被设置了
           final bloc = kiwi.Container().resolve<B>();
           return BLoCProvider<B>(
             bloc: bloc,
