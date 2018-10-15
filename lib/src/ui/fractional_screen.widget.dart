@@ -21,8 +21,8 @@ class FractionalScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: Global.screenHeight * fractionalHeight,
-      height: Global.screenWidth * fractionalWidth,
+      width: Global.screenHeight * fractionalWidth,
+      height: Global.screenWidth * fractionalHeight,
       child: child,
     );
   }
