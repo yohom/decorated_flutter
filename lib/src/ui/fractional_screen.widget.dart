@@ -4,16 +4,16 @@ import 'package:framework/framework.dart';
 class FractionalScreen extends StatelessWidget {
   const FractionalScreen({
     Key key,
-    this.fractionalWidth = double.infinity,
-    this.fractionalHeight = double.infinity,
+    this.widthFactor = double.infinity,
+    this.heightFactor = double.infinity,
     this.child,
   }) : super(key: key);
 
   /// 占屏幕宽度百分比
-  final double fractionalWidth;
+  final double widthFactor;
 
   /// 占屏幕高度百分比
-  final double fractionalHeight;
+  final double heightFactor;
 
   /// child
   final Widget child;
@@ -21,8 +21,8 @@ class FractionalScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: Global.screenHeight * fractionalWidth,
-      height: Global.screenWidth * fractionalHeight,
+      width: Global.screenHeight * widthFactor,
+      height: Global.screenWidth * heightFactor,
       child: child,
     );
   }
