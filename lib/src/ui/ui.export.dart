@@ -9,6 +9,7 @@ export 'dot_indicator.widget.dart';
 export 'empty.widget.dart';
 export 'flat_text.widget.dart';
 export 'flex_dialog.widget.dart';
+export 'fractional_screen.widget.dart';
 export 'future.widget.dart';
 export 'image.widget.dart';
 export 'loading.widget.dart';
