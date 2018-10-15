@@ -21,3 +21,11 @@ bool isEmpty(Object object) {
 bool isNotEmpty(Object object) {
   return !isEmpty(object);
 }
+
+bool isAllEmpty(List<Object> list) {
+  if (isEmpty(list)) {
+    return true;
+  } else {
+    return list.every(isEmpty);
+  }
+}
