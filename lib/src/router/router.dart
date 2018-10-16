@@ -26,8 +26,8 @@ class Router {
     /// 并且以下参数均不再有效
     PageRoute<T> route,
 
-    /// 子widget
-    Widget widget,
+    /// 目标Screen
+    Widget screen,
 
     /// 是否全屏dialog, 传递给[MaterialPageRoute]
     bool fullScreenDialog = false,
@@ -47,13 +47,13 @@ class Router {
           return BLoCProvider<B>(
             bloc: kiwi.Container().resolve<B>(),
             init: init,
-            child: AutoCloseKeyboard(child: widget),
+            child: AutoCloseKeyboard(child: screen),
           );
         } else {
-          return AutoCloseKeyboard(child: widget);
+          return AutoCloseKeyboard(child: screen);
         }
       },
-      settings: RouteSettings(name: widget.runtimeType.toString()),
+      settings: RouteSettings(name: screen.runtimeType.toString()),
     );
 
     if (replace) {
