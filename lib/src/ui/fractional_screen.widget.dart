@@ -9,6 +9,7 @@ class FractionalScreen extends StatelessWidget {
     this.child,
     this.columnChildren,
     this.rowChildren,
+    this.scrollable = true,
   })  : assert((child != null &&
                 rowChildren == null &&
                 columnChildren == null) ||
@@ -33,14 +34,18 @@ class FractionalScreen extends StatelessWidget {
   /// 子控件为Row的children
   final List<Widget> rowChildren;
 
+  /// 是否可以滚动, 可以配合键盘使用
+  final bool scrollable;
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    final content = SizedBox(
       width: Global.screenWidth * widthFactor,
       height: Global.screenHeight * heightFactor,
       child: child ??
           Column(children: columnChildren) ??
           Row(children: rowChildren),
     );
+    return scrollable ? SingleChildScrollView(child: content) : content;
   }
 }
