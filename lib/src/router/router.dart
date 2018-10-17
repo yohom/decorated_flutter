@@ -42,6 +42,7 @@ class Router {
       fullscreenDialog: fullScreenDialog,
       maintainState: maintainState,
       builder: (context) {
+        L.p('MaterialPageRoute build');
         if (B != BLoC) {
           // 说明泛型被设置了
           return BLoCProvider<B>(
