@@ -4,3 +4,8 @@ enum ErrorLevel {
   severe,
   fatal,
 }
+
+enum Actions {
+  cancel,
+  confirm,
+}
