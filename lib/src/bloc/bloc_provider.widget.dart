@@ -38,7 +38,7 @@ class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
 
   @override
   Widget build(BuildContext context) {
-    L.p('${widget.bloc.toString()} build');
+    L.p('BLoCProvider with ${widget.bloc.toString()} build');
     return widget.child;
   }
 
