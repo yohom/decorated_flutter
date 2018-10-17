@@ -47,7 +47,7 @@ class Router {
           return BLoCProvider<B>(
             bloc: kiwi.Container().resolve<B>(),
             init: init,
-            child: AutoCloseKeyboard(child: screen),
+            child: AutoCloseKeyboard(child: Builder(builder: (_) => screen)),
           );
         } else {
           return AutoCloseKeyboard(child: screen);
