@@ -37,7 +37,10 @@ class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
   }
 
   @override
-  Widget build(BuildContext context) => widget.child;
+  Widget build(BuildContext context) {
+    L.p('${widget.bloc.toString()} build');
+    return widget.child;
+  }
 
   @override
   void reassemble() {
