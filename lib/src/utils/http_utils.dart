@@ -32,7 +32,7 @@ class HttpUtils {
       result = '$baseUrl$path?$result';
     }
     if (result.endsWith('&')) {
-      result.substring(0, result.lastIndexOf('&'));
+      result.substring(0, result.length - 2);
     }
     return Uri.encodeFull(result);
   }
