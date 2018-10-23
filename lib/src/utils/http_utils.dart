@@ -12,10 +12,7 @@ class HttpUtils {
   }
 
   /// Map转成http请求参数的形式
-  static String map2Url(
-    Object data, {
-    String path = '',
-  }) {
+  static String map2Url(Object data, {String path = ''}) {
     assert(isNotEmpty(baseUrl));
 
     String result = '';
@@ -32,7 +29,7 @@ class HttpUtils {
       result = '$baseUrl$path?$result';
     }
     if (result.endsWith('&')) {
-      result.substring(0, result.length - 2);
+      result = result.substring(0, result.length - 1);
     }
     return Uri.encodeFull(result);
   }
