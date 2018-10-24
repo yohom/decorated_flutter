@@ -22,6 +22,9 @@ class Router {
     /// 是否替换route
     bool replace = false,
 
+    /// 是否自动关闭输入法
+    bool autoCloseKeyboard = false,
+
     /// 自定义的PageRoute, 如果传入了这个参数, 那么就不再使用本方法构造的[MaterialPageRoute]
     /// 并且以下参数均不再有效
     PageRoute<T> route,
@@ -48,10 +51,11 @@ class Router {
           return BLoCProvider<B>(
             bloc: kiwi.Container().resolve<B>(),
             init: init,
-            child: AutoCloseKeyboard(child: screen),
+            child:
+                autoCloseKeyboard ? AutoCloseKeyboard(child: screen) : screen,
           );
         } else {
-          return AutoCloseKeyboard(child: screen);
+          return autoCloseKeyboard ? AutoCloseKeyboard(child: screen) : screen;
         }
       },
       settings: RouteSettings(name: screen.runtimeType.toString()),
