@@ -51,16 +51,6 @@ class Router {
     }
 
     Widget child;
-    // 是否局部Navigator
-    if (scoped) {
-      child = Navigator(
-        onGenerateRoute: (setting) {
-          // Navigator找不到目标route时, 便会调用这个方法, 这里就当做是变通方法
-          return MaterialPageRoute(builder: (context) => child);
-        },
-      );
-    }
-
     // 是否使用BLoCProvider
     if (isNotEmpty(bloc)) {
       child = BLoCProvider<B>(
@@ -70,6 +60,15 @@ class Router {
       );
     } else {
       child = autoCloseKeyboard ? AutoCloseKeyboard(child: screen) : screen;
+    }
+    // 是否局部Navigator
+    if (scoped) {
+      child = Navigator(
+        onGenerateRoute: (setting) {
+          // Navigator找不到目标route时, 便会调用这个方法, 这里就当做是变通方法
+          return MaterialPageRoute(builder: (context) => child);
+        },
+      );
     }
 
     route ??= MaterialPageRoute(
