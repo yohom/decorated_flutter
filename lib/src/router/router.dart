@@ -40,9 +40,6 @@ class Router {
 
     /// 初始化方法
     _InitAction<B> init,
-
-    /// 是否局部[Navigator]
-    bool scoped = false,
   }) {
     B bloc;
     if (B != BLoC) {
@@ -50,31 +47,22 @@ class Router {
       bloc = kiwi.Container().resolve();
     }
 
-    Widget child;
-    // 是否使用BLoCProvider
-    if (isNotEmpty(bloc)) {
-      child = BLoCProvider<B>(
-        bloc: bloc,
-        init: init,
-        child: autoCloseKeyboard ? AutoCloseKeyboard(child: screen) : screen,
-      );
-    } else {
-      child = autoCloseKeyboard ? AutoCloseKeyboard(child: screen) : screen;
-    }
-    // 是否局部Navigator
-    if (scoped) {
-      child = Navigator(
-        onGenerateRoute: (setting) {
-          // Navigator找不到目标route时, 便会调用这个方法, 这里就当做是变通方法
-          return MaterialPageRoute(builder: (context) => child);
-        },
-      );
-    }
-
     route ??= MaterialPageRoute(
       fullscreenDialog: fullScreenDialog,
       maintainState: maintainState,
-      builder: (context) => child,
+      builder: (context) {
+        L.p('MaterialPageRoute build');
+        if (isNotEmpty(bloc)) {
+          return BLoCProvider<B>(
+            bloc: bloc,
+            init: init,
+            child:
+                autoCloseKeyboard ? AutoCloseKeyboard(child: screen) : screen,
+          );
+        } else {
+          return autoCloseKeyboard ? AutoCloseKeyboard(child: screen) : screen;
+        }
+      },
       settings: RouteSettings(name: screen.runtimeType.toString()),
     );
 
