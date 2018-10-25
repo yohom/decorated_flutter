@@ -61,11 +61,12 @@ class Router {
     if (scoped) {
       child = Navigator(
         onGenerateRoute: (setting) {
-          if (setting.isInitialRoute) {
+          if (setting.name == '/scoped') {
             // Navigator找不到目标route时, 便会调用这个方法, 这里就当做是变通方法
             return MaterialPageRoute(builder: (context) => screen);
           }
         },
+        initialRoute: '/scoped',
       );
     }
 
