@@ -56,7 +56,7 @@ class Router {
       child = Navigator(
         onGenerateRoute: (setting) {
           // Navigator找不到目标route时, 便会调用这个方法, 这里就当做是变通方法
-          return MaterialPageRoute(builder: (context) => child);
+          return MaterialPageRoute(builder: (context) => screen);
         },
       );
     }
@@ -66,10 +66,10 @@ class Router {
       child = BLoCProvider<B>(
         bloc: bloc,
         init: init,
-        child: autoCloseKeyboard ? AutoCloseKeyboard(child: screen) : screen,
+        child: autoCloseKeyboard ? AutoCloseKeyboard(child: child) : child,
       );
     } else {
-      child = autoCloseKeyboard ? AutoCloseKeyboard(child: screen) : screen;
+      child = autoCloseKeyboard ? AutoCloseKeyboard(child: child) : child;
     }
 
     route ??= MaterialPageRoute(
