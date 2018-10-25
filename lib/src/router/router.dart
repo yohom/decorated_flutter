@@ -43,17 +43,11 @@ class Router {
 
     /// 是否局部[Navigator]
     bool scoped = false,
-
-    /// 可选的BLoC, 如果这个参数为空, 那么去kiwi里去获取
-    B bloc,
   }) {
-    B _bloc;
-    // 如果参数bloc被设置了, 那么优先使用参数的bloc
-    if (bloc != null) {
-      _bloc = bloc;
-    } else if (B != BLoC) {
+    B bloc;
+    if (B != BLoC) {
       // 说明BLoC泛型被设置, 那么去kiwi里去获取实例
-      _bloc = kiwi.Container().resolve();
+      bloc = kiwi.Container().resolve();
     }
 
     Widget child;
@@ -68,9 +62,9 @@ class Router {
     }
 
     // 是否使用BLoCProvider
-    if (isNotEmpty(_bloc)) {
+    if (isNotEmpty(bloc)) {
       child = BLoCProvider<B>(
-        bloc: _bloc,
+        bloc: bloc,
         init: init,
         child: autoCloseKeyboard ? AutoCloseKeyboard(child: child) : child,
       );
