@@ -40,16 +40,18 @@ class Router {
 
     /// 初始化方法
     _InitAction<B> init,
+
+    /// BLoC
+    B bloc,
   }) {
     route ??= MaterialPageRoute(
       fullscreenDialog: fullScreenDialog,
       maintainState: maintainState,
       builder: (context) {
         L.p('MaterialPageRoute build');
-        if (B != BLoC) {
-          // 说明泛型被设置了
+        if (isNotEmpty(bloc)) {
           return BLoCProvider<B>(
-            bloc: kiwi.Container().resolve<B>(),
+            bloc: bloc,
             init: init,
             child:
                 autoCloseKeyboard ? AutoCloseKeyboard(child: screen) : screen,
