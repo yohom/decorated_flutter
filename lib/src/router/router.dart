@@ -40,10 +40,13 @@ class Router {
 
     /// 初始化方法
     _InitAction<B> init,
-
-    /// BLoC
-    B bloc,
   }) {
+    B bloc;
+    if (B != BLoC) {
+      // 说明BLoC泛型被设置, 那么去kiwi里去获取实例
+      bloc = kiwi.Container().resolve();
+    }
+
     route ??= MaterialPageRoute(
       fullscreenDialog: fullScreenDialog,
       maintainState: maintainState,
