@@ -15,6 +15,7 @@ typedef Widget _RouteBuilder(
 
 class Router {
   /// 导航
+  @Deprecated('建议使用onGenerateRoute方法去路由, 但是这个方法目前没用发现bug, 也还是可以使用的')
   static Future<T> navigate<B extends BLoC, T>(
     /// context
     BuildContext context, {
