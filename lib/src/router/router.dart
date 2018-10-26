@@ -13,6 +13,7 @@ typedef Widget _RouteBuilder(
   Animation<double> animation,
 );
 
+@Deprecated('用系统提供的Navigator代替')
 class Router {
   /// 导航
   @Deprecated('建议使用onGenerateRoute方法去路由, 但是这个方法目前没用发现bug, 也还是可以使用的')
