@@ -12,7 +12,7 @@ class DecoratedRoute<B extends BLoC> extends MaterialPageRoute {
     this.autoCloseKeyboard = true,
     this.init,
     String routeName,
-    bool isInitialRoute,
+    bool isInitialRoute = false,
   }) : super(
           builder: (context) => screen,
           settings: RouteSettings(
