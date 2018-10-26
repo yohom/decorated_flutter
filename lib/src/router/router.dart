@@ -22,12 +22,12 @@ class Router {
     /// 是否替换route
     bool replace = false,
 
-    /// 是否自动关闭输入法
-    bool autoCloseKeyboard = false,
-
     /// 自定义的PageRoute, 如果传入了这个参数, 那么就不再使用本方法构造的[MaterialPageRoute]
     /// 并且以下参数均不再有效
     PageRoute<T> route,
+
+    /// 是否自动关闭输入法
+    bool autoCloseKeyboard = false,
 
     /// 目标Screen
     Widget screen,
@@ -40,29 +40,34 @@ class Router {
 
     /// 初始化方法
     _InitAction<B> init,
+
+    /// 直接传递的BLoC, 如果没有设置, 那么就去kiwi里去获取
+    B bloc,
   }) {
-    B bloc;
-    if (B != BLoC) {
+    B _bloc;
+    // 优先使用参数里传递的BLoC
+    if (bloc != null) {
+      _bloc = bloc;
+    } else if (B != BLoC) {
       // 说明BLoC泛型被设置, 那么去kiwi里去获取实例
-      bloc = kiwi.Container().resolve();
+      _bloc = kiwi.Container().resolve();
+    }
+
+    Widget child;
+    if (isNotEmpty(_bloc)) {
+      child = BLoCProvider<B>(
+        bloc: _bloc,
+        init: init,
+        child: autoCloseKeyboard ? AutoCloseKeyboard(child: screen) : screen,
+      );
+    } else {
+      child = autoCloseKeyboard ? AutoCloseKeyboard(child: screen) : screen;
     }
 
     route ??= MaterialPageRoute(
       fullscreenDialog: fullScreenDialog,
       maintainState: maintainState,
-      builder: (context) {
-        L.p('MaterialPageRoute build');
-        if (isNotEmpty(bloc)) {
-          return BLoCProvider<B>(
-            bloc: bloc,
-            init: init,
-            child:
-                autoCloseKeyboard ? AutoCloseKeyboard(child: screen) : screen,
-          );
-        } else {
-          return autoCloseKeyboard ? AutoCloseKeyboard(child: screen) : screen;
-        }
-      },
+      builder: (context) => child,
       settings: RouteSettings(name: screen.runtimeType.toString()),
     );
 
