@@ -27,7 +27,7 @@ class Router {
     PageRoute<T> route,
 
     /// 是否自动关闭输入法
-    bool autoCloseKeyboard = false,
+    bool autoCloseKeyboard = true,
 
     /// 目标Screen
     Widget screen,
