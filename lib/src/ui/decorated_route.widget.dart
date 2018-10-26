@@ -11,7 +11,8 @@ class DecoratedRoute<B extends BLoC> extends MaterialPageRoute {
     this.bloc,
     this.autoCloseKeyboard = true,
     this.init,
-  }) : super(builder: (context) => screen);
+    RouteSettings settings,
+  }) : super(builder: (context) => screen, settings: settings);
 
   /// 直接传递的BLoC, 如果没有设置, 那么就去kiwi里去获取
   final B bloc;
