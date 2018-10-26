@@ -38,3 +38,15 @@ void handleError(BuildContext context, Object error) {
     showError(context, error.toString());
   }
 }
+
+/// 等待页
+Future<T> loading<T>(BuildContext context, Future<T> futureTask) {
+  showDialog(
+    context: context,
+    builder: (context) => LoadingWidget(),
+    barrierDismissible: false,
+  );
+  return futureTask.whenComplete(() {
+    Navigator.pop(context);
+  });
+}
