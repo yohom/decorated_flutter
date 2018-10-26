@@ -4,9 +4,8 @@ class UnknownScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Unkown')),
-      body: Center(child: Text('Unkown')),
+      appBar: AppBar(title: Text('Unknown')),
+      body: Center(child: Text('Unknown')),
     );
   }
 }
-
