@@ -5,6 +5,7 @@ export 'captcha/captcha_manager.mixin.dart';
 export 'carousel.widget.dart';
 export 'countdown.widget.dart';
 export 'debounce_text_field.widget.dart';
+export 'decorated_flex.widget.dart';
 export 'dot_indicator.widget.dart';
 export 'empty.widget.dart';
 export 'flat_text.widget.dart';
