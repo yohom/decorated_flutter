@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:framework/framework.dart';
-import 'package:kiwi/kiwi.dart' as kiwi;
 
 typedef void _InitAction<T extends BLoC>(T bloc);
 
@@ -43,19 +42,10 @@ class DecoratedRoute<B extends BLoC> extends MaterialPageRoute {
       Global.init(context);
     }
 
-    B _bloc;
-    // 优先使用参数里传递的BLoC
-    if (bloc != null) {
-      _bloc = bloc;
-    } else if (B != BLoC) {
-      // 说明BLoC泛型被设置, 那么去kiwi里去获取实例
-      _bloc = kiwi.Container().resolve();
-    }
-
     Widget result;
-    if (isNotEmpty(_bloc)) {
+    if (isNotEmpty(bloc)) {
       result = BLoCProvider<B>(
-        bloc: _bloc,
+        bloc: bloc,
         init: init,
         child: autoCloseKeyboard
             ? AutoCloseKeyboard(child: builder(context))
