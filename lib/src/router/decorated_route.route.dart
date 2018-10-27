@@ -12,7 +12,9 @@ class DecoratedRoute<B extends BLoC> extends MaterialPageRoute {
     this.init,
     String routeName,
     bool isInitialRoute = false,
-  }) : super(
+  })  : assert((B != BLoC && bloc != null) ||
+            (B == BLoC && bloc == null)), // 要么同时设置泛型B和bloc参数, 要么就都不设置
+        super(
           builder: (context) => screen,
           settings: RouteSettings(
             name: routeName,
@@ -20,7 +22,7 @@ class DecoratedRoute<B extends BLoC> extends MaterialPageRoute {
           ),
         );
 
-  /// 直接传递的BLoC, 如果没有设置, 那么就去kiwi里去获取
+  /// 直接传递的BLoC
   final B bloc;
 
   /// child
