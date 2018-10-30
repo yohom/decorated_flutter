@@ -25,6 +25,7 @@ class Runtime extends StatelessWidget {
               width: Global.screenWidth,
               color: Colors.grey.withOpacity(0.6),
               child: ListView.builder(
+                padding: EdgeInsets.symmetric(horizontal: kSpaceNormal),
                 shrinkWrap: true,
                 itemCount: runtimeInfo.length,
                 itemBuilder: (context, index) {
