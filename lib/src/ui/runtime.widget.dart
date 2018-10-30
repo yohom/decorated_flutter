@@ -48,7 +48,7 @@ class _RuntimeState extends State<Runtime> {
           // 局部BLoC运行时信息
           ExpansionPanel(
             isExpanded: _localBLoCExpanded,
-            headerBuilder: (_, __) => _Header(title: 'Local BLoCs'),
+            headerBuilder: (_, __) => _Header(title: 'Local BLoC'),
             body: _Body(eventList: widget.runtimeInfo),
           ),
         ],
