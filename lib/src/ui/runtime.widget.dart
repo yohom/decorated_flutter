@@ -8,7 +8,10 @@ class Runtime extends StatefulWidget {
     @required this.runtimeInfo,
   }) : super(key: key);
 
-  static List<GlobalBLoC> globalBLoCList;
+  static void registerGlobalBLoCList(List<GlobalBLoC> blocs) {
+    _globalBLoCList = blocs;
+  }
+  static List<GlobalBLoC> _globalBLoCList;
 
   final List<Event> runtimeInfo;
 
@@ -22,9 +25,10 @@ class _RuntimeState extends State<Runtime> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Event> globalEventList =
-        Runtime.globalBLoCList?.expand((bloc) => bloc.eventList)?.toList() ??
-            [];
+    final List<Event> globalEventList = Runtime._globalBLoCList
+            ?.expand((bloc) => bloc.eventList)
+            ?.toList() ??
+        [];
     return SingleChildScrollView(
       child: ExpansionPanelList(
         expansionCallback: (index, isExpanded) {
