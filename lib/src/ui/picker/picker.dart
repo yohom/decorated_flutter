@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../picker/picker_item.dart';
 
 typedef PickerSelectedCallback = void Function(
@@ -45,7 +46,7 @@ class Picker<T> {
   final PickerSelectedCallback onSelect;
   final PickerConfirmCallback onConfirm;
 
-  final changeToFirst;
+  final bool changeToFirst;
 
   final List<int> columnFlex;
 
@@ -125,7 +126,7 @@ class Picker<T> {
 
   /// 获取当前选择的值
   List<T> getSelectedValues() {
-    return adapter.getSelectedValues();
+    return adapter.getSelectedValues() as List<T>;
   }
 
   _parseData() {
@@ -161,7 +162,7 @@ class Picker<T> {
         for (int j = 0; j < _maplist.length; j++) {
           var _o = map[_maplist[j]];
           if (_o is List && _o.length > 0) {
-            List<PickerItem> _children = List<PickerItem<T>>();
+            List<PickerItem<T>> _children = List<PickerItem<T>>();
             //print('add: ${data.runtimeType.toString()}');
             data.add(PickerItem<T>(value: _maplist[j], children: _children));
             _parsePickerDataItem(_o, _children);
@@ -360,7 +361,7 @@ abstract class PickerAdapter<T> {
   Widget buildItem(int index);
 
   List<T> getSelectedValues() {
-    return [];
+    return <T>[];
   }
 
   void doShow() {}
@@ -462,7 +463,7 @@ class PickerDataAdapter<T> extends PickerAdapter<T> {
       for (int i = 0; i < picker.selectedList.length; i++) {
         int j = picker.selectedList[i];
         if (j < 0 || j >= datas.length) break;
-        _items.add(datas[j].value);
+        _items.add(datas[j].value as T);
         datas = datas[j].children;
         if (datas == null || datas.length == 0) break;
       }
