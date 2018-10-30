@@ -6,7 +6,7 @@ abstract class BLoC {
   String semantics;
 
   /// 所有的event集合, 主要是提供给RuntimeScaffold使用
-  List<Event> eventSet = <Event>[];
+  List<Event> eventList = <Event>[];
 
   BLoC([this.semantics]);
 
@@ -15,6 +15,7 @@ abstract class BLoC {
 
   @mustCallSuper
   void close() {
+    eventList.forEach((event) => event.close());
     L.p('=============================================\n'
         '${semantics ??= runtimeType.toString()} closed '
         '\n=============================================');
