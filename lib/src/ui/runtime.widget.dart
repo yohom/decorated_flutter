@@ -13,19 +13,43 @@ class Runtime extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: ListView.builder(
-        padding: EdgeInsets.symmetric(horizontal: kSpaceNormal),
-        shrinkWrap: true,
-        itemCount: runtimeInfo.length,
-        itemBuilder: (context, index) {
-          final event = runtimeInfo[index];
-          return StreamBuilder(
-            stream: event.stream,
-            builder: (_, __) {
-              return Text(event.runtimeSummary());
-            },
-          );
-        },
+      child: ExpansionPanelList(
+        children: [
+          ExpansionPanel(
+            headerBuilder: (context, isExpanded) => Text('Global BLoCs'),
+            body: ListView.builder(
+              padding: EdgeInsets.symmetric(horizontal: kSpaceNormal),
+              shrinkWrap: true,
+              itemCount: runtimeInfo.length,
+              itemBuilder: (context, index) {
+                final event = runtimeInfo[index];
+                return StreamBuilder(
+                  stream: event.stream,
+                  builder: (_, __) {
+                    return Text(event.runtimeSummary());
+                  },
+                );
+              },
+            ),
+          ),
+          ExpansionPanel(
+            headerBuilder: (context, isExpanded) => Text('Local BLoCs'),
+            body: ListView.builder(
+              padding: EdgeInsets.symmetric(horizontal: kSpaceNormal),
+              shrinkWrap: true,
+              itemCount: runtimeInfo.length,
+              itemBuilder: (context, index) {
+                final event = runtimeInfo[index];
+                return StreamBuilder(
+                  stream: event.stream,
+                  builder: (_, __) {
+                    return Text(event.runtimeSummary());
+                  },
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

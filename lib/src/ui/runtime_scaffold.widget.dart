@@ -21,7 +21,7 @@ class RuntimeScaffold extends StatelessWidget {
   })  : assert(primary != null),
         super(key: key);
 
-  final BLoC bloc;
+  final LocalBLoC bloc;
 
   //region Scaffold
   final PreferredSizeWidget appBar;
