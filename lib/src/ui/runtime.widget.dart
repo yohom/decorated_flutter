@@ -12,19 +12,23 @@ class Runtime extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: EdgeInsets.symmetric(horizontal: kSpaceNormal),
-      shrinkWrap: true,
-      itemCount: runtimeInfo.length,
-      itemBuilder: (context, index) {
-        final event = runtimeInfo[index];
-        return StreamBuilder(
-          stream: event.stream,
-          builder: (_, __) {
-            return Text(event.runtimeSummary());
+    return SafeArea(
+      child: Center(
+        child: ListView.builder(
+          padding: EdgeInsets.symmetric(horizontal: kSpaceNormal),
+          shrinkWrap: true,
+          itemCount: runtimeInfo.length,
+          itemBuilder: (context, index) {
+            final event = runtimeInfo[index];
+            return StreamBuilder(
+              stream: event.stream,
+              builder: (_, __) {
+                return Text(event.runtimeSummary());
+              },
+            );
           },
-        );
-      },
+        ),
+      ),
     );
   }
 }
