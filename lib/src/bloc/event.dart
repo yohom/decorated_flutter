@@ -149,6 +149,10 @@ class Event<T> {
     _subject.close();
   }
 
+  String runtimeSummary() {
+    return '$_semantics: seedValue: $_seedValue, latest: $latest';
+  }
+
   @override
   String toString() {
     return 'Event{latest: $latest, stream: $stream, test: $_test, isDistinct: $_isDistinct, seedValue: $_seedValue, acceptNull: $_acceptNull, semantics: $_semantics, _subject: $_subject}';
