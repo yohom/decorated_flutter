@@ -150,7 +150,7 @@ class Event<T> {
   }
 
   String runtimeSummary() {
-    return '$_semantics: seedValue: $_seedValue, latest: $latest';
+    return '$_semantics:\n\tseedValue: $_seedValue,\nlatest: $latest';
   }
 
   @override
@@ -261,6 +261,10 @@ class Input<T> {
     _subject.close();
   }
 
+  String runtimeSummary() {
+    return '$_semantics:\n\tseedValue: $_seedValue,\nlatest: $latest';
+  }
+
   @override
   String toString() {
     return 'Input{latest: $latest, _downstream: $_downstream, _test: $_test, _isDistinct: $_isDistinct, _seedValue: $_seedValue, _acceptNull: $_acceptNull, _semantics: $_semantics, _subject: $_subject}';
@@ -361,6 +365,10 @@ class Output<T> {
         '${_semantics ??= runtimeType.toString()}事件 closed '
         '\n==============================================================');
     _subject.close();
+  }
+
+  String runtimeSummary() {
+    return '$_semantics:\n\tseedValue: $_seedValue,\nlatest: $latest';
   }
 
   @override
