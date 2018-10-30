@@ -30,6 +30,7 @@ class _RuntimeState extends State<Runtime> {
         Runtime._globalBLoCList?.expand((bloc) => bloc.eventList)?.toList() ??
             [];
     return SingleChildScrollView(
+      physics: ClampingScrollPhysics(),
       child: ExpansionPanelList(
         expansionCallback: (index, isExpanded) {
           setState(() {
@@ -90,6 +91,7 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      physics: ClampingScrollPhysics(),
       shrinkWrap: true,
       itemCount: eventList?.length ?? 0,
       itemBuilder: (context, index) {
