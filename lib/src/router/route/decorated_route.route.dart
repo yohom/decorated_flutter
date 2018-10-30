@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:framework/framework.dart';
+import 'package:framework/src/ui/runtime.widget.dart';
 
 typedef void _InitAction<T extends BLoC>(T bloc);
 
@@ -66,32 +67,9 @@ class DecoratedRoute<B extends BLoC> extends MaterialPageRoute {
     // 如果需要运行时信息不为空的话就加一层运行时信息显示
     // release模式任何情况下都不允许出现调试信息
     if (isNotEmpty(runtimeInfo) && !bool.fromEnvironment('dart.vm.product')) {
-      Overlay.of(context).insert(
-        OverlayEntry(
-          builder: (context) {
-            return Positioned(
-              bottom: kSpaceNormal,
-              child: Container(
-                height: Global.screenHeight / 3,
-                width: Global.screenWidth,
-                color: Colors.grey.withOpacity(0.6),
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: runtimeInfo.length,
-                  itemBuilder: (context, index) {
-                    final event = runtimeInfo[index];
-                    return StreamBuilder(
-                      stream: event.stream,
-                      builder: (_, __) {
-                        return Text(event.runtimeSummary());
-                      },
-                    );
-                  },
-                ),
-              ),
-            );
-          },
-        ),
+      result = Runtime(
+        child: result,
+        runtimeInfo: runtimeInfo,
       );
     }
     return result;
