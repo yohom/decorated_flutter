@@ -18,7 +18,7 @@ class Runtime extends StatelessWidget {
       children: <Widget>[
         child,
         Positioned(
-          bottom: kSpaceNormal,
+          bottom: kSpaceZero,
           child: Container(
             height: Global.screenHeight / 3,
             width: Global.screenWidth,
@@ -31,7 +31,7 @@ class Runtime extends StatelessWidget {
                 return StreamBuilder(
                   stream: event.stream,
                   builder: (_, __) {
-                    return Text(event.runtimeSummary());
+                    return Material(child: Text(event.runtimeSummary()));
                   },
                 );
               },
