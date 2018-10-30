@@ -22,7 +22,7 @@ class Runtime extends StatefulWidget {
 
 class _RuntimeState extends State<Runtime> {
   bool _globalBLoCExpanded = true;
-  bool _localBLoCExpanded = false;
+  bool _localBLoCExpanded = true;
 
   @override
   Widget build(BuildContext context) {
