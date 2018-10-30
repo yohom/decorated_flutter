@@ -13,7 +13,6 @@ class RuntimeScaffold extends StatelessWidget {
     this.floatingActionButtonAnimator,
     this.persistentFooterButtons,
     this.drawer,
-    this.endDrawer,
     this.bottomNavigationBar,
     this.bottomSheet,
     this.backgroundColor,
@@ -38,8 +37,6 @@ class RuntimeScaffold extends StatelessWidget {
   final List<Widget> persistentFooterButtons;
 
   final Widget drawer;
-
-  final Widget endDrawer;
 
   final Color backgroundColor;
 
