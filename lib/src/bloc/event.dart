@@ -150,7 +150,7 @@ class Event<T> {
   }
 
   String runtimeSummary() {
-    return '$_semantics:\n\tseedValue: $_seedValue,\nlatest: $latest';
+    return '$_semantics:\n\t\tseedValue: $_seedValue,\n\t\tlatest: $latest';
   }
 
   @override
@@ -262,7 +262,7 @@ class Input<T> {
   }
 
   String runtimeSummary() {
-    return '$_semantics:\n\tseedValue: $_seedValue,\nlatest: $latest';
+    return '$_semantics:\n\t\tseedValue: $_seedValue,\n\t\tlatest: $latest';
   }
 
   @override
@@ -368,7 +368,7 @@ class Output<T> {
   }
 
   String runtimeSummary() {
-    return '$_semantics:\n\tseedValue: $_seedValue,\nlatest: $latest';
+    return '$_semantics:\n\t\tseedValue: $_seedValue,\n\t\tlatest: $latest';
   }
 
   @override
