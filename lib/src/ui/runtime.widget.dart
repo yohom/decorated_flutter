@@ -18,25 +18,28 @@ class Runtime extends StatelessWidget {
       child: Stack(
         children: <Widget>[
           child,
-          Positioned(
-            bottom: kSpaceZero,
-            child: Container(
-              constraints: BoxConstraints(maxHeight: Global.screenHeight / 3),
-              width: Global.screenWidth,
-              color: Colors.grey.withOpacity(0.6),
-              child: ListView.builder(
-                padding: EdgeInsets.symmetric(horizontal: kSpaceNormal),
-                shrinkWrap: true,
-                itemCount: runtimeInfo.length,
-                itemBuilder: (context, index) {
-                  final event = runtimeInfo[index];
-                  return StreamBuilder(
-                    stream: event.stream,
-                    builder: (_, __) {
-                      return Text(event.runtimeSummary());
-                    },
-                  );
-                },
+          GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            child: Positioned(
+              bottom: kSpaceZero,
+              child: Container(
+                constraints: BoxConstraints(maxHeight: Global.screenHeight / 3),
+                width: Global.screenWidth,
+                color: Colors.grey.withOpacity(0.6),
+                child: ListView.builder(
+                  padding: EdgeInsets.symmetric(horizontal: kSpaceNormal),
+                  shrinkWrap: true,
+                  itemCount: runtimeInfo.length,
+                  itemBuilder: (context, index) {
+                    final event = runtimeInfo[index];
+                    return StreamBuilder(
+                      stream: event.stream,
+                      builder: (_, __) {
+                        return Text(event.runtimeSummary());
+                      },
+                    );
+                  },
+                ),
               ),
             ),
           ),
