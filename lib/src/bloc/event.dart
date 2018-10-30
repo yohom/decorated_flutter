@@ -150,7 +150,11 @@ class Event<T> {
   }
 
   String runtimeSummary() {
-    return '$_semantics:\n\t\tseedValue: $_seedValue,\n\t\tlatest: $latest';
+    return '''
+    $_semantics:
+        seedValue: $_seedValue,
+        latest: $latest
+    ''';
   }
 
   @override
