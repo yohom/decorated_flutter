@@ -18,10 +18,10 @@ class Runtime extends StatelessWidget {
       child: Stack(
         children: <Widget>[
           child,
-          GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            child: Positioned(
-              bottom: kSpaceZero,
+          Positioned(
+            bottom: kSpaceZero,
+            child: GestureDetector(
+              behavior: HitTestBehavior.translucent,
               child: Container(
                 constraints: BoxConstraints(maxHeight: Global.screenHeight / 3),
                 width: Global.screenWidth,
