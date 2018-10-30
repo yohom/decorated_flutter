@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:framework/framework.dart';
-import 'package:framework/src/ui/runtime.widget.dart';
 
 class RuntimeScaffold extends StatelessWidget {
   const RuntimeScaffold({
     Key key,
-    @required this.bloc,
+    this.bloc,
     this.appBar,
     this.body,
     this.floatingActionButton,
@@ -53,9 +52,10 @@ class RuntimeScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget runtimeInfoWidget;
-    if (isNotEmpty(bloc.eventList) &&
-        !bool.fromEnvironment('dart.vm.product')) {
-      runtimeInfoWidget = Drawer(child: Runtime(runtimeInfo: bloc.eventList));
+    if (!bool.fromEnvironment('dart.vm.product')) {
+      runtimeInfoWidget = Drawer(
+        child: SafeArea(child: Runtime(runtimeInfo: bloc?.eventList)),
+      );
     }
     return Scaffold(
       key: key,

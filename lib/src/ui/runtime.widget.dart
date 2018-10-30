@@ -2,55 +2,101 @@ import 'package:flutter/material.dart';
 import 'package:framework/framework.dart';
 
 /// 显示运行时信息的widget
-class Runtime extends StatelessWidget {
+class Runtime extends StatefulWidget {
   const Runtime({
     Key key,
     @required this.runtimeInfo,
   }) : super(key: key);
 
+  static List<GlobalBLoC> globalBLoCList;
+
   final List<Event> runtimeInfo;
 
   @override
+  _RuntimeState createState() => _RuntimeState();
+}
+
+class _RuntimeState extends State<Runtime> {
+  bool _globalBLoCExpanded = true;
+  bool _localBLoCExpanded = false;
+
+  @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    final List<Event> globalEventList =
+        Runtime.globalBLoCList?.expand((bloc) => bloc.eventList)?.toList() ??
+            [];
+    return SingleChildScrollView(
       child: ExpansionPanelList(
+        expansionCallback: (index, isExpanded) {
+          setState(() {
+            switch (index) {
+              case 0:
+                _globalBLoCExpanded = !isExpanded;
+                break;
+              case 1:
+                _localBLoCExpanded = !isExpanded;
+            }
+          });
+        },
         children: [
+          // 全局BLoC运行时信息
           ExpansionPanel(
-            headerBuilder: (context, isExpanded) => Text('Global BLoCs'),
-            body: ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: kSpaceNormal),
-              shrinkWrap: true,
-              itemCount: runtimeInfo.length,
-              itemBuilder: (context, index) {
-                final event = runtimeInfo[index];
-                return StreamBuilder(
-                  stream: event.stream,
-                  builder: (_, __) {
-                    return Text(event.runtimeSummary());
-                  },
-                );
-              },
-            ),
+            isExpanded: _globalBLoCExpanded,
+            headerBuilder: (_, __) => _Header(title: 'Global BLoCs'),
+            body: _Body(eventList: globalEventList),
           ),
+          // 局部BLoC运行时信息
           ExpansionPanel(
-            headerBuilder: (context, isExpanded) => Text('Local BLoCs'),
-            body: ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: kSpaceNormal),
-              shrinkWrap: true,
-              itemCount: runtimeInfo.length,
-              itemBuilder: (context, index) {
-                final event = runtimeInfo[index];
-                return StreamBuilder(
-                  stream: event.stream,
-                  builder: (_, __) {
-                    return Text(event.runtimeSummary());
-                  },
-                );
-              },
-            ),
+            isExpanded: _localBLoCExpanded,
+            headerBuilder: (_, __) => _Header(title: 'Local BLoCs'),
+            body: _Body(eventList: widget.runtimeInfo),
           ),
         ],
       ),
+    );
+  }
+}
+
+/// ExpansionList的Header
+class _Header extends StatelessWidget {
+  const _Header({
+    Key key,
+    @required this.title,
+  }) : super(key: key);
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(title),
+    );
+  }
+}
+
+/// ExpansionList的Body
+class _Body extends StatelessWidget {
+  const _Body({
+    Key key,
+    @required this.eventList,
+  }) : super(key: key);
+
+  final List<Event> eventList;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: eventList?.length ?? 0,
+      itemBuilder: (context, index) {
+        final event = eventList[index];
+        return StreamBuilder(
+          stream: event.stream,
+          builder: (_, __) {
+            return ListTile(title: Text(event.runtimeSummary()));
+          },
+        );
+      },
     );
   }
 }
