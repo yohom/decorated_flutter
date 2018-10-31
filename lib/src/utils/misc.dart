@@ -47,6 +47,7 @@ Future<T> loading<T>(BuildContext context, Future<T> futureTask) {
     barrierDismissible: false,
   );
   return futureTask.whenComplete(() {
-    Navigator.pop(context);
+    // 由于showDialog会强制使用rootNavigator, 所以这里pop的时候也要用rootNavigator
+    Navigator.of(context, rootNavigator: true).pop(context);
   });
 }
