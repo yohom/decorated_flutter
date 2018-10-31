@@ -56,6 +56,7 @@ class DecoratedRow extends StatelessWidget {
     );
   }
 }
+
 class DecoratedColumn extends StatelessWidget {
   const DecoratedColumn({
     Key key,
