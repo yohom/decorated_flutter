@@ -10,7 +10,7 @@ RouteInfo parseRoute(String routeName) {
   List<String> pathAndArguments = routeName.split('?');
   // 获取路径
   String path = pathAndArguments[0];
-  Map<String, Object> arguments;
+  Map<String, Object> arguments = {};
   try {
     // 参数按&分解成键值对
     final argumentsList = pathAndArguments[1].split('&');
@@ -20,7 +20,7 @@ RouteInfo parseRoute(String routeName) {
       arguments[keyValue[0]] = keyValue[1];
     });
   } catch (e) {
-    arguments = null;
+    arguments = {};
   }
   return RouteInfo(path, arguments);
 }
