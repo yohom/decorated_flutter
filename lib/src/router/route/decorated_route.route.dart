@@ -11,6 +11,7 @@ class DecoratedRoute<B extends BLoC> extends MaterialPageRoute {
     this.autoCloseKeyboard = true,
     this.init,
     this.runtimeInfo,
+    this.animate = true,
     String routeName,
     bool isInitialRoute = false,
     bool fullscreenDialog = false,
@@ -42,6 +43,9 @@ class DecoratedRoute<B extends BLoC> extends MaterialPageRoute {
   /// 运行时的一些信息
   final List<Event> runtimeInfo;
 
+  /// 是否执行动画
+  final bool animate;
+
   @override
   Widget buildPage(
     BuildContext context,
@@ -67,5 +71,13 @@ class DecoratedRoute<B extends BLoC> extends MaterialPageRoute {
           : builder(context);
     }
     return result;
+  }
+
+  @override
+  Widget buildTransitions(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation, Widget child) {
+    return animate
+        ? super.buildTransitions(context, animation, secondaryAnimation, child)
+        : child;
   }
 }
