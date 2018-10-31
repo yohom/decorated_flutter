@@ -5,14 +5,14 @@ import 'package:framework/framework.dart';
 class Runtime extends StatefulWidget {
   const Runtime({
     Key key,
-    @required this.runtimeInfo,
+    this.runtimeInfo = const <Event>[],
   }) : super(key: key);
 
   static void registerGlobalBLoCList(List<GlobalBLoC> blocs) {
     _globalBLoCList = blocs;
   }
 
-  static List<GlobalBLoC> _globalBLoCList;
+  static List<GlobalBLoC> _globalBLoCList = [];
 
   final List<Event> runtimeInfo;
 
@@ -27,8 +27,7 @@ class _RuntimeState extends State<Runtime> {
   @override
   Widget build(BuildContext context) {
     final List<Event> globalEventList =
-        Runtime._globalBLoCList?.expand((bloc) => bloc.eventList)?.toList() ??
-            [];
+        Runtime._globalBLoCList.expand((bloc) => bloc.eventList).toList();
     return SingleChildScrollView(
       physics: ClampingScrollPhysics(),
       child: ExpansionPanelList(
