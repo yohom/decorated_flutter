@@ -13,9 +13,13 @@ class DecoratedRoute<B extends BLoC> extends MaterialPageRoute {
     this.runtimeInfo,
     String routeName,
     bool isInitialRoute = false,
+    bool fullscreenDialog = false,
+    bool maintainState = true,
   })  : assert((B != BLoC && bloc != null) ||
             (B == BLoC && bloc == null)), // 要么同时设置泛型B和bloc参数, 要么就都不设置
         super(
+          fullscreenDialog: fullscreenDialog,
+          maintainState: maintainState,
           builder: (context) => screen,
           settings: RouteSettings(
             name: routeName,
