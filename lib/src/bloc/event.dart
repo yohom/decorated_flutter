@@ -92,6 +92,10 @@ class Event<T> {
     }
   }
 
+  void addError(Object error, [StackTrace stackTrace]) {
+    _subject.addError(error, stackTrace);
+  }
+
   Observable<T> addStream(Stream<T> source, {bool cancelOnError: true}) {
     return Observable<T>(
       _subject..addStream(source, cancelOnError: cancelOnError),
