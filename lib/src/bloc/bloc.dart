@@ -22,11 +22,11 @@ abstract class BLoC {
 abstract class RootBLoC extends BLoC {
   RootBLoC([String semantics]) : super(semantics);
 
-  List<GlobalBLoC> globalBLoCList = <GlobalBLoC>[];
+  List<GlobalBLoC> globalBLoCList;
 
   @override
   void close() {
-    globalBLoCList.forEach((bloc) => bloc.close());
+    globalBLoCList?.forEach((bloc) => bloc.close());
 
     super.close();
   }
@@ -37,11 +37,11 @@ abstract class LocalBLoC extends BLoC {
   LocalBLoC([String semantics]) : super(semantics);
 
   /// 所有的event集合, 主要是提供给RuntimeScaffold使用
-  List<Event> eventList = <Event>[];
+  List<Event> eventList;
 
   @override
   void close() {
-    eventList.forEach((event) => event.close());
+    eventList?.forEach((event) => event.close());
 
     super.close();
   }
@@ -52,11 +52,11 @@ abstract class GlobalBLoC extends BLoC {
   GlobalBLoC([String semantics]) : super(semantics);
 
   /// 所有的event集合, 主要是提供给RuntimeScaffold使用
-  List<Event> eventList = <Event>[];
+  List<Event> eventList;
 
   @override
   void close() {
-    eventList.forEach((event) => event.close());
+    eventList?.forEach((event) => event.close());
 
     super.close();
   }
