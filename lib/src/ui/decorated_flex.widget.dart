@@ -18,6 +18,7 @@ class DecoratedRow extends StatelessWidget {
     this.crossAxisAlignment = CrossAxisAlignment.center,
     this.onTap,
     this.onLongPress,
+    this.behavior = HitTestBehavior.opaque,
     this.children,
   }) : super(key: key);
 
@@ -41,12 +42,14 @@ class DecoratedRow extends StatelessWidget {
   //region GestureDetector
   final VoidCallback onTap;
   final VoidCallback onLongPress;
+  final HitTestBehavior behavior;
   //endregion
   final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: behavior,
       onTap: onTap,
       onLongPress: onLongPress,
       child: Container(
