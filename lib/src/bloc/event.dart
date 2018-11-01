@@ -58,7 +58,7 @@ class Event<T> {
   Observable<T> stream;
 
   /// 输出Future
-  AsObservableFuture<T> get first => stream.first;
+  Future<T> get first => stream.first;
 
   final Equal _test;
   final bool _isDistinct;
@@ -314,7 +314,7 @@ class Output<T> {
   Observable<T> stream;
 
   /// 输出Future
-  AsObservableFuture<T> get first => stream.first;
+  Future<T> get first => stream.first;
 
   final T _seedValue;
   String _semantics;
