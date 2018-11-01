@@ -12,6 +12,7 @@ export 'flex_dialog.widget.dart';
 export 'form_sheet.widget.dart';
 export 'fractional_screen.widget.dart';
 export 'future.widget.dart';
+export 'future_list_view.widget.dart';
 export 'image.widget.dart';
 export 'loading.widget.dart';
 export 'parallax_box.widget.dart';
