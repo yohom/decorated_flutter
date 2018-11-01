@@ -15,6 +15,7 @@ class FutureListView<T> extends StatelessWidget {
     this.errorWidget,
     this.padding,
     this.physics = const ClampingScrollPhysics(),
+    this.divider,
   }) : super(key: key);
 
   //region FutureWidget
@@ -30,6 +31,7 @@ class FutureListView<T> extends StatelessWidget {
   final EdgeInsets padding;
   final ScrollPhysics physics;
   //endregion
+  final Widget divider;
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +46,19 @@ class FutureListView<T> extends StatelessWidget {
           padding: padding,
           shrinkWrap: shrinkWrap,
           physics: physics,
-          itemCount: data?.length ?? 0,
-          itemBuilder: (context, index) => itemBuilder(context, data[index]),
+          itemCount: data.length ?? 0,
+          itemBuilder: (context, index) {
+            if (index != data.length - 1 && divider != null) {
+              return Column(
+                children: <Widget>[
+                  itemBuilder(context, data[index]),
+                  divider,
+                ],
+              );
+            } else {
+              return itemBuilder(context, data[index]);
+            }
+          },
         );
       },
     );
