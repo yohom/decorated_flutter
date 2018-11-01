@@ -13,7 +13,7 @@ class FutureListView<T> extends StatelessWidget {
     this.initialData = const [],
     this.emptyWidget,
     this.errorWidget,
-    this.padding = const EdgeInsets.all(kSpaceLittleBig),
+    this.padding,
     this.physics = const ClampingScrollPhysics(),
   }) : super(key: key);
 
