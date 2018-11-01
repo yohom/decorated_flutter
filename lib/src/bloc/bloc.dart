@@ -22,7 +22,7 @@ abstract class BLoC {
 abstract class RootBLoC extends BLoC {
   RootBLoC([String semantics]) : super(semantics);
 
-  List<GlobalBLoC> globalBLoCList;
+  List<GlobalBLoC> get globalBLoCList;
 
   @override
   void close() {
@@ -37,7 +37,7 @@ abstract class LocalBLoC extends BLoC {
   LocalBLoC([String semantics]) : super(semantics);
 
   /// 所有的event集合, 主要是提供给RuntimeScaffold使用
-  List<Event> eventList;
+  List<Event> get eventList;
 
   @override
   void close() {
@@ -52,7 +52,7 @@ abstract class GlobalBLoC extends BLoC {
   GlobalBLoC([String semantics]) : super(semantics);
 
   /// 所有的event集合, 主要是提供给RuntimeScaffold使用
-  List<Event> eventList;
+  List<Event> get eventList;
 
   @override
   void close() {
