@@ -16,9 +16,12 @@ class DecoratedRow extends StatelessWidget {
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.mainAxisSize = MainAxisSize.max,
     this.crossAxisAlignment = CrossAxisAlignment.center,
+    this.onTap,
+    this.onLongPress,
     this.children,
   }) : super(key: key);
 
+  //region Container
   final EdgeInsets padding;
   final EdgeInsets margin;
   final Color color;
@@ -28,30 +31,41 @@ class DecoratedRow extends StatelessWidget {
   final Matrix4 transform;
   final double width;
   final double height;
+  //endregion
+  //region Row
   final AlignmentGeometry alignment;
   final MainAxisAlignment mainAxisAlignment;
   final MainAxisSize mainAxisSize;
   final CrossAxisAlignment crossAxisAlignment;
+  //endregion
+  //region GestureDetector
+  final VoidCallback onTap;
+  final VoidCallback onLongPress;
+  //endregion
   final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: padding,
-      margin: margin,
-      width: width,
-      height: height,
-      color: color,
-      decoration: decoration,
-      foregroundDecoration: foregroundDecoration,
-      constraints: constraints,
-      transform: transform,
-      alignment: alignment,
-      child: Row(
-        mainAxisAlignment: mainAxisAlignment,
-        mainAxisSize: mainAxisSize,
-        crossAxisAlignment: crossAxisAlignment,
-        children: children,
+    return GestureDetector(
+      onTap: onTap,
+      onLongPress: onLongPress,
+      child: Container(
+        padding: padding,
+        margin: margin,
+        width: width,
+        height: height,
+        color: color,
+        decoration: decoration,
+        foregroundDecoration: foregroundDecoration,
+        constraints: constraints,
+        transform: transform,
+        alignment: alignment,
+        child: Row(
+          mainAxisAlignment: mainAxisAlignment,
+          mainAxisSize: mainAxisSize,
+          crossAxisAlignment: crossAxisAlignment,
+          children: children,
+        ),
       ),
     );
   }
@@ -73,9 +87,12 @@ class DecoratedColumn extends StatelessWidget {
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.mainAxisSize = MainAxisSize.max,
     this.crossAxisAlignment = CrossAxisAlignment.center,
+    this.onTap,
+    this.onLongPress,
     this.children,
   }) : super(key: key);
 
+  //region Container
   final EdgeInsets padding;
   final EdgeInsets margin;
   final Color color;
@@ -85,30 +102,41 @@ class DecoratedColumn extends StatelessWidget {
   final Matrix4 transform;
   final double width;
   final double height;
+  //endregion
+  //region Row
   final AlignmentGeometry alignment;
   final MainAxisAlignment mainAxisAlignment;
   final MainAxisSize mainAxisSize;
   final CrossAxisAlignment crossAxisAlignment;
+  //endregion
+  //region GestureDetector
+  final VoidCallback onTap;
+  final VoidCallback onLongPress;
+  //endregion
   final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: padding,
-      margin: margin,
-      width: width,
-      height: height,
-      color: color,
-      decoration: decoration,
-      foregroundDecoration: foregroundDecoration,
-      constraints: constraints,
-      transform: transform,
-      alignment: alignment,
-      child: Column(
-        mainAxisAlignment: mainAxisAlignment,
-        mainAxisSize: mainAxisSize,
-        crossAxisAlignment: crossAxisAlignment,
-        children: children,
+    return GestureDetector(
+      onTap: onTap,
+      onLongPress: onLongPress,
+      child: Container(
+        padding: padding,
+        margin: margin,
+        width: width,
+        height: height,
+        color: color,
+        decoration: decoration,
+        foregroundDecoration: foregroundDecoration,
+        constraints: constraints,
+        transform: transform,
+        alignment: alignment,
+        child: Column(
+          mainAxisAlignment: mainAxisAlignment,
+          mainAxisSize: mainAxisSize,
+          crossAxisAlignment: crossAxisAlignment,
+          children: children,
+        ),
       ),
     );
   }
