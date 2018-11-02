@@ -12,6 +12,7 @@ class DecoratedRoute<B extends BLoC> extends MaterialPageRoute {
     this.init,
     this.runtimeInfo,
     this.animate = true,
+    this.lateinit = true,
     String routeName,
     bool isInitialRoute = false,
     bool fullscreenDialog = false,
@@ -46,6 +47,9 @@ class DecoratedRoute<B extends BLoC> extends MaterialPageRoute {
   /// 是否执行动画
   final bool animate;
 
+  /// 是否等待入场动画结束之后再进行初始化动作
+  final bool lateinit;
+
   @override
   Widget buildPage(
     BuildContext context,
@@ -60,7 +64,7 @@ class DecoratedRoute<B extends BLoC> extends MaterialPageRoute {
     if (isNotEmpty(bloc)) {
       result = BLoCProvider<B>(
         bloc: bloc,
-        init: init,
+        init: lateinit ? null : init, // 可以设置为null, BLoCProvider会处理的
         child: autoCloseKeyboard
             ? AutoCloseKeyboard(child: builder(context))
             : builder(context),
@@ -76,6 +80,15 @@ class DecoratedRoute<B extends BLoC> extends MaterialPageRoute {
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation, Widget child) {
+    animation.addStatusListener((status) {
+      // 如果是懒加载, 那么动画结束时开始初始化
+      if (status == AnimationStatus.completed &&
+          lateinit &&
+          init != null &&
+          bloc != null) {
+        init(bloc);
+      }
+    });
     return animate
         ? super.buildTransitions(context, animation, secondaryAnimation, child)
         : child;
