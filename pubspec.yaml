@@ -24,6 +24,12 @@ dependencies:
 
 dev_dependencies:
   mockito: 3.0.0
+  build_runner: ^1.1.0
+  ozzie: ^1.0.1
+  kiwi_generator:
+    git:
+      url: https://github.com/yohom/kiwi.git
+      path: kiwi_generator
   flutter_test:
     sdk: flutter
 
