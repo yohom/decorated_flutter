@@ -1,6 +1,6 @@
 import 'package:framework/framework.dart';
 
-class CaptchaManagerMixin extends BLoC {
+mixin CaptchaManagerMixin on BLoC {
   @override
   void close() {
     // 关闭全局的定时器
