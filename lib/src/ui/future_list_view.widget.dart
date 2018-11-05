@@ -26,7 +26,7 @@ class FutureListView<T> extends StatelessWidget {
   final Widget errorWidget;
   //endregion
   //region ListView.builder
-  final _ItemBuilder itemBuilder;
+  final _ItemBuilder<T> itemBuilder;
   final bool shrinkWrap;
   final EdgeInsets padding;
   final ScrollPhysics physics;
