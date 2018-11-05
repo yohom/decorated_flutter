@@ -71,7 +71,7 @@ class FlatText extends StatelessWidget {
     this.textScaleFactor,
     this.maxLines,
     this.semanticsLabel,
-    this.inherit,
+    this.inherit = true,
     this.color,
     this.fontFamily,
     this.fontSize,
