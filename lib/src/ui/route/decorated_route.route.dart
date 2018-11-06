@@ -13,6 +13,7 @@ class DecoratedRoute<B extends BLoC> extends MaterialPageRoute {
     this.runtimeInfo,
     this.animate = true,
     this.lateinit = false,
+    this.withForm = false,
     String routeName,
     bool isInitialRoute = false,
     bool fullscreenDialog = false,
@@ -50,6 +51,9 @@ class DecoratedRoute<B extends BLoC> extends MaterialPageRoute {
   /// 是否等待入场动画结束之后再进行初始化动作
   final bool lateinit;
 
+  /// 是否带有表单
+  final bool withForm;
+
   /// 是否已经初始化
   bool _inited = false;
 
@@ -68,14 +72,20 @@ class DecoratedRoute<B extends BLoC> extends MaterialPageRoute {
       result = BLoCProvider<B>(
         bloc: bloc,
         init: lateinit ? null : init, // 可以设置为null, BLoCProvider会处理的
-        child: autoCloseKeyboard
-            ? AutoCloseKeyboard(child: builder(context))
-            : builder(context),
+        child: builder(context),
       );
     } else {
-      result = autoCloseKeyboard
-          ? AutoCloseKeyboard(child: builder(context))
-          : builder(context);
+      result = builder(context);
+    }
+
+    // 是否自动收起键盘
+    if (autoCloseKeyboard) {
+      result = AutoCloseKeyboard(child: result);
+    }
+
+    // 是否带有表单
+    if (withForm) {
+      result = Form(child: result);
     }
     return result;
   }
