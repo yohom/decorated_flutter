@@ -7,13 +7,24 @@ import 'package:meta/meta.dart';
 typedef Widget FutureWidgetBuilder<DATA>(DATA data);
 
 class FutureWidget<T> extends StatelessWidget {
+  static Widget defaultEmptyPlaceholder;
+  static Widget defaultErrorPlaceholder;
+
   final Future<T> future;
   final FutureWidgetBuilder<T> builder;
   final bool showLoading;
   final T initialData;
   final bool isExpanded;
-  final Widget emptyWidget;
-  final Widget errorWidget;
+  final Widget emptyPlaceholder;
+  final Widget errorPlaceholder;
+
+  static void setDefaultPlaceholder({
+    Widget emptyPlaceholder,
+    Widget errorPlaceholder,
+  }) {
+    defaultEmptyPlaceholder = emptyPlaceholder;
+    defaultErrorPlaceholder = errorPlaceholder;
+  }
 
   const FutureWidget({
     Key key,
@@ -22,8 +33,8 @@ class FutureWidget<T> extends StatelessWidget {
     this.showLoading = true,
     this.isExpanded = false,
     this.initialData,
-    this.emptyWidget,
-    this.errorWidget,
+    this.emptyPlaceholder,
+    this.errorPlaceholder,
   }) : super(key: key);
 
   @override
@@ -33,17 +44,25 @@ class FutureWidget<T> extends StatelessWidget {
       future: future,
       builder: (ctx, snapshot) {
         if (snapshot.hasError) {
-          return errorWidget ?? ErrorWidget(snapshot.error.toString());
+          return errorPlaceholder ??
+              defaultErrorPlaceholder ??
+              const ErrorPlaceholder();
         }
 
         if (snapshot.hasData) {
-          return builder(snapshot.data);
+          if (isEmpty(snapshot.data)) {
+            return emptyPlaceholder ??
+                defaultEmptyPlaceholder ??
+                const EmptyPlaceholder();
+          } else {
+            return builder(snapshot.data);
+          }
         } else if (showLoading) {
           return LoadingWidget();
         } else if (isExpanded) {
-          return Expanded(child: EmptyWidget());
+          return Expanded(child: SizedBox.shrink());
         } else {
-          return emptyWidget ?? EmptyWidget();
+          return SizedBox.shrink();
         }
       },
     );

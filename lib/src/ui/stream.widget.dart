@@ -6,6 +6,9 @@ import 'package:rxdart/rxdart.dart';
 typedef Widget _StreamWidgetBuilder<DATA>(DATA data);
 
 class StreamWidget<T> extends StatelessWidget {
+  static Widget defaultEmptyPlaceholder;
+  static Widget defaultErrorPlaceholder;
+
   final Observable<T> stream;
   final _StreamWidgetBuilder<T> builder;
 
@@ -13,8 +16,16 @@ class StreamWidget<T> extends StatelessWidget {
   final bool showLoading;
 
   final T initData;
-  final Widget emptyWidget;
-  final Widget errorWidget;
+  final Widget emptyPlaceholder;
+  final Widget errorPlaceholder;
+
+  static void setDefaultPlaceholder({
+    Widget emptyPlaceholder,
+    Widget errorPlaceholder,
+  }) {
+    defaultEmptyPlaceholder = emptyPlaceholder;
+    defaultErrorPlaceholder = errorPlaceholder;
+  }
 
   const StreamWidget({
     Key key,
@@ -22,8 +33,8 @@ class StreamWidget<T> extends StatelessWidget {
     @required this.builder,
     this.showLoading = true,
     this.initData,
-    this.emptyWidget,
-    this.errorWidget,
+    this.emptyPlaceholder,
+    this.errorPlaceholder,
   }) : super(key: key);
 
   @override
@@ -33,15 +44,23 @@ class StreamWidget<T> extends StatelessWidget {
       stream: stream,
       builder: (ctx, snapshot) {
         if (snapshot.hasError) {
-          return errorWidget ?? ErrorWidget(snapshot.error.toString());
+          return errorPlaceholder ??
+              defaultErrorPlaceholder ??
+              const ErrorPlaceholder();
         }
 
         if (snapshot.hasData) {
-          return builder(snapshot.data);
+          if (isEmpty(snapshot.data)) {
+            return emptyPlaceholder ??
+                defaultEmptyPlaceholder ??
+                const EmptyPlaceholder();
+          } else {
+            return builder(snapshot.data);
+          }
         } else if (showLoading) {
           return LoadingWidget();
         } else {
-          return emptyWidget ?? EmptyWidget();
+          return SizedBox.shrink();
         }
       },
     );

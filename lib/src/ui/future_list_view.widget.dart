@@ -11,8 +11,8 @@ class FutureListView<T> extends StatelessWidget {
     this.shrinkWrap = true,
     this.showLoading = true,
     this.initialData = const [],
-    this.emptyWidget,
-    this.errorWidget,
+    this.emptyPlaceholder,
+    this.errorPlaceholder,
     this.padding,
     this.physics = const ClampingScrollPhysics(),
     this.divider,
@@ -22,8 +22,8 @@ class FutureListView<T> extends StatelessWidget {
   final Future<List<T>> future;
   final bool showLoading;
   final List<T> initialData;
-  final Widget emptyWidget;
-  final Widget errorWidget;
+  final Widget emptyPlaceholder;
+  final Widget errorPlaceholder;
   //endregion
   //region ListView.builder
   final _ItemBuilder<T> itemBuilder;
@@ -39,8 +39,8 @@ class FutureListView<T> extends StatelessWidget {
       future: future,
       showLoading: showLoading,
       initialData: initialData,
-      emptyWidget: emptyWidget,
-      errorWidget: errorWidget,
+      emptyPlaceholder: emptyPlaceholder,
+      errorPlaceholder: errorPlaceholder,
       builder: (data) {
         return ListView.builder(
           padding: padding,
