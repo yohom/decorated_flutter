@@ -35,7 +35,7 @@ class FutureListView<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureWidget<List<T>>(
+    return PreferredFutureBuilder<List<T>>(
       future: future,
       showLoading: showLoading,
       initialData: initialData,
