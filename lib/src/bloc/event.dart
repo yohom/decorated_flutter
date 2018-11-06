@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:framework/framework.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../utils/log.dart';
@@ -70,6 +71,10 @@ class Event<T> {
   void add(T data) {
     L.p('++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n'
         'Event接收到**${_semantics ??= data.runtimeType.toString()}**数据: $data');
+
+    if (isEmpty(data) && !_acceptNull) {
+      return;
+    }
 
     // 如果需要distinct的话, 就判断是否相同; 如果不需要distinct, 直接发射数据
     if (_isDistinct) {
@@ -232,6 +237,10 @@ class Input<T> {
   void add(T data) {
     L.p('++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n'
         'Event接收到**${_semantics ??= data.runtimeType.toString()}**数据: $data');
+
+    if (isEmpty(data) && !_acceptNull) {
+      return;
+    }
 
     // 如果需要distinct的话, 就判断是否相同; 如果不需要distinct, 直接发射数据
     if (_isDistinct) {
