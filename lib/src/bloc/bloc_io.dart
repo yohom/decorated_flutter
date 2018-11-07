@@ -165,6 +165,7 @@ mixin InputMixin<T> on BaseIO<T> {
         'IO接收到**${semantics ??= data.runtimeType.toString()}**数据: $data');
 
     if (isEmpty(data) && !_acceptEmpty) {
+      L.p('转发被拒绝! 原因: 需要非Empty值, 但是接收到Empty值');
       return;
     }
 
@@ -177,14 +178,14 @@ mixin InputMixin<T> on BaseIO<T> {
           L.p('IO转发出**${semantics ??= data.runtimeType.toString()}**数据: $data');
           subject.add(data);
         } else {
-          L.p('转发被拒绝!');
+          L.p('转发被拒绝! 原因: 需要唯一, 但是没有通过唯一性测试');
         }
       } else {
         if (data != latest) {
           L.p('IO转发出**${semantics ??= data.runtimeType.toString()}**数据: $data');
           subject.add(data);
         } else {
-          L.p('转发被拒绝!');
+          L.p('转发被拒绝! 原因: 需要唯一, 但是新数据与最新值相同');
         }
       }
     } else {
