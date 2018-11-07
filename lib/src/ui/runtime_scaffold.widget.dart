@@ -54,7 +54,7 @@ class RuntimeScaffold extends StatelessWidget {
     Widget runtimeInfoWidget;
     if (!bool.fromEnvironment('dart.vm.product')) {
       runtimeInfoWidget = Drawer(
-        child: SafeArea(child: Runtime(runtimeInfo: bloc?.eventList ?? [])),
+        child: SafeArea(child: Runtime(runtimeInfo: bloc?.ioList ?? [])),
       );
     }
     return Scaffold(

@@ -1,4 +1,5 @@
 import 'package:framework/framework.dart';
+import 'package:framework/src/bloc/bloc_io.dart';
 import 'package:meta/meta.dart';
 
 abstract class BLoC {
@@ -37,11 +38,11 @@ abstract class LocalBLoC extends BLoC {
   LocalBLoC([String semantics]) : super(semantics);
 
   /// 所有的event集合, 主要是提供给RuntimeScaffold使用
-  List<Event> get eventList;
+  List<BaseIO> get ioList;
 
   @override
   void close() {
-    eventList?.forEach((event) => event.close());
+    ioList?.forEach((event) => event.dispose());
 
     super.close();
   }
@@ -52,11 +53,11 @@ abstract class GlobalBLoC extends BLoC {
   GlobalBLoC([String semantics]) : super(semantics);
 
   /// 所有的event集合, 主要是提供给RuntimeScaffold使用
-  List<Event> get eventList;
+  List<BaseIO> get ioList;
 
   @override
   void close() {
-    eventList?.forEach((event) => event.close());
+    ioList?.forEach((event) => event.dispose());
 
     super.close();
   }

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:framework/framework.dart';
+import 'package:framework/src/bloc/bloc_io.dart';
 
 /// 显示运行时信息的widget
 class Runtime extends StatefulWidget {
   const Runtime({
     Key key,
-    this.runtimeInfo = const <Event>[],
+    this.runtimeInfo = const <BaseIO>[],
   }) : super(key: key);
 
   static void registerGlobalBLoCList(List<GlobalBLoC> blocs) {
@@ -14,7 +15,7 @@ class Runtime extends StatefulWidget {
 
   static List<GlobalBLoC> _globalBLoCList = [];
 
-  final List<Event> runtimeInfo;
+  final List<BaseIO> runtimeInfo;
 
   @override
   _RuntimeState createState() => _RuntimeState();
@@ -26,8 +27,8 @@ class _RuntimeState extends State<Runtime> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Event> globalEventList =
-        Runtime._globalBLoCList.expand((bloc) => bloc.eventList).toList();
+    final List<BaseIO> globalIOList =
+        Runtime._globalBLoCList.expand((bloc) => bloc.ioList).toList();
     return SingleChildScrollView(
       physics: ClampingScrollPhysics(),
       child: ExpansionPanelList(
@@ -47,13 +48,13 @@ class _RuntimeState extends State<Runtime> {
           ExpansionPanel(
             isExpanded: _globalBLoCExpanded,
             headerBuilder: (_, __) => _Header(title: 'Global BLoCs'),
-            body: _Body(eventList: globalEventList),
+            body: _Body(ioList: globalIOList),
           ),
           // 局部BLoC运行时信息
           ExpansionPanel(
             isExpanded: _localBLoCExpanded,
             headerBuilder: (_, __) => _Header(title: 'Local BLoC'),
-            body: _Body(eventList: widget.runtimeInfo),
+            body: _Body(ioList: widget.runtimeInfo),
           ),
         ],
       ),
@@ -82,25 +83,19 @@ class _Header extends StatelessWidget {
 class _Body extends StatelessWidget {
   const _Body({
     Key key,
-    @required this.eventList,
+    @required this.ioList,
   }) : super(key: key);
 
-  final List<Event> eventList;
+  final List<BaseIO> ioList;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       physics: ClampingScrollPhysics(),
       shrinkWrap: true,
-      itemCount: eventList?.length ?? 0,
+      itemCount: ioList?.length ?? 0,
       itemBuilder: (context, index) {
-        final event = eventList[index];
-        return StreamBuilder(
-          stream: event.stream,
-          builder: (_, __) {
-            return ListTile(title: Text(event.runtimeSummary()));
-          },
-        );
+        return ListTile(title: Text(ioList[index].runtimeSummary()));
       },
     );
   }
