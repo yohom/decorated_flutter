@@ -131,7 +131,6 @@ class Output<T> extends BaseIO<T> with OutputMixin {
 
 /// 既可以输入又可以输出的事件
 class IO<T> extends BaseIO<T> with InputMixin, OutputMixin {
-  // IO不需要trigger
   IO({
     T seedValue,
     String semantics,
