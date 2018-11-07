@@ -104,9 +104,9 @@ class Input<T> extends BaseIO<T> with InputMixin {
           sync: sync,
           isBehavior: isBehavior,
         ) {
-    this.acceptEmpty = acceptEmpty;
-    this.isDistinct = isDistinct;
-    this.test = test;
+    this._acceptEmpty = acceptEmpty;
+    this._isDistinct = isDistinct;
+    this._test = test;
   }
 }
 
@@ -127,14 +127,6 @@ class Output<T> extends BaseIO<T> with OutputMixin {
     stream = subject.stream;
     _trigger = trigger;
   }
-
-  /// 输出Stream
-  _Trigger<T> _trigger;
-
-  /// 使用内部的trigger获取数据
-  Future<T> update() {
-    return _trigger()..then(subject.add);
-  }
 }
 
 /// 既可以输入又可以输出的事件
@@ -148,6 +140,7 @@ class IO<T> extends BaseIO<T> with InputMixin, OutputMixin {
     bool acceptEmpty = false,
     bool isDistinct = true,
     _Equal test,
+    _Trigger<T> trigger,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -155,34 +148,33 @@ class IO<T> extends BaseIO<T> with InputMixin, OutputMixin {
           isBehavior: isBehavior,
         ) {
     stream = subject.stream;
-    this.acceptEmpty = acceptEmpty;
-    this.isDistinct = isDistinct;
-    this.test = test;
+
+    _acceptEmpty = acceptEmpty;
+    _isDistinct = isDistinct;
+    _test = test;
+    _trigger = trigger;
   }
 }
 
 mixin InputMixin<T> on BaseIO<T> {
-  @protected
-  bool acceptEmpty;
-  @protected
-  bool isDistinct;
-  @protected
-  _Equal test;
+  bool _acceptEmpty;
+  bool _isDistinct;
+  _Equal _test;
 
   void add(T data) {
     L.p('++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n'
         'IO接收到**${semantics ??= data.runtimeType.toString()}**数据: $data');
 
-    if (isEmpty(data) && !acceptEmpty) {
+    if (isEmpty(data) && !_acceptEmpty) {
       return;
     }
 
     // 如果需要distinct的话, 就判断是否相同; 如果不需要distinct, 直接发射数据
-    if (isDistinct) {
+    if (_isDistinct) {
       // 如果是不一样的数据, 才发射新的通知,防止TabBar的addListener那种
       // 不停地发送通知(但是值又是一样)的情况
-      if (test != null) {
-        if (!test(latest, data)) {
+      if (_test != null) {
+        if (!_test(latest, data)) {
           L.p('IO转发出**${semantics ??= data.runtimeType.toString()}**数据: $data');
           subject.add(data);
         } else {
@@ -230,5 +222,13 @@ mixin OutputMixin<T> on BaseIO<T> {
       onDone: onDone,
       cancelOnError: cancelOnError,
     );
+  }
+
+  /// 输出Stream
+  _Trigger<T> _trigger;
+
+  /// 使用内部的trigger获取数据
+  Future<T> update() {
+    return _trigger()..then(subject.add);
   }
 }
