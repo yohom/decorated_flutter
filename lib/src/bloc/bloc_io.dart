@@ -112,7 +112,7 @@ class Output<T> extends BaseIO<T> with OutputMixin {
     String semantics,
     bool sync = true,
     bool isBehavior = false,
-    VoidCallback trigger,
+    @required VoidCallback trigger,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
