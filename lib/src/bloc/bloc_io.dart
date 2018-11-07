@@ -128,8 +128,8 @@ class Output<T> extends BaseIO<T> with OutputMixin {
   _Trigger<T> _trigger;
 
   /// 使用内部的trigger获取数据
-  void update() {
-    _trigger().then(subject.add);
+  Future<T> update() {
+    return _trigger()..then(subject.add);
   }
 }
 
