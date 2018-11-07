@@ -97,6 +97,14 @@ class Event<T> {
     }
   }
 
+  void addIfAbsent(T data) {
+    // 如果最新值是_seedValue或者是空, 那么才add新数据, 换句话说, 就是如果event已经被add过
+    // 了的话那就不add了, 用于第一次add
+    if (_seedValue == latest || isEmpty(latest)) {
+      add(data);
+    }
+  }
+
   void addError(Object error, [StackTrace stackTrace]) {
     _subject.addError(error, stackTrace);
   }
@@ -260,6 +268,14 @@ class Input<T> {
     } else {
       L.p('Event转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
       _subject.add(data);
+    }
+  }
+
+  void addIfAbsent(T data) {
+    // 如果最新值是_seedValue或者是空, 那么才add新数据, 换句话说, 就是如果event已经被add过
+    // 了的话那就不add了, 用于第一次add
+    if (_seedValue == latest || isEmpty(latest)) {
+      add(data);
     }
   }
 
