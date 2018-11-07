@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 typedef bool _Equal<T>(T data1, T data2);
+typedef Future<T> _Trigger<T>();
 
 abstract class BaseIO<T> {
   BaseIO({
@@ -112,7 +113,7 @@ class Output<T> extends BaseIO<T> with OutputMixin {
     String semantics,
     bool sync = true,
     bool isBehavior = false,
-    @required VoidCallback trigger,
+    @required _Trigger trigger,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
