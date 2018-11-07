@@ -171,7 +171,7 @@ mixin InputMixin<T> on BaseIO<T> {
 
   void add(T data) {
     L.p('++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n'
-        'Event接收到**${semantics ??= data.runtimeType.toString()}**数据: $data');
+        'IO接收到**${semantics ??= data.runtimeType.toString()}**数据: $data');
 
     if (isEmpty(data) && !acceptEmpty) {
       return;
@@ -183,17 +183,21 @@ mixin InputMixin<T> on BaseIO<T> {
       // 不停地发送通知(但是值又是一样)的情况
       if (test != null) {
         if (!test(latest, data)) {
-          L.p('Event转发出**${semantics ??= data.runtimeType.toString()}**数据: $data');
+          L.p('IO转发出**${semantics ??= data.runtimeType.toString()}**数据: $data');
           subject.add(data);
+        } else {
+          L.p('转发被拒绝!');
         }
       } else {
         if (data != latest) {
-          L.p('Event转发出**${semantics ??= data.runtimeType.toString()}**数据: $data');
+          L.p('IO转发出**${semantics ??= data.runtimeType.toString()}**数据: $data');
           subject.add(data);
+        } else {
+          L.p('转发被拒绝!');
         }
       }
     } else {
-      L.p('Event转发出**${semantics ??= data.runtimeType.toString()}**数据: $data');
+      L.p('IO转发出**${semantics ??= data.runtimeType.toString()}**数据: $data');
       subject.add(data);
     }
   }
