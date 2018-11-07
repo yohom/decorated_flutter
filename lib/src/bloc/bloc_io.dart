@@ -49,6 +49,10 @@ abstract class BaseIO<T> {
   @protected
   Subject<T> subject;
 
+  void addError(Object error, [StackTrace stackTrace]) {
+    subject.addError(error, stackTrace);
+  }
+
   Observable<S> map<S>(S convert(T event)) {
     return subject.map(convert);
   }
