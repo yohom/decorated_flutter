@@ -113,7 +113,7 @@ class Output<T> extends BaseIO<T> with OutputMixin {
     String semantics,
     bool sync = true,
     bool isBehavior = false,
-    @required _Trigger trigger,
+    @required _Trigger<T> trigger,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -121,18 +121,26 @@ class Output<T> extends BaseIO<T> with OutputMixin {
           isBehavior: isBehavior,
         ) {
     stream = subject.stream;
-    this.trigger = trigger;
+    _trigger = trigger;
+  }
+
+  /// 输出Stream
+  _Trigger<T> _trigger;
+
+  /// 使用内部的trigger获取数据
+  void update() {
+    _trigger().then(subject.add);
   }
 }
 
 /// 既可以输入又可以输出的事件
 class IO<T> extends BaseIO<T> with InputMixin, OutputMixin {
+  // IO不需要trigger
   IO({
     T seedValue,
     String semantics,
     bool sync = true,
     bool isBehavior = false,
-    VoidCallback trigger,
     bool acceptEmpty = false,
     bool isDistinct = true,
     _Equal test,
@@ -143,8 +151,6 @@ class IO<T> extends BaseIO<T> with InputMixin, OutputMixin {
           isBehavior: isBehavior,
         ) {
     stream = subject.stream;
-    // 因为IO的理论上应该来自Input, 不然的话直接使用Output就可以了
-    this.trigger = trigger ?? () {};
     this.acceptEmpty = acceptEmpty;
     this.isDistinct = isDistinct;
     this.test = test;
@@ -203,9 +209,6 @@ mixin OutputMixin<T> on BaseIO<T> {
 
   /// 输出Stream
   Observable<T> stream;
-
-  /// 输出Stream
-  VoidCallback trigger;
 
   void listen(
     ValueChanged<T> listener, {
