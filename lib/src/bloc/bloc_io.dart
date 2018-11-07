@@ -125,7 +125,29 @@ class Output<T> extends BaseIO<T> with OutputMixin {
 }
 
 /// 既可以输入又可以输出的事件
-class IO<T> extends BaseIO<T> with InputMixin, OutputMixin {}
+class IO<T> extends BaseIO<T> with InputMixin, OutputMixin {
+  IO({
+    T seedValue,
+    String semantics,
+    bool sync = true,
+    bool isBehavior = false,
+    VoidCallback trigger,
+    bool acceptEmpty = false,
+    bool isDistinct = true,
+    _Equal test,
+  }) : super(
+          seedValue: seedValue,
+          semantics: semantics,
+          sync: sync,
+          isBehavior: isBehavior,
+        ) {
+    stream = subject.stream;
+    this.trigger = trigger;
+    this.acceptEmpty = acceptEmpty;
+    this.isDistinct = isDistinct;
+    this.test = test;
+  }
+}
 
 mixin InputMixin<T> on BaseIO<T> {
   @protected
