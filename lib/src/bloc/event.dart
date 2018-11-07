@@ -9,6 +9,7 @@ typedef void Listener<T>(T data);
 typedef bool Equal<T>(T data1, T data2);
 
 /// 既可以输入又可以输出的事件
+@Deprecated('使用bloc_io中的IO代替')
 class Event<T> {
   Event({
     /// 判断新值与旧值是否相同
@@ -181,6 +182,7 @@ class Event<T> {
 }
 
 /// 纯输入的事件(只add, 不listen), 可以转发数据给[Output], 也可以自己存着数据
+@Deprecated('使用bloc_io中的Input代替')
 class Input<T> {
   Input({
     /// 判断新值与旧值是否相同
@@ -305,6 +307,7 @@ class Input<T> {
 }
 
 /// 纯监听的事件(只listen, 不add), 可以接到[Input]上让其转发数据给[Output]
+@Deprecated('使用bloc_io中的Output代替')
 class Output<T> {
   Output({
     /// 初始值, 传递给内部的[_subject]
