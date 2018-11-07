@@ -142,7 +142,8 @@ class IO<T> extends BaseIO<T> with InputMixin, OutputMixin {
           isBehavior: isBehavior,
         ) {
     stream = subject.stream;
-    this.trigger = trigger;
+    // 因为IO的理论上应该来自Input, 不然的话直接使用Output就可以了
+    this.trigger = trigger ?? () {};
     this.acceptEmpty = acceptEmpty;
     this.isDistinct = isDistinct;
     this.test = test;
