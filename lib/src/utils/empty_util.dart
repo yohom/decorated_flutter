@@ -29,3 +29,7 @@ bool isAllEmpty(List<Object> list) {
     return list.every(isEmpty);
   }
 }
+
+bool isAllNotEmpty(List<Object> list) {
+  return !list.any(isEmpty);
+}
