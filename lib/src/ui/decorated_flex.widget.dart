@@ -19,6 +19,7 @@ class DecoratedRow extends StatelessWidget {
     this.onTap,
     this.onLongPress,
     this.behavior = HitTestBehavior.opaque,
+    this.borderRadius,
     this.children,
   }) : super(key: key);
 
@@ -32,42 +33,52 @@ class DecoratedRow extends StatelessWidget {
   final Matrix4 transform;
   final double width;
   final double height;
+
   //endregion
   //region Row
   final AlignmentGeometry alignment;
   final MainAxisAlignment mainAxisAlignment;
   final MainAxisSize mainAxisSize;
   final CrossAxisAlignment crossAxisAlignment;
+
   //endregion
   //region GestureDetector
   final VoidCallback onTap;
   final VoidCallback onLongPress;
   final HitTestBehavior behavior;
+
+  //endregion
+  //region ClipRRect
+  final BorderRadius borderRadius;
+
   //endregion
   final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: behavior,
-      onTap: onTap,
-      onLongPress: onLongPress,
-      child: Container(
-        padding: padding,
-        margin: margin,
-        width: width,
-        height: height,
-        color: color,
-        decoration: decoration,
-        foregroundDecoration: foregroundDecoration,
-        constraints: constraints,
-        transform: transform,
-        alignment: alignment,
-        child: Row(
-          mainAxisAlignment: mainAxisAlignment,
-          mainAxisSize: mainAxisSize,
-          crossAxisAlignment: crossAxisAlignment,
-          children: children,
+    return ClipRRect(
+      borderRadius: borderRadius ?? BorderRadius.circular(0.0),
+      child: GestureDetector(
+        behavior: behavior,
+        onTap: onTap,
+        onLongPress: onLongPress,
+        child: Container(
+          padding: padding,
+          margin: margin,
+          width: width,
+          height: height,
+          color: color,
+          decoration: decoration,
+          foregroundDecoration: foregroundDecoration,
+          constraints: constraints,
+          transform: transform,
+          alignment: alignment,
+          child: Row(
+            mainAxisAlignment: mainAxisAlignment,
+            mainAxisSize: mainAxisSize,
+            crossAxisAlignment: crossAxisAlignment,
+            children: children,
+          ),
         ),
       ),
     );
@@ -92,6 +103,8 @@ class DecoratedColumn extends StatelessWidget {
     this.crossAxisAlignment = CrossAxisAlignment.center,
     this.onTap,
     this.onLongPress,
+    this.behavior = HitTestBehavior.opaque,
+    this.borderRadius,
     this.children,
   }) : super(key: key);
 
@@ -105,40 +118,52 @@ class DecoratedColumn extends StatelessWidget {
   final Matrix4 transform;
   final double width;
   final double height;
+
   //endregion
   //region Row
   final AlignmentGeometry alignment;
   final MainAxisAlignment mainAxisAlignment;
   final MainAxisSize mainAxisSize;
   final CrossAxisAlignment crossAxisAlignment;
+
   //endregion
   //region GestureDetector
   final VoidCallback onTap;
   final VoidCallback onLongPress;
+  final HitTestBehavior behavior;
+
+  //endregion
+  //region ClipRRect
+  final BorderRadius borderRadius;
+
   //endregion
   final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      onLongPress: onLongPress,
-      child: Container(
-        padding: padding,
-        margin: margin,
-        width: width,
-        height: height,
-        color: color,
-        decoration: decoration,
-        foregroundDecoration: foregroundDecoration,
-        constraints: constraints,
-        transform: transform,
-        alignment: alignment,
-        child: Column(
-          mainAxisAlignment: mainAxisAlignment,
-          mainAxisSize: mainAxisSize,
-          crossAxisAlignment: crossAxisAlignment,
-          children: children,
+    return ClipRRect(
+      borderRadius: borderRadius ?? BorderRadius.circular(0.0),
+      child: GestureDetector(
+        behavior: behavior,
+        onTap: onTap,
+        onLongPress: onLongPress,
+        child: Container(
+          padding: padding,
+          margin: margin,
+          width: width,
+          height: height,
+          color: color,
+          decoration: decoration,
+          foregroundDecoration: foregroundDecoration,
+          constraints: constraints,
+          transform: transform,
+          alignment: alignment,
+          child: Column(
+            mainAxisAlignment: mainAxisAlignment,
+            mainAxisSize: mainAxisSize,
+            crossAxisAlignment: crossAxisAlignment,
+            children: children,
+          ),
         ),
       ),
     );
