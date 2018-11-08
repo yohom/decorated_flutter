@@ -31,5 +31,8 @@ bool isAllEmpty(List<Object> list) {
 }
 
 bool isAllNotEmpty(List<Object> list) {
+  if (isEmpty(list)) {
+    return false;
+  }
   return !list.any(isEmpty);
 }
