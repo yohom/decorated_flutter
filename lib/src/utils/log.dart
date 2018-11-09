@@ -4,25 +4,23 @@ import 'package:flutter/material.dart';
 /// If you're in debug mode, assert(() { ...; return true; }); will execute ....
 /// If you're in profile mode, neither of the above will happen.
 class L {
-  static const String tag = 'flutter_framework';
-
   /// debug模式打印
-  static void d(String content) {
+  static void d(String content) async {
     assert(() {
-      debugPrint('$tag: $content');
+      debugPrint(content);
       return true;
     }());
   }
 
   /// profile模式打印
-  static void p(String content) {
+  static void p(String content) async {
     if (!bool.fromEnvironment('dart.vm.product')) {
-      debugPrint('$tag: $content');
+      debugPrint(content);
     }
   }
 
   /// release模式打印
-  static void r(String content) {
-    debugPrint('$tag: $content');
+  static void r(String content) async {
+    debugPrint(content);
   }
 }
