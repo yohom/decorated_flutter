@@ -229,6 +229,8 @@ mixin OutputMixin<T> on BaseIO<T> {
 
   /// 使用内部的trigger获取数据
   Future<T> update() {
-    return _trigger()..then(subject.add);
+    return _trigger()
+      ..then(subject.add)
+      ..catchError(subject.addError);
   }
 }
