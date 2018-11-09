@@ -30,3 +30,4 @@ export 'snap_list.widget.dart';
 export 'preferred_stream_builder.widget.dart';
 export 'tap_tooltip.widget.dart';
 export 'unknown_route.screen.dart';
+export 'stream_list_view.widget.dart';
