@@ -9,13 +9,13 @@ class PreferredStreamBuilder<T> extends StatelessWidget {
   static Widget defaultEmptyPlaceholder;
   static Widget defaultErrorPlaceholder;
 
-  final Observable<T> stream;
+  final Stream<T> stream;
   final _Builder<T> builder;
 
   /// 是否显示loading
   final bool showLoading;
 
-  final T initData;
+  final T initialData;
   final Widget emptyPlaceholder;
   final Widget errorPlaceholder;
 
@@ -32,7 +32,7 @@ class PreferredStreamBuilder<T> extends StatelessWidget {
     @required this.stream,
     @required this.builder,
     this.showLoading = true,
-    this.initData,
+    this.initialData,
     this.emptyPlaceholder,
     this.errorPlaceholder,
   }) : super(key: key);
@@ -40,7 +40,7 @@ class PreferredStreamBuilder<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<T>(
-      initialData: initData,
+      initialData: initialData,
       stream: stream,
       builder: (ctx, snapshot) {
         if (snapshot.hasError) {
