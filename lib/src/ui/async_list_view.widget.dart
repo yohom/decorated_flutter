@@ -85,7 +85,7 @@ class StreamListView<T> extends StatelessWidget {
     this.refreshDisplacement,
     this.refreshColor,
     this.refreshBackgroundColor,
-    this.notificationPredicate,
+    this.notificationPredicate = defaultScrollNotificationPredicate,
   }) : super(key: key);
 
   //region FutureWidget
