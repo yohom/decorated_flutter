@@ -4,7 +4,7 @@ import 'package:framework/framework.dart';
 class RuntimeScaffold extends StatelessWidget {
   const RuntimeScaffold({
     Key key,
-    this.bloc,
+    @required this.bloc,
     this.appBar,
     this.body,
     this.floatingActionButton,
