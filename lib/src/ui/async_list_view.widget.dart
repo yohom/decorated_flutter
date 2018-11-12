@@ -25,12 +25,14 @@ class FutureListView<T> extends StatelessWidget {
   final List<T> initialData;
   final Widget emptyPlaceholder;
   final _ErrorPlaceholderBuilder errorPlaceholderBuilder;
+
   //endregion
   //region ListView.builder
   final _ItemBuilder<T> itemBuilder;
   final bool shrinkWrap;
   final EdgeInsets padding;
   final ScrollPhysics physics;
+
   //endregion
   final Widget divider;
 
@@ -79,6 +81,11 @@ class StreamListView<T> extends StatelessWidget {
     this.padding,
     this.physics = const ClampingScrollPhysics(),
     this.divider,
+    this.onRefresh,
+    this.refreshDisplacement,
+    this.refreshColor,
+    this.refreshBackgroundColor,
+    this.notificationPredicate,
   }) : super(key: key);
 
   //region FutureWidget
@@ -87,18 +94,28 @@ class StreamListView<T> extends StatelessWidget {
   final List<T> initialData;
   final Widget emptyPlaceholder;
   final _ErrorPlaceholderBuilder errorPlaceholderBuilder;
+
   //endregion
   //region ListView.builder
   final _ItemBuilder<T> itemBuilder;
   final bool shrinkWrap;
   final EdgeInsets padding;
   final ScrollPhysics physics;
+
+  //endregion
+  //region RefreshIndicator
+  final RefreshCallback onRefresh;
+  final double refreshDisplacement;
+  final Color refreshColor;
+  final Color refreshBackgroundColor;
+  final ScrollNotificationPredicate notificationPredicate;
+
   //endregion
   final Widget divider;
 
   @override
   Widget build(BuildContext context) {
-    return PreferredStreamBuilder<List<T>>(
+    Widget result = PreferredStreamBuilder<List<T>>(
       stream: stream,
       showLoading: showLoading,
       initialData: initialData,
@@ -125,5 +142,17 @@ class StreamListView<T> extends StatelessWidget {
         );
       },
     );
+
+    if (onRefresh != null) {
+      result = RefreshIndicator(
+        child: result,
+        onRefresh: onRefresh,
+        displacement: refreshDisplacement,
+        color: refreshColor,
+        backgroundColor: refreshBackgroundColor,
+        notificationPredicate: notificationPredicate,
+      );
+    }
+    return result;
   }
 }
