@@ -82,7 +82,7 @@ class StreamListView<T> extends StatelessWidget {
     this.physics = const ClampingScrollPhysics(),
     this.divider,
     this.onRefresh,
-    this.refreshDisplacement,
+    this.refreshDisplacement = 40.0,
     this.refreshColor,
     this.refreshBackgroundColor,
     this.notificationPredicate = defaultScrollNotificationPredicate,
