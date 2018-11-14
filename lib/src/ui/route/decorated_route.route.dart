@@ -10,7 +10,6 @@ class DecoratedRoute<B extends BLoC> extends MaterialPageRoute {
     this.bloc,
     this.autoCloseKeyboard = true,
     this.init,
-    this.runtimeInfo,
     this.animate = true,
     this.lateinit = false,
     this.withForm = false,
@@ -41,9 +40,6 @@ class DecoratedRoute<B extends BLoC> extends MaterialPageRoute {
 
   /// 初始化方法
   final _InitAction<B> init;
-
-  /// 运行时的一些信息
-  final List<Event> runtimeInfo;
 
   /// 是否执行动画
   final bool animate;

@@ -20,7 +20,7 @@ dependencies:
   superpower: ^0.4.0
 
 dev_dependencies:
-  mockito: 3.0.0
+  mockito: 4.0.0
   flutter_test:
     sdk: flutter
 
