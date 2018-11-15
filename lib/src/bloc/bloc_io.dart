@@ -63,7 +63,7 @@ abstract class BaseIO<T> {
 
   /// 清理保存的值, 恢复成初始状态
   void clear() {
-    L.p('-------------------------------BEGIN---------------------------------\n'
+    L.p('-----------------------------BEGIN---------------------------------\n'
         '${semantics ??= runtimeType.toString()}事件 cleared '
         '\n------------------------------END----------------------------------');
     latest = seedValue;
@@ -72,7 +72,7 @@ abstract class BaseIO<T> {
 
   /// 关闭流
   void dispose() {
-    L.p('===============================BEGIN===============================\n'
+    L.p('=============================BEGIN===============================\n'
         '${semantics ??= runtimeType.toString()}事件 disposed '
         '\n==============================END================================');
     subject.close();
@@ -161,7 +161,7 @@ mixin InputMixin<T> on BaseIO<T> {
   _Equal _test;
 
   void add(T data) {
-    L.p('+++++++++++++++++++++++++BEGIN+++++++++++++++++++++++++++++\n'
+    L.p('+++++++++++++++++++++++++++BEGIN+++++++++++++++++++++++++++++\n'
         'IO接收到**${semantics ??= data.runtimeType.toString()}**数据: $data');
 
     if (isEmpty(data) && !_acceptEmpty) {
