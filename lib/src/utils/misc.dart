@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:framework/framework.dart';
 
-@Deprecated('用ErrorHandler代替')
 void handleError(BuildContext context, Object error) {
   if (error is DioError) {
     String message = '网络异常, 请检查网络设置';
