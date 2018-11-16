@@ -3,6 +3,7 @@ import 'package:framework/framework.dart';
 
 typedef Widget _ItemBuilder<T>(BuildContext context, T data);
 typedef Widget _ErrorPlaceholderBuilder(BuildContext context, Object error);
+typedef bool _Filter<T>(T element);
 
 class FutureListView<T> extends StatelessWidget {
   const FutureListView({
@@ -17,6 +18,7 @@ class FutureListView<T> extends StatelessWidget {
     this.padding,
     this.physics = const ClampingScrollPhysics(),
     this.divider,
+    this.where,
   }) : super(key: key);
 
   //region FutureWidget
@@ -35,6 +37,7 @@ class FutureListView<T> extends StatelessWidget {
 
   //endregion
   final Widget divider;
+  final _Filter where;
 
   @override
   Widget build(BuildContext context) {
@@ -45,21 +48,25 @@ class FutureListView<T> extends StatelessWidget {
       emptyPlaceholder: emptyPlaceholder,
       errorPlaceholderBuilder: errorPlaceholderBuilder,
       builder: (data) {
+        List<T> filteredData = data;
+        if (where != null) {
+          filteredData = data.where(where).toList();
+        }
         return ListView.builder(
           padding: padding,
           shrinkWrap: shrinkWrap,
           physics: physics,
-          itemCount: data.length ?? 0,
+          itemCount: filteredData.length ?? 0,
           itemBuilder: (context, index) {
-            if (index != data.length - 1 && divider != null) {
+            if (index != filteredData.length - 1 && divider != null) {
               return Column(
                 children: <Widget>[
-                  itemBuilder(context, data[index]),
+                  itemBuilder(context, filteredData[index]),
                   divider,
                 ],
               );
             } else {
-              return itemBuilder(context, data[index]);
+              return itemBuilder(context, filteredData[index]);
             }
           },
         );
@@ -86,6 +93,7 @@ class StreamListView<T> extends StatelessWidget {
     this.refreshColor,
     this.refreshBackgroundColor,
     this.notificationPredicate = defaultScrollNotificationPredicate,
+    this.where,
   }) : super(key: key);
 
   //region FutureWidget
@@ -112,6 +120,7 @@ class StreamListView<T> extends StatelessWidget {
 
   //endregion
   final Widget divider;
+  final _Filter where;
 
   @override
   Widget build(BuildContext context) {
@@ -122,21 +131,25 @@ class StreamListView<T> extends StatelessWidget {
       emptyPlaceholder: emptyPlaceholder,
       errorPlaceholderBuilder: errorPlaceholderBuilder,
       builder: (data) {
+        List<T> filteredData = data;
+        if (where != null) {
+          filteredData = data.where(where).toList();
+        }
         return ListView.builder(
           padding: padding,
           shrinkWrap: shrinkWrap,
           physics: physics,
-          itemCount: data.length ?? 0,
+          itemCount: filteredData.length ?? 0,
           itemBuilder: (context, index) {
-            if (index != data.length - 1 && divider != null) {
+            if (index != filteredData.length - 1 && divider != null) {
               return Column(
                 children: <Widget>[
-                  itemBuilder(context, data[index]),
+                  itemBuilder(context, filteredData[index]),
                   divider,
                 ],
               );
             } else {
-              return itemBuilder(context, data[index]);
+              return itemBuilder(context, filteredData[index]);
             }
           },
         );
