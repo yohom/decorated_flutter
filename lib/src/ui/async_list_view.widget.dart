@@ -37,7 +37,7 @@ class FutureListView<T> extends StatelessWidget {
 
   //endregion
   final Widget divider;
-  final _Filter where;
+  final _Filter<T> where;
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +120,7 @@ class StreamListView<T> extends StatelessWidget {
 
   //endregion
   final Widget divider;
-  final _Filter where;
+  final _Filter<T> where;
 
   @override
   Widget build(BuildContext context) {
