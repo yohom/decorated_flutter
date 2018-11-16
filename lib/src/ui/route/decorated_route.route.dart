@@ -13,6 +13,7 @@ class DecoratedRoute<B extends BLoC> extends MaterialPageRoute {
     this.animate = true,
     this.lateinit = false,
     this.withForm = false,
+    this.withAnalytics = true,
     String routeName,
     bool isInitialRoute = false,
     bool fullscreenDialog = false,
@@ -50,6 +51,9 @@ class DecoratedRoute<B extends BLoC> extends MaterialPageRoute {
   /// 是否带有表单
   final bool withForm;
 
+  /// 是否分析页面并上传
+  final bool withAnalytics;
+
   /// 是否已经初始化
   bool _inited = false;
 
@@ -68,6 +72,7 @@ class DecoratedRoute<B extends BLoC> extends MaterialPageRoute {
       result = BLoCProvider<B>(
         bloc: bloc,
         init: lateinit ? null : init, // 可以设置为null, BLoCProvider会处理的
+        withAnalytics: withAnalytics,
         child: builder(context),
       );
     } else {
