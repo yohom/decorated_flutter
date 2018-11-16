@@ -30,11 +30,6 @@ class BLoCProvider<T extends BLoC> extends StatefulWidget {
     return provider.bloc;
   }
 
-  /// 注册一个页面分析器
-  static void setPageAnalytics(PageAnalytics analytics) {
-    BLoCProvider.analytics = analytics;
-  }
-
   static Type _typeOf<T>() => T;
 }
 
@@ -46,7 +41,7 @@ class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
     if (isNotEmpty(widget.init)) widget.init(widget.bloc);
 
     if (BLoCProvider.analytics != null && widget.withAnalytics) {
-      BLoCProvider.analytics.onPageStart();
+      BLoCProvider.analytics.onPageStart(T.toString());
     }
   }
 
@@ -62,7 +57,7 @@ class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
   @override
   void dispose() {
     if (BLoCProvider.analytics != null && widget.withAnalytics) {
-      BLoCProvider.analytics.onPageEnd();
+      BLoCProvider.analytics.onPageEnd(T.toString());
     }
     widget.bloc.close();
     super.dispose();

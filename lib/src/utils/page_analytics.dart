@@ -1,5 +1,5 @@
 abstract class PageAnalytics {
-  void onPageStart();
+  void onPageStart(String page);
 
-  void onPageEnd();
+  void onPageEnd(String page);
 }
