@@ -43,7 +43,9 @@ void handleError(BuildContext context, Object error) {
 Future<T> loading<T>(BuildContext context, Future<T> futureTask) {
   showDialog(
     context: context,
-    builder: (context) => LoadingWidget(),
+    builder: (context) {
+      return WillPopScope(onWillPop: () async => false, child: LoadingWidget());
+    },
     barrierDismissible: false,
   );
   return futureTask.whenComplete(() {
