@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
+/// 连续点击返回按钮退出应用, 如果要使用默认的提示信息(由[SnackBar]实现)的话, 那么要放在[Scaffold]
+/// 下方!
 class DoubleBackExitApp extends StatefulWidget {
   const DoubleBackExitApp({
     Key key,
