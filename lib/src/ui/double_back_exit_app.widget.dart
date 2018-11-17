@@ -44,7 +44,13 @@ class _DoubleBackExitAppState extends State<DoubleBackExitApp> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.child;
+    return WillPopScope(
+      onWillPop: () {
+        _closeAppSubject.add(Object());
+        return Future.value(false);
+      },
+      child: widget.child,
+    );
   }
 
   @override
