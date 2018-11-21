@@ -30,3 +30,4 @@ export 'shadowed_box.widget.dart';
 export 'snap_list.widget.dart';
 export 'tap_tooltip.widget.dart';
 export 'unknown_route.screen.dart';
+export 'flex_bottom_sheet.widget.dart';
