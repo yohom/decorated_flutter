@@ -9,8 +9,8 @@ const double _kMinFlingVelocity = 700.0;
 const double _kCloseProgressThreshold = 0.5;
 
 /// 可以自由设置高度的bottom sheet, 就是解除了系统自带sheet的高度限制
-class FlexBottomSheet extends StatefulWidget {
-  const FlexBottomSheet({
+class FreeBottomSheet extends StatefulWidget {
+  const FreeBottomSheet({
     Key key,
     this.animationController,
     this.enableDrag = true,
@@ -34,7 +34,7 @@ class FlexBottomSheet extends StatefulWidget {
   final double elevation;
 
   @override
-  _FlexBottomSheetState createState() => _FlexBottomSheetState();
+  _FreeBottomSheetState createState() => _FreeBottomSheetState();
 
   static AnimationController createAnimationController(TickerProvider vsync) {
     return AnimationController(
@@ -45,7 +45,7 @@ class FlexBottomSheet extends StatefulWidget {
   }
 }
 
-class _FlexBottomSheetState extends State<FlexBottomSheet> {
+class _FreeBottomSheetState extends State<FreeBottomSheet> {
   final GlobalKey _childKey = GlobalKey(debugLabel: 'BottomSheet child');
 
   double get _childHeight {
@@ -174,7 +174,7 @@ class _ModalBottomSheetState<T> extends State<_ModalBottomSheet<T>> {
             child: ClipRect(
               child: CustomSingleChildLayout(
                 delegate: _ModalBottomSheetLayout(animationValue),
-                child: FlexBottomSheet(
+                child: FreeBottomSheet(
                   animationController: widget.route._animationController,
                   onClosing: () => Navigator.pop(context),
                   builder: widget.route.builder,
@@ -217,7 +217,7 @@ class _ModalBottomSheetRoute<T> extends PopupRoute<T> {
   AnimationController createAnimationController() {
     assert(_animationController == null);
     _animationController =
-        FlexBottomSheet.createAnimationController(navigator.overlay);
+        FreeBottomSheet.createAnimationController(navigator.overlay);
     return _animationController;
   }
 
@@ -236,7 +236,7 @@ class _ModalBottomSheetRoute<T> extends PopupRoute<T> {
   }
 }
 
-Future<T> showFlexModalBottomSheet<T>({
+Future<T> showFreeModalBottomSheet<T>({
   @required BuildContext context,
   @required WidgetBuilder builder,
 }) {
@@ -253,7 +253,7 @@ Future<T> showFlexModalBottomSheet<T>({
   );
 }
 
-PersistentBottomSheetController<T> showFlexBottomSheet<T>({
+PersistentBottomSheetController<T> showFreeBottomSheet<T>({
   @required BuildContext context,
   @required WidgetBuilder builder,
 }) {

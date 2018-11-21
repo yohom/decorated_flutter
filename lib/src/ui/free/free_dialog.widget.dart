@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 /// 解除了Material Design对于Dialog的边距限制的Dialog
 /// 大体部分之间拷贝了原始的[Dialog]类, 就修改了下[padding]
-class FlexDialog extends StatelessWidget {
-  const FlexDialog({
+class FreeDialog extends StatelessWidget {
+  const FreeDialog({
     Key key,
     this.child,
     this.insetAnimationDuration = const Duration(milliseconds: 100),
