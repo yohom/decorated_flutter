@@ -31,3 +31,4 @@ export 'snap_list.widget.dart';
 export 'tap_tooltip.widget.dart';
 export 'unknown_route.screen.dart';
 export 'free/free_bottom_sheet.widget.dart';
+export 'switcher.widget.dart';
