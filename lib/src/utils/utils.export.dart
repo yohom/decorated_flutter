@@ -1,5 +1,4 @@
 export 'base_param.dart';
-export 'device_info.dart';
 export 'empty_util.dart';
 export 'enums.dart';
 export 'faker/faker.dart';
