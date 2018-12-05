@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:framework/framework.dart';
+import 'package:decorated_flutter/framework.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../utils/log.dart';

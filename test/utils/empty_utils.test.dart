@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:framework/src/utils/empty_util.dart' as util;
+import 'package:decorated_flutter/src/utils/empty_util.dart' as util;
 
 void main() {
   group('isEmpty', () {

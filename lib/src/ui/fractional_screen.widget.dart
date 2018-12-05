@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:framework/framework.dart';
+import 'package:decorated_flutter/framework.dart';
 
 class FractionalScreen extends StatelessWidget {
   const FractionalScreen({

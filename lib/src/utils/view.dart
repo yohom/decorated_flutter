@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:framework/framework.dart';
-import 'package:framework/src/utils/enums.dart';
+import 'package:decorated_flutter/framework.dart';
+import 'package:decorated_flutter/src/utils/enums.dart';
 
 /// 显示信息底层方法, 当需要动态选择是错误还是正常信息时, 调用这个方法
 Future<SnackBarClosedReason> showMessage(

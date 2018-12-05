@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:framework/framework.dart';
+import 'package:decorated_flutter/framework.dart';
 import 'package:kiwi/kiwi.dart' as kiwi;
 
 import '../ui/loading.widget.dart';

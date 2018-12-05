@@ -1,4 +1,4 @@
-import 'package:framework/framework.dart';
+import 'package:decorated_flutter/framework.dart';
 
 mixin CaptchaManagerMixin on BLoC {
   @override

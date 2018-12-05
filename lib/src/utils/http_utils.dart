@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:framework/framework.dart';
+import 'package:decorated_flutter/framework.dart';
 
 class HttpUtils {
   HttpUtils._();

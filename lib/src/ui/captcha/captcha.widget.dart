@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:framework/src/ui/captcha/captcha_controller.dart';
+import 'package:decorated_flutter/src/ui/captcha/captcha_controller.dart';
 
 const _kInitLabel = '获取验证码';
 const _kRefetchLabel = '重新获取';

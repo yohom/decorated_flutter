@@ -1,4 +1,4 @@
-import 'package:framework/framework.dart';
+import 'package:decorated_flutter/framework.dart';
 
 class ValueBLoC<T> extends BLoC {
   final value = Event<T>();

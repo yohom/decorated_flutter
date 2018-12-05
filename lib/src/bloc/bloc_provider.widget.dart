@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:framework/framework.dart';
-import 'package:framework/src/bloc/bloc.dart';
-import 'package:framework/src/utils/page_analytics.dart';
+import 'package:decorated_flutter/framework.dart';
+import 'package:decorated_flutter/src/bloc/bloc.dart';
+import 'package:decorated_flutter/src/utils/page_analytics.dart';
 
 typedef void _Init<T extends BLoC>(T bloc);
 
