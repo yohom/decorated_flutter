@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:decorated_flutter/src/bloc/bloc_io.dart';
+import 'package:flutter/material.dart';
 
 /// 显示运行时信息的widget
 class Runtime extends StatefulWidget {

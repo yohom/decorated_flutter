@@ -1,6 +1,6 @@
+import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:decorated_flutter/decorated_flutter.dart';
 
 void main() {
   BaseParam param;

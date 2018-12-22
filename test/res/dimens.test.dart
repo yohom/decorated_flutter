@@ -1,6 +1,6 @@
+import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:decorated_flutter/decorated_flutter.dart';
 
 void main() {
   test('dimens测试, 对应的dimen要对应的上', () {
