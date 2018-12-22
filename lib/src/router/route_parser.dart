@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class RouteInfo {
   final String path;
   final Map<String, Object> arguments;
@@ -19,6 +21,20 @@ RouteInfo parseRoute(String routeName) {
       final keyValue = argumentEntry.split('=');
       arguments[keyValue[0]] = keyValue[1];
     });
+  } catch (e) {
+    arguments = {};
+  }
+  return RouteInfo(path, arguments);
+}
+
+RouteInfo parseJsonRoute(String routeName) {
+  //  分解出路径和参数
+  List<String> pathAndArguments = routeName.split('?');
+  // 获取路径
+  String path = pathAndArguments[0];
+  Map<String, Object> arguments = {};
+  try {
+    arguments = jsonDecode(pathAndArguments[1]);
   } catch (e) {
     arguments = {};
   }
