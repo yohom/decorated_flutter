@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:decorated_flutter/framework.dart';
+import 'package:decorated_flutter/decorated_flutter.dart';
 
 void main() {
   test('color测试, 对应的颜色应该符合预期', () {

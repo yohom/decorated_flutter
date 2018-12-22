@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:decorated_flutter/framework.dart';
+import 'package:decorated_flutter/decorated_flutter.dart';
 
 void main() {
   group('构造器相关测试:', () {

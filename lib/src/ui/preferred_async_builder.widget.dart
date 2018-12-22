@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:decorated_flutter/framework.dart';
+import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:meta/meta.dart';
 
 typedef Widget _Builder<DATA>(DATA data);
