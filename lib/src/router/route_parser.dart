@@ -7,6 +7,7 @@ class RouteInfo {
   RouteInfo(this.path, this.arguments);
 }
 
+@Deprecated('使用parseKeyValueRoute代替')
 RouteInfo parseRoute(String routeName) {
   //  分解出路径和参数
   List<String> pathAndArguments = routeName.split('?');
@@ -26,6 +27,8 @@ RouteInfo parseRoute(String routeName) {
   }
   return RouteInfo(path, arguments);
 }
+
+RouteInfo parseKeyValueRoute(String routeName) => parseRoute(routeName);
 
 RouteInfo parseJsonRoute(String routeName) {
   //  分解出路径和参数
