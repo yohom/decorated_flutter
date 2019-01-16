@@ -6,6 +6,21 @@ import 'package:rxdart/rxdart.dart';
 typedef bool _Equal<T>(T data1, T data2);
 typedef Future<T> _Trigger<T>();
 
+/// BLoC内的静态值, 也就是供初始化时的值, 之前都是直接写成字段, 这里提供一个类, 保持与IO的一致性
+class Static<T> {
+  T _content;
+
+  void set(T value) {
+    assert(_content == null);
+    if (_content != null) {
+      throw '';
+    }
+    _content = value;
+  }
+
+  T get() => _content;
+}
+
 abstract class BaseIO<T> {
   BaseIO({
     /// 初始值, 传递给内部的[subject]

@@ -5,22 +5,22 @@ import 'package:flutter/material.dart';
 /// If you're in profile mode, neither of the above will happen.
 class L {
   /// debug模式打印
-  static void d(String content) async {
+  static void d(Object content) async {
     assert(() {
-      debugPrint(content);
+      debugPrint(content.toString());
       return true;
     }());
   }
 
   /// profile模式打印
-  static void p(String content) async {
+  static void p(Object content) async {
     if (!bool.fromEnvironment('dart.vm.product')) {
-      debugPrint(content);
+      debugPrint(content.toString());
     }
   }
 
   /// release模式打印
-  static void r(String content) async {
-    debugPrint(content);
+  static void r(Object content) async {
+    debugPrint(content.toString());
   }
 }
