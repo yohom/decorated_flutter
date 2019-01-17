@@ -110,8 +110,8 @@ class Input<T> extends BaseIO<T> with InputMixin {
     String semantics,
     bool sync = true,
     bool isBehavior = false,
-    bool acceptEmpty = false,
-    bool isDistinct = true,
+    bool acceptEmpty = true,
+    bool isDistinct = false,
     _Equal test,
   }) : super(
           seedValue: seedValue,
@@ -151,8 +151,8 @@ class IO<T> extends BaseIO<T> with InputMixin, OutputMixin {
     String semantics,
     bool sync = true,
     bool isBehavior = false,
-    bool acceptEmpty = false,
-    bool isDistinct = true,
+    bool acceptEmpty = true,
+    bool isDistinct = false,
     _Equal test,
     _Trigger<T> trigger,
   }) : super(
