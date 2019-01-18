@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 typedef void _InitAction<T extends BLoC>(T bloc);
 
-class DecoratedRoute<B extends BLoC> extends MaterialPageRoute {
+/// [B]是指定的BLoC, [T]是Route的返回类型
+class DecoratedRoute<B extends BLoC, T extends Object>
+    extends MaterialPageRoute<T> {
   DecoratedRoute({
     Key key,
     @required this.screen,
