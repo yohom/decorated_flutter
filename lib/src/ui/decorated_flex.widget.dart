@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class DecoratedRow extends StatelessWidget {
+class DecoratedRow extends StatelessWidget with _AddItemMarginMixin {
   const DecoratedRow({
     Key key,
     this.padding,
@@ -19,6 +19,7 @@ class DecoratedRow extends StatelessWidget {
     this.onTap,
     this.onLongPress,
     this.behavior = HitTestBehavior.opaque,
+    this.itemMargin = 0,
     this.children,
   }) : super(key: key);
 
@@ -44,6 +45,7 @@ class DecoratedRow extends StatelessWidget {
   final VoidCallback onLongPress;
   final HitTestBehavior behavior;
   //endregion
+  final double itemMargin;
   final List<Widget> children;
 
   @override
@@ -67,14 +69,17 @@ class DecoratedRow extends StatelessWidget {
           mainAxisAlignment: mainAxisAlignment,
           mainAxisSize: mainAxisSize,
           crossAxisAlignment: crossAxisAlignment,
-          children: children,
+          children: itemMargin != 0
+              ? addItemMargin(children: children, itemMargin: itemMargin)
+                  .toList()
+              : children,
         ),
       ),
     );
   }
 }
 
-class DecoratedColumn extends StatelessWidget {
+class DecoratedColumn extends StatelessWidget with _AddItemMarginMixin {
   const DecoratedColumn({
     Key key,
     this.padding,
@@ -93,6 +98,7 @@ class DecoratedColumn extends StatelessWidget {
     this.onTap,
     this.onLongPress,
     this.behavior = HitTestBehavior.opaque,
+    this.itemMargin = 0,
     this.children,
   }) : super(key: key);
 
@@ -118,6 +124,7 @@ class DecoratedColumn extends StatelessWidget {
   final VoidCallback onLongPress;
   final HitTestBehavior behavior;
   //endregion
+  final double itemMargin;
   final List<Widget> children;
 
   @override
@@ -141,9 +148,34 @@ class DecoratedColumn extends StatelessWidget {
           mainAxisAlignment: mainAxisAlignment,
           mainAxisSize: mainAxisSize,
           crossAxisAlignment: crossAxisAlignment,
-          children: children,
+          children: itemMargin != 0
+              ? addItemMargin(children: children, itemMargin: itemMargin)
+                  .toList()
+              : children,
         ),
       ),
     );
+  }
+}
+
+mixin _AddItemMarginMixin on StatelessWidget {
+  Iterable<Widget> addItemMargin({
+    @required Iterable<Widget> children,
+    @required double itemMargin,
+  }) sync* {
+    assert(children != null);
+
+    final Iterator<Widget> iterator = children.iterator;
+    final bool isNotEmpty = iterator.moveNext();
+
+    Widget tile = iterator.current;
+    while (iterator.moveNext()) {
+      yield Container(
+        padding: EdgeInsets.only(bottom: itemMargin),
+        child: tile,
+      );
+      tile = iterator.current;
+    }
+    if (isNotEmpty) yield tile;
   }
 }
