@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 typedef bool _Equal<T>(T data1, T data2);
-typedef Future<T> _Trigger<T>();
+typedef Future<T> _Trigger<T>(Object arg);
 
 /// BLoC内的静态值, 也就是供初始化时的值, 之前都是直接写成字段, 这里提供一个类, 保持与IO的一致性
 class Static<T> {
@@ -21,6 +21,7 @@ class Static<T> {
   T get() => _content;
 }
 
+/// 业务单元基类
 abstract class BaseIO<T> {
   BaseIO({
     /// 初始值, 传递给内部的[subject]
@@ -104,6 +105,7 @@ abstract class BaseIO<T> {
   }
 }
 
+/// 只输入数据的业务单元
 class Input<T> extends BaseIO<T> with InputMixin {
   Input({
     T seedValue,
@@ -246,8 +248,8 @@ mixin OutputMixin<T> on BaseIO<T> {
   _Trigger<T> _trigger;
 
   /// 使用内部的trigger获取数据
-  Future<T> update() {
-    return _trigger()
+  Future<T> update([Object arg]) {
+    return _trigger(arg)
       ..then(subject.add)
       ..catchError(subject.addError);
   }
