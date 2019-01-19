@@ -19,7 +19,7 @@ class DecoratedRow extends StatelessWidget {
     this.onTap,
     this.onLongPress,
     this.behavior = HitTestBehavior.opaque,
-    this.itemMargin = 0,
+    this.itemSpacing = 0,
     this.children,
   }) : super(key: key);
 
@@ -48,7 +48,7 @@ class DecoratedRow extends StatelessWidget {
   final HitTestBehavior behavior;
 
   //endregion
-  final double itemMargin;
+  final double itemSpacing;
   final List<Widget> children;
 
   @override
@@ -71,7 +71,7 @@ class DecoratedRow extends StatelessWidget {
       onTap: onTap,
       onLongPress: onLongPress,
       behavior: behavior,
-      itemMargin: itemMargin,
+      itemSpacing: itemSpacing,
       children: children,
     );
   }
@@ -96,7 +96,7 @@ class DecoratedColumn extends StatelessWidget {
     this.onTap,
     this.onLongPress,
     this.behavior = HitTestBehavior.opaque,
-    this.itemMargin = 0,
+    this.itemSpacing = 0,
     this.children,
   }) : super(key: key);
 
@@ -125,7 +125,7 @@ class DecoratedColumn extends StatelessWidget {
   final HitTestBehavior behavior;
 
   //endregion
-  final double itemMargin;
+  final double itemSpacing;
   final List<Widget> children;
 
   @override
@@ -148,7 +148,7 @@ class DecoratedColumn extends StatelessWidget {
       onTap: onTap,
       onLongPress: onLongPress,
       behavior: behavior,
-      itemMargin: itemMargin,
+      itemSpacing: itemSpacing,
       children: children,
     );
   }
@@ -174,7 +174,7 @@ class DecoratedFlex extends StatelessWidget {
     this.onTap,
     this.onLongPress,
     this.behavior = HitTestBehavior.opaque,
-    this.itemMargin = 0,
+    this.itemSpacing = 0,
     this.children,
   }) : super(key: key);
 
@@ -204,7 +204,7 @@ class DecoratedFlex extends StatelessWidget {
   final HitTestBehavior behavior;
 
   //endregion
-  final double itemMargin;
+  final double itemSpacing;
   final List<Widget> children;
 
   @override
@@ -229,32 +229,41 @@ class DecoratedFlex extends StatelessWidget {
           mainAxisAlignment: mainAxisAlignment,
           mainAxisSize: mainAxisSize,
           crossAxisAlignment: crossAxisAlignment,
-          children: itemMargin != 0
-              ? addItemMargin(children: children, itemMargin: itemMargin)
-                  .toList()
+          children: itemSpacing != 0
+              ? addItemSpacing(children: children, itemSpacing: itemSpacing)
               : children,
         ),
       ),
     );
   }
 
-  Iterable<Widget> addItemMargin({
-    @required Iterable<Widget> children,
-    @required double itemMargin,
-  }) sync* {
+  List<Widget> addItemSpacing({
+    @required List<Widget> children,
+    @required double itemSpacing,
+  }) {
     assert(children != null);
 
-    final Iterator<Widget> iterator = children.iterator;
-    final bool isNotEmpty = iterator.moveNext();
+    // 确认要往哪几个index(以最终的插入后的List为参考系)插空间
+    int currentLength = children.length;
+    if (currentLength > 1) {
+      final indexes = <int>[];
+      // `currentLength + (currentLength - 1)`是插入后的长度
+      // 这里的循环是在纸上画过得出的结论
+      for (int i = 1; i < currentLength + (currentLength - 1); i += 2) {
+        indexes.add(i);
+      }
 
-    Widget tile = iterator.current;
-    while (iterator.moveNext()) {
-      yield Container(
-        padding: EdgeInsets.only(bottom: itemMargin),
-        child: tile,
-      );
-      tile = iterator.current;
+      if (direction == Axis.horizontal) {
+        indexes.forEach((index) {
+          children.insert(index, SizedBox(width: itemSpacing));
+        });
+      } else if (direction == Axis.vertical) {
+        indexes.forEach((index) {
+          children.insert(index, SizedBox(height: itemSpacing));
+        });
+      }
     }
-    if (isNotEmpty) yield tile;
+
+    return children;
   }
 }

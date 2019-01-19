@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -61,4 +63,15 @@ Future<T> loading<T>(BuildContext context, Future<T> futureTask) {
       Navigator.of(context, rootNavigator: true).pop(context);
     }
   });
+}
+
+Color highContrast(Color input) {
+  final grey = 0.2126 * math.pow(input.red / 255, 2.2) +
+      0.7151 * math.pow(input.green / 255, 2.2) +
+      0.0721 * math.pow(input.blue / 255, 2.2);
+  Color output = Colors.black;
+  if (grey <= 0.18) {
+    output = Colors.white;
+  }
+  return output;
 }
