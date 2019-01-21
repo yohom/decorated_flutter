@@ -209,11 +209,27 @@ class DecoratedFlex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: behavior,
-      onTap: onTap,
-      onLongPress: onLongPress,
-      child: Container(
+    Widget result = Flex(
+      direction: direction,
+      mainAxisAlignment: mainAxisAlignment,
+      mainAxisSize: mainAxisSize,
+      crossAxisAlignment: crossAxisAlignment,
+      children: itemSpacing != 0
+          ? addItemSpacing(children: children, itemSpacing: itemSpacing)
+          : children,
+    );
+
+    if (padding != null ||
+        margin != null ||
+        width != null ||
+        height != null ||
+        color != null ||
+        decoration != null ||
+        foregroundDecoration != null ||
+        constraints != null ||
+        transform != null ||
+        alignment != null) {
+      result = Container(
         padding: padding,
         margin: margin,
         width: width,
@@ -224,17 +240,19 @@ class DecoratedFlex extends StatelessWidget {
         constraints: constraints,
         transform: transform,
         alignment: alignment,
-        child: Flex(
-          direction: direction,
-          mainAxisAlignment: mainAxisAlignment,
-          mainAxisSize: mainAxisSize,
-          crossAxisAlignment: crossAxisAlignment,
-          children: itemSpacing != 0
-              ? addItemSpacing(children: children, itemSpacing: itemSpacing)
-              : children,
-        ),
-      ),
-    );
+        child: result,
+      );
+    }
+
+    if (behavior != null || onTap != null || onLongPress != null) {
+      result = GestureDetector(
+        behavior: behavior,
+        onTap: onTap,
+        onLongPress: onLongPress,
+        child: result,
+      );
+    }
+    return result;
   }
 
   List<Widget> addItemSpacing({
