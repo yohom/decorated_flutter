@@ -16,6 +16,7 @@ class DecoratedRow extends StatelessWidget {
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.mainAxisSize = MainAxisSize.max,
     this.crossAxisAlignment = CrossAxisAlignment.center,
+    this.textBaseline,
     this.onTap,
     this.onLongPress,
     this.behavior = HitTestBehavior.opaque,
@@ -40,6 +41,7 @@ class DecoratedRow extends StatelessWidget {
   final MainAxisAlignment mainAxisAlignment;
   final MainAxisSize mainAxisSize;
   final CrossAxisAlignment crossAxisAlignment;
+  final TextBaseline textBaseline;
 
   //endregion
   //region GestureDetector
@@ -68,6 +70,7 @@ class DecoratedRow extends StatelessWidget {
       mainAxisAlignment: mainAxisAlignment,
       mainAxisSize: mainAxisSize,
       crossAxisAlignment: crossAxisAlignment,
+      textBaseline: textBaseline,
       onTap: onTap,
       onLongPress: onLongPress,
       behavior: behavior,
@@ -93,6 +96,7 @@ class DecoratedColumn extends StatelessWidget {
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.mainAxisSize = MainAxisSize.max,
     this.crossAxisAlignment = CrossAxisAlignment.center,
+    this.textBaseline,
     this.onTap,
     this.onLongPress,
     this.behavior = HitTestBehavior.opaque,
@@ -117,6 +121,7 @@ class DecoratedColumn extends StatelessWidget {
   final MainAxisAlignment mainAxisAlignment;
   final MainAxisSize mainAxisSize;
   final CrossAxisAlignment crossAxisAlignment;
+  final TextBaseline textBaseline;
 
   //endregion
   //region GestureDetector
@@ -145,6 +150,7 @@ class DecoratedColumn extends StatelessWidget {
       mainAxisAlignment: mainAxisAlignment,
       mainAxisSize: mainAxisSize,
       crossAxisAlignment: crossAxisAlignment,
+      textBaseline: textBaseline,
       onTap: onTap,
       onLongPress: onLongPress,
       behavior: behavior,
@@ -171,6 +177,7 @@ class DecoratedFlex extends StatelessWidget {
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.mainAxisSize = MainAxisSize.max,
     this.crossAxisAlignment = CrossAxisAlignment.center,
+    this.textBaseline,
     this.onTap,
     this.onLongPress,
     this.behavior = HitTestBehavior.opaque,
@@ -196,6 +203,7 @@ class DecoratedFlex extends StatelessWidget {
   final MainAxisAlignment mainAxisAlignment;
   final MainAxisSize mainAxisSize;
   final CrossAxisAlignment crossAxisAlignment;
+  final TextBaseline textBaseline;
 
   //endregion
   //region GestureDetector
@@ -214,6 +222,7 @@ class DecoratedFlex extends StatelessWidget {
       mainAxisAlignment: mainAxisAlignment,
       mainAxisSize: mainAxisSize,
       crossAxisAlignment: crossAxisAlignment,
+      textBaseline: textBaseline,
       children: itemSpacing != 0
           ? addItemSpacing(children: children, itemSpacing: itemSpacing)
           : children,
