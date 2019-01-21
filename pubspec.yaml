@@ -6,7 +6,7 @@ homepage: https://github.com/yohom/decorated_flutter.git
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
-  
+
 dependencies:
   flutter:
     sdk: flutter
@@ -15,8 +15,6 @@ dependencies:
   cached_network_image: ^0.5.1
   intl: ^0.15.7
   kiwi: ^0.1.0
-  superpower: ^0.4.0
-  quiver: '>=2.0.0 <3.0.0'
 
 dev_dependencies:
   mockito: 4.0.0
