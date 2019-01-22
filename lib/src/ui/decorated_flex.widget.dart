@@ -16,10 +16,11 @@ class DecoratedRow extends StatelessWidget {
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.mainAxisSize = MainAxisSize.max,
     this.crossAxisAlignment = CrossAxisAlignment.center,
+    this.textBaseline,
     this.onTap,
     this.onLongPress,
     this.behavior = HitTestBehavior.opaque,
-    this.itemMargin = 0,
+    this.itemSpacing = 0,
     this.children,
   }) : super(key: key);
 
@@ -40,6 +41,7 @@ class DecoratedRow extends StatelessWidget {
   final MainAxisAlignment mainAxisAlignment;
   final MainAxisSize mainAxisSize;
   final CrossAxisAlignment crossAxisAlignment;
+  final TextBaseline textBaseline;
 
   //endregion
   //region GestureDetector
@@ -48,7 +50,7 @@ class DecoratedRow extends StatelessWidget {
   final HitTestBehavior behavior;
 
   //endregion
-  final double itemMargin;
+  final double itemSpacing;
   final List<Widget> children;
 
   @override
@@ -68,10 +70,11 @@ class DecoratedRow extends StatelessWidget {
       mainAxisAlignment: mainAxisAlignment,
       mainAxisSize: mainAxisSize,
       crossAxisAlignment: crossAxisAlignment,
+      textBaseline: textBaseline,
       onTap: onTap,
       onLongPress: onLongPress,
       behavior: behavior,
-      itemMargin: itemMargin,
+      itemSpacing: itemSpacing,
       children: children,
     );
   }
@@ -93,10 +96,11 @@ class DecoratedColumn extends StatelessWidget {
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.mainAxisSize = MainAxisSize.max,
     this.crossAxisAlignment = CrossAxisAlignment.center,
+    this.textBaseline,
     this.onTap,
     this.onLongPress,
     this.behavior = HitTestBehavior.opaque,
-    this.itemMargin = 0,
+    this.itemSpacing = 0,
     this.children,
   }) : super(key: key);
 
@@ -117,6 +121,7 @@ class DecoratedColumn extends StatelessWidget {
   final MainAxisAlignment mainAxisAlignment;
   final MainAxisSize mainAxisSize;
   final CrossAxisAlignment crossAxisAlignment;
+  final TextBaseline textBaseline;
 
   //endregion
   //region GestureDetector
@@ -125,7 +130,7 @@ class DecoratedColumn extends StatelessWidget {
   final HitTestBehavior behavior;
 
   //endregion
-  final double itemMargin;
+  final double itemSpacing;
   final List<Widget> children;
 
   @override
@@ -145,10 +150,11 @@ class DecoratedColumn extends StatelessWidget {
       mainAxisAlignment: mainAxisAlignment,
       mainAxisSize: mainAxisSize,
       crossAxisAlignment: crossAxisAlignment,
+      textBaseline: textBaseline,
       onTap: onTap,
       onLongPress: onLongPress,
       behavior: behavior,
-      itemMargin: itemMargin,
+      itemSpacing: itemSpacing,
       children: children,
     );
   }
@@ -171,10 +177,11 @@ class DecoratedFlex extends StatelessWidget {
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.mainAxisSize = MainAxisSize.max,
     this.crossAxisAlignment = CrossAxisAlignment.center,
+    this.textBaseline,
     this.onTap,
     this.onLongPress,
     this.behavior = HitTestBehavior.opaque,
-    this.itemMargin = 0,
+    this.itemSpacing = 0,
     this.children,
   }) : super(key: key);
 
@@ -196,6 +203,7 @@ class DecoratedFlex extends StatelessWidget {
   final MainAxisAlignment mainAxisAlignment;
   final MainAxisSize mainAxisSize;
   final CrossAxisAlignment crossAxisAlignment;
+  final TextBaseline textBaseline;
 
   //endregion
   //region GestureDetector
@@ -204,16 +212,33 @@ class DecoratedFlex extends StatelessWidget {
   final HitTestBehavior behavior;
 
   //endregion
-  final double itemMargin;
+  final double itemSpacing;
   final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: behavior,
-      onTap: onTap,
-      onLongPress: onLongPress,
-      child: Container(
+    Widget result = Flex(
+      direction: direction,
+      mainAxisAlignment: mainAxisAlignment,
+      mainAxisSize: mainAxisSize,
+      crossAxisAlignment: crossAxisAlignment,
+      textBaseline: textBaseline,
+      children: itemSpacing != 0
+          ? addItemSpacing(children: children, itemSpacing: itemSpacing)
+          : children,
+    );
+
+    if (padding != null ||
+        margin != null ||
+        width != null ||
+        height != null ||
+        color != null ||
+        decoration != null ||
+        foregroundDecoration != null ||
+        constraints != null ||
+        transform != null ||
+        alignment != null) {
+      result = Container(
         padding: padding,
         margin: margin,
         width: width,
@@ -224,37 +249,48 @@ class DecoratedFlex extends StatelessWidget {
         constraints: constraints,
         transform: transform,
         alignment: alignment,
-        child: Flex(
-          direction: direction,
-          mainAxisAlignment: mainAxisAlignment,
-          mainAxisSize: mainAxisSize,
-          crossAxisAlignment: crossAxisAlignment,
-          children: itemMargin != 0
-              ? addItemMargin(children: children, itemMargin: itemMargin)
-                  .toList()
-              : children,
-        ),
-      ),
-    );
+        child: result,
+      );
+    }
+
+    if (behavior != null || onTap != null || onLongPress != null) {
+      result = GestureDetector(
+        behavior: behavior,
+        onTap: onTap,
+        onLongPress: onLongPress,
+        child: result,
+      );
+    }
+    return result;
   }
 
-  Iterable<Widget> addItemMargin({
-    @required Iterable<Widget> children,
-    @required double itemMargin,
-  }) sync* {
+  List<Widget> addItemSpacing({
+    @required List<Widget> children,
+    @required double itemSpacing,
+  }) {
     assert(children != null);
 
-    final Iterator<Widget> iterator = children.iterator;
-    final bool isNotEmpty = iterator.moveNext();
+    // 确认要往哪几个index(以最终的插入后的List为参考系)插空间
+    int currentLength = children.length;
+    if (currentLength > 1) {
+      final indexes = <int>[];
+      // `currentLength + (currentLength - 1)`是插入后的长度
+      // 这里的循环是在纸上画过得出的结论
+      for (int i = 1; i < currentLength + (currentLength - 1); i += 2) {
+        indexes.add(i);
+      }
 
-    Widget tile = iterator.current;
-    while (iterator.moveNext()) {
-      yield Container(
-        padding: EdgeInsets.only(bottom: itemMargin),
-        child: tile,
-      );
-      tile = iterator.current;
+      if (direction == Axis.horizontal) {
+        indexes.forEach((index) {
+          children.insert(index, SizedBox(width: itemSpacing));
+        });
+      } else if (direction == Axis.vertical) {
+        indexes.forEach((index) {
+          children.insert(index, SizedBox(height: itemSpacing));
+        });
+      }
     }
-    if (isNotEmpty) yield tile;
+
+    return children;
   }
 }

@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 typedef bool _Equal<T>(T data1, T data2);
-typedef Future<T> _Trigger<T>();
+typedef Future<T> _Trigger<T>(Object arg);
 
 /// BLoC内的静态值, 也就是供初始化时的值, 之前都是直接写成字段, 这里提供一个类, 保持与IO的一致性
 class Static<T> {
@@ -21,6 +21,7 @@ class Static<T> {
   T get() => _content;
 }
 
+/// 业务单元基类
 abstract class BaseIO<T> {
   BaseIO({
     /// 初始值, 传递给内部的[subject]
@@ -104,6 +105,7 @@ abstract class BaseIO<T> {
   }
 }
 
+/// 只输入数据的业务单元
 class Input<T> extends BaseIO<T> with InputMixin {
   Input({
     T seedValue,
@@ -119,10 +121,31 @@ class Input<T> extends BaseIO<T> with InputMixin {
           sync: sync,
           isBehavior: isBehavior,
         ) {
-    this._acceptEmpty = acceptEmpty;
-    this._isDistinct = isDistinct;
-    this._test = test;
+    _acceptEmpty = acceptEmpty;
+    _isDistinct = isDistinct;
+    _test = test;
   }
+}
+
+/// 内部数据类型是[List]的输入业务单元
+class ListInput<T> extends Input<List<T>> with ListMixin {
+  ListInput({
+    List<T> seedValue,
+    String semantics,
+    bool sync = true,
+    bool isBehavior = false,
+    bool acceptEmpty = true,
+    bool isDistinct = false,
+    _Equal test,
+  }) : super(
+          seedValue: seedValue,
+          semantics: semantics,
+          sync: sync,
+          isBehavior: isBehavior,
+          acceptEmpty: acceptEmpty,
+          isDistinct: isDistinct,
+          test: test,
+        );
 }
 
 /// 只输出数据的业务单元
@@ -142,6 +165,23 @@ class Output<T> extends BaseIO<T> with OutputMixin {
     stream = subject.stream;
     _trigger = trigger;
   }
+}
+
+/// 内部数据类型是[List]的输出业务单元
+class ListOutput<T> extends Output<List<T>> with ListMixin {
+  ListOutput({
+    List<T> seedValue,
+    String semantics,
+    bool sync = true,
+    bool isBehavior = false,
+    @required _Trigger<List<T>> trigger,
+  }) : super(
+          seedValue: seedValue,
+          semantics: semantics,
+          sync: sync,
+          isBehavior: isBehavior,
+          trigger: trigger,
+        );
 }
 
 /// 既可以输入又可以输出的事件
@@ -170,6 +210,30 @@ class IO<T> extends BaseIO<T> with InputMixin, OutputMixin {
   }
 }
 
+/// 内部数据类型是[List]的输入输出业务单元
+class ListIO<T> extends IO<List<T>> with ListMixin {
+  ListIO({
+    List<T> seedValue,
+    String semantics,
+    bool sync = true,
+    bool isBehavior = false,
+    bool acceptEmpty = true,
+    bool isDistinct = false,
+    _Equal test,
+    _Trigger<List<T>> trigger,
+  }) : super(
+          seedValue: seedValue,
+          semantics: semantics,
+          sync: sync,
+          isBehavior: isBehavior,
+          acceptEmpty: acceptEmpty,
+          isDistinct: isDistinct,
+          test: test,
+          trigger: trigger,
+        );
+}
+
+/// 输入单元特有的成员
 mixin InputMixin<T> on BaseIO<T> {
   bool _acceptEmpty;
   bool _isDistinct;
@@ -221,6 +285,7 @@ mixin InputMixin<T> on BaseIO<T> {
   }
 }
 
+/// 输出单元特有的成员
 mixin OutputMixin<T> on BaseIO<T> {
   /// 输出Future
   Future<T> get future => stream.first;
@@ -246,9 +311,30 @@ mixin OutputMixin<T> on BaseIO<T> {
   _Trigger<T> _trigger;
 
   /// 使用内部的trigger获取数据
-  Future<T> update() {
-    return _trigger()
+  Future<T> update([Object arg]) {
+    return _trigger(arg)
       ..then(subject.add)
       ..catchError(subject.addError);
+  }
+}
+
+/// 内部数据是[List]特有的成员
+mixin ListMixin<T> on BaseIO<List<T>> {
+  /// 按条件过滤, 并发射过滤后的数据
+  ///
+  /// 这里有两种情况:
+  ///   1. [subject]是[PublishSubject], 那么直接发射即可, 不改变[latest]的值
+  ///   2. [subject]是[BehaviorSubject], 为了和[BehaviorSubject]内部的最新值同步, [latest]需要设置成过滤后的值
+  /// 这里的行为还没有最终定稿, 等用例多一些之后再做最终的行为定义.
+  void filterItem(bool test(T element)) {
+    if (subject is PublishSubject) {
+      subject.add(latest.where(test).toList());
+    } else if (subject is BehaviorSubject) {
+      final filtered = latest.where(test).toList();
+      subject.add(filtered);
+      latest = filtered;
+    }
+
+    L.d('ListMixin: $latest');
   }
 }

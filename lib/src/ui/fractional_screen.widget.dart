@@ -1,4 +1,3 @@
-import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 
 class FractionalScreen extends StatelessWidget {
@@ -65,8 +64,8 @@ class FractionalScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final content = SizedBox(
-      width: Global.screenWidth * widthFactor,
-      height: Global.screenHeight * heightFactor,
+      width: MediaQuery.of(context).size.width * widthFactor,
+      height: MediaQuery.of(context).size.height * heightFactor,
       child: Padding(
         padding: padding,
         child: Flex(
