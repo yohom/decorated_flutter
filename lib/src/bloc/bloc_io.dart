@@ -82,7 +82,6 @@ abstract class BaseIO<T> {
     L.p('-----------------------------BEGIN---------------------------------\n'
         '${semantics ??= runtimeType.toString()}事件 cleared '
         '\n------------------------------END----------------------------------');
-    latest = seedValue;
     subject.add(seedValue);
   }
 
