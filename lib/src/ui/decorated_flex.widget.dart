@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+typedef void PressedCallback(BuildContext context);
+
 class DecoratedRow extends StatelessWidget {
   const DecoratedRow({
     Key key,
@@ -17,8 +19,8 @@ class DecoratedRow extends StatelessWidget {
     this.mainAxisSize = MainAxisSize.max,
     this.crossAxisAlignment = CrossAxisAlignment.center,
     this.textBaseline,
-    this.onTap,
-    this.onLongPress,
+    this.onPressed,
+    this.onLongPressed,
     this.behavior = HitTestBehavior.opaque,
     this.itemSpacing = 0,
     this.visible = true,
@@ -47,8 +49,8 @@ class DecoratedRow extends StatelessWidget {
 
   //endregion
   //region GestureDetector
-  final VoidCallback onTap;
-  final VoidCallback onLongPress;
+  final PressedCallback onPressed;
+  final PressedCallback onLongPressed;
   final HitTestBehavior behavior;
 
   //endregion
@@ -75,8 +77,8 @@ class DecoratedRow extends StatelessWidget {
       mainAxisSize: mainAxisSize,
       crossAxisAlignment: crossAxisAlignment,
       textBaseline: textBaseline,
-      onTap: onTap,
-      onLongPress: onLongPress,
+      onPressed: onPressed,
+      onLongPressed: onLongPressed,
       behavior: behavior,
       itemSpacing: itemSpacing,
       visible: visible,
@@ -103,8 +105,8 @@ class DecoratedColumn extends StatelessWidget {
     this.mainAxisSize = MainAxisSize.max,
     this.crossAxisAlignment = CrossAxisAlignment.center,
     this.textBaseline,
-    this.onTap,
-    this.onLongPress,
+    this.onPressed,
+    this.onLongPressed,
     this.behavior = HitTestBehavior.opaque,
     this.itemSpacing = 0,
     this.visible = true,
@@ -133,8 +135,8 @@ class DecoratedColumn extends StatelessWidget {
 
   //endregion
   //region GestureDetector
-  final VoidCallback onTap;
-  final VoidCallback onLongPress;
+  final PressedCallback onPressed;
+  final PressedCallback onLongPressed;
   final HitTestBehavior behavior;
 
   //endregion
@@ -161,8 +163,8 @@ class DecoratedColumn extends StatelessWidget {
       mainAxisSize: mainAxisSize,
       crossAxisAlignment: crossAxisAlignment,
       textBaseline: textBaseline,
-      onTap: onTap,
-      onLongPress: onLongPress,
+      onPressed: onPressed,
+      onLongPressed: onLongPressed,
       behavior: behavior,
       itemSpacing: itemSpacing,
       visible: visible,
@@ -190,8 +192,8 @@ class DecoratedFlex extends StatelessWidget {
     this.mainAxisSize = MainAxisSize.max,
     this.crossAxisAlignment = CrossAxisAlignment.center,
     this.textBaseline,
-    this.onTap,
-    this.onLongPress,
+    this.onPressed,
+    this.onLongPressed,
     this.behavior = HitTestBehavior.opaque,
     this.itemSpacing = 0,
     this.visible = true,
@@ -221,8 +223,8 @@ class DecoratedFlex extends StatelessWidget {
 
   //endregion
   //region GestureDetector
-  final VoidCallback onTap;
-  final VoidCallback onLongPress;
+  final PressedCallback onPressed;
+  final PressedCallback onLongPressed;
   final HitTestBehavior behavior;
 
   //endregion
@@ -269,11 +271,11 @@ class DecoratedFlex extends StatelessWidget {
       );
     }
 
-    if (behavior != null || onTap != null || onLongPress != null) {
+    if (behavior != null || onPressed != null || onLongPressed != null) {
       result = GestureDetector(
         behavior: behavior,
-        onTap: onTap,
-        onLongPress: onLongPress,
+        onTap: () => onPressed(context),
+        onLongPress: () => onLongPressed(context),
         child: result,
       );
     }
