@@ -21,6 +21,7 @@ class DecoratedRow extends StatelessWidget {
     this.onLongPress,
     this.behavior = HitTestBehavior.opaque,
     this.itemSpacing = 0,
+    this.visible = true,
     this.children,
   }) : super(key: key);
 
@@ -51,6 +52,7 @@ class DecoratedRow extends StatelessWidget {
 
   //endregion
   final double itemSpacing;
+  final bool visible;
   final List<Widget> children;
 
   @override
@@ -75,6 +77,7 @@ class DecoratedRow extends StatelessWidget {
       onLongPress: onLongPress,
       behavior: behavior,
       itemSpacing: itemSpacing,
+      visible: visible,
       children: children,
     );
   }
@@ -101,6 +104,7 @@ class DecoratedColumn extends StatelessWidget {
     this.onLongPress,
     this.behavior = HitTestBehavior.opaque,
     this.itemSpacing = 0,
+    this.visible = true,
     this.children,
   }) : super(key: key);
 
@@ -131,6 +135,7 @@ class DecoratedColumn extends StatelessWidget {
 
   //endregion
   final double itemSpacing;
+  final bool visible;
   final List<Widget> children;
 
   @override
@@ -155,6 +160,7 @@ class DecoratedColumn extends StatelessWidget {
       onLongPress: onLongPress,
       behavior: behavior,
       itemSpacing: itemSpacing,
+      visible: visible,
       children: children,
     );
   }
@@ -182,6 +188,7 @@ class DecoratedFlex extends StatelessWidget {
     this.onLongPress,
     this.behavior = HitTestBehavior.opaque,
     this.itemSpacing = 0,
+    this.visible = true,
     this.children,
   }) : super(key: key);
 
@@ -213,6 +220,7 @@ class DecoratedFlex extends StatelessWidget {
 
   //endregion
   final double itemSpacing;
+  final bool visible;
   final List<Widget> children;
 
   @override
@@ -261,7 +269,7 @@ class DecoratedFlex extends StatelessWidget {
         child: result,
       );
     }
-    return result;
+    return Visibility(visible: visible, child: result);
   }
 
   List<Widget> addItemSpacing({
