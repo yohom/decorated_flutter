@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 typedef Widget _ItemBuilder<T>(BuildContext context, T data);
 typedef Widget _ErrorPlaceholderBuilder(BuildContext context, Object error);
 typedef bool _Filter<T>(T element);
+typedef bool _EqualCallback<T>(T t1, T t2);
 
 class FutureListView<T> extends StatelessWidget {
   const FutureListView({
@@ -76,7 +77,7 @@ class FutureListView<T> extends StatelessWidget {
 }
 
 class StreamListView<T> extends StatelessWidget {
-  const StreamListView({
+  StreamListView({
     Key key,
     @required this.stream,
     @required this.itemBuilder,
@@ -89,12 +90,23 @@ class StreamListView<T> extends StatelessWidget {
     this.physics = const ClampingScrollPhysics(),
     this.divider,
     this.onRefresh,
+    this.onLoadMore,
+    this.controller,
     this.refreshDisplacement = 40.0,
     this.refreshColor,
     this.refreshBackgroundColor,
     this.notificationPredicate = defaultScrollNotificationPredicate,
     this.where,
-  }) : super(key: key);
+    this.incremental = false,
+    this.distinct = false,
+  })  : assert(onLoadMore != null && controller != null || onLoadMore == null),
+        super(key: key) {
+    controller?.addListener(() {
+      if (controller?.position?.maxScrollExtent == controller?.offset) {
+        if (onLoadMore != null) onLoadMore();
+      }
+    });
+  }
 
   //region FutureWidget
   final Stream<List<T>> stream;
@@ -113,6 +125,8 @@ class StreamListView<T> extends StatelessWidget {
   //endregion
   //region RefreshIndicator
   final RefreshCallback onRefresh;
+  final RefreshCallback onLoadMore;
+  final ScrollController controller;
   final double refreshDisplacement;
   final Color refreshColor;
   final Color refreshBackgroundColor;
@@ -121,6 +135,10 @@ class StreamListView<T> extends StatelessWidget {
   //endregion
   final Widget divider;
   final _Filter<T> where;
+  final bool incremental;
+  final bool distinct;
+
+  final _cachedList = <T>[];
 
   @override
   Widget build(BuildContext context) {
@@ -131,14 +149,26 @@ class StreamListView<T> extends StatelessWidget {
       emptyPlaceholder: emptyPlaceholder,
       errorPlaceholderBuilder: errorPlaceholderBuilder,
       builder: (data) {
-        List<T> filteredData = data;
-        if (where != null) {
-          filteredData = data.where(where).toList();
+        List<T> filteredData = _cachedList;
+        if (incremental) {
+          filteredData.addAll(data);
+        } else {
+          filteredData = data;
         }
+
+        if (where != null) {
+          filteredData = filteredData.where(where).toList();
+        }
+
+        if (distinct) {
+          filteredData = filteredData.toSet().toList();
+        }
+
         return ListView.builder(
           padding: padding,
           shrinkWrap: shrinkWrap,
           physics: physics,
+          controller: controller,
           itemCount: filteredData.length ?? 0,
           itemBuilder: (context, index) {
             if (index != filteredData.length - 1 && divider != null) {
@@ -159,7 +189,10 @@ class StreamListView<T> extends StatelessWidget {
     if (onRefresh != null) {
       result = RefreshIndicator(
         child: result,
-        onRefresh: onRefresh,
+        onRefresh: () {
+          _cachedList.clear();
+          return onRefresh();
+        },
         displacement: refreshDisplacement,
         color: refreshColor,
         backgroundColor: refreshBackgroundColor,
