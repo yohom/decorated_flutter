@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 typedef Widget _ItemBuilder<T>(BuildContext context, T data);
 typedef Widget _ErrorPlaceholderBuilder(BuildContext context, Object error);
 typedef bool _Filter<T>(T element);
-typedef bool _EqualCallback<T>(T t1, T t2);
 
 class FutureListView<T> extends StatelessWidget {
   const FutureListView({
@@ -102,8 +101,14 @@ class StreamListView<T> extends StatelessWidget {
   })  : assert(onLoadMore != null && controller != null || onLoadMore == null),
         super(key: key) {
     controller?.addListener(() {
-      if (controller?.position?.maxScrollExtent == controller?.offset) {
-        if (onLoadMore != null) onLoadMore();
+      if (controller.position.maxScrollExtent == controller.offset) {
+        if (onLoadMore != null && !_inLoading.value) {
+          _inLoading.value = true;
+          onLoadMore().whenComplete(() {
+            L.p('加载更多完成');
+            _inLoading.value = false;
+          });
+        }
       }
     });
   }
@@ -139,6 +144,7 @@ class StreamListView<T> extends StatelessWidget {
   final bool distinct;
 
   final _cachedList = <T>[];
+  final _inLoading = Value(false);
 
   @override
   Widget build(BuildContext context) {
