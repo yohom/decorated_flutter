@@ -10,7 +10,7 @@ Future<SnackBarClosedReason> showMessage(
   String content, {
   ErrorLevel errorLevel = ErrorLevel.none,
   bool isExit = false, // show完了是否退出本页
-  Type exitTo, // 退出到对应页面
+  String exitTo, // 退出到对应页面
   Duration duration = const Duration(milliseconds: 1500),
 }) {
   L.d('messge: $content');
@@ -37,9 +37,9 @@ Future<SnackBarClosedReason> showMessage(
       .closed
       .then((_) {
     if (isNotEmpty(exitTo)) {
-      Router.popTo(context, exitTo);
+      Navigator.popUntil(context, ModalRoute.withName(exitTo));
     } else if (isExit) {
-      Router.pop(context);
+      Navigator.pop(context);
     }
   });
 }
@@ -49,7 +49,7 @@ Future<SnackBarClosedReason> showError(
   BuildContext context,
   String content, {
   bool isExit = false, // show完了是否退出本页
-  Type exitTo, // 退出到对应页面
+  String exitTo, // 退出到对应页面
   Duration duration = const Duration(milliseconds: 1500),
 }) {
   return showMessage(
@@ -67,7 +67,7 @@ Future<SnackBarClosedReason> showInfo(
   BuildContext context,
   String content, {
   bool isExit = false, // show完了是否退出本页
-  Type exitTo, // 退出到对应页面
+  String exitTo, // 退出到对应页面
   Duration duration = const Duration(milliseconds: 1500),
 }) {
   return showMessage(
@@ -85,7 +85,7 @@ Future<SnackBarClosedReason> showWarn(
   BuildContext context,
   String content, {
   bool isExit = false, // show完了是否退出本页
-  Type exitTo, // 退出到对应页面
+  String exitTo, // 退出到对应页面
   Duration duration = const Duration(milliseconds: 1500),
 }) {
   return showMessage(
