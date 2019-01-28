@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 typedef bool _Equal<T>(T data1, T data2);
-typedef Future<T> _Trigger<T>(Object arg);
+typedef Future<T> _Trigger<T>(dynamic arg);
 
 /// BLoC内的静态值, 也就是供初始化时的值, 之前都是直接写成字段, 这里提供一个类, 保持与IO的一致性
 class Static<T> {
@@ -320,20 +320,7 @@ mixin OutputMixin<T> on BaseIO<T> {
 /// 内部数据是[List]特有的成员
 mixin ListMixin<T> on BaseIO<List<T>> {
   /// 按条件过滤, 并发射过滤后的数据
-  ///
-  /// 这里有两种情况:
-  ///   1. [subject]是[PublishSubject], 那么直接发射即可, 不改变[latest]的值
-  ///   2. [subject]是[BehaviorSubject], 为了和[BehaviorSubject]内部的最新值同步, [latest]需要设置成过滤后的值
-  /// 这里的行为还没有最终定稿, 等用例多一些之后再做最终的行为定义.
   void filterItem(bool test(T element)) {
-    if (subject is PublishSubject) {
-      subject.add(latest.where(test).toList());
-    } else if (subject is BehaviorSubject) {
-      final filtered = latest.where(test).toList();
-      subject.add(filtered);
-      latest = filtered;
-    }
-
-    L.d('ListMixin: $latest');
+    subject.add(latest.where(test).toList());
   }
 }

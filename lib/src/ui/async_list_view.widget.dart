@@ -90,7 +90,7 @@ class StreamListView<T> extends StatelessWidget {
     this.divider,
     this.onRefresh,
     this.onLoadMore,
-    this.controller,
+    ScrollController controller,
     this.refreshDisplacement = 40.0,
     this.refreshColor,
     this.refreshBackgroundColor,
@@ -98,9 +98,9 @@ class StreamListView<T> extends StatelessWidget {
     this.where,
     this.incremental = false,
     this.distinct = false,
-  })  : assert(onLoadMore != null && controller != null || onLoadMore == null),
+  })  : _controller = controller ?? ScrollController(),
         super(key: key) {
-    controller?.addListener(() {
+    _controller?.addListener(() {
       if (controller.position.maxScrollExtent == controller.offset) {
         if (onLoadMore != null && !_inLoading.value) {
           _inLoading.value = true;
@@ -131,7 +131,7 @@ class StreamListView<T> extends StatelessWidget {
   //region RefreshIndicator
   final RefreshCallback onRefresh;
   final RefreshCallback onLoadMore;
-  final ScrollController controller;
+  final ScrollController _controller;
   final double refreshDisplacement;
   final Color refreshColor;
   final Color refreshBackgroundColor;
@@ -174,7 +174,7 @@ class StreamListView<T> extends StatelessWidget {
           padding: padding,
           shrinkWrap: shrinkWrap,
           physics: physics,
-          controller: controller,
+          controller: _controller,
           itemCount: filteredData.length ?? 0,
           itemBuilder: (context, index) {
             if (index != filteredData.length - 1 && divider != null) {
