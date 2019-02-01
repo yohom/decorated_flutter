@@ -1,8 +1,15 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+
+typedef void _HandlerErrorCallback(Object error);
+
+_HandlerErrorCallback handle(BuildContext context) {
+  return (Object error) => handleError(context, error);
+}
 
 void handleError(BuildContext context, Object error) {
   if (error is DioError) {

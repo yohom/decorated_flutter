@@ -12,7 +12,6 @@ dependencies:
     sdk: flutter
   dio: ^1.0.13
   rxdart:  ^0.20.0
-  cached_network_image: ^0.5.1
   intl: ^0.15.7
   kiwi: ^0.1.0
 
