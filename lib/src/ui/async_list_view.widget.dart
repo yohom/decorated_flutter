@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 
@@ -101,7 +103,7 @@ class StreamListView<T> extends StatelessWidget {
   })  : _controller = controller ?? ScrollController(),
         super(key: key) {
     _controller?.addListener(() {
-      if (controller.position.maxScrollExtent == controller.offset) {
+      if (_controller.position.maxScrollExtent == _controller.offset) {
         if (onLoadMore != null && !_inLoading.value) {
           _inLoading.value = true;
           onLoadMore().whenComplete(() {
