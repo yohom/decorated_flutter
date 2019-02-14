@@ -1,3 +1,11 @@
+## [0.1.3]
+
+- bugfix: async_list_view的bug处理
+- enhancement: dio升级2.0.2
+- enhancement: [break change] 去除cached_network_image; 错误处理方法优化
+- enhancement: StreamListView默认ScrollController
+- enhancement: [break change] showMessage方法的exitTo参数换成String类型的路由参数, 替换Deprecated的Type参数
+
 ## [0.1.2]
 
 - enhancement: 增加Value类, 把一些简单的StatefulWidget转换回StatelessWidget;
