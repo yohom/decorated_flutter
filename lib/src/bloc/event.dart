@@ -39,7 +39,7 @@ class Event<T> {
         _acceptNull = acceptNull,
         _semantics = semantics {
     _subject = isBehavior
-        ? BehaviorSubject<T>(seedValue: seedValue, sync: sync)
+        ? BehaviorSubject<T>.seeded(seedValue, sync: sync)
         : PublishSubject<T>(sync: sync);
 
     stream = _subject.stream;
