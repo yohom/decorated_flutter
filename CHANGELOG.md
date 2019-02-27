@@ -1,3 +1,7 @@
+## [0.1.4]
+- enhancement: 升级依赖
+- bugfix: DecoratedFlex的onPressed问题
+
 ## [0.1.3]
 
 - bugfix: async_list_view的bug处理
