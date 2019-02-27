@@ -40,7 +40,7 @@ abstract class BaseIO<T> {
     bool isBehavior = false,
   }) {
     subject = isBehavior
-        ? BehaviorSubject<T>(seedValue: seedValue, sync: sync)
+        ? BehaviorSubject<T>.seeded(seedValue, sync: sync)
         : PublishSubject<T>(sync: sync);
 
     subject.listen((data) {
