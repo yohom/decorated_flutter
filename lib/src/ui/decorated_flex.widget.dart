@@ -273,13 +273,12 @@ class DecoratedFlex extends StatelessWidget {
 
     if (behavior != null || onPressed != null || onLongPressed != null) {
       result = GestureDetector(
-        behavior: behavior,
-        onTap: () {
-          if (onPressed != null) onPressed(context);
-        },
-        onLongPress: () {
-          if (onLongPressed != null) onLongPressed(context);
-        },
+        behavior: behavior == null ?? result != null
+            ? HitTestBehavior.deferToChild
+            : HitTestBehavior.translucent,
+        onTap: onPressed != null ? () => onPressed(context) : null,
+        onLongPress:
+            onLongPressed != null ? () => onLongPressed(context) : null,
         child: result,
       );
     }
