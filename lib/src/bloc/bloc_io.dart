@@ -8,21 +8,6 @@ import 'package:rxdart/rxdart.dart';
 typedef bool _Equal<T>(T data1, T data2);
 typedef Future<T> _Trigger<T>(dynamic arg);
 
-/// BLoC内的静态值, 也就是供初始化时的值, 之前都是直接写成字段, 这里提供一个类, 保持与IO的一致性
-class Static<T> {
-  T _content;
-
-  void set(T value) {
-    assert(_content == null);
-    if (_content != null) {
-      throw '';
-    }
-    _content = value;
-  }
-
-  T get() => _content;
-}
-
 /// 业务单元基类
 abstract class BaseIO<T> {
   BaseIO({
@@ -103,6 +88,33 @@ abstract class BaseIO<T> {
   @override
   String toString() {
     return 'Output{latest: $latest, seedValue: $seedValue, semantics: $semantics, subject: $subject}';
+  }
+}
+
+/// BLoC内的静态值, 也就是供初始化时的值, 之前都是直接写成字段, 这里提供一个类, 保持与IO的一致性
+class Static<T> {
+  T _content;
+
+  void set(T value) {
+    assert(_content == null);
+    if (_content != null) {
+      throw '';
+    }
+    _content = value;
+  }
+
+  T get() => _content;
+}
+
+/// 依赖BLoC内的其他单元的单元
+class Action extends BaseIO {
+  Future perform() {
+    subject.add(Object());
+    return subject.first;
+  }
+
+  void bind(VoidCallback handler) {
+    subject.listen((_) => handler());
   }
 }
 

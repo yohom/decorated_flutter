@@ -6,10 +6,15 @@ abstract class BLoC {
   /// BLoC代表的语义
   String semantics;
 
-  BLoC([this.semantics]);
+  BLoC([this.semantics]) {
+    bindAction();
+  }
 
   /// 对应[State]的[reassemble]方法
   void reassemble() {}
+
+  /// 绑定Action和对应的方法
+  void bindAction() {}
 
   @mustCallSuper
   void close() {
