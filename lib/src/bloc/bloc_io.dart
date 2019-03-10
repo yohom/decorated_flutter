@@ -106,18 +106,6 @@ class Static<T> {
   T get() => _content;
 }
 
-/// 依赖BLoC内的其他单元的单元
-class Action extends BaseIO {
-  Future perform() {
-    subject.add(Object());
-    return subject.first;
-  }
-
-  void bind(VoidCallback handler) {
-    subject.listen((_) => handler());
-  }
-}
-
 /// 只输入数据的业务单元
 class Input<T> extends BaseIO<T> with InputMixin {
   Input({

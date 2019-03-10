@@ -2,24 +2,20 @@ import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:decorated_flutter/src/bloc/bloc_io.dart';
 import 'package:meta/meta.dart';
 
+@immutable
 abstract class BLoC {
   /// BLoC代表的语义
-  String semantics;
+  final String semantics;
 
-  BLoC([this.semantics]) {
-    bindAction();
-  }
+  BLoC([this.semantics]);
 
   /// 对应[State]的[reassemble]方法
   void reassemble() {}
 
-  /// 绑定Action和对应的方法
-  void bindAction() {}
-
   @mustCallSuper
   void close() {
     L.p('=============================================\n'
-        '${semantics ??= runtimeType.toString()} closed '
+        '${semantics ?? runtimeType.toString()} closed '
         '\n=============================================');
   }
 }
@@ -28,7 +24,7 @@ abstract class BLoC {
 abstract class RootBLoC extends BLoC {
   RootBLoC([String semantics]) : super(semantics);
 
-  List<GlobalBLoC> get globalBLoCList;
+  List<GlobalBLoC> get globalBLoCList => [];
 
   @override
   void close() {
@@ -43,7 +39,7 @@ abstract class LocalBLoC extends BLoC {
   LocalBLoC([String semantics]) : super(semantics);
 
   /// 所有的event集合, 主要是提供给RuntimeScaffold使用
-  List<BaseIO> get ioList;
+  List<BaseIO> get ioList => [];
 
   @override
   void close() {
@@ -58,7 +54,7 @@ abstract class GlobalBLoC extends BLoC {
   GlobalBLoC([String semantics]) : super(semantics);
 
   /// 所有的event集合, 主要是提供给RuntimeScaffold使用
-  List<BaseIO> get ioList;
+  List<BaseIO> get ioList => [];
 
   @override
   void close() {
