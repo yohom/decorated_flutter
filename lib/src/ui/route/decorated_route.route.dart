@@ -25,7 +25,8 @@ class DecoratedRoute<B extends BLoC, T extends Object>
   })  : // 要么同时设置泛型B和bloc参数, 要么就都不设置
         assert((B != BLoC && bloc != null) || (B == BLoC && bloc == null)),
         // 如果withDefaultTabController为true, 那么必须设置tabLength
-        assert(withDefaultTabController && tabLength != null),
+        assert((withDefaultTabController && tabLength != null) ||
+            !withDefaultTabController),
         super(
           fullscreenDialog: fullscreenDialog,
           maintainState: maintainState,
