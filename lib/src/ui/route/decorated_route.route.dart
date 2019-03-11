@@ -16,12 +16,16 @@ class DecoratedRoute<B extends BLoC, T extends Object>
     this.lateinit = false,
     this.withForm = false,
     this.withAnalytics = true,
+    this.withDefaultTabController = false,
+    this.tabLength,
     String routeName,
     bool isInitialRoute = false,
     bool fullscreenDialog = false,
     bool maintainState = true,
-  })  : assert((B != BLoC && bloc != null) ||
-            (B == BLoC && bloc == null)), // 要么同时设置泛型B和bloc参数, 要么就都不设置
+  })  : // 要么同时设置泛型B和bloc参数, 要么就都不设置
+        assert((B != BLoC && bloc != null) || (B == BLoC && bloc == null)),
+        // 如果withDefaultTabController为true, 那么必须设置tabLength
+        assert(withDefaultTabController && tabLength != null),
         super(
           fullscreenDialog: fullscreenDialog,
           maintainState: maintainState,
@@ -56,6 +60,12 @@ class DecoratedRoute<B extends BLoC, T extends Object>
   /// 是否分析页面并上传
   final bool withAnalytics;
 
+  /// 是否含有TabBar
+  final bool withDefaultTabController;
+
+  /// tab bar长度, 必须和[withDefaultTabController]一起设置
+  final int tabLength;
+
   /// 是否已经初始化
   bool _inited = false;
 
@@ -89,6 +99,10 @@ class DecoratedRoute<B extends BLoC, T extends Object>
     // 是否带有表单
     if (withForm) {
       result = Form(child: result);
+    }
+
+    if (withDefaultTabController) {
+      result = DefaultTabController(length: tabLength, child: result);
     }
     return result;
   }
