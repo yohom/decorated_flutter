@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  dio: ^2.0.10
+  dio: ^2.1.0
   rxdart:  ^0.21.0
   intl: ^0.15.7
   kiwi: ^0.1.0
