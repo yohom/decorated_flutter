@@ -1,3 +1,11 @@
+## [0.1.5]
+- chore: 提升dio版本
+- feature: async_list_view增加endWithDivider参数, 配置列表结尾是否有divider
+- bugfix: withDefaultTabController的assert的bug
+- feature: decorated_route增加withDefaultTabController和tabLength参数
+- enhancement: BLoC标记为@immutable
+- [break change] chore: trigger -> fetch
+
 ## [0.1.4]
 - enhancement: 升级依赖
 - bugfix: DecoratedFlex的onPressed问题
