@@ -91,9 +91,14 @@ abstract class BaseIO<T> {
   }
 }
 
+typedef T Getter<T>();
+
 /// BLoC内的静态值, 也就是供初始化时的值, 之前都是直接写成字段, 这里提供一个类, 保持与IO的一致性
 class Static<T> {
   T _content;
+  Getter _getter;
+
+  Static({Getter getter}) : _getter = getter;
 
   void set(T value) {
     assert(_content == null);
@@ -103,7 +108,7 @@ class Static<T> {
     _content = value;
   }
 
-  T get() => _content;
+  T get() => _getter != null ? _getter() : _content;
 }
 
 /// 只输入数据的业务单元
