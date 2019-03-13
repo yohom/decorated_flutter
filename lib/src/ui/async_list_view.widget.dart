@@ -20,6 +20,7 @@ class FutureListView<T> extends StatelessWidget {
     this.padding,
     this.physics = const ClampingScrollPhysics(),
     this.divider,
+    this.endWithDivider = false,
     this.where,
   }) : super(key: key);
 
@@ -39,6 +40,7 @@ class FutureListView<T> extends StatelessWidget {
 
   //endregion
   final Widget divider;
+  final bool endWithDivider;
   final _Filter<T> where;
 
   @override
@@ -60,7 +62,9 @@ class FutureListView<T> extends StatelessWidget {
           physics: physics,
           itemCount: filteredData.length ?? 0,
           itemBuilder: (context, index) {
-            if (index != filteredData.length - 1 && divider != null) {
+            if (divider == null) {
+              return itemBuilder(context, filteredData[index]);
+            } else if (endWithDivider) {
               return Column(
                 children: <Widget>[
                   itemBuilder(context, filteredData[index]),
@@ -68,7 +72,16 @@ class FutureListView<T> extends StatelessWidget {
                 ],
               );
             } else {
-              return itemBuilder(context, filteredData[index]);
+              if (index < filteredData.length - 1) {
+                return Column(
+                  children: <Widget>[
+                    itemBuilder(context, filteredData[index]),
+                    divider,
+                  ],
+                );
+              } else {
+                return itemBuilder(context, filteredData[index]);
+              }
             }
           },
         );
@@ -100,6 +113,7 @@ class StreamListView<T> extends StatelessWidget {
     this.where,
     this.incremental = false,
     this.distinct = false,
+    this.endWithDivider = false,
   })  : _controller = controller ?? ScrollController(),
         super(key: key) {
     _controller?.addListener(() {
@@ -144,6 +158,7 @@ class StreamListView<T> extends StatelessWidget {
   final _Filter<T> where;
   final bool incremental;
   final bool distinct;
+  final bool endWithDivider;
 
   final _cachedList = <T>[];
   final _inLoading = Value(false);
@@ -179,7 +194,9 @@ class StreamListView<T> extends StatelessWidget {
           controller: _controller,
           itemCount: filteredData.length ?? 0,
           itemBuilder: (context, index) {
-            if (index != filteredData.length - 1 && divider != null) {
+            if (divider == null) {
+              return itemBuilder(context, filteredData[index]);
+            } else if (endWithDivider) {
               return Column(
                 children: <Widget>[
                   itemBuilder(context, filteredData[index]),
@@ -187,7 +204,16 @@ class StreamListView<T> extends StatelessWidget {
                 ],
               );
             } else {
-              return itemBuilder(context, filteredData[index]);
+              if (index < filteredData.length - 1) {
+                return Column(
+                  children: <Widget>[
+                    itemBuilder(context, filteredData[index]),
+                    divider,
+                  ],
+                );
+              } else {
+                return itemBuilder(context, filteredData[index]);
+              }
             }
           },
         );

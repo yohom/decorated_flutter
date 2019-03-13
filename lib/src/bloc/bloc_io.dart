@@ -6,22 +6,7 @@ import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 typedef bool _Equal<T>(T data1, T data2);
-typedef Future<T> _Trigger<T>(dynamic arg);
-
-/// BLoC内的静态值, 也就是供初始化时的值, 之前都是直接写成字段, 这里提供一个类, 保持与IO的一致性
-class Static<T> {
-  T _content;
-
-  void set(T value) {
-    assert(_content == null);
-    if (_content != null) {
-      throw '';
-    }
-    _content = value;
-  }
-
-  T get() => _content;
-}
+typedef Future<T> _Fetch<T>(dynamic arg);
 
 /// 业务单元基类
 abstract class BaseIO<T> {
@@ -106,6 +91,21 @@ abstract class BaseIO<T> {
   }
 }
 
+/// BLoC内的静态值, 也就是供初始化时的值, 之前都是直接写成字段, 这里提供一个类, 保持与IO的一致性
+class Static<T> {
+  T _content;
+
+  void set(T value) {
+    assert(_content == null);
+    if (_content != null) {
+      throw '';
+    }
+    _content = value;
+  }
+
+  T get() => _content;
+}
+
 /// 只输入数据的业务单元
 class Input<T> extends BaseIO<T> with InputMixin {
   Input({
@@ -156,7 +156,7 @@ class Output<T> extends BaseIO<T> with OutputMixin {
     String semantics,
     bool sync = true,
     bool isBehavior = false,
-    @required _Trigger<T> trigger,
+    @required _Fetch<T> fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -164,7 +164,7 @@ class Output<T> extends BaseIO<T> with OutputMixin {
           isBehavior: isBehavior,
         ) {
     stream = subject.stream;
-    _trigger = trigger;
+    _fetch = fetch;
   }
 }
 
@@ -175,13 +175,13 @@ class ListOutput<T> extends Output<List<T>> with ListMixin {
     String semantics,
     bool sync = true,
     bool isBehavior = false,
-    @required _Trigger<List<T>> trigger,
+    @required _Fetch<List<T>> fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
           sync: sync,
           isBehavior: isBehavior,
-          trigger: trigger,
+          fetch: fetch,
         );
 }
 
@@ -195,7 +195,7 @@ class IO<T> extends BaseIO<T> with InputMixin, OutputMixin {
     bool acceptEmpty = true,
     bool isDistinct = false,
     _Equal test,
-    _Trigger<T> trigger,
+    _Fetch<T> fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -207,7 +207,7 @@ class IO<T> extends BaseIO<T> with InputMixin, OutputMixin {
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
     _test = test;
-    _trigger = trigger;
+    _fetch = fetch;
   }
 }
 
@@ -221,7 +221,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin {
     bool acceptEmpty = true,
     bool isDistinct = false,
     _Equal test,
-    _Trigger<List<T>> trigger,
+    _Fetch<List<T>> fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -230,7 +230,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin {
           acceptEmpty: acceptEmpty,
           isDistinct: isDistinct,
           test: test,
-          trigger: trigger,
+          fetch: fetch,
         );
 }
 
@@ -309,11 +309,11 @@ mixin OutputMixin<T> on BaseIO<T> {
   }
 
   /// 输出Stream
-  _Trigger<T> _trigger;
+  _Fetch<T> _fetch;
 
   /// 使用内部的trigger获取数据
   Future<T> update([Object arg]) {
-    return _trigger(arg)
+    return _fetch(arg)
       ..then(subject.add)
       ..catchError(subject.addError);
   }
