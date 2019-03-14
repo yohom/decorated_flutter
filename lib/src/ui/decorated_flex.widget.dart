@@ -56,8 +56,10 @@ class DecoratedRow extends StatelessWidget {
   //endregion
   /// item间距
   final double itemSpacing;
+
   /// 是否可见
   final bool visible;
+
   /// 垂直方向上Expand
   final bool crossExpanded;
   final List<Widget> children;

@@ -16,6 +16,7 @@ export 'fractional_screen.widget.dart';
 export 'free/free_bottom_sheet.widget.dart';
 export 'free/free_dialog.widget.dart';
 export 'loading.widget.dart';
+export 'notification_badge.widget.dart';
 export 'parallax_box.widget.dart';
 export 'picker/picker.dart';
 export 'picker/picker_item.dart';
