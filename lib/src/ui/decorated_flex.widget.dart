@@ -24,7 +24,7 @@ class DecoratedRow extends StatelessWidget {
     this.behavior = HitTestBehavior.opaque,
     this.itemSpacing = 0,
     this.visible = true,
-    this.expanded = false,
+    this.crossExpanded = false,
     this.children,
   }) : super(key: key);
 
@@ -54,9 +54,12 @@ class DecoratedRow extends StatelessWidget {
   final HitTestBehavior behavior;
 
   //endregion
+  /// item间距
   final double itemSpacing;
+  /// 是否可见
   final bool visible;
-  final bool expanded;
+  /// 垂直方向上Expand
+  final bool crossExpanded;
   final List<Widget> children;
 
   @override
@@ -82,7 +85,7 @@ class DecoratedRow extends StatelessWidget {
       behavior: behavior,
       itemSpacing: itemSpacing,
       visible: visible,
-      expanded: expanded,
+      crossExpanded: crossExpanded,
       children: children,
     );
   }
@@ -110,7 +113,7 @@ class DecoratedColumn extends StatelessWidget {
     this.behavior = HitTestBehavior.opaque,
     this.itemSpacing = 0,
     this.visible = true,
-    this.expanded = false,
+    this.crossExpanded = false,
     this.children,
   }) : super(key: key);
 
@@ -142,7 +145,7 @@ class DecoratedColumn extends StatelessWidget {
   //endregion
   final double itemSpacing;
   final bool visible;
-  final bool expanded;
+  final bool crossExpanded;
   final List<Widget> children;
 
   @override
@@ -168,7 +171,7 @@ class DecoratedColumn extends StatelessWidget {
       behavior: behavior,
       itemSpacing: itemSpacing,
       visible: visible,
-      expanded: expanded,
+      crossExpanded: crossExpanded,
       children: children,
     );
   }
@@ -197,7 +200,7 @@ class DecoratedFlex extends StatelessWidget {
     this.behavior = HitTestBehavior.opaque,
     this.itemSpacing = 0,
     this.visible = true,
-    this.expanded = false,
+    this.crossExpanded = false,
     this.children,
   }) : super(key: key);
 
@@ -230,7 +233,7 @@ class DecoratedFlex extends StatelessWidget {
   //endregion
   final double itemSpacing;
   final bool visible;
-  final bool expanded;
+  final bool crossExpanded;
   final List<Widget> children;
 
   @override
@@ -283,7 +286,7 @@ class DecoratedFlex extends StatelessWidget {
       );
     }
 
-    if (expanded) {
+    if (crossExpanded) {
       result = Expanded(child: result);
     }
     return Visibility(visible: visible, child: result);
