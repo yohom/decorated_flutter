@@ -93,7 +93,8 @@ class FutureListView<T> extends StatelessWidget {
 class StreamListView<T> extends StatelessWidget {
   StreamListView({
     Key key,
-    @required this.stream,
+    this.stream,
+    this.incrementalStream,
     @required this.itemBuilder,
     this.shrinkWrap = true,
     this.showLoading = true,
@@ -115,6 +116,9 @@ class StreamListView<T> extends StatelessWidget {
     this.distinct = false,
     this.endWithDivider = false,
   })  : _controller = controller ?? ScrollController(),
+        // 如果是增量, 那么incrementalStream必须不为空且stream必须为空; 反之只能设置stream不为空
+        assert((incremental && incrementalStream != null && stream == null) ||
+            (!incremental && stream != null && incrementalStream == null)),
         super(key: key) {
     _controller?.addListener(() {
       if (_controller.position.maxScrollExtent == _controller.offset) {
@@ -131,6 +135,7 @@ class StreamListView<T> extends StatelessWidget {
 
   //region FutureWidget
   final Stream<List<T>> stream;
+  final Stream<T> incrementalStream;
   final bool showLoading;
   final List<T> initialData;
   final Widget emptyPlaceholder;
@@ -166,7 +171,7 @@ class StreamListView<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget result = PreferredStreamBuilder<List<T>>(
-      stream: stream,
+      stream: incremental ? incrementalStream.map((it) => [it]) : stream,
       showLoading: showLoading,
       initialData: initialData,
       emptyPlaceholder: emptyPlaceholder,
