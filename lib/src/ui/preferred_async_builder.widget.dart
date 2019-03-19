@@ -45,6 +45,7 @@ class PreferredFutureBuilder<T> extends StatelessWidget {
       future: future,
       builder: (ctx, snapshot) {
         if (snapshot.hasError) {
+          L.p(snapshot.error);
           if (errorPlaceholderBuilder != null) {
             return errorPlaceholderBuilder(context, snapshot.error);
           } else {
@@ -106,6 +107,7 @@ class PreferredStreamBuilder<T> extends StatelessWidget {
       stream: stream,
       builder: (ctx, snapshot) {
         if (snapshot.hasError) {
+          L.p(snapshot.error);
           if (errorPlaceholderBuilder != null) {
             return errorPlaceholderBuilder(context, snapshot.error);
           } else {

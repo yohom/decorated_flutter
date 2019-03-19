@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 
-typedef Widget _ItemBuilder<T>(BuildContext context, T data);
+typedef Widget _ItemBuilder<T>(BuildContext context, T data, T lastData);
 typedef Widget _ErrorPlaceholderBuilder(BuildContext context, Object error);
 typedef bool _Filter<T>(T element);
 
@@ -19,6 +19,7 @@ class FutureListView<T> extends StatelessWidget {
     this.errorPlaceholderBuilder,
     this.padding,
     this.physics = const ClampingScrollPhysics(),
+    this.reverse = false,
     this.divider,
     this.endWithDivider = false,
     this.where,
@@ -37,6 +38,7 @@ class FutureListView<T> extends StatelessWidget {
   final bool shrinkWrap;
   final EdgeInsets padding;
   final ScrollPhysics physics;
+  final bool reverse;
 
   //endregion
   final Widget divider;
@@ -60,29 +62,18 @@ class FutureListView<T> extends StatelessWidget {
           padding: padding,
           shrinkWrap: shrinkWrap,
           physics: physics,
+          reverse: reverse,
           itemCount: filteredData.length ?? 0,
           itemBuilder: (context, index) {
-            if (divider == null) {
-              return itemBuilder(context, filteredData[index]);
-            } else if (endWithDivider) {
-              return Column(
-                children: <Widget>[
-                  itemBuilder(context, filteredData[index]),
-                  divider,
-                ],
-              );
-            } else {
-              if (index < filteredData.length - 1) {
-                return Column(
-                  children: <Widget>[
-                    itemBuilder(context, filteredData[index]),
-                    divider,
-                  ],
-                );
-              } else {
-                return itemBuilder(context, filteredData[index]);
-              }
-            }
+            return _buildItem(
+              context,
+              filteredData,
+              index,
+              reverse,
+              endWithDivider,
+              divider,
+              itemBuilder,
+            );
           },
         );
       },
@@ -103,6 +94,7 @@ class StreamListView<T> extends StatelessWidget {
     this.errorPlaceholderBuilder,
     this.padding,
     this.physics = const ClampingScrollPhysics(),
+    this.reverse = false,
     this.divider,
     this.onRefresh,
     this.onLoadMore,
@@ -147,6 +139,7 @@ class StreamListView<T> extends StatelessWidget {
   final bool shrinkWrap;
   final EdgeInsets padding;
   final ScrollPhysics physics;
+  final bool reverse;
 
   //endregion
   //region RefreshIndicator
@@ -196,30 +189,19 @@ class StreamListView<T> extends StatelessWidget {
           padding: padding,
           shrinkWrap: shrinkWrap,
           physics: physics,
+          reverse: reverse,
           controller: _controller,
           itemCount: filteredData.length ?? 0,
           itemBuilder: (context, index) {
-            if (divider == null) {
-              return itemBuilder(context, filteredData[index]);
-            } else if (endWithDivider) {
-              return Column(
-                children: <Widget>[
-                  itemBuilder(context, filteredData[index]),
-                  divider,
-                ],
-              );
-            } else {
-              if (index < filteredData.length - 1) {
-                return Column(
-                  children: <Widget>[
-                    itemBuilder(context, filteredData[index]),
-                    divider,
-                  ],
-                );
-              } else {
-                return itemBuilder(context, filteredData[index]);
-              }
-            }
+            return _buildItem(
+              context,
+              filteredData,
+              index,
+              reverse,
+              endWithDivider,
+              divider,
+              itemBuilder,
+            );
           },
         );
       },
@@ -239,5 +221,44 @@ class StreamListView<T> extends StatelessWidget {
       );
     }
     return result;
+  }
+}
+
+Widget _buildItem<T>(
+  BuildContext context,
+  List<T> filteredData,
+  int index,
+  bool reverse,
+  bool endWithDivider,
+  Widget divider,
+  _ItemBuilder<T> itemBuilder,
+) {
+  final data = filteredData[index];
+  T lastData;
+  if (reverse) {
+    lastData = index < filteredData.length - 1 ? filteredData[index + 1] : null;
+  } else {
+    lastData = index > 0 ? filteredData[index - 1] : null;
+  }
+  if (divider == null) {
+    return itemBuilder(context, data, lastData);
+  } else if (endWithDivider) {
+    return Column(
+      children: <Widget>[
+        itemBuilder(context, data, lastData),
+        divider,
+      ],
+    );
+  } else {
+    if (index < filteredData.length - 1) {
+      return Column(
+        children: <Widget>[
+          itemBuilder(context, data, lastData),
+          divider,
+        ],
+      );
+    } else {
+      return itemBuilder(context, data, lastData);
+    }
   }
 }
