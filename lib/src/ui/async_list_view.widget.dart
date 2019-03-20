@@ -21,6 +21,7 @@ class FutureListView<T> extends StatelessWidget {
     this.physics = const ClampingScrollPhysics(),
     this.reverse = false,
     this.divider,
+    this.startWithDivider = false,
     this.endWithDivider = false,
     this.where,
   }) : super(key: key);
@@ -42,6 +43,7 @@ class FutureListView<T> extends StatelessWidget {
 
   //endregion
   final Widget divider;
+  final bool startWithDivider;
   final bool endWithDivider;
   final _Filter<T> where;
 
@@ -70,6 +72,7 @@ class FutureListView<T> extends StatelessWidget {
               filteredData,
               index,
               reverse,
+              startWithDivider,
               endWithDivider,
               divider,
               itemBuilder,
@@ -106,6 +109,7 @@ class StreamListView<T> extends StatelessWidget {
     this.where,
     this.incremental = false,
     this.distinct = false,
+    this.startWithDivider = false,
     this.endWithDivider = false,
   })  : _controller = controller ?? ScrollController(),
         // 如果是增量, 那么incrementalStream必须不为空且stream必须为空; 反之只能设置stream不为空
@@ -156,6 +160,7 @@ class StreamListView<T> extends StatelessWidget {
   final _Filter<T> where;
   final bool incremental;
   final bool distinct;
+  final bool startWithDivider;
   final bool endWithDivider;
 
   final _cachedList = <T>[];
@@ -198,6 +203,7 @@ class StreamListView<T> extends StatelessWidget {
               filteredData,
               index,
               reverse,
+              startWithDivider,
               endWithDivider,
               divider,
               itemBuilder,
@@ -229,6 +235,7 @@ Widget _buildItem<T>(
   List<T> filteredData,
   int index,
   bool reverse,
+  bool startWithDivider,
   bool endWithDivider,
   Widget divider,
   _ItemBuilder<T> itemBuilder,
@@ -242,6 +249,14 @@ Widget _buildItem<T>(
   }
   if (divider == null) {
     return itemBuilder(context, data, lastData);
+  } else if (startWithDivider && index == 0) {
+    return Column(
+      children: <Widget>[
+        divider,
+        itemBuilder(context, data, lastData),
+        divider,
+      ],
+    );
   } else if (endWithDivider) {
     if (reverse) {
       return Column(
