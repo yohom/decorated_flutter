@@ -111,6 +111,7 @@ class StreamListView<T> extends StatelessWidget {
     this.distinct = false,
     this.startWithDivider = false,
     this.endWithDivider = false,
+    this.insertFromHead = false,
   })  : _controller = controller ?? ScrollController(),
         // 如果是增量, 那么incrementalStream必须不为空且stream必须为空; 反之只能设置stream不为空
         assert((incremental && incrementalStream != null && stream == null) ||
@@ -157,11 +158,24 @@ class StreamListView<T> extends StatelessWidget {
 
   //endregion
   final Widget divider;
+
+  /// 过滤器
   final _Filter<T> where;
+
+  /// 是否增量刷新
   final bool incremental;
+
+  /// 元素是否唯一
   final bool distinct;
+
+  /// 头部插入divider
   final bool startWithDivider;
+
+  /// 尾部插入divider
   final bool endWithDivider;
+
+  /// 从开头插入
+  final bool insertFromHead;
 
   final _cachedList = <T>[];
   final _inLoading = Value(false);
@@ -177,7 +191,11 @@ class StreamListView<T> extends StatelessWidget {
       builder: (data) {
         List<T> filteredData = _cachedList;
         if (incremental) {
-          filteredData.addAll(data);
+          if (insertFromHead) {
+            filteredData.insertAll(0, data);
+          } else {
+            filteredData.addAll(data);
+          }
         } else {
           filteredData = data;
         }
