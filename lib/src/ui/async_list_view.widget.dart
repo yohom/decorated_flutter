@@ -243,20 +243,38 @@ Widget _buildItem<T>(
   if (divider == null) {
     return itemBuilder(context, data, lastData);
   } else if (endWithDivider) {
-    return Column(
-      children: <Widget>[
-        itemBuilder(context, data, lastData),
-        divider,
-      ],
-    );
-  } else {
-    if (index < filteredData.length - 1) {
+    if (reverse) {
+      return Column(
+        children: <Widget>[
+          divider,
+          itemBuilder(context, data, lastData),
+        ],
+      );
+    } else {
       return Column(
         children: <Widget>[
           itemBuilder(context, data, lastData),
           divider,
         ],
       );
+    }
+  } else {
+    if (index < filteredData.length - 1) {
+      if (reverse) {
+        return Column(
+          children: <Widget>[
+            divider,
+            itemBuilder(context, data, lastData),
+          ],
+        );
+      } else {
+        return Column(
+          children: <Widget>[
+            itemBuilder(context, data, lastData),
+            divider,
+          ],
+        );
+      }
     } else {
       return itemBuilder(context, data, lastData);
     }
