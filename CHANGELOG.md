@@ -1,3 +1,10 @@
+## [0.1.6]
+- enhancement: reverse和divider配合
+- enhancement: async_list_view.widget的itemBuilder增加lastData参数
+- enhancement: 优化StreamListView的incremental相关功能
+- feature: 增加notification_badge
+- enhancement: decorated_flex的expanded -> crossExpanded, 语义准确一点
+
 ## [0.1.5]
 - chore: 提升dio版本
 - feature: async_list_view增加endWithDivider参数, 配置列表结尾是否有divider
