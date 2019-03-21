@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 
-typedef Widget _ItemBuilder<T>(BuildContext context, T data, T lastData);
+typedef Widget _ItemBuilder<T>(BuildContext context, T data);
 typedef Widget _ErrorPlaceholderBuilder(BuildContext context, Object error);
 typedef bool _Filter<T>(T element);
 
@@ -259,19 +259,13 @@ Widget _buildItem<T>(
   _ItemBuilder<T> itemBuilder,
 ) {
   final data = filteredData[index];
-  T lastData;
-  if (reverse) {
-    lastData = index < filteredData.length - 1 ? filteredData[index + 1] : null;
-  } else {
-    lastData = index > 0 ? filteredData[index - 1] : null;
-  }
   if (divider == null) {
-    return itemBuilder(context, data, lastData);
+    return itemBuilder(context, data);
   } else if (startWithDivider && index == 0) {
     return Column(
       children: <Widget>[
         divider,
-        itemBuilder(context, data, lastData),
+        itemBuilder(context, data),
         divider,
       ],
     );
@@ -280,13 +274,13 @@ Widget _buildItem<T>(
       return Column(
         children: <Widget>[
           divider,
-          itemBuilder(context, data, lastData),
+          itemBuilder(context, data),
         ],
       );
     } else {
       return Column(
         children: <Widget>[
-          itemBuilder(context, data, lastData),
+          itemBuilder(context, data),
           divider,
         ],
       );
@@ -297,19 +291,19 @@ Widget _buildItem<T>(
         return Column(
           children: <Widget>[
             divider,
-            itemBuilder(context, data, lastData),
+            itemBuilder(context, data),
           ],
         );
       } else {
         return Column(
           children: <Widget>[
-            itemBuilder(context, data, lastData),
+            itemBuilder(context, data),
             divider,
           ],
         );
       }
     } else {
-      return itemBuilder(context, data, lastData);
+      return itemBuilder(context, data);
     }
   }
 }
