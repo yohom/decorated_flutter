@@ -29,6 +29,7 @@ class PreferredFutureBuilder<T> extends StatelessWidget {
     this.initialData,
     this.emptyPlaceholder,
     this.errorPlaceholderBuilder,
+    this.loadingPlaceholder,
   }) : super(key: key);
 
   final Future<T> future;
@@ -37,6 +38,7 @@ class PreferredFutureBuilder<T> extends StatelessWidget {
   final T initialData;
   final Widget emptyPlaceholder;
   final _ErrorPlaceholderBuilder errorPlaceholderBuilder;
+  final Widget loadingPlaceholder;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +64,7 @@ class PreferredFutureBuilder<T> extends StatelessWidget {
             return builder(snapshot.data);
           }
         } else if (showLoading) {
-          return LoadingWidget();
+          return loadingPlaceholder ?? LoadingWidget();
         } else {
           return SizedBox.shrink();
         }
@@ -91,6 +93,7 @@ class PreferredStreamBuilder<T> extends StatelessWidget {
     this.initialData,
     this.emptyPlaceholder,
     this.errorPlaceholderBuilder,
+    this.loadingPlaceholder,
   }) : super(key: key);
 
   final Stream<T> stream;
@@ -99,6 +102,7 @@ class PreferredStreamBuilder<T> extends StatelessWidget {
   final T initialData;
   final Widget emptyPlaceholder;
   final _ErrorPlaceholderBuilder errorPlaceholderBuilder;
+  final Widget loadingPlaceholder;
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +128,7 @@ class PreferredStreamBuilder<T> extends StatelessWidget {
             return builder(snapshot.data);
           }
         } else if (showLoading) {
-          return LoadingWidget();
+          return loadingPlaceholder ?? LoadingWidget();
         } else {
           return SizedBox.shrink();
         }
