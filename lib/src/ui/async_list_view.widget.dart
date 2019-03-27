@@ -16,6 +16,7 @@ class FutureListView<T> extends StatelessWidget {
     this.showLoading = true,
     this.initialData,
     this.emptyPlaceholder,
+    this.loadingPlaceholder,
     this.errorPlaceholderBuilder,
     this.padding,
     this.physics = const ClampingScrollPhysics(),
@@ -31,6 +32,7 @@ class FutureListView<T> extends StatelessWidget {
   final bool showLoading;
   final List<T> initialData;
   final Widget emptyPlaceholder;
+  final Widget loadingPlaceholder;
   final _ErrorPlaceholderBuilder errorPlaceholderBuilder;
 
   //endregion
@@ -54,6 +56,7 @@ class FutureListView<T> extends StatelessWidget {
       showLoading: showLoading,
       initialData: initialData,
       emptyPlaceholder: emptyPlaceholder,
+      loadingPlaceholder: loadingPlaceholder,
       errorPlaceholderBuilder: errorPlaceholderBuilder,
       builder: (data) {
         List<T> filteredData = data;
@@ -94,6 +97,7 @@ class StreamListView<T> extends StatelessWidget {
     this.showLoading = true,
     this.initialData,
     this.emptyPlaceholder,
+    this.loadingPlaceholder,
     this.errorPlaceholderBuilder,
     this.padding,
     this.physics = const ClampingScrollPhysics(),
@@ -136,6 +140,7 @@ class StreamListView<T> extends StatelessWidget {
   final bool showLoading;
   final List<T> initialData;
   final Widget emptyPlaceholder;
+  final Widget loadingPlaceholder;
   final _ErrorPlaceholderBuilder errorPlaceholderBuilder;
 
   //endregion
@@ -187,6 +192,7 @@ class StreamListView<T> extends StatelessWidget {
       showLoading: showLoading,
       initialData: initialData,
       emptyPlaceholder: emptyPlaceholder,
+      loadingPlaceholder: loadingPlaceholder,
       errorPlaceholderBuilder: errorPlaceholderBuilder,
       builder: (data) {
         List<T> filteredData = _cachedList;
