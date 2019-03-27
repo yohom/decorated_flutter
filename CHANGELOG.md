@@ -1,3 +1,12 @@
+## [0.1.7]
+- feature: 增加loadingPlaceholder 自定义loading的widget
+- feature: preferred_async_view增加loadingPlaceholder参数
+- feature: cover_card初步, shadowed_box默认参数调整
+- feature: 增加alias.dart
+- feature: 增加animation
+- enhancement: 增加insertFromHead参数
+- enhancement: 增加startWithDivider参数
+
 ## [0.1.6]
 - enhancement: reverse和divider配合
 - enhancement: async_list_view.widget的itemBuilder增加lastData参数
