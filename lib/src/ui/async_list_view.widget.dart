@@ -16,11 +16,13 @@ class FutureListView<T> extends StatelessWidget {
     this.showLoading = true,
     this.initialData,
     this.emptyPlaceholder,
+    this.loadingPlaceholder,
     this.errorPlaceholderBuilder,
     this.padding,
     this.physics = const ClampingScrollPhysics(),
     this.reverse = false,
     this.divider,
+    this.startWithDivider = false,
     this.endWithDivider = false,
     this.where,
   }) : super(key: key);
@@ -30,6 +32,7 @@ class FutureListView<T> extends StatelessWidget {
   final bool showLoading;
   final List<T> initialData;
   final Widget emptyPlaceholder;
+  final Widget loadingPlaceholder;
   final _ErrorPlaceholderBuilder errorPlaceholderBuilder;
 
   //endregion
@@ -42,6 +45,7 @@ class FutureListView<T> extends StatelessWidget {
 
   //endregion
   final Widget divider;
+  final bool startWithDivider;
   final bool endWithDivider;
   final _Filter<T> where;
 
@@ -52,6 +56,7 @@ class FutureListView<T> extends StatelessWidget {
       showLoading: showLoading,
       initialData: initialData,
       emptyPlaceholder: emptyPlaceholder,
+      loadingPlaceholder: loadingPlaceholder,
       errorPlaceholderBuilder: errorPlaceholderBuilder,
       builder: (data) {
         List<T> filteredData = data;
@@ -70,6 +75,7 @@ class FutureListView<T> extends StatelessWidget {
               filteredData,
               index,
               reverse,
+              startWithDivider,
               endWithDivider,
               divider,
               itemBuilder,
@@ -91,6 +97,7 @@ class StreamListView<T> extends StatelessWidget {
     this.showLoading = true,
     this.initialData,
     this.emptyPlaceholder,
+    this.loadingPlaceholder,
     this.errorPlaceholderBuilder,
     this.padding,
     this.physics = const ClampingScrollPhysics(),
@@ -106,7 +113,9 @@ class StreamListView<T> extends StatelessWidget {
     this.where,
     this.incremental = false,
     this.distinct = false,
+    this.startWithDivider = false,
     this.endWithDivider = false,
+    this.insertFromHead = false,
   })  : _controller = controller ?? ScrollController(),
         // 如果是增量, 那么incrementalStream必须不为空且stream必须为空; 反之只能设置stream不为空
         assert((incremental && incrementalStream != null && stream == null) ||
@@ -131,6 +140,7 @@ class StreamListView<T> extends StatelessWidget {
   final bool showLoading;
   final List<T> initialData;
   final Widget emptyPlaceholder;
+  final Widget loadingPlaceholder;
   final _ErrorPlaceholderBuilder errorPlaceholderBuilder;
 
   //endregion
@@ -153,10 +163,24 @@ class StreamListView<T> extends StatelessWidget {
 
   //endregion
   final Widget divider;
+
+  /// 过滤器
   final _Filter<T> where;
+
+  /// 是否增量刷新
   final bool incremental;
+
+  /// 元素是否唯一
   final bool distinct;
+
+  /// 头部插入divider
+  final bool startWithDivider;
+
+  /// 尾部插入divider
   final bool endWithDivider;
+
+  /// 从开头插入
+  final bool insertFromHead;
 
   final _cachedList = <T>[];
   final _inLoading = Value(false);
@@ -168,11 +192,16 @@ class StreamListView<T> extends StatelessWidget {
       showLoading: showLoading,
       initialData: initialData,
       emptyPlaceholder: emptyPlaceholder,
+      loadingPlaceholder: loadingPlaceholder,
       errorPlaceholderBuilder: errorPlaceholderBuilder,
       builder: (data) {
         List<T> filteredData = _cachedList;
         if (incremental) {
-          filteredData.addAll(data);
+          if (insertFromHead) {
+            filteredData.insertAll(0, data);
+          } else {
+            filteredData.addAll(data);
+          }
         } else {
           filteredData = data;
         }
@@ -198,6 +227,7 @@ class StreamListView<T> extends StatelessWidget {
               filteredData,
               index,
               reverse,
+              startWithDivider,
               endWithDivider,
               divider,
               itemBuilder,
@@ -229,6 +259,7 @@ Widget _buildItem<T>(
   List<T> filteredData,
   int index,
   bool reverse,
+  bool startWithDivider,
   bool endWithDivider,
   Widget divider,
   _ItemBuilder<T> itemBuilder,
@@ -242,6 +273,14 @@ Widget _buildItem<T>(
   }
   if (divider == null) {
     return itemBuilder(context, data, lastData);
+  } else if (startWithDivider && index == 0) {
+    return Column(
+      children: <Widget>[
+        divider,
+        itemBuilder(context, data, lastData),
+        divider,
+      ],
+    );
   } else if (endWithDivider) {
     if (reverse) {
       return Column(
