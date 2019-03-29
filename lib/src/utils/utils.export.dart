@@ -1,5 +1,6 @@
 export 'alias.dart';
 export 'base_param.dart';
+export 'codec.dart';
 export 'empty_util.dart';
 export 'enums.dart';
 export 'faker/faker.dart';
