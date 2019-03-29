@@ -1,47 +1,57 @@
 import 'dart:convert';
 
 import 'package:encrypt/encrypt.dart';
+import 'package:meta/meta.dart';
 
 class Codec {
   static Codec _instance;
 
   Codec._();
 
-  factory Codec() {
+  factory Codec({String aesKey, String aesIv}) {
     if (_instance == null) {
       _instance = Codec._();
+      _aes = _AES(key: aesKey, iv: aesIv);
       return _instance;
     } else {
       return _instance;
     }
   }
 
-  final _aes = _AES();
+  static _AES _aes;
 
-  dynamic output;
+  dynamic _output;
 
-  void jsonEncode([dynamic target]) {
-    output = json.encode(target ?? output);
+  dynamic get() => _output;
+
+  Codec jsonEncode([dynamic target]) {
+    _output = json.encode(target ?? _output);
+    return this;
   }
 
-  void jsonDecode([dynamic target]) {
-    output = json.decode(target ?? output);
+  Codec jsonDecode([dynamic target]) {
+    _output = json.decode(target ?? _output);
+    return this;
   }
 
-  void urlEncode([String target]) {
-    output = Uri.encodeFull(target ?? output);
+  Codec urlEncode([String target]) {
+    _output = Uri.encodeFull(target ?? _output);
+    return this;
   }
 
-  void urlDecode([String target]) {
-    output = Uri.decodeFull(target ?? output);
+  Codec urlDecode([String target]) {
+    _output = Uri.decodeFull(target ?? _output);
+    return this;
   }
 
-  void aesEncrypt([String plainText]) {
-    output = _aes.encode(plainText ?? output);
+  Codec aesEncrypt([String plainText]) {
+    _output = _aes.encode(plainText ?? _output);
+    return this;
   }
 
-  void aesDecrypt([String base64Cipher]) {
-    output = _aes.decode(base64Cipher ?? output);
+  Codec aesDecrypt([String base64Cipher]) {
+    _output = _aes.decode(base64Cipher ?? _output);
+    return this;
   }
 }
 
@@ -52,24 +62,24 @@ abstract class Algorithm {
 }
 
 class _AES implements Algorithm {
-  static const _seed = '1234567890123456';
-  static const _iv = '1234567890123456';
-  static final _aesKey = Key.fromUtf8(_seed);
-  static final _encrypter = Encrypter(
-    AES(_aesKey, IV.fromUtf8(_iv), mode: AESMode.cbc),
-  );
+  final Encrypter _encryptor;
+
+  _AES({@required String key, @required String iv})
+      : _encryptor = Encrypter(
+          AES(Key.fromUtf8(key), IV.fromUtf8(iv), mode: AESMode.cbc),
+        );
 
   /// 返回base64编码的密文
   String encode(String plainText) {
     final base64PlainText = base64.encode(plainText.codeUnits);
-    return _encrypter.encrypt(base64PlainText).base64;
+    return _encryptor.encrypt(base64PlainText).base64;
   }
 
   /// 返回未编码的明文
   String decode(String base64Cipher) {
     return String.fromCharCodes(
       base64.decode(
-        _encrypter.decrypt(Encrypted.fromBase64(base64Cipher)),
+        _encryptor.decrypt(Encrypted.fromBase64(base64Cipher)),
       ),
     );
   }
