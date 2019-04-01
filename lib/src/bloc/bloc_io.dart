@@ -284,6 +284,20 @@ mixin InputMixin<T> on BaseIO<T> {
       add(data);
     }
   }
+
+  Observable<T> addStream(Stream<T> source, {bool cancelOnError: true}) {
+    return Observable<T>(
+      subject..addStream(source, cancelOnError: cancelOnError),
+    );
+  }
+
+  AsObservableFuture<T> addFuture(Future<T> source,
+      {bool cancelOnError: true}) {
+    return Observable.fromFuture((subject
+              ..addStream(source.asStream(), cancelOnError: cancelOnError))
+            .first)
+        .first;
+  }
 }
 
 /// 输出单元特有的成员
