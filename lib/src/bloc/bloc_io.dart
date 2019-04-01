@@ -285,18 +285,8 @@ mixin InputMixin<T> on BaseIO<T> {
     }
   }
 
-  Observable<T> addStream(Stream<T> source, {bool cancelOnError: true}) {
-    return Observable<T>(
-      subject..addStream(source, cancelOnError: cancelOnError),
-    );
-  }
-
-  AsObservableFuture<T> addFuture(Future<T> source,
-      {bool cancelOnError: true}) {
-    return Observable.fromFuture((subject
-              ..addStream(source.asStream(), cancelOnError: cancelOnError))
-            .first)
-        .first;
+  Future<T> addStream(Stream<T> source, {bool cancelOnError: true}) {
+    return subject.addStream(source, cancelOnError: cancelOnError);
   }
 }
 
