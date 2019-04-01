@@ -1,3 +1,7 @@
+## [0.1.8]
+- feature: io增加addStream方法
+- feature: 增加codec类
+
 ## [0.1.7]
 - feature: 增加loadingPlaceholder 自定义loading的widget
 - feature: preferred_async_view增加loadingPlaceholder参数

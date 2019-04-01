@@ -284,6 +284,10 @@ mixin InputMixin<T> on BaseIO<T> {
       add(data);
     }
   }
+
+  Future<T> addStream(Stream<T> source, {bool cancelOnError: true}) {
+    return subject.addStream(source, cancelOnError: cancelOnError);
+  }
 }
 
 /// 输出单元特有的成员
