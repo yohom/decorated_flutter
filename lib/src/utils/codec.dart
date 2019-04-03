@@ -26,6 +26,20 @@ class Codec {
 
   dynamic get() => _output;
 
+  Codec base64Encode([String target]) {
+    L.p('base64Encode前: ${target ?? _output} 结束');
+    _output = base64.encode(utf8.encode(target) ?? _output.codeUnits);
+    L.p('base64Encode后: $_output 结束');
+    return this;
+  }
+
+  Codec base64Decode([String target]) {
+    L.p('base64Decode前: ${target ?? _output} 结束');
+    _output = utf8.decode(base64.decode(target ?? _output));
+    L.p('base64Decode后: $_output 结束');
+    return this;
+  }
+
   Codec jsonEncode([dynamic target]) {
     L.p('jsonEncode前: ${target ?? _output} 结束');
     _output = json.encode(target ?? _output);
@@ -68,24 +82,18 @@ class Codec {
     return this;
   }
 
-  Codec md5(String seed) {
+  Codec md5([String seed]) {
     L.p('md5前: ${seed ?? _output} 结束');
-    _output = String.fromCharCodes(crypto.md5.convert(seed.codeUnits).bytes);
+    final seedCode = utf8.encode(seed ?? _output);
+    _output = crypto.md5.convert(seedCode).toString();
     L.p('md5后: $_output 结束');
     return this;
   }
 
-  Codec sha1(String seed) {
-    L.p('sha1前: ${seed ?? _output} 结束');
-    _output = String.fromCharCodes(crypto.sha1.convert(seed.codeUnits).bytes);
-    L.p('sha1后: $_output 结束');
-    return this;
-  }
-
-  Codec sha256(String seed) {
-    L.p('sha256前: ${seed ?? _output} 结束');
-    _output = String.fromCharCodes(crypto.sha256.convert(seed.codeUnits).bytes);
-    L.p('sha256后: $_output 结束');
+  Codec md5Bytes([List<int> seed]) {
+    L.p('md5前: ${seed ?? _output} 结束');
+    _output = crypto.md5.convert(seed ?? _output).toString();
+    L.p('md5后: $_output 结束');
     return this;
   }
 }
@@ -106,7 +114,7 @@ class _AES implements Algorithm {
 
   /// 返回base64编码的密文
   String encode(String plainText) {
-    final base64PlainText = base64.encode(plainText.codeUnits);
+    final base64PlainText = base64.encode(utf8.encode(plainText));
     return _encryptor.encrypt(base64PlainText).base64;
   }
 
