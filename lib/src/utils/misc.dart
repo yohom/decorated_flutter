@@ -13,7 +13,7 @@ _HandlerErrorCallback handle(BuildContext context) {
 
 void handleError(BuildContext context, Object error) {
   if (error is DioError) {
-    String message = '网络异常, 请检查网络设置';
+    String message = error.message;
     if (error.response != null) {
       switch (error.type) {
         case DioErrorType.CANCEL:
@@ -34,10 +34,10 @@ void handleError(BuildContext context, Object error) {
           }
           break;
         case DioErrorType.DEFAULT:
-          message = '网络异常, 请检查网络设置';
+          message = error.message;
           break;
         default:
-          message = '网络异常, 请检查网络设置';
+          message = error.message;
       }
     }
     showError(context, message);

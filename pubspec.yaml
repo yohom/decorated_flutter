@@ -15,6 +15,7 @@ dependencies:
   intl: ^0.15.7
   kiwi: ^0.1.0
   encrypt: ^2.0.0
+  crypto: ^2.0.6
   flutter_advanced_networkimage: ^0.4.14
   flutter_svg: ^0.12.1
 

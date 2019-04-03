@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:crypto/crypto.dart' as crypto;
+import 'package:decorated_flutter/src/utils/log.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:meta/meta.dart';
 
@@ -25,32 +27,65 @@ class Codec {
   dynamic get() => _output;
 
   Codec jsonEncode([dynamic target]) {
+    L.p('jsonEncode前: ${target ?? _output} 结束');
     _output = json.encode(target ?? _output);
+    L.p('jsonEncode后: $_output 结束');
     return this;
   }
 
   Codec jsonDecode([dynamic target]) {
+    L.p('jsonDecode前: ${target ?? _output} 结束');
     _output = json.decode(target ?? _output);
+    L.p('jsonDecode后: $_output 结束');
     return this;
   }
 
   Codec urlEncode([String target]) {
+    L.p('urlEncode前: ${target ?? _output} 结束');
     _output = Uri.encodeFull(target ?? _output);
+    L.p('urlEncode后: $_output 结束');
     return this;
   }
 
   Codec urlDecode([String target]) {
+    L.p('urlDecode前: ${target ?? _output} 结束');
     _output = Uri.decodeFull(target ?? _output);
+    L.p('urlDecode后: $_output 结束');
     return this;
   }
 
   Codec aesEncrypt([String plainText]) {
+    L.p('aesEncrypt前: ${plainText ?? _output} 结束');
     _output = _aes.encode(plainText ?? _output);
+    L.p('aesEncrypt后: $_output 结束');
     return this;
   }
 
   Codec aesDecrypt([String base64Cipher]) {
+    L.p('aesDecrypt前: ${base64Cipher ?? _output} 结束');
     _output = _aes.decode(base64Cipher ?? _output);
+    L.p('aesDecrypt后: $_output 结束');
+    return this;
+  }
+
+  Codec md5(String seed) {
+    L.p('md5前: ${seed ?? _output} 结束');
+    _output = String.fromCharCodes(crypto.md5.convert(seed.codeUnits).bytes);
+    L.p('md5后: $_output 结束');
+    return this;
+  }
+
+  Codec sha1(String seed) {
+    L.p('sha1前: ${seed ?? _output} 结束');
+    _output = String.fromCharCodes(crypto.sha1.convert(seed.codeUnits).bytes);
+    L.p('sha1后: $_output 结束');
+    return this;
+  }
+
+  Codec sha256(String seed) {
+    L.p('sha256前: ${seed ?? _output} 结束');
+    _output = String.fromCharCodes(crypto.sha256.convert(seed.codeUnits).bytes);
+    L.p('sha256后: $_output 结束');
     return this;
   }
 }
