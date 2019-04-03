@@ -1,4 +1,3 @@
-import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -45,7 +44,7 @@ class ImageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (isNotEmpty(imagePath)) {
+    if (imagePath != null) {
       return Image.asset(
         imagePath,
         width: width,
@@ -53,7 +52,7 @@ class ImageView extends StatelessWidget {
         fit: fit,
         color: color,
       );
-    } else if (isNotEmpty(imageUrl)) {
+    } else if (imageUrl != null) {
       return Image(
         image: AdvancedNetworkImage(imageUrl, useDiskCache: useDiskCache),
         width: width,
@@ -61,7 +60,7 @@ class ImageView extends StatelessWidget {
         fit: fit,
         color: color,
       );
-    } else if (isNotEmpty(svgPath)) {
+    } else if (svgPath != null) {
       return SvgPicture.asset(
         svgPath,
         width: width,
