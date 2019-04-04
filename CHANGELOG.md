@@ -1,3 +1,12 @@
+## [0.1.9]
+- enhancement: 增强preferred_async_builder的错误日志打印
+- enhancement: 整理Codec
+- enhancement: 更新BLoCProvider的实现
+- feature: Codec增加base64相关, 并且获取byte的时候一律使用utf8.encode而不是直接codeUnits
+- feature: 增加信息摘要的方法
+- enhancement: isNotEmpty -> != null
+- feature: 增加ImageView封装Image和Svg的widget.
+
 ## [0.1.8]
 - feature: io增加addStream方法
 - feature: 增加codec类

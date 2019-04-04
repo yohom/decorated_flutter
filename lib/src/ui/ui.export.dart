@@ -18,6 +18,7 @@ export 'form_sheet.widget.dart';
 export 'fractional_screen.widget.dart';
 export 'free/free_bottom_sheet.widget.dart';
 export 'free/free_dialog.widget.dart';
+export 'image_view.widget.dart';
 export 'loading.widget.dart';
 export 'notification_badge.widget.dart';
 export 'picker/picker.dart';
