@@ -28,9 +28,9 @@ void handleError(BuildContext context, Object error) {
         case DioErrorType.RESPONSE:
           final statusCode = error.response.statusCode;
           if (statusCode >= 400 && statusCode <= 417) {
-            message = '访问地址异常，请稍后重试';
+            message = '访问地址异常，请稍后重试 $statusCode';
           } else if (statusCode >= 500 && statusCode <= 505) {
-            message = '服务器繁忙';
+            message = '服务器繁忙 $statusCode';
           }
           break;
         case DioErrorType.DEFAULT:
