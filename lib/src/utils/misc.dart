@@ -82,3 +82,8 @@ Color highContrast(Color input) {
   }
   return output;
 }
+
+enumName(enumValue) {
+  var s = enumValue.toString();
+  return s.substring(s.indexOf('.') + 1);
+}
