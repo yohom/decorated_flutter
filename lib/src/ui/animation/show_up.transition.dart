@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ShowUpTransition extends StatefulWidget {
-  final int delay;
-  final int duration;
-  final Widget child;
-
   ShowUpTransition({
     Key key,
     this.delay = 500,
     this.duration = 700,
+    this.safeArea = false,
     this.child,
   }) : super(key: key);
 
+  final int delay;
+  final int duration;
+  final bool safeArea;
+  final Widget child;
+
   @override
-  _ShowUpTransitionState createState() {
-    return _ShowUpTransitionState();
-  }
+  _ShowUpTransitionState createState() => _ShowUpTransitionState();
 }
 
 class _ShowUpTransitionState extends State<ShowUpTransition>
@@ -40,10 +40,15 @@ class _ShowUpTransitionState extends State<ShowUpTransition>
 
   @override
   Widget build(BuildContext context) {
-    return ScaleTransition(
+    Widget result = ScaleTransition(
       scale: _animation,
       child: widget.child,
     );
+
+    if (widget.safeArea) {
+      result = SafeArea(child: result);
+    }
+    return result;
   }
 
   @override
