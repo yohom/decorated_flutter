@@ -11,30 +11,29 @@ typedef Future<T> _Fetch<T>(dynamic arg);
 /// 业务单元基类
 abstract class BaseIO<T> {
   BaseIO({
-    /// 初始值, 传递给内部的[subject]
-    this.seedValue,
+    /// 初始值, 传递给内部的[_subject]
+    T seedValue,
 
     /// Event代表的语义
-    this.semantics,
+    String semantics,
 
-    /// 是否同步发射数据, 传递给内部的[subject]
+    /// 是否同步发射数据, 传递给内部的[_subject]
     bool sync = true,
 
-    /// 是否使用BehaviorSubject, 如果使用, 那么Event内部的[subject]会保存最近一次的值
+    /// 是否使用BehaviorSubject, 如果使用, 那么Event内部的[_subject]会保存最近一次的值
     /// 默认为false
     bool isBehavior = false,
-  }) {
-    subject = isBehavior
-        ? BehaviorSubject<T>.seeded(seedValue, sync: sync)
-        : PublishSubject<T>(sync: sync);
-
-    subject.listen((data) {
+  })  : _semantics = semantics,
+        _seedValue = seedValue,
+        latest = seedValue,
+        _subject = isBehavior
+            ? BehaviorSubject<T>.seeded(seedValue, sync: sync)
+            : PublishSubject<T>(sync: sync) {
+    _subject.listen((data) {
       latest = data;
       L.p('当前${semantics ??= data.runtimeType.toString()} latest: $latest'
           '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
     });
-
-    latest = seedValue;
   }
 
   /// 最新的值
@@ -42,52 +41,52 @@ abstract class BaseIO<T> {
 
   /// 初始值
   @protected
-  T seedValue;
+  T _seedValue;
 
   /// 语义
   @protected
-  String semantics;
+  String _semantics;
 
   /// 内部中转对象
   @protected
-  Subject<T> subject;
+  Subject<T> _subject;
 
   void addError(Object error, [StackTrace stackTrace]) {
-    subject.addError(error, stackTrace);
+    _subject.addError(error, stackTrace);
   }
 
   Observable<S> map<S>(S convert(T event)) {
-    return subject.map(convert);
+    return _subject.map(convert);
   }
 
   Observable<T> where(bool test(T event)) {
-    return subject.where(test);
+    return _subject.where(test);
   }
 
   /// 清理保存的值, 恢复成初始状态
   void clear() {
     L.p('-----------------------------BEGIN---------------------------------\n'
-        '${semantics ??= runtimeType.toString()}事件 cleared '
+        '${_semantics ??= runtimeType.toString()}事件 cleared '
         '\n------------------------------END----------------------------------');
-    subject.add(seedValue);
+    _subject.add(_seedValue);
   }
 
   /// 关闭流
   void dispose() {
     L.p('=============================BEGIN===============================\n'
-        '${semantics ??= runtimeType.toString()}事件 disposed '
+        '${_semantics ??= runtimeType.toString()}事件 disposed '
         '\n==============================END================================');
-    subject.close();
+    _subject.close();
   }
 
   /// 运行时概要
   String runtimeSummary() {
-    return '$semantics:\n\t\tseedValue: $seedValue,\n\t\tlatest: $latest';
+    return '$_semantics:\n\t\tseedValue: $_seedValue,\n\t\tlatest: $latest';
   }
 
   @override
   String toString() {
-    return 'Output{latest: $latest, seedValue: $seedValue, semantics: $semantics, subject: $subject}';
+    return 'Output{latest: $latest, seedValue: $_seedValue, semantics: $_semantics, subject: $_subject}';
   }
 }
 
@@ -163,7 +162,7 @@ class Output<T> extends BaseIO<T> with OutputMixin {
           sync: sync,
           isBehavior: isBehavior,
         ) {
-    stream = subject.stream;
+    stream = _subject.stream;
     _fetch = fetch;
   }
 }
@@ -202,7 +201,7 @@ class IO<T> extends BaseIO<T> with InputMixin, OutputMixin {
           sync: sync,
           isBehavior: isBehavior,
         ) {
-    stream = subject.stream;
+    stream = _subject.stream;
 
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
@@ -242,7 +241,7 @@ mixin InputMixin<T> on BaseIO<T> {
 
   void add(T data) {
     L.p('+++++++++++++++++++++++++++BEGIN+++++++++++++++++++++++++++++\n'
-        'IO接收到**${semantics ??= data.runtimeType.toString()}**数据: $data');
+        'IO接收到**${_semantics ??= data.runtimeType.toString()}**数据: $data');
 
     if (isEmpty(data) && !_acceptEmpty) {
       L.p('转发被拒绝! 原因: 需要非Empty值, 但是接收到Empty值'
@@ -256,37 +255,37 @@ mixin InputMixin<T> on BaseIO<T> {
       // 不停地发送通知(但是值又是一样)的情况
       if (_test != null) {
         if (!_test(latest, data)) {
-          L.p('IO转发出**${semantics ??= data.runtimeType.toString()}**数据: $data');
-          subject.add(data);
+          L.p('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
+          _subject.add(data);
         } else {
           L.p('转发被拒绝! 原因: 需要唯一, 但是没有通过唯一性测试'
               '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
         }
       } else {
         if (data != latest) {
-          L.p('IO转发出**${semantics ??= data.runtimeType.toString()}**数据: $data');
-          subject.add(data);
+          L.p('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
+          _subject.add(data);
         } else {
           L.p('转发被拒绝! 原因: 需要唯一, 但是新数据与最新值相同'
               '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
         }
       }
     } else {
-      L.p('IO转发出**${semantics ??= data.runtimeType.toString()}**数据: $data');
-      subject.add(data);
+      L.p('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
+      _subject.add(data);
     }
   }
 
   void addIfAbsent(T data) {
     // 如果最新值是_seedValue或者是空, 那么才add新数据, 换句话说, 就是如果event已经被add过
     // 了的话那就不add了, 用于第一次add
-    if (seedValue == latest || isEmpty(latest)) {
+    if (_seedValue == latest || isEmpty(latest)) {
       add(data);
     }
   }
 
   Future<T> addStream(Stream<T> source, {bool cancelOnError: true}) {
-    return subject.addStream(source, cancelOnError: cancelOnError);
+    return _subject.addStream(source, cancelOnError: cancelOnError);
   }
 }
 
@@ -318,8 +317,8 @@ mixin OutputMixin<T> on BaseIO<T> {
   /// 使用内部的trigger获取数据
   Future<T> update([Object arg]) {
     return _fetch(arg)
-      ..then(subject.add)
-      ..catchError(subject.addError);
+      ..then(_subject.add)
+      ..catchError(_subject.addError);
   }
 }
 
@@ -327,6 +326,6 @@ mixin OutputMixin<T> on BaseIO<T> {
 mixin ListMixin<T> on BaseIO<List<T>> {
   /// 按条件过滤, 并发射过滤后的数据
   void filterItem(bool test(T element)) {
-    subject.add(latest.where(test).toList());
+    _subject.add(latest.where(test).toList());
   }
 }
