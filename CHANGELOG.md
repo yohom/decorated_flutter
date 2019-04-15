@@ -1,3 +1,12 @@
+## [0.1.10]
+- enhancement: 优化打印日志内容
+- enhancement: decorated_route增加onConnectivityChanged参数
+- enhancement: 增加一些透明颜色的shortcut
+- feature: 增加enumName
+- feature: 增加区分运行模式的类
+- enhancement: BaseIO中该私有的成员私有化
+- enhancement: ShowUpTransition增加safe area的选项
+
 ## [0.1.9]
 - enhancement: 增强preferred_async_builder的错误日志打印
 - enhancement: 整理Codec

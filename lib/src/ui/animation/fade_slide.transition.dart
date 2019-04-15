@@ -42,18 +42,16 @@ class FadeSlideTransition extends StatefulWidget {
     this.originOffset = const Offset(0.0, 30.0),
     this.delay = const Duration(milliseconds: 0),
     this.duration = const Duration(milliseconds: 700),
-    this.fadeCurve = Curves.decelerate,
-    this.slideCurve = Curves.decelerate,
-    this.slideReverseCurve = Curves.decelerate,
+    this.fadeCurve = Curves.easeOut,
+    this.slideCurve = Curves.easeOut,
+    this.slideReverseCurve = Curves.easeIn,
     this.direction = SlideDirection.vertical,
     this.immediately = true,
     this.builder,
   }) : super(key: key);
 
   @override
-  _FadeInSlideTransitionState createState() {
-    return _FadeInSlideTransitionState();
-  }
+  _FadeInSlideTransitionState createState() => _FadeInSlideTransitionState();
 }
 
 class _FadeInSlideTransitionState extends State<FadeSlideTransition>
