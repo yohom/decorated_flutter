@@ -42,10 +42,10 @@ class ImageView extends StatelessWidget {
     this.height,
     this.fit = BoxFit.contain,
     this.color,
+    this.useDiskCache = true,
   })  : imageUrl = null,
         imagePath = null,
-        svgPath = null,
-        useDiskCache = true;
+        svgPath = null;
 
   final String imagePath;
   final String imageUrl;
