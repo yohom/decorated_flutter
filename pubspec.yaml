@@ -19,6 +19,7 @@ dependencies:
   flutter_advanced_networkimage: ^0.4.14
   flutter_svg: ^0.12.1
   connectivity: ^0.4.2+2
+  flushbar: ^1.4.0
 
 dev_dependencies:
   mockito: 4.0.0
