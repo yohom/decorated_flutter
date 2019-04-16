@@ -11,6 +11,7 @@ class ImageView extends StatelessWidget {
     this.color,
   })  : imageUrl = null,
         svgPath = null,
+        svgUrl = null,
         useDiskCache = true;
 
   ImageView.networkImage(
@@ -21,6 +22,7 @@ class ImageView extends StatelessWidget {
     this.color,
     this.useDiskCache = true,
   })  : imagePath = null,
+        svgUrl = null,
         svgPath = null;
 
   ImageView.assetSvg(
@@ -31,11 +33,24 @@ class ImageView extends StatelessWidget {
     this.color,
   })  : imageUrl = null,
         imagePath = null,
+        svgUrl = null,
+        useDiskCache = true;
+
+  ImageView.networkSvg(
+    this.svgUrl, {
+    this.width,
+    this.height,
+    this.fit = BoxFit.contain,
+    this.color,
+  })  : imageUrl = null,
+        imagePath = null,
+        svgPath = null,
         useDiskCache = true;
 
   final String imagePath;
   final String imageUrl;
   final String svgPath;
+  final String svgUrl;
   final double width;
   final double height;
   final BoxFit fit;
@@ -63,6 +78,14 @@ class ImageView extends StatelessWidget {
     } else if (svgPath != null) {
       return SvgPicture.asset(
         svgPath,
+        width: width,
+        height: height,
+        fit: fit,
+        color: color,
+      );
+    } else if (svgUrl != null) {
+      return SvgPicture.network(
+        svgUrl,
         width: width,
         height: height,
         fit: fit,
