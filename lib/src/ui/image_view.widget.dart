@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,6 +17,8 @@ class ImageView extends StatelessWidget {
         svgPath = null,
         svgUrl = null,
         icon = null,
+        imageUrlFuture = null,
+        svgUrlFuture = null,
         useDiskCache = true;
 
   ImageView.networkImage(
@@ -27,6 +32,23 @@ class ImageView extends StatelessWidget {
   })  : imagePath = null,
         svgUrl = null,
         icon = null,
+        imageUrlFuture = null,
+        svgUrlFuture = null,
+        svgPath = null;
+
+  ImageView.futureImage(
+    this.imageUrlFuture, {
+    this.width,
+    this.height,
+    this.size,
+    this.fit = BoxFit.contain,
+    this.color,
+    this.useDiskCache = true,
+  })  : imagePath = null,
+        svgUrl = null,
+        icon = null,
+        imageUrl = null,
+        svgUrlFuture = null,
         svgPath = null;
 
   ImageView.assetSvg(
@@ -40,6 +62,8 @@ class ImageView extends StatelessWidget {
         imagePath = null,
         svgUrl = null,
         icon = null,
+        imageUrlFuture = null,
+        svgUrlFuture = null,
         useDiskCache = true;
 
   ImageView.networkSvg(
@@ -53,6 +77,23 @@ class ImageView extends StatelessWidget {
   })  : imageUrl = null,
         imagePath = null,
         icon = null,
+        imageUrlFuture = null,
+        svgUrlFuture = null,
+        svgPath = null;
+
+  ImageView.futureSvg(
+    this.svgUrlFuture, {
+    this.width,
+    this.height,
+    this.fit = BoxFit.contain,
+    this.size,
+    this.color,
+    this.useDiskCache = true,
+  })  : imageUrl = null,
+        imagePath = null,
+        svgUrl = null,
+        icon = null,
+        imageUrlFuture = null,
         svgPath = null;
 
   ImageView.icon(
@@ -66,6 +107,8 @@ class ImageView extends StatelessWidget {
         width = null,
         height = null,
         fit = null,
+        imageUrlFuture = null,
+        svgUrlFuture = null,
         useDiskCache = null;
 
   /// 本地图片路径
@@ -101,6 +144,12 @@ class ImageView extends StatelessWidget {
   /// 大小, 如果同时设置了[width], [height]和[size], 那么优先[size]
   final double size;
 
+  /// 需要异步获取的图片url
+  final Future<String> imageUrlFuture;
+
+  /// 需要异步获取的svg url
+  final Future<String> svgUrlFuture;
+
   @override
   Widget build(BuildContext context) {
     if (imagePath != null) {
@@ -134,6 +183,35 @@ class ImageView extends StatelessWidget {
         height: size ?? height,
         fit: fit,
         color: color,
+      );
+    } else if (imageUrlFuture != null) {
+      return PreferredFutureBuilder<String>(
+        future: imageUrlFuture,
+        showLoading: false,
+        builder: (data) {
+          return ImageView.networkImage(
+            data,
+            width: size ?? width,
+            height: size ?? height,
+            fit: fit,
+            color: color,
+            useDiskCache: useDiskCache,
+          );
+        },
+      );
+    } else if (svgUrlFuture != null) {
+      return PreferredFutureBuilder<String>(
+        future: svgUrlFuture,
+        showLoading: false,
+        builder: (data) {
+          return ImageView.networkSvg(
+            data,
+            width: size ?? width,
+            height: size ?? height,
+            fit: fit,
+            color: color,
+          );
+        },
       );
     } else if (icon != null) {
       return Icon(icon, size: size, color: color);
