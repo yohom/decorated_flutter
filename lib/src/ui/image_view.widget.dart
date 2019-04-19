@@ -138,7 +138,8 @@ class ImageView extends StatelessWidget {
     } else if (icon != null) {
       return Icon(icon, size: size, color: color);
     } else {
-      return ErrorWidget('imagePath, imageUrl, svgPath不能同时为空');
+      // 如果图片地址为null的话, 那就不显示
+      return SizedBox.shrink();
     }
   }
 }
