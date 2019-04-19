@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 
 class SnapList extends StatelessWidget {
-  final int initialPage;
-  final double aspectRatio;
-  final double viewportFraction;
-  final EdgeInsetsGeometry padding;
-  final SliverChildDelegate childrenDelegate;
-
   SnapList({
     Key key,
-    this.initialPage: 0,
-    this.aspectRatio: 1.0,
-    this.viewportFraction: 1.0,
-    this.padding,
+    this.initialPage = 0,
+    this.aspectRatio = 1.0,
+    this.viewportFraction = 1.0,
+    this.padding = EdgeInsets.zero,
     @required IndexedWidgetBuilder itemBuilder,
     int itemCount,
     bool addAutomaticKeepAlive: true,
@@ -24,6 +18,12 @@ class SnapList extends StatelessWidget {
           addRepaintBoundaries: addRepaintBoundaries,
         ),
         super(key: key);
+
+  final int initialPage;
+  final double aspectRatio;
+  final double viewportFraction;
+  final EdgeInsetsGeometry padding;
+  final SliverChildDelegate childrenDelegate;
 
   @override
   Widget build(BuildContext context) {
