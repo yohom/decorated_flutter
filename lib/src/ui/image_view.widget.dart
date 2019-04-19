@@ -19,6 +19,7 @@ class ImageView extends StatelessWidget {
         icon = null,
         imageUrlFuture = null,
         svgUrlFuture = null,
+        iconFuture = null,
         useDiskCache = true;
 
   ImageView.networkImage(
@@ -34,6 +35,7 @@ class ImageView extends StatelessWidget {
         icon = null,
         imageUrlFuture = null,
         svgUrlFuture = null,
+        iconFuture = null,
         svgPath = null;
 
   ImageView.futureImage(
@@ -49,6 +51,7 @@ class ImageView extends StatelessWidget {
         icon = null,
         imageUrl = null,
         svgUrlFuture = null,
+        iconFuture = null,
         svgPath = null;
 
   ImageView.assetSvg(
@@ -64,6 +67,7 @@ class ImageView extends StatelessWidget {
         icon = null,
         imageUrlFuture = null,
         svgUrlFuture = null,
+        iconFuture = null,
         useDiskCache = true;
 
   ImageView.networkSvg(
@@ -79,6 +83,7 @@ class ImageView extends StatelessWidget {
         icon = null,
         imageUrlFuture = null,
         svgUrlFuture = null,
+        iconFuture = null,
         svgPath = null;
 
   ImageView.futureSvg(
@@ -94,6 +99,7 @@ class ImageView extends StatelessWidget {
         svgUrl = null,
         icon = null,
         imageUrlFuture = null,
+        iconFuture = null,
         svgPath = null;
 
   ImageView.icon(
@@ -109,6 +115,23 @@ class ImageView extends StatelessWidget {
         fit = null,
         imageUrlFuture = null,
         svgUrlFuture = null,
+        iconFuture = null,
+        useDiskCache = null;
+
+  ImageView.futureIcon(
+    this.iconFuture, {
+    this.size,
+    this.color,
+  })  : imageUrl = null,
+        imagePath = null,
+        svgPath = null,
+        svgUrl = null,
+        width = null,
+        height = null,
+        fit = null,
+        imageUrlFuture = null,
+        svgUrlFuture = null,
+        icon = null,
         useDiskCache = null;
 
   /// 本地图片路径
@@ -149,6 +172,9 @@ class ImageView extends StatelessWidget {
 
   /// 需要异步获取的svg url
   final Future<String> svgUrlFuture;
+
+  /// 需要异步获取的icon
+  final Future<IconData> iconFuture;
 
   @override
   Widget build(BuildContext context) {
@@ -209,6 +235,18 @@ class ImageView extends StatelessWidget {
             width: size ?? width,
             height: size ?? height,
             fit: fit,
+            color: color,
+          );
+        },
+      );
+    } else if (iconFuture != null) {
+      return PreferredFutureBuilder<IconData>(
+        future: iconFuture,
+        showLoading: false,
+        builder: (data) {
+          return ImageView.icon(
+            data,
+            size: size ?? width,
             color: color,
           );
         },
