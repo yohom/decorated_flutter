@@ -6,7 +6,7 @@ import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 typedef bool _Equal<T>(T data1, T data2);
-typedef Future<T> _Fetch<T>(dynamic arg);
+typedef Future<T> _Fetch<T, ARG_TYPE>(ARG_TYPE arg);
 
 /// 业务单元基类
 abstract class BaseIO<T> {
@@ -149,13 +149,13 @@ class ListInput<T> extends Input<List<T>> with ListMixin {
 }
 
 /// 只输出数据的业务单元
-class Output<T> extends BaseIO<T> with OutputMixin {
+class Output<T, ARG_TYPE> extends BaseIO<T> with OutputMixin<T, ARG_TYPE> {
   Output({
     T seedValue,
     String semantics,
     bool sync = true,
     bool isBehavior = false,
-    @required _Fetch<T> fetch,
+    @required _Fetch<T, ARG_TYPE> fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -168,13 +168,13 @@ class Output<T> extends BaseIO<T> with OutputMixin {
 }
 
 /// 内部数据类型是[List]的输出业务单元
-class ListOutput<T> extends Output<List<T>> with ListMixin {
+class ListOutput<T, ARG_TYPE> extends Output<List<T>, ARG_TYPE> with ListMixin {
   ListOutput({
     List<T> seedValue,
     String semantics,
     bool sync = true,
     bool isBehavior = false,
-    @required _Fetch<List<T>> fetch,
+    @required _Fetch<List<T>, ARG_TYPE> fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -185,7 +185,7 @@ class ListOutput<T> extends Output<List<T>> with ListMixin {
 }
 
 /// 既可以输入又可以输出的事件
-class IO<T> extends BaseIO<T> with InputMixin, OutputMixin {
+class IO<T> extends BaseIO<T> with InputMixin, OutputMixin<T, dynamic> {
   IO({
     T seedValue,
     String semantics,
@@ -194,7 +194,7 @@ class IO<T> extends BaseIO<T> with InputMixin, OutputMixin {
     bool acceptEmpty = true,
     bool isDistinct = false,
     _Equal test,
-    _Fetch<T> fetch,
+    _Fetch<T, dynamic> fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -220,7 +220,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin {
     bool acceptEmpty = true,
     bool isDistinct = false,
     _Equal test,
-    _Fetch<List<T>> fetch,
+    _Fetch<List<T>, dynamic> fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -290,7 +290,7 @@ mixin InputMixin<T> on BaseIO<T> {
 }
 
 /// 输出单元特有的成员
-mixin OutputMixin<T> on BaseIO<T> {
+mixin OutputMixin<T, ARG_TYPE> on BaseIO<T> {
   /// 输出Future
   Future<T> get future => stream.first;
 
@@ -312,10 +312,10 @@ mixin OutputMixin<T> on BaseIO<T> {
   }
 
   /// 输出Stream
-  _Fetch<T> _fetch;
+  _Fetch<T, ARG_TYPE> _fetch;
 
   /// 使用内部的trigger获取数据
-  Future<T> update([Object arg]) {
+  Future<T> update([ARG_TYPE arg]) {
     return _fetch(arg)
       ..then((data) {
         if (!_subject.isClosed) _subject.add(data);
