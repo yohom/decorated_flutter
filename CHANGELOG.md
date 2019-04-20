@@ -1,3 +1,15 @@
+## [0.2.0]
+- enhancement: [break change] bloc_io中的Output系列, 加上一个update时的参数泛型
+- bugfix: SnapList的padding参数增加默认值
+- enhancement: ImageView增加异步获取IconData的构造器
+- enhancement: ImageView增加异步获取图片地址的构造器
+- enhancement: ImageView如果图片地址全都为null, 那就不显示
+- feature: ImageView增加icon构造器
+- bugfix: io中add数据前, 先判断内部subject是否已经被close.
+- enhancement: 使用flushbar代替原生的snackbar
+- feature: ImageView增加networkSvg构造器
+- feature: 增加Blur的widget
+
 ## [0.1.10]
 - enhancement: 优化打印日志内容
 - enhancement: decorated_route增加onConnectivityChanged参数

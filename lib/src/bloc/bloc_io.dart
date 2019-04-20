@@ -6,7 +6,7 @@ import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 typedef bool _Equal<T>(T data1, T data2);
-typedef Future<T> _Fetch<T>(dynamic arg);
+typedef Future<T> _Fetch<T, ARG_TYPE>(ARG_TYPE arg);
 
 /// 业务单元基类
 abstract class BaseIO<T> {
@@ -52,7 +52,7 @@ abstract class BaseIO<T> {
   Subject<T> _subject;
 
   void addError(Object error, [StackTrace stackTrace]) {
-    _subject.addError(error, stackTrace);
+    if (!_subject.isClosed) _subject.addError(error, stackTrace);
   }
 
   Observable<S> map<S>(S convert(T event)) {
@@ -68,7 +68,7 @@ abstract class BaseIO<T> {
     L.p('-----------------------------BEGIN---------------------------------\n'
         '${_semantics ??= runtimeType.toString()}事件 cleared '
         '\n------------------------------END----------------------------------');
-    _subject.add(_seedValue);
+    if (!_subject.isClosed) _subject.add(_seedValue);
   }
 
   /// 关闭流
@@ -76,7 +76,7 @@ abstract class BaseIO<T> {
     L.p('=============================BEGIN===============================\n'
         '${_semantics ??= runtimeType.toString()}事件 disposed '
         '\n==============================END================================');
-    _subject.close();
+    if (!_subject.isClosed) _subject.close();
   }
 
   /// 运行时概要
@@ -149,13 +149,13 @@ class ListInput<T> extends Input<List<T>> with ListMixin {
 }
 
 /// 只输出数据的业务单元
-class Output<T> extends BaseIO<T> with OutputMixin {
+class Output<T, ARG_TYPE> extends BaseIO<T> with OutputMixin<T, ARG_TYPE> {
   Output({
     T seedValue,
     String semantics,
     bool sync = true,
     bool isBehavior = false,
-    @required _Fetch<T> fetch,
+    @required _Fetch<T, ARG_TYPE> fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -168,13 +168,13 @@ class Output<T> extends BaseIO<T> with OutputMixin {
 }
 
 /// 内部数据类型是[List]的输出业务单元
-class ListOutput<T> extends Output<List<T>> with ListMixin {
+class ListOutput<T, ARG_TYPE> extends Output<List<T>, ARG_TYPE> with ListMixin {
   ListOutput({
     List<T> seedValue,
     String semantics,
     bool sync = true,
     bool isBehavior = false,
-    @required _Fetch<List<T>> fetch,
+    @required _Fetch<List<T>, ARG_TYPE> fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -185,7 +185,7 @@ class ListOutput<T> extends Output<List<T>> with ListMixin {
 }
 
 /// 既可以输入又可以输出的事件
-class IO<T> extends BaseIO<T> with InputMixin, OutputMixin {
+class IO<T> extends BaseIO<T> with InputMixin, OutputMixin<T, dynamic> {
   IO({
     T seedValue,
     String semantics,
@@ -194,7 +194,7 @@ class IO<T> extends BaseIO<T> with InputMixin, OutputMixin {
     bool acceptEmpty = true,
     bool isDistinct = false,
     _Equal test,
-    _Fetch<T> fetch,
+    _Fetch<T, dynamic> fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -220,7 +220,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin {
     bool acceptEmpty = true,
     bool isDistinct = false,
     _Equal test,
-    _Fetch<List<T>> fetch,
+    _Fetch<List<T>, dynamic> fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -256,7 +256,7 @@ mixin InputMixin<T> on BaseIO<T> {
       if (_test != null) {
         if (!_test(latest, data)) {
           L.p('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
-          _subject.add(data);
+          if (!_subject.isClosed) _subject.add(data);
         } else {
           L.p('转发被拒绝! 原因: 需要唯一, 但是没有通过唯一性测试'
               '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
@@ -264,7 +264,7 @@ mixin InputMixin<T> on BaseIO<T> {
       } else {
         if (data != latest) {
           L.p('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
-          _subject.add(data);
+          if (!_subject.isClosed) _subject.add(data);
         } else {
           L.p('转发被拒绝! 原因: 需要唯一, 但是新数据与最新值相同'
               '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
@@ -272,7 +272,7 @@ mixin InputMixin<T> on BaseIO<T> {
       }
     } else {
       L.p('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
-      _subject.add(data);
+      if (!_subject.isClosed) _subject.add(data);
     }
   }
 
@@ -290,7 +290,7 @@ mixin InputMixin<T> on BaseIO<T> {
 }
 
 /// 输出单元特有的成员
-mixin OutputMixin<T> on BaseIO<T> {
+mixin OutputMixin<T, ARG_TYPE> on BaseIO<T> {
   /// 输出Future
   Future<T> get future => stream.first;
 
@@ -312,13 +312,17 @@ mixin OutputMixin<T> on BaseIO<T> {
   }
 
   /// 输出Stream
-  _Fetch<T> _fetch;
+  _Fetch<T, ARG_TYPE> _fetch;
 
   /// 使用内部的trigger获取数据
-  Future<T> update([Object arg]) {
+  Future<T> update([ARG_TYPE arg]) {
     return _fetch(arg)
-      ..then(_subject.add)
-      ..catchError(_subject.addError);
+      ..then((data) {
+        if (!_subject.isClosed) _subject.add(data);
+      })
+      ..catchError((error) {
+        if (!_subject.isClosed) _subject.addError(error);
+      });
   }
 }
 
@@ -326,6 +330,6 @@ mixin OutputMixin<T> on BaseIO<T> {
 mixin ListMixin<T> on BaseIO<List<T>> {
   /// 按条件过滤, 并发射过滤后的数据
   void filterItem(bool test(T element)) {
-    _subject.add(latest.where(test).toList());
+    if (!_subject.isClosed) _subject.add(latest.where(test).toList());
   }
 }
