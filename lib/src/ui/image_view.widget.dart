@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,11 @@ class ImageView extends StatelessWidget {
         imageUrlFuture = null,
         svgUrlFuture = null,
         iconFuture = null,
+        fallbackAssetImage = null,
+        fallbackImage = null,
+        loadingProgress = null,
+        loadFailedCallback = null,
+        loadedCallback = null,
         useDiskCache = true;
 
   ImageView.networkImage(
@@ -30,6 +36,11 @@ class ImageView extends StatelessWidget {
     this.fit = BoxFit.contain,
     this.color,
     this.useDiskCache = true,
+    this.fallbackAssetImage,
+    this.fallbackImage,
+    this.loadingProgress,
+    this.loadFailedCallback,
+    this.loadedCallback,
   })  : imagePath = null,
         svgUrl = null,
         icon = null,
@@ -52,6 +63,11 @@ class ImageView extends StatelessWidget {
         imageUrl = null,
         svgUrlFuture = null,
         iconFuture = null,
+        fallbackAssetImage = null,
+        fallbackImage = null,
+        loadingProgress = null,
+        loadFailedCallback = null,
+        loadedCallback = null,
         svgPath = null;
 
   ImageView.assetSvg(
@@ -68,6 +84,11 @@ class ImageView extends StatelessWidget {
         imageUrlFuture = null,
         svgUrlFuture = null,
         iconFuture = null,
+        fallbackAssetImage = null,
+        fallbackImage = null,
+        loadingProgress = null,
+        loadFailedCallback = null,
+        loadedCallback = null,
         useDiskCache = true;
 
   ImageView.networkSvg(
@@ -84,6 +105,11 @@ class ImageView extends StatelessWidget {
         imageUrlFuture = null,
         svgUrlFuture = null,
         iconFuture = null,
+        fallbackAssetImage = null,
+        fallbackImage = null,
+        loadingProgress = null,
+        loadFailedCallback = null,
+        loadedCallback = null,
         svgPath = null;
 
   ImageView.futureSvg(
@@ -100,6 +126,11 @@ class ImageView extends StatelessWidget {
         icon = null,
         imageUrlFuture = null,
         iconFuture = null,
+        fallbackAssetImage = null,
+        fallbackImage = null,
+        loadingProgress = null,
+        loadFailedCallback = null,
+        loadedCallback = null,
         svgPath = null;
 
   ImageView.icon(
@@ -116,6 +147,11 @@ class ImageView extends StatelessWidget {
         imageUrlFuture = null,
         svgUrlFuture = null,
         iconFuture = null,
+        fallbackAssetImage = null,
+        fallbackImage = null,
+        loadingProgress = null,
+        loadFailedCallback = null,
+        loadedCallback = null,
         useDiskCache = null;
 
   ImageView.futureIcon(
@@ -132,6 +168,11 @@ class ImageView extends StatelessWidget {
         imageUrlFuture = null,
         svgUrlFuture = null,
         icon = null,
+        fallbackAssetImage = null,
+        fallbackImage = null,
+        loadingProgress = null,
+        loadFailedCallback = null,
+        loadedCallback = null,
         useDiskCache = null;
 
   /// 本地图片路径
@@ -161,6 +202,21 @@ class ImageView extends StatelessWidget {
   /// 是否使用硬盘缓存
   final bool useDiskCache;
 
+  /// 备用的asset image路径
+  final String fallbackAssetImage;
+
+  /// 备用的Image
+  final Uint8List fallbackImage;
+
+  /// 加载失败回调
+  final VoidCallback loadFailedCallback;
+
+  /// 加载进度回调
+  final ValueChanged loadingProgress;
+
+  /// 加载完成回调
+  final VoidCallback loadedCallback;
+
   /// icon
   final IconData icon;
 
@@ -188,7 +244,15 @@ class ImageView extends StatelessWidget {
       );
     } else if (imageUrl != null) {
       return Image(
-        image: AdvancedNetworkImage(imageUrl, useDiskCache: useDiskCache),
+        image: AdvancedNetworkImage(
+          imageUrl,
+          useDiskCache: useDiskCache,
+          fallbackAssetImage: fallbackAssetImage,
+          fallbackImage: fallbackImage,
+          loadFailedCallback: loadFailedCallback,
+          loadingProgress: loadingProgress,
+          loadedCallback: loadedCallback,
+        ),
         width: size ?? width,
         height: size ?? height,
         fit: fit,
