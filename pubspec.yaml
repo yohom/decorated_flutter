@@ -5,7 +5,7 @@ author: yohom <382146139@qq.com>
 homepage: https://github.com/yohom/decorated_flutter.git
 
 environment:
-  sdk: ">=2.2.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   flutter:
