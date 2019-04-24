@@ -136,6 +136,7 @@ class StreamListView<T> extends StatelessWidget {
 
   //region FutureWidget
   final Stream<List<T>> stream;
+  @Deprecated('使用IO中的ListMixin的append方法来实现增量的刷新')
   final Stream<T> incrementalStream;
   final bool showLoading;
   final List<T> initialData;
@@ -168,6 +169,7 @@ class StreamListView<T> extends StatelessWidget {
   final _Filter<T> where;
 
   /// 是否增量刷新
+  @Deprecated('使用IO中的ListMixin的append方法来实现增量的刷新')
   final bool incremental;
 
   /// 元素是否唯一
@@ -180,6 +182,7 @@ class StreamListView<T> extends StatelessWidget {
   final bool endWithDivider;
 
   /// 从开头插入
+  @Deprecated('使用IO中的ListMixin的append方法的fromHead参数来实现增量的刷新')
   final bool insertFromHead;
 
   final _cachedList = <T>[];

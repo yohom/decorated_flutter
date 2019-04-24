@@ -332,4 +332,69 @@ mixin ListMixin<T> on BaseIO<List<T>> {
   void filterItem(bool test(T element)) {
     if (!_subject.isClosed) _subject.add(latest.where(test).toList());
   }
+
+  /// 追加, 并发射
+  void append(T element, {bool fromHead = false}) {
+    if (!_subject.isClosed) {
+      if (fromHead) {
+        _subject.add(latest..insert(0, element));
+      } else {
+        _subject.add(latest..add(element));
+      }
+    }
+  }
+
+  /// 替换指定index的元素, 并发射
+  void replace(int index, T element) {
+    if (!_subject.isClosed) {
+      _subject.add(latest..replaceRange(index, index + 1, [element]));
+    }
+  }
+
+  /// 替换最后一个的元素, 并发射
+  void replaceLast(T element) {
+    if (!_subject.isClosed) {
+      _subject.add(latest
+        ..replaceRange(
+          latest.length - 1,
+          latest.length,
+          [element],
+        ));
+    }
+  }
+
+  /// 替换第一个的元素, 并发射
+  void replaceFirst(T element) {
+    if (!_subject.isClosed) {
+      _subject.add(latest..replaceRange(0, 1, [element]));
+    }
+  }
+
+  /// 删除最后一个的元素, 并发射
+  void removeLast() {
+    if (!_subject.isClosed) {
+      _subject.add(latest..removeLast());
+    }
+  }
+
+  /// 删除一个的元素, 并发射
+  void remove(T element) {
+    if (!_subject.isClosed) {
+      _subject.add(latest..remove(element));
+    }
+  }
+
+  /// 删除第一个的元素, 并发射
+  void removeFirst() {
+    if (!_subject.isClosed) {
+      _subject.add(latest..removeAt(0));
+    }
+  }
+
+  /// 删除指定索引的元素, 并发射
+  void removeAt(int index) {
+    if (!_subject.isClosed) {
+      _subject.add(latest..removeAt(index));
+    }
+  }
 }
