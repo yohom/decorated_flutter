@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 
-typedef Widget _ItemBuilder<T>(BuildContext context, T data, T lastData);
+typedef Widget _ItemBuilder<T>(BuildContext context, int index, T data);
 typedef Widget _ErrorPlaceholderBuilder(BuildContext context, Object error);
 typedef bool _Filter<T>(T element);
 
@@ -117,9 +117,6 @@ class StreamListView<T> extends StatelessWidget {
     this.endWithDivider = false,
     this.insertFromHead = false,
   })  : _controller = controller ?? ScrollController(),
-        // 如果是增量, 那么incrementalStream必须不为空且stream必须为空; 反之只能设置stream不为空
-        assert((incremental && incrementalStream != null && stream == null) ||
-            (!incremental && stream != null && incrementalStream == null)),
         super(key: key) {
     _controller?.addListener(() {
       if (_controller.position.maxScrollExtent == _controller.offset) {
@@ -268,19 +265,13 @@ Widget _buildItem<T>(
   _ItemBuilder<T> itemBuilder,
 ) {
   final data = filteredData[index];
-  T lastData;
-  if (reverse) {
-    lastData = index < filteredData.length - 1 ? filteredData[index + 1] : null;
-  } else {
-    lastData = index > 0 ? filteredData[index - 1] : null;
-  }
   if (divider == null) {
-    return itemBuilder(context, data, lastData);
+    return itemBuilder(context, index, data);
   } else if (startWithDivider && index == 0) {
     return Column(
       children: <Widget>[
         divider,
-        itemBuilder(context, data, lastData),
+        itemBuilder(context, index, data),
         divider,
       ],
     );
@@ -289,13 +280,13 @@ Widget _buildItem<T>(
       return Column(
         children: <Widget>[
           divider,
-          itemBuilder(context, data, lastData),
+          itemBuilder(context, index, data),
         ],
       );
     } else {
       return Column(
         children: <Widget>[
-          itemBuilder(context, data, lastData),
+          itemBuilder(context, index, data),
           divider,
         ],
       );
@@ -306,19 +297,19 @@ Widget _buildItem<T>(
         return Column(
           children: <Widget>[
             divider,
-            itemBuilder(context, data, lastData),
+            itemBuilder(context, index, data),
           ],
         );
       } else {
         return Column(
           children: <Widget>[
-            itemBuilder(context, data, lastData),
+            itemBuilder(context, index, data),
             divider,
           ],
         );
       }
     } else {
-      return itemBuilder(context, data, lastData);
+      return itemBuilder(context, index, data);
     }
   }
 }
