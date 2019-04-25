@@ -1,3 +1,9 @@
+## [0.3.0]
+- enhancement: [break change] _ItemBuilder的第二参数换成index, data移动到第三个参数
+- enhancement: ListMixin增加一些方法
+- chore: 提升dart版本到2.2.2
+- enhancement: 完善AdvancedNetworkImage的参数
+
 ## [0.2.0]
 - enhancement: [break change] bloc_io中的Output系列, 加上一个update时的参数泛型
 - bugfix: SnapList的padding参数增加默认值
