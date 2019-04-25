@@ -18,6 +18,7 @@ Future showFlushBar(
   String exitTo, // 退出到对应页面
   Duration duration = const Duration(milliseconds: _duration),
 }) {
+  L.p('showFlushBar: $content');
   if (color == null) {
     switch (errorLevel) {
       case ErrorLevel.none:
