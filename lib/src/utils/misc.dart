@@ -87,3 +87,7 @@ String enumName(enumValue) {
   var s = enumValue.toString();
   return s.substring(s.indexOf('.') + 1);
 }
+
+void clearFocus(BuildContext context) {
+  FocusScope.of(context).requestFocus(FocusNode());
+}

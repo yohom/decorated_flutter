@@ -55,11 +55,11 @@ abstract class BaseIO<T> {
     if (!_subject.isClosed) _subject.addError(error, stackTrace);
   }
 
-  Observable<S> map<S>(S convert(T event)) {
+  Stream<S> map<S>(S convert(T event)) {
     return _subject.map(convert);
   }
 
-  Observable<T> where(bool test(T event)) {
+  Stream<T> where(bool test(T event)) {
     return _subject.where(test);
   }
 
@@ -320,7 +320,7 @@ mixin OutputMixin<T, ARG_TYPE> on BaseIO<T> {
   Future<T> get future => stream.first;
 
   /// 输出Stream
-  Observable<T> stream;
+  Stream<T> stream;
 
   void listen(
     ValueChanged<T> listener, {
@@ -367,6 +367,22 @@ mixin ListMixin<T> on BaseIO<List<T>> {
         _subject.add(latest..add(element));
       }
     }
+  }
+
+  /// 追加一个list, 并发射
+  void appendAll(List<T> elements, {bool fromHead = false}) {
+    if (!_subject.isClosed) {
+      if (fromHead) {
+        _subject.add(latest..insertAll(0, elements));
+      } else {
+        _subject.add(latest..addAll(elements));
+      }
+    }
+  }
+
+  /// 对list的item做变换之后重新组成list
+  Stream<List<S>> flatMap<S>(S mapper(T value)) {
+    return _subject.map((list) => list.map(mapper).toList());
   }
 
   /// 替换指定index的元素, 并发射
