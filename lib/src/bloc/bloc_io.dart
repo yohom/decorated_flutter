@@ -127,27 +127,6 @@ class Input<T> extends BaseIO<T> with InputMixin {
   }
 }
 
-/// 内部数据类型是[List]的输入业务单元
-class ListInput<T> extends Input<List<T>> with ListMixin {
-  ListInput({
-    List<T> seedValue,
-    String semantics,
-    bool sync = true,
-    bool isBehavior = false,
-    bool acceptEmpty = true,
-    bool isDistinct = false,
-    _Equal test,
-  }) : super(
-          seedValue: seedValue,
-          semantics: semantics,
-          sync: sync,
-          isBehavior: isBehavior,
-          acceptEmpty: acceptEmpty,
-          isDistinct: isDistinct,
-          test: test,
-        );
-}
-
 /// 只输出数据的业务单元
 class Output<T, ARG_TYPE> extends BaseIO<T> with OutputMixin<T, ARG_TYPE> {
   Output({
@@ -165,23 +144,6 @@ class Output<T, ARG_TYPE> extends BaseIO<T> with OutputMixin<T, ARG_TYPE> {
     stream = _subject.stream;
     _fetch = fetch;
   }
-}
-
-/// 内部数据类型是[List]的输出业务单元
-class ListOutput<T, ARG_TYPE> extends Output<List<T>, ARG_TYPE> with ListMixin {
-  ListOutput({
-    List<T> seedValue,
-    String semantics,
-    bool sync = true,
-    bool isBehavior = false,
-    @required _Fetch<List<T>, ARG_TYPE> fetch,
-  }) : super(
-          seedValue: seedValue,
-          semantics: semantics,
-          sync: sync,
-          isBehavior: isBehavior,
-          fetch: fetch,
-        );
 }
 
 /// 既可以输入又可以输出的事件
@@ -210,6 +172,45 @@ class IO<T> extends BaseIO<T> with InputMixin, OutputMixin<T, dynamic> {
   }
 }
 
+//region 衍生IO
+/// 内部数据类型是[List]的输入业务单元
+class ListInput<T> extends Input<List<T>> with ListMixin {
+  ListInput({
+    List<T> seedValue,
+    String semantics,
+    bool sync = true,
+    bool isBehavior = false,
+    bool acceptEmpty = true,
+    bool isDistinct = false,
+    _Equal test,
+  }) : super(
+          seedValue: seedValue,
+          semantics: semantics,
+          sync: sync,
+          isBehavior: isBehavior,
+          acceptEmpty: acceptEmpty,
+          isDistinct: isDistinct,
+          test: test,
+        );
+}
+
+/// 内部数据类型是[List]的输出业务单元
+class ListOutput<T, ARG_TYPE> extends Output<List<T>, ARG_TYPE> with ListMixin {
+  ListOutput({
+    List<T> seedValue,
+    String semantics,
+    bool sync = true,
+    bool isBehavior = false,
+    @required _Fetch<List<T>, ARG_TYPE> fetch,
+  }) : super(
+          seedValue: seedValue,
+          semantics: semantics,
+          sync: sync,
+          isBehavior: isBehavior,
+          fetch: fetch,
+        );
+}
+
 /// 内部数据类型是[List]的输入输出业务单元
 class ListIO<T> extends IO<List<T>> with ListMixin {
   ListIO({
@@ -232,6 +233,30 @@ class ListIO<T> extends IO<List<T>> with ListMixin {
           fetch: fetch,
         );
 }
+
+/// 只接收bool类型数据的IO
+class BoolIO extends IO<bool> with BoolMixin {
+  BoolIO({
+    bool seedValue,
+    String semantics,
+    bool sync = true,
+    bool isBehavior = false,
+    bool acceptEmpty = true,
+    bool isDistinct = false,
+    _Equal test,
+    _Fetch<bool, dynamic> fetch,
+  }) : super(
+          seedValue: seedValue,
+          semantics: semantics,
+          sync: sync,
+          isBehavior: isBehavior,
+          acceptEmpty: acceptEmpty,
+          isDistinct: isDistinct,
+          test: test,
+          fetch: fetch,
+        );
+}
+//endregion
 
 /// 输入单元特有的成员
 mixin InputMixin<T> on BaseIO<T> {
@@ -395,6 +420,14 @@ mixin ListMixin<T> on BaseIO<List<T>> {
   void removeAt(int index) {
     if (!_subject.isClosed) {
       _subject.add(latest..removeAt(index));
+    }
+  }
+}
+
+mixin BoolMixin on BaseIO<bool> {
+  void toggle() {
+    if (!_subject.isClosed) {
+      _subject.add(!latest);
     }
   }
 }
