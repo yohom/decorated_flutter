@@ -91,7 +91,6 @@ class StreamListView<T> extends StatelessWidget {
   StreamListView({
     Key key,
     this.stream,
-    this.incrementalStream,
     @required this.itemBuilder,
     this.shrinkWrap = true,
     this.showLoading = true,
@@ -111,11 +110,9 @@ class StreamListView<T> extends StatelessWidget {
     this.refreshBackgroundColor,
     this.notificationPredicate = defaultScrollNotificationPredicate,
     this.where,
-    this.incremental = false,
     this.distinct = false,
     this.startWithDivider = false,
     this.endWithDivider = false,
-    this.insertFromHead = false,
   })  : _controller = controller ?? ScrollController(),
         super(key: key) {
     _controller?.addListener(() {
@@ -133,8 +130,6 @@ class StreamListView<T> extends StatelessWidget {
 
   //region FutureWidget
   final Stream<List<T>> stream;
-  @Deprecated('使用IO中的ListMixin的append方法来实现增量的刷新')
-  final Stream<T> incrementalStream;
   final bool showLoading;
   final List<T> initialData;
   final Widget emptyPlaceholder;
@@ -165,10 +160,6 @@ class StreamListView<T> extends StatelessWidget {
   /// 过滤器
   final _Filter<T> where;
 
-  /// 是否增量刷新
-  @Deprecated('使用IO中的ListMixin的append方法来实现增量的刷新')
-  final bool incremental;
-
   /// 元素是否唯一
   final bool distinct;
 
@@ -178,33 +169,19 @@ class StreamListView<T> extends StatelessWidget {
   /// 尾部插入divider
   final bool endWithDivider;
 
-  /// 从开头插入
-  @Deprecated('使用IO中的ListMixin的append方法的fromHead参数来实现增量的刷新')
-  final bool insertFromHead;
-
-  final _cachedList = <T>[];
   final _inLoading = Value(false);
 
   @override
   Widget build(BuildContext context) {
     Widget result = PreferredStreamBuilder<List<T>>(
-      stream: incremental ? incrementalStream.map((it) => [it]) : stream,
+      stream: stream,
       showLoading: showLoading,
       initialData: initialData,
       emptyPlaceholder: emptyPlaceholder,
       loadingPlaceholder: loadingPlaceholder,
       errorPlaceholderBuilder: errorPlaceholderBuilder,
       builder: (data) {
-        List<T> filteredData = _cachedList;
-        if (incremental) {
-          if (insertFromHead) {
-            filteredData.insertAll(0, data);
-          } else {
-            filteredData.addAll(data);
-          }
-        } else {
-          filteredData = data;
-        }
+        List<T> filteredData = data;
 
         if (where != null) {
           filteredData = filteredData.where(where).toList();
@@ -240,10 +217,7 @@ class StreamListView<T> extends StatelessWidget {
     if (onRefresh != null) {
       result = RefreshIndicator(
         child: result,
-        onRefresh: () {
-          _cachedList.clear();
-          return onRefresh();
-        },
+        onRefresh: onRefresh,
         displacement: refreshDisplacement,
         color: refreshColor,
         backgroundColor: refreshBackgroundColor,

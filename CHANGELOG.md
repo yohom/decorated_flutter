@@ -1,3 +1,11 @@
+## [0.3.1]
+- feature: 增加BoolIO
+- enhancement: 增加appendAll方法;
+- 增加flatMap方法; 
+- 去除StreamListView中increment相关代码; 
+- DecoratedFlex增加scrollable参数; 
+- 增加clearFocus方法
+
 ## [0.3.0]
 - enhancement: [break change] _ItemBuilder的第二参数换成index, data移动到第三个参数
 - enhancement: ListMixin增加一些方法

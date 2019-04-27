@@ -116,6 +116,7 @@ class DecoratedColumn extends StatelessWidget {
     this.itemSpacing = 0,
     this.visible = true,
     this.crossExpanded = false,
+    this.scrollable = false,
     this.children,
   }) : super(key: key);
 
@@ -148,11 +149,12 @@ class DecoratedColumn extends StatelessWidget {
   final double itemSpacing;
   final bool visible;
   final bool crossExpanded;
+  final bool scrollable;
   final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedFlex(
+    Widget result = DecoratedFlex(
       direction: Axis.vertical,
       padding: padding,
       margin: margin,
@@ -176,6 +178,12 @@ class DecoratedColumn extends StatelessWidget {
       crossExpanded: crossExpanded,
       children: children,
     );
+
+    if (scrollable) {
+      result = ListView(children: <Widget>[result], shrinkWrap: true);
+    }
+
+    return result;
   }
 }
 
