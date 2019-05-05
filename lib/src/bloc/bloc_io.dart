@@ -325,13 +325,13 @@ mixin OutputMixin<T, ARG_TYPE> on BaseIO<T> {
   /// 输出Stream
   Stream<T> stream;
 
-  void listen(
+  StreamSubscription<T> listen(
     ValueChanged<T> listener, {
     Function onError,
     VoidCallback onDone,
     bool cancelOnError,
   }) {
-    stream.listen(
+    return stream.listen(
       listener,
       onError: onError,
       onDone: onDone,
