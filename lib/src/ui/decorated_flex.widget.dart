@@ -25,6 +25,7 @@ class DecoratedRow extends StatelessWidget {
     this.itemSpacing = 0,
     this.visible = true,
     this.crossExpanded = false,
+    this.forceItemSameExtent = false,
     this.children,
   }) : super(key: key);
 
@@ -62,6 +63,9 @@ class DecoratedRow extends StatelessWidget {
 
   /// 垂直方向上Expand
   final bool crossExpanded;
+
+  /// 强制子widget拥有相同的宽度, 会获取到屏幕宽度然后除以item个数来计算
+  final bool forceItemSameExtent;
   final List<Widget> children;
 
   @override
@@ -88,6 +92,7 @@ class DecoratedRow extends StatelessWidget {
       itemSpacing: itemSpacing,
       visible: visible,
       crossExpanded: crossExpanded,
+      forceItemSameExtent: forceItemSameExtent,
       children: children,
     );
   }
@@ -117,6 +122,7 @@ class DecoratedColumn extends StatelessWidget {
     this.visible = true,
     this.crossExpanded = false,
     this.scrollable = false,
+    this.forceItemSameExtent = false,
     this.children,
   }) : super(key: key);
 
@@ -150,6 +156,9 @@ class DecoratedColumn extends StatelessWidget {
   final bool visible;
   final bool crossExpanded;
   final bool scrollable;
+
+  /// 强制子widget拥有相同的高度, 会获取到屏幕高度然后除以item个数来计算
+  final bool forceItemSameExtent;
   final List<Widget> children;
 
   @override
@@ -176,6 +185,7 @@ class DecoratedColumn extends StatelessWidget {
       itemSpacing: itemSpacing,
       visible: visible,
       crossExpanded: crossExpanded,
+      forceItemSameExtent: forceItemSameExtent,
       children: children,
     );
 
@@ -211,6 +221,7 @@ class DecoratedFlex extends StatelessWidget {
     this.itemSpacing = 0,
     this.visible = true,
     this.crossExpanded = false,
+    this.forceItemSameExtent = false,
     this.children,
   }) : super(key: key);
 
@@ -244,10 +255,30 @@ class DecoratedFlex extends StatelessWidget {
   final double itemSpacing;
   final bool visible;
   final bool crossExpanded;
+  final bool forceItemSameExtent;
   final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> _children = children;
+
+    if (forceItemSameExtent) {
+      _children = children.map((it) {
+        if (direction == Axis.horizontal) {
+          return SizedBox(
+            width: MediaQuery.of(context).size.width / children.length,
+            child: it,
+          );
+        }
+        if (direction == Axis.vertical) {
+          return SizedBox(
+            width: MediaQuery.of(context).size.height / children.length,
+            child: it,
+          );
+        }
+      }).toList();
+    }
+
     Widget result = Flex(
       direction: direction,
       mainAxisAlignment: mainAxisAlignment,
@@ -255,8 +286,8 @@ class DecoratedFlex extends StatelessWidget {
       crossAxisAlignment: crossAxisAlignment,
       textBaseline: textBaseline,
       children: itemSpacing != 0
-          ? addItemSpacing(children: children, itemSpacing: itemSpacing)
-          : children,
+          ? addItemSpacing(children: _children, itemSpacing: itemSpacing)
+          : _children,
     );
 
     if (padding != null ||
