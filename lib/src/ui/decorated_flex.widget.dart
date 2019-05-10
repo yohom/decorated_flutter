@@ -23,8 +23,10 @@ class DecoratedRow extends StatelessWidget {
     this.onLongPressed,
     this.behavior = HitTestBehavior.opaque,
     this.itemSpacing = 0,
+    this.divider,
     this.visible = true,
     this.crossExpanded = false,
+    this.forceItemSameExtent = false,
     this.children,
   }) : super(key: key);
 
@@ -57,11 +59,17 @@ class DecoratedRow extends StatelessWidget {
   /// item间距
   final double itemSpacing;
 
+  /// 分隔控件 与[itemSpacing]功能类似, 但是优先使用[divider]
+  final Widget divider;
+
   /// 是否可见
   final bool visible;
 
   /// 垂直方向上Expand
   final bool crossExpanded;
+
+  /// 强制子widget拥有相同的宽度, 会获取到屏幕宽度然后除以item个数来计算
+  final bool forceItemSameExtent;
   final List<Widget> children;
 
   @override
@@ -86,8 +94,10 @@ class DecoratedRow extends StatelessWidget {
       onLongPressed: onLongPressed,
       behavior: behavior,
       itemSpacing: itemSpacing,
+      divider: divider,
       visible: visible,
       crossExpanded: crossExpanded,
+      forceItemSameExtent: forceItemSameExtent,
       children: children,
     );
   }
@@ -114,9 +124,11 @@ class DecoratedColumn extends StatelessWidget {
     this.onLongPressed,
     this.behavior = HitTestBehavior.opaque,
     this.itemSpacing = 0,
+    this.divider,
     this.visible = true,
     this.crossExpanded = false,
     this.scrollable = false,
+    this.forceItemSameExtent = false,
     this.children,
   }) : super(key: key);
 
@@ -147,9 +159,15 @@ class DecoratedColumn extends StatelessWidget {
 
   //endregion
   final double itemSpacing;
+
+  /// 分隔控件 与[itemSpacing]功能类似, 但是优先使用[divider]
+  final Widget divider;
   final bool visible;
   final bool crossExpanded;
   final bool scrollable;
+
+  /// 强制子widget拥有相同的高度, 会获取到屏幕高度然后除以item个数来计算
+  final bool forceItemSameExtent;
   final List<Widget> children;
 
   @override
@@ -174,8 +192,10 @@ class DecoratedColumn extends StatelessWidget {
       onLongPressed: onLongPressed,
       behavior: behavior,
       itemSpacing: itemSpacing,
+      divider: divider,
       visible: visible,
       crossExpanded: crossExpanded,
+      forceItemSameExtent: forceItemSameExtent,
       children: children,
     );
 
@@ -209,8 +229,10 @@ class DecoratedFlex extends StatelessWidget {
     this.onLongPressed,
     this.behavior = HitTestBehavior.opaque,
     this.itemSpacing = 0,
+    this.divider,
     this.visible = true,
     this.crossExpanded = false,
+    this.forceItemSameExtent = false,
     this.children,
   }) : super(key: key);
 
@@ -241,22 +263,54 @@ class DecoratedFlex extends StatelessWidget {
   final HitTestBehavior behavior;
 
   //endregion
+  /// 元素间距
   final double itemSpacing;
+
+  /// 分隔控件 与[itemSpacing]功能类似, 但是优先使用[divider]
+  final Widget divider;
+
+  /// 是否可见
   final bool visible;
+
+  /// cross方向上是否展开
   final bool crossExpanded;
+
+  /// 是否强制子控件等长
+  final bool forceItemSameExtent;
+
+  /// 子元素
   final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> _children = children;
+
+    if (forceItemSameExtent) {
+      _children = children.map((it) {
+        if (direction == Axis.horizontal) {
+          return SizedBox(
+            width: MediaQuery.of(context).size.width / children.length,
+            child: it,
+          );
+        }
+        if (direction == Axis.vertical) {
+          return SizedBox(
+            width: MediaQuery.of(context).size.height / children.length,
+            child: it,
+          );
+        }
+      }).toList();
+    }
+
     Widget result = Flex(
       direction: direction,
       mainAxisAlignment: mainAxisAlignment,
       mainAxisSize: mainAxisSize,
       crossAxisAlignment: crossAxisAlignment,
       textBaseline: textBaseline,
-      children: itemSpacing != 0
-          ? addItemSpacing(children: children, itemSpacing: itemSpacing)
-          : children,
+      children: itemSpacing != 0 || divider != null
+          ? addItemDivider(_children, itemSpacing, divider)
+          : _children,
     );
 
     if (padding != null ||
@@ -302,10 +356,11 @@ class DecoratedFlex extends StatelessWidget {
     return Visibility(visible: visible, child: result);
   }
 
-  List<Widget> addItemSpacing({
-    @required List<Widget> children,
-    @required double itemSpacing,
-  }) {
+  List<Widget> addItemDivider(
+    List<Widget> children,
+    double itemSpacing,
+    Widget divider,
+  ) {
     assert(children != null);
 
     // 确认要往哪几个index(以最终的插入后的List为参考系)插空间
@@ -320,11 +375,11 @@ class DecoratedFlex extends StatelessWidget {
 
       if (direction == Axis.horizontal) {
         indexes.forEach((index) {
-          children.insert(index, SizedBox(width: itemSpacing));
+          children.insert(index, divider ?? SizedBox(width: itemSpacing));
         });
       } else if (direction == Axis.vertical) {
         indexes.forEach((index) {
-          children.insert(index, SizedBox(height: itemSpacing));
+          children.insert(index, divider ?? SizedBox(height: itemSpacing));
         });
       }
     }

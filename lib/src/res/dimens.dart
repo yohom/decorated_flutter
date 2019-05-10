@@ -75,3 +75,7 @@ const kElevationBig = 8.0;
 const kElevationHuge = 16.0;
 const kElevationGiant = 32.0;
 //endregion
+
+const borderSide = BorderSide(color: Colors.grey, width: 0.3);
+const topBottomBorder = Border(top: borderSide, bottom: borderSide);
+const leftRightBorder = Border(left: borderSide, right: borderSide);

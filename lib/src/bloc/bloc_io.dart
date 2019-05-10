@@ -264,14 +264,14 @@ mixin InputMixin<T> on BaseIO<T> {
   bool _isDistinct;
   _Equal _test;
 
-  void add(T data) {
+  T add(T data) {
     L.p('+++++++++++++++++++++++++++BEGIN+++++++++++++++++++++++++++++\n'
         'IO接收到**${_semantics ??= data.runtimeType.toString()}**数据: $data');
 
     if (isEmpty(data) && !_acceptEmpty) {
       L.p('转发被拒绝! 原因: 需要非Empty值, 但是接收到Empty值'
           '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++++');
-      return;
+      return data;
     }
 
     // 如果需要distinct的话, 就判断是否相同; 如果不需要distinct, 直接发射数据
@@ -299,14 +299,17 @@ mixin InputMixin<T> on BaseIO<T> {
       L.p('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
       if (!_subject.isClosed) _subject.add(data);
     }
+
+    return data;
   }
 
-  void addIfAbsent(T data) {
+  T addIfAbsent(T data) {
     // 如果最新值是_seedValue或者是空, 那么才add新数据, 换句话说, 就是如果event已经被add过
     // 了的话那就不add了, 用于第一次add
     if (_seedValue == latest || isEmpty(latest)) {
       add(data);
     }
+    return data;
   }
 
   Future<T> addStream(Stream<T> source, {bool cancelOnError: true}) {
@@ -322,13 +325,13 @@ mixin OutputMixin<T, ARG_TYPE> on BaseIO<T> {
   /// 输出Stream
   Stream<T> stream;
 
-  void listen(
+  StreamSubscription<T> listen(
     ValueChanged<T> listener, {
     Function onError,
     VoidCallback onDone,
     bool cancelOnError,
   }) {
-    stream.listen(
+    return stream.listen(
       listener,
       onError: onError,
       onDone: onDone,
@@ -354,12 +357,14 @@ mixin OutputMixin<T, ARG_TYPE> on BaseIO<T> {
 /// 内部数据是[List]特有的成员
 mixin ListMixin<T> on BaseIO<List<T>> {
   /// 按条件过滤, 并发射过滤后的数据
-  void filterItem(bool test(T element)) {
-    if (!_subject.isClosed) _subject.add(latest.where(test).toList());
+  List<T> filterItem(bool test(T element)) {
+    final filtered = latest.where(test).toList();
+    if (!_subject.isClosed) _subject.add(filtered);
+    return filtered;
   }
 
   /// 追加, 并发射
-  void append(T element, {bool fromHead = false}) {
+  T append(T element, {bool fromHead = false}) {
     if (!_subject.isClosed) {
       if (fromHead) {
         _subject.add(latest..insert(0, element));
@@ -367,10 +372,11 @@ mixin ListMixin<T> on BaseIO<List<T>> {
         _subject.add(latest..add(element));
       }
     }
+    return element;
   }
 
   /// 追加一个list, 并发射
-  void appendAll(List<T> elements, {bool fromHead = false}) {
+  List<T> appendAll(List<T> elements, {bool fromHead = false}) {
     if (!_subject.isClosed) {
       if (fromHead) {
         _subject.add(latest..insertAll(0, elements));
@@ -378,6 +384,7 @@ mixin ListMixin<T> on BaseIO<List<T>> {
         _subject.add(latest..addAll(elements));
       }
     }
+    return elements;
   }
 
   /// 对list的item做变换之后重新组成list
@@ -386,14 +393,15 @@ mixin ListMixin<T> on BaseIO<List<T>> {
   }
 
   /// 替换指定index的元素, 并发射
-  void replace(int index, T element) {
+  T replace(int index, T element) {
     if (!_subject.isClosed) {
       _subject.add(latest..replaceRange(index, index + 1, [element]));
     }
+    return element;
   }
 
   /// 替换最后一个的元素, 并发射
-  void replaceLast(T element) {
+  T replaceLast(T element) {
     if (!_subject.isClosed) {
       _subject.add(latest
         ..replaceRange(
@@ -402,48 +410,59 @@ mixin ListMixin<T> on BaseIO<List<T>> {
           [element],
         ));
     }
+    return element;
   }
 
   /// 替换第一个的元素, 并发射
-  void replaceFirst(T element) {
+  T replaceFirst(T element) {
     if (!_subject.isClosed) {
       _subject.add(latest..replaceRange(0, 1, [element]));
     }
+    return element;
   }
 
   /// 删除最后一个的元素, 并发射
-  void removeLast() {
+  T removeLast() {
+    final lastElement = latest.last;
     if (!_subject.isClosed) {
       _subject.add(latest..removeLast());
     }
+    return lastElement;
   }
 
   /// 删除一个的元素, 并发射
-  void remove(T element) {
+  T remove(T element) {
     if (!_subject.isClosed) {
       _subject.add(latest..remove(element));
     }
+    return element;
   }
 
   /// 删除第一个的元素, 并发射
-  void removeFirst() {
+  T removeFirst() {
+    final firstElement = latest.first;
     if (!_subject.isClosed) {
       _subject.add(latest..removeAt(0));
     }
+    return firstElement;
   }
 
   /// 删除指定索引的元素, 并发射
-  void removeAt(int index) {
+  T removeAt(int index) {
+    final element = latest.elementAt(index);
     if (!_subject.isClosed) {
       _subject.add(latest..removeAt(index));
     }
+    return element;
   }
 }
 
 mixin BoolMixin on BaseIO<bool> {
-  void toggle() {
+  bool toggle() {
+    final toggled = !latest;
     if (!_subject.isClosed) {
-      _subject.add(!latest);
+      _subject.add(toggled);
     }
+    return toggled;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 
+@Deprecated('还是直接使用Container吧')
 class ShadowedBox extends StatelessWidget {
   /// 内部Container的width
   final double width;

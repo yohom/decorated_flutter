@@ -1,3 +1,10 @@
+## [0.3.2]
+- enhancement: decorated_flex增加divider参数; decorated_screen的init参数bug; image_view的assetImage默认不使用fit; 废弃shadowed_box
+- feature: 增加decorated_screen; decorated_flex增加forceItemSameExtent
+- enhancement: deprecate `ioList`; 增加topBottomBorder和leftRightBorder
+- enhancement: OutputMixin的listen方法返回StreamSubscription
+- enhancement: 所有的类add方法都返回处理过后的值.
+
 ## [0.3.1]
 - feature: 增加BoolIO
 - enhancement: 增加appendAll方法;
