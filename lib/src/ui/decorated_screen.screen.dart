@@ -18,7 +18,6 @@ class DecoratedScreen<B extends BLoC> extends StatefulWidget {
     this.bloc,
     this.autoCloseKeyboard = true,
     this.init,
-    this.animate = true,
     this.withForm = false,
     this.withAnalytics = true,
     this.withDefaultTabController = false,
@@ -43,9 +42,6 @@ class DecoratedScreen<B extends BLoC> extends StatefulWidget {
   /// 初始化方法
   final _InitAction<B> init;
 
-  /// 是否执行动画
-  final bool animate;
-
   /// 是否带有表单
   final bool withForm;
 
@@ -65,7 +61,7 @@ class DecoratedScreen<B extends BLoC> extends StatefulWidget {
   _DecoratedScreenState createState() => _DecoratedScreenState<B>();
 }
 
-class _DecoratedScreenState<B extends BLoC> extends State<DecoratedScreen> {
+class _DecoratedScreenState<B extends BLoC> extends State<DecoratedScreen<B>> {
   /// 当前的网络连接状态
   ConnectivityResult _currentState;
 
