@@ -24,6 +24,7 @@ class DecoratedRoute<B extends BLoC, T extends Object>
     this.withDefaultTabController = false,
     this.tabLength,
     this.onConnectivityChanged,
+    this.onDispose,
     String routeName,
     bool isInitialRoute = false,
     bool fullscreenDialog = false,
@@ -76,6 +77,8 @@ class DecoratedRoute<B extends BLoC, T extends Object>
   /// 网络连接情况切换回调
   final _ConnectivityChangedCallback onConnectivityChanged;
 
+  final VoidCallback onDispose;
+
   /// 是否已经初始化
   bool _inited = false;
 
@@ -102,6 +105,7 @@ class DecoratedRoute<B extends BLoC, T extends Object>
         init: lateinit ? null : init, // 可以设置为null, BLoCProvider会处理的
         withAnalytics: withAnalytics,
         child: builder(context),
+        onDispose: onDispose,
       );
     } else {
       result = builder(context);

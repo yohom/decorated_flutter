@@ -19,6 +19,7 @@ export 'flat_text.widget.dart';
 export 'form_sheet.widget.dart';
 export 'fractional_screen.widget.dart';
 export 'free/free_bottom_sheet.widget.dart';
+export 'free/free_check_box.widget.dart';
 export 'free/free_dialog.widget.dart';
 export 'image_view.widget.dart';
 export 'loading.widget.dart';

@@ -8,18 +8,20 @@ typedef void _Init<T extends BLoC>(T bloc);
 class BLoCProvider<T extends BLoC> extends StatefulWidget {
   static PageAnalytics analytics;
 
-  BLoCProvider({
-    Key key,
-    @required this.child,
-    @required this.bloc,
-    this.init,
-    this.withAnalytics = true,
-  }) : super(key: key);
+  BLoCProvider(
+      {Key key,
+      @required this.child,
+      @required this.bloc,
+      this.init,
+      this.withAnalytics = true,
+      this.onDispose})
+      : super(key: key);
 
   final T bloc;
   final _Init<T> init;
   final Widget child;
   final bool withAnalytics;
+  final VoidCallback onDispose;
 
   @override
   _BLoCProviderState<T> createState() => _BLoCProviderState<T>();
@@ -68,6 +70,10 @@ class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
       L.p('${T.toString()} end');
     }
     widget.bloc.close();
+
+    if (widget.onDispose != null) {
+      widget.onDispose();
+    }
     super.dispose();
   }
 }
