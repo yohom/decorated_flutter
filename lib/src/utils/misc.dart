@@ -49,14 +49,21 @@ void handleError(BuildContext context, Object error) {
 }
 
 /// 等待页
-Future<T> loading<T>(BuildContext context, Future<T> futureTask) {
+Future<T> loading<T>(
+  BuildContext context,
+  Future<T> futureTask, {
+  bool cancelable = true,
+}) {
   // 是被future pop的还是按返回键pop的
   bool popByFuture = true;
 
   showDialog(
     context: context,
     builder: (context) {
-      return WillPopScope(onWillPop: () async => false, child: LoadingWidget());
+      return WillPopScope(
+        onWillPop: () async => cancelable,
+        child: LoadingWidget(),
+      );
     },
     barrierDismissible: false,
   ).whenComplete(() {
