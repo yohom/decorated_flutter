@@ -65,7 +65,7 @@ Future<T> loading<T>(
         child: LoadingWidget(),
       );
     },
-    barrierDismissible: false,
+    barrierDismissible: cancelable,
   ).whenComplete(() {
     // 1. 如果是返回键pop的, 那么设置成true, 这样future完成时就不会pop了
     // 2. 如果是future完成导致的pop, 那么这一行是没用任何作用的
