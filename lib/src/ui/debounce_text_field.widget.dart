@@ -73,7 +73,7 @@ class _DebounceTextFieldState extends State<DebounceTextField> {
   @override
   void initState() {
     super.initState();
-    _subject.debounceTime(widget.duration).listen(widget.onChanged);
+    _subject.debounce(widget.duration).listen(widget.onChanged);
   }
 
   @override
