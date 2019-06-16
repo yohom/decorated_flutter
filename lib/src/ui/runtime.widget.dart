@@ -28,7 +28,7 @@ class _RuntimeState extends State<Runtime> {
   @override
   Widget build(BuildContext context) {
     final List<BaseIO> globalIOList =
-        Runtime._globalBLoCList.expand((bloc) => bloc.ioList).toList();
+        Runtime._globalBLoCList.expand((bloc) => bloc.disposeBag).toList();
     return SingleChildScrollView(
       physics: ClampingScrollPhysics(),
       child: ExpansionPanelList(
