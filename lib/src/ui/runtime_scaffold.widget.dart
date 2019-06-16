@@ -1,10 +1,10 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class RuntimeScaffold extends StatelessWidget {
+class RuntimeScaffold<T extends LocalBLoC> extends StatelessWidget {
   const RuntimeScaffold({
     Key key,
-    @required this.bloc,
     this.appBar,
     this.body,
     this.floatingActionButton,
@@ -19,8 +19,6 @@ class RuntimeScaffold extends StatelessWidget {
     this.primary = true,
   })  : assert(primary != null),
         super(key: key);
-
-  final LocalBLoC bloc;
 
   //region Scaffold
   final PreferredSizeWidget appBar;
@@ -52,26 +50,27 @@ class RuntimeScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget runtimeInfoWidget;
-    if (!bool.fromEnvironment('dart.vm.product')) {
+    if (!kReleaseMode) {
+      final bloc = BLoCProvider.of<T>(context);
       runtimeInfoWidget = Drawer(
-        child: SafeArea(child: Runtime(runtimeInfo: bloc?.ioList ?? [])),
+        child: SafeArea(child: Runtime(runtimeInfo: bloc?.disposeBag ?? [])),
       );
     }
     return Scaffold(
       key: key,
-      appBar: appBar,
-      body: body,
-      floatingActionButton: floatingActionButton,
       floatingActionButtonLocation: floatingActionButtonLocation,
       floatingActionButtonAnimator: floatingActionButtonAnimator,
       persistentFooterButtons: persistentFooterButtons,
-      drawer: drawer,
-      endDrawer: runtimeInfoWidget,
       backgroundColor: backgroundColor,
-      bottomNavigationBar: bottomNavigationBar,
-      bottomSheet: bottomSheet,
       resizeToAvoidBottomPadding: resizeToAvoidBottomPadding,
       primary: primary,
+      appBar: appBar,
+      body: body,
+      floatingActionButton: floatingActionButton,
+      drawer: drawer,
+      endDrawer: runtimeInfoWidget,
+      bottomNavigationBar: bottomNavigationBar,
+      bottomSheet: bottomSheet,
     );
   }
 }

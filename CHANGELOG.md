@@ -1,3 +1,11 @@
+## [0.4.0]
+- feature: 增加Delayed, Toggleable的widget; 
+- enhancement: [break change] runtime_scaffold使用泛型来获取bloc
+- feature: 增加DisposeBag
+- enhancement: barrierDismissible可配置
+- enhancement: loading默认可以通过返回键退出
+- enhancement: BLoCProvider提供dispose回调; feature: 增加async mixin, 简化StreamBuilder的写法
+
 ## [0.3.2]
 - enhancement: decorated_flex增加divider参数; decorated_screen的init参数bug; image_view的assetImage默认不使用fit; 废弃shadowed_box
 - feature: 增加decorated_screen; decorated_flex增加forceItemSameExtent

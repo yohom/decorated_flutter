@@ -49,16 +49,23 @@ void handleError(BuildContext context, Object error) {
 }
 
 /// 等待页
-Future<T> loading<T>(BuildContext context, Future<T> futureTask) {
+Future<T> loading<T>(
+  BuildContext context,
+  Future<T> futureTask, {
+  bool cancelable = true,
+}) {
   // 是被future pop的还是按返回键pop的
   bool popByFuture = true;
 
   showDialog(
     context: context,
     builder: (context) {
-      return WillPopScope(onWillPop: () async => false, child: LoadingWidget());
+      return WillPopScope(
+        onWillPop: () async => cancelable,
+        child: LoadingWidget(),
+      );
     },
-    barrierDismissible: false,
+    barrierDismissible: cancelable,
   ).whenComplete(() {
     // 1. 如果是返回键pop的, 那么设置成true, 这样future完成时就不会pop了
     // 2. 如果是future完成导致的pop, 那么这一行是没用任何作用的
