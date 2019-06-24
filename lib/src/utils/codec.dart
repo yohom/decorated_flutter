@@ -10,11 +10,11 @@ class Codec {
 
   Codec._();
 
-  factory Codec({String aesKey, String aesIv}) {
+  factory Codec({String aesKey}) {
     if (_instance == null) {
       _instance = Codec._();
       _aes = Encrypter(
-        AES(Key.fromUtf8(aesKey), IV.fromUtf8(aesIv), mode: AESMode.cbc),
+        AES(Key.fromUtf8(aesKey), mode: AESMode.cbc),
       );
       return _instance;
     } else {
@@ -69,16 +69,19 @@ class Codec {
     return this;
   }
 
-  Codec aesEncrypt([String plainText]) {
+  Codec aesEncrypt([String plainText, String aesIv]) {
     L.p('aesEncrypt前: ${plainText ?? _output} 结束');
-    _output = _aes.encrypt(plainText ?? _output).base64;
+    _output = _aes.encrypt(plainText ?? _output, iv: IV.fromUtf8(aesIv)).base64;
     L.p('aesEncrypt后: $_output 结束');
     return this;
   }
 
-  Codec aesDecrypt([String base64Cipher]) {
+  Codec aesDecrypt([String base64Cipher, String aesIv]) {
     L.p('aesDecrypt前: ${base64Cipher ?? _output} 结束');
-    _output = _aes.decrypt(Encrypted.fromBase64(base64Cipher ?? _output));
+    _output = _aes.decrypt(
+      Encrypted.fromBase64(base64Cipher ?? _output),
+      iv: IV.fromUtf8(aesIv),
+    );
     L.p('aesDecrypt后: $_output 结束');
     return this;
   }

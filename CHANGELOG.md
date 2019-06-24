@@ -1,3 +1,6 @@
+## [0.5.0]
+- enhancement: 适配新的依赖
+
 ## [0.4.0]
 - feature: 增加Delayed, Toggleable的widget; 
 - enhancement: [break change] runtime_scaffold使用泛型来获取bloc
