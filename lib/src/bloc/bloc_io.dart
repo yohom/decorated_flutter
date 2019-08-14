@@ -256,6 +256,26 @@ class BoolIO extends IO<bool> with BoolMixin {
           fetch: fetch,
         );
 }
+
+/// 只接收bool类型数据的Output
+class BoolOutput<ARG_TYPE> extends Output<bool, ARG_TYPE> with BoolMixin {
+  BoolOutput({
+    bool seedValue,
+    String semantics,
+    bool sync = true,
+    bool isBehavior = false,
+    bool acceptEmpty = true,
+    bool isDistinct = false,
+    _Equal test,
+    _Fetch<bool, dynamic> fetch,
+  }) : super(
+          seedValue: seedValue,
+          semantics: semantics,
+          sync: sync,
+          isBehavior: isBehavior,
+          fetch: fetch,
+        );
+}
 //endregion
 
 /// 输入单元特有的成员

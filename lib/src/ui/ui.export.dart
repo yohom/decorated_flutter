@@ -11,6 +11,7 @@ export 'cover_card.widget.dart';
 export 'debounce_text_field.widget.dart';
 export 'decorated_flex.widget.dart';
 export 'decorated_screen.screen.dart';
+export 'decorated_text.widget.dart';
 export 'delayed.widget.dart';
 export 'dot_indicator.widget.dart';
 export 'double_back_exit_app.widget.dart';
