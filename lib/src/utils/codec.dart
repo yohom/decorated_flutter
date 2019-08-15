@@ -13,9 +13,11 @@ class Codec {
   factory Codec({String aesKey}) {
     if (_instance == null) {
       _instance = Codec._();
-      _aes = Encrypter(
-        AES(Key.fromUtf8(aesKey), mode: AESMode.cbc),
-      );
+      if (aesKey != null) {
+        _aes = Encrypter(
+          AES(Key.fromUtf8(aesKey), mode: AESMode.cbc),
+        );
+      }
       return _instance;
     } else {
       return _instance;
