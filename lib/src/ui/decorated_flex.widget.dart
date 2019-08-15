@@ -28,6 +28,7 @@ class DecoratedRow extends StatelessWidget {
     this.crossExpanded = false,
     this.forceItemSameExtent = false,
     this.children,
+    this.safeArea,
   }) : super(key: key);
 
   //region Container
@@ -70,6 +71,9 @@ class DecoratedRow extends StatelessWidget {
 
   /// 强制子widget拥有相同的宽度, 会获取到屏幕宽度然后除以item个数来计算
   final bool forceItemSameExtent;
+
+  /// 是否安全区域
+  final bool safeArea;
   final List<Widget> children;
 
   @override
@@ -94,10 +98,11 @@ class DecoratedRow extends StatelessWidget {
       onLongPressed: onLongPressed,
       behavior: behavior,
       itemSpacing: itemSpacing,
-      divider: divider,
       visible: visible,
       crossExpanded: crossExpanded,
       forceItemSameExtent: forceItemSameExtent,
+      safeArea: safeArea,
+      divider: divider,
       children: children,
     );
   }
@@ -129,6 +134,7 @@ class DecoratedColumn extends StatelessWidget {
     this.crossExpanded = false,
     this.scrollable = false,
     this.forceItemSameExtent = false,
+    this.safeArea,
     this.children,
   }) : super(key: key);
 
@@ -168,6 +174,9 @@ class DecoratedColumn extends StatelessWidget {
 
   /// 强制子widget拥有相同的高度, 会获取到屏幕高度然后除以item个数来计算
   final bool forceItemSameExtent;
+
+  /// 是否安全区域
+  final bool safeArea;
   final List<Widget> children;
 
   @override
@@ -192,10 +201,11 @@ class DecoratedColumn extends StatelessWidget {
       onLongPressed: onLongPressed,
       behavior: behavior,
       itemSpacing: itemSpacing,
-      divider: divider,
       visible: visible,
       crossExpanded: crossExpanded,
       forceItemSameExtent: forceItemSameExtent,
+      safeArea: safeArea,
+      divider: divider,
       children: children,
     );
 
@@ -233,6 +243,7 @@ class DecoratedFlex extends StatelessWidget {
     this.visible = true,
     this.crossExpanded = false,
     this.forceItemSameExtent = false,
+    this.safeArea,
     this.children,
   }) : super(key: key);
 
@@ -278,6 +289,9 @@ class DecoratedFlex extends StatelessWidget {
   /// 是否强制子控件等长
   final bool forceItemSameExtent;
 
+  /// 是否安全区域
+  final bool safeArea;
+
   /// 子元素
   final List<Widget> children;
 
@@ -287,17 +301,17 @@ class DecoratedFlex extends StatelessWidget {
 
     if (forceItemSameExtent) {
       _children = children.map((it) {
-        if (direction == Axis.horizontal) {
-          return SizedBox(
-            width: MediaQuery.of(context).size.width / children.length,
-            child: it,
-          );
-        }
-        if (direction == Axis.vertical) {
-          return SizedBox(
-            width: MediaQuery.of(context).size.height / children.length,
-            child: it,
-          );
+        switch (direction) {
+          case Axis.horizontal:
+            return SizedBox(
+              width: MediaQuery.of(context).size.width / children.length,
+              child: it,
+            );
+          case Axis.vertical:
+            return SizedBox(
+              height: MediaQuery.of(context).size.height / children.length,
+              child: it,
+            );
         }
       }).toList();
     }
@@ -352,6 +366,10 @@ class DecoratedFlex extends StatelessWidget {
 
     if (crossExpanded) {
       result = Expanded(child: result);
+    }
+
+    if (safeArea != null) {
+      result = SafeArea(child: result);
     }
     return Visibility(visible: visible, child: result);
   }

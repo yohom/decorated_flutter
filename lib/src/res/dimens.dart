@@ -49,6 +49,7 @@ const SPACE_GIANT = SizedBox(width: kSpaceGiant, height: kSpaceGiant);
 const SPACE_GIANT_HORIZONTAL = SizedBox(width: kSpaceGiant, height: kSpaceZero);
 const SPACE_GIANT_VERTICAL = SizedBox(width: kSpaceZero, height: kSpaceGiant);
 
+const kDividerZero = Divider(height: kSpaceZero);
 const kDividerTiny = Divider(height: kSpaceTiny);
 const kDividerSmall = Divider(height: kSpaceSmall);
 const kDividerNormal = Divider();
