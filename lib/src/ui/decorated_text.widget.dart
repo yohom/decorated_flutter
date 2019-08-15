@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../decorated_flutter.dart';
+
 class DecoratedText extends StatelessWidget {
   const DecoratedText(
     this.data, {
@@ -10,6 +12,7 @@ class DecoratedText extends StatelessWidget {
     this.margin,
     this.style = const TextStyle(),
     this.safeArea,
+    this.onPressed,
   }) : super(key: key);
 
   final BoxBorder border;
@@ -19,6 +22,7 @@ class DecoratedText extends StatelessWidget {
   final TextStyle style;
   final String data;
   final bool safeArea;
+  final ContextCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +46,14 @@ class DecoratedText extends StatelessWidget {
     if (safeArea != null) {
       result = SafeArea(child: result);
     }
+
+    if (onPressed != null) {
+      result = GestureDetector(
+        onTap: () => onPressed(context),
+        child: result,
+      );
+    }
+
     return result;
   }
 }
