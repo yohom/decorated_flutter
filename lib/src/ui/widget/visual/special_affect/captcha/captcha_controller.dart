@@ -7,17 +7,17 @@ import 'package:rxdart/rxdart.dart';
 const int kDuration = 60;
 
 /// 负责控制倒计时的类
-class CountdownController {
-  CountdownController._();
+class CaptchaController {
+  CaptchaController._();
 
-  factory CountdownController(Type key) {
+  factory CaptchaController(Type key) {
     if (!controllerMap.containsKey(key)) {
-      controllerMap[key] = CountdownController._();
+      controllerMap[key] = CaptchaController._();
     }
     return controllerMap[key];
   }
 
-  static final controllerMap = Map<Type, CountdownController>();
+  static final controllerMap = Map<Type, CaptchaController>();
 
   static void disposeAll() {
     controllerMap.forEach((_, controller) => controller.dispose());
