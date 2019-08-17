@@ -14,8 +14,8 @@ typedef Widget _Builder(bool enabled, String label);
 ///   2. 倒计时过程中, 不可点击
 ///   3. 一轮倒计时结束后, 自动复原到初始值
 ///   4. 自动管理所有注册的定时器
-class CaptchaBuilder extends StatefulWidget {
-  CaptchaBuilder({
+class CountdownBuilder extends StatefulWidget {
+  CountdownBuilder({
     Key key,
     @required this.controller,
     this.labelTemplate = _kLabelTemplate,
@@ -25,7 +25,7 @@ class CaptchaBuilder extends StatefulWidget {
   }) : super(key: key);
 
   /// Controller
-  final CaptchaController controller;
+  final CountdownController controller;
 
   /// 文字模板, 实际的倒计时时间会代替模板中的`%s`字符
   final String labelTemplate;
@@ -40,10 +40,10 @@ class CaptchaBuilder extends StatefulWidget {
   final _Builder builder;
 
   @override
-  _CaptchaBuilderState createState() => _CaptchaBuilderState();
+  _CountdownBuilderState createState() => _CountdownBuilderState();
 }
 
-class _CaptchaBuilderState extends State<CaptchaBuilder> {
+class _CountdownBuilderState extends State<CountdownBuilder> {
   String _label;
   bool _enabled;
 
