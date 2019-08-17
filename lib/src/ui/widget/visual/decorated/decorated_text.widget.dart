@@ -1,6 +1,5 @@
+import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
-
-import '../../decorated_flutter.dart';
 
 class DecoratedText extends StatelessWidget {
   const DecoratedText(

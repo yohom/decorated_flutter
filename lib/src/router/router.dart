@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:decorated_flutter/decorated_flutter.dart';
+import 'package:decorated_flutter/src/ui/widget/nonvisual/auto_close_keyboard.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:kiwi/kiwi.dart' as kiwi;
 
-import '../ui/loading.widget.dart';
+import '../ui/widget/visual/placeholder/loading.widget.dart';
 
 typedef void _InitAction<T extends BLoC>(T bloc);
 typedef Widget _RouteBuilder(

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:decorated_flutter/decorated_flutter.dart';
+import 'package:decorated_flutter/src/ui/widget/visual/preferred/preferred_async_builder.widget.dart';
 import 'package:flutter/material.dart';
 
 typedef Widget _ItemBuilder<T>(BuildContext context, int index, T data);

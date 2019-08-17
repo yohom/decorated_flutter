@@ -1,4 +1,4 @@
-import 'package:decorated_flutter/src/ui/ui.export.dart';
+import 'package:decorated_flutter/src/ui/widget/visual/preferred/preferred_async_builder.widget.dart';
 import 'package:flutter/widgets.dart';
 
 mixin FutureMixin<DATA> on StatelessWidget {

@@ -2,6 +2,8 @@ import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:decorated_flutter/src/annotation/wip.dart';
 import 'package:flutter/material.dart';
 
+import 'preferred_async_builder.widget.dart';
+
 typedef Widget ToggleBuilder(BoolIO io);
 
 @wip

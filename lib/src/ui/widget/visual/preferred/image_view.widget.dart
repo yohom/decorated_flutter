@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import 'preferred_async_builder.widget.dart';
 
 typedef void LoadingProgress(double progress, List<int> data);
 
