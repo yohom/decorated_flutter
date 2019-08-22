@@ -73,7 +73,12 @@ class Codec {
 
   Codec aesEncrypt([String plainText, String aesIv]) {
     L.p('aesEncrypt前: ${plainText ?? _output} 结束');
-    _output = _aes.encrypt(plainText ?? _output, iv: IV.fromUtf8(aesIv)).base64;
+    if (aesIv != null) {
+      _output =
+          _aes.encrypt(plainText ?? _output, iv: IV.fromUtf8(aesIv)).base64;
+    } else {
+      _output = _aes.encrypt(plainText ?? _output).base64;
+    }
     L.p('aesEncrypt后: $_output 结束');
     return this;
   }
