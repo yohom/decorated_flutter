@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+typedef void LoadingProgress(double progress, List<int> data);
+
 class ImageView extends StatelessWidget {
   ImageView.assetImage(
     this.imagePath, {
@@ -212,7 +214,7 @@ class ImageView extends StatelessWidget {
   final VoidCallback loadFailedCallback;
 
   /// 加载进度回调
-  final ValueChanged loadingProgress;
+  LoadingProgress loadingProgress;
 
   /// 加载完成回调
   final VoidCallback loadedCallback;

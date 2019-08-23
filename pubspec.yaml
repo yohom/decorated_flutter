@@ -16,8 +16,8 @@ dependencies:
   kiwi: ^0.2.0
   encrypt: ^3.2.0
   crypto: ^2.0.6
-  flutter_advanced_networkimage: ^0.4.15
-  flutter_svg: ^0.12.1
+  flutter_advanced_networkimage: ^0.5.0
+  flutter_svg: ^0.13.0
   connectivity: ^0.4.3+2
   flushbar: ^1.7.0
 
