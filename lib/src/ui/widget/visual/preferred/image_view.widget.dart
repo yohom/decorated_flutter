@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import 'preferred_async_builder.widget.dart';
+
+typedef void LoadingProgress(double progress, List<int> data);
 
 class ImageView extends StatelessWidget {
   ImageView.assetImage(
@@ -212,7 +215,7 @@ class ImageView extends StatelessWidget {
   final VoidCallback loadFailedCallback;
 
   /// 加载进度回调
-  final ValueChanged loadingProgress;
+  final LoadingProgress loadingProgress;
 
   /// 加载完成回调
   final VoidCallback loadedCallback;

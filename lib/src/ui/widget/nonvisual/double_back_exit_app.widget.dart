@@ -1,7 +1,8 @@
 import 'dart:async';
-import 'dart:io';
 
+import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:rxdart/rxdart.dart';
 
 /// 连续点击返回按钮退出应用, 如果要使用默认的提示信息(由[SnackBar]实现)的话, 那么要放在[Scaffold]
@@ -35,8 +36,9 @@ class _DoubleBackExitAppState extends State<DoubleBackExitApp> {
     super.initState();
 
     _closeAppSubject.timeInterval().listen((interval) {
+      L.p('回退间隔: $interval}');
       if (interval.interval < widget.duration) {
-        exit(0);
+        SystemNavigator.pop();
       } else {
         if (widget.onShowExitHint != null) {
           widget.onShowExitHint();

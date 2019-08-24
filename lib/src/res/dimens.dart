@@ -49,6 +49,7 @@ const SPACE_GIANT = SizedBox(width: kSpaceGiant, height: kSpaceGiant);
 const SPACE_GIANT_HORIZONTAL = SizedBox(width: kSpaceGiant, height: kSpaceZero);
 const SPACE_GIANT_VERTICAL = SizedBox(width: kSpaceZero, height: kSpaceGiant);
 
+const kDividerZero = Divider(height: kSpaceZero);
 const kDividerTiny = Divider(height: kSpaceTiny);
 const kDividerSmall = Divider(height: kSpaceSmall);
 const kDividerNormal = Divider();
@@ -60,6 +61,7 @@ const kDividerGiant = Divider(height: kSpaceGiant);
 //endregion
 
 //region text
+const kTextTiny = 12.0;
 const kTextSmall = 14.0;
 const kTextNormal = 16.0;
 const kTextLittleBig = 17.0;

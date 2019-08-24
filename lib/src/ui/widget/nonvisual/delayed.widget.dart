@@ -1,4 +1,4 @@
-import 'package:decorated_flutter/src/ui/preferred_async_builder.widget.dart';
+import 'package:decorated_flutter/src/ui/widget/visual/preferred/preferred_async_builder.widget.dart';
 import 'package:flutter/material.dart';
 
 class Delayed<T> extends StatelessWidget {

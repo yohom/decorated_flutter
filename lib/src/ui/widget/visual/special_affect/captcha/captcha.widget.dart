@@ -1,11 +1,11 @@
+import 'package:decorated_flutter/src/ui/ui.export.dart';
 import 'package:flutter/material.dart';
-import 'package:decorated_flutter/src/ui/captcha/captcha_controller.dart';
 
 const _kInitLabel = '获取验证码';
 const _kRefetchLabel = '重新获取';
 const _kLabelTemplate = '倒计时%s秒';
 
-typedef Widget _Builder(bool enabled, String label);
+typedef Widget _Builder(bool countdowning, String label);
 
 /// 倒计时控件
 /// 目标:
@@ -45,7 +45,7 @@ class CaptchaBuilder extends StatefulWidget {
 
 class _CaptchaBuilderState extends State<CaptchaBuilder> {
   String _label;
-  bool _enabled;
+  bool _countdowning;
 
   @override
   void initState() {
@@ -54,22 +54,22 @@ class _CaptchaBuilderState extends State<CaptchaBuilder> {
     widget.controller.disposed = false;
 
     if (widget.controller.started) {
-      _enabled = widget.controller.remain == kDuration;
+      _countdowning = widget.controller.remain != kDuration;
       _label = widget.labelTemplate
           .replaceFirst('%s', widget.controller.remain.toString());
     } else {
       _label = widget.initLabel;
-      _enabled = true;
+      _countdowning = false;
     }
 
     widget.controller.addListener(() {
       if (!widget.controller.disposed) {
         setState(() {
           if (widget.controller.done) {
-            _enabled = true;
+            _countdowning = false;
             _label = widget.refetchLabel;
           } else {
-            _enabled = widget.controller.remain == kDuration;
+            _countdowning = widget.controller.remain != kDuration;
             _label = widget.labelTemplate
                 .replaceFirst('%s', widget.controller.remain.toString());
           }
@@ -80,7 +80,7 @@ class _CaptchaBuilderState extends State<CaptchaBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.builder(_enabled, _label);
+    return widget.builder(_countdowning, _label);
   }
 
   @override

@@ -17,6 +17,7 @@ class FractionalScreen extends StatelessWidget {
     this.verticalDirection = VerticalDirection.down,
     this.textBaseline,
     this.padding = EdgeInsets.zero,
+    this.safeArea,
     @required this.children,
   }) : super(key: key);
 
@@ -52,6 +53,9 @@ class FractionalScreen extends StatelessWidget {
   /// 是否可以滚动, 可以配合键盘使用
   final bool scrollable;
 
+  /// 是否Safe Area
+  final bool safeArea;
+
   //region Flex属性
   final MainAxisAlignment mainAxisAlignment;
   final MainAxisSize mainAxisSize;
@@ -59,11 +63,12 @@ class FractionalScreen extends StatelessWidget {
   final TextDirection textDirection;
   final VerticalDirection verticalDirection;
   final TextBaseline textBaseline;
+
   //endregion
 
   @override
   Widget build(BuildContext context) {
-    final content = SizedBox(
+    Widget content = SizedBox(
       width: MediaQuery.of(context).size.width * widthFactor,
       height: MediaQuery.of(context).size.height * heightFactor,
       child: Padding(
@@ -80,6 +85,11 @@ class FractionalScreen extends StatelessWidget {
         ),
       ),
     );
+
+    if (safeArea != null) {
+      content = SafeArea(child: content);
+    }
+
     return scrollable ? SingleChildScrollView(child: content) : content;
   }
 }
