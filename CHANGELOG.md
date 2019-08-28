@@ -1,3 +1,15 @@
+## [0.6.1]
+- chore: 提升依赖版本
+- enhancement: 增加toast方法
+
+## [0.6.0]
+- feature: 增加GradientButton
+- feature: 增加DecoratedText
+- enhancement: DecoratedFlex增加safe area
+- enhancement: Codec构造器优化
+- enhancement: DecoratedText加入onPressed
+- enhancement: FractionalScreen增加safeArea参数
+
 ## [0.5.0]
 - enhancement: 适配新的依赖
 
@@ -93,7 +105,6 @@
 - bugfix: DecoratedFlex的onPressed问题
 
 ## [0.1.3]
-
 - bugfix: async_list_view的bug处理
 - enhancement: dio升级2.0.2
 - enhancement: [break change] 去除cached_network_image; 错误处理方法优化
@@ -101,7 +112,6 @@
 - enhancement: [break change] showMessage方法的exitTo参数换成String类型的路由参数, 替换Deprecated的Type参数
 
 ## [0.1.2]
-
 - enhancement: 增加Value类, 把一些简单的StatefulWidget转换回StatelessWidget;
 - enhancement: [break change] DecoratedFlex的onTap和onLongPressed重命名为onPressed和onLongPressed, 并且传入BuildContext参数.
 - feature: DecoratedFlex增加expanded参数, 控制是否Expanding
