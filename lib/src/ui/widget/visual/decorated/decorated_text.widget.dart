@@ -1,4 +1,3 @@
-import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 
 class DecoratedText extends StatelessWidget {
@@ -12,6 +11,7 @@ class DecoratedText extends StatelessWidget {
     this.style = const TextStyle(),
     this.safeArea,
     this.onPressed,
+    this.backgroundColor,
   }) : super(key: key);
 
   final BoxBorder border;
@@ -21,7 +21,8 @@ class DecoratedText extends StatelessWidget {
   final TextStyle style;
   final String data;
   final bool safeArea;
-  final ContextCallback onPressed;
+  final ValueChanged<String> onPressed;
+  final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +31,13 @@ class DecoratedText extends StatelessWidget {
     if (border != null ||
         borderRadius != null ||
         padding != null ||
-        margin != null) {
+        margin != null ||
+        backgroundColor != null) {
       result = Container(
         margin: margin,
         padding: padding,
         decoration: BoxDecoration(
+          color: backgroundColor,
           border: border,
           borderRadius: borderRadius,
         ),
@@ -48,7 +51,7 @@ class DecoratedText extends StatelessWidget {
 
     if (onPressed != null) {
       result = GestureDetector(
-        onTap: () => onPressed(context),
+        onTap: () => onPressed(data),
         child: result,
       );
     }
