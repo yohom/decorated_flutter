@@ -114,6 +114,7 @@ class StreamListView<T> extends StatelessWidget {
     this.distinct = false,
     this.startWithDivider = false,
     this.endWithDivider = false,
+    this.header,
   })  : _controller = controller ?? ScrollController(),
         super(key: key) {
     _controller?.addListener(() {
@@ -170,6 +171,9 @@ class StreamListView<T> extends StatelessWidget {
   /// 尾部插入divider
   final bool endWithDivider;
 
+  /// 头部控件
+  final Widget header;
+
   final _inLoading = Value(false);
 
   @override
@@ -200,16 +204,33 @@ class StreamListView<T> extends StatelessWidget {
           controller: _controller,
           itemCount: filteredData.length ?? 0,
           itemBuilder: (context, index) {
-            return _buildItem(
-              context,
-              filteredData,
-              index,
-              reverse,
-              startWithDivider,
-              endWithDivider,
-              divider,
-              itemBuilder,
-            );
+            if (header != null) {
+              if (index == 0) {
+                return header;
+              } else {
+                return _buildItem(
+                  context,
+                  filteredData,
+                  index - 1,
+                  reverse,
+                  startWithDivider,
+                  endWithDivider,
+                  divider,
+                  itemBuilder,
+                );
+              }
+            } else {
+              return _buildItem(
+                context,
+                filteredData,
+                index,
+                reverse,
+                startWithDivider,
+                endWithDivider,
+                divider,
+                itemBuilder,
+              );
+            }
           },
         );
       },
