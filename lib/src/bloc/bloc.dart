@@ -1,6 +1,7 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:decorated_flutter/src/bloc/bloc_io.dart';
 import 'package:meta/meta.dart';
+import 'package:oktoast/oktoast.dart';
 
 @immutable
 abstract class BLoC {
@@ -74,4 +75,19 @@ abstract class GlobalBLoC extends BLoC {
 
     super.close();
   }
+}
+
+class ToastBLoC extends GlobalBLoC {
+  ToastBLoC() : super('Toast BLoC') {
+    toast.listen((text) {
+      showToast(text);
+    });
+  }
+
+  final toast = IO<String>(semantics: 'toast内容');
+}
+
+class LoadingBLoC extends GlobalBLoC {
+  LoadingBLoC() : super('Loading BLoC');
+  final loading = IO<bool>(semantics: '是否显示loading');
 }
