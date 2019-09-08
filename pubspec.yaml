@@ -14,7 +14,7 @@ dependencies:
   rxdart:  ^0.22.2
   intl: ^0.16.0
   kiwi: ^0.2.0
-  encrypt: ^3.2.0
+  encrypt: ^3.3.1
   crypto: ^2.1.1
   flutter_advanced_networkimage: ^0.5.0
   connectivity: ^0.4.3+7
