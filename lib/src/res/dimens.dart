@@ -61,10 +61,10 @@ const kDividerGiant = Divider(height: kSpaceGiant);
 //endregion
 
 //region text
-const kTextTiny = 12.0;
-const kTextSmall = 14.0;
-const kTextNormal = 16.0;
-const kTextLittleBig = 17.0;
+const kTextTiny = 10.0;
+const kTextSmall = 12.0;
+const kTextNormal = 14.0;
+const kTextLittleBig = 16.0;
 const kTextBig = 18.0;
 //endregion
 

@@ -12,10 +12,10 @@ typedef void _ConnectivityChangedCallback(
 );
 
 /// [B]是指定的BLoC
-class DecoratedScreen<B extends BLoC> extends StatefulWidget {
-  DecoratedScreen({
+class DecoratedWidget<B extends BLoC> extends StatefulWidget {
+  DecoratedWidget({
     Key key,
-    @required this.screen,
+    @required this.widget,
     this.bloc,
     this.autoCloseKeyboard = true,
     this.init,
@@ -35,7 +35,7 @@ class DecoratedScreen<B extends BLoC> extends StatefulWidget {
   final B bloc;
 
   /// child
-  final Widget screen;
+  final Widget widget;
 
   /// 是否自动关闭输入法
   final bool autoCloseKeyboard;
@@ -59,10 +59,10 @@ class DecoratedScreen<B extends BLoC> extends StatefulWidget {
   final _ConnectivityChangedCallback onConnectivityChanged;
 
   @override
-  _DecoratedScreenState createState() => _DecoratedScreenState<B>();
+  _DecoratedWidgetState createState() => _DecoratedWidgetState<B>();
 }
 
-class _DecoratedScreenState<B extends BLoC> extends State<DecoratedScreen<B>> {
+class _DecoratedWidgetState<B extends BLoC> extends State<DecoratedWidget<B>> {
   /// 当前的网络连接状态
   ConnectivityResult _currentState;
 
@@ -77,10 +77,10 @@ class _DecoratedScreenState<B extends BLoC> extends State<DecoratedScreen<B>> {
         bloc: widget.bloc,
         init: widget.init,
         withAnalytics: widget.withAnalytics,
-        child: widget.screen,
+        child: widget.widget,
       );
     } else {
-      result = widget.screen;
+      result = widget.widget;
     }
 
     // 是否自动收起键盘
