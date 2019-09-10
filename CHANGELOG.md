@@ -1,3 +1,11 @@
+## [0.7.0]
+- enhancement: [breaking change] DecoratedText的onChange非法传入文本
+- enhancement: AsyncListView加入header
+- enhancement: [break change] decorated_screen -> decorated_widget
+- enhancement: DecoratedText增加maxLines参数
+- enhancement: 增加公用的textStyle
+- enhancement: intl -> flutter_localization
+
 ## [0.6.1]
 - chore: 提升依赖版本
 - enhancement: 增加toast方法
