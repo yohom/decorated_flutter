@@ -9,3 +9,9 @@ enum Actions {
   cancel,
   confirm,
 }
+
+enum Gravity {
+  Start,
+  Center,
+  End,
+}
