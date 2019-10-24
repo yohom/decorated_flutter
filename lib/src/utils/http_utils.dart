@@ -18,7 +18,7 @@ class HttpUtils {
     String result = '';
 
     if (data is FormData) {
-      data.entries.forEach((entry) {
+      data.fields.forEach((entry) {
         result = '${entry.key}=${entry.value}&$result';
       });
       result = '$baseUrl$path?$result';
