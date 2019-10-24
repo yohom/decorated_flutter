@@ -13,6 +13,7 @@ class DecoratedText extends StatelessWidget {
     this.onPressed,
     this.backgroundColor,
     this.maxLines,
+    this.textAlign,
   }) : super(key: key);
 
   final BoxBorder border;
@@ -25,10 +26,16 @@ class DecoratedText extends StatelessWidget {
   final ValueChanged<String> onPressed;
   final Color backgroundColor;
   final int maxLines;
+  final TextAlign textAlign;
 
   @override
   Widget build(BuildContext context) {
-    Widget result = Text(data, maxLines: maxLines, style: style);
+    Widget result = Text(
+      data,
+      maxLines: maxLines,
+      style: style,
+      textAlign: textAlign,
+    );
 
     if (border != null ||
         borderRadius != null ||

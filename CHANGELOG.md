@@ -1,5 +1,11 @@
+## [0.8.0]
+- enhancement: 增加Gravity枚举
+- enhancement: decorated_text增加textAlign
+- enhancement: bloc中应该protected的属性添加@protected
+- enhancement: [break change] dio升级3.0
+
 ## [0.7.0]
-- enhancement: [breaking change] DecoratedText的onChange非法传入文本
+- enhancement: [break change] DecoratedText的onChange非法传入文本
 - enhancement: AsyncListView加入header
 - enhancement: [break change] decorated_screen -> decorated_widget
 - enhancement: DecoratedText增加maxLines参数

@@ -28,6 +28,7 @@ abstract class RootBLoC extends BLoC {
   @Deprecated('使用[disposeBag]代替, 两者功能一样, 纯粹的重命名')
   List<GlobalBLoC> get globalBLoCList => [];
 
+  @protected
   List<GlobalBLoC> get disposeBag => [];
 
   @override
@@ -47,6 +48,7 @@ abstract class LocalBLoC extends BLoC {
   @Deprecated('使用[disposeBag]代替, 两者功能一样, 纯粹的重命名')
   List<BaseIO> get ioList => [];
 
+  @protected
   List<BaseIO> get disposeBag => [];
 
   @override
@@ -66,6 +68,7 @@ abstract class GlobalBLoC extends BLoC {
   @Deprecated('使用[disposeBag]代替, 两者功能一样, 纯粹的重命名')
   List<BaseIO> get ioList => [];
 
+  @protected
   List<BaseIO> get disposeBag => [];
 
   @override
