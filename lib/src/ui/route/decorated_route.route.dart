@@ -1,13 +1,8 @@
-import 'dart:async';
-
-import 'package:connectivity/connectivity.dart';
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:decorated_flutter/src/ui/widget/nonvisual/auto_close_keyboard.widget.dart';
 import 'package:flutter/material.dart';
 
 typedef void _InitAction<T extends BLoC>(T bloc);
-typedef void _ConnectivityChangedCallback(
-    BuildContext context, ConnectivityResult result);
 
 /// [B]是指定的BLoC, [T]是Route的返回类型
 class DecoratedRoute<B extends BLoC, T extends Object>
@@ -24,7 +19,6 @@ class DecoratedRoute<B extends BLoC, T extends Object>
     this.withAnalytics = true,
     this.withDefaultTabController = false,
     this.tabLength,
-    this.onConnectivityChanged,
     this.onDispose,
     String routeName,
     bool isInitialRoute = false,
@@ -75,19 +69,10 @@ class DecoratedRoute<B extends BLoC, T extends Object>
   /// tab bar长度, 必须和[withDefaultTabController]一起设置
   final int tabLength;
 
-  /// 网络连接情况切换回调
-  final _ConnectivityChangedCallback onConnectivityChanged;
-
   final VoidCallback onDispose;
 
   /// 是否已经初始化
   bool _inited = false;
-
-  /// 当前的网络连接状态
-  ConnectivityResult _currentState;
-
-  /// 网络状态监听的订阅
-  StreamSubscription _subscription;
 
   @override
   Widget buildPage(
@@ -126,16 +111,6 @@ class DecoratedRoute<B extends BLoC, T extends Object>
       result = DefaultTabController(length: tabLength, child: result);
     }
 
-    if (onConnectivityChanged != null) {
-      _subscription =
-          Connectivity().onConnectivityChanged.skip(1).listen((event) {
-        if (_currentState != event) {
-          _currentState = event;
-          onConnectivityChanged(context, _currentState);
-        }
-      });
-    }
-
     return result;
   }
 
@@ -156,11 +131,5 @@ class DecoratedRoute<B extends BLoC, T extends Object>
     return animate
         ? super.buildTransitions(context, animation, secondaryAnimation, child)
         : child;
-  }
-
-  @override
-  void dispose() {
-    _subscription?.cancel();
-    super.dispose();
   }
 }
