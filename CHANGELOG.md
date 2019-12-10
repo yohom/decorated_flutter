@@ -1,3 +1,6 @@
+## 0.9.1
+- enhance: 优化Toggleable
+
 ## 0.9.0
 - enhance: 去除connectivity, 保证decorated_flutter的依赖全部是纯dart, 增强兼容性; 提升依赖
 
