@@ -33,13 +33,13 @@ class CaptchaController {
   int remain = kDuration;
 
   StreamSubscription<int> _subscription;
-  Observable<int> _timer;
+  Stream<int> _timer;
 
   void start() {
     started = true;
     if (done || _subscription == null) {
       done = false;
-      _timer = Observable.periodic(Duration(seconds: 1), (data) {
+      _timer = Stream.periodic(Duration(seconds: 1), (data) {
         return kDuration - 1 - data;
       }).take(kDuration).doOnDone(() {
         done = true;

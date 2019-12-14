@@ -8,14 +8,14 @@ typedef void _Init<T extends BLoC>(T bloc);
 class BLoCProvider<T extends BLoC> extends StatefulWidget {
   static PageAnalytics analytics;
 
-  BLoCProvider(
-      {Key key,
-      @required this.child,
-      @required this.bloc,
-      this.init,
-      this.withAnalytics = true,
-      this.onDispose})
-      : super(key: key);
+  BLoCProvider({
+    Key key,
+    @required this.child,
+    @required this.bloc,
+    this.init,
+    this.withAnalytics = true,
+    this.onDispose,
+  }) : super(key: key);
 
   final T bloc;
   final _Init<T> init;
