@@ -25,15 +25,11 @@ abstract class BLoC {
 abstract class RootBLoC extends BLoC {
   RootBLoC([String semantics]) : super(semantics);
 
-  @Deprecated('使用[disposeBag]代替, 两者功能一样, 纯粹的重命名')
-  List<GlobalBLoC> get globalBLoCList => [];
-
   @protected
   List<GlobalBLoC> get disposeBag => [];
 
   @override
   void close() {
-    globalBLoCList?.forEach((bloc) => bloc.close());
     disposeBag?.forEach((bloc) => bloc.close());
 
     super.close();
@@ -44,16 +40,11 @@ abstract class RootBLoC extends BLoC {
 abstract class LocalBLoC extends BLoC {
   LocalBLoC([String semantics]) : super(semantics);
 
-  /// 所有的event集合, 主要是提供给RuntimeScaffold使用
-  @Deprecated('使用[disposeBag]代替, 两者功能一样, 纯粹的重命名')
-  List<BaseIO> get ioList => [];
-
   @protected
   List<BaseIO> get disposeBag => [];
 
   @override
   void close() {
-    ioList?.forEach((event) => event.dispose());
     disposeBag?.forEach((event) => event.dispose());
 
     super.close();
@@ -64,16 +55,11 @@ abstract class LocalBLoC extends BLoC {
 abstract class GlobalBLoC extends BLoC {
   GlobalBLoC([String semantics]) : super(semantics);
 
-  /// 所有的event集合, 主要是提供给RuntimeScaffold使用
-  @Deprecated('使用[disposeBag]代替, 两者功能一样, 纯粹的重命名')
-  List<BaseIO> get ioList => [];
-
   @protected
   List<BaseIO> get disposeBag => [];
 
   @override
   void close() {
-    ioList?.forEach((event) => event.dispose());
     disposeBag?.forEach((event) => event.dispose());
 
     super.close();

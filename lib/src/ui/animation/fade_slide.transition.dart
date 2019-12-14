@@ -79,9 +79,7 @@ class _FadeInSlideTransitionState extends State<FadeSlideTransition>
     );
 
     if (widget.immediately) {
-      Observable.just('')
-          .delay(widget.delay)
-          .listen((_) => _controller.forward());
+      Stream.value('').delay(widget.delay).listen((_) => _controller.forward());
     }
 
     super.initState();

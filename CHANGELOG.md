@@ -1,3 +1,6 @@
+## 0.10.0
+- enhance: 适配rxdart 0.23; 清除过时代码
+
 ## 0.9.1
 - enhance: 优化Toggleable
 

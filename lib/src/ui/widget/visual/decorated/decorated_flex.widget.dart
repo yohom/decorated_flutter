@@ -312,6 +312,8 @@ class DecoratedFlex extends StatelessWidget {
               height: MediaQuery.of(context).size.height / children.length,
               child: it,
             );
+          default:
+            return null;
         }
       }).toList();
     }
