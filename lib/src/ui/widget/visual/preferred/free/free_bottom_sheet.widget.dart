@@ -153,6 +153,8 @@ class _ModalBottomSheetState<T> extends State<_ModalBottomSheet<T>> {
       case TargetPlatform.fuchsia:
         routeLabel = localizations.dialogLabel;
         break;
+      case TargetPlatform.macOS:
+        break;
     }
 
     return GestureDetector(
