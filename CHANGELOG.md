@@ -1,3 +1,6 @@
+## 0.10.2
+- enhance: 优化log
+
 ## 0.10.1
 - chore: 提升依赖
 - enhance: 一些helper方法转换为extension
