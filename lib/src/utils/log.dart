@@ -1,20 +1,17 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-/// If you're in release mode, const bool.fromEnvironment("dart.vm.product") will be true.
-/// If you're in debug mode, assert(() { ...; return true; }); will execute ....
-/// If you're in profile mode, neither of the above will happen.
 class L {
   /// debug模式打印
   static void d(Object content) async {
-    assert(() {
+    if (!kReleaseMode && !kProfileMode) {
       debugPrint(content.toString());
-      return true;
-    }());
+    }
   }
 
   /// profile模式打印
   static void p(Object content) async {
-    if (!bool.fromEnvironment('dart.vm.product')) {
+    if (!kReleaseMode) {
       debugPrint(content.toString());
     }
   }
