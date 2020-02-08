@@ -21,4 +21,8 @@ extension BuildContextX on BuildContext {
   FormState form() {
     return Form.of(this);
   }
+
+  NavigatorState navigator() {
+    return Navigator.of(this);
+  }
 }
