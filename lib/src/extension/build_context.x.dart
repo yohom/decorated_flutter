@@ -17,4 +17,8 @@ extension BuildContextX on BuildContext {
       action: SnackBarAction(label: '知道了', onPressed: () {}),
     ));
   }
+
+  FormState form() {
+    return Form.of(this);
+  }
 }
