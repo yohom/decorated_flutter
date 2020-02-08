@@ -1,6 +1,7 @@
 library framework;
 
 export 'src/bloc/bloc.export.dart';
+export 'src/extension/build_context.x.dart';
 export 'src/mixin/mixin.export.dart';
 export 'src/model/model.export.dart';
 export 'src/res/res.export.dart';

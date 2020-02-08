@@ -1,3 +1,7 @@
+## 0.10.1
+- chore: 提升依赖
+- enhance: 一些helper方法转换为extension
+
 ## 0.10.0
 - enhance: 适配rxdart 0.23; 清除过时代码
 
