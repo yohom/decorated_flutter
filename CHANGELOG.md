@@ -1,3 +1,6 @@
+## 0.10.4
+- enhance: 去除logging库
+
 ## 0.10.3
 - enhance: 加入logging库
 
