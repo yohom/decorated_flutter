@@ -1,3 +1,7 @@
+## 0.10.5
+- enhance: 去掉设置TargetPlatform.macos的场景
+- fix: 去除不需要的meta包引入
+
 ## 0.10.4
 - enhance: 去除logging库
 
