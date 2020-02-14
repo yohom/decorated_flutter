@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:decorated_flutter/src/ui/widget/visual/placeholder/empty_placeholder.widget.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 
 import '../placeholder/error_placeholder.widget.dart';
 

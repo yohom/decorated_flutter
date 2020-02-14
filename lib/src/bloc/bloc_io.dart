@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 typedef bool _Equal<T>(T data1, T data2);
