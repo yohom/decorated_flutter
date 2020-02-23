@@ -122,7 +122,7 @@ class StreamListView<T> extends StatelessWidget {
         if (onLoadMore != null && !_inLoading.value) {
           _inLoading.value = true;
           onLoadMore().whenComplete(() {
-            L.p('加载更多完成');
+            L.d('加载更多完成');
             _inLoading.value = false;
           });
         }

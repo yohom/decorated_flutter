@@ -1,4 +1,3 @@
-import 'package:decorated_flutter/src/bloc/bloc.export.dart';
 import 'package:decorated_flutter/src/ui/ui.export.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

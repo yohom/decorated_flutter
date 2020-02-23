@@ -30,7 +30,7 @@ abstract class BaseIO<T> {
             : PublishSubject<T>(sync: sync) {
     _subject.listen((data) {
       latest = data;
-      L.p('当前${semantics ??= data.runtimeType.toString()} latest: $latest'
+      L.d('当前${semantics ??= data.runtimeType.toString()} latest: $latest'
           '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
     });
   }
@@ -64,7 +64,7 @@ abstract class BaseIO<T> {
 
   /// 清理保存的值, 恢复成初始状态
   void clear() {
-    L.p('-----------------------------BEGIN---------------------------------\n'
+    L.d('-----------------------------BEGIN---------------------------------\n'
         '${_semantics ??= runtimeType.toString()}事件 cleared '
         '\n------------------------------END----------------------------------');
     if (!_subject.isClosed) _subject.add(_seedValue);
@@ -72,7 +72,7 @@ abstract class BaseIO<T> {
 
   /// 关闭流
   void dispose() {
-    L.p('=============================BEGIN===============================\n'
+    L.d('=============================BEGIN===============================\n'
         '${_semantics ??= runtimeType.toString()}事件 disposed '
         '\n==============================END================================');
     if (!_subject.isClosed) _subject.close();
@@ -284,11 +284,11 @@ mixin InputMixin<T> on BaseIO<T> {
   _Equal _test;
 
   T add(T data) {
-    L.p('+++++++++++++++++++++++++++BEGIN+++++++++++++++++++++++++++++\n'
+    L.d('+++++++++++++++++++++++++++BEGIN+++++++++++++++++++++++++++++\n'
         'IO接收到**${_semantics ??= data.runtimeType.toString()}**数据: $data');
 
     if (isEmpty(data) && !_acceptEmpty) {
-      L.p('转发被拒绝! 原因: 需要非Empty值, 但是接收到Empty值'
+      L.d('转发被拒绝! 原因: 需要非Empty值, 但是接收到Empty值'
           '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++++');
       return data;
     }
@@ -299,23 +299,23 @@ mixin InputMixin<T> on BaseIO<T> {
       // 不停地发送通知(但是值又是一样)的情况
       if (_test != null) {
         if (!_test(latest, data)) {
-          L.p('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
+          L.d('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
           if (!_subject.isClosed) _subject.add(data);
         } else {
-          L.p('转发被拒绝! 原因: 需要唯一, 但是没有通过唯一性测试'
+          L.d('转发被拒绝! 原因: 需要唯一, 但是没有通过唯一性测试'
               '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
         }
       } else {
         if (data != latest) {
-          L.p('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
+          L.d('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
           if (!_subject.isClosed) _subject.add(data);
         } else {
-          L.p('转发被拒绝! 原因: 需要唯一, 但是新数据与最新值相同'
+          L.d('转发被拒绝! 原因: 需要唯一, 但是新数据与最新值相同'
               '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
         }
       }
     } else {
-      L.p('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
+      L.d('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
       if (!_subject.isClosed) _subject.add(data);
     }
 

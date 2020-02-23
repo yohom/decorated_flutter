@@ -36,7 +36,7 @@ class _DoubleBackExitAppState extends State<DoubleBackExitApp> {
     super.initState();
 
     _closeAppSubject.timeInterval().listen((interval) {
-      L.p('回退间隔: $interval}');
+      L.d('回退间隔: $interval}');
       if (interval.interval < widget.duration) {
         SystemNavigator.pop();
       } else {

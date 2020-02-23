@@ -49,9 +49,9 @@ class PreferredFutureBuilder<T> extends StatelessWidget {
       future: future,
       builder: (ctx, snapshot) {
         if (snapshot.hasError) {
-          L.p('PreferredFutureBuilder出现错误: ${snapshot.error}');
+          L.d('PreferredFutureBuilder出现错误: ${snapshot.error}');
           if (snapshot.error is Error) {
-            L.p((snapshot.error as Error).stackTrace);
+            L.d((snapshot.error as Error).stackTrace);
           }
           if (errorPlaceholderBuilder != null) {
             return errorPlaceholderBuilder(context, snapshot.error);
@@ -116,9 +116,9 @@ class PreferredStreamBuilder<T> extends StatelessWidget {
       stream: stream,
       builder: (ctx, snapshot) {
         if (snapshot.hasError) {
-          L.p('PreferredStreamBuilder出现错误: ${snapshot.error}');
+          L.d('PreferredStreamBuilder出现错误: ${snapshot.error}');
           if (snapshot.error is Error) {
-            L.p((snapshot.error as Error).stackTrace);
+            L.d((snapshot.error as Error).stackTrace);
           }
           if (errorPlaceholderBuilder != null) {
             return errorPlaceholderBuilder(context, snapshot.error);
