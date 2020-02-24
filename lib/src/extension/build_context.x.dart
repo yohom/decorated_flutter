@@ -25,4 +25,16 @@ extension BuildContextX on BuildContext {
   NavigatorState navigator() {
     return Navigator.of(this);
   }
+
+  double get height {
+    return MediaQuery.of(this).size.height;
+  }
+
+  double get width {
+    return MediaQuery.of(this).size.width;
+  }
+
+  Size get size {
+    return MediaQuery.of(this).size;
+  }
 }
