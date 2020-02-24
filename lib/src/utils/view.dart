@@ -46,7 +46,7 @@ Future showFlushBar(
   String exitTo, // 退出到对应页面
   Duration duration = const Duration(milliseconds: _duration),
 }) {
-  L.p('showFlushBar: $content');
+  L.d('showFlushBar: $content');
   if (color == null) {
     switch (errorLevel) {
       case ErrorLevel.none:
@@ -70,46 +70,6 @@ Future showFlushBar(
     duration: duration,
     flushbarStyle: FlushbarStyle.GROUNDED,
   ).show(context).then((_) {
-    if (isNotEmpty(exitTo)) {
-      Navigator.popUntil(context, ModalRoute.withName(exitTo));
-    } else if (isExit) {
-      Navigator.pop(context);
-    }
-  });
-}
-
-/// 显示信息底层方法, 当需要动态选择是错误还是正常信息时, 调用这个方法
-@Deprecated('使用[showFlushBar]代替, 因为FlushBar没有Scaffold限制, 并且定制程度更高')
-Future<SnackBarClosedReason> showMessage(
-  BuildContext context,
-  String content, {
-  ErrorLevel errorLevel = ErrorLevel.none,
-  bool isExit = false, // show完了是否退出本页
-  String exitTo, // 退出到对应页面
-  Duration duration = const Duration(milliseconds: _duration),
-}) {
-  Color color;
-  switch (errorLevel) {
-    case ErrorLevel.none:
-      break;
-    case ErrorLevel.warn:
-      color = Colors.yellowAccent;
-      break;
-    case ErrorLevel.severe:
-    case ErrorLevel.fatal:
-      color = Colors.red;
-      break;
-  }
-  return Scaffold.of(context)
-      .showSnackBar(
-        SnackBar(
-          content: Text(content),
-          backgroundColor: color,
-          duration: duration,
-        ),
-      )
-      .closed
-      .then((_) {
     if (isNotEmpty(exitTo)) {
       Navigator.popUntil(context, ModalRoute.withName(exitTo));
     } else if (isExit) {

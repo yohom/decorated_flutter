@@ -273,7 +273,7 @@ class _TooltipOverlay extends StatelessWidget {
                   child: Center(
                     widthFactor: 1.0,
                     heightFactor: 1.0,
-                    child: Text(message, style: darkTheme.textTheme.body1),
+                    child: Text(message, style: darkTheme.textTheme.bodyText2),
                   ),
                 ),
               ),

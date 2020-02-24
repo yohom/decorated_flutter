@@ -44,7 +44,7 @@ class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
     if (isNotEmpty(widget.init)) widget.init(widget.bloc);
 
     if (BLoCProvider.analytics != null && widget.withAnalytics) {
-      L.p('${T.toString()} start');
+      L.d('${T.toString()} start');
       BLoCProvider.analytics.onPageStart(T.toString());
     }
   }
@@ -67,7 +67,7 @@ class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
   void dispose() {
     if (BLoCProvider.analytics != null && widget.withAnalytics) {
       BLoCProvider.analytics.onPageEnd(T.toString());
-      L.p('${T.toString()} end');
+      L.d('${T.toString()} end');
     }
     widget.bloc.close();
 

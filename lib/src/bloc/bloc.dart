@@ -15,7 +15,7 @@ abstract class BLoC {
 
   @mustCallSuper
   void close() {
-    L.p('=============================================\n'
+    L.d('=============================================\n'
         '${semantics ?? runtimeType.toString()} closed '
         '\n=============================================');
   }

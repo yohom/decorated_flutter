@@ -21,7 +21,7 @@ class CaptchaController {
 
   static void disposeAll() {
     controllerMap.forEach((_, controller) => controller.dispose());
-    L.p('关闭所有验证码定时器');
+    L.d('关闭所有验证码定时器');
   }
 
   VoidCallback callback;
