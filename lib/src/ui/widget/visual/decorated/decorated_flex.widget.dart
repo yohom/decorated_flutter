@@ -27,6 +27,7 @@ class DecoratedRow extends StatelessWidget {
     this.visible = true,
     this.crossExpanded = false,
     this.forceItemSameExtent = false,
+    this.elevation,
     this.children,
     this.safeArea,
   }) : super(key: key);
@@ -41,22 +42,26 @@ class DecoratedRow extends StatelessWidget {
   final Matrix4 transform;
   final double width;
   final double height;
-
   //endregion
+
   //region Row
   final AlignmentGeometry alignment;
   final MainAxisAlignment mainAxisAlignment;
   final MainAxisSize mainAxisSize;
   final CrossAxisAlignment crossAxisAlignment;
   final TextBaseline textBaseline;
-
   //endregion
+
   //region GestureDetector
   final PressedCallback onPressed;
   final PressedCallback onLongPressed;
   final HitTestBehavior behavior;
-
   //endregion
+
+  //region Material
+  final double elevation;
+  //endregion
+
   /// item间距
   final double itemSpacing;
 
@@ -103,6 +108,7 @@ class DecoratedRow extends StatelessWidget {
       forceItemSameExtent: forceItemSameExtent,
       safeArea: safeArea,
       divider: divider,
+      elevation: elevation,
       children: children,
     );
   }
@@ -135,6 +141,7 @@ class DecoratedColumn extends StatelessWidget {
     this.scrollable = false,
     this.forceItemSameExtent = false,
     this.safeArea,
+    this.elevation,
     this.children,
   }) : super(key: key);
 
@@ -148,22 +155,26 @@ class DecoratedColumn extends StatelessWidget {
   final Matrix4 transform;
   final double width;
   final double height;
-
   //endregion
+
   //region Row
   final AlignmentGeometry alignment;
   final MainAxisAlignment mainAxisAlignment;
   final MainAxisSize mainAxisSize;
   final CrossAxisAlignment crossAxisAlignment;
   final TextBaseline textBaseline;
-
   //endregion
+
   //region GestureDetector
   final PressedCallback onPressed;
   final PressedCallback onLongPressed;
   final HitTestBehavior behavior;
-
   //endregion
+
+  //region Material
+  final double elevation;
+  //endregion
+
   final double itemSpacing;
 
   /// 分隔控件 与[itemSpacing]功能类似, 但是优先使用[divider]
@@ -205,6 +216,7 @@ class DecoratedColumn extends StatelessWidget {
       crossExpanded: crossExpanded,
       forceItemSameExtent: forceItemSameExtent,
       safeArea: safeArea,
+      elevation: elevation,
       divider: divider,
       children: children,
     );
@@ -243,6 +255,7 @@ class DecoratedFlex extends StatelessWidget {
     this.visible = true,
     this.crossExpanded = false,
     this.forceItemSameExtent = false,
+    this.elevation,
     this.safeArea,
     this.children,
   }) : super(key: key);
@@ -257,8 +270,8 @@ class DecoratedFlex extends StatelessWidget {
   final Matrix4 transform;
   final double width;
   final double height;
-
   //endregion
+
   //region Flex
   final Axis direction;
   final AlignmentGeometry alignment;
@@ -266,14 +279,18 @@ class DecoratedFlex extends StatelessWidget {
   final MainAxisSize mainAxisSize;
   final CrossAxisAlignment crossAxisAlignment;
   final TextBaseline textBaseline;
-
   //endregion
+
   //region GestureDetector
   final PressedCallback onPressed;
   final PressedCallback onLongPressed;
   final HitTestBehavior behavior;
-
   //endregion
+
+  //region Material
+  final double elevation;
+  //endregion
+
   /// 元素间距
   final double itemSpacing;
 
@@ -368,6 +385,13 @@ class DecoratedFlex extends StatelessWidget {
 
     if (crossExpanded) {
       result = Expanded(child: result);
+    }
+
+    if (elevation != null) {
+      result = Material(
+        elevation: elevation,
+        child: result,
+      );
     }
 
     if (safeArea != null) {
