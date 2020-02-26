@@ -37,4 +37,8 @@ extension BuildContextX on BuildContext {
   Size get size {
     return MediaQuery.of(this).size;
   }
+
+  TextTheme get textTheme {
+    return Theme.of(this).textTheme;
+  }
 }
