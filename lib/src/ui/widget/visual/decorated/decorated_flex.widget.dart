@@ -390,6 +390,7 @@ class DecoratedFlex extends StatelessWidget {
     if (elevation != null) {
       result = Material(
         elevation: elevation,
+        color: color,
         child: result,
       );
     }
