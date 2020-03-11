@@ -62,6 +62,10 @@ abstract class BaseIO<T> {
     return _subject.where(test);
   }
 
+  Stream<T> sample(Duration duration) {
+    return _subject.sampleTime(duration);
+  }
+
   /// 清理保存的值, 恢复成初始状态
   void clear() {
     L.d('-----------------------------BEGIN---------------------------------\n'
