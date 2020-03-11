@@ -1,3 +1,8 @@
+## 0.11.1
+- enhance: build_context.x增加pop方法
+- enhance: build_context.x增加textTheme
+- enhance: build_context.x增加pop方法
+
 ## 0.11.0
 - enhance: 清理不再需要的代码
 
