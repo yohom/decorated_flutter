@@ -76,6 +76,8 @@ class DecoratedRoute<B extends BLoC, T extends Object>
     Animation<double> animation,
     Animation<double> secondaryAnimation,
   ) {
+    Global.init(context);
+
     Widget result;
     if (isNotEmpty(bloc)) {
       result = BLoCProvider<B>(
