@@ -1,3 +1,6 @@
+## 0.12.0
+- enhance: [breaking change] 去除flushbar
+
 ## 0.11.1
 - enhance: build_context.x增加pop方法
 - enhance: build_context.x增加textTheme
