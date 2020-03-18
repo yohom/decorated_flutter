@@ -21,7 +21,6 @@ class DecoratedRoute<B extends BLoC, T extends Object>
     this.tabLength,
     this.onDispose,
     String routeName,
-    bool isInitialRoute = false,
     bool fullscreenDialog = false,
     bool maintainState = true,
   })  : // 要么同时设置泛型B和bloc参数, 要么就都不设置
@@ -33,10 +32,7 @@ class DecoratedRoute<B extends BLoC, T extends Object>
           fullscreenDialog: fullscreenDialog,
           maintainState: maintainState,
           builder: (context) => screen,
-          settings: RouteSettings(
-            name: routeName,
-            isInitialRoute: isInitialRoute,
-          ),
+          settings: RouteSettings(name: routeName),
         );
 
   /// 直接传递的BLoC
@@ -80,10 +76,6 @@ class DecoratedRoute<B extends BLoC, T extends Object>
     Animation<double> animation,
     Animation<double> secondaryAnimation,
   ) {
-    if (settings.isInitialRoute) {
-      Global.init(context);
-    }
-
     Widget result;
     if (isNotEmpty(bloc)) {
       result = BLoCProvider<B>(
