@@ -26,10 +26,6 @@ extension BuildContextX on BuildContext {
     return Navigator.of(this);
   }
 
-  bool pop<T>([T result]) {
-    return Navigator.of(this).pop(result);
-  }
-
   double get height {
     return MediaQuery.of(this).size.height;
   }

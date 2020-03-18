@@ -40,11 +40,11 @@ void handleError(BuildContext context, Object error) {
           message = error.message;
       }
     }
-    showError(context, message);
+    toast(message);
   } else if (error is String) {
-    showError(context, error);
+    toast(error);
   } else {
-    showError(context, error.toString());
+    toast(error.toString());
   }
 }
 
