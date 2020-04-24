@@ -105,7 +105,7 @@ class DecoratedRoute<B extends BLoC, T extends Object>
       result = DefaultTabController(length: tabLength, child: result);
     }
 
-    return result;
+    return Material(child: result);
   }
 
   @override
