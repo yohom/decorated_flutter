@@ -1,3 +1,6 @@
+## 0.12.2
+- enhance: decorated_route一律包含在Material下面
+
 ## 0.12.1
 - enhance: 提升依赖, BuildContext增加padding扩展
 
