@@ -1,3 +1,6 @@
+## 0.12.4
+- enhance: BuildContext增加rootNavigator扩展
+
 ## 0.12.3
 - enhance: 增加CupertinoRoute
 
