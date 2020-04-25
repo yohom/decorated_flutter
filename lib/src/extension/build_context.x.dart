@@ -45,4 +45,8 @@ extension BuildContextX on BuildContext {
   TextTheme get textTheme {
     return Theme.of(this).textTheme;
   }
+
+  Color get backgroundColor {
+    return Theme.of(this).backgroundColor;
+  }
 }
