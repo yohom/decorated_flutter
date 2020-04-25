@@ -18,12 +18,8 @@ extension BuildContextX on BuildContext {
     ));
   }
 
-  FormState form() {
+  FormState get form {
     return Form.of(this);
-  }
-
-  NavigatorState navigator() {
-    return Navigator.of(this);
   }
 
   double get height {
@@ -48,5 +44,13 @@ extension BuildContextX on BuildContext {
 
   Color get backgroundColor {
     return Theme.of(this).backgroundColor;
+  }
+
+  NavigatorState get rootNavigator {
+    return Navigator.of(this, rootNavigator: true);
+  }
+
+  NavigatorState get navigator {
+    return Navigator.of(this);
   }
 }
