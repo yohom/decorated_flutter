@@ -1,3 +1,6 @@
+## 0.12.5
+- feat: 增加aligned
+
 ## 0.12.4
 - enhance: BuildContext增加rootNavigator扩展
 
