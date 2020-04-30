@@ -1,3 +1,6 @@
+## 0.12.6
+- enhance: 细化BaseIO初始化
+
 ## 0.12.5
 - feat: 增加aligned
 
