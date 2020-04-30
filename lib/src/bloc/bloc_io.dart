@@ -26,7 +26,9 @@ abstract class BaseIO<T> {
         _seedValue = seedValue,
         latest = seedValue,
         _subject = isBehavior
-            ? BehaviorSubject<T>.seeded(seedValue, sync: sync)
+            ? seedValue != null
+                ? BehaviorSubject<T>.seeded(seedValue, sync: sync)
+                : BehaviorSubject<T>(sync: sync)
             : PublishSubject<T>(sync: sync) {
     _subject.listen((data) {
       latest = data;
