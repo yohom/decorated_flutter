@@ -1,3 +1,6 @@
+## 0.12.7
+- feat: 增加AutoScrollBottomDialog, 底部对话框可以自动适应输入法弹出
+
 ## 0.12.6
 - enhance: 细化BaseIO初始化
 
