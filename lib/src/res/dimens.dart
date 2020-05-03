@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 //region space
 const kSpaceZero = 0.0;
 const kSpaceTiny = 1.0;
+const kSpaceLittle = 2.0;
 const kSpaceSmall = 4.0;
 const kSpaceNormal = 8.0;
 const kSpaceLittleBig = 12.0;
@@ -16,6 +17,11 @@ const SPACE_ZERO = SizedBox.shrink();
 const SPACE_TINY = SizedBox(width: kSpaceTiny, height: kSpaceTiny);
 const SPACE_TINY_HORIZONTAL = SizedBox(width: kSpaceTiny, height: kSpaceZero);
 const SPACE_TINY_VERTICAL = SizedBox(width: kSpaceZero, height: kSpaceTiny);
+
+const SPACE_LITTLE = SizedBox(width: kSpaceLittle, height: kSpaceLittle);
+const SPACE_LITTLE_HORIZONTAL =
+    SizedBox(width: kSpaceLittle, height: kSpaceZero);
+const SPACE_LITTLE_VERTICAL = SizedBox(width: kSpaceZero, height: kSpaceLittle);
 
 const SPACE_SMALL = SizedBox(width: kSpaceSmall, height: kSpaceSmall);
 const SPACE_SMALL_HORIZONTAL = SizedBox(width: kSpaceSmall, height: kSpaceZero);
@@ -51,6 +57,7 @@ const SPACE_GIANT_VERTICAL = SizedBox(width: kSpaceZero, height: kSpaceGiant);
 
 const kDividerZero = Divider(height: kSpaceZero);
 const kDividerTiny = Divider(height: kSpaceTiny);
+const kDividerLittle = Divider(height: kSpaceLittle);
 const kDividerSmall = Divider(height: kSpaceSmall);
 const kDividerNormal = Divider();
 const kDividerLittleBig = Divider(height: kSpaceLittleBig);
