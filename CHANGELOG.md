@@ -1,3 +1,6 @@
+## 0.12.8
+- feat: 增加dimens
+
 ## 0.12.7
 - feat: 增加AutoScrollBottomDialog, 底部对话框可以自动适应输入法弹出
 
