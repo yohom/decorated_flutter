@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 typedef void PressedCallback(BuildContext context);
@@ -142,6 +143,7 @@ class DecoratedColumn extends StatelessWidget {
     this.forceItemSameExtent = false,
     this.safeArea,
     this.elevation,
+    this.withLocalNavigator = false,
     this.children,
   }) : super(key: key);
 
@@ -188,6 +190,8 @@ class DecoratedColumn extends StatelessWidget {
 
   /// 是否安全区域
   final bool safeArea;
+  final bool withLocalNavigator;
+
   final List<Widget> children;
 
   @override
@@ -218,6 +222,7 @@ class DecoratedColumn extends StatelessWidget {
       safeArea: safeArea,
       elevation: elevation,
       divider: divider,
+      withLocalNavigator: withLocalNavigator,
       children: children,
     );
 
@@ -257,6 +262,7 @@ class DecoratedFlex extends StatelessWidget {
     this.forceItemSameExtent = false,
     this.elevation,
     this.safeArea,
+    this.withLocalNavigator = false,
     this.children,
   }) : super(key: key);
 
@@ -308,6 +314,9 @@ class DecoratedFlex extends StatelessWidget {
 
   /// 是否安全区域
   final bool safeArea;
+
+  /// 是否带有局部Navigator 简单来说就是要不要用[CupertinoTabView]包裹
+  final bool withLocalNavigator;
 
   /// 子元素
   final List<Widget> children;
@@ -398,7 +407,12 @@ class DecoratedFlex extends StatelessWidget {
     if (safeArea != null) {
       result = SafeArea(child: result);
     }
-    return Visibility(visible: visible, child: result);
+
+    if (withLocalNavigator) {
+      return CupertinoTabView(builder: (context) => result);
+    } else {
+      return Visibility(visible: visible, child: result);
+    }
   }
 
   List<Widget> addItemDivider(
