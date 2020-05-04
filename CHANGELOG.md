@@ -1,3 +1,6 @@
+## 0.12.9
+- enhance: 增加是否使用局部Navigator参数
+
 ## 0.12.8
 - feat: 增加dimens
 
