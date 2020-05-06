@@ -1,3 +1,6 @@
+## 0.12.10
+- feat: 增加PageOutput, 处理分页情况
+
 ## 0.12.9
 - enhance: 增加是否使用局部Navigator参数
 
