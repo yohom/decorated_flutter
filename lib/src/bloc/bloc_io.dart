@@ -216,6 +216,46 @@ class ListOutput<T, ARG_TYPE> extends Output<List<T>, ARG_TYPE> with ListMixin {
         );
 }
 
+/// 分页业务单元
+class PageOutput<T> extends Output<List<T>, int> with ListMixin {
+  PageOutput({
+    List<T> seedValue,
+    String semantics,
+    bool sync = true,
+    bool isBehavior = false,
+    this.initPage = 0,
+    @required _Fetch<List<T>, int> fetch,
+  }) : super(
+          seedValue: seedValue,
+          semantics: semantics,
+          sync: sync,
+          isBehavior: isBehavior,
+          fetch: fetch,
+        );
+
+  final int initPage;
+  int _currentPage = 0;
+  List<T> _dataList = [];
+  bool _noMoreData = false;
+
+  Future<List<T>> nextPage() async {
+    // 如果已经没有更多数据的话, 就不再请求
+    if (_noMoreData) {
+      return _dataList;
+    } else {
+      final nextPageData = await _fetch(++_currentPage);
+      _noMoreData = nextPageData.isEmpty;
+      return [..._dataList, ...nextPageData];
+    }
+  }
+
+  Future<List<T>> refresh() {
+    _currentPage = initPage;
+    _noMoreData = false;
+    return _fetch(_currentPage);
+  }
+}
+
 /// 内部数据类型是[List]的输入输出业务单元
 class ListIO<T> extends IO<List<T>> with ListMixin {
   ListIO({
