@@ -1,3 +1,7 @@
+## 0.12.11
+- enhance: PageOutput出现错误时的处理
+- enhance: loading默认不可关闭
+
 ## 0.12.10
 - feat: 增加PageOutput, 处理分页情况
 
