@@ -241,18 +241,26 @@ class PageOutput<T> extends Output<List<T>, int> with ListMixin {
   Future<void> nextPage() async {
     // 如果已经没有更多数据的话, 就不再请求
     if (!_noMoreData) {
-      final nextPageData = await _fetch(++_currentPage);
-      _dataList = [..._dataList, ...nextPageData];
-      _noMoreData = nextPageData.isEmpty;
-      _subject.add(_dataList);
+      try {
+        final nextPageData = await _fetch(++_currentPage);
+        _dataList = [..._dataList, ...nextPageData];
+        _noMoreData = nextPageData.isEmpty;
+        _subject.add(_dataList);
+      } catch (e) {
+        _subject.addError(e);
+      }
     }
   }
 
   Future<void> refresh() async {
     _currentPage = initPage;
     _noMoreData = false;
-    _dataList = await _fetch(_currentPage);
-    _subject.add(_dataList);
+    try {
+      _dataList = await _fetch(_currentPage);
+      _subject.add(_dataList);
+    } catch (e) {
+      _subject.addError(e);
+    }
   }
 }
 

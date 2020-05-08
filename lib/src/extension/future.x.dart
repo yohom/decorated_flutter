@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 extension FutureX<T> on Future<T> {
-  Future<T> loading(BuildContext context, {bool cancelable = true}) {
+  Future<T> loading(BuildContext context, {bool cancelable = false}) {
     // 是被future pop的还是按返回键pop的
     bool popByFuture = true;
 
