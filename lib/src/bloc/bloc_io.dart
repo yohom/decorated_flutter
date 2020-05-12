@@ -228,6 +228,7 @@ class PageOutput<T> extends Output<List<T>, int> with ListMixin {
     bool sync = true,
     bool isBehavior = true,
     this.initPage = 0,
+    this.receiveFullData = true,
     @required _Fetch<List<T>, int> fetch,
   }) : super(
           seedValue: seedValue,
@@ -237,9 +238,19 @@ class PageOutput<T> extends Output<List<T>, int> with ListMixin {
           fetch: fetch,
         );
 
+  /// 初始页 因为后端业务对初始页的定义不一定一样, 这里提供设置参数
   final int initPage;
+
+  /// nextPage时, 是否add整个列表, 为false时, 只add最新一页的数据
+  final bool receiveFullData;
+
+  /// 当前页数
   int _currentPage = 0;
+
+  /// 全部数据
   List<T> _dataList = [];
+
+  /// 是否还有更多数据
   bool _noMoreData = false;
 
   Future<void> nextPage() async {
@@ -247,7 +258,11 @@ class PageOutput<T> extends Output<List<T>, int> with ListMixin {
     if (!_noMoreData) {
       try {
         final nextPageData = await _fetch(++_currentPage);
-        _dataList = [..._dataList, ...nextPageData];
+        if (receiveFullData) {
+          _dataList = [..._dataList, ...nextPageData];
+        } else {
+          _dataList = nextPageData;
+        }
         _noMoreData = nextPageData.isEmpty;
         _subject.add(_dataList);
       } catch (e) {
