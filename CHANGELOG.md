@@ -1,3 +1,7 @@
+## 0.12.12
+- feat: 增加TextEditingControllerX
+- enhance: 增加invalidate方法
+
 ## 0.12.11
 - enhance: PageOutput出现错误时的处理
 - enhance: loading默认不可关闭
