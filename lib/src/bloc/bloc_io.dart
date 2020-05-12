@@ -20,8 +20,7 @@ abstract class BaseIO<T> {
     bool sync = true,
 
     /// 是否使用BehaviorSubject, 如果使用, 那么Event内部的[_subject]会保存最近一次的值
-    /// 默认为false
-    bool isBehavior = false,
+    bool isBehavior = true,
   })  : _semantics = semantics,
         _seedValue = seedValue,
         latest = seedValue,
@@ -76,6 +75,11 @@ abstract class BaseIO<T> {
     if (!_subject.isClosed) _subject.add(_seedValue);
   }
 
+  /// 重新发送数据 用户修改数据后刷新的场景
+  void invalidate() {
+    if (!_subject.isClosed) _subject.add(latest);
+  }
+
   /// 关闭流
   void dispose() {
     L.d('=============================BEGIN===============================\n'
@@ -116,7 +120,7 @@ class Input<T> extends BaseIO<T> with InputMixin {
     T seedValue,
     String semantics,
     bool sync = true,
-    bool isBehavior = false,
+    bool isBehavior = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
     _Equal test,
@@ -138,7 +142,7 @@ class Output<T, ARG_TYPE> extends BaseIO<T> with OutputMixin<T, ARG_TYPE> {
     T seedValue,
     String semantics,
     bool sync = true,
-    bool isBehavior = false,
+    bool isBehavior = true,
     @required _Fetch<T, ARG_TYPE> fetch,
   }) : super(
           seedValue: seedValue,
@@ -157,7 +161,7 @@ class IO<T> extends BaseIO<T> with InputMixin, OutputMixin<T, dynamic> {
     T seedValue,
     String semantics,
     bool sync = true,
-    bool isBehavior = false,
+    bool isBehavior = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
     _Equal test,
@@ -184,7 +188,7 @@ class ListInput<T> extends Input<List<T>> with ListMixin {
     List<T> seedValue,
     String semantics,
     bool sync = true,
-    bool isBehavior = false,
+    bool isBehavior = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
     _Equal test,
@@ -205,7 +209,7 @@ class ListOutput<T, ARG_TYPE> extends Output<List<T>, ARG_TYPE> with ListMixin {
     List<T> seedValue,
     String semantics,
     bool sync = true,
-    bool isBehavior = false,
+    bool isBehavior = true,
     @required _Fetch<List<T>, ARG_TYPE> fetch,
   }) : super(
           seedValue: seedValue,
@@ -222,7 +226,7 @@ class PageOutput<T> extends Output<List<T>, int> with ListMixin {
     List<T> seedValue,
     String semantics,
     bool sync = true,
-    bool isBehavior = false,
+    bool isBehavior = true,
     this.initPage = 0,
     @required _Fetch<List<T>, int> fetch,
   }) : super(
@@ -270,7 +274,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin {
     List<T> seedValue,
     String semantics,
     bool sync = true,
-    bool isBehavior = false,
+    bool isBehavior = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
     _Equal test,
@@ -293,7 +297,7 @@ class BoolIO extends IO<bool> with BoolMixin {
     bool seedValue,
     String semantics,
     bool sync = true,
-    bool isBehavior = false,
+    bool isBehavior = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
     _Equal test,
@@ -316,7 +320,7 @@ class BoolOutput<ARG_TYPE> extends Output<bool, ARG_TYPE> with BoolMixin {
     bool seedValue,
     String semantics,
     bool sync = true,
-    bool isBehavior = false,
+    bool isBehavior = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
     _Equal test,
