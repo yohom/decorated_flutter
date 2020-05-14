@@ -1,3 +1,7 @@
+## 0.12.13
+- enhance: 优化loading方法
+- enhance: 添加receiveFullData参数
+
 ## 0.12.12
 - feat: 增加TextEditingControllerX
 - enhance: 增加invalidate方法
