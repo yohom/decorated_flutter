@@ -22,13 +22,12 @@ extension FutureX<T> on Future<T> {
       popByFuture = false;
     });
 
-    // 防止上游同步返回Future.error, 导致showDialog还没弹出, 这里就已经调用Complete了
-    WidgetsBinding.instance.addPostFrameCallback((_) => whenComplete(() {
-          // 由于showDialog会强制使用rootNavigator, 所以这里pop的时候也要用rootNavigator
-          if (popByFuture) {
-            Navigator.of(context, rootNavigator: true).pop(this);
-          }
-        }));
+    whenComplete(() {
+      // 由于showDialog会强制使用rootNavigator, 所以这里pop的时候也要用rootNavigator
+      if (popByFuture) {
+        Navigator.of(context, rootNavigator: true).pop(this);
+      }
+    });
 
     return this;
   }
