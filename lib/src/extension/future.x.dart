@@ -25,7 +25,7 @@ extension FutureX<T> on Future<T> {
     whenComplete(() {
       // 由于showDialog会强制使用rootNavigator, 所以这里pop的时候也要用rootNavigator
       if (popByFuture) {
-        Navigator.of(context, rootNavigator: true).pop(this);
+        Navigator.of(context, rootNavigator: true).pop();
       }
     });
 

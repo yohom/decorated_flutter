@@ -339,7 +339,7 @@ class BoolOutput<ARG_TYPE> extends Output<bool, ARG_TYPE> with BoolMixin {
     bool acceptEmpty = true,
     bool isDistinct = false,
     _Equal test,
-    _Fetch<bool, dynamic> fetch,
+    _Fetch<bool, ARG_TYPE> fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
