@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 extension FutureX<T> on Future<T> {
-  Future<T> loading(BuildContext context, {bool cancelable = false}) {
+  Future<T> loading(
+    BuildContext context, {
+    bool cancelable = false,
+    Duration timeout = const Duration(seconds: 20),
+  }) {
     // 是被future pop的还是按返回键pop的
     bool popByFuture = true;
 
@@ -21,6 +25,8 @@ extension FutureX<T> on Future<T> {
       // 2. 如果是future完成导致的pop, 那么这一行是没用任何作用的
       popByFuture = false;
     });
+
+    this.timeout(timeout);
 
     whenComplete(() {
       // 由于showDialog会强制使用rootNavigator, 所以这里pop的时候也要用rootNavigator
