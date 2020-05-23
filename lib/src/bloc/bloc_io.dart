@@ -222,68 +222,51 @@ class ListOutput<T, ARG_TYPE> extends Output<List<T>, ARG_TYPE> with ListMixin {
 }
 
 /// 分页业务单元
-class PageOutput<T, ARG_TYPE> extends Output<List<T>, int> with ListMixin {
+class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
+    with PageMixin<T, ARG_TYPE> {
   PageOutput({
     List<T> seedValue,
     String semantics,
     bool sync = true,
     bool isBehavior = true,
-    this.initPage = 0,
-    this.receiveFullData = true,
-    @required this.pageFetch,
-  })  : this._currentPage = initPage,
-        super(
+    int initPage = 0,
+    bool receiveFullData = true,
+    @required _PageFetch<List<T>, ARG_TYPE> pageFetch,
+  }) : super(
           seedValue: seedValue,
           semantics: semantics,
           sync: sync,
           isBehavior: isBehavior,
           fetch: null,
-        );
-
-  /// 初始页 因为后端业务对初始页的定义不一定一样, 这里提供设置参数
-  final int initPage;
-
-  /// nextPage时, 是否add整个列表, 为false时, 只add最新一页的数据
-  final bool receiveFullData;
-
-  /// 当前页数
-  int _currentPage = 0;
-
-  /// 全部数据
-  List<T> _dataList = [];
-
-  /// 是否还有更多数据
-  bool _noMoreData = false;
-
-  _PageFetch<List<T>, ARG_TYPE> pageFetch;
-
-  Future<void> nextPage([ARG_TYPE args]) async {
-    // 如果已经没有更多数据的话, 就不再请求
-    if (!_noMoreData) {
-      try {
-        final nextPageData = await pageFetch(++_currentPage, args);
-        if (receiveFullData) {
-          _dataList = [..._dataList, ...nextPageData];
-        } else {
-          _dataList = nextPageData;
-        }
-        _noMoreData = nextPageData.isEmpty;
-        _subject.add(_dataList);
-      } catch (e) {
-        _subject.addError(e);
-      }
-    }
+        ) {
+    _initPage = initPage;
+    _currentPage = _initPage;
+    _pageFetch = pageFetch;
+    _receiveFullData = receiveFullData;
   }
+}
 
-  Future<void> refresh([ARG_TYPE args]) async {
-    _currentPage = initPage;
-    _noMoreData = false;
-    try {
-      _dataList = await pageFetch(_currentPage, args);
-      _subject.add(_dataList);
-    } catch (e) {
-      _subject.addError(e);
-    }
+/// 分页业务单元
+class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
+  PageIO({
+    List<T> seedValue,
+    String semantics,
+    bool sync = true,
+    bool isBehavior = true,
+    int initPage = 0,
+    bool receiveFullData = true,
+    @required _PageFetch<List<T>, ARG_TYPE> pageFetch,
+  }) : super(
+          seedValue: seedValue,
+          semantics: semantics,
+          sync: sync,
+          isBehavior: isBehavior,
+          fetch: null,
+        ) {
+    _initPage = initPage;
+    _currentPage = _initPage;
+    _pageFetch = pageFetch;
+    _receiveFullData = receiveFullData;
   }
 }
 
@@ -560,5 +543,53 @@ mixin BoolMixin on BaseIO<bool> {
       _subject.add(toggled);
     }
     return toggled;
+  }
+}
+
+mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
+  /// 初始页 因为后端业务对初始页的定义不一定一样, 这里提供设置参数
+  int _initPage;
+
+  /// nextPage时, 是否add整个列表, 为false时, 只add最新一页的数据
+  bool _receiveFullData;
+
+  /// 当前页数
+  int _currentPage = 0;
+
+  /// 全部数据
+  List<T> _dataList = [];
+
+  /// 是否还有更多数据
+  bool _noMoreData = false;
+
+  _PageFetch<List<T>, ARG_TYPE> _pageFetch;
+
+  Future<void> nextPage([ARG_TYPE args]) async {
+    // 如果已经没有更多数据的话, 就不再请求
+    if (!_noMoreData) {
+      try {
+        final nextPageData = await _pageFetch(++_currentPage, args);
+        if (_receiveFullData) {
+          _dataList = [..._dataList, ...nextPageData];
+        } else {
+          _dataList = nextPageData;
+        }
+        _noMoreData = nextPageData.isEmpty;
+        _subject.add(_dataList);
+      } catch (e) {
+        _subject.addError(e);
+      }
+    }
+  }
+
+  Future<void> refresh([ARG_TYPE args]) async {
+    _currentPage = _initPage;
+    _noMoreData = false;
+    try {
+      _dataList = await _pageFetch(_currentPage, args);
+      _subject.add(_dataList);
+    } catch (e) {
+      _subject.addError(e);
+    }
   }
 }
