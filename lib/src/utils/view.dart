@@ -6,7 +6,7 @@ const _duration = 2000;
 
 void toast(
   String message, {
-  ToastPosition position = ToastPosition.bottom,
+  ToastPosition position = ToastPosition.center,
   double radius = 32,
   EdgeInsets padding = const EdgeInsets.symmetric(
     vertical: kSpaceLittleBig,
