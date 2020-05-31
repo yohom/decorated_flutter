@@ -481,7 +481,7 @@ mixin ListMixin<T> on BaseIO<List<T>> {
 
   /// 替换最后一个的元素, 并发射
   T replaceLast(T element) {
-    if (!_subject.isClosed) {
+    if (!_subject.isClosed && latest.isNotEmpty) {
       _subject.add(latest
         ..replaceRange(
           latest.length - 1,
@@ -494,7 +494,7 @@ mixin ListMixin<T> on BaseIO<List<T>> {
 
   /// 替换第一个的元素, 并发射
   T replaceFirst(T element) {
-    if (!_subject.isClosed) {
+    if (!_subject.isClosed && latest.isNotEmpty) {
       _subject.add(latest..replaceRange(0, 1, [element]));
     }
     return element;
@@ -503,7 +503,7 @@ mixin ListMixin<T> on BaseIO<List<T>> {
   /// 删除最后一个的元素, 并发射
   T removeLast() {
     final lastElement = latest.last;
-    if (!_subject.isClosed) {
+    if (!_subject.isClosed && latest.isNotEmpty) {
       _subject.add(latest..removeLast());
     }
     return lastElement;
@@ -520,7 +520,7 @@ mixin ListMixin<T> on BaseIO<List<T>> {
   /// 删除第一个的元素, 并发射
   T removeFirst() {
     final firstElement = latest.first;
-    if (!_subject.isClosed) {
+    if (!_subject.isClosed && latest.isNotEmpty) {
       _subject.add(latest..removeAt(0));
     }
     return firstElement;
@@ -529,7 +529,7 @@ mixin ListMixin<T> on BaseIO<List<T>> {
   /// 删除指定索引的元素, 并发射
   T removeAt(int index) {
     final element = latest.elementAt(index);
-    if (!_subject.isClosed) {
+    if (!_subject.isClosed && element != null) {
       _subject.add(latest..removeAt(index));
     }
     return element;
