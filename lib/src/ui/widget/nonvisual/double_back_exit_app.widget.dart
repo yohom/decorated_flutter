@@ -43,9 +43,7 @@ class _DoubleBackExitAppState extends State<DoubleBackExitApp> {
         if (widget.onShowExitHint != null) {
           widget.onShowExitHint();
         } else {
-          Scaffold.of(context).showSnackBar(
-            SnackBar(content: Text('再按一次退出应用'), duration: widget.duration),
-          );
+          toast('再按一次退出应用');
         }
       }
     });

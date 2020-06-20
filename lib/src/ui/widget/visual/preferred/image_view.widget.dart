@@ -12,6 +12,7 @@ typedef void LoadingProgress(double progress, List<int> data);
 class ImageView extends StatelessWidget {
   ImageView.assetImage(
     this.imagePath, {
+    Key key,
     this.width,
     this.height,
     this.size,
@@ -29,10 +30,12 @@ class ImageView extends StatelessWidget {
         loadingProgress = null,
         loadFailedCallback = null,
         loadedCallback = null,
-        useDiskCache = true;
+        useDiskCache = true,
+        super(key: key);
 
   ImageView.networkImage(
     this.imageUrl, {
+    Key key,
     this.width,
     this.height,
     this.size,
@@ -50,10 +53,12 @@ class ImageView extends StatelessWidget {
         imageUrlFuture = null,
         svgUrlFuture = null,
         iconFuture = null,
-        svgPath = null;
+        svgPath = null,
+        super(key: key);
 
   ImageView.futureImage(
     this.imageUrlFuture, {
+    Key key,
     this.width,
     this.height,
     this.size,
@@ -71,10 +76,12 @@ class ImageView extends StatelessWidget {
         loadingProgress = null,
         loadFailedCallback = null,
         loadedCallback = null,
-        svgPath = null;
+        svgPath = null,
+        super(key: key);
 
   ImageView.assetSvg(
     this.svgPath, {
+    Key key,
     this.width,
     this.height,
     this.size,
@@ -92,10 +99,12 @@ class ImageView extends StatelessWidget {
         loadingProgress = null,
         loadFailedCallback = null,
         loadedCallback = null,
-        useDiskCache = true;
+        useDiskCache = true,
+        super(key: key);
 
   ImageView.networkSvg(
     this.svgUrl, {
+    Key key,
     this.width,
     this.height,
     this.fit = BoxFit.contain,
@@ -113,10 +122,12 @@ class ImageView extends StatelessWidget {
         loadingProgress = null,
         loadFailedCallback = null,
         loadedCallback = null,
-        svgPath = null;
+        svgPath = null,
+        super(key: key);
 
   ImageView.futureSvg(
     this.svgUrlFuture, {
+    Key key,
     this.width,
     this.height,
     this.fit = BoxFit.contain,
@@ -134,10 +145,12 @@ class ImageView extends StatelessWidget {
         loadingProgress = null,
         loadFailedCallback = null,
         loadedCallback = null,
-        svgPath = null;
+        svgPath = null,
+        super(key: key);
 
   ImageView.icon(
     this.icon, {
+    Key key,
     this.size,
     this.color,
   })  : imageUrl = null,
@@ -155,10 +168,12 @@ class ImageView extends StatelessWidget {
         loadingProgress = null,
         loadFailedCallback = null,
         loadedCallback = null,
-        useDiskCache = null;
+        useDiskCache = null,
+        super(key: key);
 
   ImageView.futureIcon(
     this.iconFuture, {
+    Key key,
     this.size,
     this.color,
   })  : imageUrl = null,
@@ -176,7 +191,8 @@ class ImageView extends StatelessWidget {
         loadingProgress = null,
         loadFailedCallback = null,
         loadedCallback = null,
-        useDiskCache = null;
+        useDiskCache = null,
+        super(key: key);
 
   /// 本地图片路径
   final String imagePath;
@@ -244,6 +260,7 @@ class ImageView extends StatelessWidget {
         height: size ?? height,
         fit: fit,
         color: color,
+        gaplessPlayback: true,
       );
     } else if (imageUrl != null) {
       return Image(
@@ -260,6 +277,7 @@ class ImageView extends StatelessWidget {
         height: size ?? height,
         fit: fit,
         color: color,
+        gaplessPlayback: true,
       );
     } else if (svgPath != null) {
       return SvgPicture.asset(

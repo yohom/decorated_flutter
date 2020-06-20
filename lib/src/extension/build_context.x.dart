@@ -18,6 +18,10 @@ extension BuildContextX on BuildContext {
     ));
   }
 
+  void clearFocus() {
+    FocusScope.of(this).requestFocus(FocusNode());
+  }
+
   FormState get form {
     return Form.of(this);
   }
