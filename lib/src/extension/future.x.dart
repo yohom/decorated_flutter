@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 extension FutureX<T> on Future<T> {
+  static Widget loadingWidget;
+
   Future<T> loading(
     BuildContext context, {
     bool cancelable = false,
@@ -16,7 +18,7 @@ extension FutureX<T> on Future<T> {
       builder: (context) {
         return WillPopScope(
           onWillPop: () async => cancelable,
-          child: LoadingWidget(),
+          child: loadingWidget ?? LoadingWidget(),
         );
       },
       barrierDismissible: cancelable,

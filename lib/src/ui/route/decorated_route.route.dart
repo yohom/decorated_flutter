@@ -15,7 +15,7 @@ class DecoratedRoute<B extends BLoC, T extends Object>
     this.autoCloseKeyboard = true,
     this.init,
     this.animate = true,
-    this.lateinit = true,
+    this.lateinit = false,
     this.withForm = false,
     this.withAnalytics = true,
     this.withDefaultTabController = false,
