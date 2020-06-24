@@ -1,5 +1,5 @@
 ## 0.12.14
-- enhance: 默认懒加载
+- ~~enhance: 默认懒加载~~
 
 ## 0.12.13
 - enhance: 优化loading方法
