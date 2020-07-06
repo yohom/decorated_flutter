@@ -31,6 +31,7 @@ class DecoratedRow extends StatelessWidget {
     this.elevation,
     this.children,
     this.safeArea,
+    this.widthFactor,
   }) : super(key: key);
 
   //region Container
@@ -61,6 +62,10 @@ class DecoratedRow extends StatelessWidget {
 
   //region Material
   final double elevation;
+  //endregion
+
+  //region FractionallySizedBox
+  final double widthFactor;
   //endregion
 
   /// item间距
@@ -110,6 +115,7 @@ class DecoratedRow extends StatelessWidget {
       safeArea: safeArea,
       divider: divider,
       elevation: elevation,
+      widthFactor: widthFactor,
       children: children,
     );
   }
@@ -144,6 +150,7 @@ class DecoratedColumn extends StatelessWidget {
     this.safeArea,
     this.elevation,
     this.withLocalNavigator = false,
+    this.heightFactor,
     this.children,
   }) : super(key: key);
 
@@ -175,6 +182,10 @@ class DecoratedColumn extends StatelessWidget {
 
   //region Material
   final double elevation;
+  //endregion
+
+  //region FractionallySizedBox
+  final double heightFactor;
   //endregion
 
   final double itemSpacing;
@@ -223,6 +234,7 @@ class DecoratedColumn extends StatelessWidget {
       elevation: elevation,
       divider: divider,
       withLocalNavigator: withLocalNavigator,
+      heightFactor: heightFactor,
       children: children,
     );
 
@@ -263,6 +275,8 @@ class DecoratedFlex extends StatelessWidget {
     this.elevation,
     this.safeArea,
     this.withLocalNavigator = false,
+    this.widthFactor,
+    this.heightFactor,
     this.children,
   }) : super(key: key);
 
@@ -295,6 +309,11 @@ class DecoratedFlex extends StatelessWidget {
 
   //region Material
   final double elevation;
+  //endregion
+
+  //region FractionallySizedBox
+  final double widthFactor;
+  final double heightFactor;
   //endregion
 
   /// 元素间距
@@ -406,6 +425,14 @@ class DecoratedFlex extends StatelessWidget {
 
     if (safeArea != null) {
       result = SafeArea(child: result);
+    }
+
+    if (widthFactor != null || heightFactor != null) {
+      result = FractionallySizedBox(
+        widthFactor: widthFactor,
+        heightFactor: heightFactor,
+        child: result,
+      );
     }
 
     if (withLocalNavigator) {
