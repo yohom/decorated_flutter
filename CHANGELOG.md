@@ -1,6 +1,7 @@
 ## 0.13.0
 - enhance: 提示依赖
 - enhance: DecoratedFlex增加heightFactor, widthFactor
+- fix: DecoratedColumn scrollable, List换为SingleChildScrollView
 
 ## 0.12.14
 - ~~enhance: 默认懒加载~~
