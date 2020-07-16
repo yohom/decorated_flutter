@@ -239,7 +239,7 @@ class DecoratedColumn extends StatelessWidget {
     );
 
     if (scrollable) {
-      result = ListView(children: <Widget>[result], shrinkWrap: true);
+      result = SingleChildScrollView(child: result);
     }
 
     return result;
