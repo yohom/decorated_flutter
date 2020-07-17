@@ -2,13 +2,16 @@ import 'package:decorated_flutter/src/ui/ui.export.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+typedef Widget LoadingBuilder(BuildContext context, String loadingText);
+
 extension FutureX<T> on Future<T> {
-  static Widget loadingWidget;
+  static LoadingBuilder loadingWidgetBuilder;
 
   Future<T> loading(
     BuildContext context, {
     bool cancelable = false,
     Duration timeout = const Duration(seconds: 20),
+    String loadingText = '加载中..',
   }) {
     // 是被future pop的还是按返回键pop的
     bool popByFuture = true;
@@ -18,7 +21,7 @@ extension FutureX<T> on Future<T> {
       builder: (context) {
         return WillPopScope(
           onWillPop: () async => cancelable,
-          child: loadingWidget ?? LoadingWidget(),
+          child: loadingWidgetBuilder(context, loadingText) ?? LoadingWidget(),
         );
       },
       barrierDismissible: cancelable,
