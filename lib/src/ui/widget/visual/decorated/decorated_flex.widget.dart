@@ -29,6 +29,7 @@ class DecoratedRow extends StatelessWidget {
     this.crossExpanded = false,
     this.forceItemSameExtent = false,
     this.elevation,
+    this.material = false,
     this.children,
     this.safeArea,
     this.widthFactor,
@@ -44,6 +45,7 @@ class DecoratedRow extends StatelessWidget {
   final Matrix4 transform;
   final double width;
   final double height;
+
   //endregion
 
   //region Row
@@ -52,20 +54,25 @@ class DecoratedRow extends StatelessWidget {
   final MainAxisSize mainAxisSize;
   final CrossAxisAlignment crossAxisAlignment;
   final TextBaseline textBaseline;
+
   //endregion
 
   //region GestureDetector
   final PressedCallback onPressed;
   final PressedCallback onLongPressed;
   final HitTestBehavior behavior;
+
   //endregion
 
   //region Material
+  final bool material;
   final double elevation;
+
   //endregion
 
   //region FractionallySizedBox
   final double widthFactor;
+
   //endregion
 
   /// item间距
@@ -115,6 +122,7 @@ class DecoratedRow extends StatelessWidget {
       safeArea: safeArea,
       divider: divider,
       elevation: elevation,
+      material: material,
       widthFactor: widthFactor,
       children: children,
     );
@@ -149,6 +157,7 @@ class DecoratedColumn extends StatelessWidget {
     this.forceItemSameExtent = false,
     this.safeArea,
     this.elevation,
+    this.material = false,
     this.withLocalNavigator = false,
     this.heightFactor,
     this.children,
@@ -164,6 +173,7 @@ class DecoratedColumn extends StatelessWidget {
   final Matrix4 transform;
   final double width;
   final double height;
+
   //endregion
 
   //region Row
@@ -172,20 +182,25 @@ class DecoratedColumn extends StatelessWidget {
   final MainAxisSize mainAxisSize;
   final CrossAxisAlignment crossAxisAlignment;
   final TextBaseline textBaseline;
+
   //endregion
 
   //region GestureDetector
   final PressedCallback onPressed;
   final PressedCallback onLongPressed;
   final HitTestBehavior behavior;
+
   //endregion
 
   //region Material
+  final bool material;
   final double elevation;
+
   //endregion
 
   //region FractionallySizedBox
   final double heightFactor;
+
   //endregion
 
   final double itemSpacing;
@@ -232,6 +247,7 @@ class DecoratedColumn extends StatelessWidget {
       forceItemSameExtent: forceItemSameExtent,
       safeArea: safeArea,
       elevation: elevation,
+      material: material,
       divider: divider,
       withLocalNavigator: withLocalNavigator,
       heightFactor: heightFactor,
@@ -277,6 +293,7 @@ class DecoratedFlex extends StatelessWidget {
     this.withLocalNavigator = false,
     this.widthFactor,
     this.heightFactor,
+    this.material = false,
     this.children,
   }) : super(key: key);
 
@@ -290,6 +307,7 @@ class DecoratedFlex extends StatelessWidget {
   final Matrix4 transform;
   final double width;
   final double height;
+
   //endregion
 
   //region Flex
@@ -299,21 +317,26 @@ class DecoratedFlex extends StatelessWidget {
   final MainAxisSize mainAxisSize;
   final CrossAxisAlignment crossAxisAlignment;
   final TextBaseline textBaseline;
+
   //endregion
 
   //region GestureDetector
   final PressedCallback onPressed;
   final PressedCallback onLongPressed;
   final HitTestBehavior behavior;
+
   //endregion
 
   //region Material
+  final bool material;
   final double elevation;
+
   //endregion
 
   //region FractionallySizedBox
   final double widthFactor;
   final double heightFactor;
+
   //endregion
 
   /// 元素间距
@@ -415,9 +438,9 @@ class DecoratedFlex extends StatelessWidget {
       result = Expanded(child: result);
     }
 
-    if (elevation != null) {
+    if (material || elevation != null) {
       result = Material(
-        elevation: elevation,
+        elevation: elevation ?? 0,
         color: color,
         child: result,
       );
