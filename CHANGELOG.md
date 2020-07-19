@@ -1,3 +1,8 @@
+## 0.13.1
+- enhance: 自定义loading时的widget
+- enhance: decorated_flex增加material参数, 处理上方没有Material组件的情况
+- enhance: PageOutput中的update方法标记为protected
+
 ## 0.13.0
 - enhance: 提示依赖
 - enhance: DecoratedFlex增加heightFactor, widthFactor
