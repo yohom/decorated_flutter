@@ -244,6 +244,12 @@ class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
     _pageFetch = pageFetch;
     _receiveFullData = receiveFullData;
   }
+
+  /// 这里标记为protected, 防止被外部引用, 应该使用[refresh]方法
+  @protected
+  Future<List<T>> update([int arg]) {
+    return super.update(arg);
+  }
 }
 
 /// 分页业务单元
