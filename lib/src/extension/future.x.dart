@@ -21,7 +21,9 @@ extension FutureX<T> on Future<T> {
       builder: (context) {
         return WillPopScope(
           onWillPop: () async => cancelable,
-          child: loadingWidgetBuilder(context, loadingText) ?? LoadingWidget(),
+          child: loadingWidgetBuilder != null
+              ? loadingWidgetBuilder(context, loadingText)
+              : LoadingWidget(),
         );
       },
       barrierDismissible: cancelable,
