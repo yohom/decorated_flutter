@@ -1,3 +1,6 @@
+## 0.13.2
+- feat: 增加show_more_text
+
 ## 0.13.1
 - enhance: 自定义loading时的widget
 - enhance: decorated_flex增加material参数, 处理上方没有Material组件的情况
