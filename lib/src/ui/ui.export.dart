@@ -39,5 +39,6 @@ export 'widget/visual/special_affect/gradient_button.widget.dart';
 export 'widget/visual/special_affect/notification_badge.widget.dart';
 export 'widget/visual/special_affect/rating_bar.widget.dart';
 export 'widget/visual/special_affect/runtime.widget.dart';
+export 'widget/visual/special_affect/show_more_text.widget.dart';
 export 'widget/visual/special_affect/snap_list.widget.dart';
 export 'widget/visual/special_affect/unknown_route.screen.dart';
