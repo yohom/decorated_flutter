@@ -26,7 +26,7 @@ class DecoratedRow extends StatelessWidget {
     this.itemSpacing = 0,
     this.divider,
     this.visible = true,
-    this.crossExpanded = false,
+    this.expanded = false,
     this.forceItemSameExtent = false,
     this.elevation,
     this.material = false,
@@ -85,7 +85,7 @@ class DecoratedRow extends StatelessWidget {
   final bool visible;
 
   /// 垂直方向上Expand
-  final bool crossExpanded;
+  final bool expanded;
 
   /// 强制子widget拥有相同的宽度, 会获取到屏幕宽度然后除以item个数来计算
   final bool forceItemSameExtent;
@@ -117,7 +117,7 @@ class DecoratedRow extends StatelessWidget {
       behavior: behavior,
       itemSpacing: itemSpacing,
       visible: visible,
-      crossExpanded: crossExpanded,
+      expanded: expanded,
       forceItemSameExtent: forceItemSameExtent,
       safeArea: safeArea,
       divider: divider,
@@ -152,7 +152,7 @@ class DecoratedColumn extends StatelessWidget {
     this.itemSpacing = 0,
     this.divider,
     this.visible = true,
-    this.crossExpanded = false,
+    this.expanded = false,
     this.scrollable = false,
     this.forceItemSameExtent = false,
     this.safeArea,
@@ -208,7 +208,7 @@ class DecoratedColumn extends StatelessWidget {
   /// 分隔控件 与[itemSpacing]功能类似, 但是优先使用[divider]
   final Widget divider;
   final bool visible;
-  final bool crossExpanded;
+  final bool expanded;
   final bool scrollable;
 
   /// 强制子widget拥有相同的高度, 会获取到屏幕高度然后除以item个数来计算
@@ -243,7 +243,7 @@ class DecoratedColumn extends StatelessWidget {
       behavior: behavior,
       itemSpacing: itemSpacing,
       visible: visible,
-      crossExpanded: crossExpanded,
+      expanded: expanded,
       forceItemSameExtent: forceItemSameExtent,
       safeArea: safeArea,
       elevation: elevation,
@@ -286,7 +286,7 @@ class DecoratedFlex extends StatelessWidget {
     this.itemSpacing = 0,
     this.divider,
     this.visible = true,
-    this.crossExpanded = false,
+    this.expanded = false,
     this.forceItemSameExtent = false,
     this.elevation,
     this.safeArea,
@@ -348,8 +348,8 @@ class DecoratedFlex extends StatelessWidget {
   /// 是否可见
   final bool visible;
 
-  /// cross方向上是否展开
-  final bool crossExpanded;
+  /// 是否展开
+  final bool expanded;
 
   /// 是否强制子控件等长
   final bool forceItemSameExtent;
@@ -434,7 +434,7 @@ class DecoratedFlex extends StatelessWidget {
       );
     }
 
-    if (crossExpanded) {
+    if (expanded) {
       result = Expanded(child: result);
     }
 
