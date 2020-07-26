@@ -12,6 +12,7 @@ class DecoratedText extends StatelessWidget {
     this.onPressed,
     this.maxLines,
     this.textAlign,
+    this.constraints,
   }) : super(key: key);
 
   final EdgeInsetsGeometry padding;
@@ -23,6 +24,7 @@ class DecoratedText extends StatelessWidget {
   final ValueChanged<String> onPressed;
   final int maxLines;
   final TextAlign textAlign;
+  final BoxConstraints constraints;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +40,7 @@ class DecoratedText extends StatelessWidget {
         margin: margin,
         padding: padding,
         decoration: decoration,
+        constraints: constraints,
         child: result,
       );
     }
