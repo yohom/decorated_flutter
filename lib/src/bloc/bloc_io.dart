@@ -231,6 +231,7 @@ class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
     bool isBehavior = true,
     int initPage = 0,
     bool receiveFullData = true,
+    int pageSize = 0,
     @required _PageFetch<List<T>, ARG_TYPE> pageFetch,
   }) : super(
           seedValue: seedValue,
@@ -243,6 +244,7 @@ class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
     _currentPage = _initPage;
     _pageFetch = pageFetch;
     _receiveFullData = receiveFullData;
+    _pageSize = pageSize;
   }
 
   /// 这里标记为protected, 防止被外部引用, 应该使用[refresh]方法
@@ -260,6 +262,7 @@ class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
     bool sync = true,
     bool isBehavior = true,
     int initPage = 0,
+    int pageSize = 0,
     bool receiveFullData = true,
     @required _PageFetch<List<T>, ARG_TYPE> pageFetch,
   }) : super(
@@ -273,6 +276,7 @@ class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
     _currentPage = _initPage;
     _pageFetch = pageFetch;
     _receiveFullData = receiveFullData;
+    _pageSize = pageSize;
   }
 }
 
@@ -566,7 +570,15 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
   List<T> _dataList = [];
 
   /// 是否还有更多数据
+  ///
+  /// 两种策略判断:
+  ///   1. 设置过[_pageSize], 则判断当前页列表大小是否小于[_pageSize],
+  ///   如果是, 那么当前页就是最后一页, 不需要再请求下一页
+  ///   2. 没有设置过[_pageSize], 那么判断当前页是否为空列表.
   bool _noMoreData = false;
+
+  /// 每页大小 用于判断是否已加载完全部数据
+  int _pageSize = 0;
 
   _PageFetch<List<T>, ARG_TYPE> _pageFetch;
 
@@ -580,7 +592,9 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
         } else {
           _dataList = nextPageData;
         }
-        _noMoreData = nextPageData.isEmpty;
+        // 如果当前页列表大小已经小于设置的每页大小, 那么说明已经到最后一页
+        // 或者当前页是空, 也说明已经是最后一页
+        _noMoreData = nextPageData.length < _pageSize || nextPageData.isEmpty;
         _subject.add(_dataList);
       } catch (e) {
         _subject.addError(e);
