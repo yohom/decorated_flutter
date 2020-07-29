@@ -10,6 +10,7 @@ class Blur extends StatelessWidget {
     this.alignment = AlignmentDirectional.center,
     this.sigmaX = 0,
     this.sigmaY = 0,
+    this.fit,
   }) : super(key: key);
 
   final Widget background;
@@ -17,21 +18,21 @@ class Blur extends StatelessWidget {
   final AlignmentGeometry alignment;
   final double sigmaX;
   final double sigmaY;
+  final StackFit fit;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       alignment: alignment,
+      fit: fit,
       children: <Widget>[
         background,
-        ClipRect(
-          child: BackdropFilter(
-            filter: ui.ImageFilter.blur(
-              sigmaX: sigmaX,
-              sigmaY: sigmaY,
-            ),
-            child: foreground,
+        BackdropFilter(
+          filter: ui.ImageFilter.blur(
+            sigmaX: sigmaX,
+            sigmaY: sigmaY,
           ),
+          child: foreground,
         )
       ],
     );

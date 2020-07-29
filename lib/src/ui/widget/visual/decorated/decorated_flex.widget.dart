@@ -32,6 +32,7 @@ class DecoratedRow extends StatelessWidget {
     this.material = false,
     this.children,
     this.safeArea,
+    this.textStyle,
     this.widthFactor,
   }) : super(key: key);
 
@@ -90,6 +91,9 @@ class DecoratedRow extends StatelessWidget {
   /// 强制子widget拥有相同的宽度, 会获取到屏幕宽度然后除以item个数来计算
   final bool forceItemSameExtent;
 
+  /// 内部统一的TextStyle
+  final TextStyle textStyle;
+
   /// 是否安全区域
   final bool safeArea;
   final List<Widget> children;
@@ -124,6 +128,7 @@ class DecoratedRow extends StatelessWidget {
       elevation: elevation,
       material: material,
       widthFactor: widthFactor,
+      textStyle: textStyle,
       children: children,
     );
   }
@@ -160,6 +165,7 @@ class DecoratedColumn extends StatelessWidget {
     this.material = false,
     this.withLocalNavigator = false,
     this.heightFactor,
+    this.textStyle,
     this.children,
   }) : super(key: key);
 
@@ -218,6 +224,9 @@ class DecoratedColumn extends StatelessWidget {
   final bool safeArea;
   final bool withLocalNavigator;
 
+  /// 内部统一的TextStyle
+  final TextStyle textStyle;
+
   final List<Widget> children;
 
   @override
@@ -251,6 +260,7 @@ class DecoratedColumn extends StatelessWidget {
       divider: divider,
       withLocalNavigator: withLocalNavigator,
       heightFactor: heightFactor,
+      textStyle: textStyle,
       children: children,
     );
 
@@ -294,6 +304,7 @@ class DecoratedFlex extends StatelessWidget {
     this.widthFactor,
     this.heightFactor,
     this.material = false,
+    this.textStyle,
     this.children,
   }) : super(key: key);
 
@@ -359,6 +370,9 @@ class DecoratedFlex extends StatelessWidget {
 
   /// 是否带有局部Navigator 简单来说就是要不要用[CupertinoTabView]包裹
   final bool withLocalNavigator;
+
+  /// 内部统一的TextStyle
+  final TextStyle textStyle;
 
   /// 子元素
   final List<Widget> children;
@@ -456,6 +470,10 @@ class DecoratedFlex extends StatelessWidget {
         heightFactor: heightFactor,
         child: result,
       );
+    }
+
+    if (textStyle != null) {
+      result = DefaultTextStyle(style: textStyle, child: result);
     }
 
     if (withLocalNavigator) {
