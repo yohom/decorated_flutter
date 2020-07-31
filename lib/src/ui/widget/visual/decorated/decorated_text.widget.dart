@@ -13,6 +13,7 @@ class DecoratedText extends StatelessWidget {
     this.maxLines,
     this.textAlign,
     this.constraints,
+    this.expanded = false,
   }) : super(key: key);
 
   final EdgeInsetsGeometry padding;
@@ -25,6 +26,7 @@ class DecoratedText extends StatelessWidget {
   final int maxLines;
   final TextAlign textAlign;
   final BoxConstraints constraints;
+  final bool expanded;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +56,10 @@ class DecoratedText extends StatelessWidget {
         onTap: () => onPressed(data),
         child: result,
       );
+    }
+
+    if (expanded) {
+      result = Expanded(child: result);
     }
 
     return result;
