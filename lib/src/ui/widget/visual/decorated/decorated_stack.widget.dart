@@ -76,11 +76,11 @@ class DecoratedStack extends StatelessWidget {
         if (topCenter != null)
           Positioned(top: 0, left: 0, right: 0, child: topCenter),
         if (bottomCenter != null)
-          Positioned(bottom: 0, right: 0, left: 0, child: topEnd),
+          Positioned(bottom: 0, right: 0, left: 0, child: bottomCenter),
         if (centerStart != null)
-          Positioned(bottom: 0, top: 0, left: 0, child: bottomStart),
+          Positioned(bottom: 0, top: 0, left: 0, child: centerStart),
         if (centerEnd != null)
-          Positioned(bottom: 0, top: 0, right: 0, child: bottomEnd),
+          Positioned(bottom: 0, top: 0, right: 0, child: centerEnd),
         if (center != null)
           Positioned(bottom: 0, right: 0, top: 0, left: 0, child: center),
       ],
