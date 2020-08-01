@@ -7,11 +7,11 @@ class DecoratedStack extends StatelessWidget {
     this.padding,
     this.margin,
     this.decoration,
+    this.width,
+    this.height,
     this.textStyle = const TextStyle(),
     this.safeArea,
     this.onPressed,
-    this.maxLines,
-    this.textAlign,
     this.overflow,
     this.constraints,
     this.expanded = false,
@@ -28,12 +28,16 @@ class DecoratedStack extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final EdgeInsetsGeometry margin;
   final BoxDecoration decoration;
-  final TextStyle textStyle;
-  final bool safeArea;
-  final ContextCallback onPressed;
-  final int maxLines;
-  final TextAlign textAlign;
   final BoxConstraints constraints;
+  final double width;
+  final double height;
+
+  final TextStyle textStyle;
+
+  final bool safeArea;
+
+  final ContextCallback onPressed;
+
   final bool expanded;
 
   final Widget topStart;
@@ -66,10 +70,16 @@ class DecoratedStack extends StatelessWidget {
       ],
     );
 
-    if (decoration != null || padding != null || margin != null) {
+    if (decoration != null ||
+        padding != null ||
+        margin != null ||
+        width != null ||
+        height != null) {
       result = Container(
         margin: margin,
         padding: padding,
+        width: width,
+        height: height,
         decoration: decoration,
         constraints: constraints,
         child: result,
