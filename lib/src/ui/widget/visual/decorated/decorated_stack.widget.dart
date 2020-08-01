@@ -1,13 +1,13 @@
+import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 
 class DecoratedStack extends StatelessWidget {
-  const DecoratedStack(
-    this.data, {
+  const DecoratedStack({
     Key key,
     this.padding,
     this.margin,
     this.decoration,
-    this.style = const TextStyle(),
+    this.textStyle = const TextStyle(),
     this.safeArea,
     this.onPressed,
     this.maxLines,
@@ -28,10 +28,9 @@ class DecoratedStack extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final EdgeInsetsGeometry margin;
   final BoxDecoration decoration;
-  final TextStyle style;
-  final String data;
+  final TextStyle textStyle;
   final bool safeArea;
-  final ValueChanged<String> onPressed;
+  final ContextCallback onPressed;
   final int maxLines;
   final TextAlign textAlign;
   final BoxConstraints constraints;
@@ -83,13 +82,17 @@ class DecoratedStack extends StatelessWidget {
 
     if (onPressed != null) {
       result = GestureDetector(
-        onTap: () => onPressed(data),
+        onTap: () => onPressed(context),
         child: result,
       );
     }
 
     if (expanded) {
       result = Expanded(child: result);
+    }
+
+    if (textStyle != null) {
+      result = DefaultTextStyle(style: textStyle, child: result);
     }
 
     return result;
