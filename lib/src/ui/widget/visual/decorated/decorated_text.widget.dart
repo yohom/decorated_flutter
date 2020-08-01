@@ -12,6 +12,7 @@ class DecoratedText extends StatelessWidget {
     this.onPressed,
     this.maxLines,
     this.textAlign,
+    this.overflow,
     this.constraints,
     this.expanded = false,
   }) : super(key: key);
@@ -25,6 +26,7 @@ class DecoratedText extends StatelessWidget {
   final ValueChanged<String> onPressed;
   final int maxLines;
   final TextAlign textAlign;
+  final TextOverflow overflow;
   final BoxConstraints constraints;
   final bool expanded;
 
@@ -35,6 +37,7 @@ class DecoratedText extends StatelessWidget {
       maxLines: maxLines,
       style: style,
       textAlign: textAlign,
+      overflow: overflow,
     );
 
     if (decoration != null || padding != null || margin != null) {
