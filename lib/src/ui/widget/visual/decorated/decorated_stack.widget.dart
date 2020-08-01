@@ -21,6 +21,10 @@ class DecoratedStack extends StatelessWidget {
     this.topEnd,
     this.bottomStart,
     this.bottomEnd,
+    this.topCenter,
+    this.bottomCenter,
+    this.centerStart,
+    this.centerEnd,
     this.center,
     @required this.children,
   }) : super(key: key);
@@ -44,6 +48,10 @@ class DecoratedStack extends StatelessWidget {
   final Widget topEnd;
   final Widget bottomStart;
   final Widget bottomEnd;
+  final Widget topCenter;
+  final Widget bottomCenter;
+  final Widget centerStart;
+  final Widget centerEnd;
   final Widget center;
 
   final StackFit stackFit;
@@ -65,6 +73,14 @@ class DecoratedStack extends StatelessWidget {
           Positioned(bottom: 0, left: 0, child: bottomStart),
         if (bottomEnd != null)
           Positioned(bottom: 0, right: 0, child: bottomEnd),
+        if (topCenter != null)
+          Positioned(top: 0, left: 0, right: 0, child: topCenter),
+        if (bottomCenter != null)
+          Positioned(bottom: 0, right: 0, left: 0, child: topEnd),
+        if (centerStart != null)
+          Positioned(bottom: 0, top: 0, left: 0, child: bottomStart),
+        if (centerEnd != null)
+          Positioned(bottom: 0, top: 0, right: 0, child: bottomEnd),
         if (center != null)
           Positioned(bottom: 0, right: 0, top: 0, left: 0, child: center),
       ],
