@@ -1,290 +1,145 @@
+import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 typedef void PressedCallback(BuildContext context);
 
-class DecoratedRow extends StatelessWidget {
+class DecoratedRow extends DecoratedFlex {
   const DecoratedRow({
     Key key,
-    this.padding,
-    this.margin,
-    this.color,
-    this.decoration,
-    this.foregroundDecoration,
-    this.constraints,
-    this.transform,
-    this.width,
-    this.height,
-    this.alignment,
-    this.mainAxisAlignment = MainAxisAlignment.start,
-    this.mainAxisSize = MainAxisSize.max,
-    this.crossAxisAlignment = CrossAxisAlignment.center,
-    this.textBaseline,
-    this.onPressed,
-    this.onLongPressed,
-    this.behavior = HitTestBehavior.opaque,
-    this.itemSpacing = 0,
-    this.divider,
-    this.visible,
-    this.expanded,
-    this.forceItemSameExtent = false,
-    this.elevation,
-    this.material = false,
-    this.children,
-    this.safeArea,
-    this.textStyle,
-    this.repaintBoundaryKey,
-    this.widthFactor,
-  }) : super(key: key);
-
-  //region Container
-  final EdgeInsets padding;
-  final EdgeInsets margin;
-  final Color color;
-  final Decoration decoration;
-  final Decoration foregroundDecoration;
-  final BoxConstraints constraints;
-  final Matrix4 transform;
-  final double width;
-  final double height;
-
-  //endregion
-
-  //region Row
-  final AlignmentGeometry alignment;
-  final MainAxisAlignment mainAxisAlignment;
-  final MainAxisSize mainAxisSize;
-  final CrossAxisAlignment crossAxisAlignment;
-  final TextBaseline textBaseline;
-
-  //endregion
-
-  //region GestureDetector
-  final PressedCallback onPressed;
-  final PressedCallback onLongPressed;
-  final HitTestBehavior behavior;
-
-  //endregion
-
-  //region Material
-  final bool material;
-  final double elevation;
-
-  //endregion
-
-  //region FractionallySizedBox
-  final double widthFactor;
-
-  //endregion
-
-  /// item间距
-  final double itemSpacing;
-
-  /// 分隔控件 与[itemSpacing]功能类似, 但是优先使用[divider]
-  final Widget divider;
-
-  /// 是否可见
-  final bool visible;
-
-  /// 垂直方向上Expand
-  final bool expanded;
-
-  /// 强制子widget拥有相同的宽度, 会获取到屏幕宽度然后除以item个数来计算
-  final bool forceItemSameExtent;
-
-  /// 内部统一的TextStyle
-  final TextStyle textStyle;
-
-  /// 是否安全区域
-  final bool safeArea;
-
-  /// 是否需要[RepaintBoundary]
-  final GlobalKey repaintBoundaryKey;
-
-  final List<Widget> children;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedFlex(
-      direction: Axis.horizontal,
-      padding: padding,
-      margin: margin,
-      color: color,
-      decoration: decoration,
-      foregroundDecoration: foregroundDecoration,
-      constraints: constraints,
-      transform: transform,
-      width: width,
-      height: height,
-      alignment: alignment,
-      mainAxisAlignment: mainAxisAlignment,
-      mainAxisSize: mainAxisSize,
-      crossAxisAlignment: crossAxisAlignment,
-      textBaseline: textBaseline,
-      onPressed: onPressed,
-      onLongPressed: onLongPressed,
-      behavior: behavior,
-      itemSpacing: itemSpacing,
-      visible: visible,
-      expanded: expanded,
-      forceItemSameExtent: forceItemSameExtent,
-      safeArea: safeArea,
-      divider: divider,
-      elevation: elevation,
-      material: material,
-      widthFactor: widthFactor,
-      textStyle: textStyle,
-      repaintBoundaryKey: repaintBoundaryKey,
-      children: children,
-    );
-  }
+    EdgeInsets padding,
+    EdgeInsets margin,
+    Color color,
+    Decoration decoration,
+    Decoration foregroundDecoration,
+    BoxConstraints constraints,
+    Matrix4 transform,
+    double width,
+    double height,
+    AlignmentGeometry alignment,
+    MainAxisAlignment mainAxisAlignment = MainAxisAlignment.start,
+    MainAxisSize mainAxisSize = MainAxisSize.max,
+    CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.center,
+    TextBaseline textBaseline,
+    ContextCallback onPressed,
+    ContextCallback onLongPressed,
+    HitTestBehavior behavior = HitTestBehavior.opaque,
+    double itemSpacing = 0,
+    Widget divider,
+    bool visible,
+    bool expanded,
+    bool forceItemSameExtent = false,
+    double elevation,
+    bool material = false,
+    List<Widget> children,
+    bool safeArea,
+    TextStyle textStyle,
+    GlobalKey repaintBoundaryKey,
+    double widthFactor,
+  }) : super(
+          key: key,
+          direction: Axis.horizontal,
+          padding: padding,
+          margin: margin,
+          color: color,
+          decoration: decoration,
+          foregroundDecoration: foregroundDecoration,
+          constraints: constraints,
+          transform: transform,
+          width: width,
+          height: height,
+          alignment: alignment,
+          mainAxisAlignment: mainAxisAlignment,
+          mainAxisSize: mainAxisSize,
+          crossAxisAlignment: crossAxisAlignment,
+          textBaseline: textBaseline,
+          onPressed: onPressed,
+          onLongPressed: onLongPressed,
+          behavior: behavior,
+          itemSpacing: itemSpacing,
+          visible: visible,
+          expanded: expanded,
+          forceItemSameExtent: forceItemSameExtent,
+          safeArea: safeArea,
+          divider: divider,
+          elevation: elevation,
+          material: material,
+          widthFactor: widthFactor,
+          textStyle: textStyle,
+          repaintBoundaryKey: repaintBoundaryKey,
+          children: children,
+        );
 }
 
-class DecoratedColumn extends StatelessWidget {
+class DecoratedColumn extends DecoratedFlex {
   const DecoratedColumn({
     Key key,
-    this.padding,
-    this.margin,
-    this.color,
-    this.decoration,
-    this.foregroundDecoration,
-    this.constraints,
-    this.transform,
-    this.width,
-    this.height,
-    this.alignment,
-    this.mainAxisAlignment = MainAxisAlignment.start,
-    this.mainAxisSize = MainAxisSize.max,
-    this.crossAxisAlignment = CrossAxisAlignment.center,
-    this.textBaseline,
-    this.onPressed,
-    this.onLongPressed,
-    this.behavior = HitTestBehavior.opaque,
-    this.itemSpacing = 0,
-    this.divider,
-    this.visible,
-    this.expanded,
-    this.scrollable = false,
-    this.forceItemSameExtent = false,
-    this.safeArea,
-    this.elevation,
-    this.material = false,
-    this.withLocalNavigator = false,
-    this.heightFactor,
-    this.textStyle,
-    this.repaintBoundaryKey,
-    this.children,
-  }) : super(key: key);
-
-  //region Container
-  final EdgeInsets padding;
-  final EdgeInsets margin;
-  final Color color;
-  final Decoration decoration;
-  final Decoration foregroundDecoration;
-  final BoxConstraints constraints;
-  final Matrix4 transform;
-  final double width;
-  final double height;
-
-  //endregion
-
-  //region Row
-  final AlignmentGeometry alignment;
-  final MainAxisAlignment mainAxisAlignment;
-  final MainAxisSize mainAxisSize;
-  final CrossAxisAlignment crossAxisAlignment;
-  final TextBaseline textBaseline;
-
-  //endregion
-
-  //region GestureDetector
-  final PressedCallback onPressed;
-  final PressedCallback onLongPressed;
-  final HitTestBehavior behavior;
-
-  //endregion
-
-  //region Material
-  final bool material;
-  final double elevation;
-
-  //endregion
-
-  //region FractionallySizedBox
-  final double heightFactor;
-
-  //endregion
-
-  final double itemSpacing;
-
-  /// 分隔控件 与[itemSpacing]功能类似, 但是优先使用[divider]
-  final Widget divider;
-  final bool visible;
-  final bool expanded;
-  final bool scrollable;
-
-  /// 强制子widget拥有相同的高度, 会获取到屏幕高度然后除以item个数来计算
-  final bool forceItemSameExtent;
-
-  /// 是否安全区域
-  final bool safeArea;
-  final bool withLocalNavigator;
-
-  /// 内部统一的TextStyle
-  final TextStyle textStyle;
-
-  /// 是否需要[RepaintBoundary]
-  final GlobalKey repaintBoundaryKey;
-
-  final List<Widget> children;
-
-  @override
-  Widget build(BuildContext context) {
-    Widget result = DecoratedFlex(
-      direction: Axis.vertical,
-      padding: padding,
-      margin: margin,
-      color: color,
-      decoration: decoration,
-      foregroundDecoration: foregroundDecoration,
-      constraints: constraints,
-      transform: transform,
-      width: width,
-      height: height,
-      alignment: alignment,
-      mainAxisAlignment: mainAxisAlignment,
-      mainAxisSize: mainAxisSize,
-      crossAxisAlignment: crossAxisAlignment,
-      textBaseline: textBaseline,
-      onPressed: onPressed,
-      onLongPressed: onLongPressed,
-      behavior: behavior,
-      itemSpacing: itemSpacing,
-      visible: visible,
-      expanded: expanded,
-      forceItemSameExtent: forceItemSameExtent,
-      safeArea: safeArea,
-      elevation: elevation,
-      material: material,
-      divider: divider,
-      withLocalNavigator: withLocalNavigator,
-      heightFactor: heightFactor,
-      textStyle: textStyle,
-      repaintBoundaryKey: repaintBoundaryKey,
-      children: children,
-    );
-
-    if (scrollable) {
-      result = SingleChildScrollView(child: result);
-    }
-
-    return result;
-  }
+    EdgeInsets padding,
+    EdgeInsets margin,
+    Color color,
+    Decoration decoration,
+    Decoration foregroundDecoration,
+    BoxConstraints constraints,
+    Matrix4 transform,
+    double width,
+    double height,
+    AlignmentGeometry alignment,
+    MainAxisAlignment mainAxisAlignment = MainAxisAlignment.start,
+    MainAxisSize mainAxisSize = MainAxisSize.max,
+    CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.center,
+    TextBaseline textBaseline,
+    ContextCallback onPressed,
+    ContextCallback onLongPressed,
+    HitTestBehavior behavior = HitTestBehavior.opaque,
+    double itemSpacing = 0,
+    Widget divider,
+    bool visible,
+    bool expanded,
+    bool forceItemSameExtent = false,
+    double elevation,
+    bool material = false,
+    List<Widget> children,
+    bool safeArea,
+    TextStyle textStyle,
+    GlobalKey repaintBoundaryKey,
+    double heightFactor,
+  }) : super(
+          key: key,
+          direction: Axis.vertical,
+          padding: padding,
+          margin: margin,
+          color: color,
+          decoration: decoration,
+          foregroundDecoration: foregroundDecoration,
+          constraints: constraints,
+          transform: transform,
+          width: width,
+          height: height,
+          alignment: alignment,
+          mainAxisAlignment: mainAxisAlignment,
+          mainAxisSize: mainAxisSize,
+          crossAxisAlignment: crossAxisAlignment,
+          textBaseline: textBaseline,
+          onPressed: onPressed,
+          onLongPressed: onLongPressed,
+          behavior: behavior,
+          itemSpacing: itemSpacing,
+          visible: visible,
+          expanded: expanded,
+          forceItemSameExtent: forceItemSameExtent,
+          safeArea: safeArea,
+          divider: divider,
+          elevation: elevation,
+          material: material,
+          heightFactor: heightFactor,
+          textStyle: textStyle,
+          repaintBoundaryKey: repaintBoundaryKey,
+          children: children,
+        );
 }
 
 class DecoratedFlex extends StatelessWidget {
-  DecoratedFlex({
+  const DecoratedFlex({
     Key key,
     this.padding,
     this.margin,
