@@ -306,7 +306,7 @@ class DecoratedFlex extends StatelessWidget {
     this.behavior = HitTestBehavior.opaque,
     this.itemSpacing = 0,
     this.divider,
-    this.visible = true,
+    this.visible,
     this.expanded = false,
     this.forceItemSameExtent = false,
     this.elevation,
@@ -497,9 +497,12 @@ class DecoratedFlex extends StatelessWidget {
 
     if (withLocalNavigator) {
       return CupertinoTabView(builder: (context) => result);
-    } else {
+    }
+
+    if (visible != null) {
       result = Visibility(visible: visible, child: result);
     }
+
     return result;
   }
 
