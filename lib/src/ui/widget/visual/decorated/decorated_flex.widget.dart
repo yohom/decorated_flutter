@@ -463,10 +463,6 @@ class DecoratedFlex extends StatelessWidget {
       );
     }
 
-    if (expanded) {
-      result = Expanded(child: result);
-    }
-
     if (material || elevation != null) {
       result = Material(
         elevation: elevation ?? 0,
@@ -495,11 +491,16 @@ class DecoratedFlex extends StatelessWidget {
       result = RepaintBoundary(key: repaintBoundaryKey, child: result);
     }
 
+    if (expanded) {
+      result = Expanded(child: result);
+    }
+
     if (withLocalNavigator) {
       return CupertinoTabView(builder: (context) => result);
     } else {
-      return Visibility(visible: visible, child: result);
+      result = Visibility(visible: visible, child: result);
     }
+    return result;
   }
 
   List<Widget> addItemDivider(
