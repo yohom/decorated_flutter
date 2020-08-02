@@ -25,8 +25,8 @@ class DecoratedRow extends StatelessWidget {
     this.behavior = HitTestBehavior.opaque,
     this.itemSpacing = 0,
     this.divider,
-    this.visible = true,
-    this.expanded = false,
+    this.visible,
+    this.expanded,
     this.forceItemSameExtent = false,
     this.elevation,
     this.material = false,
@@ -162,8 +162,8 @@ class DecoratedColumn extends StatelessWidget {
     this.behavior = HitTestBehavior.opaque,
     this.itemSpacing = 0,
     this.divider,
-    this.visible = true,
-    this.expanded = false,
+    this.visible,
+    this.expanded,
     this.scrollable = false,
     this.forceItemSameExtent = false,
     this.safeArea,
@@ -307,7 +307,7 @@ class DecoratedFlex extends StatelessWidget {
     this.itemSpacing = 0,
     this.divider,
     this.visible,
-    this.expanded = false,
+    this.expanded,
     this.forceItemSameExtent = false,
     this.elevation,
     this.safeArea,
@@ -491,16 +491,16 @@ class DecoratedFlex extends StatelessWidget {
       result = RepaintBoundary(key: repaintBoundaryKey, child: result);
     }
 
-    if (expanded) {
-      result = Expanded(child: result);
-    }
-
-    if (withLocalNavigator) {
+    if (withLocalNavigator == true) {
       return CupertinoTabView(builder: (context) => result);
     }
 
     if (visible != null) {
       result = Visibility(visible: visible, child: result);
+    }
+
+    if (expanded == true) {
+      result = Expanded(child: result);
     }
 
     return result;
