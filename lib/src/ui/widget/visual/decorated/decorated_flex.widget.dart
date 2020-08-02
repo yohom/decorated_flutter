@@ -31,11 +31,12 @@ class DecoratedRow extends DecoratedFlex {
     bool forceItemSameExtent = false,
     double elevation,
     bool material = false,
-    List<Widget> children,
     bool safeArea,
     TextStyle textStyle,
     GlobalKey repaintBoundaryKey,
     double widthFactor,
+    bool scrollable,
+    List<Widget> children,
   }) : super(
           key: key,
           direction: Axis.horizontal,
@@ -67,6 +68,7 @@ class DecoratedRow extends DecoratedFlex {
           widthFactor: widthFactor,
           textStyle: textStyle,
           repaintBoundaryKey: repaintBoundaryKey,
+          scrollable: scrollable,
           children: children,
         );
 }
@@ -98,11 +100,12 @@ class DecoratedColumn extends DecoratedFlex {
     bool forceItemSameExtent = false,
     double elevation,
     bool material = false,
-    List<Widget> children,
     bool safeArea,
     TextStyle textStyle,
     GlobalKey repaintBoundaryKey,
     double heightFactor,
+    bool scrollable,
+    List<Widget> children,
   }) : super(
           key: key,
           direction: Axis.vertical,
@@ -134,6 +137,7 @@ class DecoratedColumn extends DecoratedFlex {
           heightFactor: heightFactor,
           textStyle: textStyle,
           repaintBoundaryKey: repaintBoundaryKey,
+          scrollable: scrollable,
           children: children,
         );
 }
@@ -167,6 +171,7 @@ class DecoratedFlex extends StatelessWidget {
     this.elevation,
     this.safeArea,
     this.withLocalNavigator = false,
+    this.scrollable,
     this.widthFactor,
     this.heightFactor,
     this.material = false,
@@ -234,6 +239,9 @@ class DecoratedFlex extends StatelessWidget {
 
   /// 是否安全区域
   final bool safeArea;
+
+  /// 是否可滚动
+  final bool scrollable;
 
   /// 是否带有局部Navigator 简单来说就是要不要用[CupertinoTabView]包裹
   final bool withLocalNavigator;
@@ -348,6 +356,10 @@ class DecoratedFlex extends StatelessWidget {
 
     if (withLocalNavigator == true) {
       return CupertinoTabView(builder: (context) => result);
+    }
+
+    if (scrollable == true) {
+      result = SingleChildScrollView(child: result, scrollDirection: direction);
     }
 
     if (visible != null) {
