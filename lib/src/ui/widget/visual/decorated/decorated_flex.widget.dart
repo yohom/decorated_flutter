@@ -33,6 +33,7 @@ class DecoratedRow extends StatelessWidget {
     this.children,
     this.safeArea,
     this.textStyle,
+    this.repaintBoundaryKey,
     this.widthFactor,
   }) : super(key: key);
 
@@ -96,6 +97,10 @@ class DecoratedRow extends StatelessWidget {
 
   /// 是否安全区域
   final bool safeArea;
+
+  /// 是否需要[RepaintBoundary]
+  final Key repaintBoundaryKey;
+
   final List<Widget> children;
 
   @override
@@ -129,6 +134,7 @@ class DecoratedRow extends StatelessWidget {
       material: material,
       widthFactor: widthFactor,
       textStyle: textStyle,
+      repaintBoundaryKey: repaintBoundaryKey,
       children: children,
     );
   }
@@ -166,6 +172,7 @@ class DecoratedColumn extends StatelessWidget {
     this.withLocalNavigator = false,
     this.heightFactor,
     this.textStyle,
+    this.repaintBoundaryKey,
     this.children,
   }) : super(key: key);
 
@@ -227,6 +234,9 @@ class DecoratedColumn extends StatelessWidget {
   /// 内部统一的TextStyle
   final TextStyle textStyle;
 
+  /// 是否需要[RepaintBoundary]
+  final Key repaintBoundaryKey;
+
   final List<Widget> children;
 
   @override
@@ -261,6 +271,7 @@ class DecoratedColumn extends StatelessWidget {
       withLocalNavigator: withLocalNavigator,
       heightFactor: heightFactor,
       textStyle: textStyle,
+      repaintBoundaryKey: repaintBoundaryKey,
       children: children,
     );
 
@@ -305,6 +316,7 @@ class DecoratedFlex extends StatelessWidget {
     this.heightFactor,
     this.material = false,
     this.textStyle,
+    this.repaintBoundaryKey,
     this.children,
   }) : super(key: key);
 
@@ -373,6 +385,9 @@ class DecoratedFlex extends StatelessWidget {
 
   /// 内部统一的TextStyle
   final TextStyle textStyle;
+
+  /// 是否需要[RepaintBoundary]
+  final Key repaintBoundaryKey;
 
   /// 子元素
   final List<Widget> children;
@@ -474,6 +489,10 @@ class DecoratedFlex extends StatelessWidget {
 
     if (textStyle != null) {
       result = DefaultTextStyle(style: textStyle, child: result);
+    }
+
+    if (repaintBoundaryKey != null) {
+      result = RepaintBoundary(key: repaintBoundaryKey, child: result);
     }
 
     if (withLocalNavigator) {
