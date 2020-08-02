@@ -99,7 +99,7 @@ class DecoratedRow extends StatelessWidget {
   final bool safeArea;
 
   /// 是否需要[RepaintBoundary]
-  final Key repaintBoundaryKey;
+  final GlobalKey repaintBoundaryKey;
 
   final List<Widget> children;
 
@@ -235,7 +235,7 @@ class DecoratedColumn extends StatelessWidget {
   final TextStyle textStyle;
 
   /// 是否需要[RepaintBoundary]
-  final Key repaintBoundaryKey;
+  final GlobalKey repaintBoundaryKey;
 
   final List<Widget> children;
 
@@ -387,7 +387,7 @@ class DecoratedFlex extends StatelessWidget {
   final TextStyle textStyle;
 
   /// 是否需要[RepaintBoundary]
-  final Key repaintBoundaryKey;
+  final GlobalKey repaintBoundaryKey;
 
   /// 子元素
   final List<Widget> children;
