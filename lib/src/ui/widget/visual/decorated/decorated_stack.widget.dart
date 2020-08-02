@@ -26,6 +26,7 @@ class DecoratedStack extends StatelessWidget {
     this.centerStart,
     this.centerEnd,
     this.center,
+    this.borderRadius,
     @required this.children,
   }) : super(key: key);
 
@@ -57,6 +58,9 @@ class DecoratedStack extends StatelessWidget {
   final StackFit stackFit;
   final AlignmentGeometry alignment;
   final Overflow overflow;
+
+  final BorderRadius borderRadius;
+
   final List<Widget> children;
 
   @override
@@ -86,22 +90,6 @@ class DecoratedStack extends StatelessWidget {
       ],
     );
 
-    if (decoration != null ||
-        padding != null ||
-        margin != null ||
-        width != null ||
-        height != null) {
-      result = Container(
-        margin: margin,
-        padding: padding,
-        width: width,
-        height: height,
-        decoration: decoration,
-        constraints: constraints,
-        child: result,
-      );
-    }
-
     if (safeArea != null) {
       result = SafeArea(child: result);
     }
@@ -121,6 +109,25 @@ class DecoratedStack extends StatelessWidget {
       result = DefaultTextStyle(style: textStyle, child: result);
     }
 
+    if (borderRadius != null) {
+      result = ClipRRect(borderRadius: borderRadius, child: result);
+    }
+
+    if (decoration != null ||
+        padding != null ||
+        margin != null ||
+        width != null ||
+        height != null) {
+      result = Container(
+        margin: margin,
+        padding: padding,
+        width: width,
+        height: height,
+        decoration: decoration,
+        constraints: constraints,
+        child: result,
+      );
+    }
     return result;
   }
 }
