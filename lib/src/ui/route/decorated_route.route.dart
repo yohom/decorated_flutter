@@ -2,12 +2,13 @@ import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:decorated_flutter/src/ui/widget/nonvisual/auto_close_keyboard.widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 typedef void _InitAction<T extends BLoC>(T bloc);
 
 /// [B]是指定的BLoC, [T]是Route的返回类型
 class DecoratedRoute<B extends BLoC, T extends Object>
-    extends MaterialPageRoute<T> {
+    extends MaterialWithModalsPageRoute<T> {
   DecoratedRoute({
     Key key,
     @required this.screen,

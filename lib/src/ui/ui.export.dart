@@ -6,6 +6,7 @@ export 'widget/nonvisual/auto_close_keyboard.widget.dart';
 export 'widget/nonvisual/delayed.widget.dart';
 export 'widget/nonvisual/double_back_exit_app.widget.dart';
 export 'widget/visual/decorated/decorated_flex.widget.dart';
+export 'widget/visual/decorated/decorated_stack.widget.dart';
 export 'widget/visual/decorated/decorated_text.widget.dart';
 export 'widget/visual/decorated/decorated_widget.widget.dart';
 export 'widget/visual/decorated/fractional_screen.widget.dart';

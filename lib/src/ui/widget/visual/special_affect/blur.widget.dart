@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 class Blur extends StatelessWidget {
   const Blur({
     Key key,
-    @required this.background,
-    @required this.foreground,
+    this.background,
+    @required this.child,
     this.alignment = AlignmentDirectional.center,
-    this.sigmaX = 0,
-    this.sigmaY = 0,
-    this.fit,
+    this.sigmaX = 2,
+    this.sigmaY = 2,
+    this.fit = StackFit.expand,
   }) : super(key: key);
 
   final Widget background;
-  final Widget foreground;
+  final Widget child;
   final AlignmentGeometry alignment;
   final double sigmaX;
   final double sigmaY;
@@ -22,19 +22,21 @@ class Blur extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: alignment,
-      fit: fit,
-      children: <Widget>[
-        background,
-        BackdropFilter(
-          filter: ui.ImageFilter.blur(
-            sigmaX: sigmaX,
-            sigmaY: sigmaY,
-          ),
-          child: foreground,
-        )
-      ],
+    Widget result = BackdropFilter(
+      filter: ui.ImageFilter.blur(
+        sigmaX: sigmaX,
+        sigmaY: sigmaY,
+      ),
+      child: child,
     );
+
+    if (background != null) {
+      result = Stack(
+        alignment: alignment,
+        fit: fit,
+        children: <Widget>[background, result],
+      );
+    }
+    return result;
   }
 }
