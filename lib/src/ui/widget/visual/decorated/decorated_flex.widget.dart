@@ -315,7 +315,7 @@ class DecoratedFlex extends StatelessWidget {
         constraints != null ||
         transform != null ||
         alignment != null) {
-      if (animationDuration != null) {
+      if (animationDuration != null && animationDuration != Duration.zero) {
         result = AnimatedContainer(
           duration: animationDuration,
           curve: animationCurve ?? Curves.linear,
