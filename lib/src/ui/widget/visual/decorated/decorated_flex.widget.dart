@@ -36,6 +36,8 @@ class DecoratedRow extends DecoratedFlex {
     GlobalKey repaintBoundaryKey,
     double widthFactor,
     bool scrollable,
+    Duration animationDuration = const Duration(milliseconds: 500),
+    Curve animationCurve,
     List<Widget> children,
   }) : super(
           key: key,
@@ -69,6 +71,8 @@ class DecoratedRow extends DecoratedFlex {
           textStyle: textStyle,
           repaintBoundaryKey: repaintBoundaryKey,
           scrollable: scrollable,
+          animationDuration: animationDuration,
+          animationCurve: animationCurve,
           children: children,
         );
 }
@@ -105,6 +109,8 @@ class DecoratedColumn extends DecoratedFlex {
     GlobalKey repaintBoundaryKey,
     double heightFactor,
     bool scrollable,
+    Duration animationDuration = const Duration(milliseconds: 500),
+    Curve animationCurve,
     List<Widget> children,
   }) : super(
           key: key,
@@ -138,6 +144,8 @@ class DecoratedColumn extends DecoratedFlex {
           textStyle: textStyle,
           repaintBoundaryKey: repaintBoundaryKey,
           scrollable: scrollable,
+          animationDuration: animationDuration,
+          animationCurve: animationCurve,
           children: children,
         );
 }
@@ -177,6 +185,8 @@ class DecoratedFlex extends StatelessWidget {
     this.material = false,
     this.textStyle,
     this.repaintBoundaryKey,
+    this.animationDuration = const Duration(milliseconds: 500),
+    this.animationCurve,
     this.children,
   }) : super(key: key);
 
@@ -252,6 +262,12 @@ class DecoratedFlex extends StatelessWidget {
   /// 是否需要[RepaintBoundary]
   final GlobalKey repaintBoundaryKey;
 
+  /// 动画时长
+  final Duration animationDuration;
+
+  /// 动画曲线
+  final Curve animationCurve;
+
   /// 子元素
   final List<Widget> children;
 
@@ -299,19 +315,37 @@ class DecoratedFlex extends StatelessWidget {
         constraints != null ||
         transform != null ||
         alignment != null) {
-      result = Container(
-        padding: padding,
-        margin: margin,
-        width: width,
-        height: height,
-        color: color,
-        decoration: decoration,
-        foregroundDecoration: foregroundDecoration,
-        constraints: constraints,
-        transform: transform,
-        alignment: alignment,
-        child: result,
-      );
+      if (animationDuration != null) {
+        result = AnimatedContainer(
+          duration: animationDuration,
+          curve: animationCurve ?? Curves.linear,
+          padding: padding,
+          margin: margin,
+          width: width,
+          height: height,
+          color: color,
+          decoration: decoration,
+          foregroundDecoration: foregroundDecoration,
+          constraints: constraints,
+          transform: transform,
+          alignment: alignment,
+          child: result,
+        );
+      } else {
+        result = Container(
+          padding: padding,
+          margin: margin,
+          width: width,
+          height: height,
+          color: color,
+          decoration: decoration,
+          foregroundDecoration: foregroundDecoration,
+          constraints: constraints,
+          transform: transform,
+          alignment: alignment,
+          child: result,
+        );
+      }
     }
 
     if (behavior != null || onPressed != null || onLongPressed != null) {
