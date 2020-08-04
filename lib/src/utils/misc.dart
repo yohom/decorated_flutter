@@ -43,6 +43,8 @@ void handleError(BuildContext context, Object error) {
     toast(message);
   } else if (error is String) {
     toast(error);
+  } else if (error is BizException) {
+    toast(error.message);
   } else {
     toast(error.toString());
   }
