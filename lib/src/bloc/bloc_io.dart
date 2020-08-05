@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
@@ -335,6 +336,8 @@ class IntInput extends Input<int> with IntMixin {
     bool isBehavior = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
+    int min,
+    int max,
     _Equal test,
     _Fetch<int, dynamic> fetch,
   }) : super(
@@ -345,7 +348,10 @@ class IntInput extends Input<int> with IntMixin {
           acceptEmpty: acceptEmpty,
           isDistinct: isDistinct,
           test: test,
-        );
+        ) {
+    this._min = min;
+    this._max = max;
+  }
 }
 
 /// 只接收bool类型数据的IO
@@ -602,8 +608,16 @@ mixin BoolMixin on BaseIO<bool> {
 }
 
 mixin IntMixin on BaseIO<int> {
+  int _min;
+  int _max;
+
   int plus([int value = 1]) {
-    final result = latest + value;
+    int result;
+    if (_max != null) {
+      result = math.min(latest + value, _max);
+    } else {
+      result = latest + value;
+    }
     if (!_subject.isClosed) {
       _subject.add(result);
     }
@@ -611,7 +625,12 @@ mixin IntMixin on BaseIO<int> {
   }
 
   int minus([int value = 1]) {
-    final result = latest - value;
+    int result;
+    if (_min != null) {
+      result = math.max(latest - value, _min);
+    } else {
+      result = latest - value;
+    }
     if (!_subject.isClosed) {
       _subject.add(result);
     }
