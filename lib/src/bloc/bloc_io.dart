@@ -326,6 +326,28 @@ class IntIO extends IO<int> with IntMixin {
         );
 }
 
+/// 只接收int类型数据的Input
+class IntInput extends Input<int> with IntMixin {
+  IntInput({
+    int seedValue,
+    String semantics,
+    bool sync = true,
+    bool isBehavior = true,
+    bool acceptEmpty = true,
+    bool isDistinct = false,
+    _Equal test,
+    _Fetch<int, dynamic> fetch,
+  }) : super(
+          seedValue: seedValue,
+          semantics: semantics,
+          sync: sync,
+          isBehavior: isBehavior,
+          acceptEmpty: acceptEmpty,
+          isDistinct: isDistinct,
+          test: test,
+        );
+}
+
 /// 只接收bool类型数据的IO
 class BoolIO extends IO<bool> with BoolMixin {
   BoolIO({
