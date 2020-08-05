@@ -303,6 +303,29 @@ class ListIO<T> extends IO<List<T>> with ListMixin {
         );
 }
 
+/// 只接收int类型数据的IO
+class IntIO extends IO<int> with IntMixin {
+  IntIO({
+    int seedValue,
+    String semantics,
+    bool sync = true,
+    bool isBehavior = true,
+    bool acceptEmpty = true,
+    bool isDistinct = false,
+    _Equal test,
+    _Fetch<int, dynamic> fetch,
+  }) : super(
+          seedValue: seedValue,
+          semantics: semantics,
+          sync: sync,
+          isBehavior: isBehavior,
+          acceptEmpty: acceptEmpty,
+          isDistinct: isDistinct,
+          test: test,
+          fetch: fetch,
+        );
+}
+
 /// 只接收bool类型数据的IO
 class BoolIO extends IO<bool> with BoolMixin {
   BoolIO({
@@ -553,6 +576,24 @@ mixin BoolMixin on BaseIO<bool> {
       _subject.add(toggled);
     }
     return toggled;
+  }
+}
+
+mixin IntMixin on BaseIO<int> {
+  int plus([int value = 1]) {
+    final result = latest + value;
+    if (!_subject.isClosed) {
+      _subject.add(result);
+    }
+    return result;
+  }
+
+  int minus([int value = 1]) {
+    final result = latest - value;
+    if (!_subject.isClosed) {
+      _subject.add(result);
+    }
+    return result;
   }
 }
 
