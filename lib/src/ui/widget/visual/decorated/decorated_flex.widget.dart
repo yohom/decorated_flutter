@@ -36,6 +36,7 @@ class DecoratedRow extends DecoratedFlex {
     GlobalKey repaintBoundaryKey,
     double widthFactor,
     bool scrollable,
+    bool withLocalNavigator,
     Duration animationDuration = const Duration(milliseconds: 500),
     Curve animationCurve,
     List<Widget> children,
@@ -73,6 +74,7 @@ class DecoratedRow extends DecoratedFlex {
           scrollable: scrollable,
           animationDuration: animationDuration,
           animationCurve: animationCurve,
+          withLocalNavigator: withLocalNavigator,
           children: children,
         );
 }
@@ -109,6 +111,7 @@ class DecoratedColumn extends DecoratedFlex {
     GlobalKey repaintBoundaryKey,
     double heightFactor,
     bool scrollable,
+    bool withLocalNavigator,
     Duration animationDuration = const Duration(milliseconds: 500),
     Curve animationCurve,
     List<Widget> children,
@@ -146,6 +149,7 @@ class DecoratedColumn extends DecoratedFlex {
           scrollable: scrollable,
           animationDuration: animationDuration,
           animationCurve: animationCurve,
+          withLocalNavigator: withLocalNavigator,
           children: children,
         );
 }
