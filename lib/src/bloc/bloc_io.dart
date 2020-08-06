@@ -664,7 +664,10 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
 
   _PageFetch<List<T>, ARG_TYPE> _pageFetch;
 
-  Future<void> nextPage([ARG_TYPE args]) async {
+  /// 请求下一页数据
+  ///
+  /// 返回是否还有更多数据 true为还有更多数据 false为没有更多数据
+  Future<bool> nextPage([ARG_TYPE args]) async {
     // 如果已经没有更多数据的话, 就不再请求
     if (!_noMoreData) {
       try {
@@ -682,6 +685,7 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
         _subject.addError(e);
       }
     }
+    return !_noMoreData;
   }
 
   Future<void> refresh([ARG_TYPE args]) async {
