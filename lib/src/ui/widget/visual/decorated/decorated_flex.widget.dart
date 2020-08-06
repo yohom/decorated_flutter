@@ -114,7 +114,7 @@ class DecoratedColumn extends DecoratedFlex {
     double heightFactor,
     bool scrollable,
     bool withLocalNavigator,
-    Duration animationDuration = const Duration(milliseconds: 500),
+    Duration animationDuration,
     Curve animationCurve,
     ThemeData theme,
     List<Widget> children,
