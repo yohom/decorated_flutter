@@ -31,6 +31,8 @@ dependencies:
   flutter_svg: ^0.17.4
   # 模态对话框增强
   modal_bottom_sheet: ^0.2.0+1
+  # 日志打印
+  logger_flutter: ^0.7.1
 
 dev_dependencies:
   mockito: ^4.1.1
