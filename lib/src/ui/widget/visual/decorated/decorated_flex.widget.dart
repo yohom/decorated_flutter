@@ -37,7 +37,7 @@ class DecoratedRow extends DecoratedFlex {
     double widthFactor,
     bool scrollable,
     bool withLocalNavigator,
-    Duration animationDuration = const Duration(milliseconds: 500),
+    Duration animationDuration,
     Curve animationCurve,
     List<Widget> children,
   }) : super(
@@ -189,7 +189,7 @@ class DecoratedFlex extends StatelessWidget {
     this.material = false,
     this.textStyle,
     this.repaintBoundaryKey,
-    this.animationDuration = const Duration(milliseconds: 500),
+    this.animationDuration,
     this.animationCurve,
     this.children,
   }) : super(key: key);
