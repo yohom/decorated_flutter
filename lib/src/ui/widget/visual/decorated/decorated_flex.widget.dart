@@ -39,6 +39,7 @@ class DecoratedRow extends DecoratedFlex {
     bool withLocalNavigator,
     Duration animationDuration,
     Curve animationCurve,
+    ThemeData theme,
     List<Widget> children,
   }) : super(
           key: key,
@@ -75,6 +76,7 @@ class DecoratedRow extends DecoratedFlex {
           animationDuration: animationDuration,
           animationCurve: animationCurve,
           withLocalNavigator: withLocalNavigator,
+          theme: theme,
           children: children,
         );
 }
@@ -114,6 +116,7 @@ class DecoratedColumn extends DecoratedFlex {
     bool withLocalNavigator,
     Duration animationDuration = const Duration(milliseconds: 500),
     Curve animationCurve,
+    ThemeData theme,
     List<Widget> children,
   }) : super(
           key: key,
@@ -150,6 +153,7 @@ class DecoratedColumn extends DecoratedFlex {
           animationDuration: animationDuration,
           animationCurve: animationCurve,
           withLocalNavigator: withLocalNavigator,
+          theme: theme,
           children: children,
         );
 }
@@ -191,6 +195,7 @@ class DecoratedFlex extends StatelessWidget {
     this.repaintBoundaryKey,
     this.animationDuration,
     this.animationCurve,
+    this.theme,
     this.children,
   }) : super(key: key);
 
@@ -271,6 +276,9 @@ class DecoratedFlex extends StatelessWidget {
 
   /// 动画曲线
   final Curve animationCurve;
+
+  /// 主题
+  final ThemeData theme;
 
   /// 子元素
   final List<Widget> children;
@@ -402,6 +410,10 @@ class DecoratedFlex extends StatelessWidget {
 
     if (visible != null) {
       result = Visibility(visible: visible, child: result);
+    }
+
+    if (theme != null) {
+      result = Theme(data: theme, child: result);
     }
 
     if (expanded == true) {
