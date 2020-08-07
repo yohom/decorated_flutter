@@ -106,8 +106,8 @@ class Static<T> {
   T _content;
 
   void set(T value) {
-    assert(_content != null);
-    if (_content == null) {
+    assert(value != null);
+    if (value == null) {
       throw 'Static值不能为null';
     }
     _content = value;
