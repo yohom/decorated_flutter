@@ -15,6 +15,7 @@ class DecoratedText extends StatelessWidget {
     this.overflow,
     this.constraints,
     this.expanded = false,
+    this.visible,
   }) : super(key: key);
 
   final EdgeInsetsGeometry padding;
@@ -29,6 +30,7 @@ class DecoratedText extends StatelessWidget {
   final TextOverflow overflow;
   final BoxConstraints constraints;
   final bool expanded;
+  final bool visible;
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +61,10 @@ class DecoratedText extends StatelessWidget {
         onTap: () => onPressed(data),
         child: result,
       );
+    }
+
+    if (visible != null) {
+      result = Visibility(visible: visible, child: result);
     }
 
     if (expanded) {
