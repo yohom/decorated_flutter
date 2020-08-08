@@ -325,6 +325,13 @@ class DecoratedFlex extends StatelessWidget {
           : _children,
     );
 
+    if (topEnd != null) {
+      result = Stack(children: <Widget>[
+        result,
+        Positioned(top: 0, right: 0, child: topEnd),
+      ]);
+    }
+
     if (padding != null ||
         margin != null ||
         width != null ||
@@ -422,13 +429,6 @@ class DecoratedFlex extends StatelessWidget {
 
     if (theme != null) {
       result = Theme(data: theme, child: result);
-    }
-
-    if (topEnd != null) {
-      result = Stack(children: <Widget>[
-        result,
-        Positioned(top: 0, right: 0, child: topEnd),
-      ]);
     }
 
     if (expanded == true) {
