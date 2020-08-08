@@ -67,12 +67,14 @@ class Top extends StatelessWidget {
     this.widthFactor,
     this.heightFactor,
     this.padding,
+    this.margin,
   }) : super(key: key);
 
   final Widget child;
   final double widthFactor;
   final double heightFactor;
   final EdgeInsets padding;
+  final EdgeInsets margin;
 
   @override
   Widget build(BuildContext context) {
@@ -83,8 +85,8 @@ class Top extends StatelessWidget {
       child: child,
     );
 
-    if (padding != null) {
-      result = Container(padding: padding, child: result);
+    if (padding != null || margin != null) {
+      result = Container(padding: padding, margin: margin, child: result);
     }
     return result;
   }
