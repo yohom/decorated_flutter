@@ -10,6 +10,7 @@ const kSpaceLittleBig = 12.0;
 const kSpaceBig = 16.0;
 const kSpaceLarge = 24.0;
 const kSpaceHuge = 32.0;
+const kSpaceGreat = 48.0;
 const kSpaceGiant = 64.0;
 
 const SPACE_ZERO = SizedBox.shrink();
@@ -51,6 +52,10 @@ const SPACE_HUGE = SizedBox(width: kSpaceHuge, height: kSpaceHuge);
 const SPACE_HUGE_HORIZONTAL = SizedBox(width: kSpaceHuge, height: kSpaceZero);
 const SPACE_HUGE_VERTICAL = SizedBox(width: kSpaceZero, height: kSpaceHuge);
 
+const SPACE_GREAT = SizedBox(width: kSpaceGreat, height: kSpaceGreat);
+const SPACE_GREAT_HORIZONTAL = SizedBox(width: kSpaceGreat, height: kSpaceZero);
+const SPACE_GREAT_VERTICAL = SizedBox(width: kSpaceZero, height: kSpaceGreat);
+
 const SPACE_GIANT = SizedBox(width: kSpaceGiant, height: kSpaceGiant);
 const SPACE_GIANT_HORIZONTAL = SizedBox(width: kSpaceGiant, height: kSpaceZero);
 const SPACE_GIANT_VERTICAL = SizedBox(width: kSpaceZero, height: kSpaceGiant);
@@ -64,6 +69,7 @@ const kDividerLittleBig = Divider(height: kSpaceLittleBig);
 const kDividerBig = Divider(height: kSpaceBig);
 const kDividerLarge = Divider(height: kSpaceLarge);
 const kDividerHuge = Divider(height: kSpaceHuge);
+const kDividerGreat = Divider(height: kSpaceGreat);
 const kDividerGiant = Divider(height: kSpaceGiant);
 //endregion
 
