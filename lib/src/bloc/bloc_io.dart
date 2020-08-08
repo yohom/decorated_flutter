@@ -698,4 +698,8 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
       _subject.addError(e);
     }
   }
+
+  bool get isFirstPage {
+    return _currentPage == _initPage;
+  }
 }
