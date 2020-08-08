@@ -40,6 +40,7 @@ class DecoratedRow extends DecoratedFlex {
     Duration animationDuration,
     Curve animationCurve,
     ThemeData theme,
+    Widget topEnd,
     List<Widget> children,
   }) : super(
           key: key,
@@ -77,6 +78,7 @@ class DecoratedRow extends DecoratedFlex {
           animationCurve: animationCurve,
           withLocalNavigator: withLocalNavigator,
           theme: theme,
+          topEnd: topEnd,
           children: children,
         );
 }
@@ -117,6 +119,7 @@ class DecoratedColumn extends DecoratedFlex {
     Duration animationDuration,
     Curve animationCurve,
     ThemeData theme,
+    Widget topEnd,
     List<Widget> children,
   }) : super(
           key: key,
@@ -154,6 +157,7 @@ class DecoratedColumn extends DecoratedFlex {
           animationCurve: animationCurve,
           withLocalNavigator: withLocalNavigator,
           theme: theme,
+          topEnd: topEnd,
           children: children,
         );
 }
@@ -196,6 +200,7 @@ class DecoratedFlex extends StatelessWidget {
     this.animationDuration,
     this.animationCurve,
     this.theme,
+    this.topEnd,
     this.children,
   }) : super(key: key);
 
@@ -279,6 +284,9 @@ class DecoratedFlex extends StatelessWidget {
 
   /// 主题
   final ThemeData theme;
+
+  /// 右上角控件
+  final Widget topEnd;
 
   /// 子元素
   final List<Widget> children;
@@ -414,6 +422,13 @@ class DecoratedFlex extends StatelessWidget {
 
     if (theme != null) {
       result = Theme(data: theme, child: result);
+    }
+
+    if (topEnd != null) {
+      result = Stack(children: <Widget>[
+        result,
+        Positioned(top: 0, right: 0, child: topEnd),
+      ]);
     }
 
     if (expanded == true) {
