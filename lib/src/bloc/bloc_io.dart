@@ -703,7 +703,7 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
     return _currentPage == _initPage;
   }
 
-  bool get noMoreData {
-    return _noMoreData;
+  bool get hasMoreData {
+    return !_noMoreData;
   }
 }
