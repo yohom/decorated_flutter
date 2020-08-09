@@ -702,4 +702,8 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
   bool get isFirstPage {
     return _currentPage == _initPage;
   }
+
+  bool get noMoreData {
+    return _noMoreData;
+  }
 }
