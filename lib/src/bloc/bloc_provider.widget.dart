@@ -58,12 +58,6 @@ class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
   }
 
   @override
-  void reassemble() {
-    widget.bloc.reassemble();
-    super.reassemble();
-  }
-
-  @override
   void dispose() {
     if (BLoCProvider.analytics != null && widget.withAnalytics) {
       BLoCProvider.analytics.onPageEnd(T.toString());
