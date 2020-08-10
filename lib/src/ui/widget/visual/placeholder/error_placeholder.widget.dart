@@ -6,7 +6,7 @@ class ErrorPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('出现错误'),
+      child: Icon(Icons.error_outline, color: Colors.red),
     );
   }
 }
