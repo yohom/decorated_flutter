@@ -19,7 +19,6 @@ class DecoratedRoute<B extends BLoC, T extends Object>
     this.animate = true,
     this.lateinit = false,
     this.withForm = false,
-    this.withAnalytics = true,
     this.withDefaultTabController = false,
     this.tabLength,
     this.onDispose,
@@ -60,9 +59,6 @@ class DecoratedRoute<B extends BLoC, T extends Object>
   /// 是否带有表单
   final bool withForm;
 
-  /// 是否分析页面并上传
-  final bool withAnalytics;
-
   /// 是否含有TabBar
   final bool withDefaultTabController;
 
@@ -90,7 +86,6 @@ class DecoratedRoute<B extends BLoC, T extends Object>
       result = BLoCProvider<B>(
         bloc: bloc,
         init: lateinit ? null : init, // 可以设置为null, BLoCProvider会处理的
-        withAnalytics: withAnalytics,
         child: builder(context),
         onDispose: onDispose,
       );
@@ -221,7 +216,6 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
       result = BLoCProvider<B>(
         bloc: bloc,
         init: lateinit ? null : init, // 可以设置为null, BLoCProvider会处理的
-        withAnalytics: withAnalytics,
         child: builder(context),
         onDispose: onDispose,
       );

@@ -13,7 +13,6 @@ class DecoratedWidget<B extends BLoC> extends StatefulWidget {
     this.autoCloseKeyboard = true,
     this.init,
     this.withForm = false,
-    this.withAnalytics = true,
     this.withDefaultTabController = false,
     this.tabLength,
   })  : // 要么同时设置泛型B和bloc参数, 要么就都不设置
@@ -38,9 +37,6 @@ class DecoratedWidget<B extends BLoC> extends StatefulWidget {
   /// 是否带有表单
   final bool withForm;
 
-  /// 是否分析页面并上传
-  final bool withAnalytics;
-
   /// 是否含有TabBar
   final bool withDefaultTabController;
 
@@ -59,7 +55,6 @@ class _DecoratedWidgetState<B extends BLoC> extends State<DecoratedWidget<B>> {
       result = BLoCProvider<B>(
         bloc: widget.bloc,
         init: widget.init,
-        withAnalytics: widget.withAnalytics,
         child: widget.widget,
       );
     } else {
