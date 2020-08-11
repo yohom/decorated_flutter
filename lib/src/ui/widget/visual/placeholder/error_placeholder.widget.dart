@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ErrorPlaceholder extends StatelessWidget {
@@ -6,7 +7,9 @@ class ErrorPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Icon(Icons.error_outline, color: Colors.red),
+      child: kDebugMode
+          ? Icon(Icons.error_outline, color: Colors.red)
+          : Container(),
     );
   }
 }
