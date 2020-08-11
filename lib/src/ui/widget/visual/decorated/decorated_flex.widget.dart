@@ -424,7 +424,7 @@ class DecoratedFlex extends StatelessWidget {
     }
 
     if (withLocalNavigator == true) {
-      return CupertinoTabView(builder: (context) => result);
+      result = LocalNavigator(child: result);
     }
 
     if (scrollable == true) {
