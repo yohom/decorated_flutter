@@ -11,7 +11,7 @@ abstract class BLoC {
   BLoC([this.semantics]);
 
   /// 重试
-  void retry() {}
+  void onErrorRetry() {}
 
   @mustCallSuper
   void close() {
