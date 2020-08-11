@@ -22,11 +22,13 @@ class BLoCProvider<T extends BLoC> extends StatefulWidget {
   _BLoCProviderState<T> createState() => _BLoCProviderState<T>();
 
   static T of<T extends BLoC>(BuildContext context) {
-    _BLoCProviderInherited<T> provider = context
-        .getElementForInheritedWidgetOfExactType<_BLoCProviderInherited>()
-        ?.widget;
+    final type = _typeOf<_BLoCProviderInherited<T>>();
+    _BLoCProviderInherited<T> provider =
+        context.ancestorInheritedElementForWidgetOfExactType(type)?.widget;
     return provider?.bloc;
   }
+
+  static Type _typeOf<T>() => T;
 }
 
 class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
