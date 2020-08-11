@@ -22,6 +22,7 @@ class DecoratedRoute<B extends BLoC, T extends Object>
     this.withDefaultTabController = false,
     this.tabLength,
     this.onDispose,
+    this.isOpaque = true,
     this.systemUiOverlayStyle,
     String routeName,
     bool fullscreenDialog = false,
@@ -69,6 +70,9 @@ class DecoratedRoute<B extends BLoC, T extends Object>
 
   /// 系统ui
   final SystemUiOverlayStyle systemUiOverlayStyle;
+
+  /// 是否挡住前面的页面
+  final bool isOpaque;
 
   /// 是否已经初始化
   bool _inited = false;
@@ -131,6 +135,11 @@ class DecoratedRoute<B extends BLoC, T extends Object>
     return animate
         ? super.buildTransitions(context, animation, secondaryAnimation, child)
         : child;
+  }
+
+  @override
+  bool get opaque {
+    return isOpaque;
   }
 }
 
