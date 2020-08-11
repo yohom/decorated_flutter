@@ -11,6 +11,7 @@ export 'widget/visual/decorated/decorated_text.widget.dart';
 export 'widget/visual/decorated/decorated_widget.widget.dart';
 export 'widget/visual/decorated/fractional_screen.widget.dart';
 export 'widget/visual/decorated/fractional_screen.widget.dart';
+export 'widget/visual/decorated/local_navigator.widget.dart';
 export 'widget/visual/placeholder/empty_placeholder.widget.dart';
 export 'widget/visual/placeholder/error_placeholder.widget.dart';
 export 'widget/visual/placeholder/loading.widget.dart';
