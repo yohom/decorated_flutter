@@ -578,6 +578,13 @@ mixin ListMixin<T> on BaseIO<List<T>> {
     return element;
   }
 
+  /// 删除指定条件的元素
+  void removeWhere(bool test(T t)) {
+    if (!_subject.isClosed) {
+      _subject.add(latest..removeWhere(test));
+    }
+  }
+
   /// 删除第一个的元素, 并发射
   T removeFirst() {
     final firstElement = latest.first;
