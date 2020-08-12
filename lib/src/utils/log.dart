@@ -1,43 +1,32 @@
 import 'package:flutter/foundation.dart';
+import 'package:logger/logger.dart';
 
 final _Logger L = _Logger();
 
 class _Logger {
+  final logger = Logger();
+
   void d(Object content) {
     if (!kReleaseMode) {
-      debugPrint(content.toString());
+      logger.d(content);
     }
   }
 
   void w(Object content) {
     if (!kReleaseMode) {
-      debugPrint(content.toString());
+      logger.w(content);
     }
   }
 
   void i(Object content) {
     if (!kReleaseMode) {
-      debugPrint(content.toString());
+      logger.i(content);
     }
   }
 
   void e(Object content) {
     if (!kReleaseMode) {
-      debugPrint(content.toString());
+      logger.e(content);
     }
-  }
-
-  /// profile模式打印
-  @Deprecated('使用L.d代替')
-  void p(Object content) {
-    if (!kReleaseMode) {
-      debugPrint(content.toString());
-    }
-  }
-
-  /// release模式打印
-  @Deprecated('使用L.d代替')
-  void r(Object content) {
-    debugPrint(content.toString());
   }
 }

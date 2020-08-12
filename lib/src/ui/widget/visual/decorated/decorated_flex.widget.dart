@@ -36,6 +36,12 @@ class DecoratedRow extends DecoratedFlex {
     GlobalKey repaintBoundaryKey,
     double widthFactor,
     bool scrollable,
+    bool withLocalNavigator,
+    Duration animationDuration,
+    Curve animationCurve,
+    ThemeData theme,
+    Widget topEnd,
+    bool center,
     List<Widget> children,
   }) : super(
           key: key,
@@ -69,6 +75,12 @@ class DecoratedRow extends DecoratedFlex {
           textStyle: textStyle,
           repaintBoundaryKey: repaintBoundaryKey,
           scrollable: scrollable,
+          animationDuration: animationDuration,
+          animationCurve: animationCurve,
+          withLocalNavigator: withLocalNavigator,
+          theme: theme,
+          topEnd: topEnd,
+          center: center,
           children: children,
         );
 }
@@ -105,6 +117,12 @@ class DecoratedColumn extends DecoratedFlex {
     GlobalKey repaintBoundaryKey,
     double heightFactor,
     bool scrollable,
+    bool withLocalNavigator,
+    Duration animationDuration,
+    Curve animationCurve,
+    ThemeData theme,
+    Widget topEnd,
+    bool center,
     List<Widget> children,
   }) : super(
           key: key,
@@ -138,6 +156,12 @@ class DecoratedColumn extends DecoratedFlex {
           textStyle: textStyle,
           repaintBoundaryKey: repaintBoundaryKey,
           scrollable: scrollable,
+          animationDuration: animationDuration,
+          animationCurve: animationCurve,
+          withLocalNavigator: withLocalNavigator,
+          theme: theme,
+          topEnd: topEnd,
+          center: center,
           children: children,
         );
 }
@@ -177,6 +201,11 @@ class DecoratedFlex extends StatelessWidget {
     this.material = false,
     this.textStyle,
     this.repaintBoundaryKey,
+    this.animationDuration,
+    this.animationCurve,
+    this.theme,
+    this.topEnd,
+    this.center,
     this.children,
   }) : super(key: key);
 
@@ -252,6 +281,21 @@ class DecoratedFlex extends StatelessWidget {
   /// 是否需要[RepaintBoundary]
   final GlobalKey repaintBoundaryKey;
 
+  /// 动画时长
+  final Duration animationDuration;
+
+  /// 动画曲线
+  final Curve animationCurve;
+
+  /// 主题
+  final ThemeData theme;
+
+  /// 右上角控件
+  final Widget topEnd;
+
+  /// 是否加center
+  final bool center;
+
   /// 子元素
   final List<Widget> children;
 
@@ -289,6 +333,13 @@ class DecoratedFlex extends StatelessWidget {
           : _children,
     );
 
+    if (topEnd != null) {
+      result = Stack(children: <Widget>[
+        result,
+        Positioned(top: 0, right: 0, child: topEnd),
+      ]);
+    }
+
     if (padding != null ||
         margin != null ||
         width != null ||
@@ -299,19 +350,37 @@ class DecoratedFlex extends StatelessWidget {
         constraints != null ||
         transform != null ||
         alignment != null) {
-      result = Container(
-        padding: padding,
-        margin: margin,
-        width: width,
-        height: height,
-        color: color,
-        decoration: decoration,
-        foregroundDecoration: foregroundDecoration,
-        constraints: constraints,
-        transform: transform,
-        alignment: alignment,
-        child: result,
-      );
+      if (animationDuration != null && animationDuration != Duration.zero) {
+        result = AnimatedContainer(
+          duration: animationDuration,
+          curve: animationCurve ?? Curves.linear,
+          padding: padding,
+          margin: margin,
+          width: width,
+          height: height,
+          color: color,
+          decoration: decoration,
+          foregroundDecoration: foregroundDecoration,
+          constraints: constraints,
+          transform: transform,
+          alignment: alignment,
+          child: result,
+        );
+      } else {
+        result = Container(
+          padding: padding,
+          margin: margin,
+          width: width,
+          height: height,
+          color: color,
+          decoration: decoration,
+          foregroundDecoration: foregroundDecoration,
+          constraints: constraints,
+          transform: transform,
+          alignment: alignment,
+          child: result,
+        );
+      }
     }
 
     if (behavior != null || onPressed != null || onLongPressed != null) {
@@ -355,7 +424,7 @@ class DecoratedFlex extends StatelessWidget {
     }
 
     if (withLocalNavigator == true) {
-      return CupertinoTabView(builder: (context) => result);
+      result = LocalNavigator(child: result);
     }
 
     if (scrollable == true) {
@@ -364,6 +433,14 @@ class DecoratedFlex extends StatelessWidget {
 
     if (visible != null) {
       result = Visibility(visible: visible, child: result);
+    }
+
+    if (theme != null) {
+      result = Theme(data: theme, child: result);
+    }
+
+    if (center == true) {
+      result = Center(child: result);
     }
 
     if (expanded == true) {

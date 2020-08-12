@@ -117,7 +117,8 @@ class DecoratedStack extends StatelessWidget {
         padding != null ||
         margin != null ||
         width != null ||
-        height != null) {
+        height != null ||
+        constraints != null) {
       result = Container(
         margin: margin,
         padding: padding,

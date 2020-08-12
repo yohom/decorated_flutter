@@ -14,35 +14,35 @@ _HandlerErrorCallback handle(BuildContext context) {
 void handleError(BuildContext context, Object error) {
   if (error is DioError) {
     String message = error.message;
-    if (error.response != null) {
-      switch (error.type) {
-        case DioErrorType.CANCEL:
-          message = '取消请求';
-          break;
-        case DioErrorType.CONNECT_TIMEOUT:
-          message = '请求超时';
-          break;
-        case DioErrorType.RECEIVE_TIMEOUT:
-          message = '接收超时';
-          break;
-        case DioErrorType.RESPONSE:
-          final statusCode = error.response.statusCode;
-          if (statusCode >= 400 && statusCode <= 417) {
-            message = '访问地址异常，请稍后重试 $statusCode';
-          } else if (statusCode >= 500 && statusCode <= 505) {
-            message = '服务器繁忙 $statusCode';
-          }
-          break;
-        case DioErrorType.DEFAULT:
-          message = error.message;
-          break;
-        default:
-          message = error.message;
-      }
+    switch (error.type) {
+      case DioErrorType.CANCEL:
+        message = '取消请求';
+        break;
+      case DioErrorType.CONNECT_TIMEOUT:
+        message = '请求超时';
+        break;
+      case DioErrorType.RECEIVE_TIMEOUT:
+        message = '接收超时';
+        break;
+      case DioErrorType.RESPONSE:
+        final statusCode = error.response.statusCode;
+        if (statusCode >= 400 && statusCode <= 417) {
+          message = '访问地址异常，请稍后重试 $statusCode';
+        } else if (statusCode >= 500 && statusCode <= 505) {
+          message = '服务器繁忙 $statusCode';
+        }
+        break;
+      case DioErrorType.DEFAULT:
+        message = error.message;
+        break;
+      default:
+        message = error.message;
     }
     toast(message);
   } else if (error is String) {
     toast(error);
+  } else if (error is BizException) {
+    toast(error.message);
   } else {
     toast(error.toString());
   }

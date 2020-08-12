@@ -2,6 +2,7 @@ import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:decorated_flutter/src/ui/widget/nonvisual/auto_close_keyboard.widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 typedef void _InitAction<T extends BLoC>(T bloc);
@@ -18,10 +19,10 @@ class DecoratedRoute<B extends BLoC, T extends Object>
     this.animate = true,
     this.lateinit = false,
     this.withForm = false,
-    this.withAnalytics = true,
     this.withDefaultTabController = false,
     this.tabLength,
     this.onDispose,
+    this.systemUiOverlayStyle,
     String routeName,
     bool fullscreenDialog = false,
     bool maintainState = true,
@@ -58,9 +59,6 @@ class DecoratedRoute<B extends BLoC, T extends Object>
   /// 是否带有表单
   final bool withForm;
 
-  /// 是否分析页面并上传
-  final bool withAnalytics;
-
   /// 是否含有TabBar
   final bool withDefaultTabController;
 
@@ -68,6 +66,9 @@ class DecoratedRoute<B extends BLoC, T extends Object>
   final int tabLength;
 
   final VoidCallback onDispose;
+
+  /// 系统ui
+  final SystemUiOverlayStyle systemUiOverlayStyle;
 
   /// 是否已经初始化
   bool _inited = false;
@@ -85,7 +86,6 @@ class DecoratedRoute<B extends BLoC, T extends Object>
       result = BLoCProvider<B>(
         bloc: bloc,
         init: lateinit ? null : init, // 可以设置为null, BLoCProvider会处理的
-        withAnalytics: withAnalytics,
         child: builder(context),
         onDispose: onDispose,
       );
@@ -105,6 +105,10 @@ class DecoratedRoute<B extends BLoC, T extends Object>
 
     if (withDefaultTabController) {
       result = DefaultTabController(length: tabLength, child: result);
+    }
+
+    if (systemUiOverlayStyle != null) {
+      result = AnnotatedRegion(child: result, value: systemUiOverlayStyle);
     }
 
     return Material(child: result);
@@ -145,6 +149,7 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
     this.withDefaultTabController = false,
     this.tabLength,
     this.onDispose,
+    this.systemUiOverlayStyle,
     String routeName,
     bool fullscreenDialog = false,
     bool maintainState = true,
@@ -192,6 +197,9 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
 
   final VoidCallback onDispose;
 
+  /// 系统ui
+  final SystemUiOverlayStyle systemUiOverlayStyle;
+
   /// 是否已经初始化
   bool _inited = false;
 
@@ -208,7 +216,6 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
       result = BLoCProvider<B>(
         bloc: bloc,
         init: lateinit ? null : init, // 可以设置为null, BLoCProvider会处理的
-        withAnalytics: withAnalytics,
         child: builder(context),
         onDispose: onDispose,
       );
@@ -228,6 +235,10 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
 
     if (withDefaultTabController) {
       result = DefaultTabController(length: tabLength, child: result);
+    }
+
+    if (systemUiOverlayStyle != null) {
+      result = AnnotatedRegion(child: result, value: systemUiOverlayStyle);
     }
 
     return Material(child: result);

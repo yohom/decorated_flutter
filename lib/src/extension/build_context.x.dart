@@ -57,4 +57,8 @@ extension BuildContextX on BuildContext {
   NavigatorState get navigator {
     return Navigator.of(this);
   }
+
+  TabController get tabController {
+    return DefaultTabController.of(this);
+  }
 }

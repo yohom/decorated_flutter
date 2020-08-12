@@ -1,26 +1,21 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:decorated_flutter/src/bloc/bloc.dart';
-import 'package:decorated_flutter/src/utils/page_analytics.dart';
 import 'package:flutter/material.dart';
 
 typedef void _Init<T extends BLoC>(T bloc);
 
 class BLoCProvider<T extends BLoC> extends StatefulWidget {
-  static PageAnalytics analytics;
-
   BLoCProvider({
     Key key,
     @required this.child,
     @required this.bloc,
     this.init,
-    this.withAnalytics = true,
     this.onDispose,
   }) : super(key: key);
 
   final T bloc;
   final _Init<T> init;
   final Widget child;
-  final bool withAnalytics;
   final VoidCallback onDispose;
 
   @override
@@ -42,11 +37,6 @@ class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
     super.initState();
 
     if (isNotEmpty(widget.init)) widget.init(widget.bloc);
-
-    if (BLoCProvider.analytics != null && widget.withAnalytics) {
-      L.d('${T.toString()} start');
-      BLoCProvider.analytics.onPageStart(T.toString());
-    }
   }
 
   @override
@@ -58,17 +48,7 @@ class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
   }
 
   @override
-  void reassemble() {
-    widget.bloc.reassemble();
-    super.reassemble();
-  }
-
-  @override
   void dispose() {
-    if (BLoCProvider.analytics != null && widget.withAnalytics) {
-      BLoCProvider.analytics.onPageEnd(T.toString());
-      L.d('${T.toString()} end');
-    }
     widget.bloc.close();
 
     if (widget.onDispose != null) {

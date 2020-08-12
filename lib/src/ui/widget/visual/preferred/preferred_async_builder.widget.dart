@@ -11,6 +11,7 @@ typedef Widget _ErrorPlaceholderBuilder(BuildContext context, Object error);
 
 /// **Preferred**表达的语义是对目标widget预定义了一些参数
 /// **Decorated**表达的语义是对目标widget进行了一些外围的包装
+@Deprecated('用Subscriber代替, 只是简单的名称代替, 这个类不再维护')
 class PreferredFutureBuilder<T> extends StatelessWidget {
   static Widget defaultEmptyPlaceholder;
   static Widget defaultErrorPlaceholder;
@@ -78,6 +79,7 @@ class PreferredFutureBuilder<T> extends StatelessWidget {
   }
 }
 
+@Deprecated('用Subscriber代替, 只是简单的名称代替, 这个类不再维护')
 class PreferredStreamBuilder<T> extends StatelessWidget {
   static Widget defaultEmptyPlaceholder;
   static Widget defaultErrorPlaceholder;

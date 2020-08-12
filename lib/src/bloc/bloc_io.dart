@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
@@ -105,9 +106,9 @@ class Static<T> {
   T _content;
 
   void set(T value) {
-    assert(_content == null);
-    if (_content != null) {
-      throw '';
+    assert(value != null);
+    if (value == null) {
+      throw 'Static值不能为null';
     }
     _content = value;
   }
@@ -301,6 +302,56 @@ class ListIO<T> extends IO<List<T>> with ListMixin {
           test: test,
           fetch: fetch,
         );
+}
+
+/// 只接收int类型数据的IO
+class IntIO extends IO<int> with IntMixin {
+  IntIO({
+    int seedValue,
+    String semantics,
+    bool sync = true,
+    bool isBehavior = true,
+    bool acceptEmpty = true,
+    bool isDistinct = false,
+    _Equal test,
+    _Fetch<int, dynamic> fetch,
+  }) : super(
+          seedValue: seedValue,
+          semantics: semantics,
+          sync: sync,
+          isBehavior: isBehavior,
+          acceptEmpty: acceptEmpty,
+          isDistinct: isDistinct,
+          test: test,
+          fetch: fetch,
+        );
+}
+
+/// 只接收int类型数据的Input
+class IntInput extends Input<int> with IntMixin {
+  IntInput({
+    int seedValue,
+    String semantics,
+    bool sync = true,
+    bool isBehavior = true,
+    bool acceptEmpty = true,
+    bool isDistinct = false,
+    int min,
+    int max,
+    _Equal test,
+    _Fetch<int, dynamic> fetch,
+  }) : super(
+          seedValue: seedValue,
+          semantics: semantics,
+          sync: sync,
+          isBehavior: isBehavior,
+          acceptEmpty: acceptEmpty,
+          isDistinct: isDistinct,
+          test: test,
+        ) {
+    this._min = min;
+    this._max = max;
+  }
 }
 
 /// 只接收bool类型数据的IO
@@ -556,6 +607,37 @@ mixin BoolMixin on BaseIO<bool> {
   }
 }
 
+mixin IntMixin on BaseIO<int> {
+  int _min;
+  int _max;
+
+  int plus([int value = 1]) {
+    int result;
+    if (_max != null) {
+      result = math.min(latest + value, _max);
+    } else {
+      result = latest + value;
+    }
+    if (!_subject.isClosed) {
+      _subject.add(result);
+    }
+    return result;
+  }
+
+  int minus([int value = 1]) {
+    int result;
+    if (_min != null) {
+      result = math.max(latest - value, _min);
+    } else {
+      result = latest - value;
+    }
+    if (!_subject.isClosed) {
+      _subject.add(result);
+    }
+    return result;
+  }
+}
+
 mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
   /// 初始页 因为后端业务对初始页的定义不一定一样, 这里提供设置参数
   int _initPage;
@@ -582,7 +664,10 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
 
   _PageFetch<List<T>, ARG_TYPE> _pageFetch;
 
-  Future<void> nextPage([ARG_TYPE args]) async {
+  /// 请求下一页数据
+  ///
+  /// 返回是否还有更多数据 true为还有更多数据 false为没有更多数据
+  Future<bool> nextPage([ARG_TYPE args]) async {
     // 如果已经没有更多数据的话, 就不再请求
     if (!_noMoreData) {
       try {
@@ -600,6 +685,7 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
         _subject.addError(e);
       }
     }
+    return !_noMoreData;
   }
 
   Future<void> refresh([ARG_TYPE args]) async {
@@ -611,5 +697,13 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
     } catch (e) {
       _subject.addError(e);
     }
+  }
+
+  bool get isFirstPage {
+    return _currentPage == _initPage;
+  }
+
+  bool get hasMoreData {
+    return !_noMoreData;
   }
 }
