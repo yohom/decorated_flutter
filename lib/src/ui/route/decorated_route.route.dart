@@ -16,8 +16,8 @@ class DecoratedRoute<B extends BLoC, T extends Object>
     this.bloc,
     this.autoCloseKeyboard = true,
     this.init,
+    this.onLateinit,
     this.animate = true,
-    this.lateinit = false,
     this.withForm = false,
     this.withDefaultTabController = false,
     this.tabLength,
@@ -48,13 +48,17 @@ class DecoratedRoute<B extends BLoC, T extends Object>
   final bool autoCloseKeyboard;
 
   /// 初始化方法
+  ///
+  /// [init]与[onLateinit]设计目的是[init]用来设置静态数据, [onLateinit]设置网络请求数据.
+  /// 因为在使用lateinit的过程中, 发现如果widget中需要在初始化的时候用到静态数据, 由于lateinit的缘故
+  /// 会导致拿不到静态数据, 所以这里区分一下静态的初始化和动态的初始化(网络请求数据)
   final _InitAction<B> init;
+
+  /// 入场动画结束后的初始化方法
+  final _InitAction<B> onLateinit;
 
   /// 是否执行动画
   final bool animate;
-
-  /// 是否等待入场动画结束之后再进行初始化动作
-  final bool lateinit;
 
   /// 是否带有表单
   final bool withForm;
@@ -85,7 +89,7 @@ class DecoratedRoute<B extends BLoC, T extends Object>
     if (isNotEmpty(bloc)) {
       result = BLoCProvider<B>(
         bloc: bloc,
-        init: lateinit ? null : init, // 可以设置为null, BLoCProvider会处理的
+        init: init,
         child: builder(context),
         onDispose: onDispose,
       );
@@ -120,11 +124,10 @@ class DecoratedRoute<B extends BLoC, T extends Object>
     animation.addStatusListener((status) {
       // 如果是懒加载, 那么动画结束时开始初始化
       if (status == AnimationStatus.completed &&
-          lateinit &&
-          init != null &&
+          onLateinit != null &&
           bloc != null &&
           !_inited) {
-        init(bloc);
+        onLateinit(bloc);
         _inited = true;
       }
     });
@@ -143,7 +146,7 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
     this.autoCloseKeyboard = true,
     this.init,
     this.animate = true,
-    this.lateinit = true,
+    this.onLateinit,
     this.withForm = false,
     this.withAnalytics = true,
     this.withDefaultTabController = false,
@@ -180,8 +183,8 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
   /// 是否执行动画
   final bool animate;
 
-  /// 是否等待入场动画结束之后再进行初始化动作
-  final bool lateinit;
+  /// 入场动画结束后的初始化方法
+  final _InitAction<B> onLateinit;
 
   /// 是否带有表单
   final bool withForm;
@@ -215,7 +218,7 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
     if (isNotEmpty(bloc)) {
       result = BLoCProvider<B>(
         bloc: bloc,
-        init: lateinit ? null : init, // 可以设置为null, BLoCProvider会处理的
+        init: init,
         child: builder(context),
         onDispose: onDispose,
       );
@@ -250,11 +253,10 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
     animation.addStatusListener((status) {
       // 如果是懒加载, 那么动画结束时开始初始化
       if (status == AnimationStatus.completed &&
-          lateinit &&
-          init != null &&
+          onLateinit != null &&
           bloc != null &&
           !_inited) {
-        init(bloc);
+        onLateinit(bloc);
         _inited = true;
       }
     });
