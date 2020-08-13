@@ -442,10 +442,10 @@ class DecoratedFlex extends StatelessWidget {
         safeAreaRight != null) {
       result = SafeArea(
         child: result,
-        top: safeAreaTop,
-        bottom: safeAreaBottom,
-        left: safeAreaLeft,
-        right: safeAreaRight,
+        top: safeAreaTop ?? true,
+        bottom: safeAreaBottom ?? true,
+        left: safeAreaLeft ?? true,
+        right: safeAreaRight ?? true,
       );
     }
 
