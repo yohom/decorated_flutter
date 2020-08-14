@@ -56,8 +56,10 @@ class Subscriber<T> extends StatelessWidget {
           }
           if (errorPlaceholderBuilder != null) {
             result = errorPlaceholderBuilder(context, snapshot.error);
+            result = isSliver ? SliverToBoxAdapter(child: result) : result;
           } else {
             result = defaultErrorPlaceholder ?? const ErrorPlaceholder();
+            result = isSliver ? SliverToBoxAdapter(child: result) : result;
           }
         }
 
@@ -66,15 +68,18 @@ class Subscriber<T> extends StatelessWidget {
             result = emptyPlaceholder ??
                 defaultEmptyPlaceholder ??
                 const EmptyPlaceholder();
+            result = isSliver ? SliverToBoxAdapter(child: result) : result;
           } else {
             result = builder(snapshot.data);
           }
         } else if (showLoading) {
           result = loadingPlaceholder ?? LoadingWidget();
+          result = isSliver ? SliverToBoxAdapter(child: result) : result;
         } else {
           result = SizedBox.shrink();
+          result = isSliver ? SliverToBoxAdapter(child: result) : result;
         }
-        return isSliver ? SliverToBoxAdapter(child: result) : result;
+        return result;
       },
     );
   }
