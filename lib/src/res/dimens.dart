@@ -28,6 +28,7 @@ const kSpace0 = 0.0;
 const kSpace1 = 1.0;
 const kSpace2 = 2.0;
 const kSpace4 = 4.0;
+const kSpace6 = 6.0;
 const kSpace8 = 8.0;
 const kSpace12 = 12.0;
 const kSpace16 = 16.0;
