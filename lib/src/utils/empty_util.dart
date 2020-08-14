@@ -15,6 +15,14 @@ bool isEmpty(Object object) {
     return object.isEmpty;
   }
 
+  if (object is double) {
+    return object == 0.0;
+  }
+
+  if (object is int) {
+    return object == 0;
+  }
+
   return false;
 }
 
