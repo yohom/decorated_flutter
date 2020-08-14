@@ -27,6 +27,7 @@ class Subscriber<T> extends StatelessWidget {
     @required this.builder,
     this.showLoading = true,
     this.initialData,
+    this.isSliver = false,
     this.emptyPlaceholder,
     this.errorPlaceholderBuilder,
     this.loadingPlaceholder,
@@ -39,6 +40,7 @@ class Subscriber<T> extends StatelessWidget {
   final Widget emptyPlaceholder;
   final _ErrorPlaceholderBuilder errorPlaceholderBuilder;
   final Widget loadingPlaceholder;
+  final bool isSliver;
 
   @override
   Widget build(BuildContext context) {
@@ -54,22 +56,28 @@ class Subscriber<T> extends StatelessWidget {
           if (errorPlaceholderBuilder != null) {
             return errorPlaceholderBuilder(context, snapshot.error);
           } else {
-            return defaultErrorPlaceholder ?? const ErrorPlaceholder();
+            return defaultErrorPlaceholder ?? isSliver
+                ? SliverToBoxAdapter(child: const ErrorPlaceholder())
+                : const ErrorPlaceholder();
           }
         }
 
         if (snapshot.hasData) {
           if (isEmpty(snapshot.data)) {
-            return emptyPlaceholder ??
-                defaultEmptyPlaceholder ??
-                const EmptyPlaceholder();
+            return emptyPlaceholder ?? defaultEmptyPlaceholder ?? isSliver
+                ? SliverToBoxAdapter(child: const EmptyPlaceholder())
+                : const EmptyPlaceholder();
           } else {
             return builder(snapshot.data);
           }
         } else if (showLoading) {
-          return loadingPlaceholder ?? LoadingWidget();
+          return loadingPlaceholder ?? isSliver
+              ? SliverToBoxAdapter(child: LoadingWidget())
+              : LoadingWidget();
         } else {
-          return SizedBox.shrink();
+          return isSliver
+              ? SliverToBoxAdapter(child: SizedBox.shrink())
+              : SizedBox.shrink();
         }
       },
     );
