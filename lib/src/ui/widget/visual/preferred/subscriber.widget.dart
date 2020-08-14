@@ -30,6 +30,7 @@ class Subscriber<T> extends StatelessWidget {
     this.emptyPlaceholder,
     this.errorPlaceholderBuilder,
     this.loadingPlaceholder,
+    this.isSliver = false,
   }) : super(key: key);
 
   final Stream<T> stream;
@@ -39,6 +40,7 @@ class Subscriber<T> extends StatelessWidget {
   final Widget emptyPlaceholder;
   final _ErrorPlaceholderBuilder errorPlaceholderBuilder;
   final Widget loadingPlaceholder;
+  final bool isSliver;
 
   @override
   Widget build(BuildContext context) {
@@ -46,31 +48,33 @@ class Subscriber<T> extends StatelessWidget {
       initialData: initialData,
       stream: stream,
       builder: (ctx, snapshot) {
+        Widget result;
         if (snapshot.hasError) {
           L.d('Subscriber出现错误: ${snapshot.error}');
           if (snapshot.error is Error) {
             L.d((snapshot.error as Error).stackTrace);
           }
           if (errorPlaceholderBuilder != null) {
-            return errorPlaceholderBuilder(context, snapshot.error);
+            result = errorPlaceholderBuilder(context, snapshot.error);
           } else {
-            return defaultErrorPlaceholder ?? const ErrorPlaceholder();
+            result = defaultErrorPlaceholder ?? const ErrorPlaceholder();
           }
         }
 
         if (snapshot.hasData) {
           if (isEmpty(snapshot.data)) {
-            return emptyPlaceholder ??
+            result = emptyPlaceholder ??
                 defaultEmptyPlaceholder ??
                 const EmptyPlaceholder();
           } else {
-            return builder(snapshot.data);
+            result = builder(snapshot.data);
           }
         } else if (showLoading) {
-          return loadingPlaceholder ?? LoadingWidget();
+          result = loadingPlaceholder ?? LoadingWidget();
         } else {
-          return SizedBox.shrink();
+          result = SizedBox.shrink();
         }
+        return isSliver ? SliverToBoxAdapter(child: result) : result;
       },
     );
   }
