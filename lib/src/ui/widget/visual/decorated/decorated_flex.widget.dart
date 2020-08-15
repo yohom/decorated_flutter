@@ -470,7 +470,7 @@ class DecoratedFlex extends StatelessWidget {
     }
 
     if (withLocalNavigator == true) {
-      result = LocalNavigator(child: result);
+      result = LocalNavigator(builder: (context) => result);
     }
 
     if (scrollable == true) {
