@@ -49,7 +49,7 @@ class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
 
   @override
   void dispose() {
-    widget.bloc.close();
+    widget.bloc.dispose();
 
     if (widget.onDispose != null) {
       widget.onDispose();

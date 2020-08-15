@@ -1,7 +1,6 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:decorated_flutter/src/bloc/bloc_io.dart';
 import 'package:flutter/widgets.dart';
-import 'package:oktoast/oktoast.dart';
 
 @immutable
 abstract class BLoC {
@@ -14,7 +13,7 @@ abstract class BLoC {
   void onErrorRetry() {}
 
   @mustCallSuper
-  void close() {
+  void dispose() {
     L.d('=============================================\n'
         '${semantics ?? runtimeType.toString()} closed '
         '\n=============================================');
@@ -29,10 +28,10 @@ abstract class RootBLoC extends BLoC {
   List<GlobalBLoC> get disposeBag => [];
 
   @override
-  void close() {
-    disposeBag?.forEach((bloc) => bloc.close());
+  void dispose() {
+    disposeBag?.forEach((bloc) => bloc.dispose());
 
-    super.close();
+    super.dispose();
   }
 }
 
@@ -44,10 +43,9 @@ abstract class LocalBLoC extends BLoC {
   List<BaseIO> get disposeBag => [];
 
   @override
-  void close() {
+  void dispose() {
     disposeBag?.forEach((event) => event.dispose());
-
-    super.close();
+    super.dispose();
   }
 }
 
@@ -59,24 +57,8 @@ abstract class GlobalBLoC extends BLoC {
   List<BaseIO> get disposeBag => [];
 
   @override
-  void close() {
+  void dispose() {
     disposeBag?.forEach((event) => event.dispose());
-
-    super.close();
+    super.dispose();
   }
-}
-
-class ToastBLoC extends GlobalBLoC {
-  ToastBLoC() : super('Toast BLoC') {
-    toast.listen((text) {
-      showToast(text);
-    });
-  }
-
-  final toast = IO<String>(semantics: 'toast内容');
-}
-
-class LoadingBLoC extends GlobalBLoC {
-  LoadingBLoC() : super('Loading BLoC');
-  final loading = IO<bool>(semantics: '是否显示loading');
 }
