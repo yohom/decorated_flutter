@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'preferred_async_builder.widget.dart';
@@ -263,22 +263,29 @@ class ImageView extends StatelessWidget {
         gaplessPlayback: true,
       );
     } else if (imageUrl != null) {
-      return Image(
-        image: AdvancedNetworkImage(
-          imageUrl,
-          useDiskCache: useDiskCache,
-          fallbackAssetImage: fallbackAssetImage,
-          fallbackImage: fallbackImage,
-          loadFailedCallback: loadFailedCallback,
-          loadingProgress: loadingProgress,
-          loadedCallback: loadedCallback,
-        ),
+      return CachedNetworkImage(
+        imageUrl: imageUrl,
         width: size ?? width,
         height: size ?? height,
         fit: fit,
         color: color,
-        gaplessPlayback: true,
       );
+//      return Image(
+//        image: AdvancedNetworkImage(
+//          imageUrl,
+//          useDiskCache: useDiskCache,
+//          fallbackAssetImage: fallbackAssetImage,
+//          fallbackImage: fallbackImage,
+//          loadFailedCallback: loadFailedCallback,
+//          loadingProgress: loadingProgress,
+//          loadedCallback: loadedCallback,
+//        ),
+//        width: size ?? width,
+//        height: size ?? height,
+//        fit: fit,
+//        color: color,
+//        gaplessPlayback: true,
+//      );
     } else if (svgPath != null) {
       return SvgPicture.asset(
         svgPath,

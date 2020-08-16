@@ -24,11 +24,11 @@ dependencies:
   encrypt: ^4.0.2
   crypto: ^2.1.4
   # 图片加载增强
-  flutter_advanced_networkimage: ^0.7.0
+  cached_network_image: ^2.2.0+1
   # toast
   oktoast: ^2.3.2
   # svg
-  flutter_svg: ^0.17.4
+  flutter_svg: ^0.18.0
   # 模态对话框增强
   modal_bottom_sheet: ^0.2.0+1
   # 日志打印
