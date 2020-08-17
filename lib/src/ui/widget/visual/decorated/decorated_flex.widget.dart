@@ -40,7 +40,6 @@ class DecoratedRow extends DecoratedFlex {
     GlobalKey repaintBoundaryKey,
     double widthFactor,
     bool scrollable,
-    bool withLocalNavigator,
     Duration animationDuration,
     Curve animationCurve,
     ThemeData theme,
@@ -85,7 +84,6 @@ class DecoratedRow extends DecoratedFlex {
           scrollable: scrollable,
           animationDuration: animationDuration,
           animationCurve: animationCurve,
-          withLocalNavigator: withLocalNavigator,
           theme: theme,
           topEnd: topEnd,
           center: center,
@@ -129,7 +127,6 @@ class DecoratedColumn extends DecoratedFlex {
     GlobalKey repaintBoundaryKey,
     double heightFactor,
     bool scrollable,
-    bool withLocalNavigator,
     Duration animationDuration,
     Curve animationCurve,
     ThemeData theme,
@@ -174,7 +171,6 @@ class DecoratedColumn extends DecoratedFlex {
           scrollable: scrollable,
           animationDuration: animationDuration,
           animationCurve: animationCurve,
-          withLocalNavigator: withLocalNavigator,
           theme: theme,
           topEnd: topEnd,
           center: center,
@@ -214,7 +210,6 @@ class DecoratedFlex extends StatelessWidget {
     this.safeAreaBottom,
     this.safeAreaLeft,
     this.safeAreaRight,
-    this.withLocalNavigator = false,
     this.scrollable,
     this.widthFactor,
     this.heightFactor,
@@ -303,9 +298,6 @@ class DecoratedFlex extends StatelessWidget {
 
   /// 是否可滚动
   final bool scrollable;
-
-  /// 是否带有局部Navigator 简单来说就是要不要用[CupertinoTabView]包裹
-  final bool withLocalNavigator;
 
   /// 内部统一的TextStyle
   final TextStyle textStyle;
@@ -467,10 +459,6 @@ class DecoratedFlex extends StatelessWidget {
 
     if (repaintBoundaryKey != null) {
       result = RepaintBoundary(key: repaintBoundaryKey, child: result);
-    }
-
-    if (withLocalNavigator == true) {
-      result = LocalNavigator(builder: (context) => result);
     }
 
     if (scrollable == true) {
