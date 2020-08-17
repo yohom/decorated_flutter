@@ -30,15 +30,34 @@ class Subscriber<T> extends StatelessWidget {
     this.emptyPlaceholder,
     this.errorPlaceholderBuilder,
     this.loadingPlaceholder,
+    this.handleEmpty = true,
   }) : super(key: key);
 
+  /// 流
   final Stream<T> stream;
+
+  /// widget builder
   final _Builder<T> builder;
+
+  /// 是否显示loading
   final bool showLoading;
+
+  /// 初始数据
   final T initialData;
+
+  /// 空列表视图
   final Widget emptyPlaceholder;
+
+  /// 错误视图
   final _ErrorPlaceholderBuilder errorPlaceholderBuilder;
+
+  /// loading视图
   final Widget loadingPlaceholder;
+
+  /// 是否处理空列表的情况
+  ///
+  /// 碰到EasyRefresh需要接管空列表的情况
+  final bool handleEmpty;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +78,7 @@ class Subscriber<T> extends StatelessWidget {
         }
 
         if (snapshot.hasData) {
-          if (isEmpty(snapshot.data)) {
+          if (isEmpty(snapshot.data) && handleEmpty) {
             return emptyPlaceholder ??
                 defaultEmptyPlaceholder ??
                 const EmptyPlaceholder();
