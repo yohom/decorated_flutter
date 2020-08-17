@@ -12,7 +12,7 @@ class DecoratedStack extends StatelessWidget {
     this.textStyle = const TextStyle(),
     this.safeArea,
     this.onPressed,
-    this.behavior,
+    this.behavior = HitTestBehavior.opaque,
     this.overflow,
     this.constraints,
     this.expanded = false,
