@@ -10,12 +10,15 @@ Future<T> showPickerDialog<T>(
   String title,
   @required Converter<T> converter,
   TextStyle titleStyle,
+  TextStyle confirmStyle,
 }) {
   return showModalBottomSheet<T>(
     context: context,
     builder: (context) => _PickerDialog<T>(
       data,
       title: title,
+      titleStyle: titleStyle,
+      confirmStyle: confirmStyle,
       converter: converter,
     ),
   );
@@ -27,6 +30,7 @@ class _PickerDialog<T> extends StatefulWidget {
     Key key,
     this.title,
     this.titleStyle,
+    this.confirmStyle,
     @required this.converter,
   }) : super(key: key);
 
@@ -34,6 +38,7 @@ class _PickerDialog<T> extends StatefulWidget {
   final String title;
   final Converter<T> converter;
   final TextStyle titleStyle;
+  final TextStyle confirmStyle;
 
   @override
   _PickerDialogState createState() => _PickerDialogState<T>();
@@ -68,7 +73,10 @@ class _PickerDialogState<T> extends State<_PickerDialog<T>> {
             Spacer(),
             FlatButton(
               onPressed: () => context.rootNavigator.pop(_selected),
-              child: Text('确定'),
+              child: Text(
+                '确定',
+                style: widget.confirmStyle ?? context.textTheme.bodyText1,
+              ),
             ),
           ],
         ),
