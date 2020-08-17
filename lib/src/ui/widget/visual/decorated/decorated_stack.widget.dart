@@ -12,6 +12,7 @@ class DecoratedStack extends StatelessWidget {
     this.textStyle = const TextStyle(),
     this.safeArea,
     this.onPressed,
+    this.behavior,
     this.overflow,
     this.constraints,
     this.expanded = false,
@@ -42,6 +43,7 @@ class DecoratedStack extends StatelessWidget {
   final bool safeArea;
 
   final ContextCallback onPressed;
+  final HitTestBehavior behavior;
 
   final bool expanded;
 
@@ -96,6 +98,7 @@ class DecoratedStack extends StatelessWidget {
 
     if (onPressed != null) {
       result = GestureDetector(
+        behavior: behavior ?? HitTestBehavior.deferToChild,
         onTap: () => onPressed(context),
         child: result,
       );
