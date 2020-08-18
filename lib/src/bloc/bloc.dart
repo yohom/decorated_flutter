@@ -12,6 +12,9 @@ abstract class BLoC {
   /// 重试
   Future<void> onErrorRetry() async {}
 
+  /// 重置BLoC, 发射初始值
+  void reset();
+
   @mustCallSuper
   void dispose() {
     L.d('=============================================\n'
@@ -27,10 +30,13 @@ abstract class RootBLoC extends BLoC {
   @protected
   List<GlobalBLoC> get disposeBag => [];
 
+  void reset() {
+    disposeBag.forEach((bloc) => bloc.reset());
+  }
+
   @override
   void dispose() {
-    disposeBag?.forEach((bloc) => bloc.dispose());
-
+    disposeBag.forEach((bloc) => bloc.dispose());
     super.dispose();
   }
 }
@@ -41,6 +47,10 @@ abstract class LocalBLoC extends BLoC {
 
   @protected
   List<BaseIO> get disposeBag => [];
+
+  void reset() {
+    disposeBag.forEach((io) => io.reset());
+  }
 
   @override
   void dispose() {

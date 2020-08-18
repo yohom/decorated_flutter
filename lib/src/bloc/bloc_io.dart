@@ -81,7 +81,7 @@ abstract class BaseIO<T> {
   /// 清理保存的值, 恢复成初始状态
   void reset() {
     L.d('-----------------------------BEGIN---------------------------------\n'
-        '${_semantics ??= runtimeType.toString()}事件 cleared '
+        '${_semantics ??= runtimeType.toString()}事件 重置 '
         '\n------------------------------END----------------------------------');
     if (!_subject.isClosed) _subject.add(_seedValue);
   }
