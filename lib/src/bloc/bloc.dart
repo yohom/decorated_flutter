@@ -1,7 +1,6 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:decorated_flutter/src/bloc/bloc_io.dart';
 import 'package:flutter/widgets.dart';
-import 'package:oktoast/oktoast.dart';
 
 @immutable
 abstract class BLoC {
@@ -11,10 +10,13 @@ abstract class BLoC {
   BLoC([this.semantics]);
 
   /// 重试
-  void onErrorRetry() {}
+  Future<void> onErrorRetry() async {}
+
+  /// 重置BLoC, 发射初始值
+  void reset();
 
   @mustCallSuper
-  void close() {
+  void dispose() {
     L.d('=============================================\n'
         '${semantics ?? runtimeType.toString()} closed '
         '\n=============================================');
@@ -28,11 +30,14 @@ abstract class RootBLoC extends BLoC {
   @protected
   List<GlobalBLoC> get disposeBag => [];
 
-  @override
-  void close() {
-    disposeBag?.forEach((bloc) => bloc.close());
+  void reset() {
+    disposeBag.forEach((bloc) => bloc.reset());
+  }
 
-    super.close();
+  @override
+  void dispose() {
+    disposeBag.forEach((bloc) => bloc.dispose());
+    super.dispose();
   }
 }
 
@@ -43,11 +48,14 @@ abstract class LocalBLoC extends BLoC {
   @protected
   List<BaseIO> get disposeBag => [];
 
-  @override
-  void close() {
-    disposeBag?.forEach((event) => event.dispose());
+  void reset() {
+    disposeBag.forEach((io) => io.reset());
+  }
 
-    super.close();
+  @override
+  void dispose() {
+    disposeBag?.forEach((event) => event.dispose());
+    super.dispose();
   }
 }
 
@@ -58,25 +66,13 @@ abstract class GlobalBLoC extends BLoC {
   @protected
   List<BaseIO> get disposeBag => [];
 
+  void reset() {
+    disposeBag.forEach((io) => io.reset());
+  }
+
   @override
-  void close() {
-    disposeBag?.forEach((event) => event.dispose());
-
-    super.close();
+  void dispose() {
+    disposeBag.forEach((event) => event.dispose());
+    super.dispose();
   }
-}
-
-class ToastBLoC extends GlobalBLoC {
-  ToastBLoC() : super('Toast BLoC') {
-    toast.listen((text) {
-      showToast(text);
-    });
-  }
-
-  final toast = IO<String>(semantics: 'toast内容');
-}
-
-class LoadingBLoC extends GlobalBLoC {
-  LoadingBLoC() : super('Loading BLoC');
-  final loading = IO<bool>(semantics: '是否显示loading');
 }

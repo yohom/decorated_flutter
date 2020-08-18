@@ -25,6 +25,8 @@ export 'widget/visual/preferred/free/free_check_box.widget.dart';
 export 'widget/visual/preferred/free/free_dialog.widget.dart';
 export 'widget/visual/preferred/free/tap_tooltip.widget.dart';
 export 'widget/visual/preferred/image_view.widget.dart';
+export 'widget/visual/preferred/max_scale_text.widget.dart';
+export 'widget/visual/preferred/picker.dialog.dart';
 export 'widget/visual/preferred/preferred_async_builder.widget.dart';
 export 'widget/visual/preferred/primary_icon.widget.dart';
 export 'widget/visual/preferred/runtime_scaffold.widget.dart';

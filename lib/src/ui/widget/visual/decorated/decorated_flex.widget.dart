@@ -32,11 +32,14 @@ class DecoratedRow extends DecoratedFlex {
     double elevation,
     bool material = false,
     bool safeArea,
+    bool safeAreaTop,
+    bool safeAreaBottom,
+    bool safeAreaLeft,
+    bool safeAreaRight,
     TextStyle textStyle,
     GlobalKey repaintBoundaryKey,
     double widthFactor,
     bool scrollable,
-    bool withLocalNavigator,
     Duration animationDuration,
     Curve animationCurve,
     ThemeData theme,
@@ -68,6 +71,10 @@ class DecoratedRow extends DecoratedFlex {
           expanded: expanded,
           forceItemSameExtent: forceItemSameExtent,
           safeArea: safeArea,
+          safeAreaTop: safeAreaTop,
+          safeAreaBottom: safeAreaBottom,
+          safeAreaLeft: safeAreaLeft,
+          safeAreaRight: safeAreaRight,
           divider: divider,
           elevation: elevation,
           material: material,
@@ -77,7 +84,6 @@ class DecoratedRow extends DecoratedFlex {
           scrollable: scrollable,
           animationDuration: animationDuration,
           animationCurve: animationCurve,
-          withLocalNavigator: withLocalNavigator,
           theme: theme,
           topEnd: topEnd,
           center: center,
@@ -113,11 +119,14 @@ class DecoratedColumn extends DecoratedFlex {
     double elevation,
     bool material = false,
     bool safeArea,
+    bool safeAreaTop,
+    bool safeAreaBottom,
+    bool safeAreaLeft,
+    bool safeAreaRight,
     TextStyle textStyle,
     GlobalKey repaintBoundaryKey,
     double heightFactor,
     bool scrollable,
-    bool withLocalNavigator,
     Duration animationDuration,
     Curve animationCurve,
     ThemeData theme,
@@ -149,6 +158,10 @@ class DecoratedColumn extends DecoratedFlex {
           expanded: expanded,
           forceItemSameExtent: forceItemSameExtent,
           safeArea: safeArea,
+          safeAreaTop: safeAreaTop,
+          safeAreaBottom: safeAreaBottom,
+          safeAreaLeft: safeAreaLeft,
+          safeAreaRight: safeAreaRight,
           divider: divider,
           elevation: elevation,
           material: material,
@@ -158,7 +171,6 @@ class DecoratedColumn extends DecoratedFlex {
           scrollable: scrollable,
           animationDuration: animationDuration,
           animationCurve: animationCurve,
-          withLocalNavigator: withLocalNavigator,
           theme: theme,
           topEnd: topEnd,
           center: center,
@@ -194,7 +206,10 @@ class DecoratedFlex extends StatelessWidget {
     this.forceItemSameExtent = false,
     this.elevation,
     this.safeArea,
-    this.withLocalNavigator = false,
+    this.safeAreaTop,
+    this.safeAreaBottom,
+    this.safeAreaLeft,
+    this.safeAreaRight,
     this.scrollable,
     this.widthFactor,
     this.heightFactor,
@@ -269,11 +284,20 @@ class DecoratedFlex extends StatelessWidget {
   /// 是否安全区域
   final bool safeArea;
 
+  /// 是否安全区域(顶部)
+  final bool safeAreaTop;
+
+  /// 是否安全区域(底部)
+  final bool safeAreaBottom;
+
+  /// 是否安全区域(左)
+  final bool safeAreaLeft;
+
+  /// 是否安全区域(右)
+  final bool safeAreaRight;
+
   /// 是否可滚动
   final bool scrollable;
-
-  /// 是否带有局部Navigator 简单来说就是要不要用[CupertinoTabView]包裹
-  final bool withLocalNavigator;
 
   /// 内部统一的TextStyle
   final TextStyle textStyle;
@@ -403,8 +427,22 @@ class DecoratedFlex extends StatelessWidget {
       );
     }
 
-    if (safeArea != null) {
-      result = SafeArea(child: result);
+    if (safeArea != null ||
+        safeAreaTop != null ||
+        safeAreaBottom != null ||
+        safeAreaLeft != null ||
+        safeAreaRight != null) {
+      if (safeArea == true) {
+        result = SafeArea(child: result);
+      } else {
+        result = SafeArea(
+          child: result,
+          top: safeAreaTop ?? true,
+          bottom: safeAreaBottom ?? true,
+          left: safeAreaLeft ?? true,
+          right: safeAreaRight ?? true,
+        );
+      }
     }
 
     if (widthFactor != null || heightFactor != null) {
@@ -421,10 +459,6 @@ class DecoratedFlex extends StatelessWidget {
 
     if (repaintBoundaryKey != null) {
       result = RepaintBoundary(key: repaintBoundaryKey, child: result);
-    }
-
-    if (withLocalNavigator == true) {
-      result = LocalNavigator(child: result);
     }
 
     if (scrollable == true) {

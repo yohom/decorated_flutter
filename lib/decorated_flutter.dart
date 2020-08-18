@@ -1,4 +1,6 @@
-library framework;
+library decorated_flutter;
+
+export 'package:rxdart/rxdart.dart';
 
 export 'src/bloc/bloc.export.dart';
 export 'src/extension/extension.export.dart';

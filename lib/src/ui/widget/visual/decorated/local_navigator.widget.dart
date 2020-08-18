@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
 class LocalNavigator extends StatelessWidget {
-  const LocalNavigator({Key key, this.child}) : super(key: key);
+  const LocalNavigator({Key key, this.builder}) : super(key: key);
 
-  final Widget child;
+  final WidgetBuilder builder;
 
   @override
   Widget build(BuildContext context) {
-    return Navigator(
-      onGenerateRoute: (settings) {
-        return MaterialPageRoute(builder: (context) => child);
-      },
+    return Theme(
+      data: Theme.of(context).copyWith(platform: TargetPlatform.android),
+      child: Navigator(
+        onGenerateRoute: (settings) {
+          return MaterialPageRoute(builder: builder);
+        },
+      ),
     );
   }
 }
