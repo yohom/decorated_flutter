@@ -66,9 +66,13 @@ abstract class GlobalBLoC extends BLoC {
   @protected
   List<BaseIO> get disposeBag => [];
 
+  void reset() {
+    disposeBag.forEach((io) => io.reset());
+  }
+
   @override
   void dispose() {
-    disposeBag?.forEach((event) => event.dispose());
+    disposeBag.forEach((event) => event.dispose());
     super.dispose();
   }
 }
