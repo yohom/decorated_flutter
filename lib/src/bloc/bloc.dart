@@ -10,7 +10,7 @@ abstract class BLoC {
   BLoC([this.semantics]);
 
   /// 重试
-  void onErrorRetry() {}
+  Future<void> onErrorRetry() async {}
 
   @mustCallSuper
   void dispose() {
