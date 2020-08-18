@@ -70,7 +70,16 @@ abstract class BaseIO<T> {
   }
 
   /// 清理保存的值, 恢复成初始状态
+  @Deprecated('使用reset代替, 仅是名称替换')
   void clear() {
+    L.d('-----------------------------BEGIN---------------------------------\n'
+        '${_semantics ??= runtimeType.toString()}事件 cleared '
+        '\n------------------------------END----------------------------------');
+    if (!_subject.isClosed) _subject.add(_seedValue);
+  }
+
+  /// 清理保存的值, 恢复成初始状态
+  void reset() {
     L.d('-----------------------------BEGIN---------------------------------\n'
         '${_semantics ??= runtimeType.toString()}事件 cleared '
         '\n------------------------------END----------------------------------');
