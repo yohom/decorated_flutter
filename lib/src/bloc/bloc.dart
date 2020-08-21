@@ -31,8 +31,6 @@ abstract class RootBLoC extends BLoC {
 
   @protected
   List<GlobalBLoC> get disposeBag => [];
-  @protected
-  final CompositeSubscription compositeSubscription = CompositeSubscription();
 
   void reset() {
     disposeBag.forEach((bloc) => bloc.reset());
@@ -41,7 +39,6 @@ abstract class RootBLoC extends BLoC {
   @override
   void dispose() {
     disposeBag.forEach((bloc) => bloc.dispose());
-    if (!compositeSubscription.isDisposed) compositeSubscription.dispose();
     super.dispose();
   }
 }
@@ -51,7 +48,7 @@ abstract class LocalBLoC extends BLoC {
   LocalBLoC([String semantics]) : super(semantics);
 
   @protected
-  final List<BaseIO> disposeBag = [];
+  List<BaseIO> get disposeBag => [];
   @protected
   final CompositeSubscription compositeSubscription = CompositeSubscription();
 
@@ -73,6 +70,8 @@ abstract class GlobalBLoC extends BLoC {
 
   @protected
   List<BaseIO> get disposeBag => [];
+  @protected
+  final CompositeSubscription compositeSubscription = CompositeSubscription();
 
   void reset() {
     disposeBag.forEach((io) => io.reset());
@@ -81,6 +80,7 @@ abstract class GlobalBLoC extends BLoC {
   @override
   void dispose() {
     disposeBag.forEach((event) => event.dispose());
+    if (!compositeSubscription.isDisposed) compositeSubscription.dispose();
     super.dispose();
   }
 }
