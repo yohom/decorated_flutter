@@ -4,7 +4,7 @@ import 'package:decorated_flutter/src/bloc/bloc.export.dart';
 import 'package:flutter/cupertino.dart';
 
 mixin DisposeBag<T extends StatefulWidget> on State<T> {
-  List<StreamSubscription> disposeBag = [];
+  final List<StreamSubscription> disposeBag = [];
 
   @override
   void dispose() {
@@ -14,7 +14,7 @@ mixin DisposeBag<T extends StatefulWidget> on State<T> {
 }
 
 mixin BLoCDisposeBag on BLoC {
-  List<StreamSubscription> disposeBag = [];
+  final List<StreamSubscription> disposeBag = [];
 
   @override
   void dispose() {
