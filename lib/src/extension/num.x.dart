@@ -23,7 +23,7 @@ extension DoubleX on double {
 extension IntX on int {
   /// 时间转为格式化字符串
   String toFormattedString(String format) {
-    final dateTime = DateTime.fromMillisecondsSinceEpoch(this * 1000);
+    final dateTime = DateTime.fromMillisecondsSinceEpoch(this);
     return DateFormat(format).format(dateTime);
   }
 }
