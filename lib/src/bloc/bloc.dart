@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:decorated_flutter/src/bloc/bloc_io.dart';
 import 'package:flutter/widgets.dart';
@@ -46,7 +48,9 @@ abstract class LocalBLoC extends BLoC {
   LocalBLoC([String semantics]) : super(semantics);
 
   @protected
-  List<BaseIO> get disposeBag => [];
+  final List<BaseIO> disposeBag = [];
+  @protected
+  final CompositeSubscription compositeSubscription = CompositeSubscription();
 
   void reset() {
     disposeBag.forEach((io) => io.reset());
@@ -54,7 +58,8 @@ abstract class LocalBLoC extends BLoC {
 
   @override
   void dispose() {
-    disposeBag?.forEach((event) => event.dispose());
+    disposeBag.forEach((event) => event.dispose());
+    if (!compositeSubscription.isDisposed) compositeSubscription.dispose();
     super.dispose();
   }
 }
