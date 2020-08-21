@@ -31,6 +31,8 @@ abstract class RootBLoC extends BLoC {
 
   @protected
   List<GlobalBLoC> get disposeBag => [];
+  @protected
+  final CompositeSubscription compositeSubscription = CompositeSubscription();
 
   void reset() {
     disposeBag.forEach((bloc) => bloc.reset());
@@ -39,6 +41,7 @@ abstract class RootBLoC extends BLoC {
   @override
   void dispose() {
     disposeBag.forEach((bloc) => bloc.dispose());
+    if (!compositeSubscription.isDisposed) compositeSubscription.dispose();
     super.dispose();
   }
 }
