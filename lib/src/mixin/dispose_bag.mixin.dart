@@ -14,11 +14,11 @@ mixin DisposeBag<T extends StatefulWidget> on State<T> {
 }
 
 mixin BLoCDisposeBag on BLoC {
-  final List<StreamSubscription> disposeBag = [];
+  final List<StreamSubscription> subscriptionBag = [];
 
   @override
   void dispose() {
-    disposeBag.forEach((it) => it.cancel());
+    subscriptionBag.forEach((it) => it.cancel());
     super.dispose();
   }
 }
