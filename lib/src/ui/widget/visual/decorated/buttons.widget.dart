@@ -32,7 +32,7 @@ class _AnimatedScaleButtonState extends State<AnimatedScaleButton> {
   @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder<double>(
-      duration: Duration(milliseconds: 200),
+      duration: Duration(milliseconds: 100),
       curve: Curves.easeOut,
       builder: (BuildContext context, value, Widget child) {
         return Transform.scale(
@@ -48,16 +48,29 @@ class _AnimatedScaleButtonState extends State<AnimatedScaleButton> {
             _pressed = true;
           });
         },
-        onTapUp: (_) {
+        onLongPress: () {
+          setState(() {
+            _pressed = true;
+          });
+        },
+        onLongPressEnd: (_) {
           setState(() {
             _pressed = false;
           });
           widget.onPressed(context);
         },
+        onTapUp: (_) {
+          setState(() {
+            _pressed = false;
+          });
+        },
         onTapCancel: () {
           setState(() {
             _pressed = false;
           });
+        },
+        onTap: () {
+          widget.onPressed(context);
         },
         child: widget.child,
       ),
