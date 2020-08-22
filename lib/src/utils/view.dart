@@ -15,7 +15,6 @@ void toast(
   showToast(
     message,
     position: position,
-    backgroundColor: error ? Colors.red : Colors.grey,
     radius: radius,
     textPadding: padding,
     textStyle: textStyle,
