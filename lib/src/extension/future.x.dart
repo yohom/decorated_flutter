@@ -15,6 +15,8 @@ extension FutureX<T> on Future<T> {
     String loadingText = '加载中..',
     Color backgroundColor,
   }) {
+    final navigator = Navigator.of(context, rootNavigator: true);
+
     // 是被future pop的还是按返回键pop的
     bool popByFuture = true;
 
@@ -59,7 +61,7 @@ extension FutureX<T> on Future<T> {
     whenComplete(() {
       // 由于showDialog会强制使用rootNavigator, 所以这里pop的时候也要用rootNavigator
       if (popByFuture) {
-        Navigator.of(context, rootNavigator: true).pop();
+        navigator.pop();
       }
     });
 
