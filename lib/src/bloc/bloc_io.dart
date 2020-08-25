@@ -65,6 +65,10 @@ abstract class BaseIO<T> {
     return _subject.where(test);
   }
 
+  Stream<T> distinct([bool test(T previous, T next)]) {
+    return test != null ? _subject.distinct(test) : _subject.distinct();
+  }
+
   Stream<T> sample(Duration duration) {
     return _subject.sampleTime(duration);
   }
