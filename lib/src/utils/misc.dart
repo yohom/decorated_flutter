@@ -18,11 +18,10 @@ void handleError(BuildContext context, Object error) {
       case DioErrorType.CANCEL:
         message = '取消请求';
         break;
+      case DioErrorType.SEND_TIMEOUT:
       case DioErrorType.CONNECT_TIMEOUT:
-        message = '请求超时';
-        break;
       case DioErrorType.RECEIVE_TIMEOUT:
-        message = '接收超时';
+        message = '网络连接超时，请重试';
         break;
       case DioErrorType.RESPONSE:
         final statusCode = error.response.statusCode;
@@ -36,7 +35,7 @@ void handleError(BuildContext context, Object error) {
         message = error.message;
         break;
       default:
-        message = error.message;
+        message = '网络异常，请重试';
     }
     toast(message);
   } else if (error is String) {
