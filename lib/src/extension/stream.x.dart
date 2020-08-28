@@ -1,3 +1,5 @@
+import 'dart:async';
+
 extension ListStreamX<T> on Stream<List<T>> {
   /// 在一个列表Stream中, 找出目标项, 并转换为该项的Stream
   ///
@@ -14,3 +16,5 @@ extension ListStreamX<T> on Stream<List<T>> {
     }
   }
 }
+
+extension StreamSubscriptionX<T> on StreamSubscription<T> {}

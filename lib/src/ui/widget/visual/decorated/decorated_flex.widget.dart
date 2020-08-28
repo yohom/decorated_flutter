@@ -14,6 +14,7 @@ class DecoratedRow extends DecoratedFlex {
     Decoration foregroundDecoration,
     BoxConstraints constraints,
     Matrix4 transform,
+    Offset offset,
     double width,
     double height,
     AlignmentGeometry alignment,
@@ -56,6 +57,7 @@ class DecoratedRow extends DecoratedFlex {
           foregroundDecoration: foregroundDecoration,
           constraints: constraints,
           transform: transform,
+          offset: offset,
           width: width,
           height: height,
           alignment: alignment,
@@ -101,6 +103,7 @@ class DecoratedColumn extends DecoratedFlex {
     Decoration foregroundDecoration,
     BoxConstraints constraints,
     Matrix4 transform,
+    Offset offset,
     double width,
     double height,
     AlignmentGeometry alignment,
@@ -143,6 +146,7 @@ class DecoratedColumn extends DecoratedFlex {
           foregroundDecoration: foregroundDecoration,
           constraints: constraints,
           transform: transform,
+          offset: offset,
           width: width,
           height: height,
           alignment: alignment,
@@ -188,6 +192,7 @@ class DecoratedFlex extends StatelessWidget {
     this.foregroundDecoration,
     this.constraints,
     this.transform,
+    this.offset,
     this.width,
     this.height,
     @required this.direction,
@@ -289,6 +294,9 @@ class DecoratedFlex extends StatelessWidget {
 
   /// 是否安全区域(底部)
   final bool safeAreaBottom;
+
+  /// 作用在Transform.translate上的偏移量
+  final Offset offset;
 
   /// 是否安全区域(左)
   final bool safeAreaLeft;
@@ -475,6 +483,10 @@ class DecoratedFlex extends StatelessWidget {
 
     if (center == true) {
       result = Center(child: result);
+    }
+
+    if (offset != null) {
+      result = Transform.translate(offset: offset, child: result);
     }
 
     if (expanded == true) {
