@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 extension DoubleX on double {
   SizedBox get vSizeBox {
@@ -16,5 +17,13 @@ extension DoubleX on double {
 
   Divider get hDivider {
     return Divider(height: this);
+  }
+}
+
+extension IntX on int {
+  /// 时间转为格式化字符串
+  String toFormattedString(String format) {
+    final dateTime = DateTime.fromMillisecondsSinceEpoch(this);
+    return DateFormat(format).format(dateTime);
   }
 }

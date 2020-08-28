@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:decorated_flutter/src/bloc/bloc_io.dart';
 import 'package:flutter/widgets.dart';
@@ -10,7 +12,10 @@ abstract class BLoC {
   BLoC([this.semantics]);
 
   /// 重试
-  void onErrorRetry() {}
+  Future<void> onErrorRetry() async {}
+
+  /// 重置BLoC, 发射初始值
+  void reset();
 
   @mustCallSuper
   void dispose() {
@@ -27,10 +32,13 @@ abstract class RootBLoC extends BLoC {
   @protected
   List<GlobalBLoC> get disposeBag => [];
 
+  void reset() {
+    disposeBag.forEach((bloc) => bloc.reset());
+  }
+
   @override
   void dispose() {
-    disposeBag?.forEach((bloc) => bloc.dispose());
-
+    disposeBag.forEach((bloc) => bloc.dispose());
     super.dispose();
   }
 }
@@ -41,10 +49,17 @@ abstract class LocalBLoC extends BLoC {
 
   @protected
   List<BaseIO> get disposeBag => [];
+  @protected
+  final CompositeSubscription compositeSubscription = CompositeSubscription();
+
+  void reset() {
+    disposeBag.forEach((io) => io.reset());
+  }
 
   @override
   void dispose() {
-    disposeBag?.forEach((event) => event.dispose());
+    disposeBag.forEach((event) => event.dispose());
+    if (!compositeSubscription.isDisposed) compositeSubscription.dispose();
     super.dispose();
   }
 }
@@ -55,10 +70,17 @@ abstract class GlobalBLoC extends BLoC {
 
   @protected
   List<BaseIO> get disposeBag => [];
+  @protected
+  final CompositeSubscription compositeSubscription = CompositeSubscription();
+
+  void reset() {
+    disposeBag.forEach((io) => io.reset());
+  }
 
   @override
   void dispose() {
-    disposeBag?.forEach((event) => event.dispose());
+    disposeBag.forEach((event) => event.dispose());
+    if (!compositeSubscription.isDisposed) compositeSubscription.dispose();
     super.dispose();
   }
 }

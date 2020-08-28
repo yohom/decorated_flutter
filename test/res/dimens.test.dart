@@ -53,16 +53,5 @@ void main() {
 
     expect(kDividerTiny, const Divider(height: kSpaceTiny));
     expect(kDividerSmall, const Divider(height: kSpaceSmall));
-
-    expect(kTextNormal, 16.0);
-    expect(kTextBig, 18.0);
-
-    expect(kElevationZero, 0.0);
-    expect(kElevationTiny, 1.0);
-    expect(kElevationSmall, 2.0);
-    expect(kElevationNormal, 4.0);
-    expect(kElevationBig, 8.0);
-    expect(kElevationHuge, 16.0);
-    expect(kElevationGiant, 32.0);
   });
 }

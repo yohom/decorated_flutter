@@ -12,6 +12,7 @@ class DecoratedStack extends StatelessWidget {
     this.textStyle = const TextStyle(),
     this.safeArea,
     this.onPressed,
+    this.behavior = HitTestBehavior.opaque,
     this.overflow,
     this.constraints,
     this.expanded = false,
@@ -21,10 +22,10 @@ class DecoratedStack extends StatelessWidget {
     this.topEnd,
     this.bottomStart,
     this.bottomEnd,
-    this.topCenter,
-    this.bottomCenter,
-    this.centerStart,
-    this.centerEnd,
+    this.top,
+    this.bottom,
+    this.start,
+    this.end,
     this.center,
     this.borderRadius,
     @required this.children,
@@ -42,6 +43,7 @@ class DecoratedStack extends StatelessWidget {
   final bool safeArea;
 
   final ContextCallback onPressed;
+  final HitTestBehavior behavior;
 
   final bool expanded;
 
@@ -49,10 +51,10 @@ class DecoratedStack extends StatelessWidget {
   final Widget topEnd;
   final Widget bottomStart;
   final Widget bottomEnd;
-  final Widget topCenter;
-  final Widget bottomCenter;
-  final Widget centerStart;
-  final Widget centerEnd;
+  final Widget top;
+  final Widget bottom;
+  final Widget start;
+  final Widget end;
   final Widget center;
 
   final StackFit stackFit;
@@ -77,14 +79,11 @@ class DecoratedStack extends StatelessWidget {
           Positioned(bottom: 0, left: 0, child: bottomStart),
         if (bottomEnd != null)
           Positioned(bottom: 0, right: 0, child: bottomEnd),
-        if (topCenter != null)
-          Positioned(top: 0, left: 0, right: 0, child: topCenter),
-        if (bottomCenter != null)
-          Positioned(bottom: 0, right: 0, left: 0, child: bottomCenter),
-        if (centerStart != null)
-          Positioned(bottom: 0, top: 0, left: 0, child: centerStart),
-        if (centerEnd != null)
-          Positioned(bottom: 0, top: 0, right: 0, child: centerEnd),
+        if (top != null) Positioned(top: 0, left: 0, right: 0, child: top),
+        if (bottom != null)
+          Positioned(bottom: 0, right: 0, left: 0, child: bottom),
+        if (start != null) Positioned(bottom: 0, top: 0, left: 0, child: start),
+        if (end != null) Positioned(bottom: 0, top: 0, right: 0, child: end),
         if (center != null)
           Positioned(bottom: 0, right: 0, top: 0, left: 0, child: center),
       ],
@@ -96,6 +95,7 @@ class DecoratedStack extends StatelessWidget {
 
     if (onPressed != null) {
       result = GestureDetector(
+        behavior: behavior ?? HitTestBehavior.deferToChild,
         onTap: () => onPressed(context),
         child: result,
       );

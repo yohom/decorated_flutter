@@ -14,6 +14,7 @@ class DecoratedRow extends DecoratedFlex {
     Decoration foregroundDecoration,
     BoxConstraints constraints,
     Matrix4 transform,
+    Offset offset,
     double width,
     double height,
     AlignmentGeometry alignment,
@@ -40,7 +41,6 @@ class DecoratedRow extends DecoratedFlex {
     GlobalKey repaintBoundaryKey,
     double widthFactor,
     bool scrollable,
-    bool withLocalNavigator,
     Duration animationDuration,
     Curve animationCurve,
     ThemeData theme,
@@ -57,6 +57,7 @@ class DecoratedRow extends DecoratedFlex {
           foregroundDecoration: foregroundDecoration,
           constraints: constraints,
           transform: transform,
+          offset: offset,
           width: width,
           height: height,
           alignment: alignment,
@@ -85,7 +86,6 @@ class DecoratedRow extends DecoratedFlex {
           scrollable: scrollable,
           animationDuration: animationDuration,
           animationCurve: animationCurve,
-          withLocalNavigator: withLocalNavigator,
           theme: theme,
           topEnd: topEnd,
           center: center,
@@ -103,6 +103,7 @@ class DecoratedColumn extends DecoratedFlex {
     Decoration foregroundDecoration,
     BoxConstraints constraints,
     Matrix4 transform,
+    Offset offset,
     double width,
     double height,
     AlignmentGeometry alignment,
@@ -129,7 +130,6 @@ class DecoratedColumn extends DecoratedFlex {
     GlobalKey repaintBoundaryKey,
     double heightFactor,
     bool scrollable,
-    bool withLocalNavigator,
     Duration animationDuration,
     Curve animationCurve,
     ThemeData theme,
@@ -146,6 +146,7 @@ class DecoratedColumn extends DecoratedFlex {
           foregroundDecoration: foregroundDecoration,
           constraints: constraints,
           transform: transform,
+          offset: offset,
           width: width,
           height: height,
           alignment: alignment,
@@ -174,7 +175,6 @@ class DecoratedColumn extends DecoratedFlex {
           scrollable: scrollable,
           animationDuration: animationDuration,
           animationCurve: animationCurve,
-          withLocalNavigator: withLocalNavigator,
           theme: theme,
           topEnd: topEnd,
           center: center,
@@ -192,6 +192,7 @@ class DecoratedFlex extends StatelessWidget {
     this.foregroundDecoration,
     this.constraints,
     this.transform,
+    this.offset,
     this.width,
     this.height,
     @required this.direction,
@@ -214,7 +215,6 @@ class DecoratedFlex extends StatelessWidget {
     this.safeAreaBottom,
     this.safeAreaLeft,
     this.safeAreaRight,
-    this.withLocalNavigator = false,
     this.scrollable,
     this.widthFactor,
     this.heightFactor,
@@ -295,6 +295,9 @@ class DecoratedFlex extends StatelessWidget {
   /// 是否安全区域(底部)
   final bool safeAreaBottom;
 
+  /// 作用在Transform.translate上的偏移量
+  final Offset offset;
+
   /// 是否安全区域(左)
   final bool safeAreaLeft;
 
@@ -303,9 +306,6 @@ class DecoratedFlex extends StatelessWidget {
 
   /// 是否可滚动
   final bool scrollable;
-
-  /// 是否带有局部Navigator 简单来说就是要不要用[CupertinoTabView]包裹
-  final bool withLocalNavigator;
 
   /// 内部统一的TextStyle
   final TextStyle textStyle;
@@ -469,10 +469,6 @@ class DecoratedFlex extends StatelessWidget {
       result = RepaintBoundary(key: repaintBoundaryKey, child: result);
     }
 
-    if (withLocalNavigator == true) {
-      result = LocalNavigator(builder: (context) => result);
-    }
-
     if (scrollable == true) {
       result = SingleChildScrollView(child: result, scrollDirection: direction);
     }
@@ -487,6 +483,10 @@ class DecoratedFlex extends StatelessWidget {
 
     if (center == true) {
       result = Center(child: result);
+    }
+
+    if (offset != null) {
+      result = Transform.translate(offset: offset, child: result);
     }
 
     if (expanded == true) {

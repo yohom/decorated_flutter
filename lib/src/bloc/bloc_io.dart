@@ -65,14 +65,27 @@ abstract class BaseIO<T> {
     return _subject.where(test);
   }
 
+  Stream<T> distinct([bool test(T previous, T next)]) {
+    return test != null ? _subject.distinct(test) : _subject.distinct();
+  }
+
   Stream<T> sample(Duration duration) {
     return _subject.sampleTime(duration);
   }
 
   /// 清理保存的值, 恢复成初始状态
+  @Deprecated('使用reset代替, 仅是名称替换')
   void clear() {
     L.d('-----------------------------BEGIN---------------------------------\n'
         '${_semantics ??= runtimeType.toString()}事件 cleared '
+        '\n------------------------------END----------------------------------');
+    if (!_subject.isClosed) _subject.add(_seedValue);
+  }
+
+  /// 清理保存的值, 恢复成初始状态
+  void reset() {
+    L.d('-----------------------------BEGIN---------------------------------\n'
+        '${_semantics ??= runtimeType.toString()}事件 重置 '
         '\n------------------------------END----------------------------------');
     if (!_subject.isClosed) _subject.add(_seedValue);
   }
@@ -206,6 +219,8 @@ class ListInput<T> extends Input<List<T>> with ListMixin {
 }
 
 /// 内部数据类型是[List]的输出业务单元
+///
+/// 泛型[T]为列表项的类型
 class ListOutput<T, ARG_TYPE> extends Output<List<T>, ARG_TYPE> with ListMixin {
   ListOutput({
     List<T> seedValue,
@@ -399,11 +414,14 @@ class BoolOutput<ARG_TYPE> extends Output<bool, ARG_TYPE> with BoolMixin {
 //endregion
 
 /// 输入单元特有的成员
+///
+/// 泛型[T]为数据数据的类型
 mixin InputMixin<T> on BaseIO<T> {
   bool _acceptEmpty;
   bool _isDistinct;
   _Equal _test;
 
+  /// 发射数据
   T add(T data) {
     L.d('+++++++++++++++++++++++++++BEGIN+++++++++++++++++++++++++++++\n'
         'IO接收到**${_semantics ??= data.runtimeType.toString()}**数据: $data');
@@ -458,6 +476,9 @@ mixin InputMixin<T> on BaseIO<T> {
 }
 
 /// 输出单元特有的成员
+///
+/// 泛型[T]为输出数据的类型, 泛型[ARG_TYPE]为请求数据时的参数类型. 一般参数只有一个时, 就
+/// 直接使用该参数的类型, 如果有多个时, 就使用List接收.
 mixin OutputMixin<T, ARG_TYPE> on BaseIO<T> {
   /// 输出Future
   Future<T> get future => stream.first;
@@ -465,6 +486,7 @@ mixin OutputMixin<T, ARG_TYPE> on BaseIO<T> {
   /// 输出Stream
   Stream<T> stream;
 
+  /// 监听流
   StreamSubscription<T> listen(
     ValueChanged<T> listener, {
     Function onError,
@@ -605,6 +627,7 @@ mixin ListMixin<T> on BaseIO<List<T>> {
 }
 
 mixin BoolMixin on BaseIO<bool> {
+  /// 切换true/false 并发射
   bool toggle() {
     final toggled = !latest;
     if (!_subject.isClosed) {
@@ -618,6 +641,7 @@ mixin IntMixin on BaseIO<int> {
   int _min;
   int _max;
 
+  /// 加一个值 并发射
   int plus([int value = 1]) {
     int result;
     if (_max != null) {
@@ -631,6 +655,7 @@ mixin IntMixin on BaseIO<int> {
     return result;
   }
 
+  /// 减一个值 并发射
   int minus([int value = 1]) {
     int result;
     if (_min != null) {
@@ -695,6 +720,9 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
     return !_noMoreData;
   }
 
+  /// 刷新列表
+  ///
+  /// 会重新加载第一页
   Future<void> refresh([ARG_TYPE args]) async {
     _currentPage = _initPage;
     _noMoreData = false;
@@ -706,10 +734,12 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
     }
   }
 
+  /// 当前是否是第一页
   bool get isFirstPage {
     return _currentPage == _initPage;
   }
 
+  /// 是否还有更多数据
   bool get hasMoreData {
     return !_noMoreData;
   }

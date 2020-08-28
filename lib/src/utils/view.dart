@@ -10,13 +10,14 @@ void toast(
   VoidCallback onDismiss,
   bool dismissOtherToast = true,
   TextAlign textAlign,
+  Duration duration,
   bool error = false,
 }) {
   showToast(
     message,
     position: position,
-    backgroundColor: error ? Colors.red : Colors.grey,
     radius: radius,
+    duration: duration,
     textPadding: padding,
     textStyle: textStyle,
     onDismiss: onDismiss,
