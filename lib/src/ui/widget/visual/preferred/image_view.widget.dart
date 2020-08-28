@@ -269,23 +269,8 @@ class ImageView extends StatelessWidget {
         height: size ?? height,
         fit: fit,
         color: color,
+        errorWidget: (_, __, ___) => Image.asset(fallbackAssetImage),
       );
-//      return Image(
-//        image: AdvancedNetworkImage(
-//          imageUrl,
-//          useDiskCache: useDiskCache,
-//          fallbackAssetImage: fallbackAssetImage,
-//          fallbackImage: fallbackImage,
-//          loadFailedCallback: loadFailedCallback,
-//          loadingProgress: loadingProgress,
-//          loadedCallback: loadedCallback,
-//        ),
-//        width: size ?? width,
-//        height: size ?? height,
-//        fit: fit,
-//        color: color,
-//        gaplessPlayback: true,
-//      );
     } else if (svgPath != null) {
       return SvgPicture.asset(
         svgPath,
