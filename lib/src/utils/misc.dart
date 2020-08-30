@@ -3,6 +3,7 @@ import 'dart:math' as math;
 
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 typedef void _HandlerErrorCallback(Object error);
@@ -32,7 +33,7 @@ void handleError(BuildContext context, Object error) {
         }
         break;
       case DioErrorType.DEFAULT:
-        message = error.message;
+        message = kReleaseMode ? '网络异常，请重试' : error.message;
         break;
       default:
         message = '网络异常，请重试';
