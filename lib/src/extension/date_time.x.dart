@@ -8,4 +8,8 @@ extension DateTimeX on DateTime {
   String Md() {
     return DateFormat.Md().format(this);
   }
+
+  String format(String format) {
+    return DateFormat(format).format(this);
+  }
 }
