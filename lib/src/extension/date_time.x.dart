@@ -9,7 +9,7 @@ extension DateTimeX on DateTime {
     return DateFormat.Md().format(this);
   }
 
-  String format(String format) {
+  String format([String format = 'yyyy-MM-dd HH:mm:ss']) {
     return DateFormat(format).format(this);
   }
 }
