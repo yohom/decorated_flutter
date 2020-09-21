@@ -2,6 +2,7 @@ library decorated_flutter;
 
 export 'package:rxdart/rxdart.dart';
 
+export 'src/annotation/annotation.export.dart';
 export 'src/bloc/bloc.export.dart';
 export 'src/extension/extension.export.dart';
 export 'src/misc/misc.export.dart';
