@@ -18,6 +18,7 @@ class DecoratedText extends StatelessWidget {
     this.visible,
     this.width,
     this.height,
+    this.center,
   }) : super(key: key);
 
   final EdgeInsetsGeometry padding;
@@ -35,6 +36,7 @@ class DecoratedText extends StatelessWidget {
   final double width;
   final double height;
   final bool visible;
+  final bool center;
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +47,10 @@ class DecoratedText extends StatelessWidget {
       textAlign: textAlign,
       overflow: overflow,
     );
+
+    if (center == true) {
+      result = Center(child: result);
+    }
 
     if (decoration != null ||
         padding != null ||
