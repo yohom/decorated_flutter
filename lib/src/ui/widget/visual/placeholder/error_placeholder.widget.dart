@@ -13,3 +13,18 @@ class ErrorPlaceholder extends StatelessWidget {
     );
   }
 }
+
+class SliverErrorPlaceholder extends StatelessWidget {
+  const SliverErrorPlaceholder({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Center(
+        child: kDebugMode
+            ? Icon(Icons.error_outline, color: Colors.red)
+            : Container(),
+      ),
+    );
+  }
+}
