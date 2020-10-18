@@ -148,6 +148,7 @@ class Input<T> extends BaseIO<T> with InputMixin {
     String semantics,
     bool sync = true,
     bool isBehavior = true,
+    bool printLog = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
     _Equal test,
@@ -160,6 +161,7 @@ class Input<T> extends BaseIO<T> with InputMixin {
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
     _test = test;
+    _printLog = printLog;
   }
 }
 
@@ -169,6 +171,7 @@ class Output<T, ARG_TYPE> extends BaseIO<T> with OutputMixin<T, ARG_TYPE> {
     T seedValue,
     String semantics,
     bool sync = true,
+    bool printLog = true,
     bool isBehavior = true,
     @required _Fetch<T, ARG_TYPE> fetch,
   }) : super(
@@ -179,6 +182,7 @@ class Output<T, ARG_TYPE> extends BaseIO<T> with OutputMixin<T, ARG_TYPE> {
         ) {
     stream = _subject.stream;
     _fetch = fetch;
+    _printLog = printLog;
   }
 }
 
@@ -191,6 +195,7 @@ class IO<T> extends BaseIO<T> with InputMixin, OutputMixin<T, dynamic> {
     bool isBehavior = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
+    bool printLog = true,
     _Equal test,
     _Fetch<T, dynamic> fetch,
   }) : super(
@@ -205,6 +210,7 @@ class IO<T> extends BaseIO<T> with InputMixin, OutputMixin<T, dynamic> {
     _isDistinct = isDistinct;
     _test = test;
     _fetch = fetch;
+    _printLog = printLog;
   }
 }
 
@@ -217,6 +223,7 @@ class ListInput<T> extends Input<List<T>> with ListMixin {
     bool sync = true,
     bool isBehavior = true,
     bool acceptEmpty = true,
+    bool printLog = true,
     bool isDistinct = false,
     _Equal test,
   }) : super(
@@ -227,6 +234,7 @@ class ListInput<T> extends Input<List<T>> with ListMixin {
           acceptEmpty: acceptEmpty,
           isDistinct: isDistinct,
           test: test,
+          printLog: printLog,
         );
 }
 
@@ -239,6 +247,7 @@ class ListOutput<T, ARG_TYPE> extends Output<List<T>, ARG_TYPE> with ListMixin {
     String semantics,
     bool sync = true,
     bool isBehavior = true,
+    bool printLog = true,
     @required _Fetch<List<T>, ARG_TYPE> fetch,
   }) : super(
           seedValue: seedValue,
@@ -246,6 +255,7 @@ class ListOutput<T, ARG_TYPE> extends Output<List<T>, ARG_TYPE> with ListMixin {
           sync: sync,
           isBehavior: isBehavior,
           fetch: fetch,
+          printLog: printLog,
         );
 }
 
@@ -259,6 +269,7 @@ class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
     bool isBehavior = true,
     int initPage = 0,
     bool receiveFullData = true,
+    bool printLog = true,
     int pageSize = 0,
     @required _PageFetch<List<T>, ARG_TYPE> pageFetch,
   }) : super(
@@ -273,6 +284,7 @@ class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
     _pageFetch = pageFetch;
     _receiveFullData = receiveFullData;
     _pageSize = pageSize;
+    _printLog = printLog;
   }
 
   /// 这里标记为protected, 防止被外部引用, 应该使用[refresh]方法
@@ -291,6 +303,7 @@ class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
     bool isBehavior = true,
     int initPage = 0,
     int pageSize = 0,
+    bool printLog = true,
     bool receiveFullData = true,
     @required _PageFetch<List<T>, ARG_TYPE> pageFetch,
   }) : super(
@@ -305,6 +318,7 @@ class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
     _pageFetch = pageFetch;
     _receiveFullData = receiveFullData;
     _pageSize = pageSize;
+    _printLog = printLog;
   }
 }
 
@@ -317,6 +331,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin {
     bool isBehavior = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
+    bool printLog = true,
     _Equal test,
     _Fetch<List<T>, dynamic> fetch,
   }) : super(
@@ -328,6 +343,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin {
           isDistinct: isDistinct,
           test: test,
           fetch: fetch,
+          printLog: printLog,
         );
 }
 
@@ -340,6 +356,7 @@ class IntIO extends IO<int> with IntMixin {
     bool isBehavior = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
+    bool printLog = true,
     _Equal test,
     _Fetch<int, dynamic> fetch,
   }) : super(
@@ -351,6 +368,7 @@ class IntIO extends IO<int> with IntMixin {
           isDistinct: isDistinct,
           test: test,
           fetch: fetch,
+          printLog: printLog,
         );
 }
 
@@ -365,6 +383,7 @@ class IntInput extends Input<int> with IntMixin {
     bool isDistinct = false,
     int min,
     int max,
+    bool printLog = true,
     _Equal test,
     _Fetch<int, dynamic> fetch,
   }) : super(
@@ -375,6 +394,7 @@ class IntInput extends Input<int> with IntMixin {
           acceptEmpty: acceptEmpty,
           isDistinct: isDistinct,
           test: test,
+          printLog: printLog,
         ) {
     this._min = min;
     this._max = max;
@@ -390,6 +410,7 @@ class BoolIO extends IO<bool> with BoolMixin {
     bool isBehavior = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
+    bool printLog = true,
     _Equal test,
     _Fetch<bool, dynamic> fetch,
   }) : super(
@@ -401,6 +422,7 @@ class BoolIO extends IO<bool> with BoolMixin {
           isDistinct: isDistinct,
           test: test,
           fetch: fetch,
+          printLog: printLog,
         );
 }
 
@@ -413,6 +435,7 @@ class BoolOutput<ARG_TYPE> extends Output<bool, ARG_TYPE> with BoolMixin {
     bool isBehavior = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
+    bool printLog = true,
     _Equal test,
     _Fetch<bool, ARG_TYPE> fetch,
   }) : super(
@@ -421,6 +444,7 @@ class BoolOutput<ARG_TYPE> extends Output<bool, ARG_TYPE> with BoolMixin {
           sync: sync,
           isBehavior: isBehavior,
           fetch: fetch,
+          printLog: printLog,
         );
 }
 //endregion
