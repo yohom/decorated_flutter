@@ -21,10 +21,14 @@ abstract class BaseIO<T> {
     /// 是否同步发射数据, 传递给内部的[_subject]
     bool sync = true,
 
+    /// 是否打印日志, 有些IO add比较频繁时, 影响日志观看
+    bool printLog = true,
+
     /// 是否使用BehaviorSubject, 如果使用, 那么Event内部的[_subject]会保存最近一次的值
     bool isBehavior = true,
   })  : _semantics = semantics,
         _seedValue = seedValue,
+        _printLog = printLog,
         latest = seedValue,
         _subject = isBehavior
             ? seedValue != null
@@ -33,8 +37,9 @@ abstract class BaseIO<T> {
             : PublishSubject<T>(sync: sync) {
     _subject.listen((data) {
       latest = data;
-      L.d('当前${semantics ??= data.runtimeType.toString()} latest: $latest'
-          '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
+      if (_printLog)
+        L.d('当前${semantics ??= data.runtimeType.toString()} latest: $latest'
+            '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
     });
   }
 
@@ -44,6 +49,10 @@ abstract class BaseIO<T> {
   /// 初始值
   @protected
   T _seedValue;
+
+  /// 初始值
+  @protected
+  bool _printLog;
 
   /// 语义
   @protected
@@ -76,17 +85,19 @@ abstract class BaseIO<T> {
   /// 清理保存的值, 恢复成初始状态
   @Deprecated('使用reset代替, 仅是名称替换')
   void clear() {
-    L.d('-----------------------------BEGIN---------------------------------\n'
-        '${_semantics ??= runtimeType.toString()}事件 cleared '
-        '\n------------------------------END----------------------------------');
+    if (_printLog)
+      L.d('-----------------------------BEGIN---------------------------------\n'
+          '${_semantics ??= runtimeType.toString()}事件 cleared '
+          '\n------------------------------END----------------------------------');
     if (!_subject.isClosed) _subject.add(_seedValue);
   }
 
   /// 清理保存的值, 恢复成初始状态
   void reset() {
-    L.d('-----------------------------BEGIN---------------------------------\n'
-        '${_semantics ??= runtimeType.toString()}事件 重置 '
-        '\n------------------------------END----------------------------------');
+    if (_printLog)
+      L.d('-----------------------------BEGIN---------------------------------\n'
+          '${_semantics ??= runtimeType.toString()}事件 重置 '
+          '\n------------------------------END----------------------------------');
     if (!_subject.isClosed) _subject.add(_seedValue);
   }
 
@@ -97,9 +108,10 @@ abstract class BaseIO<T> {
 
   /// 关闭流
   void dispose() {
-    L.d('=============================BEGIN===============================\n'
-        '${_semantics ??= runtimeType.toString()}事件 disposed '
-        '\n==============================END================================');
+    if (_printLog)
+      L.d('=============================BEGIN===============================\n'
+          '${_semantics ??= runtimeType.toString()}事件 disposed '
+          '\n==============================END================================');
     if (!_subject.isClosed) _subject.close();
   }
 
@@ -423,12 +435,14 @@ mixin InputMixin<T> on BaseIO<T> {
 
   /// 发射数据
   T add(T data) {
-    L.d('+++++++++++++++++++++++++++BEGIN+++++++++++++++++++++++++++++\n'
-        'IO接收到**${_semantics ??= data.runtimeType.toString()}**数据: $data');
+    if (_printLog)
+      L.d('+++++++++++++++++++++++++++BEGIN+++++++++++++++++++++++++++++\n'
+          'IO接收到**${_semantics ??= data.runtimeType.toString()}**数据: $data');
 
     if (isEmpty(data) && !_acceptEmpty) {
-      L.d('转发被拒绝! 原因: 需要非Empty值, 但是接收到Empty值'
-          '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++++');
+      if (_printLog)
+        L.d('转发被拒绝! 原因: 需要非Empty值, 但是接收到Empty值'
+            '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++++');
       return data;
     }
 
@@ -438,23 +452,28 @@ mixin InputMixin<T> on BaseIO<T> {
       // 不停地发送通知(但是值又是一样)的情况
       if (_test != null) {
         if (!_test(latest, data)) {
-          L.d('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
+          if (_printLog)
+            L.d('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
           if (!_subject.isClosed) _subject.add(data);
         } else {
-          L.d('转发被拒绝! 原因: 需要唯一, 但是没有通过唯一性测试'
-              '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
+          if (_printLog)
+            L.d('转发被拒绝! 原因: 需要唯一, 但是没有通过唯一性测试'
+                '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
         }
       } else {
         if (data != latest) {
-          L.d('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
+          if (_printLog)
+            L.d('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
           if (!_subject.isClosed) _subject.add(data);
         } else {
-          L.d('转发被拒绝! 原因: 需要唯一, 但是新数据与最新值相同'
-              '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
+          if (_printLog)
+            L.d('转发被拒绝! 原因: 需要唯一, 但是新数据与最新值相同'
+                '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
         }
       }
     } else {
-      L.d('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
+      if (_printLog)
+        L.d('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
       if (!_subject.isClosed) _subject.add(data);
     }
 
