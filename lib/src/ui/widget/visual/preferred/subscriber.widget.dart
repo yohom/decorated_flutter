@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 
 import '../placeholder/error_placeholder.widget.dart';
 
-typedef Widget _Builder<DATA>(DATA data);
-typedef Widget _ErrorPlaceholderBuilder(BuildContext context, Object error);
+typedef _Builder<DATA> = Widget Function(DATA data);
+typedef _ErrorPlaceholderBuilder = Widget Function(
+    BuildContext context, Object error);
 
 class Subscriber<T> extends StatelessWidget {
   static Widget defaultEmptyPlaceholder;
@@ -31,6 +32,7 @@ class Subscriber<T> extends StatelessWidget {
     this.errorPlaceholderBuilder,
     this.loadingPlaceholder,
     this.handleEmpty = true,
+    this.sliver = false,
   }) : super(key: key);
 
   /// 流
@@ -59,6 +61,9 @@ class Subscriber<T> extends StatelessWidget {
   /// 碰到EasyRefresh需要接管空列表的情况
   final bool handleEmpty;
 
+  /// 是否使用Sliver
+  final bool sliver;
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<T>(
@@ -73,7 +78,7 @@ class Subscriber<T> extends StatelessWidget {
           if (errorPlaceholderBuilder != null) {
             return errorPlaceholderBuilder(context, snapshot.error);
           } else {
-            return defaultErrorPlaceholder ?? const ErrorPlaceholder();
+            return defaultErrorPlaceholder ?? ErrorPlaceholder(sliver: sliver);
           }
         }
 
@@ -81,12 +86,12 @@ class Subscriber<T> extends StatelessWidget {
           if (isEmpty(snapshot.data) && handleEmpty) {
             return emptyPlaceholder ??
                 defaultEmptyPlaceholder ??
-                const EmptyPlaceholder();
+                EmptyPlaceholder(sliver: sliver);
           } else {
             return builder(snapshot.data);
           }
         } else if (showLoading) {
-          return loadingPlaceholder ?? LoadingWidget();
+          return loadingPlaceholder ?? LoadingWidget(sliver: sliver);
         } else {
           return SizedBox.shrink();
         }
