@@ -667,6 +667,15 @@ mixin ListMixin<T> on BaseIO<List<T>> {
     }
     return element;
   }
+
+  /// 对元素逐个执行操作后, 重新发射
+  List<T> forEach(ValueChanged<T> action) {
+    latest.forEach(action);
+    if (!_subject.isClosed) {
+      _subject.add(latest);
+    }
+    return latest;
+  }
 }
 
 mixin BoolMixin on BaseIO<bool> {
