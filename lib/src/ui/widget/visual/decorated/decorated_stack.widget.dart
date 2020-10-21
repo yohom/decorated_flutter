@@ -101,10 +101,6 @@ class DecoratedStack extends StatelessWidget {
       );
     }
 
-    if (expanded) {
-      result = Expanded(child: result);
-    }
-
     if (textStyle != null) {
       result = DefaultTextStyle(style: textStyle, child: result);
     }
@@ -128,6 +124,10 @@ class DecoratedStack extends StatelessWidget {
         constraints: constraints,
         child: result,
       );
+    }
+
+    if (expanded) {
+      result = Expanded(child: result);
     }
     return result;
   }
