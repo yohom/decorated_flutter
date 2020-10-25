@@ -2,7 +2,6 @@ package io.flutter.plugins;
 
 import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugins.pathprovider.PathProviderPlugin;
-import io.flutter.plugins.sensors.SensorsPlugin;
 import com.tekartik.sqflite.SqflitePlugin;
 
 /**
@@ -14,7 +13,6 @@ public final class GeneratedPluginRegistrant {
       return;
     }
     PathProviderPlugin.registerWith(registry.registrarFor("io.flutter.plugins.pathprovider.PathProviderPlugin"));
-    SensorsPlugin.registerWith(registry.registrarFor("io.flutter.plugins.sensors.SensorsPlugin"));
     SqflitePlugin.registerWith(registry.registrarFor("com.tekartik.sqflite.SqflitePlugin"));
   }
 
