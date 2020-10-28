@@ -39,6 +39,7 @@ export 'widget/visual/special_affect/captcha/captcha_manager.mixin.dart';
 export 'widget/visual/special_affect/carousel.widget.dart';
 export 'widget/visual/special_affect/cover_card.widget.dart';
 export 'widget/visual/special_affect/dot_indicator.widget.dart';
+export 'widget/visual/special_affect/edge_fade.widget.dart';
 export 'widget/visual/special_affect/form_sheet.widget.dart';
 export 'widget/visual/special_affect/gradient_button.widget.dart';
 export 'widget/visual/special_affect/notification_badge.widget.dart';
