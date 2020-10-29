@@ -389,6 +389,26 @@ class DecoratedFlex extends StatelessWidget {
       ]);
     }
 
+    if (behavior != null || onPressed != null || onLongPressed != null) {
+      result = GestureDetector(
+        behavior: behavior == null ?? result != null
+            ? HitTestBehavior.deferToChild
+            : HitTestBehavior.translucent,
+        onTap: onPressed != null ? () => onPressed(context) : null,
+        onLongPress:
+            onLongPressed != null ? () => onLongPressed(context) : null,
+        child: result,
+      );
+    }
+
+    if (material || elevation != null) {
+      result = Material(
+        elevation: elevation ?? 0,
+        color: color,
+        child: result,
+      );
+    }
+
     if (padding != null ||
         margin != null ||
         width != null ||
@@ -430,26 +450,6 @@ class DecoratedFlex extends StatelessWidget {
           child: result,
         );
       }
-    }
-
-    if (behavior != null || onPressed != null || onLongPressed != null) {
-      result = GestureDetector(
-        behavior: behavior == null ?? result != null
-            ? HitTestBehavior.deferToChild
-            : HitTestBehavior.translucent,
-        onTap: onPressed != null ? () => onPressed(context) : null,
-        onLongPress:
-            onLongPressed != null ? () => onLongPressed(context) : null,
-        child: result,
-      );
-    }
-
-    if (material || elevation != null) {
-      result = Material(
-        elevation: elevation ?? 0,
-        color: color,
-        child: result,
-      );
     }
 
     if (safeArea != null ||
