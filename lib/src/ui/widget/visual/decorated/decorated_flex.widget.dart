@@ -46,6 +46,7 @@ class DecoratedRow extends DecoratedFlex {
     ThemeData theme,
     Widget topEnd,
     bool center,
+    bool sliver = false,
     List<Widget> children,
   }) : super(
           key: key,
@@ -89,6 +90,7 @@ class DecoratedRow extends DecoratedFlex {
           theme: theme,
           topEnd: topEnd,
           center: center,
+          sliver: sliver,
           children: children,
         );
 }
@@ -135,6 +137,7 @@ class DecoratedColumn extends DecoratedFlex {
     ThemeData theme,
     Widget topEnd,
     bool center,
+    bool sliver = false,
     List<Widget> children,
   }) : super(
           key: key,
@@ -178,6 +181,7 @@ class DecoratedColumn extends DecoratedFlex {
           theme: theme,
           topEnd: topEnd,
           center: center,
+          sliver: sliver,
           children: children,
         );
 }
@@ -226,6 +230,7 @@ class DecoratedFlex extends StatelessWidget {
     this.theme,
     this.topEnd,
     this.center,
+    this.sliver = false,
     this.children,
   }) : super(key: key);
 
@@ -327,6 +332,9 @@ class DecoratedFlex extends StatelessWidget {
 
   /// 是否加center
   final bool center;
+
+  /// 是否sliver
+  final bool sliver;
 
   /// 子元素
   final List<Widget> children;
@@ -491,6 +499,10 @@ class DecoratedFlex extends StatelessWidget {
 
     if (expanded == true) {
       result = Expanded(child: result);
+    }
+
+    if (sliver == true) {
+      result = SliverToBoxAdapter(child: result);
     }
 
     return result;
