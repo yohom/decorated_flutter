@@ -47,6 +47,7 @@ class DecoratedRow extends DecoratedFlex {
     Widget topEnd,
     bool center,
     bool sliver = false,
+    VerticalDirection verticalDirection,
     List<Widget> children,
   }) : super(
           key: key,
@@ -91,6 +92,7 @@ class DecoratedRow extends DecoratedFlex {
           topEnd: topEnd,
           center: center,
           sliver: sliver,
+          verticalDirection: verticalDirection,
           children: children,
         );
 }
@@ -138,6 +140,7 @@ class DecoratedColumn extends DecoratedFlex {
     Widget topEnd,
     bool center,
     bool sliver = false,
+    VerticalDirection verticalDirection,
     List<Widget> children,
   }) : super(
           key: key,
@@ -182,6 +185,7 @@ class DecoratedColumn extends DecoratedFlex {
           topEnd: topEnd,
           center: center,
           sliver: sliver,
+          verticalDirection: verticalDirection,
           children: children,
         );
 }
@@ -231,6 +235,7 @@ class DecoratedFlex extends StatelessWidget {
     this.topEnd,
     this.center,
     this.sliver = false,
+    this.verticalDirection,
     this.children,
   }) : super(key: key);
 
@@ -336,6 +341,9 @@ class DecoratedFlex extends StatelessWidget {
   /// 是否sliver
   final bool sliver;
 
+  /// 垂直方向
+  final VerticalDirection verticalDirection;
+
   /// 子元素
   final List<Widget> children;
 
@@ -368,6 +376,7 @@ class DecoratedFlex extends StatelessWidget {
       mainAxisSize: mainAxisSize,
       crossAxisAlignment: crossAxisAlignment,
       textBaseline: textBaseline,
+      verticalDirection: verticalDirection,
       children: itemSpacing != 0 || divider != null
           ? addItemDivider(_children, itemSpacing, divider)
           : _children,
