@@ -19,6 +19,7 @@ class DecoratedText extends StatelessWidget {
     this.width,
     this.height,
     this.center,
+    this.sliver = false,
   }) : super(key: key);
 
   final EdgeInsetsGeometry padding;
@@ -37,6 +38,7 @@ class DecoratedText extends StatelessWidget {
   final double height;
   final bool visible;
   final bool center;
+  final bool sliver;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +70,7 @@ class DecoratedText extends StatelessWidget {
       );
     }
 
-    if (safeArea != null) {
+    if (safeArea == true) {
       result = SafeArea(child: result);
     }
 
@@ -79,12 +81,16 @@ class DecoratedText extends StatelessWidget {
       );
     }
 
-    if (visible != null) {
+    if (visible == true) {
       result = Visibility(visible: visible, child: result);
     }
 
-    if (expanded) {
+    if (expanded == true) {
       result = Expanded(child: result);
+    }
+
+    if (sliver == true) {
+      result = SliverToBoxAdapter(child: result);
     }
 
     return result;

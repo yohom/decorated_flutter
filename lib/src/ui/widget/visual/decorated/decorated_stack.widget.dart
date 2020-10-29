@@ -28,6 +28,7 @@ class DecoratedStack extends StatelessWidget {
     this.end,
     this.center,
     this.borderRadius,
+    this.sliver = false,
     @required this.children,
   }) : super(key: key);
 
@@ -62,6 +63,8 @@ class DecoratedStack extends StatelessWidget {
   final Overflow overflow;
 
   final BorderRadius borderRadius;
+
+  final bool sliver;
 
   final List<Widget> children;
 
@@ -128,6 +131,10 @@ class DecoratedStack extends StatelessWidget {
 
     if (expanded) {
       result = Expanded(child: result);
+    }
+
+    if (sliver) {
+      result = SliverToBoxAdapter(child: result);
     }
     return result;
   }
