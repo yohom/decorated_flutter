@@ -9,7 +9,7 @@ class DecoratedStack extends StatelessWidget {
     this.decoration,
     this.width,
     this.height,
-    this.textStyle = const TextStyle(),
+    this.textStyle,
     this.safeArea,
     this.onPressed,
     this.behavior = HitTestBehavior.opaque,
