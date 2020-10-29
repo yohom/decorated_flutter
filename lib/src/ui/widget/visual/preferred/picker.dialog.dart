@@ -80,7 +80,7 @@ class _PickerDialogState<T> extends State<_PickerDialog<T>> {
             ),
           ],
         ),
-        kDividerTiny,
+        kDivider1,
         Flexible(
           child: CupertinoPicker(
             onSelectedItemChanged: (int value) {
