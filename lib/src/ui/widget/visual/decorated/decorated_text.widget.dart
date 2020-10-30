@@ -20,6 +20,7 @@ class DecoratedText extends StatelessWidget {
     this.height,
     this.center,
     this.sliver = false,
+    this.transform,
   }) : super(key: key);
 
   final EdgeInsetsGeometry padding;
@@ -39,6 +40,7 @@ class DecoratedText extends StatelessWidget {
   final bool visible;
   final bool center;
   final bool sliver;
+  final Matrix4 transform;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +60,8 @@ class DecoratedText extends StatelessWidget {
         padding != null ||
         margin != null ||
         width != null ||
-        height != null) {
+        height != null ||
+        transform != null) {
       result = Container(
         width: width,
         height: height,
@@ -66,6 +69,7 @@ class DecoratedText extends StatelessWidget {
         padding: padding,
         decoration: decoration,
         constraints: constraints,
+        transform: transform,
         child: result,
       );
     }
