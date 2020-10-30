@@ -352,22 +352,7 @@ class DecoratedFlex extends StatelessWidget {
     List<Widget> _children = children;
 
     if (forceItemSameExtent) {
-      _children = children.map((it) {
-        switch (direction) {
-          case Axis.horizontal:
-            return SizedBox(
-              width: MediaQuery.of(context).size.width / children.length,
-              child: it,
-            );
-          case Axis.vertical:
-            return SizedBox(
-              height: MediaQuery.of(context).size.height / children.length,
-              child: it,
-            );
-          default:
-            return null;
-        }
-      }).toList();
+      _children = children.map((it) => Expanded(child: it)).toList();
     }
 
     Widget result = Flex(
