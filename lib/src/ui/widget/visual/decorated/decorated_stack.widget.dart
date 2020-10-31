@@ -1,6 +1,11 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 
+enum ZIndex {
+  top,
+  bottom,
+}
+
 class DecoratedStack extends StatelessWidget {
   const DecoratedStack({
     Key key,
@@ -29,6 +34,7 @@ class DecoratedStack extends StatelessWidget {
     this.center,
     this.borderRadius,
     this.sliver = false,
+    this.childrenZIndex = ZIndex.top,
     @required this.children,
   }) : super(key: key);
 
@@ -65,6 +71,7 @@ class DecoratedStack extends StatelessWidget {
   final BorderRadius borderRadius;
 
   final bool sliver;
+  final ZIndex childrenZIndex;
 
   final List<Widget> children;
 
@@ -75,6 +82,7 @@ class DecoratedStack extends StatelessWidget {
       fit: stackFit ?? StackFit.loose,
       overflow: overflow ?? Overflow.clip,
       children: <Widget>[
+        if (childrenZIndex == ZIndex.bottom) ...children,
         if (topStart != null) Positioned(top: 0, left: 0, child: topStart),
         if (topEnd != null) Positioned(top: 0, right: 0, child: topEnd),
         if (bottomStart != null)
@@ -88,7 +96,7 @@ class DecoratedStack extends StatelessWidget {
         if (end != null) Positioned(bottom: 0, top: 0, right: 0, child: end),
         if (center != null)
           Positioned(bottom: 0, right: 0, top: 0, left: 0, child: center),
-        ...children,
+        if (childrenZIndex == ZIndex.top) ...children,
       ],
     );
 
