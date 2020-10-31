@@ -75,7 +75,6 @@ class DecoratedStack extends StatelessWidget {
       fit: stackFit ?? StackFit.loose,
       overflow: overflow ?? Overflow.clip,
       children: <Widget>[
-        ...children,
         if (topStart != null) Positioned(top: 0, left: 0, child: topStart),
         if (topEnd != null) Positioned(top: 0, right: 0, child: topEnd),
         if (bottomStart != null)
@@ -89,6 +88,7 @@ class DecoratedStack extends StatelessWidget {
         if (end != null) Positioned(bottom: 0, top: 0, right: 0, child: end),
         if (center != null)
           Positioned(bottom: 0, right: 0, top: 0, left: 0, child: center),
+        ...children,
       ],
     );
 
