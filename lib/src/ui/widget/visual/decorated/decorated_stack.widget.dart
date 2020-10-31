@@ -34,7 +34,7 @@ class DecoratedStack extends StatelessWidget {
     this.center,
     this.borderRadius,
     this.sliver = false,
-    this.childrenZIndex = ZIndex.top,
+    this.childrenZIndex = ZIndex.bottom,
     @required this.children,
   }) : super(key: key);
 
