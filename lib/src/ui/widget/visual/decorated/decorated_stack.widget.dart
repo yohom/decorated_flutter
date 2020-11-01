@@ -104,14 +104,6 @@ class DecoratedStack extends StatelessWidget {
       result = SafeArea(child: result);
     }
 
-    if (onPressed != null) {
-      result = GestureDetector(
-        behavior: behavior ?? HitTestBehavior.deferToChild,
-        onTap: () => onPressed(context),
-        child: result,
-      );
-    }
-
     if (textStyle != null) {
       result = DefaultTextStyle(style: textStyle, child: result);
     }
@@ -133,6 +125,14 @@ class DecoratedStack extends StatelessWidget {
         height: height,
         decoration: decoration,
         constraints: constraints,
+        child: result,
+      );
+    }
+
+    if (onPressed != null) {
+      result = GestureDetector(
+        behavior: behavior ?? HitTestBehavior.deferToChild,
+        onTap: () => onPressed(context),
         child: result,
       );
     }
