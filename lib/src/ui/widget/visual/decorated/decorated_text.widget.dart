@@ -7,7 +7,8 @@ class DecoratedText extends StatelessWidget {
     this.padding,
     this.margin,
     this.decoration,
-    this.style = const TextStyle(),
+    this.style,
+    this.strutStyle = const StrutStyle(),
     this.safeArea,
     this.onPressed,
     this.maxLines,
@@ -27,6 +28,7 @@ class DecoratedText extends StatelessWidget {
   final EdgeInsetsGeometry margin;
   final BoxDecoration decoration;
   final TextStyle style;
+  final StrutStyle strutStyle;
   final String data;
   final bool safeArea;
   final ValueChanged<String> onPressed;
@@ -47,7 +49,8 @@ class DecoratedText extends StatelessWidget {
     Widget result = Text(
       data,
       maxLines: maxLines,
-      style: style,
+      style: style ?? DefaultTextStyle.of(context).style,
+      strutStyle: strutStyle,
       textAlign: textAlign,
       overflow: overflow,
     );
