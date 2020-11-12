@@ -15,3 +15,9 @@ enum Gravity {
   Center,
   End,
 }
+
+enum Gender {
+  male,
+  female,
+  unknown,
+}
