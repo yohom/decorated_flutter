@@ -1,3 +1,4 @@
+import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 
@@ -13,15 +14,16 @@ void toast(
   Duration duration,
   bool error = false,
 }) {
-  showToast(
-    message,
-    position: position,
-    radius: radius,
-    duration: duration,
-    textPadding: padding,
-    textStyle: textStyle,
-    onDismiss: onDismiss,
-    dismissOtherToast: dismissOtherToast,
-    textAlign: textAlign,
-  );
+  if (isNotEmpty(message))
+    showToast(
+      message,
+      position: position,
+      radius: radius,
+      duration: duration,
+      textPadding: padding,
+      textStyle: textStyle,
+      onDismiss: onDismiss,
+      dismissOtherToast: dismissOtherToast,
+      textAlign: textAlign,
+    );
 }
