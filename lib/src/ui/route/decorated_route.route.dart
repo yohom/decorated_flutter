@@ -76,7 +76,7 @@ class DecoratedRoute<B extends BLoC, T extends Object>
   final SystemUiOverlayStyle systemUiOverlayStyle;
 
   /// 自定义的动画
-  final Widget Function(Animation, Widget) animationBuilder;
+  final Widget Function(Animation<double>, Widget) animationBuilder;
 
   /// 是否已经初始化
   bool _inited = false;
