@@ -23,6 +23,7 @@ class DecoratedRoute<B extends BLoC, T extends Object>
     this.tabLength,
     this.onDispose,
     this.systemUiOverlayStyle,
+    this.animationBuilder,
     String routeName,
     bool fullscreenDialog = false,
     bool maintainState = true,
@@ -74,6 +75,9 @@ class DecoratedRoute<B extends BLoC, T extends Object>
   /// 系统ui
   final SystemUiOverlayStyle systemUiOverlayStyle;
 
+  /// 自定义的动画
+  final Widget Function(Animation, Widget) animationBuilder;
+
   /// 是否已经初始化
   bool _inited = false;
 
@@ -119,8 +123,12 @@ class DecoratedRoute<B extends BLoC, T extends Object>
   }
 
   @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
     animation.addStatusListener((status) {
       // 如果是懒加载, 那么动画结束时开始初始化
       if (status == AnimationStatus.completed &&
@@ -131,9 +139,21 @@ class DecoratedRoute<B extends BLoC, T extends Object>
         _inited = true;
       }
     });
-    return animate
-        ? super.buildTransitions(context, animation, secondaryAnimation, child)
-        : child;
+
+    if (animate) {
+      if (animationBuilder != null) {
+        return animationBuilder(animation, child);
+      } else {
+        return super.buildTransitions(
+          context,
+          animation,
+          secondaryAnimation,
+          child,
+        );
+      }
+    } else {
+      return child;
+    }
   }
 }
 

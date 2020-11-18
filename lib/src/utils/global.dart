@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// 全局常量
+@Deprecated('不再使用')
 class Global {
   static const kTrue = 'true';
   static const kFalse = 'false';
