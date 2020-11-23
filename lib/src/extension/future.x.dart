@@ -20,7 +20,7 @@ extension FutureX<T> on Future<T> {
     // 是被future pop的还是按返回键pop的
     bool popByFuture = true;
 
-    final ThemeData theme = Theme.of(context, shadowThemeOnly: true);
+    final ThemeData theme = Theme.of(context);
     showGeneralDialog(
       context: context,
       pageBuilder: (
