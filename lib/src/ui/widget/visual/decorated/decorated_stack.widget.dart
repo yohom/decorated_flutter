@@ -35,7 +35,7 @@ class DecoratedStack extends StatelessWidget {
     this.borderRadius,
     this.sliver = false,
     this.childrenZIndex = ZIndex.bottom,
-    @required this.children,
+    this.children = const [],
   }) : super(key: key);
 
   final EdgeInsetsGeometry padding;

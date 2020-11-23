@@ -178,7 +178,7 @@ class StreamListView<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget result = PreferredStreamBuilder<List<T>>(
+    Widget result = Subscriber<List<T>>(
       stream: stream,
       showLoading: showLoading,
       initialData: initialData,

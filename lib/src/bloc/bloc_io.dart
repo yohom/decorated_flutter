@@ -672,6 +672,16 @@ mixin ListMixin<T> on BaseIO<List<T>> {
     }
     return latest;
   }
+
+  /// 对[target]进行单选操作, 如果[T]不为[Selectable]则什么都不做, 直接透传
+  List<T> select(T target) {
+    assert(latest is List<Selectable>);
+    return forEach((T data) {
+      if (data is Selectable) {
+        data.selected = (data == target);
+      }
+    });
+  }
 }
 
 mixin BoolMixin on BaseIO<bool> {
