@@ -78,6 +78,10 @@ class DecoratedText extends StatelessWidget {
       overflow: overflow,
     );
 
+    if (center == true) {
+      result = Center(child: result);
+    }
+
     if (decoration != null ||
         padding != null ||
         margin != null ||
@@ -109,10 +113,6 @@ class DecoratedText extends StatelessWidget {
 
     if (visible == true) {
       result = Visibility(visible: visible, child: result);
-    }
-
-    if (center == true) {
-      result = Center(child: result);
     }
 
     if (expanded == true) {
