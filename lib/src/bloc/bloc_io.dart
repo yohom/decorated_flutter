@@ -757,7 +757,32 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
   /// 请求下一页数据
   ///
   /// 返回是否还有更多数据 true为还有更多数据 false为没有更多数据
+  @Deprecated('使用[loadMore]代替, 仅仅是名称替换')
   Future<bool> nextPage([ARG_TYPE args]) async {
+    // 如果已经没有更多数据的话, 就不再请求
+    if (!_noMoreData) {
+      try {
+        final nextPageData = await _pageFetch(++_currentPage, args);
+        if (_receiveFullData) {
+          _dataList = [..._dataList, ...nextPageData];
+        } else {
+          _dataList = nextPageData;
+        }
+        // 如果当前页列表大小已经小于设置的每页大小, 那么说明已经到最后一页
+        // 或者当前页是空, 也说明已经是最后一页
+        _noMoreData = nextPageData.length < _pageSize || nextPageData.isEmpty;
+        _subject.add(_dataList);
+      } catch (e) {
+        _subject.addError(e);
+      }
+    }
+    return !_noMoreData;
+  }
+
+  /// 请求下一页数据
+  ///
+  /// 返回是否还有更多数据 true为还有更多数据 false为没有更多数据
+  Future<bool> loadMore([ARG_TYPE args]) async {
     // 如果已经没有更多数据的话, 就不再请求
     if (!_noMoreData) {
       try {
