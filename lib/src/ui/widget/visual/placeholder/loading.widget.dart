@@ -6,11 +6,13 @@ class LoadingWidget extends StatelessWidget {
     Key key,
     this.height,
     this.width,
+    this.margin,
     this.sliver = false,
   }) : super(key: key);
 
   final double width;
   final double height;
+  final EdgeInsets margin;
   final bool sliver;
 
   @override
@@ -20,6 +22,9 @@ class LoadingWidget extends StatelessWidget {
     );
     if (height != null || width != null) {
       result = SizedBox(height: height, width: width, child: result);
+    }
+    if (margin != null) {
+      result = Padding(padding: margin, child: result);
     }
     if (sliver) {
       result = SliverToBoxAdapter(child: result);
