@@ -1,3 +1,4 @@
+import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:flutter/material.dart';
 
 class DecoratedText extends StatelessWidget {
@@ -54,7 +55,7 @@ class DecoratedText extends StatelessWidget {
   final StrutStyle strutStyle;
   final String data;
   final bool safeArea;
-  final ValueChanged<String> onPressed;
+  final ContextCallback onPressed;
   final int maxLines;
   final TextAlign textAlign;
   final TextOverflow overflow;
@@ -106,7 +107,7 @@ class DecoratedText extends StatelessWidget {
 
     if (onPressed != null) {
       result = GestureDetector(
-        onTap: () => onPressed(data),
+        onTap: () => onPressed(context),
         child: result,
       );
     }
