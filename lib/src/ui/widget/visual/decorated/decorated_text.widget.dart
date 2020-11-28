@@ -22,31 +22,8 @@ class DecoratedText extends StatelessWidget {
     this.height,
     this.center,
     this.transform,
-  })  : this._sliver = false,
-        super(key: key);
-
-  const DecoratedText.sliver(
-    this.data, {
-    Key key,
-    this.padding,
-    this.margin,
-    this.decoration,
-    this.style,
-    this.strutStyle = const StrutStyle(),
-    this.safeArea,
-    this.onPressed,
-    this.maxLines,
-    this.textAlign,
-    this.overflow,
-    this.constraints,
-    this.expanded = false,
-    this.visible,
-    this.width,
-    this.height,
-    this.center,
-    this.transform,
-  })  : this._sliver = true,
-        super(key: key);
+    this.sliver,
+  }) : super(key: key);
 
   final EdgeInsetsGeometry padding;
   final EdgeInsetsGeometry margin;
@@ -65,7 +42,7 @@ class DecoratedText extends StatelessWidget {
   final double height;
   final bool visible;
   final bool center;
-  final bool _sliver;
+  final bool sliver;
   final Matrix4 transform;
 
   @override
@@ -120,7 +97,7 @@ class DecoratedText extends StatelessWidget {
       result = Expanded(child: result);
     }
 
-    if (_sliver == true) {
+    if (sliver == true) {
       result = SliverToBoxAdapter(child: result);
     }
 
