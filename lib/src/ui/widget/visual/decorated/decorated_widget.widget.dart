@@ -1,6 +1,7 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:decorated_flutter/src/ui/widget/nonvisual/auto_close_keyboard.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 typedef void _InitAction<T extends BLoC>(T bloc);
 
@@ -14,6 +15,7 @@ class DecoratedWidget<B extends BLoC> extends StatefulWidget {
     this.init,
     this.withForm = false,
     this.withDefaultTabController = false,
+    this.systemUiOverlayStyle,
     this.tabLength,
   })  : // 要么同时设置泛型B和bloc参数, 要么就都不设置
         assert((B != BLoC && bloc != null) || (B == BLoC && bloc == null)),
@@ -43,6 +45,9 @@ class DecoratedWidget<B extends BLoC> extends StatefulWidget {
   /// tab bar长度, 必须和[withDefaultTabController]一起设置
   final int tabLength;
 
+  /// 系统ui
+  final SystemUiOverlayStyle systemUiOverlayStyle;
+
   @override
   _DecoratedWidgetState createState() => _DecoratedWidgetState<B>();
 }
@@ -62,17 +67,24 @@ class _DecoratedWidgetState<B extends BLoC> extends State<DecoratedWidget<B>> {
     }
 
     // 是否自动收起键盘
-    if (widget.autoCloseKeyboard) {
+    if (widget.autoCloseKeyboard == true) {
       result = AutoCloseKeyboard(child: result);
     }
 
     // 是否带有表单
-    if (widget.withForm) {
+    if (widget.withForm == true) {
       result = Form(child: result);
     }
 
-    if (widget.withDefaultTabController) {
+    if (widget.withDefaultTabController == true) {
       result = DefaultTabController(length: widget.tabLength, child: result);
+    }
+
+    if (widget.systemUiOverlayStyle != null) {
+      result = AnnotatedRegion<SystemUiOverlayStyle>(
+        value: widget.systemUiOverlayStyle,
+        child: result,
+      );
     }
 
     return result;
