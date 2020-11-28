@@ -5,3 +5,4 @@ final notNull = (data) => data != null;
 final notEmpty = (data) => isNotEmpty(data);
 final isTrue = (bool data) => data == true;
 final isFalse = (bool data) => data == false;
+final returnNull = () => null;

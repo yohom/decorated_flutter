@@ -131,7 +131,7 @@ class DecoratedStack extends StatelessWidget {
       );
     }
 
-    if (onPressed != null) {
+    if (onPressed != null || onLongPressed != null) {
       result = GestureDetector(
         behavior: behavior ?? HitTestBehavior.deferToChild,
         onTap: () => onPressed?.call(context),
