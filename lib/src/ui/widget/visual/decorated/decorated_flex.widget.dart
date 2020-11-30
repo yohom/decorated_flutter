@@ -30,6 +30,7 @@ class DecoratedRow extends DecoratedFlex {
     bool visible,
     bool expanded,
     bool flexible,
+    int flex,
     bool forceItemSameExtent = false,
     double elevation,
     bool material = false,
@@ -76,6 +77,7 @@ class DecoratedRow extends DecoratedFlex {
           visible: visible,
           expanded: expanded,
           flexible: flexible,
+          flex: flex,
           forceItemSameExtent: forceItemSameExtent,
           safeArea: safeArea,
           safeAreaTop: safeAreaTop,
@@ -127,6 +129,7 @@ class DecoratedColumn extends DecoratedFlex {
     bool visible,
     bool expanded,
     bool flexible,
+    int flex,
     bool forceItemSameExtent = false,
     double elevation,
     bool material = false,
@@ -173,6 +176,7 @@ class DecoratedColumn extends DecoratedFlex {
           visible: visible,
           expanded: expanded,
           flexible: flexible,
+          flex: flex,
           forceItemSameExtent: forceItemSameExtent,
           safeArea: safeArea,
           safeAreaTop: safeAreaTop,
@@ -225,6 +229,7 @@ class DecoratedFlex extends StatelessWidget {
     this.visible,
     this.expanded,
     this.flexible,
+    this.flex,
     this.forceItemSameExtent = false,
     this.elevation,
     this.safeArea,
@@ -304,6 +309,9 @@ class DecoratedFlex extends StatelessWidget {
 
   /// 是否展开
   final bool flexible;
+
+  /// 比例
+  final int flex;
 
   /// 是否强制子控件等长
   final bool forceItemSameExtent;
@@ -504,11 +512,11 @@ class DecoratedFlex extends StatelessWidget {
     }
 
     if (expanded == true) {
-      result = Expanded(child: result);
+      result = Expanded(child: result, flex: flex ?? 1);
     }
 
     if (flexible == true) {
-      result = Flexible(child: result);
+      result = Flexible(child: result, flex: flex ?? 1);
     }
 
     if (sliver == true) {
