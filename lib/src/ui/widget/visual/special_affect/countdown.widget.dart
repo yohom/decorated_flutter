@@ -4,7 +4,7 @@ class Countdown extends StatelessWidget {
   const Countdown({
     Key key,
     @required this.initialData,
-    @required this.duration,
+    this.duration = const Duration(seconds: 1),
     @required this.builder,
   }) : super(key: key);
 
@@ -19,7 +19,7 @@ class Countdown extends StatelessWidget {
       stream: Stream.periodic(duration, (count) => initialData - 1 - count)
           .take(initialData),
       builder: (context, snapshot) {
-        return builder(context, snapshot.data);
+        return builder?.call(context, snapshot.data);
       },
     );
   }
