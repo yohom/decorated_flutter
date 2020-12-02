@@ -84,8 +84,6 @@ class DecoratedText extends StatelessWidget {
 
     if (rightWidget != null || leftWidget != null) {
       result = Row(
-        textBaseline: TextBaseline.alphabetic,
-        crossAxisAlignment: CrossAxisAlignment.baseline,
         children: [
           if (leftWidget != null) leftWidget,
           result,
