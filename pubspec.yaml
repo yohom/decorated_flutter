@@ -18,15 +18,10 @@ dependencies:
   dio: ^3.0.10
   # rx
   rxdart: ^0.24.1
-  # 加解密
-  encrypt: 4.1.0
-  crypto: 2.1.5
   # 图片加载增强
   cached_network_image: 2.3.3
   # toast
   oktoast: ^2.3.2
-  # svg
-  flutter_svg: 0.19.1
   # 模态对话框增强
   modal_bottom_sheet: 1.0.0+1
   # 日志打印
