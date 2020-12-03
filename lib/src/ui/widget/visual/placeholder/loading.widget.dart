@@ -10,6 +10,7 @@ class LoadingWidget extends StatelessWidget {
     this.color,
     this.backgroundColor,
     this.sliver = false,
+    this.material = false,
   }) : super(key: key);
 
   final double width;
@@ -18,15 +19,18 @@ class LoadingWidget extends StatelessWidget {
   final Color color;
   final Color backgroundColor;
   final bool sliver;
+  final bool material;
 
   @override
   Widget build(BuildContext context) {
     Widget result = Center(
-      child: CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation(
-          color ?? Theme.of(context).primaryColor,
-        ),
-      ),
+      child: material
+          ? CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation(
+                color ?? Theme.of(context).primaryColor,
+              ),
+            )
+          : CupertinoActivityIndicator(),
     );
     if (height != null || width != null) {
       result = SizedBox(height: height, width: width, child: result);
