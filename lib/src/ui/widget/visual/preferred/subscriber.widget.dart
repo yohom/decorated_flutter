@@ -11,15 +11,15 @@ typedef _ErrorPlaceholderBuilder = Widget Function(
     BuildContext context, Object error);
 
 class Subscriber<T> extends StatelessWidget {
-  static Widget defaultEmptyPlaceholder;
-  static Widget defaultErrorPlaceholder;
+  static Widget _defaultEmptyPlaceholder;
+  static Widget _defaultErrorPlaceholder;
 
   static void setDefaultPlaceholder({
     Widget emptyPlaceholder,
     Widget errorPlaceholder,
   }) {
-    defaultEmptyPlaceholder = emptyPlaceholder;
-    defaultErrorPlaceholder = errorPlaceholder;
+    _defaultEmptyPlaceholder = emptyPlaceholder;
+    _defaultErrorPlaceholder = errorPlaceholder;
   }
 
   const Subscriber({
@@ -78,14 +78,14 @@ class Subscriber<T> extends StatelessWidget {
           if (errorPlaceholderBuilder != null) {
             return errorPlaceholderBuilder(context, snapshot.error);
           } else {
-            return defaultErrorPlaceholder ?? ErrorPlaceholder(sliver: sliver);
+            return _defaultErrorPlaceholder ?? ErrorPlaceholder(sliver: sliver);
           }
         }
 
         if (snapshot.hasData) {
           if (isEmpty(snapshot.data) && handleEmpty) {
             return emptyPlaceholder ??
-                defaultEmptyPlaceholder ??
+                _defaultEmptyPlaceholder ??
                 EmptyPlaceholder(sliver: sliver);
           } else {
             return builder(snapshot.data);

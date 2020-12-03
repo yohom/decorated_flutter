@@ -36,6 +36,7 @@ export 'widget/visual/special_affect/captcha/captcha.widget.dart';
 export 'widget/visual/special_affect/captcha/captcha_controller.dart';
 export 'widget/visual/special_affect/captcha/captcha_manager.mixin.dart';
 export 'widget/visual/special_affect/carousel.widget.dart';
+export 'widget/visual/special_affect/countdown.widget.dart';
 export 'widget/visual/special_affect/cover_card.widget.dart';
 export 'widget/visual/special_affect/dot_indicator.widget.dart';
 export 'widget/visual/special_affect/edge_fade.widget.dart';

@@ -23,6 +23,8 @@ class DecoratedText extends StatelessWidget {
     this.center,
     this.transform,
     this.sliver,
+    this.leftWidget,
+    this.rightWidget,
   }) : super(key: key);
 
   final EdgeInsetsGeometry padding;
@@ -44,6 +46,8 @@ class DecoratedText extends StatelessWidget {
   final bool center;
   final bool sliver;
   final Matrix4 transform;
+  final Widget leftWidget;
+  final Widget rightWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +79,16 @@ class DecoratedText extends StatelessWidget {
         constraints: constraints,
         transform: transform,
         child: result,
+      );
+    }
+
+    if (rightWidget != null || leftWidget != null) {
+      result = Row(
+        children: [
+          if (leftWidget != null) leftWidget,
+          result,
+          if (rightWidget != null) rightWidget,
+        ],
       );
     }
 

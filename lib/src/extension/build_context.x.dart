@@ -22,7 +22,7 @@ extension BuildContextX on BuildContext {
   }
 
   void clearFocus() {
-    FocusScope.of(this).requestFocus(FocusNode());
+    FocusScope.of(this).unfocus();
   }
 
   FormState get form {

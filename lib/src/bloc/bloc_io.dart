@@ -63,7 +63,9 @@ abstract class BaseIO<T> {
   Subject<T> _subject;
 
   void addError(Object error, [StackTrace stackTrace]) {
-    if (!_subject.isClosed) _subject.addError(error, stackTrace);
+    if (_subject.isClosed) return;
+
+    _subject.addError(error, stackTrace);
   }
 
   Stream<S> map<S>(S convert(T event)) {
@@ -83,36 +85,32 @@ abstract class BaseIO<T> {
   }
 
   /// 清理保存的值, 恢复成初始状态
-  @Deprecated('使用reset代替, 仅是名称替换')
-  void clear() {
-    if (_printLog)
-      L.d('-----------------------------BEGIN---------------------------------\n'
-          '${_semantics ??= runtimeType.toString()}事件 cleared '
-          '\n------------------------------END----------------------------------');
-    if (!_subject.isClosed) _subject.add(_seedValue);
-  }
-
-  /// 清理保存的值, 恢复成初始状态
   void reset() {
+    if (_subject.isClosed) return;
+
     if (_printLog)
       L.d('-----------------------------BEGIN---------------------------------\n'
           '${_semantics ??= runtimeType.toString()}事件 重置 '
           '\n------------------------------END----------------------------------');
-    if (!_subject.isClosed) _subject.add(_seedValue);
+    _subject.add(_seedValue);
   }
 
   /// 重新发送数据 用户修改数据后刷新的场景
   void invalidate() {
-    if (!_subject.isClosed) _subject.add(latest);
+    if (_subject.isClosed) return;
+
+    _subject.add(latest);
   }
 
   /// 关闭流
   void dispose() {
+    if (_subject.isClosed) return;
+
     if (_printLog)
       L.d('=============================BEGIN===============================\n'
           '${_semantics ??= runtimeType.toString()}事件 disposed '
           '\n==============================END================================');
-    if (!_subject.isClosed) _subject.close();
+    _subject.close();
   }
 
   /// 运行时概要
@@ -455,6 +453,8 @@ mixin InputMixin<T> on BaseIO<T> {
 
   /// 发射数据
   T add(T data) {
+    if (_subject.isClosed) return null;
+
     if (_printLog)
       L.d('+++++++++++++++++++++++++++BEGIN+++++++++++++++++++++++++++++\n'
           'IO接收到**${_semantics ??= data.runtimeType.toString()}**数据: $data');
@@ -474,7 +474,7 @@ mixin InputMixin<T> on BaseIO<T> {
         if (!_test(latest, data)) {
           if (_printLog)
             L.d('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
-          if (!_subject.isClosed) _subject.add(data);
+          _subject.add(data);
         } else {
           if (_printLog)
             L.d('转发被拒绝! 原因: 需要唯一, 但是没有通过唯一性测试'
@@ -484,7 +484,7 @@ mixin InputMixin<T> on BaseIO<T> {
         if (data != latest) {
           if (_printLog)
             L.d('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
-          if (!_subject.isClosed) _subject.add(data);
+          _subject.add(data);
         } else {
           if (_printLog)
             L.d('转发被拒绝! 原因: 需要唯一, 但是新数据与最新值相同'
@@ -494,13 +494,15 @@ mixin InputMixin<T> on BaseIO<T> {
     } else {
       if (_printLog)
         L.d('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
-      if (!_subject.isClosed) _subject.add(data);
+      _subject.add(data);
     }
 
     return data;
   }
 
   T addIfAbsent(T data) {
+    if (_subject.isClosed) return null;
+
     // 如果最新值是_seedValue或者是空, 那么才add新数据, 换句话说, 就是如果event已经被add过
     // 了的话那就不add了, 用于第一次add
     if (_seedValue == latest || isEmpty(latest)) {
@@ -559,31 +561,33 @@ mixin OutputMixin<T, ARG_TYPE> on BaseIO<T> {
 mixin ListMixin<T> on BaseIO<List<T>> {
   /// 按条件过滤, 并发射过滤后的数据
   List<T> filterItem(bool test(T element)) {
+    if (_subject.isClosed) return null;
+
     final filtered = latest.where(test).toList();
-    if (!_subject.isClosed) _subject.add(filtered);
+    _subject.add(filtered);
     return filtered;
   }
 
   /// 追加, 并发射
   T append(T element, {bool fromHead = false}) {
-    if (!_subject.isClosed) {
-      if (fromHead) {
-        _subject.add(latest..insert(0, element));
-      } else {
-        _subject.add(latest..add(element));
-      }
+    if (_subject.isClosed) return null;
+
+    if (fromHead) {
+      _subject.add(latest..insert(0, element));
+    } else {
+      _subject.add(latest..add(element));
     }
     return element;
   }
 
   /// 追加一个list, 并发射
   List<T> appendAll(List<T> elements, {bool fromHead = false}) {
-    if (!_subject.isClosed) {
-      if (fromHead) {
-        _subject.add(latest..insertAll(0, elements));
-      } else {
-        _subject.add(latest..addAll(elements));
-      }
+    if (_subject.isClosed) return null;
+
+    if (fromHead) {
+      _subject.add(latest..insertAll(0, elements));
+    } else {
+      _subject.add(latest..addAll(elements));
     }
     return elements;
   }
@@ -595,15 +599,17 @@ mixin ListMixin<T> on BaseIO<List<T>> {
 
   /// 替换指定index的元素, 并发射
   T replace(int index, T element) {
-    if (!_subject.isClosed) {
-      _subject.add(latest..replaceRange(index, index + 1, [element]));
-    }
+    if (_subject.isClosed) return null;
+
+    _subject.add(latest..replaceRange(index, index + 1, [element]));
     return element;
   }
 
   /// 替换最后一个的元素, 并发射
   T replaceLast(T element) {
-    if (!_subject.isClosed && latest.isNotEmpty) {
+    if (_subject.isClosed) return null;
+
+    if (latest.isNotEmpty) {
       _subject.add(latest
         ..replaceRange(
           latest.length - 1,
@@ -616,7 +622,9 @@ mixin ListMixin<T> on BaseIO<List<T>> {
 
   /// 替换第一个的元素, 并发射
   T replaceFirst(T element) {
-    if (!_subject.isClosed && latest.isNotEmpty) {
+    if (_subject.isClosed) return null;
+
+    if (latest.isNotEmpty) {
       _subject.add(latest..replaceRange(0, 1, [element]));
     }
     return element;
@@ -624,8 +632,10 @@ mixin ListMixin<T> on BaseIO<List<T>> {
 
   /// 删除最后一个的元素, 并发射
   T removeLast() {
+    if (_subject.isClosed) return null;
+
     final lastElement = latest.last;
-    if (!_subject.isClosed && latest.isNotEmpty) {
+    if (latest.isNotEmpty) {
       _subject.add(latest..removeLast());
     }
     return lastElement;
@@ -633,23 +643,25 @@ mixin ListMixin<T> on BaseIO<List<T>> {
 
   /// 删除一个的元素, 并发射
   T remove(T element) {
-    if (!_subject.isClosed) {
-      _subject.add(latest..remove(element));
-    }
+    if (_subject.isClosed) return null;
+
+    _subject.add(latest..remove(element));
     return element;
   }
 
   /// 删除指定条件的元素
   void removeWhere(bool test(T t)) {
-    if (!_subject.isClosed) {
-      _subject.add(latest..removeWhere(test));
-    }
+    if (_subject.isClosed) return;
+
+    _subject.add(latest..removeWhere(test));
   }
 
   /// 删除第一个的元素, 并发射
   T removeFirst() {
+    if (_subject.isClosed) return null;
+
     final firstElement = latest.first;
-    if (!_subject.isClosed && latest.isNotEmpty) {
+    if (latest.isNotEmpty) {
       _subject.add(latest..removeAt(0));
     }
     return firstElement;
@@ -657,8 +669,10 @@ mixin ListMixin<T> on BaseIO<List<T>> {
 
   /// 删除指定索引的元素, 并发射
   T removeAt(int index) {
+    if (_subject.isClosed) return null;
+
     final element = latest.elementAt(index);
-    if (!_subject.isClosed && element != null) {
+    if (element != null) {
       _subject.add(latest..removeAt(index));
     }
     return element;
@@ -666,15 +680,17 @@ mixin ListMixin<T> on BaseIO<List<T>> {
 
   /// 对元素逐个执行操作后, 重新发射
   List<T> forEach(ValueChanged<T> action) {
+    if (_subject.isClosed) return null;
+
     latest.forEach(action);
-    if (!_subject.isClosed) {
-      _subject.add(latest);
-    }
+    _subject.add(latest);
     return latest;
   }
 
   /// 对[target]进行单选操作, 如果[T]不为[Selectable]则什么都不做, 直接透传
   List<T> select(T target) {
+    if (_subject.isClosed) return null;
+
     assert(latest is List<Selectable>);
     return forEach((T data) {
       if (data is Selectable) {
@@ -687,10 +703,10 @@ mixin ListMixin<T> on BaseIO<List<T>> {
 mixin BoolMixin on BaseIO<bool> {
   /// 切换true/false 并发射
   bool toggle() {
+    if (_subject.isClosed) return null;
+
     final toggled = !latest;
-    if (!_subject.isClosed) {
-      _subject.add(toggled);
-    }
+    _subject.add(toggled);
     return toggled;
   }
 }
@@ -701,6 +717,8 @@ mixin IntMixin on BaseIO<int> {
 
   /// 加一个值 并发射
   int plus([int value = 1]) {
+    if (_subject.isClosed) return null;
+
     int result;
     if (_max != null) {
       result = math.min(latest + value, _max);
@@ -715,15 +733,15 @@ mixin IntMixin on BaseIO<int> {
 
   /// 减一个值 并发射
   int minus([int value = 1]) {
+    if (_subject.isClosed) return null;
+
     int result;
     if (_min != null) {
       result = math.max(latest - value, _min);
     } else {
       result = latest - value;
     }
-    if (!_subject.isClosed) {
-      _subject.add(result);
-    }
+    _subject.add(result);
     return result;
   }
 }
@@ -759,6 +777,8 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
   /// 返回是否还有更多数据 true为还有更多数据 false为没有更多数据
   @Deprecated('使用[loadMore]代替, 仅仅是名称替换')
   Future<bool> nextPage([ARG_TYPE args]) async {
+    if (_subject.isClosed) return false;
+
     // 如果已经没有更多数据的话, 就不再请求
     if (!_noMoreData) {
       try {
@@ -783,6 +803,8 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
   ///
   /// 返回是否还有更多数据 true为还有更多数据 false为没有更多数据
   Future<bool> loadMore([ARG_TYPE args]) async {
+    if (_subject.isClosed) return false;
+
     // 如果已经没有更多数据的话, 就不再请求
     if (!_noMoreData) {
       try {
@@ -807,6 +829,8 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
   ///
   /// 会重新加载第一页
   Future<void> refresh([ARG_TYPE args]) async {
+    if (_subject.isClosed) return false;
+
     _currentPage = _initPage;
     _noMoreData = false;
     try {
