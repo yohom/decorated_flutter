@@ -13,13 +13,16 @@ typedef _ErrorPlaceholderBuilder = Widget Function(
 class Subscriber<T> extends StatelessWidget {
   static Widget _defaultEmptyPlaceholder;
   static Widget _defaultErrorPlaceholder;
+  static Widget _defaultLoadingPlaceholder;
 
   static void setDefaultPlaceholder({
     Widget emptyPlaceholder,
     Widget errorPlaceholder,
+    Widget loadingPlaceholder,
   }) {
     _defaultEmptyPlaceholder = emptyPlaceholder;
     _defaultErrorPlaceholder = errorPlaceholder;
+    _defaultLoadingPlaceholder = loadingPlaceholder;
   }
 
   const Subscriber({
@@ -91,7 +94,9 @@ class Subscriber<T> extends StatelessWidget {
             return builder(snapshot.data);
           }
         } else if (showLoading) {
-          return loadingPlaceholder ?? LoadingWidget(sliver: sliver);
+          return loadingPlaceholder ??
+              _defaultLoadingPlaceholder ??
+              LoadingWidget(sliver: sliver);
         } else {
           return SizedBox.shrink();
         }
