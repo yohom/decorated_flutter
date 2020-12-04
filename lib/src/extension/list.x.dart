@@ -7,4 +7,8 @@ extension ListX<T> on List<T> {
       return null;
     }
   }
+
+  T get firstOrNull => getOrNull(0);
+
+  T get lastOrNull => getOrNull(length - 1);
 }
