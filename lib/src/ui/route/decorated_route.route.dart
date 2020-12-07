@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-typedef void _InitAction<T extends BLoC>(T bloc);
+typedef _InitAction<T extends BLoC> = void Function(T bloc);
 
 /// [B]是指定的BLoC, [T]是Route的返回类型
 class DecoratedRoute<B extends BLoC, T extends Object>
@@ -87,8 +87,6 @@ class DecoratedRoute<B extends BLoC, T extends Object>
     Animation<double> animation,
     Animation<double> secondaryAnimation,
   ) {
-    Global.init(context);
-
     Widget result;
     if (isNotEmpty(bloc)) {
       result = BLoCProvider<B>(
@@ -232,8 +230,6 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
     Animation<double> animation,
     Animation<double> secondaryAnimation,
   ) {
-    Global.init(context);
-
     Widget result;
     if (isNotEmpty(bloc)) {
       result = BLoCProvider<B>(
