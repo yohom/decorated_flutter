@@ -24,6 +24,8 @@ class DecoratedRow extends DecoratedFlex {
     TextBaseline textBaseline,
     ContextCallback onPressed,
     ContextCallback onLongPressed,
+    GestureDragEndCallback onVerticalDragEnd,
+    GestureDragEndCallback onHorizontalDragEnd,
     HitTestBehavior behavior = HitTestBehavior.opaque,
     double itemSpacing = 0,
     Widget divider,
@@ -72,6 +74,8 @@ class DecoratedRow extends DecoratedFlex {
           textBaseline: textBaseline,
           onPressed: onPressed,
           onLongPressed: onLongPressed,
+          onVerticalDragEnd: onVerticalDragEnd,
+          onHorizontalDragEnd: onHorizontalDragEnd,
           behavior: behavior,
           itemSpacing: itemSpacing,
           visible: visible,
@@ -123,6 +127,8 @@ class DecoratedColumn extends DecoratedFlex {
     TextBaseline textBaseline,
     ContextCallback onPressed,
     ContextCallback onLongPressed,
+    GestureDragEndCallback onVerticalDragEnd,
+    GestureDragEndCallback onHorizontalDragEnd,
     HitTestBehavior behavior = HitTestBehavior.opaque,
     double itemSpacing = 0,
     Widget divider,
@@ -171,6 +177,8 @@ class DecoratedColumn extends DecoratedFlex {
           textBaseline: textBaseline,
           onPressed: onPressed,
           onLongPressed: onLongPressed,
+          onVerticalDragEnd: onVerticalDragEnd,
+          onHorizontalDragEnd: onHorizontalDragEnd,
           behavior: behavior,
           itemSpacing: itemSpacing,
           visible: visible,
@@ -223,6 +231,8 @@ class DecoratedFlex extends StatelessWidget {
     this.textBaseline,
     this.onPressed,
     this.onLongPressed,
+    this.onVerticalDragEnd,
+    this.onHorizontalDragEnd,
     this.behavior = HitTestBehavior.opaque,
     this.itemSpacing = 0,
     this.divider,
@@ -279,6 +289,8 @@ class DecoratedFlex extends StatelessWidget {
   //region GestureDetector
   final PressedCallback onPressed;
   final PressedCallback onLongPressed;
+  final GestureDragEndCallback onVerticalDragEnd;
+  final GestureDragEndCallback onHorizontalDragEnd;
   final HitTestBehavior behavior;
 
   //endregion
