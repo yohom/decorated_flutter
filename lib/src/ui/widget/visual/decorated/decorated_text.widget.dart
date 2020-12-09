@@ -25,6 +25,7 @@ class DecoratedText extends StatelessWidget {
     this.sliver,
     this.leftWidget,
     this.rightWidget,
+    this.softWrap = true,
   }) : super(key: key);
 
   final EdgeInsetsGeometry padding;
@@ -48,6 +49,7 @@ class DecoratedText extends StatelessWidget {
   final Matrix4 transform;
   final Widget leftWidget;
   final Widget rightWidget;
+  final bool softWrap;
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +60,7 @@ class DecoratedText extends StatelessWidget {
       strutStyle: strutStyle,
       textAlign: textAlign,
       overflow: overflow,
+      softWrap: softWrap,
     );
 
     if (center == true) {
