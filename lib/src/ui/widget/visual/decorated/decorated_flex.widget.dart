@@ -233,7 +233,7 @@ class DecoratedFlex extends StatelessWidget {
     this.onLongPressed,
     this.onVerticalDragEnd,
     this.onHorizontalDragEnd,
-    this.behavior = HitTestBehavior.opaque,
+    this.behavior,
     this.itemSpacing = 0,
     this.divider,
     this.visible,
@@ -383,7 +383,7 @@ class DecoratedFlex extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> _children = children;
 
-    if (forceItemSameExtent) {
+    if (forceItemSameExtent == true) {
       _children = children.map((it) => Expanded(child: it)).toList();
     }
 
