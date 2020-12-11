@@ -1,3 +1,4 @@
+import 'package:decorated_flutter/src/model/model.export.dart';
 import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:flutter/material.dart';
 
@@ -25,6 +26,7 @@ class DecoratedText extends StatelessWidget {
     this.sliver,
     this.leftWidget,
     this.rightWidget,
+    this.softWrap = true,
   }) : super(key: key);
 
   final EdgeInsetsGeometry padding;
@@ -33,7 +35,7 @@ class DecoratedText extends StatelessWidget {
   final TextStyle style;
   final StrutStyle strutStyle;
   final String data;
-  final bool safeArea;
+  final SafeAreaConfig safeArea;
   final ContextCallback onPressed;
   final int maxLines;
   final TextAlign textAlign;
@@ -48,6 +50,7 @@ class DecoratedText extends StatelessWidget {
   final Matrix4 transform;
   final Widget leftWidget;
   final Widget rightWidget;
+  final bool softWrap;
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +61,7 @@ class DecoratedText extends StatelessWidget {
       strutStyle: strutStyle,
       textAlign: textAlign,
       overflow: overflow,
+      softWrap: softWrap,
     );
 
     if (center == true) {
@@ -92,8 +96,14 @@ class DecoratedText extends StatelessWidget {
       );
     }
 
-    if (safeArea == true) {
-      result = SafeArea(child: result);
+    if (safeArea != null) {
+      result = SafeArea(
+        child: result,
+        top: safeArea.top ?? true,
+        bottom: safeArea.bottom ?? true,
+        left: safeArea.left ?? true,
+        right: safeArea.right ?? true,
+      );
     }
 
     if (onPressed != null) {
