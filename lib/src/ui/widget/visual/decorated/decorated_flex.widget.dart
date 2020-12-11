@@ -332,18 +332,22 @@ class DecoratedFlex extends StatelessWidget {
   final bool safeArea;
 
   /// 是否安全区域(顶部)
+  @Deprecated('如果有单独设置SafeArea的需求, 直接使用SafeArea组件')
   final bool safeAreaTop;
 
   /// 是否安全区域(底部)
+  @Deprecated('如果有单独设置SafeArea的需求, 直接使用SafeArea组件')
   final bool safeAreaBottom;
 
   /// 作用在Transform.translate上的偏移量
   final Offset offset;
 
   /// 是否安全区域(左)
+  @Deprecated('如果有单独设置SafeArea的需求, 直接使用SafeArea组件')
   final bool safeAreaLeft;
 
   /// 是否安全区域(右)
+  @Deprecated('如果有单独设置SafeArea的需求, 直接使用SafeArea组件')
   final bool safeAreaRight;
 
   /// 是否可滚动
