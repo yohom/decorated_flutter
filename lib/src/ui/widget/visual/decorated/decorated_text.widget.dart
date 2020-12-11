@@ -1,3 +1,4 @@
+import 'package:decorated_flutter/src/model/model.export.dart';
 import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +35,7 @@ class DecoratedText extends StatelessWidget {
   final TextStyle style;
   final StrutStyle strutStyle;
   final String data;
-  final bool safeArea;
+  final SafeAreaConfig safeArea;
   final ContextCallback onPressed;
   final int maxLines;
   final TextAlign textAlign;
@@ -95,8 +96,14 @@ class DecoratedText extends StatelessWidget {
       );
     }
 
-    if (safeArea == true) {
-      result = SafeArea(child: result);
+    if (safeArea != null) {
+      result = SafeArea(
+        child: result,
+        top: safeArea.top ?? true,
+        bottom: safeArea.bottom ?? true,
+        left: safeArea.left ?? true,
+        right: safeArea.right ?? true,
+      );
     }
 
     if (onPressed != null) {

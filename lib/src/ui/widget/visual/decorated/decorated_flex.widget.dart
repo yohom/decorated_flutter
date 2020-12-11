@@ -36,11 +36,7 @@ class DecoratedRow extends DecoratedFlex {
     bool forceItemSameExtent = false,
     double elevation,
     bool material = false,
-    bool safeArea,
-    bool safeAreaTop,
-    bool safeAreaBottom,
-    bool safeAreaLeft,
-    bool safeAreaRight,
+    SafeAreaConfig safeArea,
     TextStyle textStyle,
     GlobalKey repaintBoundaryKey,
     double widthFactor,
@@ -84,10 +80,6 @@ class DecoratedRow extends DecoratedFlex {
           flex: flex,
           forceItemSameExtent: forceItemSameExtent,
           safeArea: safeArea,
-          safeAreaTop: safeAreaTop,
-          safeAreaBottom: safeAreaBottom,
-          safeAreaLeft: safeAreaLeft,
-          safeAreaRight: safeAreaRight,
           divider: divider,
           elevation: elevation,
           material: material,
@@ -139,11 +131,7 @@ class DecoratedColumn extends DecoratedFlex {
     bool forceItemSameExtent = false,
     double elevation,
     bool material = false,
-    bool safeArea,
-    bool safeAreaTop,
-    bool safeAreaBottom,
-    bool safeAreaLeft,
-    bool safeAreaRight,
+    SafeAreaConfig safeArea,
     TextStyle textStyle,
     GlobalKey repaintBoundaryKey,
     double widthFactor,
@@ -187,10 +175,6 @@ class DecoratedColumn extends DecoratedFlex {
           flex: flex,
           forceItemSameExtent: forceItemSameExtent,
           safeArea: safeArea,
-          safeAreaTop: safeAreaTop,
-          safeAreaBottom: safeAreaBottom,
-          safeAreaLeft: safeAreaLeft,
-          safeAreaRight: safeAreaRight,
           divider: divider,
           elevation: elevation,
           material: material,
@@ -243,10 +227,6 @@ class DecoratedFlex extends StatelessWidget {
     this.forceItemSameExtent = false,
     this.elevation,
     this.safeArea,
-    this.safeAreaTop,
-    this.safeAreaBottom,
-    this.safeAreaLeft,
-    this.safeAreaRight,
     this.scrollable,
     this.widthFactor,
     this.heightFactor,
@@ -329,26 +309,10 @@ class DecoratedFlex extends StatelessWidget {
   final bool forceItemSameExtent;
 
   /// 是否安全区域
-  final bool safeArea;
-
-  /// 是否安全区域(顶部)
-  @Deprecated('如果有单独设置SafeArea的需求, 直接使用SafeArea组件')
-  final bool safeAreaTop;
-
-  /// 是否安全区域(底部)
-  @Deprecated('如果有单独设置SafeArea的需求, 直接使用SafeArea组件')
-  final bool safeAreaBottom;
+  final SafeAreaConfig safeArea;
 
   /// 作用在Transform.translate上的偏移量
   final Offset offset;
-
-  /// 是否安全区域(左)
-  @Deprecated('如果有单独设置SafeArea的需求, 直接使用SafeArea组件')
-  final bool safeAreaLeft;
-
-  /// 是否安全区域(右)
-  @Deprecated('如果有单独设置SafeArea的需求, 直接使用SafeArea组件')
-  final bool safeAreaRight;
 
   /// 是否可滚动
   final bool scrollable;
@@ -478,22 +442,14 @@ class DecoratedFlex extends StatelessWidget {
       );
     }
 
-    if (safeArea != null ||
-        safeAreaTop != null ||
-        safeAreaBottom != null ||
-        safeAreaLeft != null ||
-        safeAreaRight != null) {
-      if (safeArea == true) {
-        result = SafeArea(child: result);
-      } else {
-        result = SafeArea(
-          child: result,
-          top: safeAreaTop ?? true,
-          bottom: safeAreaBottom ?? true,
-          left: safeAreaLeft ?? true,
-          right: safeAreaRight ?? true,
-        );
-      }
+    if (safeArea != null) {
+      result = SafeArea(
+        child: result,
+        top: safeArea.top ?? true,
+        bottom: safeArea.bottom ?? true,
+        left: safeArea.left ?? true,
+        right: safeArea.right ?? true,
+      );
     }
 
     if (widthFactor != null || heightFactor != null) {

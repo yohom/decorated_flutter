@@ -18,7 +18,7 @@ class DecoratedStack extends StatelessWidget {
     this.safeArea,
     this.onPressed,
     this.onLongPressed,
-    this.behavior = HitTestBehavior.opaque,
+    this.behavior,
     this.overflow,
     this.constraints,
     this.expanded = false,
@@ -48,7 +48,7 @@ class DecoratedStack extends StatelessWidget {
 
   final TextStyle textStyle;
 
-  final bool safeArea;
+  final SafeAreaConfig safeArea;
 
   final ContextCallback onPressed;
   final ContextCallback onLongPressed;
@@ -103,7 +103,13 @@ class DecoratedStack extends StatelessWidget {
     );
 
     if (safeArea != null) {
-      result = SafeArea(child: result);
+      result = SafeArea(
+        child: result,
+        top: safeArea.top ?? true,
+        bottom: safeArea.bottom ?? true,
+        left: safeArea.left ?? true,
+        right: safeArea.right ?? true,
+      );
     }
 
     if (textStyle != null) {
