@@ -35,6 +35,7 @@ class DecoratedStack extends StatelessWidget {
     this.center,
     this.borderRadius,
     this.sliver = false,
+    this.aspectRatio,
     this.childrenZIndex = ZIndex.bottom,
     this.children = const [],
   }) : super(key: key);
@@ -74,6 +75,8 @@ class DecoratedStack extends StatelessWidget {
 
   final bool sliver;
   final ZIndex childrenZIndex;
+
+  final double aspectRatio;
 
   final List<Widget> children;
 
@@ -139,11 +142,15 @@ class DecoratedStack extends StatelessWidget {
 
     if (onPressed != null || onLongPressed != null) {
       result = GestureDetector(
-        behavior: behavior ?? HitTestBehavior.deferToChild,
+        behavior: behavior,
         onTap: () => onPressed?.call(context),
         onLongPress: () => onLongPressed?.call(context),
         child: result,
       );
+    }
+
+    if (aspectRatio != null) {
+      result = AspectRatio(aspectRatio: aspectRatio, child: result);
     }
 
     if (expanded) {
