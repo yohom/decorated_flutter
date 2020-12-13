@@ -25,6 +25,9 @@ class _ShowUpTransitionState extends State<ShowUpTransition>
   Duration get duration => widget.duration;
 
   @override
+  Curve get curve => Curves.elasticOut;
+
+  @override
   void initState() {
     super.initState();
     Future.delayed(widget.delay, () => 0)
