@@ -70,7 +70,7 @@ extension FutureX<T> on Future<T> {
     return this;
   }
 
-  Future<T> apply(FutureOr<T> onValue(T value), {Function onError}) async {
+  Future<T> apply<R>(FutureOr<R> onValue(T value), {Function onError}) async {
     await then(onValue, onError: onError);
     return this;
   }
