@@ -1,17 +1,17 @@
+import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:rxdart/rxdart.dart';
 
 class ShowUpTransition extends StatefulWidget {
   ShowUpTransition({
     Key key,
-    this.delay = 500,
-    this.duration = 700,
+    this.delay = Duration.zero,
+    this.duration = const Duration(milliseconds: 700),
     this.safeArea = false,
     this.child,
   }) : super(key: key);
 
-  final int delay;
-  final int duration;
+  final Duration delay;
+  final Duration duration;
   final bool safeArea;
   final Widget child;
 
@@ -20,40 +20,24 @@ class ShowUpTransition extends StatefulWidget {
 }
 
 class _ShowUpTransitionState extends State<ShowUpTransition>
-    with TickerProviderStateMixin {
-  AnimationController _controller;
-  Animation<double> _animation;
+    with SingleTickerProviderStateMixin, AnimationMixin {
+  @override
+  Duration get duration => widget.duration;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: Duration(milliseconds: widget.duration),
-      vsync: this,
-    );
-    _animation = CurvedAnimation(parent: _controller, curve: Curves.elasticOut);
-
-    Stream.value('')
-        .delay(Duration(milliseconds: widget.delay))
-        .listen((_) => _controller.forward());
+    Future.delayed(widget.delay, () => 0)
+        .then((_) => animationController.forward());
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget result = ScaleTransition(
-      scale: _animation,
-      child: widget.child,
-    );
+    Widget result = ScaleTransition(scale: animation, child: widget.child);
 
     if (widget.safeArea) {
       result = SafeArea(child: result);
     }
     return result;
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 }
