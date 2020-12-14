@@ -24,10 +24,12 @@ class DecoratedRoute<B extends BLoC, T extends Object>
     this.onDispose,
     this.systemUiOverlayStyle,
     this.animationBuilder,
+    bool opaque = true,
     String routeName,
     bool fullscreenDialog = false,
     bool maintainState = true,
-  })  : // 要么同时设置泛型B和bloc参数, 要么就都不设置
+  })  : _opaque = opaque,
+        // 要么同时设置泛型B和bloc参数, 要么就都不设置
         assert((B != BLoC && bloc != null) || (B == BLoC && bloc == null)),
         // 如果withDefaultTabController为true, 那么必须设置tabLength
         assert((withDefaultTabController && tabLength != null) ||
@@ -77,6 +79,10 @@ class DecoratedRoute<B extends BLoC, T extends Object>
 
   /// 自定义的动画
   final Widget Function(Animation<double>, Widget) animationBuilder;
+
+  /// 是否不透明背景
+  final bool _opaque;
+  bool get opaque => _opaque;
 
   /// 是否已经初始化
   bool _inited = false;
