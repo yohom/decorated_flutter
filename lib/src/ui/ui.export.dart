@@ -2,6 +2,7 @@ export 'animation/fade_slide.transition.dart';
 export 'animation/show_up.transition.dart';
 export 'route/custom_material.route.dart';
 export 'route/decorated_route.route.dart';
+export 'route/transparent_route.route.dart';
 export 'widget/nonvisual/auto_close_keyboard.widget.dart';
 export 'widget/nonvisual/delayed.widget.dart';
 export 'widget/nonvisual/double_back_exit_app.widget.dart';
