@@ -19,7 +19,7 @@ dependencies:
   # rx
   rxdart: ^0.24.1
   # 图片加载增强
-  cached_network_image: 2.3.3
+  cached_network_image: ^2.4.1
   # toast
   oktoast: ^2.3.2
   # 模态对话框增强
