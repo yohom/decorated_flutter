@@ -105,6 +105,10 @@ class DecoratedStack extends StatelessWidget {
       ],
     );
 
+    if (aspectRatio != null) {
+      result = AspectRatio(aspectRatio: aspectRatio, child: result);
+    }
+
     if (safeArea != null) {
       result = SafeArea(
         child: result,
@@ -147,10 +151,6 @@ class DecoratedStack extends StatelessWidget {
         onLongPress: () => onLongPressed?.call(context),
         child: result,
       );
-    }
-
-    if (aspectRatio != null) {
-      result = AspectRatio(aspectRatio: aspectRatio, child: result);
     }
 
     if (expanded) {
