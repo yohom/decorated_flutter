@@ -430,7 +430,7 @@ class DecoratedFlex extends StatelessWidget {
         onVerticalDragEnd != null ||
         onHorizontalDragEnd != null) {
       result = GestureDetector(
-        behavior: behavior,
+        behavior: behavior ?? HitTestBehavior.opaque,
         onTap: () => onPressed?.call(context),
         onLongPress: () => onLongPressed?.call(context),
         onVerticalDragEnd: onVerticalDragEnd,
