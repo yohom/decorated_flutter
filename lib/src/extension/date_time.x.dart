@@ -13,19 +13,19 @@ extension DateTimeX on DateTime {
     return DateFormat(format).format(this);
   }
 
-  bool isToday() {
+  bool get isToday {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     return DateTime(year, month, day) == today;
   }
 
-  bool isYesterday() {
+  bool get isYesterday {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day - 1);
     return DateTime(year, month, day) == today;
   }
 
-  bool isTomorrow() {
+  bool get isTomorrow {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day + 1);
     return DateTime(year, month, day) == today;
