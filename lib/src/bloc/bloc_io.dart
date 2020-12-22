@@ -427,11 +427,28 @@ class BoolOutput<ARG_TYPE> extends Output<bool, ARG_TYPE> with BoolMixin {
     String semantics,
     bool sync = true,
     bool isBehavior = true,
-    bool acceptEmpty = true,
-    bool isDistinct = false,
     bool printLog = true,
-    _Equal test,
     _Fetch<bool, ARG_TYPE> fetch,
+  }) : super(
+          seedValue: seedValue,
+          semantics: semantics,
+          sync: sync,
+          isBehavior: isBehavior,
+          fetch: fetch,
+          printLog: printLog,
+        );
+}
+
+/// 固定长度的队列
+class EvictingQueueIO<T> extends IO<EvictingQueue<T>>
+    with EvictingQueueMixin<T> {
+  EvictingQueueIO({
+    EvictingQueue<T> seedValue,
+    String semantics,
+    bool sync = true,
+    bool isBehavior = true,
+    bool printLog = true,
+    _Fetch<EvictingQueue<T>, dynamic> fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -563,7 +580,6 @@ mixin ListMixin<T> on BaseIO<List<T>> {
   List<T> filterItem(bool test(T element)) {
     if (_subject.isClosed) return null;
 
-    List(100);
     final filtered = latest.where(test).toList();
     _subject.add(filtered);
     return filtered;
@@ -850,5 +866,51 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
   /// 是否还有更多数据
   bool get hasMoreData {
     return !_noMoreData;
+  }
+}
+
+/// 内部数据是[EvictingQueue]特有的成员
+mixin EvictingQueueMixin<T> on BaseIO<EvictingQueue<T>> {
+  /// 追加, 并发射
+  T append(T element, {bool fromHead = false}) {
+    if (_subject.isClosed) return null;
+
+    if (fromHead) {
+      _subject.add(latest..addFirst(element));
+    } else {
+      _subject.add(latest..add(element));
+    }
+    return element;
+  }
+
+  /// 对list的item做变换之后重新组成list
+  Stream<List<S>> flatMap<S>(S mapper(T value)) {
+    return _subject.map((list) => list.map(mapper).toList());
+  }
+
+  /// 删除一个的元素, 并发射
+  T remove(T element) {
+    if (_subject.isClosed) return null;
+
+    _subject.add(latest..remove(element));
+    return element;
+  }
+
+  /// 删除指定条件的元素
+  void removeWhere(bool test(T t)) {
+    if (_subject.isClosed) return;
+
+    _subject.add(latest..removeWhere(test));
+  }
+
+  /// 删除第一个的元素, 并发射
+  T removeFirst() {
+    if (_subject.isClosed) return null;
+
+    final firstElement = latest.first;
+    if (latest.isNotEmpty) {
+      _subject.add(latest..removeFirst());
+    }
+    return firstElement;
   }
 }
