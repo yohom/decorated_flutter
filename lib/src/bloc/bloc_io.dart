@@ -563,6 +563,7 @@ mixin ListMixin<T> on BaseIO<List<T>> {
   List<T> filterItem(bool test(T element)) {
     if (_subject.isClosed) return null;
 
+    List(100);
     final filtered = latest.where(test).toList();
     _subject.add(filtered);
     return filtered;
