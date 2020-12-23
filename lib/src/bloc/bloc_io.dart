@@ -438,6 +438,26 @@ class BoolOutput<ARG_TYPE> extends Output<bool, ARG_TYPE> with BoolMixin {
           printLog: printLog,
         );
 }
+
+/// 固定长度的队列
+class EvictingQueueIO<T> extends IO<EvictingQueue<T>>
+    with EvictingQueueMixin<T> {
+  EvictingQueueIO({
+    EvictingQueue<T> seedValue,
+    String semantics,
+    bool sync = true,
+    bool isBehavior = true,
+    bool printLog = true,
+    _Fetch<EvictingQueue<T>, dynamic> fetch,
+  }) : super(
+          seedValue: seedValue,
+          semantics: semantics,
+          sync: sync,
+          isBehavior: isBehavior,
+          fetch: fetch,
+          printLog: printLog,
+        );
+}
 //endregion
 
 /// 输入单元特有的成员

@@ -1,11 +1,12 @@
-import 'package:collection/collection.dart';
+import 'dart:collection';
+
 import 'package:decorated_flutter/decorated_flutter.dart';
 
 /// 固定长度队列
 ///
 /// 长度超过[_capacity]后自动弹出队列前端的元素.
 /// 命名参考 https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/EvictingQueue.html
-class EvictingQueue<E> extends QueueList<E> {
+class EvictingQueue<E> extends ListQueue<E> {
   EvictingQueue(this._capacity) : super(_capacity);
 
   final int _capacity;
