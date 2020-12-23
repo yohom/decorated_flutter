@@ -219,7 +219,7 @@ class ListInput<T> extends Input<List<T>> with ListMixin {
     bool acceptEmpty = true,
     bool printLog = true,
     bool isDistinct = false,
-    int capacity,
+    int forceCapacity,
     _Equal test,
   }) : super(
           seedValue: seedValue,
@@ -231,7 +231,7 @@ class ListInput<T> extends Input<List<T>> with ListMixin {
           test: test,
           printLog: printLog,
         ) {
-    _capacity = capacity;
+    _forceCapacity = forceCapacity;
   }
 }
 
@@ -245,7 +245,7 @@ class ListOutput<T, ARG_TYPE> extends Output<List<T>, ARG_TYPE> with ListMixin {
     bool sync = true,
     bool isBehavior = true,
     bool printLog = true,
-    int capacity,
+    int forceCapacity,
     @required _Fetch<List<T>, ARG_TYPE> fetch,
   }) : super(
           seedValue: seedValue,
@@ -255,7 +255,7 @@ class ListOutput<T, ARG_TYPE> extends Output<List<T>, ARG_TYPE> with ListMixin {
           fetch: fetch,
           printLog: printLog,
         ) {
-    _capacity = capacity;
+    _forceCapacity = forceCapacity;
   }
 }
 
@@ -271,7 +271,7 @@ class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
     bool receiveFullData = true,
     bool printLog = true,
     int pageSize = 0,
-    int capacity,
+    int forceCapacity,
     @required _PageFetch<List<T>, ARG_TYPE> pageFetch,
   }) : super(
           seedValue: seedValue,
@@ -286,7 +286,7 @@ class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
     _receiveFullData = receiveFullData;
     _pageSize = pageSize;
     _printLog = printLog;
-    _capacity = capacity;
+    _forceCapacity = forceCapacity;
   }
 
   /// 这里标记为protected, 防止被外部引用, 应该使用[refresh]方法
@@ -307,7 +307,7 @@ class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
     int pageSize = 0,
     bool printLog = true,
     bool receiveFullData = true,
-    int capacity,
+    int forceCapacity,
     @required _PageFetch<List<T>, ARG_TYPE> pageFetch,
   }) : super(
           seedValue: seedValue,
@@ -322,7 +322,7 @@ class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
     _receiveFullData = receiveFullData;
     _pageSize = pageSize;
     _printLog = printLog;
-    _capacity = capacity;
+    _forceCapacity = forceCapacity;
   }
 }
 
@@ -336,7 +336,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin {
     bool acceptEmpty = true,
     bool isDistinct = false,
     bool printLog = true,
-    int capacity,
+    int forceCapacity,
     _Equal test,
     _Fetch<List<T>, dynamic> fetch,
   }) : super(
@@ -350,7 +350,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin {
           fetch: fetch,
           printLog: printLog,
         ) {
-    _capacity = capacity;
+    _forceCapacity = forceCapacity;
   }
 }
 
@@ -590,7 +590,7 @@ mixin OutputMixin<T, ARG_TYPE> on BaseIO<T> {
 
 /// 内部数据是[List]特有的成员
 mixin ListMixin<T> on BaseIO<List<T>> {
-  int _capacity;
+  int _forceCapacity;
 
   /// 按条件过滤, 并发射过滤后的数据
   List<T> filterItem(bool test(T element)) {
@@ -608,14 +608,14 @@ mixin ListMixin<T> on BaseIO<List<T>> {
     if (fromHead) {
       final pending = latest..insert(0, element);
       // 从前面添加, 就把后面的挤出去
-      if (_capacity != null && pending.length > _capacity) {
+      if (_forceCapacity != null && pending.length > _forceCapacity) {
         pending.removeLast();
       }
       _subject.add(pending);
     } else {
       final pending = latest..add(element);
       // 从后面添加, 就把前面的挤出去
-      if (_capacity != null && pending.length > _capacity) {
+      if (_forceCapacity != null && pending.length > _forceCapacity) {
         pending.removeAt(0);
       }
       _subject.add(pending);
@@ -630,15 +630,15 @@ mixin ListMixin<T> on BaseIO<List<T>> {
     if (fromHead) {
       final pending = latest..insertAll(0, elements);
       // 从前面添加, 就把后面的挤出去
-      if (_capacity != null && pending.length > _capacity) {
-        pending.removeRange(_capacity - 1, pending.length);
+      if (_forceCapacity != null && pending.length > _forceCapacity) {
+        pending.removeRange(_forceCapacity - 1, pending.length);
       }
       _subject.add(pending);
     } else {
       final pending = latest..addAll(elements);
       // 从后面添加, 就把前面的挤出去
-      if (_capacity != null && pending.length > _capacity) {
-        pending.removeRange(0, _capacity);
+      if (_forceCapacity != null && pending.length > _forceCapacity) {
+        pending.removeRange(0, _forceCapacity);
       }
       _subject.add(pending);
       _subject.add(latest..addAll(elements));
