@@ -1,5 +1,7 @@
 import 'dart:collection';
 
+import 'package:decorated_flutter/decorated_flutter.dart';
+
 /// 固定长度队列
 ///
 /// 长度超过[_capacity]后自动弹出队列前端的元素.
@@ -12,6 +14,7 @@ class EvictingQueue<E> extends ListQueue<E> {
   @override
   void add(E value) {
     if (length >= _capacity) {
+      L.d('EvictingQueue超出容量, 移除首元素');
       removeFirst();
     }
     super.add(value);
@@ -21,6 +24,7 @@ class EvictingQueue<E> extends ListQueue<E> {
   void addAll(Iterable<E> elements) {
     if (length >= _capacity) {
       for (final _ in elements) {
+        L.d('EvictingQueue超出容量, 移除首元素');
         removeFirst();
       }
     }
