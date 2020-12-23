@@ -590,6 +590,7 @@ mixin OutputMixin<T, ARG_TYPE> on BaseIO<T> {
 
 /// 内部数据是[List]特有的成员
 mixin ListMixin<T> on BaseIO<List<T>> {
+  /// 强制内部列表最大长度, 超过这个长度后, 如果是从前面添加数据则弹出最后的数据, 从后面添加则反之.
   int _forceCapacity;
 
   /// 按条件过滤, 并发射过滤后的数据
