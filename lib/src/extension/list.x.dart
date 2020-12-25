@@ -14,7 +14,7 @@ extension ListX<T> on List<T> {
     }
   }
 
-  T find(bool test(T)) {
+  T find(bool test(T e)) {
     return firstWhere(test, orElse: returnNull);
   }
 
