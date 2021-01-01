@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:decorated_flutter/src/ui/ui.export.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -65,6 +67,11 @@ extension FutureX<T> on Future<T> {
       }
     });
 
+    return this;
+  }
+
+  Future<T> apply<R>(FutureOr<R> onValue(T value), {Function onError}) async {
+    await then(onValue, onError: onError);
     return this;
   }
 }

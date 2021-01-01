@@ -68,11 +68,12 @@ class DecoratedText extends StatelessWidget {
       result = Center(child: result);
     }
 
-    if (decoration != null ||
-        padding != null ||
-        margin != null ||
-        width != null ||
+    if (width != null ||
         height != null ||
+        decoration != null ||
+        margin != null ||
+        padding != null ||
+        constraints != null ||
         transform != null) {
       result = Container(
         width: width,

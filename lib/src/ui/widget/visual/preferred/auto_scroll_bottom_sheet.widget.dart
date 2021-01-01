@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AutoScrollBottomDialog extends StatelessWidget {
-  const AutoScrollBottomDialog({
+class AutoScrollBottomSheet extends StatelessWidget {
+  const AutoScrollBottomSheet({
     Key key,
     this.duration = const Duration(milliseconds: 100),
     this.curve = Curves.decelerate,

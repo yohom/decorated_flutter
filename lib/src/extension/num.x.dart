@@ -26,4 +26,14 @@ extension IntX on int {
     final dateTime = DateTime.fromMillisecondsSinceEpoch(this);
     return DateFormat(format).format(dateTime);
   }
+
+  /// 左补齐
+  String padLeft(int width, [String padding = '']) {
+    return toString().padLeft(width, padding);
+  }
+
+  /// 右补齐
+  String padRight(int width, [String padding = '']) {
+    return toString().padRight(width, padding);
+  }
 }
