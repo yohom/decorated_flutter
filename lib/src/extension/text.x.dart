@@ -12,6 +12,11 @@ extension TextX on Text {
           otherSpan,
         ],
       ),
+      softWrap: softWrap,
+      overflow: overflow,
+      maxLines: maxLines,
+      textAlign: textAlign,
+      strutStyle: strutStyle,
     );
   }
 }
