@@ -2,14 +2,11 @@ import 'package:flutter/widgets.dart';
 
 extension WidgetX on Widget {
   Text operator +(InlineSpan otherSpan) {
-    final imageSpan = WidgetSpan(child: this);
+    final widgetSpan = WidgetSpan(child: this);
     return Text.rich(
-      TextSpan(
-        children: [
-          imageSpan,
-          otherSpan,
-        ],
-      ),
+      TextSpan(children: [widgetSpan, otherSpan]),
+      softWrap: true,
+      overflow: TextOverflow.ellipsis,
     );
   }
 }
