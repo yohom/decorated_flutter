@@ -19,8 +19,8 @@ class Circle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: radius,
-      height: radius,
+      width: radius * 2,
+      height: radius * 2,
       padding: padding,
       margin: margin,
       decoration: BoxDecoration(color: color, shape: BoxShape.circle),
