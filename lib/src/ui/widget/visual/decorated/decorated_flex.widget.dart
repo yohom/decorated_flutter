@@ -352,7 +352,7 @@ class DecoratedFlex extends StatelessWidget {
     List<Widget> _children = children;
 
     if (forceItemSameExtent == true) {
-      _children = children.map((it) => Expanded(child: it)).toList();
+      _children = children.map<Widget>((it) => Expanded(child: it)).toList();
     }
 
     Widget result = Flex(
