@@ -497,9 +497,9 @@ class DecoratedFlex extends StatelessWidget {
       result = LayoutBuilder(
         builder: (context, constraint) {
           if (direction == Axis.horizontal) {
-            return SizedBox(width: constraints.maxWidth, child: result);
+            return SizedBox(width: constraint.maxWidth, child: result);
           } else if (direction == Axis.vertical) {
-            return SizedBox(height: constraints.maxHeight, child: result);
+            return SizedBox(height: constraint.maxHeight, child: result);
           } else {
             return result;
           }
