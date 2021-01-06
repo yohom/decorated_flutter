@@ -49,7 +49,6 @@ class DecoratedRow extends DecoratedFlex {
     bool center,
     bool sliver = false,
     VerticalDirection verticalDirection,
-    bool fillRemaining,
     List<Widget> children,
   }) : super(
           key: key,
@@ -96,7 +95,6 @@ class DecoratedRow extends DecoratedFlex {
           center: center,
           sliver: sliver,
           verticalDirection: verticalDirection,
-          fillRemaining: fillRemaining,
           children: children,
         );
 }
@@ -146,7 +144,6 @@ class DecoratedColumn extends DecoratedFlex {
     bool center,
     bool sliver = false,
     VerticalDirection verticalDirection,
-    bool fillRemaining,
     List<Widget> children,
   }) : super(
           key: key,
@@ -193,7 +190,6 @@ class DecoratedColumn extends DecoratedFlex {
           center: center,
           sliver: sliver,
           verticalDirection: verticalDirection,
-          fillRemaining: fillRemaining,
           children: children,
         );
 }
@@ -244,7 +240,6 @@ class DecoratedFlex extends StatelessWidget {
     this.center,
     this.sliver = false,
     this.verticalDirection,
-    this.fillRemaining,
     this.children,
   }) : super(key: key);
 
@@ -348,9 +343,6 @@ class DecoratedFlex extends StatelessWidget {
 
   /// 垂直方向
   final VerticalDirection verticalDirection;
-
-  /// 占据剩余的空间
-  final bool fillRemaining;
 
   /// 子元素
   final List<Widget> children;
@@ -491,20 +483,6 @@ class DecoratedFlex extends StatelessWidget {
 
     if (offset != null) {
       result = Transform.translate(offset: offset, child: result);
-    }
-
-    if (fillRemaining == true) {
-      result = LayoutBuilder(
-        builder: (context, constraint) {
-          if (direction == Axis.horizontal) {
-            return SizedBox(width: constraint.maxWidth, child: result);
-          } else if (direction == Axis.vertical) {
-            return SizedBox(height: constraint.maxHeight, child: result);
-          } else {
-            return result;
-          }
-        },
-      );
     }
 
     if (expanded == true) {
