@@ -13,6 +13,10 @@ extension DateTimeX on DateTime {
     return DateFormat(format).format(this);
   }
 
+  bool isSameDay(DateTime other) {
+    return year == other.year && month == other.month && day == other.day;
+  }
+
   bool get isToday {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
