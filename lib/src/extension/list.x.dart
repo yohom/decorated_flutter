@@ -36,4 +36,12 @@ extension ListX<T> on List<T> {
 
     return result;
   }
+
+  Map<S, List<T>> groupBy<S>(S Function(T) key) {
+    var map = <S, List<T>>{};
+    for (var element in this) {
+      (map[key(element)] ??= []).add(element);
+    }
+    return map;
+  }
 }
