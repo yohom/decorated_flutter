@@ -44,4 +44,8 @@ extension ListX<T> on List<T> {
     }
     return map;
   }
+
+  bool containsBy(Object target, bool Function(T) mapper) {
+    return map(mapper).contains(target);
+  }
 }
