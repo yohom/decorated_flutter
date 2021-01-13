@@ -5,17 +5,26 @@ import 'package:flutter/material.dart';
 Future<DateTime> showDateDialog(
   BuildContext context, {
   DateTime initialDateTime,
+  CupertinoDatePickerMode mode = CupertinoDatePickerMode.date,
 }) async {
   return showModalBottomSheet(
     context: context,
-    builder: (context) => _DatePickerDialog(initialDateTime: initialDateTime),
+    builder: (context) => _DatePickerDialog(
+      initialDateTime: initialDateTime,
+      mode: mode,
+    ),
   );
 }
 
 class _DatePickerDialog extends StatefulWidget {
-  const _DatePickerDialog({Key key, this.initialDateTime}) : super(key: key);
+  const _DatePickerDialog({
+    Key key,
+    this.initialDateTime,
+    this.mode,
+  }) : super(key: key);
 
   final DateTime initialDateTime;
+  final CupertinoDatePickerMode mode;
 
   @override
   __DatePickerDialogState createState() => __DatePickerDialogState();
@@ -54,7 +63,7 @@ class __DatePickerDialogState extends State<_DatePickerDialog> {
         kDivider1,
         Expanded(
           child: CupertinoDatePicker(
-            mode: CupertinoDatePickerMode.date,
+            mode: widget.mode ?? CupertinoDatePickerMode.date,
             maximumDate: DateTime.now(),
             initialDateTime: _date,
             onDateTimeChanged: (date) {
