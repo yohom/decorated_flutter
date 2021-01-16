@@ -454,6 +454,8 @@ class BoolOutput<ARG_TYPE> extends Output<bool, ARG_TYPE> with BoolMixin {
 
 /// 没有数据, 只发射信号的IO
 class Signal extends IO<dynamic> {
+  Signal({String semantics}) : super(semantics: semantics);
+
   @override
   void reset() {
     // do nothing
