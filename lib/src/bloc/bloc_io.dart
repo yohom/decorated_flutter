@@ -832,8 +832,6 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
   /// 返回是否还有更多数据 true为还有更多数据 false为没有更多数据
   @Deprecated('使用[loadMore]代替, 仅仅是名称替换')
   Future<bool> nextPage([ARG_TYPE args]) async {
-    if (_subject.isClosed) return false;
-
     // 如果已经没有更多数据的话, 就不再请求
     if (!_noMoreData) {
       try {
@@ -846,8 +844,11 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
         // 如果当前页列表大小已经小于设置的每页大小, 那么说明已经到最后一页
         // 或者当前页是空, 也说明已经是最后一页
         _noMoreData = nextPageData.length < _pageSize || nextPageData.isEmpty;
+
+        if (_subject.isClosed) return false;
         _subject.add(_dataList);
       } catch (e) {
+        if (_subject.isClosed) return false;
         _subject.addError(e);
       }
     }
@@ -858,8 +859,6 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
   ///
   /// 返回是否还有更多数据 true为还有更多数据 false为没有更多数据
   Future<bool> loadMore([ARG_TYPE args]) async {
-    if (_subject.isClosed) return false;
-
     // 如果已经没有更多数据的话, 就不再请求
     if (!_noMoreData) {
       try {
@@ -872,8 +871,11 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
         // 如果当前页列表大小已经小于设置的每页大小, 那么说明已经到最后一页
         // 或者当前页是空, 也说明已经是最后一页
         _noMoreData = nextPageData.length < _pageSize || nextPageData.isEmpty;
+
+        if (_subject.isClosed) return false;
         _subject.add(_dataList);
       } catch (e) {
+        if (_subject.isClosed) return false;
         _subject.addError(e);
       }
     }
@@ -884,14 +886,15 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
   ///
   /// 会重新加载第一页
   Future<void> refresh([ARG_TYPE args]) async {
-    if (_subject.isClosed) return false;
-
     _currentPage = _initPage;
     _noMoreData = false;
     try {
       _dataList = await _pageFetch(_currentPage, args);
+
+      if (_subject.isClosed) return false;
       _subject.add(_dataList);
     } catch (e) {
+      if (_subject.isClosed) return false;
       _subject.addError(e);
     }
   }
