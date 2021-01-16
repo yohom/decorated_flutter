@@ -452,25 +452,22 @@ class BoolOutput<ARG_TYPE> extends Output<bool, ARG_TYPE> with BoolMixin {
         );
 }
 
-/// 固定长度的队列
-@Deprecated('使用ListMixin的capacity代替')
-class EvictingQueueIO<T> extends IO<EvictingQueue<T>>
-    with EvictingQueueMixin<T> {
-  EvictingQueueIO({
-    EvictingQueue<T> seedValue,
-    String semantics,
-    bool sync = true,
-    bool isBehavior = true,
-    bool printLog = true,
-    _Fetch<EvictingQueue<T>, dynamic> fetch,
-  }) : super(
-          seedValue: seedValue,
-          semantics: semantics,
-          sync: sync,
-          isBehavior: isBehavior,
-          fetch: fetch,
-          printLog: printLog,
-        );
+/// 没有数据, 只发射信号的IO
+class Signal extends IO<dynamic> {
+  @override
+  void reset() {
+    // do nothing
+  }
+
+  // 隐藏add方法
+  @protected
+  @override
+  void add(dynamic data) {}
+
+  /// 发射信号
+  void emit() {
+    add(Object());
+  }
 }
 //endregion
 
