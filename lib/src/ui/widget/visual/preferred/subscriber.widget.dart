@@ -74,9 +74,10 @@ class Subscriber<T> extends StatelessWidget {
       stream: stream,
       builder: (ctx, snapshot) {
         if (snapshot.hasError) {
-          L.d('Subscriber出现错误: ${snapshot.error}');
           if (snapshot.error is Error) {
-            L.d((snapshot.error as Error).stackTrace);
+            L.d('Subscriber出现错误: ${(snapshot.error as Error).stackTrace}');
+          } else {
+            L.d('Subscriber出现错误: ${snapshot.error}');
           }
           if (errorPlaceholderBuilder != null) {
             return errorPlaceholderBuilder(context, snapshot.error);
