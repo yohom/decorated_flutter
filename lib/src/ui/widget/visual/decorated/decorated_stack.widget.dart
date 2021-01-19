@@ -18,6 +18,8 @@ class DecoratedStack extends StatelessWidget {
     this.safeArea,
     this.onPressed,
     this.onLongPressed,
+    this.onVerticalDragEnd,
+    this.onHorizontalDragEnd,
     this.behavior,
     this.overflow,
     this.constraints,
