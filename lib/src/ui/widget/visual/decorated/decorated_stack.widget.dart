@@ -37,6 +37,9 @@ class DecoratedStack extends StatelessWidget {
     this.sliver = false,
     this.aspectRatio,
     this.childrenZIndex = ZIndex.bottom,
+    this.transform,
+    this.animationDuration,
+    this.animationCurve,
     this.children = const [],
   }) : super(key: key);
 
@@ -46,6 +49,9 @@ class DecoratedStack extends StatelessWidget {
   final BoxConstraints constraints;
   final double width;
   final double height;
+  final Matrix4 transform;
+  final Duration animationDuration;
+  final Curve animationCurve;
 
   final TextStyle textStyle;
 
@@ -132,16 +138,33 @@ class DecoratedStack extends StatelessWidget {
         margin != null ||
         width != null ||
         height != null ||
+        transform != null ||
         constraints != null) {
-      result = Container(
-        margin: margin,
-        padding: padding,
-        width: width,
-        height: height,
-        decoration: decoration,
-        constraints: constraints,
-        child: result,
-      );
+      if (animationDuration != null && animationDuration != Duration.zero) {
+        result = AnimatedContainer(
+          duration: animationDuration,
+          curve: animationCurve ?? Curves.linear,
+          padding: padding,
+          margin: margin,
+          width: width,
+          height: height,
+          decoration: decoration,
+          constraints: constraints,
+          transform: transform,
+          child: result,
+        );
+      } else {
+        result = Container(
+          padding: padding,
+          margin: margin,
+          width: width,
+          height: height,
+          decoration: decoration,
+          constraints: constraints,
+          transform: transform,
+          child: result,
+        );
+      }
     }
 
     if (onPressed != null || onLongPressed != null) {
