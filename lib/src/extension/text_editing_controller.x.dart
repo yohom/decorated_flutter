@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +10,8 @@ extension TextEditingControllerX on TextEditingController {
   }
 
   void backspace([int count = 1]) {
-    text = text.substring(0, text.length - count);
-    selection = TextSelection.collapsed(offset: text.length - count);
+    final endIndex = max(0, text.length - count);
+    text = text.substring(0, endIndex);
+    selection = TextSelection.collapsed(offset: endIndex);
   }
 }
