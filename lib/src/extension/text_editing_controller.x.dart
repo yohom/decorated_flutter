@@ -8,7 +8,7 @@ extension TextEditingControllerX on TextEditingController {
   }
 
   void backspace([int count = 1]) {
-    text = text.substring(0, text.length - 1);
-    selection = TextSelection.collapsed(offset: text.length - 1);
+    text = text.substring(0, text.length - count);
+    selection = TextSelection.collapsed(offset: text.length - count);
   }
 }
