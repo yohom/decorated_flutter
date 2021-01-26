@@ -27,7 +27,7 @@ class ImageView extends StatelessWidget {
         loadFailedCallback = null,
         loadedCallback = null,
         useDiskCache = true,
-        placeholder = null,
+        placeholder = const SizedBox.shrink(),
         super(key: key);
 
   ImageView.networkImage(
@@ -44,7 +44,7 @@ class ImageView extends StatelessWidget {
     this.loadingProgress,
     this.loadFailedCallback,
     this.loadedCallback,
-    this.placeholder,
+    this.placeholder = const SizedBox.shrink(),
   })  : imagePath = null,
         icon = null,
         imageUrlFuture = null,
@@ -59,7 +59,7 @@ class ImageView extends StatelessWidget {
     this.size,
     this.fit,
     this.color,
-    this.placeholder,
+    this.placeholder = const SizedBox.shrink(),
     this.useDiskCache = true,
   })  : imagePath = null,
         icon = null,
@@ -90,7 +90,7 @@ class ImageView extends StatelessWidget {
         loadFailedCallback = null,
         loadedCallback = null,
         useDiskCache = null,
-        placeholder = null,
+        placeholder = const SizedBox.shrink(),
         super(key: key);
 
   ImageView.futureIcon(
@@ -98,7 +98,7 @@ class ImageView extends StatelessWidget {
     Key key,
     this.size,
     this.color,
-    this.placeholder,
+    this.placeholder = const SizedBox.shrink(),
   })  : imageUrl = null,
         imagePath = null,
         width = null,
