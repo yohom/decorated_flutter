@@ -17,3 +17,8 @@ final Function doNothing2 = (_, __) {};
 Future<void> hideKeyboard() {
   return SystemChannels.textInput.invokeMethod('TextInput.hide');
 }
+
+/// 打开键盘
+Future<void> showKeyboard() {
+  return SystemChannels.textInput.invokeMethod('TextInput.show');
+}
