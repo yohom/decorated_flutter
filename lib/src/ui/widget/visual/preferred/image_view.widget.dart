@@ -27,6 +27,7 @@ class ImageView extends StatelessWidget {
         loadFailedCallback = null,
         loadedCallback = null,
         useDiskCache = true,
+        placeholder = null,
         super(key: key);
 
   ImageView.networkImage(
@@ -43,6 +44,7 @@ class ImageView extends StatelessWidget {
     this.loadingProgress,
     this.loadFailedCallback,
     this.loadedCallback,
+    this.placeholder,
   })  : imagePath = null,
         icon = null,
         imageUrlFuture = null,
@@ -57,6 +59,7 @@ class ImageView extends StatelessWidget {
     this.size,
     this.fit,
     this.color,
+    this.placeholder,
     this.useDiskCache = true,
   })  : imagePath = null,
         icon = null,
@@ -87,6 +90,7 @@ class ImageView extends StatelessWidget {
         loadFailedCallback = null,
         loadedCallback = null,
         useDiskCache = null,
+        placeholder = null,
         super(key: key);
 
   ImageView.futureIcon(
@@ -94,6 +98,7 @@ class ImageView extends StatelessWidget {
     Key key,
     this.size,
     this.color,
+    this.placeholder,
   })  : imageUrl = null,
         imagePath = null,
         width = null,
@@ -157,6 +162,9 @@ class ImageView extends StatelessWidget {
   /// 需要异步获取的icon
   final Future<IconData> iconFuture;
 
+  /// 占位图
+  final Widget placeholder;
+
   @override
   Widget build(BuildContext context) {
     if (imagePath != null) {
@@ -175,6 +183,7 @@ class ImageView extends StatelessWidget {
         height: size ?? height,
         fit: fit,
         color: color,
+        placeholder: (_, __) => placeholder,
         errorWidget: (_, __, ___) => Image.asset(
           fallbackAssetImage,
           width: size ?? width,
