@@ -50,6 +50,7 @@ extension FutureX<T> on Future<T> {
       },
       transitionDuration: const Duration(milliseconds: 150),
       barrierDismissible: cancelable,
+      barrierLabel: 'Dismiss',
       barrierColor:
           backgroundColor ?? FutureX.backgroundColor ?? Colors.black54,
     ).whenComplete(() {
