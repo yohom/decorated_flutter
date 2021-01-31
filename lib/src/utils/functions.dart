@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/services.dart';
 
@@ -21,4 +23,10 @@ Future<void> hideKeyboard() {
 /// 打开键盘
 Future<void> showKeyboard() {
   return SystemChannels.textInput.invokeMethod('TextInput.show');
+}
+
+/// 生成指定长度的随机字符串
+String generateRandomString(int len) {
+  final r = Random();
+  return String.fromCharCodes(List.generate(len, (_) => r.nextInt(33) + 89));
 }
