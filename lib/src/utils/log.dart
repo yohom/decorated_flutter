@@ -23,25 +23,9 @@ class _Logger {
     }
   }
 
-  void i(Object content) async {
-    // 正常打印
-    logger.i(content);
-
-    // 保存到文件
-    final tempDir = await getTemporaryDirectory();
-    final time = DateTime.now();
-    final log = File('${tempDir.path}/log/${time.format('yyyy-MM-dd')}.log');
-    if (log.existsSync()) {
-      log.writeAsStringSync(
-        '${time.format()}:\n$content\n',
-        mode: FileMode.append,
-      );
-    } else {
-      log.createSync(recursive: true);
-      log.writeAsStringSync(
-        '${time.format()}:\n$content\n',
-        mode: FileMode.append,
-      );
+  void i(Object content, {LogPrinter printer}) {
+    if (!kReleaseMode) {
+      logger.i(content);
     }
   }
 
@@ -50,4 +34,24 @@ class _Logger {
       logger.e(content);
     }
   }
+}
+
+Future<File> appendLogToFile(Object content) async {
+  // 保存到文件
+  final tempDir = await getTemporaryDirectory();
+  final time = DateTime.now();
+  final log = File('${tempDir.path}/log/${time.format('yyyy-MM-dd')}.log');
+  if (log.existsSync()) {
+    log.writeAsStringSync(
+      '${time.format()}:\n$content\n',
+      mode: FileMode.append,
+    );
+  } else {
+    log.createSync(recursive: true);
+    log.writeAsStringSync(
+      '${time.format()}:\n$content\n',
+      mode: FileMode.append,
+    );
+  }
+  return log;
 }
