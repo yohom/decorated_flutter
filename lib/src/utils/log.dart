@@ -42,10 +42,16 @@ Future<File> appendLogToFile(Object content) async {
   final time = DateTime.now();
   final log = File('${tempDir.path}/log/${time.format('yyyy-MM-dd')}.log');
   if (log.existsSync()) {
-    log.writeAsStringSync('$content\n', mode: FileMode.append);
+    log.writeAsStringSync(
+      '${time.format()}: $content\n',
+      mode: FileMode.append,
+    );
   } else {
     log.createSync(recursive: true);
-    log.writeAsStringSync('$content\n', mode: FileMode.append);
+    log.writeAsStringSync(
+      '${time.format()}: $content\n',
+      mode: FileMode.append,
+    );
   }
   return log;
 }
