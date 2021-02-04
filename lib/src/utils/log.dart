@@ -37,7 +37,7 @@ class _Logger {
         mode: FileMode.append,
       );
     } else {
-      log.createSync();
+      log.createSync(recursive: true);
       log.writeAsStringSync(
         '${time.format()}:\n$content\n',
         mode: FileMode.append,
