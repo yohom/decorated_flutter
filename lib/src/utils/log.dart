@@ -40,7 +40,7 @@ Future<File> appendLogToFile(Object content) async {
   // 保存到文件
   final tempDir = await getTemporaryDirectory();
   final time = DateTime.now();
-  final log = File('${tempDir.path}/log/${time.format('yyyy-MM-dd')}.log');
+  final log = File('${tempDir.path}/log/${time.format('yyyy-MM-dd')}.txt');
   if (log.existsSync()) {
     log.writeAsStringSync(
       '${time.format()}: $content\n',
