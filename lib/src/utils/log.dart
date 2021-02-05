@@ -34,24 +34,23 @@ class _Logger {
       logger.e(content);
     }
   }
-}
 
-Future<File> appendLogToFile(Object content) async {
-  // 保存到文件
-  final tempDir = await getTemporaryDirectory();
-  final time = DateTime.now();
-  final log = File('${tempDir.path}/log/${time.format('yyyy-MM-dd')}.txt');
-  if (log.existsSync()) {
-    log.writeAsStringSync(
-      '${time.format()}: $content\n',
-      mode: FileMode.append,
-    );
-  } else {
-    log.createSync(recursive: true);
-    log.writeAsStringSync(
-      '${time.format()}: $content\n',
-      mode: FileMode.append,
-    );
+  void file(Object content) async {
+    // 保存到文件
+    final tempDir = await getTemporaryDirectory();
+    final time = DateTime.now();
+    final log = File('${tempDir.path}/log/${time.format('yyyy-MM-dd')}.txt');
+    if (log.existsSync()) {
+      log.writeAsStringSync(
+        '${time.format()}: $content\n',
+        mode: FileMode.append,
+      );
+    } else {
+      log.createSync(recursive: true);
+      log.writeAsStringSync(
+        '${time.format()}: $content\n',
+        mode: FileMode.append,
+      );
+    }
   }
-  return log;
 }
