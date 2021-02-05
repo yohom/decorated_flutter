@@ -12,8 +12,6 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  # 国际化
-  intl: ^0.16.1
   # 网络请求
   dio: ^3.0.10
   # rx
