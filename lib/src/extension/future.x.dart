@@ -13,7 +13,7 @@ extension FutureX<T> on Future<T> {
   Future<T> loading(
     BuildContext context, {
     bool cancelable = false,
-    Duration timeout = const Duration(seconds: 20),
+    Duration timeout = const Duration(seconds: 60),
     String loadingText = '加载中..',
     Color backgroundColor,
   }) {
