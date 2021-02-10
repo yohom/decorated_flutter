@@ -52,13 +52,13 @@ class _Logger {
     final time = DateTime.now();
     final log = File('${_cacheDir.path}/log/${time.format('yyyy-MM-dd')}.txt');
     if (log.existsSync()) {
-      log.writeAsString(
+      log.writeAsStringSync(
         '${time.format('H:m:s')}: $content\n',
         mode: FileMode.append,
       );
     } else {
       log.createSync(recursive: true);
-      log.writeAsString(
+      log.writeAsStringSync(
         '${time.format('H:m:s')}: $content\n',
         mode: FileMode.append,
       );
