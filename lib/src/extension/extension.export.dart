@@ -1,5 +1,6 @@
 export 'build_context.x.dart';
 export 'date_time.x.dart';
+export 'file.x.dart';
 export 'future.x.dart';
 export 'global_key.x.dart';
 export 'list.x.dart';
