@@ -10,7 +10,7 @@ final _Logger L = _Logger();
 
 class _Logger {
   final logger = Logger();
-  Directory _logDir;
+  Directory _cacheDir;
 
   void d(Object content) {
     if (!kReleaseMode) {
@@ -36,10 +36,21 @@ class _Logger {
     }
   }
 
-  void file(Object content) async {
-    _logDir ??= await getTemporaryDirectory();
+  /// 写日志到文件
+  ///
+  /// 清理[evict]时长前的文件
+  void file(Object content, {Duration evict = const Duration(days: 7)}) async {
+    _cacheDir ??= await getTemporaryDirectory();
+    final logDir = Directory('${_cacheDir.path}/log');
+    // 清理keep前的日志文件
+    logDir
+        .list()
+        .where((file) =>
+            file.statSync().changed.isBefore(DateTime.now().subtract(evict)))
+        .listen((file) => file.delete());
+
     final time = DateTime.now();
-    final log = File('${_logDir.path}/log/${time.format('yyyy-MM-dd')}.txt');
+    final log = File('${_cacheDir.path}/log/${time.format('yyyy-MM-dd')}.txt');
     if (log.existsSync()) {
       log.writeAsString(
         '${time.format('H:m:s')}: $content\n',
