@@ -10,6 +10,7 @@ final _Logger L = _Logger();
 
 class _Logger {
   final logger = Logger();
+  Directory _logDir;
 
   void d(Object content) {
     if (!kReleaseMode) {
@@ -36,19 +37,18 @@ class _Logger {
   }
 
   void file(Object content) async {
-    // 保存到文件
-    final tempDir = await getTemporaryDirectory();
+    _logDir ??= await getTemporaryDirectory();
     final time = DateTime.now();
-    final log = File('${tempDir.path}/log/${time.format('yyyy-MM-dd')}.txt');
+    final log = File('${_logDir.path}/log/${time.format('yyyy-MM-dd')}.txt');
     if (log.existsSync()) {
-      log.writeAsStringSync(
-        '${time.format()}: $content\n',
+      log.writeAsString(
+        '${time.format('H:m:s')}: $content\n',
         mode: FileMode.append,
       );
     } else {
       log.createSync(recursive: true);
-      log.writeAsStringSync(
-        '${time.format()}: $content\n',
+      log.writeAsString(
+        '${time.format('H:m:s')}: $content\n',
         mode: FileMode.append,
       );
     }
