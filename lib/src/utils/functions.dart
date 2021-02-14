@@ -1,14 +1,16 @@
 import 'dart:math';
 
-import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/services.dart';
 
-final notEqual = (prev, next) => prev != next;
-final notNull = (data) => data != null;
-final notEmpty = (data) => isNotEmpty(data);
-final isTrue = (bool data) => data == true;
-final isFalse = (bool data) => data == false;
-final returnNull = () => null;
+bool notEqual(prev, next) => prev != next;
+
+bool notNull(data) => data != null;
+
+bool isTrue(bool data) => data == true;
+
+bool isFalse(bool data) => data == false;
+
+T returnNull<T>() => null;
 
 void doNothing() {}
 
