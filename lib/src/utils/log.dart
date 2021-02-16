@@ -39,7 +39,11 @@ class _Logger {
   /// 写日志到文件
   ///
   /// 清理[evict]时长前的文件
-  void file(Object content, {Duration evict = const Duration(days: 7)}) async {
+  void file(
+    Object content, {
+    Duration evict = const Duration(days: 7),
+    bool logConsole = true,
+  }) async {
     _cacheDir ??= await getTemporaryDirectory();
     final logDir = Directory('${_cacheDir.path}/log');
     // 清理keep前的日志文件
@@ -62,6 +66,9 @@ class _Logger {
         '${time.format('H:m:s')}: $content\n',
         mode: FileMode.append,
       );
+    }
+    if (logConsole) {
+      L.d(log);
     }
   }
 }
