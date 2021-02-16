@@ -43,6 +43,7 @@ class _Logger {
     Object content, {
     Duration evict = const Duration(days: 7),
     bool logConsole = true,
+    String category = '',
   }) async {
     _cacheDir ??= await getTemporaryDirectory();
     final logDir = Directory('${_cacheDir.path}/log');
@@ -54,21 +55,22 @@ class _Logger {
         .listen((file) => file.delete());
 
     final time = DateTime.now();
-    final log = File('${_cacheDir.path}/log/${time.format('yyyy-MM-dd')}.txt');
+    final log =
+        File('${_cacheDir.path}/log/$category${time.format('yyyy-MM-dd')}.txt');
     if (log.existsSync()) {
       log.writeAsStringSync(
-        '${time.format('H:m:s')}: $content\n',
+        '${time.format('HH:mm:ss')}: $content\n',
         mode: FileMode.append,
       );
     } else {
       log.createSync(recursive: true);
       log.writeAsStringSync(
-        '${time.format('H:m:s')}: $content\n',
+        '${time.format('HH:mm:ss')}: $content\n',
         mode: FileMode.append,
       );
     }
     if (logConsole) {
-      L.d(log);
+      L.d(content);
     }
   }
 }
