@@ -36,14 +36,17 @@ class _Logger {
     }
   }
 
+  int _currentSecond = 0;
+  StringBuffer _contentBuffer = StringBuffer();
+
   /// 写日志到文件
   ///
-  /// 清理[evict]时长前的文件
+  /// 清理[evict]时长前的文件. 会缓存一秒内的日志内容, 然后统一写入文件, 减少与文件交互的次数
   void file(
     Object content, {
     Duration evict = const Duration(days: 7),
     bool logConsole = true,
-    String category = '',
+    String channel = 'default',
   }) async {
     _cacheDir ??= await getTemporaryDirectory();
     final logDir = Directory('${_cacheDir.path}/log');
@@ -56,21 +59,20 @@ class _Logger {
 
     final time = DateTime.now();
     final log =
-        File('${_cacheDir.path}/log/$category${time.format('yyyy-MM-dd')}.txt');
-    if (log.existsSync()) {
+        File('${_cacheDir.path}/log/${time.format('yyyy-MM-dd')}/$channel.txt');
+    if (_currentSecond != time.millisecondsSinceEpoch ~/ 1000) {
+      if (!log.existsSync()) log.createSync(recursive: true);
+
       log.writeAsStringSync(
-        '${time.format('HH:mm:ss')}: $content\n',
+        '${time.format('HH:mm:ss')}: ${_contentBuffer.toString()}',
         mode: FileMode.append,
       );
+      _currentSecond = time.millisecondsSinceEpoch ~/ 1000;
+      _contentBuffer.clear();
     } else {
-      log.createSync(recursive: true);
-      log.writeAsStringSync(
-        '${time.format('HH:mm:ss')}: $content\n',
-        mode: FileMode.append,
-      );
+      _contentBuffer.writeln(content);
     }
-    if (logConsole) {
-      L.d(content);
-    }
+
+    if (logConsole) L.d(content);
   }
 }
