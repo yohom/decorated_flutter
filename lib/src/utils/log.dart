@@ -55,7 +55,7 @@ class _Logger {
         .list()
         .where((file) =>
             file.statSync().changed.isBefore(DateTime.now().subtract(evict)))
-        .listen((file) => file.delete());
+        .listen((file) => file.delete(recursive: true));
 
     final time = DateTime.now();
     final log =
