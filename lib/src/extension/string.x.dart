@@ -7,12 +7,12 @@ extension StringX on String {
     return '${additionNum + thisNum}';
   }
 
-  dynamic parseJson() {
+  dynamic get json {
     if (this == null) return null;
     return jsonDecode(this);
   }
 
-  Uri parseUri() {
+  Uri get uri {
     if (this == null) return null;
     return Uri.tryParse(this);
   }
