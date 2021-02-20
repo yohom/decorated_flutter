@@ -11,4 +11,9 @@ extension StringX on String {
     if (this == null) return null;
     return jsonDecode(this);
   }
+
+  Uri parseUri() {
+    if (this == null) return null;
+    return Uri.tryParse(this);
+  }
 }
