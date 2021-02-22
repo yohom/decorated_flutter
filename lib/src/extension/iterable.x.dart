@@ -1,7 +1,7 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
 
 extension IterableX<T> on Iterable<T> {
-  T find(bool test(T e)) {
+  T find(bool Function(T) test) {
     return firstWhere(test, orElse: returnNull);
   }
 
