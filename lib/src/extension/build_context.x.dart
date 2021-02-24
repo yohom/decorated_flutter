@@ -21,6 +21,10 @@ extension BuildContextX on BuildContext {
     ));
   }
 
+  ThemeData get theme {
+    return Theme.of(this);
+  }
+
   void clearFocus() {
     FocusScope.of(this).unfocus();
   }
