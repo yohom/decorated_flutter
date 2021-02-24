@@ -27,4 +27,23 @@ extension ListX<T> on List<T> {
       return null;
     }
   }
+
+  List<List<T>> buffer(int count) {
+    final result = <List<T>>[];
+
+    final totalRound = (length / count).ceil();
+    for (int i = 0; i < totalRound; i++) {
+      final round = <T>[];
+      for (int j = (i * count); j < ((i + 1) * count); j++) {
+        if (j < length) {
+          round.add(this[j]);
+        } else {
+          break;
+        }
+      }
+      result.add(round);
+    }
+
+    return result;
+  }
 }
