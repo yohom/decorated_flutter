@@ -9,10 +9,11 @@ typedef Widget LoadingBuilder(BuildContext context, String loadingText);
 extension FutureX<T> on Future<T> {
   static LoadingBuilder loadingWidgetBuilder;
   static Color backgroundColor;
+  static bool loadingCancelable = false;
 
   Future<T> loading(
     BuildContext context, {
-    bool cancelable = false,
+    bool cancelable,
     Duration timeout = const Duration(seconds: 60),
     String loadingText = '加载中..',
     Color backgroundColor,
@@ -33,7 +34,7 @@ extension FutureX<T> on Future<T> {
         final Widget pageChild = Builder(
           builder: (context) {
             return WillPopScope(
-              onWillPop: () async => cancelable,
+              onWillPop: () async => cancelable ?? loadingCancelable,
               child: loadingWidgetBuilder != null
                   ? loadingWidgetBuilder(context, loadingText)
                   : LoadingWidget(),
@@ -49,7 +50,7 @@ extension FutureX<T> on Future<T> {
         );
       },
       transitionDuration: const Duration(milliseconds: 150),
-      barrierDismissible: cancelable,
+      barrierDismissible: cancelable ?? loadingCancelable,
       barrierLabel: 'Dismiss',
       barrierColor:
           backgroundColor ?? FutureX.backgroundColor ?? Colors.black54,

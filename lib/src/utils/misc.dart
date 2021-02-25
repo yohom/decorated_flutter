@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:decorated_flutter/decorated_flutter.dart';
@@ -8,11 +7,12 @@ import 'package:flutter/material.dart';
 
 typedef void _HandlerErrorCallback(Object error);
 
+@Deprecated('直接使用handleError即可')
 _HandlerErrorCallback handle(BuildContext context) {
-  return (Object error) => handleError(context, error);
+  return (Object error) => handleError(error);
 }
 
-void handleError(BuildContext context, Object error) {
+void handleError(Object error) {
   if (error is DioError) {
     String message = error.message;
     switch (error.type) {
@@ -46,37 +46,6 @@ void handleError(BuildContext context, Object error) {
   } else {
     toast(error.toString());
   }
-}
-
-/// 等待页
-Future<T> loading<T>(
-  BuildContext context,
-  Future<T> futureTask, {
-  bool cancelable = true,
-}) {
-  // 是被future pop的还是按返回键pop的
-  bool popByFuture = true;
-
-  showDialog(
-    context: context,
-    builder: (context) {
-      return WillPopScope(
-        onWillPop: () async => cancelable,
-        child: LoadingWidget(),
-      );
-    },
-    barrierDismissible: cancelable,
-  ).whenComplete(() {
-    // 1. 如果是返回键pop的, 那么设置成true, 这样future完成时就不会pop了
-    // 2. 如果是future完成导致的pop, 那么这一行是没用任何作用的
-    popByFuture = false;
-  });
-  return futureTask.whenComplete(() {
-    // 由于showDialog会强制使用rootNavigator, 所以这里pop的时候也要用rootNavigator
-    if (popByFuture) {
-      Navigator.of(context, rootNavigator: true).pop(context);
-    }
-  });
 }
 
 Color highContrast(Color input) {
