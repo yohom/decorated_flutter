@@ -1,24 +1,23 @@
-import 'dart:async';
-
+import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:decorated_flutter/src/bloc/bloc.export.dart';
 import 'package:flutter/cupertino.dart';
 
 mixin DisposeBag<T extends StatefulWidget> on State<T> {
-  final List<StreamSubscription> disposeBag = [];
+  final CompositeSubscription disposeBag = CompositeSubscription();
 
   @override
   void dispose() {
-    disposeBag.forEach((it) => it.cancel());
+    if (!disposeBag.isDisposed) disposeBag.dispose();
     super.dispose();
   }
 }
 
 mixin BLoCDisposeBag on BLoC {
-  final List<StreamSubscription> subscriptionBag = [];
+  final CompositeSubscription disposeBag = CompositeSubscription();
 
   @override
   void dispose() {
-    subscriptionBag.forEach((it) => it.cancel());
+    if (!disposeBag.isDisposed) disposeBag.dispose();
     super.dispose();
   }
 }
