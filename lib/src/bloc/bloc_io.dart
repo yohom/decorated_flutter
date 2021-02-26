@@ -468,7 +468,9 @@ class Signal extends IO<dynamic> {
   // 隐藏add方法
   @protected
   @override
-  void add(dynamic data) {}
+  void add(dynamic data) {
+    super.add(data);
+  }
 
   /// 发射信号
   void emit() {
