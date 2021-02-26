@@ -27,6 +27,7 @@ class DecoratedText extends StatelessWidget {
     this.leftWidget,
     this.rightWidget,
     this.softWrap = true,
+    this.mainAxisAlignment,
   }) : super(key: key);
 
   final EdgeInsetsGeometry padding;
@@ -51,6 +52,7 @@ class DecoratedText extends StatelessWidget {
   final Widget leftWidget;
   final Widget rightWidget;
   final bool softWrap;
+  final MainAxisAlignment mainAxisAlignment;
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +91,7 @@ class DecoratedText extends StatelessWidget {
 
     if (rightWidget != null || leftWidget != null) {
       result = Row(
+        mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.center,
         children: [
           if (leftWidget != null) leftWidget,
           result,
