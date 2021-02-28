@@ -16,4 +16,14 @@ extension StringX on String {
     if (this == null) return null;
     return Uri.tryParse(this);
   }
+
+  int get intValue {
+    if (this == null) return null;
+    return int.tryParse(this);
+  }
+
+  double get doubleValue {
+    if (this == null) return null;
+    return double.tryParse(this);
+  }
 }
