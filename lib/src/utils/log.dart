@@ -59,13 +59,15 @@ class _Logger {
     _logDir ??= Directory('${(await getTemporaryDirectory()).path}/log');
     final now = DateTime.now();
     // 清理keep前的日志文件
-    _logDir
-        .list()
-        .where((file) => file.statSync().changed.isBefore(now.subtract(evict)))
-        .listen((file) => file.deleteIfExists());
+    if (_logDir.existsSync()) {
+      _logDir
+          .list()
+          .where((e) => e.statSync().changed.isBefore(now.subtract(evict)))
+          .listen((file) => file.deleteIfExists());
+    }
 
     _logFile = File('${_logDir.path}/${now.format('yyyy-MM-dd')}.txt');
-    if (!_logFile.existsSync()) _logFile.createSync();
+    if (!_logFile.existsSync()) _logFile.createSync(recursive: true);
 
     final logContent = '[$tag] ${now.format('HH:mm:ss')}: $content';
     _logBuffer.writeln(logContent);
