@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'dart:ui';
 
 import 'package:decorated_flutter/src/bloc/bloc.export.dart';

@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:decorated_flutter/decorated_flutter.dart';
 
 mixin CaptchaManagerMixin on BLoC {

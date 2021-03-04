@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'dart:async';
 import 'dart:math' as math;
 
@@ -649,7 +647,6 @@ mixin ListMixin<T> on BaseIO<List<T>> {
         pending.removeRange(0, _forceCapacity);
       }
       _subject.add(pending);
-      _subject.add(latest..addAll(elements));
     }
     return elements;
   }

@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +62,7 @@ class RuntimeScaffold<T extends LocalBLoC> extends StatelessWidget {
       floatingActionButtonAnimator: floatingActionButtonAnimator,
       persistentFooterButtons: persistentFooterButtons,
       backgroundColor: backgroundColor,
-      resizeToAvoidBottomInset: resizeToAvoidBottomPadding,
+      resizeToAvoidBottomPadding: resizeToAvoidBottomPadding,
       primary: primary,
       appBar: appBar,
       body: body,

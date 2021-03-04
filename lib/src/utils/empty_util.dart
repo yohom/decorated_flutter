@@ -1,4 +1,4 @@
-bool isEmpty(Object? object) {
+bool isEmpty(Object object) {
   if (object == null) {
     return true;
   }
@@ -18,7 +18,7 @@ bool isEmpty(Object? object) {
   return false;
 }
 
-bool isNotEmpty(Object? object) {
+bool isNotEmpty(Object object) {
   return !isEmpty(object);
 }
 

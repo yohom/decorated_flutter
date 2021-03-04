@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'dart:async';
 
 import 'package:decorated_flutter/src/ui/ui.export.dart';

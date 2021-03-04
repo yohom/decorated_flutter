@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:flutter/cupertino.dart';
 
 class Start extends StatelessWidget {
