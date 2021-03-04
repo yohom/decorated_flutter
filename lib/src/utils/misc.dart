@@ -16,15 +16,15 @@ void handleError(Object error) {
   if (error is DioError) {
     String message = error.message;
     switch (error.type) {
-      case DioErrorType.CANCEL:
+      case DioErrorType.cancel:
         message = '取消请求';
         break;
-      case DioErrorType.SEND_TIMEOUT:
-      case DioErrorType.CONNECT_TIMEOUT:
-      case DioErrorType.RECEIVE_TIMEOUT:
+      case DioErrorType.sendTimeout:
+      case DioErrorType.connectTimeout:
+      case DioErrorType.receiveTimeout:
         message = '网络连接超时，请重试';
         break;
-      case DioErrorType.RESPONSE:
+      case DioErrorType.response:
         final statusCode = error.response.statusCode;
         if (statusCode >= 400 && statusCode <= 417) {
           message = '访问地址异常，请稍后重试 $statusCode';
@@ -32,7 +32,7 @@ void handleError(Object error) {
           message = '服务器繁忙 $statusCode';
         }
         break;
-      case DioErrorType.DEFAULT:
+      case DioErrorType.other:
         message = kReleaseMode ? '网络异常，请重试' : error.message;
         break;
       default:
