@@ -647,7 +647,6 @@ mixin ListMixin<T> on BaseIO<List<T>> {
         pending.removeRange(0, _forceCapacity);
       }
       _subject.add(pending);
-      _subject.add(latest..addAll(elements));
     }
     return elements;
   }
