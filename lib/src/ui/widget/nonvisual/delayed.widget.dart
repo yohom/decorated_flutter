@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:decorated_flutter/src/ui/widget/visual/preferred/preferred_async_builder.widget.dart';
 import 'package:flutter/material.dart';
 

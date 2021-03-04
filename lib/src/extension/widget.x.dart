@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 

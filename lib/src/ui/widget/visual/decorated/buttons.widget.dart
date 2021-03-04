@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:flutter/material.dart';
 

@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 mixin AnimationMixin<T extends StatefulWidget>
     on State<T>, SingleTickerProviderStateMixin<T> {
   @protected
-  late Animation animation;
+  Animation animation;
   @protected
-  late AnimationController animationController;
+  AnimationController animationController;
 
   @override
   void initState() {
