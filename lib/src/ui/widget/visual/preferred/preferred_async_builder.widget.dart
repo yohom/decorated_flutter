@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'dart:async';
 
 import 'package:decorated_flutter/decorated_flutter.dart';
@@ -11,6 +13,7 @@ typedef Widget _ErrorPlaceholderBuilder(BuildContext context, Object error);
 
 /// **Preferred**表达的语义是对目标widget预定义了一些参数
 /// **Decorated**表达的语义是对目标widget进行了一些外围的包装
+@Deprecated('使用SingleSubscriber代替')
 class PreferredFutureBuilder<T> extends StatelessWidget {
   static Widget defaultEmptyPlaceholder;
   static Widget defaultErrorPlaceholder;

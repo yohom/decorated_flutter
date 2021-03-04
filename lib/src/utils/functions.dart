@@ -10,7 +10,7 @@ bool isTrue(bool data) => data == true;
 
 bool isFalse(bool data) => data == false;
 
-T returnNull<T>() => null;
+T? returnNull<T>() => null;
 
 void doNothing() {}
 

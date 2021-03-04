@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'dart:async';
 
 extension ListStreamX<T> on Stream<List<T>> {
