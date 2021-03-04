@@ -25,7 +25,7 @@ void handleError(Object error) {
         message = '网络连接超时，请重试';
         break;
       case DioErrorType.response:
-        final statusCode = error.response.statusCode;
+        final statusCode = error.response!.statusCode!;
         if (statusCode >= 400 && statusCode <= 417) {
           message = '访问地址异常，请稍后重试 $statusCode';
         } else if (statusCode >= 500 && statusCode <= 505) {

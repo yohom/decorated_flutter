@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:decorated_flutter/src/bloc/bloc_io.dart';
 import 'package:flutter/material.dart';

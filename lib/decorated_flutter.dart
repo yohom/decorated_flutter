@@ -1,3 +1,5 @@
+// @dart=2.9
+
 library decorated_flutter;
 
 export 'package:rxdart/rxdart.dart';
