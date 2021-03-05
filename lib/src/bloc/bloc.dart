@@ -9,7 +9,7 @@ abstract class BLoC {
   /// BLoC代表的语义
   final String semantics;
 
-  BLoC([this.semantics]);
+  BLoC(this.semantics);
 
   /// 重试
   Future<void> onErrorRetry() async {}
