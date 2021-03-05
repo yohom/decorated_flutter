@@ -1,12 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class Circle extends StatelessWidget {
   const Circle({
     Key key,
     @required this.radius,
-    @required this.color,
-    this.padding,
-    this.margin,
+    this.color = Colors.transparent,
+    this.padding = EdgeInsets.zero,
+    this.margin = EdgeInsets.zero,
     this.child,
   }) : super(key: key);
 
@@ -33,9 +34,9 @@ class Square extends StatelessWidget {
   const Square({
     Key key,
     @required this.side,
-    @required this.color,
-    this.padding,
-    this.margin,
+    this.color = Colors.transparent,
+    this.padding = EdgeInsets.zero,
+    this.margin = EdgeInsets.zero,
     this.child,
   }) : super(key: key);
 
