@@ -41,7 +41,7 @@ class DecoratedStack extends StatelessWidget {
     this.transform,
     this.animationDuration,
     this.animationCurve,
-    this.clipBehavior,
+    this.clipBehavior = Clip.none,
     this.children = const [],
   }) : super(key: key);
 
