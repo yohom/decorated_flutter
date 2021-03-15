@@ -145,7 +145,7 @@ class Input<T> extends BaseIO<T> with InputMixin {
     bool printLog = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
-    _Equal test,
+    _Equal<T> test,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -190,7 +190,7 @@ class IO<T> extends BaseIO<T> with InputMixin, OutputMixin<T, dynamic> {
     bool acceptEmpty = true,
     bool isDistinct = false,
     bool printLog = true,
-    _Equal test,
+    _Equal<T> test,
     _Fetch<T, dynamic> fetch,
   }) : super(
           seedValue: seedValue,
@@ -220,7 +220,7 @@ class ListInput<T> extends Input<List<T>> with ListMixin {
     bool printLog = true,
     bool isDistinct = false,
     int forceCapacity,
-    _Equal test,
+    _Equal<List<T>> test,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -337,7 +337,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin {
     bool isDistinct = false,
     bool printLog = true,
     int forceCapacity,
-    _Equal test,
+    _Equal<List<T>> test,
     _Fetch<List<T>, dynamic> fetch,
   }) : super(
           seedValue: seedValue,
@@ -364,7 +364,7 @@ class IntIO extends IO<int> with IntMixin {
     bool acceptEmpty = true,
     bool isDistinct = false,
     bool printLog = true,
-    _Equal test,
+    _Equal<int> test,
     _Fetch<int, dynamic> fetch,
   }) : super(
           seedValue: seedValue,
@@ -391,7 +391,7 @@ class IntInput extends Input<int> with IntMixin {
     int min,
     int max,
     bool printLog = true,
-    _Equal test,
+    _Equal<int> test,
     _Fetch<int, dynamic> fetch,
   }) : super(
           seedValue: seedValue,
@@ -418,7 +418,7 @@ class BoolIO extends IO<bool> with BoolMixin {
     bool acceptEmpty = true,
     bool isDistinct = false,
     bool printLog = true,
-    _Equal test,
+    _Equal<bool> test,
     _Fetch<bool, dynamic> fetch,
   }) : super(
           seedValue: seedValue,
