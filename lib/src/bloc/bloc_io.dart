@@ -660,7 +660,7 @@ mixin ListMixin<T> on BaseIO<List<T>> {
   T replace(int index, T element) {
     if (_subject.isClosed) return null;
 
-    _subject.add(latest..replaceRange(index, index + 1, [element]));
+    _subject.add(latest..replaceRange(index, index + 1, <T>[element]));
     return element;
   }
 
