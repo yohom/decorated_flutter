@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
 typedef bool _Equal<T>(T data1, T data2);
-typedef Future<T> _Fetch<T, ARG_TYPE>(ARG_TYPE arg);
-typedef Future<T> _PageFetch<T, ARG_TYPE>(int page, ARG_TYPE arg);
+typedef FutureOr<T> _Fetch<T, ARG_TYPE>(ARG_TYPE arg);
+typedef FutureOr<T> _PageFetch<T, ARG_TYPE>(int page, ARG_TYPE arg);
 
 /// 业务单元基类
 abstract class BaseIO<T> {
@@ -582,14 +582,20 @@ mixin OutputMixin<T, ARG_TYPE> on BaseIO<T> {
   _Fetch<T, ARG_TYPE> _fetch;
 
   /// 使用内部的trigger获取数据
-  Future<T> update([ARG_TYPE arg]) {
-    return _fetch(arg)
-      ..then((data) {
-        if (!_subject.isClosed) _subject.add(data);
-      })
-      ..catchError((error) {
-        if (!_subject.isClosed) _subject.addError(error);
-      });
+  FutureOr<T> update([ARG_TYPE arg]) {
+    final result = _fetch(arg);
+    if (result is Future<T>) {
+      result
+        ..then((data) {
+          if (!_subject.isClosed) _subject.add(data);
+        })
+        ..catchError((error) {
+          if (!_subject.isClosed) _subject.addError(error);
+        });
+    } else if (result is T) {
+      if (!_subject.isClosed) _subject.add(result);
+    }
+    return result;
   }
 }
 
