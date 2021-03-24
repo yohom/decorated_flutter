@@ -46,7 +46,7 @@ String generateRandomString(int len) {
 Future<void> polling({
   @required Future<void> Function() task,
   @required Duration interval,
-  int maxTryCount,
+  @required int maxTryCount,
   Future<void> Function() whenErrorTry,
 }) async {
   int tryCount = 0;
@@ -60,11 +60,11 @@ Future<void> polling({
         // 成功就马上break
         break;
       } catch (e) {
-        L.d('第$tryCount次轮询失败, 开始执行错误重试');
         if (whenErrorTry != null) {
+          L.d('第$tryCount次轮询失败, 开始执行错误重试');
           await whenErrorTry();
         } else {
-          L.d('第$tryCount次轮询错误重试出现错误');
+          L.d('第$tryCount次轮询失败, 未配置错误重试, 抛出异常');
           rethrow;
         }
       }
