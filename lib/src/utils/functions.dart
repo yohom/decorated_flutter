@@ -1,6 +1,9 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+
+import 'log.dart';
 
 bool notEqual(prev, next) => prev != next;
 
@@ -37,4 +40,39 @@ Future<void> showKeyboard() {
 String generateRandomString(int len) {
   final r = Random();
   return String.fromCharCodes(List.generate(len, (_) => r.nextInt(33) + 89));
+}
+
+/// 通用轮询逻辑
+Future<void> polling({
+  @required Future<void> Function() task,
+  @required Duration interval,
+  int maxTryCount,
+  Future<void> Function() whenErrorTry,
+}) async {
+  int tryCount = 0;
+  while (true) {
+    if (tryCount < maxTryCount) {
+      tryCount++;
+      L.d('执行第$tryCount次轮询');
+      try {
+        await task();
+        L.d('第$tryCount次轮询执行成功');
+        // 成功就马上break
+        break;
+      } catch (e) {
+        L.d('第$tryCount次轮询失败, 开始执行错误重试');
+        if (whenErrorTry != null) {
+          await whenErrorTry();
+        } else {
+          L.d('第$tryCount次轮询错误重试出现错误');
+          rethrow;
+        }
+      }
+      await Future.delayed(interval);
+    } else {
+      L.d('超出轮询尝试次数');
+      throw '超出轮询尝试次数';
+    }
+  }
+  L.d('轮询执行结束');
 }
