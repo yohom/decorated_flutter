@@ -10,17 +10,6 @@ extension BuildContextX on BuildContext {
     return BLoCProvider.of<T>(this);
   }
 
-  void snackbar(
-    String content, {
-    Duration duration = const Duration(seconds: 1),
-  }) {
-    Scaffold.of(this).showSnackBar(SnackBar(
-      content: Text(content),
-      duration: duration,
-      action: SnackBarAction(label: '知道了', onPressed: () {}),
-    ));
-  }
-
   ThemeData get theme {
     return Theme.of(this);
   }

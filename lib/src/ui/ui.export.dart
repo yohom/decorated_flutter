@@ -1,5 +1,6 @@
 export 'animation/fade_slide.transition.dart';
 export 'animation/show_up.transition.dart';
+export 'misc/grid_delegate.dart';
 export 'route/custom_material.route.dart';
 export 'route/decorated_route.route.dart';
 export 'route/transparent_route.route.dart';

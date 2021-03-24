@@ -49,6 +49,7 @@ class DecoratedRow extends DecoratedFlex {
     bool center,
     bool sliver = false,
     VerticalDirection verticalDirection,
+    Clip clipBehavior = Clip.none,
     List<Widget> children,
   }) : super(
           key: key,
@@ -95,6 +96,7 @@ class DecoratedRow extends DecoratedFlex {
           center: center,
           sliver: sliver,
           verticalDirection: verticalDirection,
+          clipBehavior: clipBehavior,
           children: children,
         );
 }
@@ -144,6 +146,7 @@ class DecoratedColumn extends DecoratedFlex {
     bool center,
     bool sliver = false,
     VerticalDirection verticalDirection,
+    Clip clipBehavior = Clip.none,
     List<Widget> children,
   }) : super(
           key: key,
@@ -190,6 +193,7 @@ class DecoratedColumn extends DecoratedFlex {
           center: center,
           sliver: sliver,
           verticalDirection: verticalDirection,
+          clipBehavior: clipBehavior,
           children: children,
         );
 }
@@ -240,6 +244,7 @@ class DecoratedFlex extends StatelessWidget {
     this.center,
     this.sliver = false,
     this.verticalDirection,
+    this.clipBehavior,
     this.children,
   }) : super(key: key);
 
@@ -344,6 +349,8 @@ class DecoratedFlex extends StatelessWidget {
   /// 垂直方向
   final VerticalDirection verticalDirection;
 
+  final Clip clipBehavior;
+
   /// 子元素
   final List<Widget> children;
 
@@ -420,6 +427,7 @@ class DecoratedFlex extends StatelessWidget {
           constraints: constraints,
           transform: transform,
           alignment: alignment,
+          clipBehavior: clipBehavior,
           child: result,
         );
       }

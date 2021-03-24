@@ -16,7 +16,7 @@ abstract class BaseIO<T> {
     T seedValue,
 
     /// Event代表的语义
-    String semantics,
+    @required String semantics,
 
     /// 是否同步发射数据, 传递给内部的[_subject]
     bool sync = true,
@@ -139,13 +139,13 @@ class Static<T> {
 class Input<T> extends BaseIO<T> with InputMixin {
   Input({
     T seedValue,
-    String semantics,
+    @required String semantics,
     bool sync = true,
     bool isBehavior = true,
     bool printLog = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
-    _Equal test,
+    _Equal<T> test,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -163,7 +163,7 @@ class Input<T> extends BaseIO<T> with InputMixin {
 class Output<T, ARG_TYPE> extends BaseIO<T> with OutputMixin<T, ARG_TYPE> {
   Output({
     T seedValue,
-    String semantics,
+    @required String semantics,
     bool sync = true,
     bool printLog = true,
     bool isBehavior = true,
@@ -184,13 +184,13 @@ class Output<T, ARG_TYPE> extends BaseIO<T> with OutputMixin<T, ARG_TYPE> {
 class IO<T> extends BaseIO<T> with InputMixin, OutputMixin<T, dynamic> {
   IO({
     T seedValue,
-    String semantics,
+    @required String semantics,
     bool sync = true,
     bool isBehavior = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
     bool printLog = true,
-    _Equal test,
+    _Equal<T> test,
     _Fetch<T, dynamic> fetch,
   }) : super(
           seedValue: seedValue,
@@ -213,14 +213,14 @@ class IO<T> extends BaseIO<T> with InputMixin, OutputMixin<T, dynamic> {
 class ListInput<T> extends Input<List<T>> with ListMixin {
   ListInput({
     List<T> seedValue,
-    String semantics,
+    @required String semantics,
     bool sync = true,
     bool isBehavior = true,
     bool acceptEmpty = true,
     bool printLog = true,
     bool isDistinct = false,
     int forceCapacity,
-    _Equal test,
+    _Equal<List<T>> test,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -241,7 +241,7 @@ class ListInput<T> extends Input<List<T>> with ListMixin {
 class ListOutput<T, ARG_TYPE> extends Output<List<T>, ARG_TYPE> with ListMixin {
   ListOutput({
     List<T> seedValue,
-    String semantics,
+    @required String semantics,
     bool sync = true,
     bool isBehavior = true,
     bool printLog = true,
@@ -264,7 +264,7 @@ class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
     with PageMixin<T, ARG_TYPE> {
   PageOutput({
     List<T> seedValue,
-    String semantics,
+    @required String semantics,
     bool sync = true,
     bool isBehavior = true,
     int initPage = 0,
@@ -300,7 +300,7 @@ class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
 class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
   PageIO({
     List<T> seedValue,
-    String semantics,
+    @required String semantics,
     bool sync = true,
     bool isBehavior = true,
     int initPage = 0,
@@ -330,14 +330,14 @@ class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
 class ListIO<T> extends IO<List<T>> with ListMixin {
   ListIO({
     List<T> seedValue,
-    String semantics,
+    @required String semantics,
     bool sync = true,
     bool isBehavior = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
     bool printLog = true,
     int forceCapacity,
-    _Equal test,
+    _Equal<List<T>> test,
     _Fetch<List<T>, dynamic> fetch,
   }) : super(
           seedValue: seedValue,
@@ -358,13 +358,13 @@ class ListIO<T> extends IO<List<T>> with ListMixin {
 class IntIO extends IO<int> with IntMixin {
   IntIO({
     int seedValue,
-    String semantics,
+    @required String semantics,
     bool sync = true,
     bool isBehavior = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
     bool printLog = true,
-    _Equal test,
+    _Equal<int> test,
     _Fetch<int, dynamic> fetch,
   }) : super(
           seedValue: seedValue,
@@ -383,7 +383,7 @@ class IntIO extends IO<int> with IntMixin {
 class IntInput extends Input<int> with IntMixin {
   IntInput({
     int seedValue,
-    String semantics,
+    @required String semantics,
     bool sync = true,
     bool isBehavior = true,
     bool acceptEmpty = true,
@@ -391,7 +391,7 @@ class IntInput extends Input<int> with IntMixin {
     int min,
     int max,
     bool printLog = true,
-    _Equal test,
+    _Equal<int> test,
     _Fetch<int, dynamic> fetch,
   }) : super(
           seedValue: seedValue,
@@ -412,13 +412,13 @@ class IntInput extends Input<int> with IntMixin {
 class BoolIO extends IO<bool> with BoolMixin {
   BoolIO({
     bool seedValue,
-    String semantics,
+    @required String semantics,
     bool sync = true,
     bool isBehavior = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
     bool printLog = true,
-    _Equal test,
+    _Equal<bool> test,
     _Fetch<bool, dynamic> fetch,
   }) : super(
           seedValue: seedValue,
@@ -437,7 +437,7 @@ class BoolIO extends IO<bool> with BoolMixin {
 class BoolOutput<ARG_TYPE> extends Output<bool, ARG_TYPE> with BoolMixin {
   BoolOutput({
     bool seedValue,
-    String semantics,
+    @required String semantics,
     bool sync = true,
     bool isBehavior = true,
     bool printLog = true,
@@ -454,7 +454,7 @@ class BoolOutput<ARG_TYPE> extends Output<bool, ARG_TYPE> with BoolMixin {
 
 /// 没有数据, 只发射信号的IO
 class Signal extends IO<dynamic> {
-  Signal({String semantics})
+  Signal({@required String semantics})
       : super(
           semantics: semantics,
           isBehavior: false,
@@ -660,7 +660,7 @@ mixin ListMixin<T> on BaseIO<List<T>> {
   T replace(int index, T element) {
     if (_subject.isClosed) return null;
 
-    _subject.add(latest..replaceRange(index, index + 1, [element]));
+    _subject.add(latest..replaceRange(index, index + 1, <T>[element]));
     return element;
   }
 

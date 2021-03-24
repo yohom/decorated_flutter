@@ -35,13 +35,13 @@ class DecoratedStack extends StatelessWidget {
     this.start,
     this.end,
     this.center,
-    this.borderRadius,
     this.sliver = false,
     this.aspectRatio,
     this.childrenZIndex = ZIndex.bottom,
     this.transform,
     this.animationDuration,
     this.animationCurve,
+    this.clipBehavior = Clip.none,
     this.children = const [],
   }) : super(key: key);
 
@@ -81,12 +81,12 @@ class DecoratedStack extends StatelessWidget {
   final AlignmentGeometry alignment;
   final Overflow overflow;
 
-  final BorderRadius borderRadius;
-
   final bool sliver;
   final ZIndex childrenZIndex;
 
   final double aspectRatio;
+
+  final Clip clipBehavior;
 
   final List<Widget> children;
 
@@ -133,10 +133,6 @@ class DecoratedStack extends StatelessWidget {
       result = DefaultTextStyle(style: textStyle, child: result);
     }
 
-    if (borderRadius != null) {
-      result = ClipRRect(borderRadius: borderRadius, child: result);
-    }
-
     if (decoration != null ||
         padding != null ||
         margin != null ||
@@ -165,6 +161,7 @@ class DecoratedStack extends StatelessWidget {
           height: height,
           decoration: decoration,
           constraints: constraints,
+          clipBehavior: clipBehavior,
           transform: transform,
           child: result,
         );

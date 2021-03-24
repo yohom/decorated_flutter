@@ -77,3 +77,9 @@ extension FutureX<T> on Future<T> {
     return this;
   }
 }
+
+extension StringFutureX on Future<String> {
+  Future<String> operator +(String text) async {
+    return (await this) + text;
+  }
+}
