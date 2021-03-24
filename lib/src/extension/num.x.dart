@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
 extension DoubleX on double {}
@@ -21,9 +20,9 @@ extension IntX on int {
   }
 
   /// 重复执行任务
-  void repeat(VoidCallback callback) {
+  void repeat(Future<void> Function() callback) async {
     for (int i = 0; i < this; i++) {
-      callback();
+      await callback();
     }
   }
 }
