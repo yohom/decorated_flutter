@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
 extension DoubleX on double {}
@@ -17,5 +18,12 @@ extension IntX on int {
   /// 右补齐
   String padRight(int width, [String padding = '']) {
     return toString().padRight(width, padding);
+  }
+
+  /// 重复执行任务
+  void repeat(VoidCallback callback) {
+    for (int i = 0; i < this; i++) {
+      callback();
+    }
   }
 }
