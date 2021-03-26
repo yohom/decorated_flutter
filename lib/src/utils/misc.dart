@@ -13,6 +13,7 @@ _HandlerErrorCallback handle(BuildContext context) {
 }
 
 void handleError(Object error) {
+  L.d('handleError: $error');
   if (error is DioError) {
     String message = error.message;
     switch (error.type) {
