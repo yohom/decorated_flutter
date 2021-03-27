@@ -18,4 +18,11 @@ extension IntX on int {
   String padRight(int width, [String padding = '']) {
     return toString().padRight(width, padding);
   }
+
+  /// 重复执行任务
+  void repeat(Future<void> Function() callback) async {
+    for (int i = 0; i < this; i++) {
+      await callback();
+    }
+  }
 }

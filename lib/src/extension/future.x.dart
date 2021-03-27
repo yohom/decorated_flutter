@@ -10,12 +10,13 @@ extension FutureX<T> on Future<T> {
   static LoadingBuilder loadingWidgetBuilder;
   static Color backgroundColor;
   static bool loadingCancelable = false;
+  static String defaultLoadingText = '加载中...';
 
   Future<T> loading(
     BuildContext context, {
     bool cancelable,
     Duration timeout = const Duration(seconds: 60),
-    String loadingText = '加载中..',
+    String loadingText,
     Color backgroundColor,
   }) {
     final navigator = Navigator.of(context, rootNavigator: true);
@@ -36,7 +37,10 @@ extension FutureX<T> on Future<T> {
             return WillPopScope(
               onWillPop: () async => cancelable ?? loadingCancelable,
               child: loadingWidgetBuilder != null
-                  ? loadingWidgetBuilder(context, loadingText)
+                  ? loadingWidgetBuilder(
+                      context,
+                      loadingText ?? defaultLoadingText,
+                    )
                   : LoadingWidget(),
             );
           },

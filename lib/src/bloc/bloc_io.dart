@@ -708,6 +708,14 @@ mixin ListMixin<T> on BaseIO<List<T>> {
     return element;
   }
 
+  /// 删除一组的元素, 并发射
+  Iterable<T> removeBatch(Iterable<T> elements) {
+    if (_subject.isClosed) return null;
+
+    _subject.add(latest..removeWhere((it) => elements.contains(it)));
+    return elements;
+  }
+
   /// 删除指定条件的元素
   void removeWhere(bool test(T t)) {
     if (_subject.isClosed) return;
