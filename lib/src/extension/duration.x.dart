@@ -1,5 +1,5 @@
 extension DurationX on Duration {
-  String format({String format = 'HH:mm'}) {
+  String format([String format = 'HH:mm']) {
     return format
         .replaceAll('HH', hours.toString().padLeft(2, '0'))
         .replaceAll('mm', minutes.toString().padLeft(2, '0'))
