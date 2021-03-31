@@ -1,6 +1,10 @@
 import 'package:intl/intl.dart';
 
-extension DoubleX on double {}
+extension DoubleX on double {
+  double asFixed(int fractionDigits) {
+    return double.parse(toStringAsFixed(fractionDigits));
+  }
+}
 
 extension IntX on int {
   /// 时间转为格式化字符串
