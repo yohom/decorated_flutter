@@ -13,5 +13,5 @@ extension DurationX on Duration {
 
   int get minutes => inSeconds % 3600 ~/ 60;
 
-  int get seconds => inSeconds % 3600 ~/ 60 ~/ 60;
+  int get seconds => inSeconds % 60;
 }
