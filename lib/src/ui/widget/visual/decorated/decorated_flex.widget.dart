@@ -2,8 +2,6 @@ import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-typedef void PressedCallback(BuildContext context);
-
 class DecoratedRow extends DecoratedFlex {
   const DecoratedRow({
     Key key,
@@ -24,6 +22,7 @@ class DecoratedRow extends DecoratedFlex {
     TextBaseline textBaseline,
     ContextCallback onPressed,
     ContextCallback onLongPressed,
+    ContextCallback onDoubleTap,
     GestureDragEndCallback onVerticalDragEnd,
     GestureDragEndCallback onHorizontalDragEnd,
     HitTestBehavior behavior,
@@ -71,6 +70,7 @@ class DecoratedRow extends DecoratedFlex {
           textBaseline: textBaseline,
           onPressed: onPressed,
           onLongPressed: onLongPressed,
+          onDoubleTap: onDoubleTap,
           onVerticalDragEnd: onVerticalDragEnd,
           onHorizontalDragEnd: onHorizontalDragEnd,
           behavior: behavior,
@@ -121,6 +121,7 @@ class DecoratedColumn extends DecoratedFlex {
     TextBaseline textBaseline,
     ContextCallback onPressed,
     ContextCallback onLongPressed,
+    ContextCallback onDoubleTap,
     GestureDragEndCallback onVerticalDragEnd,
     GestureDragEndCallback onHorizontalDragEnd,
     HitTestBehavior behavior,
@@ -168,6 +169,7 @@ class DecoratedColumn extends DecoratedFlex {
           textBaseline: textBaseline,
           onPressed: onPressed,
           onLongPressed: onLongPressed,
+          onDoubleTap: onDoubleTap,
           onVerticalDragEnd: onVerticalDragEnd,
           onHorizontalDragEnd: onHorizontalDragEnd,
           behavior: behavior,
@@ -219,6 +221,7 @@ class DecoratedFlex extends StatelessWidget {
     this.textBaseline,
     this.onPressed,
     this.onLongPressed,
+    this.onDoubleTap,
     this.onVerticalDragEnd,
     this.onHorizontalDragEnd,
     this.behavior,
@@ -272,8 +275,9 @@ class DecoratedFlex extends StatelessWidget {
   //endregion
 
   //region GestureDetector
-  final PressedCallback onPressed;
-  final PressedCallback onLongPressed;
+  final ContextCallback onPressed;
+  final ContextCallback onLongPressed;
+  final ContextCallback onDoubleTap;
   final GestureDragEndCallback onVerticalDragEnd;
   final GestureDragEndCallback onHorizontalDragEnd;
   final HitTestBehavior behavior;
@@ -436,13 +440,15 @@ class DecoratedFlex extends StatelessWidget {
     if (onPressed != null ||
         onLongPressed != null ||
         onVerticalDragEnd != null ||
-        onHorizontalDragEnd != null) {
+        onHorizontalDragEnd != null ||
+        onDoubleTap != null) {
       result = GestureDetector(
         behavior: behavior ?? HitTestBehavior.opaque,
         onTap: () => onPressed?.call(context),
         onLongPress: () => onLongPressed?.call(context),
         onVerticalDragEnd: onVerticalDragEnd,
         onHorizontalDragEnd: onHorizontalDragEnd,
+        onDoubleTap: () => onDoubleTap?.call(context),
         child: result,
       );
     }
