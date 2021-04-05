@@ -364,6 +364,8 @@ class IntIO extends IO<int> with IntMixin {
     bool acceptEmpty = true,
     bool isDistinct = false,
     bool printLog = true,
+    int min,
+    int max,
     _Equal<int> test,
     _Fetch<int, dynamic> fetch,
   }) : super(
@@ -376,7 +378,10 @@ class IntIO extends IO<int> with IntMixin {
           test: test,
           fetch: fetch,
           printLog: printLog,
-        );
+        ) {
+    this._min = min;
+    this._max = max;
+  }
 }
 
 /// 只接收int类型数据的Input

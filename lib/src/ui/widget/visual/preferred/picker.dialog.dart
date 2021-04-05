@@ -26,7 +26,7 @@ Future<T> showPickerDialog<T>(
 
 class _PickerDialog<T> extends StatefulWidget {
   const _PickerDialog(
-    this.vmList, {
+    this._dataList, {
     Key key,
     this.title,
     this.titleStyle,
@@ -34,7 +34,7 @@ class _PickerDialog<T> extends StatefulWidget {
     @required this.converter,
   }) : super(key: key);
 
-  final List<T> vmList;
+  final List<T> _dataList;
   final String title;
   final Converter<T> converter;
   final TextStyle titleStyle;
@@ -50,7 +50,7 @@ class _PickerDialogState<T> extends State<_PickerDialog<T>> {
   @override
   void initState() {
     super.initState();
-    _selected = widget.vmList[0];
+    _selected = widget._dataList[0];
   }
 
   @override
@@ -85,12 +85,12 @@ class _PickerDialogState<T> extends State<_PickerDialog<T>> {
           child: CupertinoPicker(
             onSelectedItemChanged: (int value) {
               setState(() {
-                _selected = widget.vmList[value];
+                _selected = widget._dataList[value];
               });
             },
             itemExtent: 32,
             children: <Widget>[
-              for (final item in widget.vmList)
+              for (final item in widget._dataList)
                 Text(widget.converter(item) ?? "")
             ],
           ),
