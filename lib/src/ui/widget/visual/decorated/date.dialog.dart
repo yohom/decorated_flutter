@@ -6,12 +6,16 @@ Future<DateTime> showDateDialog(
   BuildContext context, {
   DateTime initialDateTime,
   CupertinoDatePickerMode mode = CupertinoDatePickerMode.date,
+  String cancelText,
+  String confirmText,
 }) async {
   return showModalBottomSheet(
     context: context,
     builder: (context) => _DatePickerDialog(
       initialDateTime: initialDateTime,
       mode: mode,
+      cancelText: cancelText,
+      confirmText: confirmText,
     ),
   );
 }
@@ -21,10 +25,14 @@ class _DatePickerDialog extends StatefulWidget {
     Key key,
     this.initialDateTime,
     this.mode,
+    this.cancelText,
+    this.confirmText,
   }) : super(key: key);
 
   final DateTime initialDateTime;
   final CupertinoDatePickerMode mode;
+  final String cancelText;
+  final String confirmText;
 
   @override
   __DatePickerDialogState createState() => __DatePickerDialogState();
@@ -50,13 +58,13 @@ class __DatePickerDialogState extends State<_DatePickerDialog> {
             FlatButton(
               onPressed: () => _handleCancel(context),
               child: Text(
-                '取消',
+                widget.cancelText ?? '取消',
                 style: context.textTheme.bodyText1.copyWith(color: Colors.red),
               ),
             ),
             FlatButton(
               onPressed: () => _handleConfirm(context),
-              child: Text('确认'),
+              child: Text(widget.confirmText ?? '确认'),
             ),
           ],
         ),
