@@ -31,7 +31,7 @@ class _ShowUpTransitionState extends State<ShowUpTransition>
   void initState() {
     super.initState();
     Future.delayed(widget.delay, () => 0).then((_) {
-      if (!animationController.isCompleted) animationController.forward();
+      if (!animationDisposed) animationController.forward();
     });
   }
 
