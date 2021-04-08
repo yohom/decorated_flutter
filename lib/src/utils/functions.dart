@@ -9,6 +9,8 @@ bool notEqual(prev, next) => prev != next;
 
 bool notNull(data) => data != null;
 
+bool isNull(data) => data == null;
+
 bool isTrue(bool data) => data == true;
 
 bool isFalse(bool data) => data == false;
