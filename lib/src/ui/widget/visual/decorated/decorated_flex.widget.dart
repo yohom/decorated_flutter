@@ -444,13 +444,12 @@ class DecoratedFlex extends StatelessWidget {
         onDoubleTap != null) {
       result = GestureDetector(
         behavior: behavior ?? HitTestBehavior.opaque,
-        onTap: onPressed == null ? null : () => onPressed.call(context),
+        onTap: onPressed == null ? null : () => onPressed(context),
         onLongPress:
-            onLongPressed == null ? null : () => onLongPressed.call(context),
+            onLongPressed == null ? null : () => onLongPressed(context),
         onVerticalDragEnd: onVerticalDragEnd,
         onHorizontalDragEnd: onHorizontalDragEnd,
-        onDoubleTap:
-            onDoubleTap == null ? null : () => onDoubleTap.call(context),
+        onDoubleTap: onDoubleTap == null ? null : () => onDoubleTap(context),
         child: result,
       );
     }
