@@ -12,6 +12,8 @@ class ImageView extends StatelessWidget {
     this.size,
     this.fit,
     this.color,
+    this.padding,
+    this.margin,
   })  : imageUrl = null,
         errorWidget = null,
         placeholder = const SizedBox.shrink(),
@@ -27,6 +29,8 @@ class ImageView extends StatelessWidget {
     this.color,
     this.errorWidget,
     this.placeholder = const SizedBox.shrink(),
+    this.padding,
+    this.margin,
   })  : imagePath = null,
         super(key: key);
 
@@ -57,10 +61,17 @@ class ImageView extends StatelessWidget {
   /// 占位图
   final Widget placeholder;
 
+  /// 内边距
+  final EdgeInsets padding;
+
+  /// 外边距
+  final EdgeInsets margin;
+
   @override
   Widget build(BuildContext context) {
+    Widget result;
     if (imagePath != null) {
-      return Image.asset(
+      result = Image.asset(
         imagePath,
         width: size ?? width,
         height: size ?? height,
@@ -69,7 +80,7 @@ class ImageView extends StatelessWidget {
         gaplessPlayback: true,
       );
     } else if (imageUrl != null) {
-      return CachedNetworkImage(
+      result = CachedNetworkImage(
         imageUrl: imageUrl,
         width: size ?? width,
         height: size ?? height,
@@ -80,7 +91,13 @@ class ImageView extends StatelessWidget {
       );
     } else {
       // 如果图片地址为null的话, 那就不显示
-      return SizedBox.shrink();
+      result = SizedBox.shrink();
     }
+
+    if (padding != null || margin != null) {
+      result = Container(padding: padding, margin: margin, child: result);
+    }
+
+    return result;
   }
 }
