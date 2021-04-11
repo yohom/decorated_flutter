@@ -42,6 +42,7 @@ class DecoratedStack extends StatelessWidget {
     this.animationDuration,
     this.animationCurve,
     this.clipBehavior = Clip.none,
+    this.visible,
     this.children = const [],
   }) : super(key: key);
 
@@ -87,6 +88,7 @@ class DecoratedStack extends StatelessWidget {
   final double aspectRatio;
 
   final Clip clipBehavior;
+  final bool visible;
 
   final List<Widget> children;
 
@@ -180,6 +182,10 @@ class DecoratedStack extends StatelessWidget {
         onHorizontalDragEnd: onHorizontalDragEnd,
         child: result,
       );
+    }
+
+    if (visible != null) {
+      result = Visibility(visible: visible, child: result);
     }
 
     if (expanded) {

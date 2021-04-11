@@ -364,6 +364,9 @@ class IntIO extends IO<int> with IntMixin {
     bool acceptEmpty = true,
     bool isDistinct = false,
     bool printLog = true,
+    int min,
+    int max,
+    int remainder,
     _Equal<int> test,
     _Fetch<int, dynamic> fetch,
   }) : super(
@@ -376,7 +379,11 @@ class IntIO extends IO<int> with IntMixin {
           test: test,
           fetch: fetch,
           printLog: printLog,
-        );
+        ) {
+    this._min = min;
+    this._max = max;
+    this._remainder = remainder;
+  }
 }
 
 /// 只接收int类型数据的Input
@@ -390,6 +397,7 @@ class IntInput extends Input<int> with IntMixin {
     bool isDistinct = false,
     int min,
     int max,
+    int remainder,
     bool printLog = true,
     _Equal<int> test,
     _Fetch<int, dynamic> fetch,
@@ -405,6 +413,7 @@ class IntInput extends Input<int> with IntMixin {
         ) {
     this._min = min;
     this._max = max;
+    this._remainder = remainder;
   }
 }
 
@@ -781,13 +790,19 @@ mixin BoolMixin on BaseIO<bool> {
 mixin IntMixin on BaseIO<int> {
   int _min;
   int _max;
+  int _remainder;
 
   /// 加一个值 并发射
   int plus([int value = 1]) {
     if (_subject.isClosed) return null;
 
     int result;
-    if (_max != null) {
+    if (_remainder != null) {
+      result = (latest + value).remainder(_remainder);
+      if (_min != null) {
+        result = math.max(_min, result);
+      }
+    } else if (_max != null) {
       result = math.min(latest + value, _max);
     } else {
       result = latest + value;
@@ -803,7 +818,12 @@ mixin IntMixin on BaseIO<int> {
     if (_subject.isClosed) return null;
 
     int result;
-    if (_min != null) {
+    if (_remainder != null) {
+      result = (latest - value).remainder(_remainder);
+      if (_min != null) {
+        result = math.max(_min, result);
+      }
+    } else if (_min != null) {
       result = math.max(latest - value, _min);
     } else {
       result = latest - value;

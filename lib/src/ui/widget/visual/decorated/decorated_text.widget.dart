@@ -27,6 +27,7 @@ class DecoratedText extends StatelessWidget {
     this.leftWidget,
     this.rightWidget,
     this.softWrap = true,
+    this.material,
     this.mainAxisAlignment,
   }) : super(key: key);
 
@@ -52,6 +53,7 @@ class DecoratedText extends StatelessWidget {
   final Widget leftWidget;
   final Widget rightWidget;
   final bool softWrap;
+  final bool material;
   final MainAxisAlignment mainAxisAlignment;
 
   @override
@@ -119,6 +121,10 @@ class DecoratedText extends StatelessWidget {
 
     if (visible == true) {
       result = Visibility(visible: visible, child: result);
+    }
+
+    if (material == true) {
+      result = Material(color: Colors.transparent, child: result);
     }
 
     if (expanded == true) {

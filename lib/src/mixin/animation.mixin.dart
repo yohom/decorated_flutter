@@ -6,10 +6,13 @@ mixin AnimationMixin<T extends StatefulWidget>
   Animation animation;
   @protected
   AnimationController animationController;
+  @protected
+  bool animationDisposed;
 
   @override
   void initState() {
     super.initState();
+    animationDisposed = false;
     animationController = AnimationController(duration: duration, vsync: this);
     animation = CurvedAnimation(
       parent: animationController,
@@ -27,6 +30,7 @@ mixin AnimationMixin<T extends StatefulWidget>
   @override
   void dispose() {
     animationController.dispose();
+    animationDisposed = true;
     super.dispose();
   }
 }
