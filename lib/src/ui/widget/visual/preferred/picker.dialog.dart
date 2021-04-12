@@ -8,9 +8,10 @@ Future<T> showPickerDialog<T>(
   BuildContext context, {
   @required List<T> data,
   String title,
-  @required Converter<T> converter,
   TextStyle titleStyle,
   TextStyle confirmStyle,
+  @required Widget Function(T) itemBuilder,
+  double itemExtent = 32,
 }) {
   return showModalBottomSheet<T>(
     context: context,
@@ -19,7 +20,8 @@ Future<T> showPickerDialog<T>(
       title: title,
       titleStyle: titleStyle,
       confirmStyle: confirmStyle,
-      converter: converter,
+      itemBuilder: itemBuilder,
+      itemExtent: itemExtent,
     ),
   );
 }
@@ -31,14 +33,16 @@ class _PickerDialog<T> extends StatefulWidget {
     this.title,
     this.titleStyle,
     this.confirmStyle,
-    @required this.converter,
+    @required this.itemBuilder,
+    @required this.itemExtent,
   }) : super(key: key);
 
   final List<T> _dataList;
   final String title;
-  final Converter<T> converter;
   final TextStyle titleStyle;
   final TextStyle confirmStyle;
+  final Widget Function(T) itemBuilder;
+  final double itemExtent;
 
   @override
   _PickerDialogState createState() => _PickerDialogState<T>();
@@ -88,10 +92,9 @@ class _PickerDialogState<T> extends State<_PickerDialog<T>> {
                 _selected = widget._dataList[value];
               });
             },
-            itemExtent: 32,
+            itemExtent: widget.itemExtent,
             children: <Widget>[
-              for (final item in widget._dataList)
-                Text(widget.converter(item) ?? "")
+              for (final item in widget._dataList) widget.itemBuilder(item)
             ],
           ),
         ),
