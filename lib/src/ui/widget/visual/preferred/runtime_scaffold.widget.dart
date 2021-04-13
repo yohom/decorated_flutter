@@ -62,7 +62,6 @@ class RuntimeScaffold<T extends LocalBLoC> extends StatelessWidget {
       floatingActionButtonAnimator: floatingActionButtonAnimator,
       persistentFooterButtons: persistentFooterButtons,
       backgroundColor: backgroundColor,
-      resizeToAvoidBottomPadding: resizeToAvoidBottomPadding,
       primary: primary,
       appBar: appBar,
       body: body,

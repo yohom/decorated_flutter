@@ -5,7 +5,7 @@ homepage: https://github.com/yohom/decorated_flutter.git
 
 environment:
   sdk: ">=2.9.0 <3.0.0"
-  flutter: ">=1.20.0 <2.0.0"
+  flutter: ">=1.20.0"
 
 dependencies:
   flutter:
@@ -13,7 +13,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   # 国际化 https://pub.flutter-io.cn/packages/intl
-  intl: ^0.16.1
+  intl: ^0.17.0
   # 网络请求 https://pub.flutter-io.cn/packages/dio
   dio: ^3.0.10
   # rx https://pub.flutter-io.cn/packages/rxdart
