@@ -21,11 +21,11 @@ dependencies:
   # 图片加载增强 https://pub.flutter-io.cn/packages/cached_network_image
   cached_network_image: ^3.0.0
   # toast https://pub.flutter-io.cn/packages/oktoast
-  oktoast: ^2.3.2
+  oktoast: ^3.0.0
   # 模态对话框增强 https://pub.flutter-io.cn/packages/modal_bottom_sheet
   modal_bottom_sheet: ^1.0.0+1
   # 日志打印 https://pub.flutter-io.cn/packages/logger
-  logger: ^0.9.4
+  logger: ^1.0.0-nullsafety.0
   # 获取路径 https://pub.flutter-io.cn/packages/path_provider
   path_provider: ^2.0.1
 
