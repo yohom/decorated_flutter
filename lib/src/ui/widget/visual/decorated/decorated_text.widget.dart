@@ -119,7 +119,7 @@ class DecoratedText extends StatelessWidget {
       );
     }
 
-    if (visible == true) {
+    if (visible != null) {
       result = Visibility(visible: visible, child: result);
     }
 
