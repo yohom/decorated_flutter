@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:decorated_flutter/decorated_flutter.dart';
 
 extension IterableX<T> on Iterable<T> {
@@ -17,11 +15,11 @@ extension IterableX<T> on Iterable<T> {
 }
 
 extension ListX<T> on List<T> {
-  T get firstOrNull => getOrNull(0);
+  T? get firstOrNull => getOrNull(0);
 
-  T get lastOrNull => getOrNull(length - 1);
+  T? get lastOrNull => getOrNull(length - 1);
 
-  T getOrNull(int index) {
+  T? getOrNull(int index) {
     try {
       final result = this[index];
       return result;
