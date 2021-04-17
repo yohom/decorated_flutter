@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:decorated_flutter/decorated_flutter.dart';
+import 'package:decorated_flutter/src/utils/utils.export.dart';
 
 /// 固定长度队列
 ///

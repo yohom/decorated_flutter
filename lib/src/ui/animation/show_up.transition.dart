@@ -1,15 +1,13 @@
-// @dart=2.9
-
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 
 class ShowUpTransition extends StatefulWidget {
   ShowUpTransition({
-    Key key,
+    Key? key,
     this.delay = Duration.zero,
     this.duration = const Duration(milliseconds: 700),
     this.safeArea = false,
-    this.child,
+    required this.child,
   }) : super(key: key);
 
   final Duration delay;

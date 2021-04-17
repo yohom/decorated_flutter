@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -40,7 +38,7 @@ class FadeSlideTransition extends StatefulWidget {
   final bool immediately;
 
   FadeSlideTransition({
-    Key key,
+    Key? key,
     this.originOffset = const Offset(0.0, 30.0),
     this.delay = const Duration(milliseconds: 0),
     this.duration = const Duration(milliseconds: 700),
@@ -49,7 +47,7 @@ class FadeSlideTransition extends StatefulWidget {
     this.slideReverseCurve = Curves.easeIn,
     this.direction = SlideDirection.vertical,
     this.immediately = true,
-    this.builder,
+    required this.builder,
   }) : super(key: key);
 
   @override
@@ -58,9 +56,9 @@ class FadeSlideTransition extends StatefulWidget {
 
 class _FadeInSlideTransitionState extends State<FadeSlideTransition>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-  Animation<double> _slideAnimation;
-  Animation<double> _fadeAnimation;
+  late AnimationController _controller;
+  late Animation<double> _slideAnimation;
+  late Animation<double> _fadeAnimation;
 
   @override
   void initState() {
