@@ -1,5 +1,3 @@
-// @dart=2.9
-
 mixin Cacheable {
   final _cache = <String, dynamic>{};
 
@@ -7,7 +5,7 @@ mixin Cacheable {
     _cache[key] = object;
   }
 
-  T get<T>(String key, {T initialValue}) {
+  T? get<T>(String key, {T? initialValue}) {
     final value = _cache[key];
     if (value != null) {
       return value;
