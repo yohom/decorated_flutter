@@ -1,8 +1,10 @@
-import 'package:decorated_flutter/decorated_flutter.dart';
-
 extension IterableX<T> on Iterable<T> {
-  T find(bool Function(T) test) {
-    return firstWhere(test, orElse: returnNull);
+  T? find(bool Function(T) test) {
+    try {
+      return firstWhere(test);
+    } catch (e) {
+      return null;
+    }
   }
 
   Map<S, List<T>> groupBy<S>(S Function(T) key) {

@@ -1,6 +1,4 @@
-// @dart=2.9
-
-bool isEmpty(Object object) {
+bool isEmpty(Object? object) {
   if (object == null) {
     return true;
   }
@@ -20,21 +18,21 @@ bool isEmpty(Object object) {
   return false;
 }
 
-bool isNotEmpty(Object object) {
+bool isNotEmpty(Object? object) {
   return !isEmpty(object);
 }
 
-bool isAllEmpty(List<Object> list) {
+bool isAllEmpty(List<Object?>? list) {
   if (isEmpty(list)) {
     return true;
   } else {
-    return list.every(isEmpty);
+    return list!.every(isEmpty);
   }
 }
 
-bool isAllNotEmpty(List<Object> list) {
+bool isAllNotEmpty(List<Object?>? list) {
   if (isEmpty(list)) {
     return false;
   }
-  return !list.any(isEmpty);
+  return !list!.any(isEmpty);
 }

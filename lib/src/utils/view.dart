@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
@@ -7,13 +5,13 @@ import 'package:oktoast/oktoast.dart';
 void toast(
   String message, {
   ToastPosition position = ToastPosition.center,
-  double radius,
-  EdgeInsets padding,
-  TextStyle textStyle,
-  VoidCallback onDismiss,
+  double? radius,
+  EdgeInsets? padding,
+  TextStyle? textStyle,
+  VoidCallback? onDismiss,
   bool dismissOtherToast = true,
-  TextAlign textAlign,
-  Duration duration,
+  TextAlign? textAlign,
+  Duration? duration,
   bool error = false,
 }) {
   if (isNotEmpty(message))
