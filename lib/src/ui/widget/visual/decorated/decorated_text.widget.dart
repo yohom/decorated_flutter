@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:decorated_flutter/src/model/model.export.dart';
 import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +5,7 @@ import 'package:flutter/material.dart';
 class DecoratedText extends StatelessWidget {
   const DecoratedText(
     this.data, {
-    Key key,
+    Key? key,
     this.padding,
     this.margin,
     this.decoration,
@@ -33,30 +31,30 @@ class DecoratedText extends StatelessWidget {
     this.mainAxisAlignment,
   }) : super(key: key);
 
-  final EdgeInsetsGeometry padding;
-  final EdgeInsetsGeometry margin;
-  final BoxDecoration decoration;
-  final TextStyle style;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
+  final BoxDecoration? decoration;
+  final TextStyle? style;
   final StrutStyle strutStyle;
   final String data;
-  final SafeAreaConfig safeArea;
-  final ContextCallback onPressed;
-  final int maxLines;
-  final TextAlign textAlign;
-  final TextOverflow overflow;
-  final BoxConstraints constraints;
+  final SafeAreaConfig? safeArea;
+  final ContextCallback? onPressed;
+  final int? maxLines;
+  final TextAlign? textAlign;
+  final TextOverflow? overflow;
+  final BoxConstraints? constraints;
   final bool expanded;
-  final double width;
-  final double height;
-  final bool visible;
-  final bool center;
-  final bool sliver;
-  final Matrix4 transform;
-  final Widget leftWidget;
-  final Widget rightWidget;
+  final double? width;
+  final double? height;
+  final bool? visible;
+  final bool? center;
+  final bool? sliver;
+  final Matrix4? transform;
+  final Widget? leftWidget;
+  final Widget? rightWidget;
   final bool softWrap;
-  final bool material;
-  final MainAxisAlignment mainAxisAlignment;
+  final bool? material;
+  final MainAxisAlignment? mainAxisAlignment;
 
   @override
   Widget build(BuildContext context) {
@@ -97,9 +95,9 @@ class DecoratedText extends StatelessWidget {
       result = Row(
         mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.center,
         children: [
-          if (leftWidget != null) leftWidget,
+          if (leftWidget != null) leftWidget!,
           result,
-          if (rightWidget != null) rightWidget,
+          if (rightWidget != null) rightWidget!,
         ],
       );
     }
@@ -107,22 +105,22 @@ class DecoratedText extends StatelessWidget {
     if (safeArea != null) {
       result = SafeArea(
         child: result,
-        top: safeArea.top ?? true,
-        bottom: safeArea.bottom ?? true,
-        left: safeArea.left ?? true,
-        right: safeArea.right ?? true,
+        top: safeArea?.top ?? true,
+        bottom: safeArea?.bottom ?? true,
+        left: safeArea?.left ?? true,
+        right: safeArea?.right ?? true,
       );
     }
 
     if (onPressed != null) {
       result = GestureDetector(
-        onTap: () => onPressed(context),
+        onTap: () => onPressed!(context),
         child: result,
       );
     }
 
     if (visible != null) {
-      result = Visibility(visible: visible, child: result);
+      result = Visibility(visible: visible!, child: result);
     }
 
     if (material == true) {

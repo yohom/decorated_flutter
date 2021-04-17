@@ -1,11 +1,9 @@
-// @dart=2.9
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ErrorPlaceholder extends StatelessWidget {
   const ErrorPlaceholder({
-    Key key,
+    Key? key,
     this.sliver = false,
   }) : super(key: key);
 

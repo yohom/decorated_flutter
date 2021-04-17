@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -9,9 +7,9 @@ class MaxScaleTextWidget extends StatelessWidget {
   final Widget child;
 
   const MaxScaleTextWidget({
-    Key key,
+    Key? key,
     this.max = 1.0,
-    @required this.child,
+    required this.child,
   }) : super(key: key);
 
   @override

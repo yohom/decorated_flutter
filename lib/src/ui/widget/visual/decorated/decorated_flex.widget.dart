@@ -1,57 +1,55 @@
-// @dart=2.9
-
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DecoratedRow extends DecoratedFlex {
   const DecoratedRow({
-    Key key,
-    EdgeInsets padding,
-    EdgeInsets margin,
-    Color color,
-    Decoration decoration,
-    Decoration foregroundDecoration,
-    BoxConstraints constraints,
-    Matrix4 transform,
-    Offset offset,
-    double width,
-    double height,
-    AlignmentGeometry alignment,
+    Key? key,
+    EdgeInsets? padding,
+    EdgeInsets? margin,
+    Color? color,
+    Decoration? decoration,
+    Decoration? foregroundDecoration,
+    BoxConstraints? constraints,
+    Matrix4? transform,
+    Offset? offset,
+    double? width,
+    double? height,
+    AlignmentGeometry? alignment,
     MainAxisAlignment mainAxisAlignment = MainAxisAlignment.start,
     MainAxisSize mainAxisSize = MainAxisSize.max,
     CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.center,
-    TextBaseline textBaseline,
-    ContextCallback onPressed,
-    ContextCallback onLongPressed,
-    ContextCallback onDoubleTap,
-    GestureDragEndCallback onVerticalDragEnd,
-    GestureDragEndCallback onHorizontalDragEnd,
-    HitTestBehavior behavior,
+    TextBaseline? textBaseline,
+    ContextCallback? onPressed,
+    ContextCallback? onLongPressed,
+    ContextCallback? onDoubleTap,
+    GestureDragEndCallback? onVerticalDragEnd,
+    GestureDragEndCallback? onHorizontalDragEnd,
+    HitTestBehavior? behavior,
     double itemSpacing = 0,
-    Widget divider,
-    bool visible,
-    bool expanded,
-    bool flexible,
-    int flex,
+    Widget? divider,
+    bool? visible,
+    bool? expanded,
+    bool? flexible,
+    int? flex,
     bool forceItemSameExtent = false,
-    double elevation,
+    double? elevation,
     bool material = false,
-    SafeAreaConfig safeArea,
-    TextStyle textStyle,
-    GlobalKey repaintBoundaryKey,
-    double widthFactor,
-    double heightFactor,
-    bool scrollable,
-    Duration animationDuration,
-    Curve animationCurve,
-    ThemeData theme,
-    Widget topEnd,
-    bool center,
+    SafeAreaConfig? safeArea,
+    TextStyle? textStyle,
+    GlobalKey? repaintBoundaryKey,
+    double? widthFactor,
+    double? heightFactor,
+    bool? scrollable,
+    Duration? animationDuration,
+    Curve? animationCurve,
+    ThemeData? theme,
+    Widget? topEnd,
+    bool? center,
     bool sliver = false,
-    VerticalDirection verticalDirection,
+    VerticalDirection? verticalDirection,
     Clip clipBehavior = Clip.none,
-    List<Widget> children,
+    List<Widget> children = const [],
   }) : super(
           key: key,
           direction: Axis.horizontal,
@@ -105,52 +103,52 @@ class DecoratedRow extends DecoratedFlex {
 
 class DecoratedColumn extends DecoratedFlex {
   const DecoratedColumn({
-    Key key,
-    EdgeInsets padding,
-    EdgeInsets margin,
-    Color color,
-    Decoration decoration,
-    Decoration foregroundDecoration,
-    BoxConstraints constraints,
-    Matrix4 transform,
-    Offset offset,
-    double width,
-    double height,
-    AlignmentGeometry alignment,
+    Key? key,
+    EdgeInsets? padding,
+    EdgeInsets? margin,
+    Color? color,
+    Decoration? decoration,
+    Decoration? foregroundDecoration,
+    BoxConstraints? constraints,
+    Matrix4? transform,
+    Offset? offset,
+    double? width,
+    double? height,
+    AlignmentGeometry? alignment,
     MainAxisAlignment mainAxisAlignment = MainAxisAlignment.start,
     MainAxisSize mainAxisSize = MainAxisSize.max,
     CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.center,
-    TextBaseline textBaseline,
-    ContextCallback onPressed,
-    ContextCallback onLongPressed,
-    ContextCallback onDoubleTap,
-    GestureDragEndCallback onVerticalDragEnd,
-    GestureDragEndCallback onHorizontalDragEnd,
-    HitTestBehavior behavior,
+    TextBaseline? textBaseline,
+    ContextCallback? onPressed,
+    ContextCallback? onLongPressed,
+    ContextCallback? onDoubleTap,
+    GestureDragEndCallback? onVerticalDragEnd,
+    GestureDragEndCallback? onHorizontalDragEnd,
+    HitTestBehavior? behavior,
     double itemSpacing = 0,
-    Widget divider,
-    bool visible,
-    bool expanded,
-    bool flexible,
-    int flex,
+    Widget? divider,
+    bool? visible,
+    bool? expanded,
+    bool? flexible,
+    int? flex,
     bool forceItemSameExtent = false,
-    double elevation,
+    double? elevation,
     bool material = false,
-    SafeAreaConfig safeArea,
-    TextStyle textStyle,
-    GlobalKey repaintBoundaryKey,
-    double widthFactor,
-    double heightFactor,
-    bool scrollable,
-    Duration animationDuration,
-    Curve animationCurve,
-    ThemeData theme,
-    Widget topEnd,
-    bool center,
+    SafeAreaConfig? safeArea,
+    TextStyle? textStyle,
+    GlobalKey? repaintBoundaryKey,
+    double? widthFactor,
+    double? heightFactor,
+    bool? scrollable,
+    Duration? animationDuration,
+    Curve? animationCurve,
+    ThemeData? theme,
+    Widget? topEnd,
+    bool? center,
     bool sliver = false,
-    VerticalDirection verticalDirection,
+    VerticalDirection? verticalDirection,
     Clip clipBehavior = Clip.none,
-    List<Widget> children,
+    List<Widget> children = const [],
   }) : super(
           key: key,
           direction: Axis.vertical,
@@ -204,7 +202,7 @@ class DecoratedColumn extends DecoratedFlex {
 
 class DecoratedFlex extends StatelessWidget {
   const DecoratedFlex({
-    Key key,
+    Key? key,
     this.padding,
     this.margin,
     this.color,
@@ -215,7 +213,7 @@ class DecoratedFlex extends StatelessWidget {
     this.offset,
     this.width,
     this.height,
-    @required this.direction,
+    required this.direction,
     this.alignment,
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.mainAxisSize = MainAxisSize.max,
@@ -249,111 +247,111 @@ class DecoratedFlex extends StatelessWidget {
     this.center,
     this.sliver = false,
     this.verticalDirection,
-    this.clipBehavior,
-    this.children,
+    this.clipBehavior = Clip.none,
+    this.children = const [],
   }) : super(key: key);
 
   //region Container
-  final EdgeInsets padding;
-  final EdgeInsets margin;
-  final Color color;
-  final Decoration decoration;
-  final Decoration foregroundDecoration;
-  final BoxConstraints constraints;
-  final Matrix4 transform;
-  final double width;
-  final double height;
+  final EdgeInsets? padding;
+  final EdgeInsets? margin;
+  final Color? color;
+  final Decoration? decoration;
+  final Decoration? foregroundDecoration;
+  final BoxConstraints? constraints;
+  final Matrix4? transform;
+  final double? width;
+  final double? height;
 
   //endregion
 
   //region Flex
   final Axis direction;
-  final AlignmentGeometry alignment;
+  final AlignmentGeometry? alignment;
   final MainAxisAlignment mainAxisAlignment;
   final MainAxisSize mainAxisSize;
   final CrossAxisAlignment crossAxisAlignment;
-  final TextBaseline textBaseline;
+  final TextBaseline? textBaseline;
 
   //endregion
 
   //region GestureDetector
-  final ContextCallback onPressed;
-  final ContextCallback onLongPressed;
-  final ContextCallback onDoubleTap;
-  final GestureDragEndCallback onVerticalDragEnd;
-  final GestureDragEndCallback onHorizontalDragEnd;
-  final HitTestBehavior behavior;
+  final ContextCallback? onPressed;
+  final ContextCallback? onLongPressed;
+  final ContextCallback? onDoubleTap;
+  final GestureDragEndCallback? onVerticalDragEnd;
+  final GestureDragEndCallback? onHorizontalDragEnd;
+  final HitTestBehavior? behavior;
 
   //endregion
 
   //region Material
   final bool material;
-  final double elevation;
+  final double? elevation;
 
   //endregion
 
   //region FractionallySizedBox
-  final double widthFactor;
-  final double heightFactor;
+  final double? widthFactor;
+  final double? heightFactor;
 
   //endregion
 
   /// 元素间距
-  final double itemSpacing;
+  final double? itemSpacing;
 
   /// 分隔控件 与[itemSpacing]功能类似, 但是优先使用[divider]
-  final Widget divider;
+  final Widget? divider;
 
   /// 是否可见
-  final bool visible;
+  final bool? visible;
 
   /// 是否展开
-  final bool expanded;
+  final bool? expanded;
 
   /// 是否展开
-  final bool flexible;
+  final bool? flexible;
 
   /// 比例
-  final int flex;
+  final int? flex;
 
   /// 是否强制子控件等长
-  final bool forceItemSameExtent;
+  final bool? forceItemSameExtent;
 
   /// 是否安全区域
-  final SafeAreaConfig safeArea;
+  final SafeAreaConfig? safeArea;
 
   /// 作用在Transform.translate上的偏移量
-  final Offset offset;
+  final Offset? offset;
 
   /// 是否可滚动
-  final bool scrollable;
+  final bool? scrollable;
 
   /// 内部统一的TextStyle
-  final TextStyle textStyle;
+  final TextStyle? textStyle;
 
   /// 是否需要[RepaintBoundary]
-  final GlobalKey repaintBoundaryKey;
+  final GlobalKey? repaintBoundaryKey;
 
   /// 动画时长
-  final Duration animationDuration;
+  final Duration? animationDuration;
 
   /// 动画曲线
-  final Curve animationCurve;
+  final Curve? animationCurve;
 
   /// 主题
-  final ThemeData theme;
+  final ThemeData? theme;
 
   /// 右上角控件
-  final Widget topEnd;
+  final Widget? topEnd;
 
   /// 是否加center
-  final bool center;
+  final bool? center;
 
   /// 是否sliver
-  final bool sliver;
+  final bool? sliver;
 
   /// 垂直方向
-  final VerticalDirection verticalDirection;
+  final VerticalDirection? verticalDirection;
 
   final Clip clipBehavior;
 
@@ -376,14 +374,14 @@ class DecoratedFlex extends StatelessWidget {
       textBaseline: textBaseline,
       verticalDirection: verticalDirection ?? VerticalDirection.down,
       children: itemSpacing != 0 || divider != null
-          ? addItemDivider(_children, itemSpacing, divider)
+          ? addItemDivider(_children, itemSpacing!, divider!)
           : _children,
     );
 
     if (topEnd != null) {
       result = Stack(children: <Widget>[
         result,
-        Positioned(top: 0, right: 0, child: topEnd),
+        Positioned(top: 0, right: 0, child: topEnd!),
       ]);
     }
 
@@ -407,7 +405,7 @@ class DecoratedFlex extends StatelessWidget {
         alignment != null) {
       if (animationDuration != null && animationDuration != Duration.zero) {
         result = AnimatedContainer(
-          duration: animationDuration,
+          duration: animationDuration!,
           curve: animationCurve ?? Curves.linear,
           padding: padding,
           margin: margin,
@@ -446,12 +444,12 @@ class DecoratedFlex extends StatelessWidget {
         onDoubleTap != null) {
       result = GestureDetector(
         behavior: behavior ?? HitTestBehavior.opaque,
-        onTap: onPressed == null ? null : () => onPressed(context),
+        onTap: onPressed == null ? null : () => onPressed!(context),
         onLongPress:
-            onLongPressed == null ? null : () => onLongPressed(context),
+            onLongPressed == null ? null : () => onLongPressed!(context),
         onVerticalDragEnd: onVerticalDragEnd,
         onHorizontalDragEnd: onHorizontalDragEnd,
-        onDoubleTap: onDoubleTap == null ? null : () => onDoubleTap(context),
+        onDoubleTap: onDoubleTap == null ? null : () => onDoubleTap!(context),
         child: result,
       );
     }
@@ -459,10 +457,10 @@ class DecoratedFlex extends StatelessWidget {
     if (safeArea != null) {
       result = SafeArea(
         child: result,
-        top: safeArea.top ?? true,
-        bottom: safeArea.bottom ?? true,
-        left: safeArea.left ?? true,
-        right: safeArea.right ?? true,
+        top: safeArea?.top ?? true,
+        bottom: safeArea?.bottom ?? true,
+        left: safeArea?.left ?? true,
+        right: safeArea?.right ?? true,
       );
     }
 
@@ -475,7 +473,7 @@ class DecoratedFlex extends StatelessWidget {
     }
 
     if (textStyle != null) {
-      result = DefaultTextStyle(style: textStyle, child: result);
+      result = DefaultTextStyle(style: textStyle!, child: result);
     }
 
     if (repaintBoundaryKey != null) {
@@ -487,11 +485,11 @@ class DecoratedFlex extends StatelessWidget {
     }
 
     if (visible != null) {
-      result = Visibility(visible: visible, child: result);
+      result = Visibility(visible: visible!, child: result);
     }
 
     if (theme != null) {
-      result = Theme(data: theme, child: result);
+      result = Theme(data: theme!, child: result);
     }
 
     if (center == true) {
@@ -499,7 +497,7 @@ class DecoratedFlex extends StatelessWidget {
     }
 
     if (offset != null) {
-      result = Transform.translate(offset: offset, child: result);
+      result = Transform.translate(offset: offset!, child: result);
     }
 
     if (expanded == true) {
@@ -520,10 +518,8 @@ class DecoratedFlex extends StatelessWidget {
   List<Widget> addItemDivider(
     List<Widget> children,
     double itemSpacing,
-    Widget divider,
+    Widget? divider,
   ) {
-    assert(children != null);
-
     // 确认要往哪几个index(以最终的插入后的List为参考系)插空间
     int currentLength = children.length;
     if (currentLength > 1) {

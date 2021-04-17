@@ -1,18 +1,16 @@
-// @dart=2.9
-
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 typedef String Converter<T>(T data);
 
-Future<T> showPickerDialog<T>(
+Future<T?> showPickerDialog<T>(
   BuildContext context, {
-  @required List<T> data,
-  String title,
-  TextStyle titleStyle,
-  TextStyle confirmStyle,
-  @required Widget Function(T) itemBuilder,
+  required List<T> data,
+  String? title,
+  TextStyle? titleStyle,
+  TextStyle? confirmStyle,
+  required Widget Function(T) itemBuilder,
   double itemExtent = 32,
 }) {
   return showModalBottomSheet<T>(
@@ -31,18 +29,18 @@ Future<T> showPickerDialog<T>(
 class _PickerDialog<T> extends StatefulWidget {
   const _PickerDialog(
     this._dataList, {
-    Key key,
+    Key? key,
     this.title,
     this.titleStyle,
     this.confirmStyle,
-    @required this.itemBuilder,
-    @required this.itemExtent,
+    required this.itemBuilder,
+    required this.itemExtent,
   }) : super(key: key);
 
   final List<T> _dataList;
-  final String title;
-  final TextStyle titleStyle;
-  final TextStyle confirmStyle;
+  final String? title;
+  final TextStyle? titleStyle;
+  final TextStyle? confirmStyle;
   final Widget Function(T) itemBuilder;
   final double itemExtent;
 
@@ -51,7 +49,7 @@ class _PickerDialog<T> extends StatefulWidget {
 }
 
 class _PickerDialogState<T> extends State<_PickerDialog<T>> {
-  T _selected;
+  late T _selected;
 
   @override
   void initState() {
@@ -73,7 +71,7 @@ class _PickerDialogState<T> extends State<_PickerDialog<T>> {
             Spacer(),
             if (isNotEmpty(widget.title))
               Text(
-                widget.title,
+                widget.title!,
                 style: widget.titleStyle ?? context.textTheme.bodyText1,
               ),
             Spacer(),

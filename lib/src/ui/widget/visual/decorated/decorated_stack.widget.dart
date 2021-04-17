@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +8,7 @@ enum ZIndex {
 
 class DecoratedStack extends StatelessWidget {
   const DecoratedStack({
-    Key key,
+    Key? key,
     this.padding,
     this.margin,
     this.decoration,
@@ -48,49 +46,49 @@ class DecoratedStack extends StatelessWidget {
     this.children = const [],
   }) : super(key: key);
 
-  final EdgeInsetsGeometry padding;
-  final EdgeInsetsGeometry margin;
-  final BoxDecoration decoration;
-  final BoxConstraints constraints;
-  final double width;
-  final double height;
-  final Matrix4 transform;
-  final Duration animationDuration;
-  final Curve animationCurve;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
+  final BoxDecoration? decoration;
+  final BoxConstraints? constraints;
+  final double? width;
+  final double? height;
+  final Matrix4? transform;
+  final Duration? animationDuration;
+  final Curve? animationCurve;
 
-  final TextStyle textStyle;
+  final TextStyle? textStyle;
 
-  final SafeAreaConfig safeArea;
+  final SafeAreaConfig? safeArea;
 
-  final ContextCallback onPressed;
-  final ContextCallback onLongPressed;
-  final GestureDragEndCallback onVerticalDragEnd;
-  final GestureDragEndCallback onHorizontalDragEnd;
-  final HitTestBehavior behavior;
+  final ContextCallback? onPressed;
+  final ContextCallback? onLongPressed;
+  final GestureDragEndCallback? onVerticalDragEnd;
+  final GestureDragEndCallback? onHorizontalDragEnd;
+  final HitTestBehavior? behavior;
 
   final bool expanded;
 
-  final Widget topStart;
-  final Widget topEnd;
-  final Widget bottomStart;
-  final Widget bottomEnd;
-  final Widget top;
-  final Widget bottom;
-  final Widget start;
-  final Widget end;
-  final Widget center;
+  final Widget? topStart;
+  final Widget? topEnd;
+  final Widget? bottomStart;
+  final Widget? bottomEnd;
+  final Widget? top;
+  final Widget? bottom;
+  final Widget? start;
+  final Widget? end;
+  final Widget? center;
 
-  final StackFit stackFit;
-  final AlignmentGeometry alignment;
-  final Overflow overflow;
+  final StackFit? stackFit;
+  final AlignmentGeometry? alignment;
+  final Overflow? overflow;
 
   final bool sliver;
-  final ZIndex childrenZIndex;
+  final ZIndex? childrenZIndex;
 
-  final double aspectRatio;
+  final double? aspectRatio;
 
   final Clip clipBehavior;
-  final bool visible;
+  final bool? visible;
 
   final List<Widget> children;
 
@@ -102,39 +100,40 @@ class DecoratedStack extends StatelessWidget {
       overflow: overflow ?? Overflow.clip,
       children: <Widget>[
         if (childrenZIndex == ZIndex.bottom) ...children,
-        if (topStart != null) Positioned(top: 0, left: 0, child: topStart),
-        if (topEnd != null) Positioned(top: 0, right: 0, child: topEnd),
+        if (topStart != null) Positioned(top: 0, left: 0, child: topStart!),
+        if (topEnd != null) Positioned(top: 0, right: 0, child: topEnd!),
         if (bottomStart != null)
-          Positioned(bottom: 0, left: 0, child: bottomStart),
+          Positioned(bottom: 0, left: 0, child: bottomStart!),
         if (bottomEnd != null)
-          Positioned(bottom: 0, right: 0, child: bottomEnd),
-        if (top != null) Positioned(top: 0, left: 0, right: 0, child: top),
+          Positioned(bottom: 0, right: 0, child: bottomEnd!),
+        if (top != null) Positioned(top: 0, left: 0, right: 0, child: top!),
         if (bottom != null)
-          Positioned(bottom: 0, right: 0, left: 0, child: bottom),
-        if (start != null) Positioned(bottom: 0, top: 0, left: 0, child: start),
-        if (end != null) Positioned(bottom: 0, top: 0, right: 0, child: end),
+          Positioned(bottom: 0, right: 0, left: 0, child: bottom!),
+        if (start != null)
+          Positioned(bottom: 0, top: 0, left: 0, child: start!),
+        if (end != null) Positioned(bottom: 0, top: 0, right: 0, child: end!),
         if (center != null)
-          Positioned(bottom: 0, right: 0, top: 0, left: 0, child: center),
+          Positioned(bottom: 0, right: 0, top: 0, left: 0, child: center!),
         if (childrenZIndex == ZIndex.top) ...children,
       ],
     );
 
     if (aspectRatio != null) {
-      result = AspectRatio(aspectRatio: aspectRatio, child: result);
+      result = AspectRatio(aspectRatio: aspectRatio!, child: result);
     }
 
     if (safeArea != null) {
       result = SafeArea(
         child: result,
-        top: safeArea.top ?? true,
-        bottom: safeArea.bottom ?? true,
-        left: safeArea.left ?? true,
-        right: safeArea.right ?? true,
+        top: safeArea?.top ?? true,
+        bottom: safeArea?.bottom ?? true,
+        left: safeArea?.left ?? true,
+        right: safeArea?.right ?? true,
       );
     }
 
     if (textStyle != null) {
-      result = DefaultTextStyle(style: textStyle, child: result);
+      result = DefaultTextStyle(style: textStyle!, child: result);
     }
 
     if (decoration != null ||
@@ -146,7 +145,7 @@ class DecoratedStack extends StatelessWidget {
         constraints != null) {
       if (animationDuration != null && animationDuration != Duration.zero) {
         result = AnimatedContainer(
-          duration: animationDuration,
+          duration: animationDuration!,
           curve: animationCurve ?? Curves.linear,
           padding: padding,
           margin: margin,
@@ -187,7 +186,7 @@ class DecoratedStack extends StatelessWidget {
     }
 
     if (visible != null) {
-      result = Visibility(visible: visible, child: result);
+      result = Visibility(visible: visible!, child: result);
     }
 
     if (expanded) {

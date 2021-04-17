@@ -1,20 +1,18 @@
-// @dart=2.9
-
 import 'package:flutter/cupertino.dart';
 
 class Start extends StatelessWidget {
   const Start({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.widthFactor,
     this.heightFactor,
     this.padding,
   }) : super(key: key);
 
   final Widget child;
-  final double widthFactor;
-  final double heightFactor;
-  final EdgeInsets padding;
+  final double? widthFactor;
+  final double? heightFactor;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
@@ -34,17 +32,17 @@ class Start extends StatelessWidget {
 
 class End extends StatelessWidget {
   const End({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.widthFactor,
     this.heightFactor,
     this.padding,
   }) : super(key: key);
 
   final Widget child;
-  final double widthFactor;
-  final double heightFactor;
-  final EdgeInsets padding;
+  final double? widthFactor;
+  final double? heightFactor;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
@@ -64,8 +62,8 @@ class End extends StatelessWidget {
 
 class Top extends StatelessWidget {
   const Top({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.widthFactor,
     this.heightFactor,
     this.padding,
@@ -73,10 +71,10 @@ class Top extends StatelessWidget {
   }) : super(key: key);
 
   final Widget child;
-  final double widthFactor;
-  final double heightFactor;
-  final EdgeInsets padding;
-  final EdgeInsets margin;
+  final double? widthFactor;
+  final double? heightFactor;
+  final EdgeInsets? padding;
+  final EdgeInsets? margin;
 
   @override
   Widget build(BuildContext context) {
@@ -96,17 +94,17 @@ class Top extends StatelessWidget {
 
 class Bottom extends StatelessWidget {
   const Bottom({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.widthFactor,
     this.heightFactor,
     this.padding,
   }) : super(key: key);
 
   final Widget child;
-  final double widthFactor;
-  final double heightFactor;
-  final EdgeInsets padding;
+  final double? widthFactor;
+  final double? heightFactor;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {

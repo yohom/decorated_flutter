@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -7,18 +5,18 @@ import 'package:flutter/material.dart';
 /// 模糊子widget
 class Blur extends StatelessWidget {
   const Blur({
-    Key key,
+    Key? key,
     this.applyInsets = false,
     this.sigmaX = 2,
     this.sigmaY = 2,
     this.constraints,
-    @required this.child,
+    required this.child,
   }) : super(key: key);
 
   final bool applyInsets;
   final double sigmaX;
   final double sigmaY;
-  final BoxConstraints constraints;
+  final BoxConstraints? constraints;
   final Widget child;
 
   @override
@@ -39,16 +37,16 @@ class Blur extends StatelessWidget {
 /// 背景模糊
 class BackgroundBlur extends StatelessWidget {
   const BackgroundBlur({
-    Key key,
+    Key? key,
     this.background,
-    @required this.child,
+    required this.child,
     this.alignment = AlignmentDirectional.center,
     this.sigmaX = 2,
     this.sigmaY = 2,
     this.fit = StackFit.expand,
   }) : super(key: key);
 
-  final Widget background;
+  final Widget? background;
   final Widget child;
   final AlignmentGeometry alignment;
   final double sigmaX;
@@ -69,7 +67,7 @@ class BackgroundBlur extends StatelessWidget {
       result = Stack(
         alignment: alignment,
         fit: fit,
-        children: <Widget>[background, result],
+        children: <Widget>[background!, result],
       );
     }
     return result;

@@ -1,13 +1,11 @@
-// @dart=2.9
-
-import 'package:decorated_flutter/src/ui/widget/visual/preferred/preferred_async_builder.widget.dart';
+import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 
 class Delayed<T> extends StatelessWidget {
   const Delayed({
-    Key key,
-    @required this.child,
-    @required this.duration,
+    Key? key,
+    required this.child,
+    required this.duration,
     this.showLoading = true,
     this.loadingWidget,
     this.backgroundColor = Colors.black,
@@ -16,12 +14,12 @@ class Delayed<T> extends StatelessWidget {
   final Widget child;
   final bool showLoading;
   final Duration duration;
-  final Widget loadingWidget;
+  final Widget? loadingWidget;
   final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
-    return PreferredFutureBuilder(
+    return SingleSubscriber(
       showLoading: showLoading,
       loadingPlaceholder: loadingWidget ??
           Container(

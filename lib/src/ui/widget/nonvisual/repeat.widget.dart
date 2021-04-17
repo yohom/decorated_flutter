@@ -1,13 +1,11 @@
-// @dart=2.9
-
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 
 class Repeat extends StatelessWidget {
   const Repeat({
-    Key key,
-    @required this.builder,
-    @required this.interval,
+    Key? key,
+    required this.builder,
+    required this.interval,
     this.backgroundColor = Colors.black,
   }) : super(key: key);
 
