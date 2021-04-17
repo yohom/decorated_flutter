@@ -374,7 +374,7 @@ class DecoratedFlex extends StatelessWidget {
       textBaseline: textBaseline,
       verticalDirection: verticalDirection ?? VerticalDirection.down,
       children: itemSpacing != 0 || divider != null
-          ? addItemDivider(_children, itemSpacing!, divider!)
+          ? addItemDivider(_children, itemSpacing!, divider)
           : _children,
     );
 
