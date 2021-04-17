@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class PreferredNestedScrollView extends StatelessWidget {
   const PreferredNestedScrollView({
-    Key key,
-    @required this.headers,
-    @required this.body,
+    Key? key,
+    required this.headers,
+    required this.body,
   }) : super(key: key);
 
   final List<Widget> headers;

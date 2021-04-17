@@ -11,8 +11,8 @@ typedef _InitAction<T extends BLoC> = void Function(T bloc);
 class DecoratedRoute<B extends BLoC, T extends Object>
     extends MaterialWithModalsPageRoute<T> {
   DecoratedRoute({
-    Key key,
-    @required this.screen,
+    Key? key,
+    required this.screen,
     this.bloc,
     this.autoCloseKeyboard = true,
     this.init,
@@ -24,7 +24,7 @@ class DecoratedRoute<B extends BLoC, T extends Object>
     this.onDispose,
     this.systemUiOverlayStyle,
     this.animationBuilder,
-    String routeName,
+    required String routeName,
     bool fullscreenDialog = false,
     bool maintainState = true,
   })  : // 要么同时设置泛型B和bloc参数, 要么就都不设置
@@ -40,7 +40,7 @@ class DecoratedRoute<B extends BLoC, T extends Object>
         );
 
   /// 直接传递的BLoC
-  final B bloc;
+  final B? bloc;
 
   /// child
   final Widget screen;
@@ -53,10 +53,10 @@ class DecoratedRoute<B extends BLoC, T extends Object>
   /// [init]与[onLateinit]设计目的是[init]用来设置静态数据, [onLateinit]设置网络请求数据.
   /// 因为在使用lateinit的过程中, 发现如果widget中需要在初始化的时候用到静态数据, 由于lateinit的缘故
   /// 会导致拿不到静态数据, 所以这里区分一下静态的初始化和动态的初始化(网络请求数据)
-  final _InitAction<B> init;
+  final _InitAction<B>? init;
 
   /// 入场动画结束后的初始化方法
-  final _InitAction<B> onLateinit;
+  final _InitAction<B>? onLateinit;
 
   /// 是否执行动画
   final bool animate;
@@ -68,15 +68,15 @@ class DecoratedRoute<B extends BLoC, T extends Object>
   final bool withDefaultTabController;
 
   /// tab bar长度, 必须和[withDefaultTabController]一起设置
-  final int tabLength;
+  final int? tabLength;
 
-  final VoidCallback onDispose;
+  final VoidCallback? onDispose;
 
   /// 系统ui
-  final SystemUiOverlayStyle systemUiOverlayStyle;
+  final SystemUiOverlayStyle? systemUiOverlayStyle;
 
   /// 自定义的动画
-  final Widget Function(Animation<double>, Widget) animationBuilder;
+  final Widget Function(Animation<double>, Widget)? animationBuilder;
 
   /// 是否已经初始化
   bool _inited = false;
@@ -109,12 +109,12 @@ class DecoratedRoute<B extends BLoC, T extends Object>
       result = Form(child: result);
     }
 
-    if (withDefaultTabController) {
-      result = DefaultTabController(length: tabLength, child: result);
+    if (withDefaultTabController && tabLength != null) {
+      result = DefaultTabController(length: tabLength!, child: result);
     }
 
     if (systemUiOverlayStyle != null) {
-      result = AnnotatedRegion(child: result, value: systemUiOverlayStyle);
+      result = AnnotatedRegion(child: result, value: systemUiOverlayStyle!);
     }
 
     return Material(child: result);
@@ -133,14 +133,14 @@ class DecoratedRoute<B extends BLoC, T extends Object>
           onLateinit != null &&
           bloc != null &&
           !_inited) {
-        onLateinit(bloc);
+        onLateinit!(bloc!);
         _inited = true;
       }
     });
 
     if (animate) {
       if (animationBuilder != null) {
-        return animationBuilder(animation, child);
+        return animationBuilder!(animation, child);
       } else {
         return super.buildTransitions(
           context,
@@ -158,8 +158,8 @@ class DecoratedRoute<B extends BLoC, T extends Object>
 class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
     extends CupertinoPageRoute<T> {
   DecoratedCupertinoRoute({
-    Key key,
-    @required this.screen,
+    Key? key,
+    required this.screen,
     this.bloc,
     this.autoCloseKeyboard = true,
     this.init,
@@ -171,7 +171,7 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
     this.tabLength,
     this.onDispose,
     this.systemUiOverlayStyle,
-    String routeName,
+    required String routeName,
     bool fullscreenDialog = false,
     bool maintainState = true,
   })  : // 要么同时设置泛型B和bloc参数, 要么就都不设置
@@ -187,7 +187,7 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
         );
 
   /// 直接传递的BLoC
-  final B bloc;
+  final B? bloc;
 
   /// child
   final Widget screen;
@@ -196,13 +196,13 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
   final bool autoCloseKeyboard;
 
   /// 初始化方法
-  final _InitAction<B> init;
+  final _InitAction<B>? init;
 
   /// 是否执行动画
   final bool animate;
 
   /// 入场动画结束后的初始化方法
-  final _InitAction<B> onLateinit;
+  final _InitAction<B>? onLateinit;
 
   /// 是否带有表单
   final bool withForm;
@@ -214,12 +214,12 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
   final bool withDefaultTabController;
 
   /// tab bar长度, 必须和[withDefaultTabController]一起设置
-  final int tabLength;
+  final int? tabLength;
 
-  final VoidCallback onDispose;
+  final VoidCallback? onDispose;
 
   /// 系统ui
-  final SystemUiOverlayStyle systemUiOverlayStyle;
+  final SystemUiOverlayStyle? systemUiOverlayStyle;
 
   /// 是否已经初始化
   bool _inited = false;
@@ -252,12 +252,12 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
       result = Form(child: result);
     }
 
-    if (withDefaultTabController) {
-      result = DefaultTabController(length: tabLength, child: result);
+    if (withDefaultTabController && tabLength != null) {
+      result = DefaultTabController(length: tabLength!, child: result);
     }
 
     if (systemUiOverlayStyle != null) {
-      result = AnnotatedRegion(child: result, value: systemUiOverlayStyle);
+      result = AnnotatedRegion(child: result, value: systemUiOverlayStyle!);
     }
 
     return Material(child: result);
@@ -272,7 +272,7 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
           onLateinit != null &&
           bloc != null &&
           !_inited) {
-        onLateinit(bloc);
+        onLateinit!(bloc!);
         _inited = true;
       }
     });

@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 
 class FractionalScreen extends StatelessWidget {
   const FractionalScreen({
-    Key key,
+    Key? key,
     this.widthFactor = 1.0,
     this.heightFactor = 1.0,
-    this.child,
-    this.columnChildren,
-    this.rowChildren,
     this.direction = Axis.vertical,
     this.scrollable = true,
     this.mainAxisAlignment = MainAxisAlignment.start,
@@ -18,7 +15,7 @@ class FractionalScreen extends StatelessWidget {
     this.textBaseline,
     this.padding = EdgeInsets.zero,
     this.safeArea,
-    @required this.children,
+    required this.children,
   }) : super(key: key);
 
   /// 占屏幕宽度百分比
@@ -26,20 +23,6 @@ class FractionalScreen extends StatelessWidget {
 
   /// 占屏幕高度百分比
   final double heightFactor;
-
-  /// [child], [columnChildren], [rowChildren]三个只能设置一个
-  /// 如果都设置了, 那就按[child]->[columnChildren]->[rowChildren]的优先级作为child使用
-  /// child
-  @Deprecated('使用children')
-  final Widget child;
-
-  /// 子控件为Column的children
-  @Deprecated('使用children')
-  final List<Widget> columnChildren;
-
-  /// 子控件为Row的children
-  @Deprecated('使用children')
-  final List<Widget> rowChildren;
 
   /// 不管有一个还是多个child, 都用这个, 然后用[direction]来区分方向
   final List<Widget> children;
@@ -54,15 +37,15 @@ class FractionalScreen extends StatelessWidget {
   final bool scrollable;
 
   /// 是否Safe Area
-  final bool safeArea;
+  final bool? safeArea;
 
   //region Flex属性
   final MainAxisAlignment mainAxisAlignment;
   final MainAxisSize mainAxisSize;
   final CrossAxisAlignment crossAxisAlignment;
-  final TextDirection textDirection;
+  final TextDirection? textDirection;
   final VerticalDirection verticalDirection;
-  final TextBaseline textBaseline;
+  final TextBaseline? textBaseline;
 
   //endregion
 

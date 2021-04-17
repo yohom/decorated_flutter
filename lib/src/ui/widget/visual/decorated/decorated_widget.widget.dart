@@ -8,8 +8,8 @@ typedef void _InitAction<T extends BLoC>(T bloc);
 /// [B]是指定的BLoC
 class DecoratedWidget<B extends BLoC> extends StatefulWidget {
   DecoratedWidget({
-    Key key,
-    @required this.widget,
+    Key? key,
+    required this.widget,
     this.bloc,
     this.autoCloseKeyboard = true,
     this.init,
@@ -25,7 +25,7 @@ class DecoratedWidget<B extends BLoC> extends StatefulWidget {
         super();
 
   /// 直接传递的BLoC
-  final B bloc;
+  final B? bloc;
 
   /// child
   final Widget widget;
@@ -34,7 +34,7 @@ class DecoratedWidget<B extends BLoC> extends StatefulWidget {
   final bool autoCloseKeyboard;
 
   /// 初始化方法
-  final _InitAction<B> init;
+  final _InitAction<B>? init;
 
   /// 是否带有表单
   final bool withForm;
@@ -43,10 +43,10 @@ class DecoratedWidget<B extends BLoC> extends StatefulWidget {
   final bool withDefaultTabController;
 
   /// tab bar长度, 必须和[withDefaultTabController]一起设置
-  final int tabLength;
+  final int? tabLength;
 
   /// 系统ui
-  final SystemUiOverlayStyle systemUiOverlayStyle;
+  final SystemUiOverlayStyle? systemUiOverlayStyle;
 
   @override
   _DecoratedWidgetState createState() => _DecoratedWidgetState<B>();
@@ -76,13 +76,13 @@ class _DecoratedWidgetState<B extends BLoC> extends State<DecoratedWidget<B>> {
       result = Form(child: result);
     }
 
-    if (widget.withDefaultTabController == true) {
-      result = DefaultTabController(length: widget.tabLength, child: result);
+    if (widget.withDefaultTabController == true && widget.tabLength != null) {
+      result = DefaultTabController(length: widget.tabLength!, child: result);
     }
 
     if (widget.systemUiOverlayStyle != null) {
       result = AnnotatedRegion<SystemUiOverlayStyle>(
-        value: widget.systemUiOverlayStyle,
+        value: widget.systemUiOverlayStyle!,
         child: result,
       );
     }

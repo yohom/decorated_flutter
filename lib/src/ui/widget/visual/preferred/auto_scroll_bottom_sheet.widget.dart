@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class AutoScrollBottomSheet extends StatelessWidget {
   const AutoScrollBottomSheet({
-    Key key,
+    Key? key,
     this.duration = const Duration(milliseconds: 100),
     this.curve = Curves.decelerate,
-    @required this.child,
+    required this.child,
   }) : super(key: key);
 
   final Widget child;

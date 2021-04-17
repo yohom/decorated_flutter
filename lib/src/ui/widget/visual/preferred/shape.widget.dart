@@ -3,8 +3,8 @@ import 'package:flutter/widgets.dart';
 
 class Circle extends StatelessWidget {
   const Circle({
-    Key key,
-    @required this.radius,
+    Key? key,
+    required this.radius,
     this.color = Colors.transparent,
     this.padding = EdgeInsets.zero,
     this.margin = EdgeInsets.zero,
@@ -15,7 +15,7 @@ class Circle extends StatelessWidget {
   final Color color;
   final EdgeInsets padding;
   final EdgeInsets margin;
-  final Widget child;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +32,8 @@ class Circle extends StatelessWidget {
 
 class Square extends StatelessWidget {
   const Square({
-    Key key,
-    @required this.side,
+    Key? key,
+    required this.side,
     this.color = Colors.transparent,
     this.padding = EdgeInsets.zero,
     this.margin = EdgeInsets.zero,
@@ -44,7 +44,7 @@ class Square extends StatelessWidget {
   final Color color;
   final EdgeInsets padding;
   final EdgeInsets margin;
-  final Widget child;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {

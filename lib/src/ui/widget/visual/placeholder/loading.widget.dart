@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class LoadingWidget extends StatelessWidget {
   const LoadingWidget({
-    Key key,
+    Key? key,
     this.height,
     this.width,
     this.margin,
@@ -13,11 +13,11 @@ class LoadingWidget extends StatelessWidget {
     this.material = false,
   }) : super(key: key);
 
-  final double width;
-  final double height;
-  final EdgeInsets margin;
-  final Color color;
-  final Color backgroundColor;
+  final double? width;
+  final double? height;
+  final EdgeInsets? margin;
+  final Color? color;
+  final Color? backgroundColor;
   final bool sliver;
   final bool material;
 
@@ -36,7 +36,7 @@ class LoadingWidget extends StatelessWidget {
       result = SizedBox(height: height, width: width, child: result);
     }
     if (margin != null) {
-      result = Padding(padding: margin, child: result);
+      result = Padding(padding: margin!, child: result);
     }
     if (backgroundColor != null) {
       result = Container(color: backgroundColor, child: result);

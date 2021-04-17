@@ -5,13 +5,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-typedef void _HandlerErrorCallback(Object error);
-
-@Deprecated('直接使用handleError即可')
-_HandlerErrorCallback handle(BuildContext context) {
-  return (Object error) => handleError(error);
-}
-
 void handleError(Object error) {
   L.d('handleError: $error');
   if (error is DioError) {
@@ -26,11 +19,13 @@ void handleError(Object error) {
         message = '网络连接超时，请重试';
         break;
       case DioErrorType.response:
-        final statusCode = error.response.statusCode;
-        if (statusCode >= 400 && statusCode <= 417) {
-          message = '访问地址异常，请稍后重试 $statusCode';
-        } else if (statusCode >= 500 && statusCode <= 505) {
-          message = '服务器繁忙 $statusCode';
+        final statusCode = error.response?.statusCode;
+        if (statusCode != null) {
+          if (statusCode >= 400 && statusCode <= 417) {
+            message = '访问地址异常，请稍后重试 $statusCode';
+          } else if (statusCode >= 500 && statusCode <= 505) {
+            message = '服务器繁忙 $statusCode';
+          }
         }
         break;
       case DioErrorType.other:

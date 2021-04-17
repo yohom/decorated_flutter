@@ -9,10 +9,10 @@ import 'package:rxdart/rxdart.dart';
 /// 下方!
 class DoubleBackExitApp extends StatefulWidget {
   const DoubleBackExitApp({
-    Key key,
+    Key? key,
     this.onShowExitHint,
     this.duration = const Duration(seconds: 2),
-    @required this.child,
+    required this.child,
   }) : super(key: key);
 
   /// child
@@ -22,7 +22,7 @@ class DoubleBackExitApp extends StatefulWidget {
   final Duration duration;
 
   /// 显示退出提示
-  final VoidCallback onShowExitHint;
+  final VoidCallback? onShowExitHint;
 
   @override
   _DoubleBackExitAppState createState() => _DoubleBackExitAppState();
@@ -41,7 +41,7 @@ class _DoubleBackExitAppState extends State<DoubleBackExitApp> {
         SystemNavigator.pop();
       } else {
         if (widget.onShowExitHint != null) {
-          widget.onShowExitHint();
+          widget.onShowExitHint!();
         } else {
           toast('再按一次退出应用');
         }

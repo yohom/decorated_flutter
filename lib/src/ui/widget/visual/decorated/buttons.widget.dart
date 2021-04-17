@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 /// 当按下时, 会缩放至0.9倍, 松开恢复到原状, 有些类似AppStore点击卡片时的动画
 class AnimatedScaleButton extends StatefulWidget {
   const AnimatedScaleButton({
-    Key key,
-    @required this.child,
-    @required this.onPressed,
+    Key? key,
+    required this.child,
+    required this.onPressed,
     this.minScale = 0.9,
   }) : super(key: key);
 
@@ -21,7 +21,7 @@ class AnimatedScaleButton extends StatefulWidget {
 }
 
 class _AnimatedScaleButtonState extends State<AnimatedScaleButton> {
-  bool _pressed;
+  late bool _pressed;
 
   @override
   void initState() {
@@ -34,14 +34,14 @@ class _AnimatedScaleButtonState extends State<AnimatedScaleButton> {
     return TweenAnimationBuilder<double>(
       duration: Duration(milliseconds: 100),
       curve: Curves.easeOut,
-      builder: (BuildContext context, value, Widget child) {
+      builder: (BuildContext context, value, Widget? child) {
         return Transform.scale(
           scale: value,
           alignment: AlignmentDirectional.center,
           child: child,
         );
       },
-      tween: Tween(begin: 1, end: _pressed ? widget.minScale ?? 0.9 : 1),
+      tween: Tween(begin: 1, end: _pressed ? widget.minScale : 1),
       child: GestureDetector(
         onTapDown: (_) {
           setState(() {

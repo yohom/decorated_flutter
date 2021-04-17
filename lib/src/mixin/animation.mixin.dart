@@ -3,11 +3,11 @@ import 'package:flutter/cupertino.dart';
 mixin AnimationMixin<T extends StatefulWidget>
     on State<T>, SingleTickerProviderStateMixin<T> {
   @protected
-  Animation animation;
+  late Animation<double> animation;
   @protected
-  AnimationController animationController;
+  late AnimationController animationController;
   @protected
-  bool animationDisposed;
+  late bool animationDisposed;
 
   @override
   void initState() {

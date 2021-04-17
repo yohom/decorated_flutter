@@ -11,14 +11,14 @@ typedef _ErrorPlaceholderBuilder = Widget Function(
     BuildContext context, Object error);
 
 class SingleSubscriber<T> extends StatelessWidget {
-  static Widget _defaultEmptyPlaceholder;
-  static Widget _defaultErrorPlaceholder;
-  static Widget _defaultLoadingPlaceholder;
+  static Widget? _defaultEmptyPlaceholder;
+  static Widget? _defaultErrorPlaceholder;
+  static Widget? _defaultLoadingPlaceholder;
 
   static void setDefaultPlaceholder({
-    Widget emptyPlaceholder,
-    Widget errorPlaceholder,
-    Widget loadingPlaceholder,
+    Widget? emptyPlaceholder,
+    Widget? errorPlaceholder,
+    Widget? loadingPlaceholder,
   }) {
     _defaultEmptyPlaceholder = emptyPlaceholder;
     _defaultErrorPlaceholder = errorPlaceholder;
@@ -26,9 +26,9 @@ class SingleSubscriber<T> extends StatelessWidget {
   }
 
   const SingleSubscriber({
-    Key key,
-    @required this.future,
-    @required this.builder,
+    Key? key,
+    required this.future,
+    required this.builder,
     this.showLoading = true,
     this.initialData,
     this.emptyPlaceholder,
@@ -48,16 +48,16 @@ class SingleSubscriber<T> extends StatelessWidget {
   final bool showLoading;
 
   /// 初始数据
-  final T initialData;
+  final T? initialData;
 
   /// 空列表视图
-  final Widget emptyPlaceholder;
+  final Widget? emptyPlaceholder;
 
   /// 错误视图
-  final _ErrorPlaceholderBuilder errorPlaceholderBuilder;
+  final _ErrorPlaceholderBuilder? errorPlaceholderBuilder;
 
   /// loading视图
-  final Widget loadingPlaceholder;
+  final Widget? loadingPlaceholder;
 
   /// 是否处理空列表的情况
   ///
@@ -80,7 +80,7 @@ class SingleSubscriber<T> extends StatelessWidget {
             L.e('SingleSubscriber出现错误: ${snapshot.error}');
           }
           if (errorPlaceholderBuilder != null) {
-            return errorPlaceholderBuilder(context, snapshot.error);
+            return errorPlaceholderBuilder!(context, snapshot.error!);
           } else {
             return _defaultErrorPlaceholder ?? ErrorPlaceholder(sliver: sliver);
           }
@@ -92,7 +92,7 @@ class SingleSubscriber<T> extends StatelessWidget {
                 _defaultEmptyPlaceholder ??
                 EmptyPlaceholder(sliver: sliver);
           } else {
-            return builder(snapshot.data);
+            return builder(snapshot.data!);
           }
         } else if (showLoading) {
           return loadingPlaceholder ??
@@ -107,14 +107,14 @@ class SingleSubscriber<T> extends StatelessWidget {
 }
 
 class Subscriber<T> extends StatelessWidget {
-  static Widget _defaultEmptyPlaceholder;
-  static Widget _defaultErrorPlaceholder;
-  static Widget _defaultLoadingPlaceholder;
+  static Widget? _defaultEmptyPlaceholder;
+  static Widget? _defaultErrorPlaceholder;
+  static Widget? _defaultLoadingPlaceholder;
 
   static void setDefaultPlaceholder({
-    Widget emptyPlaceholder,
-    Widget errorPlaceholder,
-    Widget loadingPlaceholder,
+    Widget? emptyPlaceholder,
+    Widget? errorPlaceholder,
+    Widget? loadingPlaceholder,
   }) {
     _defaultEmptyPlaceholder = emptyPlaceholder;
     _defaultErrorPlaceholder = errorPlaceholder;
@@ -122,9 +122,9 @@ class Subscriber<T> extends StatelessWidget {
   }
 
   const Subscriber({
-    Key key,
-    @required this.stream,
-    @required this.builder,
+    Key? key,
+    required this.stream,
+    required this.builder,
     this.showLoading = true,
     this.initialData,
     this.emptyPlaceholder,
@@ -144,16 +144,16 @@ class Subscriber<T> extends StatelessWidget {
   final bool showLoading;
 
   /// 初始数据
-  final T initialData;
+  final T? initialData;
 
   /// 空列表视图
-  final Widget emptyPlaceholder;
+  final Widget? emptyPlaceholder;
 
   /// 错误视图
-  final _ErrorPlaceholderBuilder errorPlaceholderBuilder;
+  final _ErrorPlaceholderBuilder? errorPlaceholderBuilder;
 
   /// loading视图
-  final Widget loadingPlaceholder;
+  final Widget? loadingPlaceholder;
 
   /// 是否处理空列表的情况
   ///
@@ -176,7 +176,7 @@ class Subscriber<T> extends StatelessWidget {
             L.e('Subscriber出现错误: ${snapshot.error}');
           }
           if (errorPlaceholderBuilder != null) {
-            return errorPlaceholderBuilder(context, snapshot.error);
+            return errorPlaceholderBuilder!(context, snapshot.error!);
           } else {
             return _defaultErrorPlaceholder ?? ErrorPlaceholder(sliver: sliver);
           }
@@ -188,7 +188,7 @@ class Subscriber<T> extends StatelessWidget {
                 _defaultEmptyPlaceholder ??
                 EmptyPlaceholder(sliver: sliver);
           } else {
-            return builder(snapshot.data);
+            return builder(snapshot.data!);
           }
         } else if (showLoading) {
           return loadingPlaceholder ??

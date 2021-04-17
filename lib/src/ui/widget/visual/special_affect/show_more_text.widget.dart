@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ShowMoreText extends StatelessWidget {
   const ShowMoreText(
     this.text, {
-    Key key,
+    Key? key,
     this.maxLines = 1,
     this.style,
     this.showMoreStyle,
@@ -13,8 +13,8 @@ class ShowMoreText extends StatelessWidget {
 
   final String text;
   final int maxLines;
-  final TextStyle style;
-  final TextStyle showMoreStyle;
+  final TextStyle? style;
+  final TextStyle? showMoreStyle;
   final TextOverflow overflow;
   final PopupMenuThemeData popupMenuTheme;
 

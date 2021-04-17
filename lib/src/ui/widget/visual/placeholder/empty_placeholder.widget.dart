@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class EmptyPlaceholder extends StatelessWidget {
   const EmptyPlaceholder({
-    Key key,
+    Key? key,
     this.sliver = false,
   }) : super(key: key);
 

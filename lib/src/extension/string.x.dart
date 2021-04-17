@@ -8,22 +8,18 @@ extension StringX on String {
   }
 
   dynamic get json {
-    if (this == null) return null;
     return jsonDecode(this);
   }
 
-  Uri get uri {
-    if (this == null) return null;
+  Uri? get uri {
     return Uri.tryParse(this);
   }
 
-  int get intValue {
-    if (this == null) return null;
+  int? get intValue {
     return int.tryParse(this);
   }
 
-  double get doubleValue {
-    if (this == null) return null;
+  double? get doubleValue {
     return double.tryParse(this);
   }
 }

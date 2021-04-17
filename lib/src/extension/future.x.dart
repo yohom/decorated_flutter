@@ -7,17 +7,17 @@ import 'package:flutter/widgets.dart';
 typedef Widget LoadingBuilder(BuildContext context, String loadingText);
 
 extension FutureX<T> on Future<T> {
-  static LoadingBuilder loadingWidgetBuilder;
-  static Color backgroundColor;
+  static LoadingBuilder? loadingWidgetBuilder;
+  static Color? backgroundColor;
   static bool loadingCancelable = false;
   static String defaultLoadingText = '加载中...';
 
   Future<T> loading(
     BuildContext context, {
-    bool cancelable,
+    bool? cancelable,
     Duration timeout = const Duration(seconds: 60),
-    String loadingText,
-    Color backgroundColor,
+    String? loadingText,
+    Color? backgroundColor,
   }) {
     final navigator = Navigator.of(context, rootNavigator: true);
 
@@ -36,20 +36,17 @@ extension FutureX<T> on Future<T> {
           builder: (context) {
             return WillPopScope(
               onWillPop: () async => cancelable ?? loadingCancelable,
-              child: loadingWidgetBuilder != null
-                  ? loadingWidgetBuilder(
-                      context,
-                      loadingText ?? defaultLoadingText,
-                    )
-                  : LoadingWidget(),
+              child: loadingWidgetBuilder?.call(
+                    context,
+                    loadingText ?? defaultLoadingText,
+                  ) ??
+                  LoadingWidget(),
             );
           },
         );
         return Builder(
-          builder: (BuildContext context) {
-            return theme != null
-                ? Theme(data: theme, child: pageChild)
-                : pageChild;
+          builder: (context) {
+            return Theme(data: theme, child: pageChild);
           },
         );
       },
@@ -76,7 +73,7 @@ extension FutureX<T> on Future<T> {
     return this;
   }
 
-  Future<T> apply<R>(FutureOr<R> onValue(T value), {Function onError}) async {
+  Future<T> apply<R>(FutureOr<R> onValue(T value), {Function? onError}) async {
     await then(onValue, onError: onError);
     return this;
   }

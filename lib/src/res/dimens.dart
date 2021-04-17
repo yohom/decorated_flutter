@@ -11,6 +11,7 @@ const kSpace12 = 12.0;
 const kSpace16 = 16.0;
 const kSpace24 = 24.0;
 const kSpace32 = 32.0;
+const kSpace40 = 40.0;
 const kSpace48 = 48.0;
 const kSpace56 = 56.0;
 const kSpace64 = 64.0;
@@ -127,6 +128,20 @@ const SLIVER_SPACE_32_HORIZONTAL = SliverToBoxAdapter(
 );
 const SLIVER_SPACE_32_VERTICAL = SliverToBoxAdapter(
   child: SizedBox(width: kSpace0, height: kSpace32),
+);
+
+const SPACE_40 = SizedBox(width: kSpace40, height: kSpace40);
+const SPACE_40_HORIZONTAL = SizedBox(width: kSpace40, height: kSpace0);
+const SPACE_40_VERTICAL = SizedBox(width: kSpace0, height: kSpace40);
+
+const SLIVER_SPACE_40 = SliverToBoxAdapter(
+  child: SizedBox(width: kSpace40, height: kSpace40),
+);
+const SLIVER_SPACE_40_HORIZONTAL = SliverToBoxAdapter(
+  child: SizedBox(width: kSpace40, height: kSpace0),
+);
+const SLIVER_SPACE_40_VERTICAL = SliverToBoxAdapter(
+  child: SizedBox(width: kSpace0, height: kSpace40),
 );
 
 const SPACE_48 = SizedBox(width: kSpace48, height: kSpace48);

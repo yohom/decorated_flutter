@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class LocalNavigator extends StatelessWidget {
-  const LocalNavigator({Key key, this.builder}) : super(key: key);
+  const LocalNavigator({Key? key, required this.builder}) : super(key: key);
 
   final WidgetBuilder builder;
 

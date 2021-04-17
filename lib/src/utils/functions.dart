@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'log.dart';
@@ -15,7 +14,7 @@ bool isTrue(bool data) => data == true;
 
 bool isFalse(bool data) => data == false;
 
-T returnNull<T>() => null;
+T? returnNull<T>() => null;
 
 void doNothing() {}
 
@@ -46,10 +45,10 @@ String generateRandomString(int len) {
 
 /// 通用轮询逻辑
 Future<void> polling({
-  @required Future<void> Function() task,
-  @required Duration interval,
-  @required int maxTryCount,
-  Future<void> Function() whenErrorTry,
+  required Future<void> Function() task,
+  required Duration interval,
+  required int maxTryCount,
+  Future<void> Function()? whenErrorTry,
 }) async {
   int tryCount = 0;
   while (true) {

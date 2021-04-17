@@ -12,8 +12,8 @@ final _Logger L = _Logger();
 class _Logger {
   final logger = Logger();
 
-  Directory _logDir;
-  File _logFile;
+  Directory? _logDir;
+  File? _logFile;
   StringBuffer _logBuffer = StringBuffer();
 
   _Logger() {
@@ -35,7 +35,7 @@ class _Logger {
     }
   }
 
-  void i(Object content, {LogPrinter printer}) {
+  void i(Object content, {LogPrinter? printer}) {
     if (!kReleaseMode) {
       logger.i(content);
     }
@@ -59,15 +59,15 @@ class _Logger {
     _logDir ??= Directory('${(await getTemporaryDirectory()).path}/log');
     final now = DateTime.now();
     // 清理keep前的日志文件
-    if (_logDir.existsSync()) {
+    if (_logDir!.existsSync() == true) {
       _logDir
-          .list()
+          ?.list()
           .where((e) => e.statSync().changed.isBefore(now.subtract(evict)))
           .listen((file) => file.deleteIfExists());
     }
 
-    _logFile = File('${_logDir.path}/${now.format('yyyy-MM-dd')}.txt');
-    if (!_logFile.existsSync()) _logFile.createSync(recursive: true);
+    _logFile = File('${_logDir!.path}/${now.format('yyyy-MM-dd')}.txt');
+    if (!_logFile!.existsSync()) _logFile!.createSync(recursive: true);
 
     final logContent = '[$tag] ${now.format('HH:mm:ss')}: $content';
     _logBuffer.writeln(logContent);

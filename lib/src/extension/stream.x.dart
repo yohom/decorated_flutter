@@ -8,7 +8,7 @@ extension ListStreamX<T> on Stream<List<T>> {
   ///   一个列表页, 点击进入详情页, 带入列表页的单项数据并同时请求详情页的信息. 如果对详情页
   ///   的操作会触发单项数据的改变, 那么就可以使用这个方法去动态改变单项数据的值, 并发射, 实现
   ///   数据的联动更新.
-  Stream<T> select(T t, {bool equal(T t1, T t2)}) {
+  Stream<T> select(T t, {bool equal(T t1, T t2)?}) {
     if (equal != null) {
       return map((list) => list.firstWhere((e) => equal(e, t)));
     } else {

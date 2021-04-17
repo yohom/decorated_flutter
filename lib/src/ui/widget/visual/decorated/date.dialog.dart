@@ -2,14 +2,14 @@ import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Future<DateTime> showDateDialog(
+Future<DateTime?> showDateDialog(
   BuildContext context, {
-  DateTime initialDateTime,
+  DateTime? initialDateTime,
   CupertinoDatePickerMode mode = CupertinoDatePickerMode.date,
-  String cancelText,
-  String confirmText,
+  String cancelText = '取消',
+  String confirmText = '确认',
 }) async {
-  return showModalBottomSheet(
+  return showModalBottomSheet<DateTime>(
     context: context,
     builder: (context) => _DatePickerDialog(
       initialDateTime: initialDateTime,
@@ -22,14 +22,14 @@ Future<DateTime> showDateDialog(
 
 class _DatePickerDialog extends StatefulWidget {
   const _DatePickerDialog({
-    Key key,
+    Key? key,
     this.initialDateTime,
-    this.mode,
-    this.cancelText,
-    this.confirmText,
+    this.mode = CupertinoDatePickerMode.date,
+    this.cancelText = '取消',
+    this.confirmText = '确认',
   }) : super(key: key);
 
-  final DateTime initialDateTime;
+  final DateTime? initialDateTime;
   final CupertinoDatePickerMode mode;
   final String cancelText;
   final String confirmText;
@@ -39,7 +39,7 @@ class _DatePickerDialog extends StatefulWidget {
 }
 
 class __DatePickerDialogState extends State<_DatePickerDialog> {
-  DateTime _date;
+  late DateTime _date;
 
   @override
   void initState() {
@@ -58,20 +58,20 @@ class __DatePickerDialogState extends State<_DatePickerDialog> {
             FlatButton(
               onPressed: () => _handleCancel(context),
               child: Text(
-                widget.cancelText ?? '取消',
-                style: context.textTheme.bodyText1.copyWith(color: Colors.red),
+                widget.cancelText,
+                style: context.textTheme.bodyText1!.copyWith(color: Colors.red),
               ),
             ),
             FlatButton(
               onPressed: () => _handleConfirm(context),
-              child: Text(widget.confirmText ?? '确认'),
+              child: Text(widget.confirmText),
             ),
           ],
         ),
         kDivider1,
         Expanded(
           child: CupertinoDatePicker(
-            mode: widget.mode ?? CupertinoDatePickerMode.date,
+            mode: widget.mode,
             maximumDate: DateTime.now(),
             initialDateTime: _date,
             onDateTimeChanged: (date) {
@@ -90,6 +90,6 @@ class __DatePickerDialogState extends State<_DatePickerDialog> {
 
   void _handleConfirm(BuildContext context) {
     // 点了确认, 日期却是null, 说明就是没有滚动过, 直接使用今天
-    context.rootNavigator.pop(_date ?? DateTime.now());
+    context.rootNavigator.pop(_date);
   }
 }

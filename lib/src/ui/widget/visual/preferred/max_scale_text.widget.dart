@@ -7,9 +7,9 @@ class MaxScaleTextWidget extends StatelessWidget {
   final Widget child;
 
   const MaxScaleTextWidget({
-    Key key,
+    Key? key,
     this.max = 1.0,
-    @required this.child,
+    required this.child,
   }) : super(key: key);
 
   @override

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class EdgeFade extends StatelessWidget {
   const EdgeFade({
-    Key key,
-    this.stops,
-    this.begin,
-    this.end,
-    @required this.child,
+    Key? key,
+    this.stops = const [0.9, 1.0],
+    this.begin = Alignment.centerLeft,
+    this.end = Alignment.centerRight,
+    required this.child,
   }) : super(key: key);
 
   final List<double> stops;
@@ -20,9 +20,9 @@ class EdgeFade extends StatelessWidget {
       child: child,
       shaderCallback: (rect) {
         return LinearGradient(
-          begin: begin ?? Alignment.centerLeft,
-          end: end ?? Alignment.centerRight,
-          stops: stops ?? [0.9, 1.0],
+          begin: begin,
+          end: end,
+          stops: stops,
           colors: [Colors.black, Colors.transparent],
         ).createShader(rect);
       },
