@@ -1,3 +1,5 @@
+// @dart=2.9
+
 bool isEmpty(Object object) {
   if (object == null) {
     return true;

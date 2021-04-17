@@ -4,8 +4,8 @@ import 'package:flutter/widgets.dart';
 
 class CustomMaterialRoute<T> extends PageRoute<T> {
   CustomMaterialRoute({
-    @required this.builder,
-    RouteSettings settings,
+    required this.builder,
+    RouteSettings? settings,
     this.maintainState = true,
     this.duration = const Duration(milliseconds: 300),
     bool fullscreenDialog = false,
@@ -29,10 +29,10 @@ class CustomMaterialRoute<T> extends PageRoute<T> {
   Duration get transitionDuration => duration;
 
   @override
-  Color get barrierColor => null;
+  Color? get barrierColor => null;
 
   @override
-  String get barrierLabel => null;
+  String? get barrierLabel => null;
 
   @override
   bool canTransitionFrom(TransitionRoute<dynamic> previousRoute) {

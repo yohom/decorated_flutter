@@ -6,7 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 extension BuildContextX on BuildContext {
-  T of<T extends BLoC>() {
+  T? of<T extends BLoC>() {
     return BLoCProvider.of<T>(this);
   }
 
@@ -18,7 +18,7 @@ extension BuildContextX on BuildContext {
     FocusScope.of(this).unfocus();
   }
 
-  FormState get form {
+  FormState? get form {
     return Form.of(this);
   }
 
@@ -54,7 +54,7 @@ extension BuildContextX on BuildContext {
     return Navigator.of(this);
   }
 
-  TabController get tabController {
+  TabController? get tabController {
     return DefaultTabController.of(this);
   }
 }
