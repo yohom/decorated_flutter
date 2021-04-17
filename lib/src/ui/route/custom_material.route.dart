@@ -9,10 +9,7 @@ class CustomMaterialRoute<T> extends PageRoute<T> {
     this.maintainState = true,
     this.duration = const Duration(milliseconds: 300),
     bool fullscreenDialog = false,
-  })  : assert(builder != null),
-        assert(maintainState != null),
-        assert(fullscreenDialog != null),
-        super(settings: settings, fullscreenDialog: fullscreenDialog) {
+  }) : super(settings: settings, fullscreenDialog: fullscreenDialog) {
     // ignore: prefer_asserts_in_initializer_lists , https://github.com/dart-lang/sdk/issues/31223
     assert(opaque);
   }
@@ -55,14 +52,6 @@ class CustomMaterialRoute<T> extends PageRoute<T> {
       explicitChildNodes: true,
       child: builder(context),
     );
-    assert(() {
-      if (result == null) {
-        throw FlutterError(
-            'The builder for route "${settings.name}" returned null.\n'
-            'Route builders must never return null.');
-      }
-      return true;
-    }());
     return result;
   }
 

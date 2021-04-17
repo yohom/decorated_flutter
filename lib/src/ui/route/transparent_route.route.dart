@@ -4,8 +4,7 @@ class TransparentRoute extends PageRoute<void> {
   TransparentRoute({
     required this.builder,
     RouteSettings? settings,
-  })  : assert(builder != null),
-        super(settings: settings, fullscreenDialog: false);
+  }) : super(settings: settings, fullscreenDialog: false);
 
   final WidgetBuilder builder;
 
