@@ -1,4 +1,4 @@
-// @dart=2.9
+
 
 import 'dart:async';
 import 'dart:ui';
@@ -16,7 +16,7 @@ class CaptchaController {
     if (!controllerMap.containsKey(key)) {
       controllerMap[key] = CaptchaController._();
     }
-    return controllerMap[key];
+    return controllerMap[key]!;
   }
 
   static final controllerMap = Map<Type, CaptchaController>();
@@ -26,7 +26,7 @@ class CaptchaController {
     L.d('关闭所有验证码定时器');
   }
 
-  VoidCallback callback;
+  late VoidCallback callback;
 
   bool started = false;
   bool done = false;
@@ -34,8 +34,8 @@ class CaptchaController {
 
   int remain = kDuration;
 
-  StreamSubscription<int> _subscription;
-  Stream<int> _timer;
+  StreamSubscription<int>? _subscription;
+  late Stream<int> _timer;
 
   void start() {
     started = true;

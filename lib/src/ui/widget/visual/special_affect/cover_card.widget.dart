@@ -1,11 +1,11 @@
-// @dart=2.9
+
 
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 
 class CoverCard extends StatefulWidget {
   const CoverCard({
-    Key key,
+    Key? key,
     this.background,
     this.foreground,
     this.overlay = const SizedBox.shrink(),
@@ -13,17 +13,17 @@ class CoverCard extends StatefulWidget {
     this.fit = StackFit.loose,
     this.overflow = Overflow.clip,
     this.parallaxRate = 0.2,
-    @required this.cover,
-    @required this.card,
-    @required this.coverHeight,
+    required this.cover,
+    required this.card,
+    required this.coverHeight,
   })  : assert(parallaxRate > 0.0),
         super(key: key);
 
   /// 背景
-  final Widget background;
+  final Widget? background;
 
   /// 前景
-  final Widget foreground;
+  final Widget? foreground;
 
   /// overlay, 建议使用[Position]来控制布局
   final Widget overlay;

@@ -1,4 +1,4 @@
-// @dart=2.9
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -15,7 +15,7 @@ class DotTabIndicator extends Decoration {
   });
 
   @override
-  Decoration lerpFrom(Decoration a, double t) {
+  Decoration? lerpFrom(Decoration? a, double t) {
     if (a is DotTabIndicator) {
       return DotTabIndicator();
     }
@@ -23,7 +23,7 @@ class DotTabIndicator extends Decoration {
   }
 
   @override
-  Decoration lerpTo(Decoration b, double t) {
+  Decoration? lerpTo(Decoration? b, double t) {
     if (b is DotTabIndicator) {
       return DotTabIndicator();
     }
@@ -31,13 +31,13 @@ class DotTabIndicator extends Decoration {
   }
 
   @override
-  _DotPainter createBoxPainter([VoidCallback onChanged]) {
+  _DotPainter createBoxPainter([VoidCallback? onChanged]) {
     return _DotPainter(this, onChanged);
   }
 }
 
 class _DotPainter extends BoxPainter {
-  _DotPainter(this.decoration, VoidCallback onChanged)
+  _DotPainter(this.decoration, VoidCallback? onChanged)
       : assert(decoration != null),
         super(onChanged);
 
@@ -48,7 +48,7 @@ class _DotPainter extends BoxPainter {
     assert(configuration != null);
     assert(configuration.size != null);
 
-    final _rawOffset = (offset & configuration.size).bottomCenter;
+    final _rawOffset = (offset & configuration.size!).bottomCenter;
     final _offset = Offset(_rawOffset.dx, _rawOffset.dy * decoration.offset);
     canvas.drawCircle(
       _offset,

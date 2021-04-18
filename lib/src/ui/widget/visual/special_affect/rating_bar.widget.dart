@@ -1,4 +1,4 @@
-// @dart=2.9
+
 
 import 'package:flutter/material.dart';
 
@@ -16,10 +16,10 @@ class StarRating extends StatelessWidget {
 
   final int starCount;
   final double rating;
-  final RatingChangeCallback onRatingChanged;
-  final Color color;
-  final Color borderColor;
-  final double size;
+  final RatingChangeCallback? onRatingChanged;
+  final Color? color;
+  final Color? borderColor;
+  final double? size;
 
   Widget buildStar(BuildContext context, int index) {
     Icon icon;
@@ -44,7 +44,7 @@ class StarRating extends StatelessWidget {
     }
     return InkResponse(
       onTap:
-          onRatingChanged == null ? null : () => onRatingChanged(index + 1.0),
+          onRatingChanged == null ? null : () => onRatingChanged!(index + 1.0),
       child: icon,
     );
   }

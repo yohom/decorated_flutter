@@ -1,16 +1,14 @@
-// @dart=2.9
-
 import 'package:flutter/material.dart';
 
 class SnapList extends StatelessWidget {
   SnapList({
-    Key key,
+    Key? key,
     this.initialPage = 0,
     this.aspectRatio = 1.0,
     this.viewportFraction = 1.0,
     this.padding = EdgeInsets.zero,
-    @required IndexedWidgetBuilder itemBuilder,
-    int itemCount,
+    required IndexedWidgetBuilder itemBuilder,
+    int? itemCount,
     bool addAutomaticKeepAlive: true,
     bool addRepaintBoundaries: true,
   })  : childrenDelegate = SliverChildBuilderDelegate(
@@ -56,14 +54,14 @@ class SnapList extends StatelessWidget {
 class FeaturedItem extends StatelessWidget {
   final String title;
   final String price;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final Widget child;
 
   FeaturedItem({
-    @required this.title,
-    @required this.price,
+    required this.title,
+    required this.price,
     this.onTap,
-    this.child,
+    required this.child,
   });
 
   @override

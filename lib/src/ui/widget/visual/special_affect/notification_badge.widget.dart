@@ -1,10 +1,10 @@
-// @dart=2.9
+
 
 import 'package:flutter/material.dart';
 
 class NotificationBadge extends StatelessWidget {
   const NotificationBadge({
-    Key key,
+    Key? key,
     this.radius = 12,
     this.color = const Color(0xffE05252),
   }) : super(key: key);

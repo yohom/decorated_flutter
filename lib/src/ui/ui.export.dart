@@ -1,4 +1,4 @@
-// @dart=2.9
+
 export 'animation/fade_slide.transition.dart';
 export 'animation/show_up.transition.dart';
 export 'misc/grid_delegate.dart';
