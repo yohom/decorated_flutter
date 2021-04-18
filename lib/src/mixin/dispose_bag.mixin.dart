@@ -1,6 +1,6 @@
-import 'package:decorated_flutter/decorated_flutter.dart';
-import 'package:decorated_flutter/src/bloc/bloc.export.dart';
+import 'package:decorated_flutter/src/bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:rxdart/rxdart.dart';
 
 mixin DisposeBag<T extends StatefulWidget> on State<T> {
   final CompositeSubscription disposeBag = CompositeSubscription();

@@ -1,7 +1,5 @@
-
-
-import 'package:decorated_flutter/decorated_flutter.dart';
-import 'package:decorated_flutter/src/bloc/bloc_io.dart';
+import 'package:decorated_flutter/src/bloc/bloc.dart';
+import 'package:decorated_flutter/src/bloc/bloc.export.dart';
 import 'package:flutter/material.dart';
 
 /// 显示运行时信息的widget
@@ -95,7 +93,7 @@ class _Body extends StatelessWidget {
     return ListView.builder(
       physics: ClampingScrollPhysics(),
       shrinkWrap: true,
-      itemCount: ioList?.length ?? 0,
+      itemCount: ioList.length,
       itemBuilder: (context, index) {
         return ListTile(title: Text(ioList[index].runtimeSummary()));
       },

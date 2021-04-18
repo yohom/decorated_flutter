@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -37,15 +35,12 @@ class DotTabIndicator extends Decoration {
 }
 
 class _DotPainter extends BoxPainter {
-  _DotPainter(this.decoration, VoidCallback? onChanged)
-      : assert(decoration != null),
-        super(onChanged);
+  _DotPainter(this.decoration, VoidCallback? onChanged) : super(onChanged);
 
   final DotTabIndicator decoration;
 
   @override
   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
-    assert(configuration != null);
     assert(configuration.size != null);
 
     final _rawOffset = (offset & configuration.size!).bottomCenter;

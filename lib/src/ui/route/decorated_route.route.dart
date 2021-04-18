@@ -1,5 +1,7 @@
-import 'package:decorated_flutter/decorated_flutter.dart';
+import 'package:decorated_flutter/src/bloc/bloc.dart';
+import 'package:decorated_flutter/src/bloc/bloc_provider.widget.dart';
 import 'package:decorated_flutter/src/ui/widget/nonvisual/auto_close_keyboard.widget.dart';
+import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

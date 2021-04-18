@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:android_intent/android_intent.dart';
 import 'package:android_intent/flag.dart';
-import 'package:decorated_flutter/decorated_flutter.dart';
+import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
