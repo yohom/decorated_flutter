@@ -187,7 +187,7 @@ class IO<T> extends BaseIO<T?> with InputMixin<T?>, OutputMixin<T?, dynamic> {
     bool acceptEmpty = true,
     bool isDistinct = false,
     bool printLog = true,
-    required _Fetch<T, dynamic> fetch,
+    _Fetch<T, dynamic>? fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -198,7 +198,7 @@ class IO<T> extends BaseIO<T?> with InputMixin<T?>, OutputMixin<T?, dynamic> {
 
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
-    _fetch = fetch;
+    _fetch = fetch ?? (_) => Future.value();
     _printLog = printLog;
   }
 }
@@ -302,7 +302,7 @@ class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
     bool printLog = true,
     bool receiveFullData = true,
     int? forceCapacity,
-    required _PageFetch<List<T>, ARG_TYPE?> pageFetch,
+    _PageFetch<List<T>, ARG_TYPE?>? pageFetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -312,7 +312,7 @@ class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
         ) {
     _initPage = initPage;
     _currentPage = _initPage;
-    _pageFetch = pageFetch;
+    _pageFetch = pageFetch ?? (_, __) => Future.value([]);
     _receiveFullData = receiveFullData;
     _pageSize = pageSize;
     _printLog = printLog;
@@ -331,7 +331,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin<T> {
     bool isDistinct = false,
     bool printLog = true,
     int? forceCapacity,
-    required _Fetch<List<T>, dynamic> fetch,
+    _Fetch<List<T>, dynamic>? fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -359,7 +359,7 @@ class IntIO extends IO<int?> with IntMixin {
     int? min,
     int? max,
     int? remainder,
-    required _Fetch<int, dynamic> fetch,
+    _Fetch<int, dynamic>? fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -414,7 +414,7 @@ class BoolIO extends IO<bool?> with BoolMixin {
     bool acceptEmpty = true,
     bool isDistinct = false,
     bool printLog = true,
-    required _Fetch<bool, dynamic> fetch,
+    _Fetch<bool, dynamic>? fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
