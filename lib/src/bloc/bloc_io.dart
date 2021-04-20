@@ -70,15 +70,15 @@ abstract class BaseIO<T> {
     _subject.addError(error, stackTrace);
   }
 
-  Stream<S> map<S>(S convert(T event)) {
+  Stream<S> map<S>(S Function(T event) convert) {
     return _subject.map(convert);
   }
 
-  Stream<T> where(bool test(T event)) {
+  Stream<T> where(bool Function(T event) test) {
     return _subject.where(test);
   }
 
-  Stream<T> distinct([bool test(T previous, T next)]) {
+  Stream<T> distinct([bool Function(T previous, T next) test]) {
     return test != null ? _subject.distinct(test) : _subject.distinct();
   }
 
@@ -147,7 +147,6 @@ class Input<T> extends BaseIO<T> with InputMixin<T> {
     bool printLog = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
-    _Equal<T> test,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -156,7 +155,6 @@ class Input<T> extends BaseIO<T> with InputMixin<T> {
         ) {
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
-    _test = test;
     _printLog = printLog;
   }
 }
@@ -192,7 +190,6 @@ class IO<T> extends BaseIO<T> with InputMixin<T>, OutputMixin<T, dynamic> {
     bool acceptEmpty = true,
     bool isDistinct = false,
     bool printLog = true,
-    _Equal<T> test,
     _Fetch<T, dynamic> fetch,
   }) : super(
           seedValue: seedValue,
@@ -204,7 +201,6 @@ class IO<T> extends BaseIO<T> with InputMixin<T>, OutputMixin<T, dynamic> {
 
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
-    _test = test;
     _fetch = fetch;
     _printLog = printLog;
   }
@@ -222,7 +218,6 @@ class ListInput<T> extends Input<List<T>> with ListMixin<T> {
     bool printLog = true,
     bool isDistinct = false,
     int forceCapacity,
-    _Equal<List<T>> test,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -230,7 +225,6 @@ class ListInput<T> extends Input<List<T>> with ListMixin<T> {
           isBehavior: isBehavior,
           acceptEmpty: acceptEmpty,
           isDistinct: isDistinct,
-          test: test,
           printLog: printLog,
         ) {
     _forceCapacity = forceCapacity;
@@ -340,7 +334,6 @@ class ListIO<T> extends IO<List<T>> with ListMixin<T> {
     bool isDistinct = false,
     bool printLog = true,
     int forceCapacity,
-    _Equal<List<T>> test,
     _Fetch<List<T>, dynamic> fetch,
   }) : super(
           seedValue: seedValue,
@@ -349,7 +342,6 @@ class ListIO<T> extends IO<List<T>> with ListMixin<T> {
           isBehavior: isBehavior,
           acceptEmpty: acceptEmpty,
           isDistinct: isDistinct,
-          test: test,
           fetch: fetch,
           printLog: printLog,
         ) {
@@ -370,7 +362,6 @@ class IntIO extends IO<int> with IntMixin {
     int min,
     int max,
     int remainder,
-    _Equal<int> test,
     _Fetch<int, dynamic> fetch,
   }) : super(
           seedValue: seedValue,
@@ -379,7 +370,6 @@ class IntIO extends IO<int> with IntMixin {
           isBehavior: isBehavior,
           acceptEmpty: acceptEmpty,
           isDistinct: isDistinct,
-          test: test,
           fetch: fetch,
           printLog: printLog,
         ) {
@@ -402,7 +392,6 @@ class IntInput extends Input<int> with IntMixin {
     int max,
     int remainder,
     bool printLog = true,
-    _Equal<int> test,
     _Fetch<int, dynamic> fetch,
   }) : super(
           seedValue: seedValue,
@@ -411,7 +400,6 @@ class IntInput extends Input<int> with IntMixin {
           isBehavior: isBehavior,
           acceptEmpty: acceptEmpty,
           isDistinct: isDistinct,
-          test: test,
           printLog: printLog,
         ) {
     this._min = min;
@@ -430,7 +418,6 @@ class BoolIO extends IO<bool> with BoolMixin {
     bool acceptEmpty = true,
     bool isDistinct = false,
     bool printLog = true,
-    _Equal<bool> test,
     _Fetch<bool, dynamic> fetch,
   }) : super(
           seedValue: seedValue,
@@ -439,7 +426,6 @@ class BoolIO extends IO<bool> with BoolMixin {
           isBehavior: isBehavior,
           acceptEmpty: acceptEmpty,
           isDistinct: isDistinct,
-          test: test,
           fetch: fetch,
           printLog: printLog,
         );
@@ -497,7 +483,6 @@ class Signal extends IO<dynamic> {
 mixin InputMixin<T> on BaseIO<T> {
   bool _acceptEmpty;
   bool _isDistinct;
-  _Equal _test;
 
   /// 发射数据
   T add(T data) {
@@ -518,26 +503,14 @@ mixin InputMixin<T> on BaseIO<T> {
     if (_isDistinct) {
       // 如果是不一样的数据, 才发射新的通知,防止TabBar的addListener那种
       // 不停地发送通知(但是值又是一样)的情况
-      if (_test != null) {
-        if (!_test(latest, data)) {
-          if (_printLog)
-            L.d('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
-          _subject.add(data);
-        } else {
-          if (_printLog)
-            L.d('转发被拒绝! 原因: 需要唯一, 但是没有通过唯一性测试'
-                '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
-        }
+      if (data != latest) {
+        if (_printLog)
+          L.d('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
+        _subject.add(data);
       } else {
-        if (data != latest) {
-          if (_printLog)
-            L.d('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
-          _subject.add(data);
-        } else {
-          if (_printLog)
-            L.d('转发被拒绝! 原因: 需要唯一, 但是新数据与最新值相同'
-                '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
-        }
+        if (_printLog)
+          L.d('转发被拒绝! 原因: 需要唯一, 但是新数据与最新值相同'
+              '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
       }
     } else {
       if (_printLog)
@@ -611,7 +584,7 @@ mixin ListMixin<T> on BaseIO<List<T>> {
   int _forceCapacity;
 
   /// 按条件过滤, 并发射过滤后的数据
-  List<T> filterItem(bool test(T element)) {
+  List<T> filterItem(bool Function(T element) test) {
     if (_subject.isClosed) return null;
 
     final filtered = latest.where(test).toList();
@@ -664,7 +637,7 @@ mixin ListMixin<T> on BaseIO<List<T>> {
   }
 
   /// 对list的item做变换之后重新组成list
-  Stream<List<S>> flatMap<S>(S mapper(T value)) {
+  Stream<List<S>> flatMap<S>(S Function(T value) mapper) {
     return _subject.map((list) => list.map(mapper).toList());
   }
 
@@ -729,7 +702,7 @@ mixin ListMixin<T> on BaseIO<List<T>> {
   }
 
   /// 删除指定条件的元素
-  void removeWhere(bool test(T t)) {
+  void removeWhere(bool Function(T t) test) {
     if (_subject.isClosed) return;
 
     _subject.add(latest..removeWhere(test));
@@ -960,7 +933,7 @@ mixin EvictingQueueMixin<T> on BaseIO<EvictingQueue<T>> {
   }
 
   /// 对list的item做变换之后重新组成list
-  Stream<List<S>> flatMap<S>(S mapper(T value)) {
+  Stream<List<S>> flatMap<S>(S Function(T value) mapper) {
     return _subject.map((list) => list.map(mapper).toList());
   }
 
@@ -973,7 +946,7 @@ mixin EvictingQueueMixin<T> on BaseIO<EvictingQueue<T>> {
   }
 
   /// 删除指定条件的元素
-  void removeWhere(bool test(T t)) {
+  void removeWhere(bool Function(T t) test) {
     if (_subject.isClosed) return;
 
     _subject.add(latest..removeWhere(test));
