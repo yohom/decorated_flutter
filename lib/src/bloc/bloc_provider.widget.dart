@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:decorated_flutter/src/bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -8,25 +6,25 @@ typedef void _Init<T extends BLoC>(T bloc);
 
 class BLoCProvider<T extends BLoC> extends StatefulWidget {
   BLoCProvider({
-    Key key,
-    @required this.child,
-    @required this.bloc,
+    Key? key,
+    required this.child,
+    required this.bloc,
     this.init,
     this.onDispose,
   }) : super(key: key);
 
   final T bloc;
-  final _Init<T> init;
+  final _Init<T>? init;
   final Widget child;
-  final VoidCallback onDispose;
+  final VoidCallback? onDispose;
 
   @override
   _BLoCProviderState<T> createState() => _BLoCProviderState<T>();
 
-  static T of<T extends BLoC>(BuildContext context) {
-    _BLoCProviderInherited<T> provider = context
+  static T? of<T extends BLoC>(BuildContext context) {
+    _BLoCProviderInherited<T>? provider = context
         .getElementForInheritedWidgetOfExactType<_BLoCProviderInherited<T>>()
-        ?.widget;
+        ?.widget as _BLoCProviderInherited<T>?;
     return provider?.bloc;
   }
 }
@@ -36,7 +34,7 @@ class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
   void initState() {
     super.initState();
 
-    if (isNotEmpty(widget.init)) widget.init(widget.bloc);
+    if (isNotEmpty(widget.init)) widget.init!(widget.bloc);
   }
 
   @override
@@ -52,7 +50,7 @@ class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
     widget.bloc.dispose();
 
     if (widget.onDispose != null) {
-      widget.onDispose();
+      widget.onDispose!();
     }
     super.dispose();
   }
@@ -60,9 +58,9 @@ class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
 
 class _BLoCProviderInherited<T> extends InheritedWidget {
   _BLoCProviderInherited({
-    Key key,
-    @required Widget child,
-    @required this.bloc,
+    Key? key,
+    required Widget child,
+    required this.bloc,
   }) : super(key: key, child: child);
 
   final T bloc;

@@ -1,13 +1,11 @@
-// @dart=2.9
-
-import 'package:decorated_flutter/decorated_flutter.dart';
-import 'package:decorated_flutter/src/bloc/bloc_io.dart';
+import 'package:decorated_flutter/src/bloc/bloc.dart';
+import 'package:decorated_flutter/src/bloc/bloc.export.dart';
 import 'package:flutter/material.dart';
 
 /// 显示运行时信息的widget
 class Runtime extends StatefulWidget {
   const Runtime({
-    Key key,
+    Key? key,
     this.runtimeInfo = const <BaseIO>[],
   }) : super(key: key);
 
@@ -67,8 +65,8 @@ class _RuntimeState extends State<Runtime> {
 /// ExpansionList的Header
 class _Header extends StatelessWidget {
   const _Header({
-    Key key,
-    @required this.title,
+    Key? key,
+    required this.title,
   }) : super(key: key);
 
   final String title;
@@ -84,8 +82,8 @@ class _Header extends StatelessWidget {
 /// ExpansionList的Body
 class _Body extends StatelessWidget {
   const _Body({
-    Key key,
-    @required this.ioList,
+    Key? key,
+    required this.ioList,
   }) : super(key: key);
 
   final List<BaseIO> ioList;
@@ -95,7 +93,7 @@ class _Body extends StatelessWidget {
     return ListView.builder(
       physics: ClampingScrollPhysics(),
       shrinkWrap: true,
-      itemCount: ioList?.length ?? 0,
+      itemCount: ioList.length,
       itemBuilder: (context, index) {
         return ListTile(title: Text(ioList[index].runtimeSummary()));
       },

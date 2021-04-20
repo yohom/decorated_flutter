@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:decorated_flutter/decorated_flutter.dart';
+import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';

@@ -1,4 +1,4 @@
-// @dart=2.9
+
 
 import 'package:flutter/material.dart';
 
@@ -8,9 +8,9 @@ class Carousel extends StatefulWidget {
   final double viewportFraction;
 
   const Carousel.builder({
-    Key key,
-    @required this.itemCount,
-    @required this.itemBuilder,
+    Key? key,
+    required this.itemCount,
+    required this.itemBuilder,
     this.viewportFraction = 1.0,
   }) : super(key: key);
 
@@ -19,7 +19,7 @@ class Carousel extends StatefulWidget {
 }
 
 class _CarouselState extends State<Carousel> {
-  PageController _controller;
+  PageController? _controller;
 
   @override
   initState() {
@@ -37,12 +37,12 @@ class _CarouselState extends State<Carousel> {
       itemCount: widget.itemCount,
       itemBuilder: (context, index) {
         return AnimatedBuilder(
-          animation: _controller,
+          animation: _controller!,
           builder: (context, child) {
             double value = 1.0;
-            if (_controller.position.haveDimensions) {
-              value = _controller.page - index;
-              value = (1 - (value.abs() * .5)).clamp(0.5, 1.0) as double;
+            if (_controller!.position.haveDimensions) {
+              value = _controller!.page! - index;
+              value = (1 - (value.abs() * .5)).clamp(0.5, 1.0);
             } else if (index == 1) {
               // 如果是首次加载, 由于haveDimensions为false, 会导致index为1处的item
               // 的value也会是1, 这里手动调整一下value.
@@ -62,7 +62,7 @@ class _CarouselState extends State<Carousel> {
 
   @override
   dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 }

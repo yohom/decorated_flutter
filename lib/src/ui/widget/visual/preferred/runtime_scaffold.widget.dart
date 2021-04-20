@@ -1,4 +1,4 @@
-// @dart=2.9
+
 
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/foundation.dart';
@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class RuntimeScaffold<T extends LocalBLoC> extends StatelessWidget {
   const RuntimeScaffold({
-    Key key,
+    Key? key,
     this.appBar,
     this.body,
     this.floatingActionButton,
@@ -23,25 +23,25 @@ class RuntimeScaffold<T extends LocalBLoC> extends StatelessWidget {
         super(key: key);
 
   //region Scaffold
-  final PreferredSizeWidget appBar;
+  final PreferredSizeWidget? appBar;
 
-  final Widget body;
+  final Widget? body;
 
-  final Widget floatingActionButton;
+  final Widget? floatingActionButton;
 
-  final FloatingActionButtonLocation floatingActionButtonLocation;
+  final FloatingActionButtonLocation? floatingActionButtonLocation;
 
-  final FloatingActionButtonAnimator floatingActionButtonAnimator;
+  final FloatingActionButtonAnimator? floatingActionButtonAnimator;
 
-  final List<Widget> persistentFooterButtons;
+  final List<Widget>? persistentFooterButtons;
 
-  final Widget drawer;
+  final Widget? drawer;
 
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
-  final Widget bottomNavigationBar;
+  final Widget? bottomNavigationBar;
 
-  final Widget bottomSheet;
+  final Widget? bottomSheet;
 
   final bool resizeToAvoidBottomPadding;
 
@@ -51,7 +51,7 @@ class RuntimeScaffold<T extends LocalBLoC> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget runtimeInfoWidget;
+    Widget? runtimeInfoWidget;
     if (!kReleaseMode) {
       final bloc = BLoCProvider.of<T>(context);
       runtimeInfoWidget = Drawer(

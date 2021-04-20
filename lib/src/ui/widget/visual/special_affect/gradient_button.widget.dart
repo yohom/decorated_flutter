@@ -1,19 +1,19 @@
-// @dart=2.9
+
 
 import 'package:flutter/material.dart';
 
 class GradientButton extends StatelessWidget {
   final Widget child;
-  final Gradient gradient;
+  final Gradient? gradient;
   final double width;
   final double height;
-  final Function onPressed;
-  final BorderRadius borderRadius;
+  final Function? onPressed;
+  final BorderRadius? borderRadius;
   final BoxShadow boxShadow;
 
   const GradientButton({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.gradient,
     this.width = double.infinity,
     this.height = 48.0,
@@ -39,7 +39,7 @@ class GradientButton extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: onPressed,
+          onTap: onPressed as void Function()?,
           child: Center(
             child: child,
           ),

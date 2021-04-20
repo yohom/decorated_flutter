@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'dart:async';
 import 'dart:math' as math;
 
@@ -7,18 +5,17 @@ import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
-typedef bool _Equal<T>(T data1, T data2);
-typedef Future<T> _Fetch<T, ARG_TYPE>(ARG_TYPE arg);
-typedef Future<T> _PageFetch<T, ARG_TYPE>(int page, ARG_TYPE arg);
+typedef _Fetch<T, ARG_TYPE> = Future<T> Function(ARG_TYPE arg);
+typedef _PageFetch<T, ARG_TYPE> = Future<T> Function(int page, ARG_TYPE arg);
 
 /// 业务单元基类
 abstract class BaseIO<T> {
   BaseIO({
     /// 初始值, 传递给内部的[_subject]
-    T seedValue,
+    T? seedValue,
 
     /// Event代表的语义
-    @required String semantics,
+    required String semantics,
 
     /// 是否同步发射数据, 传递给内部的[_subject]
     bool sync = true,
@@ -40,17 +37,17 @@ abstract class BaseIO<T> {
     _subject.listen((data) {
       latest = data;
       if (_printLog)
-        L.d('当前${semantics ??= data.runtimeType.toString()} latest: $latest'
+        L.d('当前$semantics latest: $latest'
             '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
     });
   }
 
   /// 最新的值
-  T latest;
+  T? latest;
 
   /// 初始值
   @protected
-  T _seedValue;
+  T? _seedValue;
 
   /// 初始值
   @protected
@@ -62,27 +59,27 @@ abstract class BaseIO<T> {
 
   /// 内部中转对象
   @protected
-  Subject<T> _subject;
+  Subject<T?> _subject;
 
-  void addError(Object error, [StackTrace stackTrace]) {
+  void addError(Object error, [StackTrace? stackTrace]) {
     if (_subject.isClosed) return;
 
     _subject.addError(error, stackTrace);
   }
 
-  Stream<S> map<S>(S convert(T event)) {
+  Stream<S> map<S>(S Function(T? event) convert) {
     return _subject.map(convert);
   }
 
-  Stream<T> where(bool test(T event)) {
+  Stream<T?> where(bool Function(T? event) test) {
     return _subject.where(test);
   }
 
-  Stream<T> distinct([bool test(T previous, T next)]) {
+  Stream<T?> distinct([bool Function(T? previous, T? next)? test]) {
     return test != null ? _subject.distinct(test) : _subject.distinct();
   }
 
-  Stream<T> sample(Duration duration) {
+  Stream<T?> sample(Duration duration) {
     return _subject.sampleTime(duration);
   }
 
@@ -92,7 +89,7 @@ abstract class BaseIO<T> {
 
     if (_printLog)
       L.d('-----------------------------BEGIN---------------------------------\n'
-          '${_semantics ??= runtimeType.toString()}事件 重置 '
+          '$_semantics事件 重置 '
           '\n------------------------------END----------------------------------');
     _subject.add(_seedValue);
   }
@@ -110,7 +107,7 @@ abstract class BaseIO<T> {
 
     if (_printLog)
       L.d('=============================BEGIN===============================\n'
-          '${_semantics ??= runtimeType.toString()}事件 disposed '
+          '$_semantics事件 disposed '
           '\n==============================END================================');
     _subject.close();
   }
@@ -128,26 +125,25 @@ abstract class BaseIO<T> {
 
 /// BLoC内的静态值, 也就是供初始化时的值, 之前都是直接写成字段, 这里提供一个类, 保持与IO的一致性
 class Static<T> {
-  T _content;
+  T? _content;
 
   void set(T value) {
     _content = value;
   }
 
-  T get() => _content;
+  T? get() => _content;
 }
 
 /// 只输入数据的业务单元
-class Input<T> extends BaseIO<T> with InputMixin {
+class Input<T> extends BaseIO<T> with InputMixin<T> {
   Input({
-    T seedValue,
-    @required String semantics,
+    T? seedValue,
+    required String semantics,
     bool sync = true,
     bool isBehavior = true,
     bool printLog = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
-    _Equal<T> test,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -156,20 +152,19 @@ class Input<T> extends BaseIO<T> with InputMixin {
         ) {
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
-    _test = test;
     _printLog = printLog;
   }
 }
 
 /// 只输出数据的业务单元
-class Output<T, ARG_TYPE> extends BaseIO<T> with OutputMixin<T, ARG_TYPE> {
+class Output<T, ARG_TYPE> extends BaseIO<T?> with OutputMixin<T?, ARG_TYPE> {
   Output({
-    T seedValue,
-    @required String semantics,
+    T? seedValue,
+    required String semantics,
     bool sync = true,
     bool printLog = true,
     bool isBehavior = true,
-    @required _Fetch<T, ARG_TYPE> fetch,
+    required _Fetch<T, ARG_TYPE?> fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -183,17 +178,16 @@ class Output<T, ARG_TYPE> extends BaseIO<T> with OutputMixin<T, ARG_TYPE> {
 }
 
 /// 既可以输入又可以输出的事件
-class IO<T> extends BaseIO<T> with InputMixin, OutputMixin<T, dynamic> {
+class IO<T> extends BaseIO<T?> with InputMixin<T?>, OutputMixin<T?, dynamic> {
   IO({
-    T seedValue,
-    @required String semantics,
+    T? seedValue,
+    required String semantics,
     bool sync = true,
     bool isBehavior = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
     bool printLog = true,
-    _Equal<T> test,
-    _Fetch<T, dynamic> fetch,
+    required _Fetch<T, dynamic> fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -204,7 +198,6 @@ class IO<T> extends BaseIO<T> with InputMixin, OutputMixin<T, dynamic> {
 
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
-    _test = test;
     _fetch = fetch;
     _printLog = printLog;
   }
@@ -212,17 +205,16 @@ class IO<T> extends BaseIO<T> with InputMixin, OutputMixin<T, dynamic> {
 
 //region 衍生IO
 /// 内部数据类型是[List]的输入业务单元
-class ListInput<T> extends Input<List<T>> with ListMixin {
+class ListInput<T> extends Input<List<T>?> with ListMixin<T> {
   ListInput({
-    List<T> seedValue,
-    @required String semantics,
+    List<T> seedValue = const [],
+    required String semantics,
     bool sync = true,
     bool isBehavior = true,
     bool acceptEmpty = true,
     bool printLog = true,
     bool isDistinct = false,
-    int forceCapacity,
-    _Equal<List<T>> test,
+    int? forceCapacity,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -230,7 +222,6 @@ class ListInput<T> extends Input<List<T>> with ListMixin {
           isBehavior: isBehavior,
           acceptEmpty: acceptEmpty,
           isDistinct: isDistinct,
-          test: test,
           printLog: printLog,
         ) {
     _forceCapacity = forceCapacity;
@@ -240,15 +231,16 @@ class ListInput<T> extends Input<List<T>> with ListMixin {
 /// 内部数据类型是[List]的输出业务单元
 ///
 /// 泛型[T]为列表项的类型
-class ListOutput<T, ARG_TYPE> extends Output<List<T>, ARG_TYPE> with ListMixin {
+class ListOutput<T, ARG_TYPE> extends Output<List<T>?, ARG_TYPE>
+    with ListMixin<T> {
   ListOutput({
-    List<T> seedValue,
-    @required String semantics,
+    List<T> seedValue = const [],
+    required String semantics,
     bool sync = true,
     bool isBehavior = true,
     bool printLog = true,
-    int forceCapacity,
-    @required _Fetch<List<T>, ARG_TYPE> fetch,
+    int? forceCapacity,
+    required _Fetch<List<T>, ARG_TYPE?> fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -265,22 +257,22 @@ class ListOutput<T, ARG_TYPE> extends Output<List<T>, ARG_TYPE> with ListMixin {
 class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
     with PageMixin<T, ARG_TYPE> {
   PageOutput({
-    List<T> seedValue,
-    @required String semantics,
+    List<T> seedValue = const [],
+    required String semantics,
     bool sync = true,
     bool isBehavior = true,
     int initPage = 0,
     bool receiveFullData = true,
     bool printLog = true,
     int pageSize = 0,
-    int forceCapacity,
-    @required _PageFetch<List<T>, ARG_TYPE> pageFetch,
+    int? forceCapacity,
+    required _PageFetch<List<T>, ARG_TYPE?> pageFetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
           sync: sync,
           isBehavior: isBehavior,
-          fetch: null,
+          fetch: (_) => Future.value([]),
         ) {
     _initPage = initPage;
     _currentPage = _initPage;
@@ -293,7 +285,7 @@ class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
 
   /// 这里标记为protected, 防止被外部引用, 应该使用[refresh]方法
   @protected
-  Future<List<T>> update([int arg]) {
+  Future<List<T>?> update([int? arg]) {
     return super.update(arg);
   }
 }
@@ -301,22 +293,22 @@ class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
 /// 分页业务单元
 class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
   PageIO({
-    List<T> seedValue,
-    @required String semantics,
+    List<T>? seedValue,
+    required String semantics,
     bool sync = true,
     bool isBehavior = true,
     int initPage = 0,
     int pageSize = 0,
     bool printLog = true,
     bool receiveFullData = true,
-    int forceCapacity,
-    @required _PageFetch<List<T>, ARG_TYPE> pageFetch,
+    int? forceCapacity,
+    required _PageFetch<List<T>, ARG_TYPE?> pageFetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
           sync: sync,
           isBehavior: isBehavior,
-          fetch: null,
+          fetch: (_) => Future.value([]),
         ) {
     _initPage = initPage;
     _currentPage = _initPage;
@@ -329,18 +321,17 @@ class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
 }
 
 /// 内部数据类型是[List]的输入输出业务单元
-class ListIO<T> extends IO<List<T>> with ListMixin {
+class ListIO<T> extends IO<List<T>> with ListMixin<T> {
   ListIO({
-    List<T> seedValue,
-    @required String semantics,
+    List<T>? seedValue,
+    required String semantics,
     bool sync = true,
     bool isBehavior = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
     bool printLog = true,
-    int forceCapacity,
-    _Equal<List<T>> test,
-    _Fetch<List<T>, dynamic> fetch,
+    int? forceCapacity,
+    required _Fetch<List<T>, dynamic> fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -348,7 +339,6 @@ class ListIO<T> extends IO<List<T>> with ListMixin {
           isBehavior: isBehavior,
           acceptEmpty: acceptEmpty,
           isDistinct: isDistinct,
-          test: test,
           fetch: fetch,
           printLog: printLog,
         ) {
@@ -357,20 +347,19 @@ class ListIO<T> extends IO<List<T>> with ListMixin {
 }
 
 /// 只接收int类型数据的IO
-class IntIO extends IO<int> with IntMixin {
+class IntIO extends IO<int?> with IntMixin {
   IntIO({
-    int seedValue,
-    @required String semantics,
+    int? seedValue,
+    required String semantics,
     bool sync = true,
     bool isBehavior = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
     bool printLog = true,
-    int min,
-    int max,
-    int remainder,
-    _Equal<int> test,
-    _Fetch<int, dynamic> fetch,
+    int? min,
+    int? max,
+    int? remainder,
+    required _Fetch<int, dynamic> fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -378,31 +367,28 @@ class IntIO extends IO<int> with IntMixin {
           isBehavior: isBehavior,
           acceptEmpty: acceptEmpty,
           isDistinct: isDistinct,
-          test: test,
           fetch: fetch,
           printLog: printLog,
         ) {
-    this._min = min;
-    this._max = max;
-    this._remainder = remainder;
+    _min = min;
+    _max = max;
+    _remainder = remainder;
   }
 }
 
 /// 只接收int类型数据的Input
-class IntInput extends Input<int> with IntMixin {
+class IntInput extends Input<int?> with IntMixin {
   IntInput({
-    int seedValue,
-    @required String semantics,
+    int? seedValue,
+    required String semantics,
     bool sync = true,
     bool isBehavior = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
-    int min,
-    int max,
-    int remainder,
+    int? min,
+    int? max,
+    int? remainder,
     bool printLog = true,
-    _Equal<int> test,
-    _Fetch<int, dynamic> fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -410,7 +396,6 @@ class IntInput extends Input<int> with IntMixin {
           isBehavior: isBehavior,
           acceptEmpty: acceptEmpty,
           isDistinct: isDistinct,
-          test: test,
           printLog: printLog,
         ) {
     this._min = min;
@@ -420,17 +405,16 @@ class IntInput extends Input<int> with IntMixin {
 }
 
 /// 只接收bool类型数据的IO
-class BoolIO extends IO<bool> with BoolMixin {
+class BoolIO extends IO<bool?> with BoolMixin {
   BoolIO({
-    bool seedValue,
-    @required String semantics,
+    bool? seedValue,
+    required String semantics,
     bool sync = true,
     bool isBehavior = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
     bool printLog = true,
-    _Equal<bool> test,
-    _Fetch<bool, dynamic> fetch,
+    required _Fetch<bool, dynamic> fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -438,7 +422,6 @@ class BoolIO extends IO<bool> with BoolMixin {
           isBehavior: isBehavior,
           acceptEmpty: acceptEmpty,
           isDistinct: isDistinct,
-          test: test,
           fetch: fetch,
           printLog: printLog,
         );
@@ -447,12 +430,12 @@ class BoolIO extends IO<bool> with BoolMixin {
 /// 只接收bool类型数据的Output
 class BoolOutput<ARG_TYPE> extends Output<bool, ARG_TYPE> with BoolMixin {
   BoolOutput({
-    bool seedValue,
-    @required String semantics,
+    bool? seedValue,
+    required String semantics,
     bool sync = true,
     bool isBehavior = true,
     bool printLog = true,
-    _Fetch<bool, ARG_TYPE> fetch,
+    required _Fetch<bool, ARG_TYPE?> fetch,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -465,10 +448,11 @@ class BoolOutput<ARG_TYPE> extends Output<bool, ARG_TYPE> with BoolMixin {
 
 /// 没有数据, 只发射信号的IO
 class Signal extends IO<dynamic> {
-  Signal({@required String semantics})
+  Signal({required String semantics})
       : super(
           semantics: semantics,
           isBehavior: false,
+          fetch: (_) => Future.value(anyObject),
         );
 
   @override
@@ -494,17 +478,16 @@ class Signal extends IO<dynamic> {
 ///
 /// 泛型[T]为数据数据的类型
 mixin InputMixin<T> on BaseIO<T> {
-  bool _acceptEmpty;
-  bool _isDistinct;
-  _Equal _test;
+  bool _acceptEmpty = true;
+  bool _isDistinct = false;
 
   /// 发射数据
-  T add(T data) {
+  T? add(T? data) {
     if (_subject.isClosed) return null;
 
     if (_printLog)
       L.d('+++++++++++++++++++++++++++BEGIN+++++++++++++++++++++++++++++\n'
-          'IO接收到**${_semantics ??= data.runtimeType.toString()}**数据: $data');
+          'IO接收到**$_semantics**数据: $data');
 
     if (isEmpty(data) && !_acceptEmpty) {
       if (_printLog)
@@ -517,37 +500,23 @@ mixin InputMixin<T> on BaseIO<T> {
     if (_isDistinct) {
       // 如果是不一样的数据, 才发射新的通知,防止TabBar的addListener那种
       // 不停地发送通知(但是值又是一样)的情况
-      if (_test != null) {
-        if (!_test(latest, data)) {
-          if (_printLog)
-            L.d('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
-          _subject.add(data);
-        } else {
-          if (_printLog)
-            L.d('转发被拒绝! 原因: 需要唯一, 但是没有通过唯一性测试'
-                '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
-        }
+      if (data != latest) {
+        if (_printLog) L.d('IO转发出**$_semantics**数据: $data');
+        _subject.add(data);
       } else {
-        if (data != latest) {
-          if (_printLog)
-            L.d('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
-          _subject.add(data);
-        } else {
-          if (_printLog)
-            L.d('转发被拒绝! 原因: 需要唯一, 但是新数据与最新值相同'
-                '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
-        }
+        if (_printLog)
+          L.d('转发被拒绝! 原因: 需要唯一, 但是新数据与最新值相同'
+              '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
       }
     } else {
-      if (_printLog)
-        L.d('IO转发出**${_semantics ??= data.runtimeType.toString()}**数据: $data');
+      if (_printLog) L.d('IO转发出**$_semantics**数据: $data');
       _subject.add(data);
     }
 
     return data;
   }
 
-  T addIfAbsent(T data) {
+  T? addIfAbsent(T data) {
     if (_subject.isClosed) return null;
 
     // 如果最新值是_seedValue或者是空, 那么才add新数据, 换句话说, 就是如果event已经被add过
@@ -558,8 +527,9 @@ mixin InputMixin<T> on BaseIO<T> {
     return data;
   }
 
-  Future<T> addStream(Stream<T> source, {bool cancelOnError: true}) {
-    return _subject.addStream(source, cancelOnError: cancelOnError);
+  Future<T?> addStream(Stream<T> source, {bool cancelOnError: true}) {
+    return _subject.addStream(source, cancelOnError: cancelOnError)
+        as Future<T?>;
   }
 }
 
@@ -572,14 +542,14 @@ mixin OutputMixin<T, ARG_TYPE> on BaseIO<T> {
   Future<T> get future => stream.first;
 
   /// 输出Stream
-  Stream<T> stream;
+  late Stream<T> stream;
 
   /// 监听流
   StreamSubscription<T> listen(
     ValueChanged<T> listener, {
-    Function onError,
-    VoidCallback onDone,
-    bool cancelOnError,
+    Function? onError,
+    VoidCallback? onDone,
+    bool? cancelOnError,
   }) {
     return stream.listen(
       listener,
@@ -590,10 +560,10 @@ mixin OutputMixin<T, ARG_TYPE> on BaseIO<T> {
   }
 
   /// 输出Stream
-  _Fetch<T, ARG_TYPE> _fetch;
+  late _Fetch<T, ARG_TYPE?> _fetch;
 
   /// 使用内部的trigger获取数据
-  Future<T> update([ARG_TYPE arg]) {
+  Future<T> update([ARG_TYPE? arg]) {
     return _fetch(arg)
       ..then((data) {
         if (!_subject.isClosed) _subject.add(data);
@@ -605,34 +575,34 @@ mixin OutputMixin<T, ARG_TYPE> on BaseIO<T> {
 }
 
 /// 内部数据是[List]特有的成员
-mixin ListMixin<T> on BaseIO<List<T>> {
+mixin ListMixin<T> on BaseIO<List<T>?> {
   /// 强制内部列表最大长度, 超过这个长度后, 如果是从前面添加数据则弹出最后的数据, 从后面添加则反之.
-  int _forceCapacity;
+  int? _forceCapacity;
 
   /// 按条件过滤, 并发射过滤后的数据
-  List<T> filterItem(bool test(T element)) {
+  List<T>? filterItem(bool Function(T element) test) {
     if (_subject.isClosed) return null;
 
-    final filtered = latest.where(test).toList();
+    final List<T> filtered = latest!.where(test).toList();
     _subject.add(filtered);
     return filtered;
   }
 
   /// 追加, 并发射
-  T append(T element, {bool fromHead = false}) {
+  T? append(T element, {bool fromHead = false}) {
     if (_subject.isClosed) return null;
 
     if (fromHead) {
-      final pending = latest..insert(0, element);
+      final List<T>? pending = latest?..insert(0, element);
       // 从前面添加, 就把后面的挤出去
-      if (_forceCapacity != null && pending.length > _forceCapacity) {
+      if (_forceCapacity != null && pending!.length > _forceCapacity!) {
         pending.removeLast();
       }
       _subject.add(pending);
     } else {
-      final pending = latest..add(element);
+      final List<T>? pending = latest?..add(element);
       // 从后面添加, 就把前面的挤出去
-      if (_forceCapacity != null && pending.length > _forceCapacity) {
+      if (_forceCapacity != null && pending!.length > _forceCapacity!) {
         pending.removeAt(0);
       }
       _subject.add(pending);
@@ -641,21 +611,21 @@ mixin ListMixin<T> on BaseIO<List<T>> {
   }
 
   /// 追加一个list, 并发射
-  List<T> appendAll(List<T> elements, {bool fromHead = false}) {
+  List<T>? appendAll(List<T> elements, {bool fromHead = false}) {
     if (_subject.isClosed) return null;
 
     if (fromHead) {
-      final pending = latest..insertAll(0, elements);
+      final List<T>? pending = latest?..insertAll(0, elements);
       // 从前面添加, 就把后面的挤出去
-      if (_forceCapacity != null && pending.length > _forceCapacity) {
-        pending.removeRange(_forceCapacity - 1, pending.length);
+      if (_forceCapacity != null && pending!.length > _forceCapacity!) {
+        pending.removeRange(_forceCapacity! - 1, pending.length);
       }
       _subject.add(pending);
     } else {
-      final pending = latest..addAll(elements);
+      final List<T>? pending = latest?..addAll(elements);
       // 从后面添加, 就把前面的挤出去
-      if (_forceCapacity != null && pending.length > _forceCapacity) {
-        pending.removeRange(0, _forceCapacity);
+      if (_forceCapacity != null && pending!.length > _forceCapacity!) {
+        pending.removeRange(0, _forceCapacity!);
       }
       _subject.add(pending);
     }
@@ -663,27 +633,27 @@ mixin ListMixin<T> on BaseIO<List<T>> {
   }
 
   /// 对list的item做变换之后重新组成list
-  Stream<List<S>> flatMap<S>(S mapper(T value)) {
-    return _subject.map((list) => list.map(mapper).toList());
+  Stream<List<S>> flatMap<S>(S Function(T value) mapper) {
+    return _subject.map((list) => list!.map(mapper).toList());
   }
 
   /// 替换指定index的元素, 并发射
-  T replace(int index, T element) {
+  T? replace(int index, T element) {
     if (_subject.isClosed) return null;
 
-    _subject.add(latest..replaceRange(index, index + 1, <T>[element]));
+    _subject.add(latest?..replaceRange(index, index + 1, <T>[element]));
     return element;
   }
 
   /// 替换最后一个的元素, 并发射
-  T replaceLast(T element) {
+  T? replaceLast(T element) {
     if (_subject.isClosed) return null;
 
-    if (latest.isNotEmpty) {
+    if (latest!.isNotEmpty) {
       _subject.add(latest
-        ..replaceRange(
-          latest.length - 1,
-          latest.length,
+        ?..replaceRange(
+          latest!.length - 1,
+          latest!.length,
           [element],
         ));
     }
@@ -691,82 +661,82 @@ mixin ListMixin<T> on BaseIO<List<T>> {
   }
 
   /// 替换第一个的元素, 并发射
-  T replaceFirst(T element) {
+  T? replaceFirst(T element) {
     if (_subject.isClosed) return null;
 
-    if (latest.isNotEmpty) {
-      _subject.add(latest..replaceRange(0, 1, [element]));
+    if (latest!.isNotEmpty) {
+      _subject.add(latest?..replaceRange(0, 1, [element]));
     }
     return element;
   }
 
   /// 删除最后一个的元素, 并发射
-  T removeLast() {
+  T? removeLast() {
     if (_subject.isClosed) return null;
 
-    final lastElement = latest.last;
-    if (latest.isNotEmpty) {
-      _subject.add(latest..removeLast());
+    final T lastElement = latest!.last;
+    if (latest!.isNotEmpty) {
+      _subject.add(latest?..removeLast());
     }
     return lastElement;
   }
 
   /// 删除一个的元素, 并发射
-  T remove(T element) {
+  T? remove(T element) {
     if (_subject.isClosed) return null;
 
-    _subject.add(latest..remove(element));
+    _subject.add(latest?..remove(element));
     return element;
   }
 
   /// 删除一组的元素, 并发射
-  Iterable<T> removeBatch(Iterable<T> elements) {
+  Iterable<T>? removeBatch(Iterable<T> elements) {
     if (_subject.isClosed) return null;
 
-    _subject.add(latest..removeWhere((it) => elements.contains(it)));
+    _subject.add(latest?..removeWhere((it) => elements.contains(it)));
     return elements;
   }
 
   /// 删除指定条件的元素
-  void removeWhere(bool test(T t)) {
+  void removeWhere(bool Function(T t) test) {
     if (_subject.isClosed) return;
 
-    _subject.add(latest..removeWhere(test));
+    _subject.add(latest?..removeWhere(test));
   }
 
   /// 删除第一个的元素, 并发射
-  T removeFirst() {
+  T? removeFirst() {
     if (_subject.isClosed) return null;
 
-    final firstElement = latest.first;
-    if (latest.isNotEmpty) {
-      _subject.add(latest..removeAt(0));
+    final T firstElement = latest!.first;
+    if (latest!.isNotEmpty) {
+      _subject.add(latest?..removeAt(0));
     }
     return firstElement;
   }
 
   /// 删除指定索引的元素, 并发射
-  T removeAt(int index) {
+  T? removeAt(int index) {
     if (_subject.isClosed) return null;
 
-    final element = latest.elementAt(index);
+    final T element = latest!.elementAt(index);
     if (element != null) {
-      _subject.add(latest..removeAt(index));
+      _subject.add(latest?..removeAt(index));
     }
     return element;
   }
 
   /// 对元素逐个执行操作后, 重新发射
-  List<T> forEach(ValueChanged<T> action) {
+  List<T>? forEach(ValueChanged<T> action) {
     if (_subject.isClosed) return null;
 
-    latest.forEach(action);
+    latest!.forEach(action);
     _subject.add(latest);
     return latest;
   }
 
   /// 对[target]进行单选操作, 如果[T]不为[Selectable]则什么都不做, 直接透传
-  List<T> select(T target) {
+  List<T>? select(T target) {
     if (_subject.isClosed) return null;
 
     assert(latest is List<Selectable>);
@@ -778,36 +748,36 @@ mixin ListMixin<T> on BaseIO<List<T>> {
   }
 }
 
-mixin BoolMixin on BaseIO<bool> {
+mixin BoolMixin on BaseIO<bool?> {
   /// 切换true/false 并发射
-  bool toggle() {
+  bool? toggle() {
     if (_subject.isClosed) return null;
 
-    final toggled = !latest;
+    final toggled = !latest!;
     _subject.add(toggled);
     return toggled;
   }
 }
 
-mixin IntMixin on BaseIO<int> {
-  int _min;
-  int _max;
-  int _remainder;
+mixin IntMixin on BaseIO<int?> {
+  int? _min;
+  int? _max;
+  int? _remainder;
 
   /// 加一个值 并发射
-  int plus([int value = 1]) {
+  int? plus([int value = 1]) {
     if (_subject.isClosed) return null;
 
     int result;
     if (_remainder != null) {
-      result = (latest + value).remainder(_remainder);
+      result = (latest! + value).remainder(_remainder!);
       if (_min != null) {
-        result = math.max(_min, result);
+        result = math.max(_min!, result);
       }
     } else if (_max != null) {
-      result = math.min(latest + value, _max);
+      result = math.min(latest! + value, _max!);
     } else {
-      result = latest + value;
+      result = latest! + value;
     }
     if (!_subject.isClosed) {
       _subject.add(result);
@@ -816,19 +786,19 @@ mixin IntMixin on BaseIO<int> {
   }
 
   /// 减一个值 并发射
-  int minus([int value = 1]) {
+  int? minus([int value = 1]) {
     if (_subject.isClosed) return null;
 
     int result;
     if (_remainder != null) {
-      result = (latest - value).remainder(_remainder);
+      result = (latest! - value).remainder(_remainder!);
       if (_min != null) {
-        result = math.max(_min, result);
+        result = math.max(_min!, result);
       }
     } else if (_min != null) {
-      result = math.max(latest - value, _min);
+      result = math.max(latest! - value, _min!);
     } else {
-      result = latest - value;
+      result = latest! - value;
     }
     _subject.add(result);
     return result;
@@ -837,10 +807,10 @@ mixin IntMixin on BaseIO<int> {
 
 mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
   /// 初始页 因为后端业务对初始页的定义不一定一样, 这里提供设置参数
-  int _initPage;
+  int _initPage = 0;
 
   /// nextPage时, 是否add整个列表, 为false时, 只add最新一页的数据
-  bool _receiveFullData;
+  bool _receiveFullData = true;
 
   /// 当前页数
   int _currentPage = 0;
@@ -859,13 +829,13 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
   /// 每页大小 用于判断是否已加载完全部数据
   int _pageSize = 0;
 
-  _PageFetch<List<T>, ARG_TYPE> _pageFetch;
+  late _PageFetch<List<T>, ARG_TYPE?> _pageFetch;
 
   /// 请求下一页数据
   ///
   /// 返回是否还有更多数据 true为还有更多数据 false为没有更多数据
   @Deprecated('使用[loadMore]代替, 仅仅是名称替换')
-  Future<bool> nextPage([ARG_TYPE args]) async {
+  Future<bool> nextPage([ARG_TYPE? args]) async {
     // 如果已经没有更多数据的话, 就不再请求
     if (!_noMoreData) {
       try {
@@ -892,7 +862,7 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
   /// 请求下一页数据
   ///
   /// 返回是否还有更多数据 true为还有更多数据 false为没有更多数据
-  Future<bool> loadMore([ARG_TYPE args]) async {
+  Future<bool> loadMore([ARG_TYPE? args]) async {
     // 如果已经没有更多数据的话, 就不再请求
     if (!_noMoreData) {
       try {
@@ -919,16 +889,16 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
   /// 刷新列表
   ///
   /// 会重新加载第一页
-  Future<void> refresh([ARG_TYPE args]) async {
+  Future<void> refresh([ARG_TYPE? args]) async {
     _currentPage = _initPage;
     _noMoreData = false;
     try {
       _dataList = await _pageFetch(_currentPage, args);
 
-      if (_subject.isClosed) return false;
+      if (_subject.isClosed) return;
       _subject.add(_dataList);
     } catch (e) {
-      if (_subject.isClosed) return false;
+      if (_subject.isClosed) return;
       _subject.addError(e);
     }
   }
@@ -947,44 +917,44 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
 /// 内部数据是[EvictingQueue]特有的成员
 mixin EvictingQueueMixin<T> on BaseIO<EvictingQueue<T>> {
   /// 追加, 并发射
-  T append(T element, {bool fromHead = false}) {
+  T? append(T element, {bool fromHead = false}) {
     if (_subject.isClosed) return null;
 
     if (fromHead) {
-      _subject.add(latest..addFirst(element));
+      _subject.add(latest?..addFirst(element));
     } else {
-      _subject.add(latest..add(element));
+      _subject.add(latest?..add(element));
     }
     return element;
   }
 
   /// 对list的item做变换之后重新组成list
-  Stream<List<S>> flatMap<S>(S mapper(T value)) {
-    return _subject.map((list) => list.map(mapper).toList());
+  Stream<List<S>> flatMap<S>(S Function(T value) mapper) {
+    return _subject.map((list) => list!.map(mapper).toList());
   }
 
   /// 删除一个的元素, 并发射
-  T remove(T element) {
+  T? remove(T element) {
     if (_subject.isClosed) return null;
 
-    _subject.add(latest..remove(element));
+    _subject.add(latest?..remove(element));
     return element;
   }
 
   /// 删除指定条件的元素
-  void removeWhere(bool test(T t)) {
+  void removeWhere(bool Function(T t) test) {
     if (_subject.isClosed) return;
 
-    _subject.add(latest..removeWhere(test));
+    _subject.add(latest?..removeWhere(test));
   }
 
   /// 删除第一个的元素, 并发射
-  T removeFirst() {
+  T? removeFirst() {
     if (_subject.isClosed) return null;
 
-    final firstElement = latest.first;
-    if (latest.isNotEmpty) {
-      _subject.add(latest..removeFirst());
+    final T firstElement = latest!.first;
+    if (latest!.isNotEmpty) {
+      _subject.add(latest?..removeFirst());
     }
     return firstElement;
   }

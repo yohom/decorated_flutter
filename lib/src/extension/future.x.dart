@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:decorated_flutter/src/ui/ui.export.dart';
+import 'package:decorated_flutter/src/utils/objects.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -12,13 +13,17 @@ extension FutureX<T> on Future<T> {
   static bool loadingCancelable = false;
   static String defaultLoadingText = '加载中...';
 
-  Future<T> loading(
-    BuildContext context, {
+  Future<T> loading({
     bool? cancelable,
     Duration timeout = const Duration(seconds: 60),
     String? loadingText,
     Color? backgroundColor,
   }) {
+    final context = gNavigatorKey.currentContext;
+    if (context == null) {
+      throw '请在MaterialApp/CupertinoApp中设置navigatorKey为gNavigatorKey';
+    }
+
     final navigator = Navigator.of(context, rootNavigator: true);
 
     // 是被future pop的还是按返回键pop的

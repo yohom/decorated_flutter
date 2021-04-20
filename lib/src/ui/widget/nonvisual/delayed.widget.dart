@@ -1,4 +1,4 @@
-import 'package:decorated_flutter/decorated_flutter.dart';
+import 'package:decorated_flutter/src/ui/ui.export.dart';
 import 'package:flutter/material.dart';
 
 class Delayed<T> extends StatelessWidget {

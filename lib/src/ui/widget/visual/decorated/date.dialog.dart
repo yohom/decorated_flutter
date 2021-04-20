@@ -1,4 +1,7 @@
-import 'package:decorated_flutter/decorated_flutter.dart';
+import 'package:decorated_flutter/src/extension/extension.export.dart';
+import 'package:decorated_flutter/src/res/dimens.dart';
+import 'package:decorated_flutter/src/ui/ui.export.dart';
+import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

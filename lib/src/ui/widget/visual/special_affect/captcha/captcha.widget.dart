@@ -1,4 +1,4 @@
-// @dart=2.9
+
 
 import 'package:decorated_flutter/src/ui/ui.export.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +7,7 @@ const _kInitLabel = '获取验证码';
 const _kRefetchLabel = '重新获取';
 const _kLabelTemplate = '倒计时%s秒';
 
-typedef Widget _Builder(bool countdowning, String label);
+typedef Widget _Builder(bool? countdowning, String? label);
 
 /// 倒计时控件
 /// 目标:
@@ -18,12 +18,12 @@ typedef Widget _Builder(bool countdowning, String label);
 ///   4. 自动管理所有注册的定时器
 class CaptchaBuilder extends StatefulWidget {
   CaptchaBuilder({
-    Key key,
-    @required this.controller,
+    Key? key,
+    required this.controller,
     this.labelTemplate = _kLabelTemplate,
     this.initLabel = _kInitLabel,
     this.refetchLabel = _kRefetchLabel,
-    @required this.builder,
+    required this.builder,
   }) : super(key: key);
 
   /// Controller
@@ -46,8 +46,8 @@ class CaptchaBuilder extends StatefulWidget {
 }
 
 class _CaptchaBuilderState extends State<CaptchaBuilder> {
-  String _label;
-  bool _countdowning;
+  String? _label;
+  bool? _countdowning;
 
   @override
   void initState() {

@@ -1,4 +1,4 @@
-import 'package:decorated_flutter/decorated_flutter.dart';
+import 'package:decorated_flutter/src/mixin/mixin.export.dart';
 import 'package:flutter/material.dart';
 
 class ShowUpTransition extends StatefulWidget {
