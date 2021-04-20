@@ -1,6 +1,7 @@
 // @dart=2.9
 library decorated_flutter;
 
+export 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 export 'package:rxdart/rxdart.dart';
 
 export 'src/annotation/annotation.export.dart';

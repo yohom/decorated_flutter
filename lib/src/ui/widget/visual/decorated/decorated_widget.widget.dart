@@ -56,9 +56,9 @@ class _DecoratedWidgetState<B extends BLoC> extends State<DecoratedWidget<B>> {
   @override
   Widget build(BuildContext context) {
     Widget result;
-    if (isNotEmpty(widget.bloc)) {
+    if (widget.bloc != null) {
       result = BLoCProvider<B>(
-        bloc: widget.bloc,
+        bloc: widget.bloc!,
         init: widget.init,
         child: widget.widget,
       );
