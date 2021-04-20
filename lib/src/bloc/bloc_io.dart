@@ -138,7 +138,7 @@ class Static<T> {
 }
 
 /// 只输入数据的业务单元
-class Input<T> extends BaseIO<T> with InputMixin {
+class Input<T> extends BaseIO<T> with InputMixin<T> {
   Input({
     T seedValue,
     @required String semantics,
@@ -183,7 +183,7 @@ class Output<T, ARG_TYPE> extends BaseIO<T> with OutputMixin<T, ARG_TYPE> {
 }
 
 /// 既可以输入又可以输出的事件
-class IO<T> extends BaseIO<T> with InputMixin, OutputMixin<T, dynamic> {
+class IO<T> extends BaseIO<T> with InputMixin<T>, OutputMixin<T, dynamic> {
   IO({
     T seedValue,
     @required String semantics,
@@ -212,7 +212,7 @@ class IO<T> extends BaseIO<T> with InputMixin, OutputMixin<T, dynamic> {
 
 //region 衍生IO
 /// 内部数据类型是[List]的输入业务单元
-class ListInput<T> extends Input<List<T>> with ListMixin {
+class ListInput<T> extends Input<List<T>> with ListMixin<T> {
   ListInput({
     List<T> seedValue,
     @required String semantics,
@@ -240,7 +240,8 @@ class ListInput<T> extends Input<List<T>> with ListMixin {
 /// 内部数据类型是[List]的输出业务单元
 ///
 /// 泛型[T]为列表项的类型
-class ListOutput<T, ARG_TYPE> extends Output<List<T>, ARG_TYPE> with ListMixin {
+class ListOutput<T, ARG_TYPE> extends Output<List<T>, ARG_TYPE>
+    with ListMixin<T> {
   ListOutput({
     List<T> seedValue,
     @required String semantics,
@@ -329,7 +330,7 @@ class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
 }
 
 /// 内部数据类型是[List]的输入输出业务单元
-class ListIO<T> extends IO<List<T>> with ListMixin {
+class ListIO<T> extends IO<List<T>> with ListMixin<T> {
   ListIO({
     List<T> seedValue,
     @required String semantics,
