@@ -10,7 +10,7 @@ typedef _Builder<DATA> = Widget Function(DATA data);
 typedef _ErrorPlaceholderBuilder = Widget Function(
     BuildContext context, Object error);
 
-class SingleSubscriber<T> extends StatelessWidget {
+class SingleSubscriber<T> extends StatefulWidget {
   static Widget? _defaultEmptyPlaceholder;
   static Widget? _defaultErrorPlaceholder;
   static Widget? _defaultLoadingPlaceholder;
@@ -31,6 +31,7 @@ class SingleSubscriber<T> extends StatelessWidget {
     required this.builder,
     this.showLoading = true,
     this.initialData,
+    this.cacheable = true,
     this.emptyPlaceholder,
     this.errorPlaceholderBuilder,
     this.loadingPlaceholder,
@@ -50,6 +51,9 @@ class SingleSubscriber<T> extends StatelessWidget {
   /// 初始数据
   final T? initialData;
 
+  /// 是否启动缓存
+  final bool cacheable;
+
   /// 空列表视图
   final Widget? emptyPlaceholder;
 
@@ -68,10 +72,17 @@ class SingleSubscriber<T> extends StatelessWidget {
   final bool sliver;
 
   @override
+  _SingleSubscriberState<T> createState() => _SingleSubscriberState<T>();
+}
+
+class _SingleSubscriberState<T> extends State<SingleSubscriber<T>> {
+  T? _cache;
+
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder<T>(
-      initialData: initialData,
-      future: future,
+      initialData: _cache ?? widget.initialData,
+      future: widget.future,
       builder: (ctx, snapshot) {
         if (snapshot.hasError) {
           if (snapshot.error is Error) {
@@ -79,25 +90,28 @@ class SingleSubscriber<T> extends StatelessWidget {
           } else {
             L.e('SingleSubscriber出现错误: ${snapshot.error}');
           }
-          if (errorPlaceholderBuilder != null) {
-            return errorPlaceholderBuilder!(context, snapshot.error!);
+          if (widget.errorPlaceholderBuilder != null) {
+            return widget.errorPlaceholderBuilder!(context, snapshot.error!);
           } else {
-            return _defaultErrorPlaceholder ?? ErrorPlaceholder(sliver: sliver);
+            return SingleSubscriber._defaultErrorPlaceholder ??
+                ErrorPlaceholder(sliver: widget.sliver);
           }
         }
 
         if (snapshot.hasData) {
-          if (isEmpty(snapshot.data) && handleEmpty) {
-            return emptyPlaceholder ??
-                _defaultEmptyPlaceholder ??
-                EmptyPlaceholder(sliver: sliver);
+          if (isEmpty(snapshot.data) && widget.handleEmpty) {
+            return widget.emptyPlaceholder ??
+                SingleSubscriber._defaultEmptyPlaceholder ??
+                EmptyPlaceholder(sliver: widget.sliver);
           } else {
-            return builder(snapshot.data!);
+            if (widget.cacheable) _cache = snapshot.data;
+
+            return widget.builder(snapshot.data!);
           }
-        } else if (showLoading) {
-          return loadingPlaceholder ??
-              _defaultLoadingPlaceholder ??
-              LoadingWidget(sliver: sliver);
+        } else if (widget.showLoading) {
+          return widget.loadingPlaceholder ??
+              SingleSubscriber._defaultLoadingPlaceholder ??
+              LoadingWidget(sliver: widget.sliver);
         } else {
           return SizedBox.shrink();
         }
