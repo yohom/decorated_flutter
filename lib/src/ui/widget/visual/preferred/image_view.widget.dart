@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 typedef void LoadingProgress(double progress, List<int> data);
 
@@ -15,6 +16,7 @@ class ImageView extends StatelessWidget {
     this.padding,
     this.margin,
   })  : imageUrl = null,
+        svgPath = null,
         errorWidget = const SizedBox.shrink(),
         placeholder = const SizedBox.shrink(),
         super(key: key);
@@ -32,10 +34,30 @@ class ImageView extends StatelessWidget {
     this.padding,
     this.margin,
   })  : imagePath = null,
+        svgPath = null,
+        super(key: key);
+
+  ImageView.svg(
+    this.svgPath, {
+    Key? key,
+    this.width,
+    this.height,
+    this.size,
+    this.fit,
+    this.color,
+    this.padding,
+    this.margin,
+  })  : imagePath = null,
+        imageUrl = null,
+        errorWidget = const SizedBox.shrink(),
+        placeholder = const SizedBox.shrink(),
         super(key: key);
 
   /// 本地图片路径
   final String? imagePath;
+
+  /// 本地图片路径
+  final String? svgPath;
 
   /// 图片url
   final String? imageUrl;
@@ -88,6 +110,15 @@ class ImageView extends StatelessWidget {
         color: color,
         placeholder: (_, __) => placeholder,
         errorWidget: (_, __, ___) => errorWidget,
+      );
+    } else if (svgPath != null) {
+      result = SvgPicture.asset(
+        svgPath!,
+        width: size ?? width,
+        height: size ?? height,
+        fit: fit ?? BoxFit.contain,
+        color: color,
+        placeholderBuilder: (_) => placeholder,
       );
     } else {
       // 如果图片地址为null的话, 那就不显示

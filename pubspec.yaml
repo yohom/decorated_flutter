@@ -32,6 +32,8 @@ dependencies:
   path_provider: ^2.0.1
   # android intent
   android_intent: ^2.0.0
+  # svg
+  flutter_svg: ^0.22.0
 
 dev_dependencies:
   mockito: ^5.0.4

@@ -14,6 +14,10 @@ extension BuildContextX on BuildContext {
     return Theme.of(this);
   }
 
+  bool get isDarkMode {
+    return Theme.of(this).brightness == Brightness.dark;
+  }
+
   void clearFocus() {
     FocusScope.of(this).unfocus();
   }
