@@ -207,7 +207,7 @@ class IO<T> extends BaseIO<T?> with InputMixin<T?>, OutputMixin<T?, dynamic> {
 /// 内部数据类型是[List]的输入业务单元
 class ListInput<T> extends Input<List<T>?> with ListMixin<T> {
   ListInput({
-    List<T> seedValue = const [],
+    List<T>? seedValue,
     required String semantics,
     bool sync = true,
     bool isBehavior = true,
@@ -234,7 +234,7 @@ class ListInput<T> extends Input<List<T>?> with ListMixin<T> {
 class ListOutput<T, ARG_TYPE> extends Output<List<T>?, ARG_TYPE>
     with ListMixin<T> {
   ListOutput({
-    List<T> seedValue = const [],
+    List<T>? seedValue,
     required String semantics,
     bool sync = true,
     bool isBehavior = true,
@@ -257,7 +257,7 @@ class ListOutput<T, ARG_TYPE> extends Output<List<T>?, ARG_TYPE>
 class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
     with PageMixin<T, ARG_TYPE> {
   PageOutput({
-    List<T> seedValue = const [],
+    List<T>? seedValue,
     required String semantics,
     bool sync = true,
     bool isBehavior = true,

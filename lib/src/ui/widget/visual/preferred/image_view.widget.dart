@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 typedef void LoadingProgress(double progress, List<int> data);
 
@@ -71,24 +72,46 @@ class ImageView extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget result;
     if (imagePath != null) {
-      result = Image.asset(
-        imagePath!,
-        width: size ?? width,
-        height: size ?? height,
-        fit: fit,
-        color: color,
-        gaplessPlayback: true,
-      );
+      if (imagePath!.endsWith('svg')) {
+        result = SvgPicture.asset(
+          imagePath!,
+          width: size ?? width,
+          height: size ?? height,
+          fit: fit ?? BoxFit.contain,
+          color: color,
+          placeholderBuilder: (_) => placeholder,
+        );
+      } else {
+        result = Image.asset(
+          imagePath!,
+          width: size ?? width,
+          height: size ?? height,
+          fit: fit,
+          color: color,
+          gaplessPlayback: true,
+        );
+      }
     } else if (imageUrl != null) {
-      result = CachedNetworkImage(
-        imageUrl: imageUrl!,
-        width: size ?? width,
-        height: size ?? height,
-        fit: fit,
-        color: color,
-        placeholder: (_, __) => placeholder,
-        errorWidget: (_, __, ___) => errorWidget,
-      );
+      if (imageUrl!.endsWith('svg')) {
+        result = SvgPicture.network(
+          imageUrl!,
+          width: size ?? width,
+          height: size ?? height,
+          fit: fit ?? BoxFit.contain,
+          color: color,
+          placeholderBuilder: (_) => placeholder,
+        );
+      } else {
+        result = CachedNetworkImage(
+          imageUrl: imageUrl!,
+          width: size ?? width,
+          height: size ?? height,
+          fit: fit,
+          color: color,
+          placeholder: (_, __) => placeholder,
+          errorWidget: (_, __, ___) => errorWidget,
+        );
+      }
     } else {
       // 如果图片地址为null的话, 那就不显示
       result = SizedBox.shrink();

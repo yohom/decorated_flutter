@@ -1,7 +1,7 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 
-class Countdown extends StatelessWidget {
+class Countdown extends StatefulWidget {
   const Countdown({
     Key? key,
     required this.initialData,
@@ -16,18 +16,36 @@ class Countdown extends StatelessWidget {
   final ContextCallback? onPressed;
 
   @override
+  _CountdownState createState() => _CountdownState();
+}
+
+class _CountdownState extends State<Countdown> {
+  late Stream<int> _countStream;
+
+  @override
+  void initState() {
+    super.initState();
+    _countStream = Stream.periodic(
+      widget.duration,
+      (count) => widget.initialData - 1 - count,
+    ).take(widget.initialData);
+  }
+
+  @override
   Widget build(BuildContext context) {
     Widget result = StreamBuilder<int>(
-      initialData: initialData,
-      stream: Stream.periodic(duration, (count) => initialData - 1 - count)
-          .take(initialData),
+      initialData: widget.initialData,
+      stream: _countStream,
       builder: (context, snapshot) {
-        return builder(context, snapshot.data);
+        return widget.builder(context, snapshot.data);
       },
     );
 
-    if (onPressed != null) {
-      result = GestureDetector(onTap: () => onPressed!(context), child: result);
+    if (widget.onPressed != null) {
+      result = GestureDetector(
+        onTap: () => widget.onPressed!(context),
+        child: result,
+      );
     }
 
     return result;
