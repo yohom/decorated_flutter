@@ -16,7 +16,6 @@ class ImageView extends StatelessWidget {
     this.padding,
     this.margin,
   })  : imageUrl = null,
-        svgPath = null,
         errorWidget = const SizedBox.shrink(),
         placeholder = const SizedBox.shrink(),
         super(key: key);
@@ -34,30 +33,10 @@ class ImageView extends StatelessWidget {
     this.padding,
     this.margin,
   })  : imagePath = null,
-        svgPath = null,
-        super(key: key);
-
-  ImageView.svg(
-    this.svgPath, {
-    Key? key,
-    this.width,
-    this.height,
-    this.size,
-    this.fit,
-    this.color,
-    this.padding,
-    this.margin,
-  })  : imagePath = null,
-        imageUrl = null,
-        errorWidget = const SizedBox.shrink(),
-        placeholder = const SizedBox.shrink(),
         super(key: key);
 
   /// 本地图片路径
   final String? imagePath;
-
-  /// 本地图片路径
-  final String? svgPath;
 
   /// 图片url
   final String? imageUrl;
@@ -93,33 +72,46 @@ class ImageView extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget result;
     if (imagePath != null) {
-      result = Image.asset(
-        imagePath!,
-        width: size ?? width,
-        height: size ?? height,
-        fit: fit,
-        color: color,
-        gaplessPlayback: true,
-      );
+      if (imagePath!.endsWith('svg')) {
+        result = SvgPicture.asset(
+          imagePath!,
+          width: size ?? width,
+          height: size ?? height,
+          fit: fit ?? BoxFit.contain,
+          color: color,
+          placeholderBuilder: (_) => placeholder,
+        );
+      } else {
+        result = Image.asset(
+          imagePath!,
+          width: size ?? width,
+          height: size ?? height,
+          fit: fit,
+          color: color,
+          gaplessPlayback: true,
+        );
+      }
     } else if (imageUrl != null) {
-      result = CachedNetworkImage(
-        imageUrl: imageUrl!,
-        width: size ?? width,
-        height: size ?? height,
-        fit: fit,
-        color: color,
-        placeholder: (_, __) => placeholder,
-        errorWidget: (_, __, ___) => errorWidget,
-      );
-    } else if (svgPath != null) {
-      result = SvgPicture.asset(
-        svgPath!,
-        width: size ?? width,
-        height: size ?? height,
-        fit: fit ?? BoxFit.contain,
-        color: color,
-        placeholderBuilder: (_) => placeholder,
-      );
+      if (imageUrl!.endsWith('svg')) {
+        result = SvgPicture.network(
+          imageUrl!,
+          width: size ?? width,
+          height: size ?? height,
+          fit: fit ?? BoxFit.contain,
+          color: color,
+          placeholderBuilder: (_) => placeholder,
+        );
+      } else {
+        result = CachedNetworkImage(
+          imageUrl: imageUrl!,
+          width: size ?? width,
+          height: size ?? height,
+          fit: fit,
+          color: color,
+          placeholder: (_, __) => placeholder,
+          errorWidget: (_, __, ___) => errorWidget,
+        );
+      }
     } else {
       // 如果图片地址为null的话, 那就不显示
       result = SizedBox.shrink();
