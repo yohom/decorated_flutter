@@ -117,6 +117,14 @@ class ImageView extends StatelessWidget {
       result = SizedBox.shrink();
     }
 
+    if (size != null || width != null || height != null) {
+      result = SizedBox(
+        width: size ?? width,
+        height: size ?? height,
+        child: result,
+      );
+    }
+
     if (padding != null || margin != null) {
       result = Container(padding: padding, margin: margin, child: result);
     }
