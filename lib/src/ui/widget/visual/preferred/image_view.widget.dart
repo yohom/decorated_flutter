@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:decorated_flutter/src/extension/extension.export.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -15,9 +16,16 @@ class ImageView extends StatelessWidget {
     this.color,
     this.padding,
     this.margin,
+    this.darkImagePath,
+    this.autoDarkMode = false,
   })  : imageUrl = null,
         errorWidget = const SizedBox.shrink(),
         placeholder = const SizedBox.shrink(),
+        assert(
+          (darkImagePath != null && autoDarkMode == false) ||
+              darkImagePath == null,
+          '不能同时设置darkImagePath和autoDarkMode',
+        ),
         super(key: key);
 
   ImageView.network(
@@ -32,7 +40,14 @@ class ImageView extends StatelessWidget {
     this.placeholder = const SizedBox.shrink(),
     this.padding,
     this.margin,
+    this.darkImagePath,
+    this.autoDarkMode = false,
   })  : imagePath = null,
+        assert(
+          (darkImagePath != null && autoDarkMode == false) ||
+              darkImagePath == null,
+          '不能同时设置darkImagePath和autoDarkMode',
+        ),
         super(key: key);
 
   /// 本地图片路径
@@ -68,26 +83,45 @@ class ImageView extends StatelessWidget {
   /// 外边距
   final EdgeInsets? margin;
 
+  /// 暗黑模式路径模式
+  ///
+  /// 用于自动化实现暗黑模式, 如果设置了就会忽略[autoDarkMode]
+  final String? darkImagePath;
+
+  /// 是否自动化暗黑模式
+  ///
+  /// 实现方式为在暗黑模式下设置颜色为白色
+  final bool autoDarkMode;
+
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = context.isDarkMode;
+    Color? _color = color;
+    if (autoDarkMode) {
+      _color = isDarkMode ? Colors.white : null;
+    }
     Widget result;
     if (imagePath != null) {
-      if (imagePath!.endsWith('svg')) {
+      String _imagePath = imagePath!;
+      if (darkImagePath != null) {
+        _imagePath = isDarkMode ? darkImagePath! : imagePath!;
+      }
+      if (_imagePath.endsWith('svg')) {
         result = SvgPicture.asset(
-          imagePath!,
+          _imagePath,
           width: size ?? width,
           height: size ?? height,
           fit: fit ?? BoxFit.contain,
-          color: color,
+          color: _color,
           placeholderBuilder: (_) => placeholder,
         );
       } else {
         result = Image.asset(
-          imagePath!,
+          _imagePath,
           width: size ?? width,
           height: size ?? height,
           fit: fit,
-          color: color,
+          color: _color,
           gaplessPlayback: true,
         );
       }
@@ -98,7 +132,7 @@ class ImageView extends StatelessWidget {
           width: size ?? width,
           height: size ?? height,
           fit: fit ?? BoxFit.contain,
-          color: color,
+          color: _color,
           placeholderBuilder: (_) => placeholder,
         );
       } else {
@@ -107,7 +141,7 @@ class ImageView extends StatelessWidget {
           width: size ?? width,
           height: size ?? height,
           fit: fit,
-          color: color,
+          color: _color,
           placeholder: (_, __) => placeholder,
           errorWidget: (_, __, ___) => errorWidget,
         );
