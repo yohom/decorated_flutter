@@ -61,10 +61,12 @@ class _PickerDialogState<T> extends State<_PickerDialog<T>> {
   Widget build(BuildContext context) {
     return DecoratedColumn(
       height: 256,
+      color: context.backgroundColor,
       children: <Widget>[
         DecoratedRow(
+          color: context.theme.colorScheme.surface,
           children: <Widget>[
-            FlatButton(
+            TextButton(
               onPressed: context.rootNavigator.pop,
               child: Text('取消'),
             ),
@@ -75,7 +77,7 @@ class _PickerDialogState<T> extends State<_PickerDialog<T>> {
                 style: widget.titleStyle ?? context.textTheme.bodyText1,
               ),
             Spacer(),
-            FlatButton(
+            TextButton(
               onPressed: () => context.rootNavigator.pop(_selected),
               child: Text(
                 '确定',

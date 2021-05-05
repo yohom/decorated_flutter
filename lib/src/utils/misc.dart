@@ -5,6 +5,7 @@ import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void handleError(Object error) {
   L.d('handleError: $error');
@@ -40,6 +41,8 @@ void handleError(Object error) {
     toast(error);
   } else if (error is BizException) {
     toast(error.message);
+  } else if (error is PlatformException) {
+    toast(error.message ?? error.toString());
   } else {
     toast(error.toString());
   }
