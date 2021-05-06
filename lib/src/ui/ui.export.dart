@@ -1,3 +1,4 @@
+
 export 'animation/fade_slide.transition.dart';
 export 'animation/show_up.transition.dart';
 export 'misc/grid_delegate.dart';
@@ -49,4 +50,5 @@ export 'widget/visual/special_affect/rating_bar.widget.dart';
 export 'widget/visual/special_affect/runtime.widget.dart';
 export 'widget/visual/special_affect/show_more_text.widget.dart';
 export 'widget/visual/special_affect/snap_list.widget.dart';
+export 'widget/visual/special_affect/spring_button.widget.dart';
 export 'widget/visual/special_affect/unknown_route.screen.dart';
