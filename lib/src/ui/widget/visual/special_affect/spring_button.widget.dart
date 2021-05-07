@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 enum SpringButtonType {
@@ -22,6 +20,9 @@ class SpringButton extends StatefulWidget {
 
   ///Use this value to determine the scaling factor while the animation is being played. Choose a value between 0.0 and 1.0.
   final double scaleCoefficient;
+
+  ///Use this value to determine the duration of the animation.
+  final int duration;
 
   ///Delegate for gesture callback.
   final GestureTapDownCallback? onTapDown;
@@ -135,6 +136,7 @@ class SpringButton extends StatefulWidget {
     this.useCache: true,
     this.alignment: Alignment.center,
     this.scaleCoefficient: 0.75,
+    this.duration: 1000,
     this.onTapDown,
     this.onTapUp,
     this.onTap,
@@ -218,7 +220,7 @@ class SpringButtonState extends State<SpringButton>
       vsync: this,
       lowerBound: 0.0,
       upperBound: 1.0,
-      duration: const Duration(milliseconds: 1000),
+      duration: Duration(milliseconds: widget.duration),
     );
     animationController.value = 1;
     animation = Tween(
@@ -374,7 +376,8 @@ class SpringButtonState extends State<SpringButton>
           ? null
           : () {
               springUp();
-              if (widget.onTapCancel != null && isEnabled) widget.onTapCancel!();
+              if (widget.onTapCancel != null && isEnabled)
+                widget.onTapCancel!();
             },
       onSecondaryTapDown: !hasSecondaryTap
           ? null
@@ -402,12 +405,14 @@ class SpringButtonState extends State<SpringButton>
           : () {
               springDown();
               spring();
-              if (widget.onDoubleTap != null && isEnabled) widget.onDoubleTap!();
+              if (widget.onDoubleTap != null && isEnabled)
+                widget.onDoubleTap!();
             },
       onLongPress: !hasLongPress
           ? null
           : () {
-              if (widget.onLongPress != null && isEnabled) widget.onLongPress!();
+              if (widget.onLongPress != null && isEnabled)
+                widget.onLongPress!();
             },
       onLongPressStart: !hasLongPress
           ? null
@@ -554,7 +559,8 @@ class SpringButtonState extends State<SpringButton>
           ? null
           : () {
               springUp();
-              if (widget.onPanCancel != null && isEnabled) widget.onPanCancel!();
+              if (widget.onPanCancel != null && isEnabled)
+                widget.onPanCancel!();
             },
       onScaleStart: !hasScale
           ? null
