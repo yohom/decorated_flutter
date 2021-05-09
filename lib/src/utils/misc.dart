@@ -44,7 +44,7 @@ void handleError(Object error) {
   } else if (error is PlatformException) {
     toast(error.message ?? error.toString());
   } else {
-    toast(error.toString());
+    toast('遇到未知错误${kReleaseMode ? '' : error}');
   }
 }
 

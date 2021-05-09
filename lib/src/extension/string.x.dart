@@ -22,4 +22,8 @@ extension StringX on String {
   double? get doubleValue {
     return double.tryParse(this);
   }
+
+  String get packed {
+    return replaceAll(RegExp(r"\s+"), '');
+  }
 }
