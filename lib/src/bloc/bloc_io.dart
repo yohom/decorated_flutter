@@ -154,11 +154,13 @@ class Input<T> extends BaseIO<T> with InputMixin<T> {
     bool printLog = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
+    T? Function()? onReset,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
           sync: sync,
           isBehavior: isBehavior,
+          onReset: onReset,
         ) {
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
@@ -175,11 +177,13 @@ class Output<T, ARG_TYPE> extends BaseIO<T?> with OutputMixin<T?, ARG_TYPE> {
     bool printLog = true,
     bool isBehavior = true,
     required _Fetch<T, ARG_TYPE?> fetch,
+    T? Function()? onReset,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
           sync: sync,
           isBehavior: isBehavior,
+          onReset: onReset,
         ) {
     stream = _subject.stream;
     _fetch = fetch;
@@ -198,11 +202,13 @@ class IO<T> extends BaseIO<T?> with InputMixin<T?>, OutputMixin<T?, dynamic> {
     bool isDistinct = false,
     bool printLog = true,
     _Fetch<T, dynamic>? fetch,
+    T? Function()? onReset,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
           sync: sync,
           isBehavior: isBehavior,
+          onReset: onReset,
         ) {
     stream = _subject.stream;
 
@@ -225,6 +231,7 @@ class ListInput<T> extends Input<List<T>?> with ListMixin<T> {
     bool printLog = true,
     bool isDistinct = false,
     int? forceCapacity,
+    List<T>? Function()? onReset,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -233,6 +240,7 @@ class ListInput<T> extends Input<List<T>?> with ListMixin<T> {
           acceptEmpty: acceptEmpty,
           isDistinct: isDistinct,
           printLog: printLog,
+          onReset: onReset,
         ) {
     _forceCapacity = forceCapacity;
   }
@@ -251,6 +259,7 @@ class ListOutput<T, ARG_TYPE> extends Output<List<T>?, ARG_TYPE>
     bool printLog = true,
     int? forceCapacity,
     required _Fetch<List<T>, ARG_TYPE?> fetch,
+    List<T>? Function()? onReset,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -258,6 +267,7 @@ class ListOutput<T, ARG_TYPE> extends Output<List<T>?, ARG_TYPE>
           isBehavior: isBehavior,
           fetch: fetch,
           printLog: printLog,
+          onReset: onReset,
         ) {
     _forceCapacity = forceCapacity;
   }
@@ -277,12 +287,14 @@ class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
     int pageSize = 0,
     int? forceCapacity,
     required _PageFetch<List<T>, ARG_TYPE?> pageFetch,
+    List<T>? Function()? onReset,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
           sync: sync,
           isBehavior: isBehavior,
           fetch: (_) => Future.value([]),
+          onReset: onReset,
         ) {
     _initPage = initPage;
     _currentPage = _initPage;
@@ -313,12 +325,14 @@ class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
     bool receiveFullData = true,
     int? forceCapacity,
     _PageFetch<List<T>, ARG_TYPE?>? pageFetch,
+    List<T>? Function()? onReset,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
           sync: sync,
           isBehavior: isBehavior,
           fetch: (_) => Future.value([]),
+          onReset: onReset,
         ) {
     _initPage = initPage;
     _currentPage = _initPage;
@@ -342,6 +356,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin<T> {
     bool printLog = true,
     int? forceCapacity,
     _Fetch<List<T>, dynamic>? fetch,
+    List<T>? Function()? onReset,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -351,6 +366,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin<T> {
           isDistinct: isDistinct,
           fetch: fetch,
           printLog: printLog,
+          onReset: onReset,
         ) {
     _forceCapacity = forceCapacity;
   }
@@ -370,6 +386,7 @@ class IntIO extends IO<int?> with IntMixin {
     int? max,
     int? remainder,
     _Fetch<int, dynamic>? fetch,
+    int? Function()? onReset,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -379,6 +396,7 @@ class IntIO extends IO<int?> with IntMixin {
           isDistinct: isDistinct,
           fetch: fetch,
           printLog: printLog,
+          onReset: onReset,
         ) {
     _min = min;
     _max = max;
@@ -399,6 +417,7 @@ class IntInput extends Input<int?> with IntMixin {
     int? max,
     int? remainder,
     bool printLog = true,
+    int? Function()? onReset,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -407,6 +426,7 @@ class IntInput extends Input<int?> with IntMixin {
           acceptEmpty: acceptEmpty,
           isDistinct: isDistinct,
           printLog: printLog,
+          onReset: onReset,
         ) {
     this._min = min;
     this._max = max;
@@ -425,6 +445,7 @@ class BoolIO extends IO<bool?> with BoolMixin {
     bool isDistinct = false,
     bool printLog = true,
     _Fetch<bool, dynamic>? fetch,
+    bool? Function()? onReset,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -434,6 +455,7 @@ class BoolIO extends IO<bool?> with BoolMixin {
           isDistinct: isDistinct,
           fetch: fetch,
           printLog: printLog,
+          onReset: onReset,
         );
 }
 
@@ -446,6 +468,7 @@ class BoolOutput<ARG_TYPE> extends Output<bool, ARG_TYPE> with BoolMixin {
     bool isBehavior = true,
     bool printLog = true,
     required _Fetch<bool, ARG_TYPE?> fetch,
+    bool? Function()? onReset,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -453,6 +476,7 @@ class BoolOutput<ARG_TYPE> extends Output<bool, ARG_TYPE> with BoolMixin {
           isBehavior: isBehavior,
           fetch: fetch,
           printLog: printLog,
+          onReset: onReset,
         );
 }
 
