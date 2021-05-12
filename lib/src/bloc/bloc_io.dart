@@ -25,10 +25,14 @@ abstract class BaseIO<T> {
 
     /// 是否使用BehaviorSubject, 如果使用, 那么Event内部的[_subject]会保存最近一次的值
     bool isBehavior = true,
+
+    /// 重置回调方法, 如果设置了, 则调用reset的时候会优先使用此回调的返回值
+    T? Function()? onReset,
   })  : _semantics = semantics,
         _seedValue = seedValue,
         _printLog = printLog,
         latest = seedValue,
+        _onReset = onReset,
         _subject = isBehavior
             ? seedValue != null
                 ? BehaviorSubject<T>.seeded(seedValue, sync: sync)
@@ -61,6 +65,10 @@ abstract class BaseIO<T> {
   @protected
   Subject<T?> _subject;
 
+  /// 重置回调方法
+  @protected
+  T? Function()? _onReset;
+
   void addError(Object error, [StackTrace? stackTrace]) {
     if (_subject.isClosed) return;
 
@@ -84,6 +92,8 @@ abstract class BaseIO<T> {
   }
 
   /// 清理保存的值, 恢复成初始状态
+  ///
+  /// 如果设置了[_onReset], 则以[_onReset]的返回值为准
   void reset() {
     if (_subject.isClosed) return;
 
@@ -91,7 +101,7 @@ abstract class BaseIO<T> {
       L.d('-----------------------------BEGIN---------------------------------\n'
           '$_semantics事件 重置 '
           '\n------------------------------END----------------------------------');
-    _subject.add(_seedValue);
+    _subject.add(_onReset != null ? _onReset!() : _seedValue);
   }
 
   /// 重新发送数据 用户修改数据后刷新的场景
