@@ -7,9 +7,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-const _kDioOther = 10000002;
-const _kSocketException = 10000001;
-const _kUnknownException = 10000003;
+const _kDioOther = 100002;
+const _kSocketException = 100001;
+const _kUnknownException = 100003;
 
 void handleError(Object error) {
   L.d('handleError: $error');
