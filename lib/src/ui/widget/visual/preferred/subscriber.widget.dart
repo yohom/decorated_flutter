@@ -93,8 +93,7 @@ class _SingleSubscriberState<T> extends State<SingleSubscriber<T>> {
       initialData: _cache ?? widget.initialData,
       future: widget.future,
       builder: (ctx, snapshot) {
-        Widget result;
-
+        Widget? result;
         if (snapshot.hasError) {
           if (snapshot.error is Error) {
             L.e('SingleSubscriber出现错误: ${(snapshot.error as Error).stackTrace}');
@@ -102,29 +101,30 @@ class _SingleSubscriberState<T> extends State<SingleSubscriber<T>> {
             L.e('SingleSubscriber出现错误: ${snapshot.error}');
           }
           if (widget.errorPlaceholderBuilder != null) {
-            result = widget.errorPlaceholderBuilder!(context, snapshot.error!);
+            result ??=
+                widget.errorPlaceholderBuilder!(context, snapshot.error!);
           } else {
-            result = SingleSubscriber._defaultErrorPlaceholder ??
+            result ??= SingleSubscriber._defaultErrorPlaceholder ??
                 ErrorPlaceholder(sliver: widget.sliver);
           }
         }
 
         if (snapshot.hasData) {
           if (isEmpty(snapshot.data) && widget.handleEmpty) {
-            result = widget.emptyPlaceholder ??
+            result ??= widget.emptyPlaceholder ??
                 SingleSubscriber._defaultEmptyPlaceholder ??
                 EmptyPlaceholder(sliver: widget.sliver);
           } else {
             if (widget.cacheable) _cache = snapshot.data;
 
-            result = widget.builder(snapshot.data!);
+            result ??= widget.builder(snapshot.data!);
           }
         } else if (widget.showLoading) {
-          result = widget.loadingPlaceholder ??
+          result ??= widget.loadingPlaceholder ??
               SingleSubscriber._defaultLoadingPlaceholder ??
               LoadingWidget(sliver: widget.sliver);
         } else {
-          result = SizedBox.shrink();
+          result ??= SizedBox.shrink();
         }
 
         if (widget.width != null ||
@@ -216,7 +216,7 @@ class Subscriber<T> extends StatelessWidget {
       initialData: initialData,
       stream: stream,
       builder: (ctx, snapshot) {
-        Widget result = SizedBox.shrink();
+        Widget? result;
         if (snapshot.hasError) {
           if (snapshot.error is Error) {
             L.e('Subscriber出现错误: ${(snapshot.error as Error).stackTrace}');
@@ -224,27 +224,27 @@ class Subscriber<T> extends StatelessWidget {
             L.e('Subscriber出现错误: ${snapshot.error}');
           }
           if (errorPlaceholderBuilder != null) {
-            result = errorPlaceholderBuilder!(context, snapshot.error!);
+            result ??= errorPlaceholderBuilder!(context, snapshot.error!);
           } else {
-            result =
+            result ??=
                 _defaultErrorPlaceholder ?? ErrorPlaceholder(sliver: sliver);
           }
         }
 
         if (snapshot.hasData) {
           if (isEmpty(snapshot.data) && handleEmpty) {
-            result = emptyPlaceholder ??
+            result ??= emptyPlaceholder ??
                 _defaultEmptyPlaceholder ??
                 EmptyPlaceholder(sliver: sliver);
           } else {
-            result = builder(snapshot.data!);
+            result ??= builder(snapshot.data!);
           }
         } else if (showLoading) {
-          result = loadingPlaceholder ??
+          result ??= loadingPlaceholder ??
               _defaultLoadingPlaceholder ??
               LoadingWidget(sliver: sliver);
         } else {
-          result = SizedBox.shrink();
+          result ??= SizedBox.shrink();
         }
 
         if (width != null || height != null || decoration != null) {
