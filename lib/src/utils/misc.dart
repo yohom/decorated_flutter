@@ -31,19 +31,19 @@ void handleError(Object error) {
         }
         break;
       default:
-        message = '网络不给力，请稍后重试 ${error.message}';
+        message = '网络不给力，请稍后重试\n${error.message}';
     }
     toast(message);
   } else if (error is String) {
     toast(error);
   } else if (error is SocketException) {
-    toast('网络不给力，请稍后重试 ${error.message}');
+    toast('网络不给力，请稍后重试\n${error.message}');
   } else if (error is BizException) {
     toast(error.message);
   } else if (error is PlatformException) {
     toast(error.message ?? error.toString());
   } else {
-    toast('遇到未知错误 $error');
+    toast('遇到未知错误\n$error');
   }
 }
 

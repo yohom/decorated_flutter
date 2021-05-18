@@ -37,6 +37,8 @@ class SingleSubscriber<T> extends StatefulWidget {
     this.loadingPlaceholder,
     this.handleEmpty = true,
     this.sliver = false,
+    this.width,
+    this.height,
   }) : super(key: key);
 
   /// 流
@@ -71,6 +73,10 @@ class SingleSubscriber<T> extends StatefulWidget {
   /// 是否使用Sliver
   final bool sliver;
 
+  /// 宽高
+  final double? width;
+  final double? height;
+
   @override
   _SingleSubscriberState<T> createState() => _SingleSubscriberState<T>();
 }
@@ -84,6 +90,8 @@ class _SingleSubscriberState<T> extends State<SingleSubscriber<T>> {
       initialData: _cache ?? widget.initialData,
       future: widget.future,
       builder: (ctx, snapshot) {
+        Widget result;
+
         if (snapshot.hasError) {
           if (snapshot.error is Error) {
             L.e('SingleSubscriber出现错误: ${(snapshot.error as Error).stackTrace}');
@@ -91,30 +99,40 @@ class _SingleSubscriberState<T> extends State<SingleSubscriber<T>> {
             L.e('SingleSubscriber出现错误: ${snapshot.error}');
           }
           if (widget.errorPlaceholderBuilder != null) {
-            return widget.errorPlaceholderBuilder!(context, snapshot.error!);
+            result = widget.errorPlaceholderBuilder!(context, snapshot.error!);
           } else {
-            return SingleSubscriber._defaultErrorPlaceholder ??
+            result = SingleSubscriber._defaultErrorPlaceholder ??
                 ErrorPlaceholder(sliver: widget.sliver);
           }
         }
 
         if (snapshot.hasData) {
           if (isEmpty(snapshot.data) && widget.handleEmpty) {
-            return widget.emptyPlaceholder ??
+            result = widget.emptyPlaceholder ??
                 SingleSubscriber._defaultEmptyPlaceholder ??
                 EmptyPlaceholder(sliver: widget.sliver);
           } else {
             if (widget.cacheable) _cache = snapshot.data;
 
-            return widget.builder(snapshot.data!);
+            result = widget.builder(snapshot.data!);
           }
         } else if (widget.showLoading) {
-          return widget.loadingPlaceholder ??
+          result = widget.loadingPlaceholder ??
               SingleSubscriber._defaultLoadingPlaceholder ??
               LoadingWidget(sliver: widget.sliver);
         } else {
-          return SizedBox.shrink();
+          result = SizedBox.shrink();
         }
+
+        if (widget.width != null || widget.height != null) {
+          result = SizedBox(
+            width: widget.width,
+            height: widget.height,
+            child: result,
+          );
+        }
+
+        return result;
       },
     );
   }
@@ -146,6 +164,8 @@ class Subscriber<T> extends StatelessWidget {
     this.loadingPlaceholder,
     this.handleEmpty = true,
     this.sliver = false,
+    this.width,
+    this.height,
   }) : super(key: key);
 
   /// 流
@@ -177,12 +197,17 @@ class Subscriber<T> extends StatelessWidget {
   /// 是否使用Sliver
   final bool sliver;
 
+  /// 宽高
+  final double? width;
+  final double? height;
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<T>(
       initialData: initialData,
       stream: stream,
       builder: (ctx, snapshot) {
+        Widget result = SizedBox.shrink();
         if (snapshot.hasError) {
           if (snapshot.error is Error) {
             L.e('Subscriber出现错误: ${(snapshot.error as Error).stackTrace}');
@@ -190,27 +215,34 @@ class Subscriber<T> extends StatelessWidget {
             L.e('Subscriber出现错误: ${snapshot.error}');
           }
           if (errorPlaceholderBuilder != null) {
-            return errorPlaceholderBuilder!(context, snapshot.error!);
+            result = errorPlaceholderBuilder!(context, snapshot.error!);
           } else {
-            return _defaultErrorPlaceholder ?? ErrorPlaceholder(sliver: sliver);
+            result =
+                _defaultErrorPlaceholder ?? ErrorPlaceholder(sliver: sliver);
           }
         }
 
         if (snapshot.hasData) {
           if (isEmpty(snapshot.data) && handleEmpty) {
-            return emptyPlaceholder ??
+            result = emptyPlaceholder ??
                 _defaultEmptyPlaceholder ??
                 EmptyPlaceholder(sliver: sliver);
           } else {
-            return builder(snapshot.data!);
+            result = builder(snapshot.data!);
           }
         } else if (showLoading) {
-          return loadingPlaceholder ??
+          result = loadingPlaceholder ??
               _defaultLoadingPlaceholder ??
               LoadingWidget(sliver: sliver);
         } else {
-          return SizedBox.shrink();
+          result = SizedBox.shrink();
         }
+
+        if (width != null || height != null) {
+          result = SizedBox(width: width, height: height, child: result);
+        }
+
+        return result;
       },
     );
   }
