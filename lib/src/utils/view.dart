@@ -10,7 +10,7 @@ void toast(
   TextStyle? textStyle,
   VoidCallback? onDismiss,
   bool dismissOtherToast = true,
-  TextAlign? textAlign,
+  TextAlign textAlign = TextAlign.center,
   Duration? duration,
   bool error = false,
 }) {
