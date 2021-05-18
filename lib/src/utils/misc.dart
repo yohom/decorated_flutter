@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:decorated_flutter/src/misc/misc.export.dart';
@@ -17,7 +18,7 @@ void handleError(Object error) {
       case DioErrorType.sendTimeout:
       case DioErrorType.connectTimeout:
       case DioErrorType.receiveTimeout:
-        message = '网络连接超时，请重试';
+        message = '网络连接超时，请稍后重试';
         break;
       case DioErrorType.response:
         final statusCode = error.response?.statusCode;
@@ -30,11 +31,13 @@ void handleError(Object error) {
         }
         break;
       default:
-        message = '网络异常，请重试 ${error.message}';
+        message = '网络不给力，请稍后重试 ${error.message}';
     }
     toast(message);
   } else if (error is String) {
     toast(error);
+  } else if (error is SocketException) {
+    toast('网络不给力，请稍后重试 ${error.message}');
   } else if (error is BizException) {
     toast(error.message);
   } else if (error is PlatformException) {
