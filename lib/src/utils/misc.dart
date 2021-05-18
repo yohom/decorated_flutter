@@ -1,9 +1,9 @@
+import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:decorated_flutter/src/misc/misc.export.dart';
 import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -18,7 +18,7 @@ void handleError(Object error) {
       case DioErrorType.sendTimeout:
       case DioErrorType.connectTimeout:
       case DioErrorType.receiveTimeout:
-        message = '网络连接超时，请重试';
+        message = '网络连接超时，请稍后重试';
         break;
       case DioErrorType.response:
         final statusCode = error.response?.statusCode;
@@ -30,21 +30,20 @@ void handleError(Object error) {
           }
         }
         break;
-      case DioErrorType.other:
-        message = kReleaseMode ? '网络异常，请重试' : error.message;
-        break;
       default:
-        message = '网络异常，请重试';
+        message = '网络不给力，请稍后重试 ${error.message}';
     }
     toast(message);
   } else if (error is String) {
     toast(error);
+  } else if (error is SocketException) {
+    toast('网络不给力，请稍后重试 ${error.message}');
   } else if (error is BizException) {
     toast(error.message);
   } else if (error is PlatformException) {
     toast(error.message ?? error.toString());
   } else {
-    toast('遇到未知错误${kReleaseMode ? '' : error}');
+    toast('遇到未知错误 $error');
   }
 }
 
