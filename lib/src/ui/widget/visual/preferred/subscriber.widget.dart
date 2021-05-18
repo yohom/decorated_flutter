@@ -39,6 +39,7 @@ class SingleSubscriber<T> extends StatefulWidget {
     this.sliver = false,
     this.width,
     this.height,
+    this.decoration,
   }) : super(key: key);
 
   /// 流
@@ -76,6 +77,8 @@ class SingleSubscriber<T> extends StatefulWidget {
   /// 宽高
   final double? width;
   final double? height;
+
+  final Decoration? decoration;
 
   @override
   _SingleSubscriberState<T> createState() => _SingleSubscriberState<T>();
@@ -124,10 +127,13 @@ class _SingleSubscriberState<T> extends State<SingleSubscriber<T>> {
           result = SizedBox.shrink();
         }
 
-        if (widget.width != null || widget.height != null) {
-          result = SizedBox(
+        if (widget.width != null ||
+            widget.height != null ||
+            widget.decoration != null) {
+          result = Container(
             width: widget.width,
             height: widget.height,
+            decoration: widget.decoration,
             child: result,
           );
         }
@@ -166,6 +172,7 @@ class Subscriber<T> extends StatelessWidget {
     this.sliver = false,
     this.width,
     this.height,
+    this.decoration,
   }) : super(key: key);
 
   /// 流
@@ -200,6 +207,8 @@ class Subscriber<T> extends StatelessWidget {
   /// 宽高
   final double? width;
   final double? height;
+
+  final Decoration? decoration;
 
   @override
   Widget build(BuildContext context) {
@@ -238,8 +247,13 @@ class Subscriber<T> extends StatelessWidget {
           result = SizedBox.shrink();
         }
 
-        if (width != null || height != null) {
-          result = SizedBox(width: width, height: height, child: result);
+        if (width != null || height != null || decoration != null) {
+          result = Container(
+            width: width,
+            height: height,
+            decoration: decoration,
+            child: result,
+          );
         }
 
         return result;
