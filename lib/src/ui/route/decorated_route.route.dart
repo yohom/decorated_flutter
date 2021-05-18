@@ -12,8 +12,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 typedef _InitAction<T extends BLoC> = void Function(T bloc);
 
 /// [B]是指定的BLoC, [T]是Route的返回类型
-class DecoratedRoute<B extends BLoC, T extends Object>
-    extends MaterialWithModalsPageRoute<T> {
+class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
   DecoratedRoute({
     Key? key,
     required this.screen,
