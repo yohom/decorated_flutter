@@ -7,6 +7,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+const _kDioOther = 10000002;
+const _kSocketException = 10000001;
+const _kUnknownException = 10000003;
+
 void handleError(Object error) {
   L.d('handleError: $error');
   if (error is DioError) {
@@ -31,19 +35,19 @@ void handleError(Object error) {
         }
         break;
       default:
-        message = '网络不给力，请稍后重试\n${error.message}';
+        message = '网络不给力，请稍后重试 $_kDioOther';
     }
     toast(message);
   } else if (error is String) {
     toast(error);
   } else if (error is SocketException) {
-    toast('网络不给力，请稍后重试\n${error.message}');
+    toast('网络不给力，请稍后重试 $_kSocketException');
   } else if (error is BizException) {
     toast(error.message);
   } else if (error is PlatformException) {
-    toast(error.message ?? error.toString());
+    toast('${error.message ?? error.toString()} ${error.code}');
   } else {
-    toast('遇到未知错误\n$error');
+    toast('遇到未知错误 $_kUnknownException');
   }
 }
 
