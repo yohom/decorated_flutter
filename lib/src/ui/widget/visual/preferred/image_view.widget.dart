@@ -6,7 +6,7 @@ import 'package:flutter_svg/svg.dart';
 typedef void LoadingProgress(double progress, List<int> data);
 
 class ImageView extends StatelessWidget {
-  ImageView.asset(
+  const ImageView.asset(
     this.imagePath, {
     Key? key,
     this.width,
@@ -28,7 +28,7 @@ class ImageView extends StatelessWidget {
         ),
         super(key: key);
 
-  ImageView.network(
+  const ImageView.network(
     this.imageUrl, {
     Key? key,
     this.width,
