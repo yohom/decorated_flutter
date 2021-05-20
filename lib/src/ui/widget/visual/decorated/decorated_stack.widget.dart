@@ -41,7 +41,7 @@ class DecoratedStack extends StatelessWidget {
     this.transform,
     this.animationDuration,
     this.animationCurve,
-    this.clipBehavior = Clip.none,
+    this.clipBehavior = Clip.hardEdge,
     this.visible,
     this.children = const [],
   }) : super(key: key);
@@ -98,6 +98,7 @@ class DecoratedStack extends StatelessWidget {
       alignment: alignment ?? AlignmentDirectional.topStart,
       fit: stackFit ?? StackFit.loose,
       overflow: overflow ?? Overflow.clip,
+      clipBehavior: clipBehavior,
       children: <Widget>[
         if (childrenZIndex == ZIndex.bottom) ...children,
         if (topStart != null) Positioned(top: 0, left: 0, child: topStart!),
