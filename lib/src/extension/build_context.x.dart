@@ -26,8 +26,8 @@ extension BuildContextX on BuildContext {
     FocusScope.of(this).unfocus();
   }
 
-  FormState? get form {
-    return Form.of(this);
+  FormState get form {
+    return Form.of(this)!;
   }
 
   double get height {
