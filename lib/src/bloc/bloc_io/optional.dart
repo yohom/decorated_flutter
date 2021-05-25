@@ -1,16 +1,8 @@
-import 'dart:async';
-import 'dart:math' as math;
-
-import 'package:decorated_flutter/decorated_flutter.dart';
-import 'package:flutter/material.dart';
-import 'package:rxdart/rxdart.dart';
-
-typedef _Fetch<R, T> = Future<R> Function(T arg);
-typedef _PageFetch<R, T> = Future<R> Function(int page, T arg);
+part of 'base.dart';
 
 /// 业务单元基类
-abstract class BaseIO<T> {
-  BaseIO({
+abstract class BaseOptionalIO<T> extends BaseIO<T?> {
+  BaseOptionalIO({
     /// 初始值, 传递给内部的[_subject]
     T? seedValue,
 
@@ -28,113 +20,18 @@ abstract class BaseIO<T> {
 
     /// 重置回调方法, 如果设置了, 则调用reset的时候会优先使用此回调的返回值
     T? Function()? onReset,
-  })  : _semantics = semantics,
-        _seedValue = seedValue,
-        _printLog = printLog,
-        latest = seedValue,
-        _onReset = onReset,
-        _subject = isBehavior
-            ? seedValue != null
-                ? BehaviorSubject<T>.seeded(seedValue, sync: sync)
-                : BehaviorSubject<T>(sync: sync)
-            : PublishSubject<T>(sync: sync) {
-    _subject.listen((data) {
-      latest = data;
-      if (_printLog)
-        L.d('当前$semantics latest: $latest'
-            '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
-    });
-  }
-
-  /// 最新的值
-  T? latest;
-
-  /// 初始值
-  @protected
-  T? _seedValue;
-
-  /// 初始值
-  @protected
-  bool _printLog;
-
-  /// 语义
-  @protected
-  String _semantics;
-
-  /// 内部中转对象
-  @protected
-  Subject<T?> _subject;
-
-  /// 重置回调方法
-  @protected
-  T? Function()? _onReset;
-
-  void addError(Object error, [StackTrace? stackTrace]) {
-    if (_subject.isClosed) return;
-
-    _subject.addError(error, stackTrace);
-  }
-
-  Stream<S> map<S>(S Function(T? event) convert) {
-    return _subject.map(convert);
-  }
-
-  Stream<T?> where(bool Function(T? event) test) {
-    return _subject.where(test);
-  }
-
-  Stream<T?> distinct([bool Function(T? previous, T? next)? test]) {
-    return test != null ? _subject.distinct(test) : _subject.distinct();
-  }
-
-  Stream<T?> sample(Duration duration) {
-    return _subject.sampleTime(duration);
-  }
-
-  /// 清理保存的值, 恢复成初始状态
-  ///
-  /// 如果设置了[_onReset], 则以[_onReset]的返回值为准
-  void reset() {
-    if (_subject.isClosed) return;
-
-    if (_printLog)
-      L.d('-----------------------------BEGIN---------------------------------\n'
-          '$_semantics事件 重置 '
-          '\n------------------------------END----------------------------------');
-    _subject.add(_onReset != null ? _onReset!() : _seedValue);
-  }
-
-  /// 重新发送数据 用户修改数据后刷新的场景
-  void invalidate() {
-    if (_subject.isClosed) return;
-
-    _subject.add(latest);
-  }
-
-  /// 关闭流
-  void dispose() {
-    if (_subject.isClosed) return;
-
-    if (_printLog)
-      L.d('=============================BEGIN===============================\n'
-          '$_semantics事件 disposed '
-          '\n==============================END================================');
-    _subject.close();
-  }
-
-  /// 运行时概要
-  String runtimeSummary() {
-    return '$_semantics:\n\t\tseedValue: $_seedValue,\n\t\tlatest: $latest';
-  }
-
-  @override
-  String toString() {
-    return 'Output{latest: $latest, seedValue: $_seedValue, semantics: $_semantics, subject: $_subject}';
-  }
+  }) : super(
+          seedValue: seedValue,
+          semantics: semantics,
+          sync: sync,
+          printLog: printLog,
+          isBehavior: isBehavior,
+          onReset: onReset,
+        );
 }
 
 /// BLoC内的静态值, 也就是供初始化时的值, 之前都是直接写成字段, 这里提供一个类, 保持与IO的一致性
-class Static<T> {
+class OptionalStatic<T> {
   T? _content;
 
   void set(T value) {
@@ -145,8 +42,8 @@ class Static<T> {
 }
 
 /// 只输入数据的业务单元
-class Input<T> extends BaseIO<T> with InputMixin<T> {
-  Input({
+class OptionalInput<T> extends BaseOptionalIO<T> with OptionalInputMixin<T> {
+  OptionalInput({
     T? seedValue,
     required String semantics,
     bool sync = true,
@@ -169,8 +66,9 @@ class Input<T> extends BaseIO<T> with InputMixin<T> {
 }
 
 /// 只输出数据的业务单元
-class Output<T, ARG_TYPE> extends BaseIO<T?> with OutputMixin<T?, ARG_TYPE> {
-  Output({
+class OptionalOutput<T, ARG_TYPE> extends BaseOptionalIO<T?>
+    with OptionalOutputMixin<T?, ARG_TYPE> {
+  OptionalOutput({
     T? seedValue,
     required String semantics,
     bool sync = true,
@@ -192,8 +90,9 @@ class Output<T, ARG_TYPE> extends BaseIO<T?> with OutputMixin<T?, ARG_TYPE> {
 }
 
 /// 既可以输入又可以输出的事件
-class IO<T> extends BaseIO<T?> with InputMixin<T?>, OutputMixin<T?, dynamic> {
-  IO({
+class OptionalIO<T> extends BaseOptionalIO<T?>
+    with OptionalInputMixin<T?>, OptionalOutputMixin<T?, dynamic> {
+  OptionalIO({
     T? seedValue,
     required String semantics,
     bool sync = true,
@@ -221,8 +120,9 @@ class IO<T> extends BaseIO<T?> with InputMixin<T?>, OutputMixin<T?, dynamic> {
 
 //region 衍生IO
 /// 内部数据类型是[List]的输入业务单元
-class ListInput<T> extends Input<List<T>?> with ListMixin<T> {
-  ListInput({
+class OptionalListInput<T> extends OptionalInput<List<T>?>
+    with OptionalListMixin<T> {
+  OptionalListInput({
     List<T>? seedValue,
     required String semantics,
     bool sync = true,
@@ -249,9 +149,9 @@ class ListInput<T> extends Input<List<T>?> with ListMixin<T> {
 /// 内部数据类型是[List]的输出业务单元
 ///
 /// 泛型[T]为列表项的类型
-class ListOutput<T, ARG_TYPE> extends Output<List<T>?, ARG_TYPE>
-    with ListMixin<T> {
-  ListOutput({
+class OptionalListOutput<T, ARG_TYPE> extends OptionalOutput<List<T>?, ARG_TYPE>
+    with OptionalListMixin<T> {
+  OptionalListOutput({
     List<T>? seedValue,
     required String semantics,
     bool sync = true,
@@ -274,9 +174,9 @@ class ListOutput<T, ARG_TYPE> extends Output<List<T>?, ARG_TYPE>
 }
 
 /// 分页业务单元
-class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
-    with PageMixin<T, ARG_TYPE> {
-  PageOutput({
+class OptionalPageOutput<T, ARG_TYPE> extends OptionalListOutput<T, int>
+    with OptionalPageMixin<T, ARG_TYPE> {
+  OptionalPageOutput({
     List<T>? seedValue,
     required String semantics,
     bool sync = true,
@@ -313,8 +213,9 @@ class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
 }
 
 /// 分页业务单元
-class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
-  PageIO({
+class OptionalPageIO<T, ARG_TYPE> extends OptionalListIO<T>
+    with OptionalPageMixin<T, ARG_TYPE> {
+  OptionalPageIO({
     List<T>? seedValue,
     required String semantics,
     bool sync = true,
@@ -345,8 +246,8 @@ class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
 }
 
 /// 内部数据类型是[List]的输入输出业务单元
-class ListIO<T> extends IO<List<T>> with ListMixin<T> {
-  ListIO({
+class OptionalListIO<T> extends OptionalIO<List<T>> with OptionalListMixin<T> {
+  OptionalListIO({
     List<T>? seedValue,
     required String semantics,
     bool sync = true,
@@ -373,8 +274,8 @@ class ListIO<T> extends IO<List<T>> with ListMixin<T> {
 }
 
 /// 只接收int类型数据的IO
-class IntIO extends IO<int?> with IntMixin {
-  IntIO({
+class OptionalIntIO extends OptionalIO<int?> with OptionalIntMixin {
+  OptionalIntIO({
     int? seedValue,
     required String semantics,
     bool sync = true,
@@ -405,8 +306,8 @@ class IntIO extends IO<int?> with IntMixin {
 }
 
 /// 只接收int类型数据的Input
-class IntInput extends Input<int?> with IntMixin {
-  IntInput({
+class OptionalIntInput extends OptionalInput<int?> with OptionalIntMixin {
+  OptionalIntInput({
     int? seedValue,
     required String semantics,
     bool sync = true,
@@ -435,8 +336,8 @@ class IntInput extends Input<int?> with IntMixin {
 }
 
 /// 只接收bool类型数据的IO
-class BoolIO extends IO<bool?> with BoolMixin {
-  BoolIO({
+class OptionalBoolIO extends OptionalIO<bool?> with OptionalBoolMixin {
+  OptionalBoolIO({
     bool? seedValue,
     required String semantics,
     bool sync = true,
@@ -460,8 +361,9 @@ class BoolIO extends IO<bool?> with BoolMixin {
 }
 
 /// 只接收bool类型数据的Output
-class BoolOutput<ARG_TYPE> extends Output<bool, ARG_TYPE> with BoolMixin {
-  BoolOutput({
+class OptionalBoolOutput<ARG_TYPE> extends OptionalOutput<bool, ARG_TYPE>
+    with OptionalBoolMixin {
+  OptionalBoolOutput({
     bool? seedValue,
     required String semantics,
     bool sync = true,
@@ -479,39 +381,12 @@ class BoolOutput<ARG_TYPE> extends Output<bool, ARG_TYPE> with BoolMixin {
           onReset: onReset,
         );
 }
-
-/// 没有数据, 只发射信号的IO
-class Signal extends IO<dynamic> {
-  Signal({required String semantics})
-      : super(
-          semantics: semantics,
-          isBehavior: false,
-          fetch: (_) => Future.value(anyObject),
-        );
-
-  @override
-  void reset() {
-    // do nothing
-  }
-
-  // 隐藏add方法
-  @protected
-  @override
-  void add(dynamic data) {
-    super.add(data);
-  }
-
-  /// 发射信号
-  void emit() {
-    add(Object());
-  }
-}
 //endregion
 
 /// 输入单元特有的成员
 ///
 /// 泛型[T]为数据数据的类型
-mixin InputMixin<T> on BaseIO<T> {
+mixin OptionalInputMixin<T> on BaseOptionalIO<T> {
   bool _acceptEmpty = true;
   bool _isDistinct = false;
 
@@ -571,7 +446,7 @@ mixin InputMixin<T> on BaseIO<T> {
 ///
 /// 泛型[T]为输出数据的类型, 泛型[ARG_TYPE]为请求数据时的参数类型. 一般参数只有一个时, 就
 /// 直接使用该参数的类型, 如果有多个时, 就使用List接收.
-mixin OutputMixin<T, ARG_TYPE> on BaseIO<T> {
+mixin OptionalOutputMixin<T, ARG_TYPE> on BaseOptionalIO<T> {
   /// 输出Future
   Future<T> get future => stream.first;
 
@@ -609,7 +484,7 @@ mixin OutputMixin<T, ARG_TYPE> on BaseIO<T> {
 }
 
 /// 内部数据是[List]特有的成员
-mixin ListMixin<T> on BaseIO<List<T>?> {
+mixin OptionalListMixin<T> on BaseOptionalIO<List<T>?> {
   /// 强制内部列表最大长度, 超过这个长度后, 如果是从前面添加数据则弹出最后的数据, 从后面添加则反之.
   int? _forceCapacity;
 
@@ -782,7 +657,7 @@ mixin ListMixin<T> on BaseIO<List<T>?> {
   }
 }
 
-mixin BoolMixin on BaseIO<bool?> {
+mixin OptionalBoolMixin on BaseOptionalIO<bool?> {
   /// 切换true/false 并发射
   bool? toggle() {
     if (_subject.isClosed) return null;
@@ -793,7 +668,7 @@ mixin BoolMixin on BaseIO<bool?> {
   }
 }
 
-mixin IntMixin on BaseIO<int?> {
+mixin OptionalIntMixin on BaseOptionalIO<int?> {
   int? _min;
   int? _max;
   int? _remainder;
@@ -839,7 +714,7 @@ mixin IntMixin on BaseIO<int?> {
   }
 }
 
-mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
+mixin OptionalPageMixin<T, ARG_TYPE> on OptionalListMixin<T> {
   /// 初始页 因为后端业务对初始页的定义不一定一样, 这里提供设置参数
   int _initPage = 0;
 
@@ -949,7 +824,7 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
 }
 
 /// 内部数据是[EvictingQueue]特有的成员
-mixin EvictingQueueMixin<T> on BaseIO<EvictingQueue<T>> {
+mixin EvictingQueueMixin<T> on BaseOptionalIO<EvictingQueue<T>> {
   /// 追加, 并发射
   T? append(T element, {bool fromHead = false}) {
     if (_subject.isClosed) return null;
