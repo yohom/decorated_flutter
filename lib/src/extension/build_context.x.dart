@@ -6,7 +6,11 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 extension BuildContextX on BuildContext {
-  T? of<T extends BLoC>() {
+  T of<T extends BLoC>() {
+    return BLoCProvider.of<T>(this)!;
+  }
+
+  T? maybeOf<T extends BLoC>() {
     return BLoCProvider.of<T>(this);
   }
 
