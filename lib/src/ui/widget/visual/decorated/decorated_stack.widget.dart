@@ -98,6 +98,7 @@ class DecoratedStack extends StatelessWidget {
       alignment: alignment ?? AlignmentDirectional.topStart,
       fit: stackFit ?? StackFit.loose,
       overflow: overflow ?? Overflow.clip,
+      clipBehavior: clipBehavior,
       children: <Widget>[
         if (childrenZIndex == ZIndex.bottom) ...children,
         if (topStart != null) Positioned(top: 0, left: 0, child: topStart!),

@@ -1,5 +1,3 @@
-
-
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +17,7 @@ class RuntimeScaffold<T extends LocalBLoC> extends StatelessWidget {
     this.backgroundColor,
     this.resizeToAvoidBottomPadding = true,
     this.primary = true,
-  })  : assert(primary != null),
-        super(key: key);
+  }) : super(key: key);
 
   //region Scaffold
   final PreferredSizeWidget? appBar;

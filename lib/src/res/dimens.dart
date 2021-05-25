@@ -60,6 +60,20 @@ const SLIVER_SPACE_4_VERTICAL = SliverToBoxAdapter(
   child: SizedBox(width: kSpace0, height: kSpace4),
 );
 
+const SPACE_6 = SizedBox(width: kSpace6, height: kSpace6);
+const SPACE_6_HORIZONTAL = SizedBox(width: kSpace6, height: kSpace0);
+const SPACE_6_VERTICAL = SizedBox(width: kSpace0, height: kSpace6);
+
+const SLIVER_SPACE_6 = SliverToBoxAdapter(
+  child: SizedBox(width: kSpace6, height: kSpace6),
+);
+const SLIVER_SPACE_6_HORIZONTAL = SliverToBoxAdapter(
+  child: SizedBox(width: kSpace6, height: kSpace0),
+);
+const SLIVER_SPACE_6_VERTICAL = SliverToBoxAdapter(
+  child: SizedBox(width: kSpace0, height: kSpace6),
+);
+
 const SPACE_8 = SizedBox(width: kSpace8, height: kSpace8);
 const SPACE_8_HORIZONTAL = SizedBox(width: kSpace8, height: kSpace0);
 const SPACE_8_VERTICAL = SizedBox(width: kSpace0, height: kSpace8);
@@ -156,6 +170,20 @@ const SLIVER_SPACE_48_HORIZONTAL = SliverToBoxAdapter(
 );
 const SLIVER_SPACE_48_VERTICAL = SliverToBoxAdapter(
   child: SizedBox(width: kSpace0, height: kSpace48),
+);
+
+const SPACE_56 = SizedBox(width: kSpace56, height: kSpace56);
+const SPACE_56_HORIZONTAL = SizedBox(width: kSpace56, height: kSpace0);
+const SPACE_56_VERTICAL = SizedBox(width: kSpace0, height: kSpace56);
+
+const SLIVER_SPACE_56 = SliverToBoxAdapter(
+  child: SizedBox(width: kSpace56, height: kSpace56),
+);
+const SLIVER_SPACE_56_HORIZONTAL = SliverToBoxAdapter(
+  child: SizedBox(width: kSpace56, height: kSpace0),
+);
+const SLIVER_SPACE_56_VERTICAL = SliverToBoxAdapter(
+  child: SizedBox(width: kSpace0, height: kSpace56),
 );
 
 const SPACE_64 = SizedBox(width: kSpace64, height: kSpace64);

@@ -1,0 +1,166 @@
+import 'dart:async';
+import 'dart:math' as math;
+
+import 'package:decorated_flutter/decorated_flutter.dart';
+import 'package:decorated_flutter/src/utils/utils.export.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:rxdart/rxdart.dart';
+
+part 'optional.dart';
+part 'required.dart';
+
+typedef _Fetch<R, T> = Future<R> Function(T arg);
+typedef _PageFetch<R, T> = Future<R> Function(int page, T arg);
+
+abstract class BaseIO<T> {
+  BaseIO({
+    /// 初始值, 传递给内部的[_subject]
+    required T seedValue,
+
+    /// Event代表的语义
+    required String semantics,
+
+    /// 是否同步发射数据, 传递给内部的[_subject]
+    bool sync = true,
+
+    /// 是否打印日志, 有些IO add比较频繁时, 影响日志观看
+    bool printLog = true,
+
+    /// 是否使用BehaviorSubject, 如果使用, 那么Event内部的[_subject]会保存最近一次的值
+    bool isBehavior = true,
+
+    /// 重置回调方法, 如果设置了, 则调用reset的时候会优先使用此回调的返回值
+    T Function()? onReset,
+  })  : _semantics = semantics,
+        _seedValue = seedValue,
+        _printLog = printLog,
+        latest = seedValue,
+        _onReset = onReset,
+        _subject = isBehavior
+            ? seedValue != null
+                ? BehaviorSubject<T>.seeded(seedValue, sync: sync)
+                : BehaviorSubject<T>(sync: sync)
+            : PublishSubject<T>(sync: sync) {
+    _subject.listen((data) {
+      latest = data;
+      if (_printLog)
+        L.d('当前$semantics latest: $latest'
+            '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
+    });
+  }
+
+  /// 最新的值
+  T latest;
+
+  /// 初始值
+  @protected
+  T _seedValue;
+
+  /// 初始值
+  @protected
+  bool _printLog;
+
+  /// 语义
+  @protected
+  String _semantics;
+
+  /// 内部中转对象
+  @protected
+  Subject<T> _subject;
+
+  /// 重置回调方法
+  @protected
+  T Function()? _onReset;
+
+  void addError(Object error, [StackTrace? stackTrace]) {
+    if (_subject.isClosed) return;
+
+    _subject.addError(error, stackTrace);
+  }
+
+  Stream<S> map<S>(S Function(T? event) convert) {
+    return _subject.map(convert);
+  }
+
+  Stream<T?> where(bool Function(T? event) test) {
+    return _subject.where(test);
+  }
+
+  Stream<T?> distinct([bool Function(T? previous, T? next)? test]) {
+    return test != null ? _subject.distinct(test) : _subject.distinct();
+  }
+
+  Stream<T?> sample(Duration duration) {
+    return _subject.sampleTime(duration);
+  }
+
+  /// 清理保存的值, 恢复成初始状态
+  ///
+  /// 如果设置了[_onReset], 则以[_onReset]的返回值为准
+  void reset() {
+    if (_subject.isClosed) return;
+
+    if (_printLog)
+      L.d('-----------------------------BEGIN---------------------------------\n'
+          '$_semantics事件 重置 '
+          '\n------------------------------END----------------------------------');
+    _subject.add(_onReset != null ? _onReset!() : _seedValue);
+  }
+
+  /// 重新发送数据 用户修改数据后刷新的场景
+  void invalidate() {
+    if (_subject.isClosed) return;
+
+    _subject.add(latest);
+  }
+
+  /// 关闭流
+  void dispose() {
+    if (_subject.isClosed) return;
+
+    if (_printLog)
+      L.d('=============================BEGIN===============================\n'
+          '$_semantics事件 disposed '
+          '\n==============================END================================');
+    _subject.close();
+  }
+
+  /// 运行时概要
+  String runtimeSummary() {
+    return '$_semantics:\n\t\tseedValue: $_seedValue,\n\t\tlatest: $latest';
+  }
+
+  @override
+  String toString() {
+    return 'Output{latest: $latest, seedValue: $_seedValue, semantics: $_semantics, subject: $_subject}';
+  }
+}
+
+/// 没有数据, 只发射信号的IO
+class Signal extends IO<dynamic> {
+  Signal({required String semantics})
+      : super(
+          seedValue: anyObject,
+          semantics: semantics,
+          isBehavior: false,
+          fetch: (_) => Future.value(anyObject),
+        );
+
+  @override
+  void reset() {
+    // do nothing
+  }
+
+  // 隐藏add方法
+  @protected
+  @override
+  void add(dynamic data) {
+    super.add(data);
+  }
+
+  /// 发射信号
+  void emit() {
+    add(Object());
+  }
+}

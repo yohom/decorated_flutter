@@ -5,14 +5,14 @@ class Countdown extends StatefulWidget {
   const Countdown({
     Key? key,
     required this.initialData,
-    this.duration = const Duration(seconds: 1),
+    this.interval = const Duration(seconds: 1),
     required this.builder,
     this.onPressed,
   }) : super(key: key);
 
   final int initialData;
-  final Duration duration;
-  final Widget Function(BuildContext, int?) builder;
+  final Duration interval;
+  final Widget Function(BuildContext, int) builder;
   final ContextCallback? onPressed;
 
   @override
@@ -26,7 +26,7 @@ class _CountdownState extends State<Countdown> {
   void initState() {
     super.initState();
     _countStream = Stream.periodic(
-      widget.duration,
+      widget.interval,
       (count) => widget.initialData - 1 - count,
     ).take(widget.initialData);
   }
@@ -37,7 +37,7 @@ class _CountdownState extends State<Countdown> {
       initialData: widget.initialData,
       stream: _countStream,
       builder: (context, snapshot) {
-        return widget.builder(context, snapshot.data);
+        return widget.builder(context, snapshot.data!);
       },
     );
 

@@ -6,7 +6,11 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 extension BuildContextX on BuildContext {
-  T? of<T extends BLoC>() {
+  T of<T extends BLoC>() {
+    return BLoCProvider.of<T>(this)!;
+  }
+
+  T? maybeOf<T extends BLoC>() {
     return BLoCProvider.of<T>(this);
   }
 
@@ -22,8 +26,8 @@ extension BuildContextX on BuildContext {
     FocusScope.of(this).unfocus();
   }
 
-  FormState? get form {
-    return Form.of(this);
+  FormState get form {
+    return Form.of(this)!;
   }
 
   double get height {

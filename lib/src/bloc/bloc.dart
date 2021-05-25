@@ -4,7 +4,7 @@ import 'package:decorated_flutter/src/utils/log.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rxdart/rxdart.dart';
 
-import 'bloc_io.dart';
+import 'bloc_io/base.dart';
 
 @immutable
 abstract class BLoC {
@@ -51,6 +51,7 @@ abstract class LocalBLoC extends BLoC {
 
   @protected
   List<BaseIO> get disposeBag => [];
+
   @protected
   final CompositeSubscription compositeSubscription = CompositeSubscription();
 
@@ -72,6 +73,7 @@ abstract class GlobalBLoC extends BLoC {
 
   @protected
   List<BaseIO> get disposeBag => [];
+
   @protected
   final CompositeSubscription compositeSubscription = CompositeSubscription();
 
