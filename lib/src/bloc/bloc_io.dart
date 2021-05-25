@@ -5,8 +5,8 @@ import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
-typedef _Fetch<T, ARG_TYPE> = Future<T> Function(ARG_TYPE arg);
-typedef _PageFetch<T, ARG_TYPE> = Future<T> Function(int page, ARG_TYPE arg);
+typedef _Fetch<R, T> = Future<R> Function(T arg);
+typedef _PageFetch<R, T> = Future<R> Function(int page, T arg);
 
 /// 业务单元基类
 abstract class BaseIO<T> {
