@@ -79,19 +79,19 @@ abstract class BaseIO<T> {
     _subject.addError(error, stackTrace);
   }
 
-  Stream<S> map<S>(S Function(T? event) convert) {
+  Stream<S> map<S>(S Function(T event) convert) {
     return _subject.map(convert);
   }
 
-  Stream<T?> where(bool Function(T? event) test) {
+  Stream<T> where(bool Function(T event) test) {
     return _subject.where(test);
   }
 
-  Stream<T?> distinct([bool Function(T? previous, T? next)? test]) {
+  Stream<T> distinct([bool Function(T previous, T next)? test]) {
     return test != null ? _subject.distinct(test) : _subject.distinct();
   }
 
-  Stream<T?> sample(Duration duration) {
+  Stream<T> sample(Duration duration) {
     return _subject.sampleTime(duration);
   }
 
