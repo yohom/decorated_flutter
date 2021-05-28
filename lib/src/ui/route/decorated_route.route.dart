@@ -22,6 +22,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
     this.onLateinit,
     this.animate = true,
     this.withForm = false,
+    this.withLocalNavigator = false,
     this.withDefaultTabController = false,
     this.tabLength,
     this.onDispose,
@@ -67,6 +68,9 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
   /// 是否带有表单
   final bool withForm;
 
+  /// 是否局部navigator
+  final bool withLocalNavigator;
+
   /// 是否含有TabBar
   final bool withDefaultTabController;
 
@@ -90,16 +94,20 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
     Animation<double> animation,
     Animation<double> secondaryAnimation,
   ) {
-    Widget result;
+    Widget result = builder(context);
+
+    if (withLocalNavigator) {
+      final tempResult = result;
+      result = LocalNavigator(builder: (_) => tempResult);
+    }
+
     if (bloc != null) {
       result = BLoCProvider<B>(
         bloc: bloc!,
         init: init,
-        child: builder(context),
+        child: result,
         onDispose: onDispose,
       );
-    } else {
-      result = builder(context);
     }
 
     // 是否自动收起键盘
