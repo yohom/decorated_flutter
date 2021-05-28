@@ -20,6 +20,7 @@ abstract class BaseRequiredIO<T> extends BaseIO<T> {
 
     /// 重置回调方法, 如果设置了, 则调用reset的时候会优先使用此回调的返回值
     T Function()? onReset,
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -27,6 +28,7 @@ abstract class BaseRequiredIO<T> extends BaseIO<T> {
           printLog: printLog,
           isBehavior: isBehavior,
           onReset: onReset,
+          persistentKey: persistentKey,
         );
 }
 
@@ -52,12 +54,14 @@ class Input<T> extends BaseRequiredIO<T> with InputMixin<T> {
     bool acceptEmpty = true,
     bool isDistinct = false,
     T Function()? onReset,
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
           sync: sync,
           isBehavior: isBehavior,
           onReset: onReset,
+          persistentKey: persistentKey,
         ) {
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
@@ -76,12 +80,14 @@ class Output<T, ARG_TYPE> extends BaseRequiredIO<T>
     bool isBehavior = true,
     required _Fetch<T, ARG_TYPE?> fetch,
     T Function()? onReset,
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
           sync: sync,
           isBehavior: isBehavior,
           onReset: onReset,
+          persistentKey: persistentKey,
         ) {
     stream = _subject.stream;
     _fetch = fetch;
@@ -102,12 +108,14 @@ class IO<T> extends BaseRequiredIO<T>
     bool printLog = true,
     _Fetch<T, dynamic>? fetch,
     T Function()? onReset,
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
           sync: sync,
           isBehavior: isBehavior,
           onReset: onReset,
+          persistentKey: persistentKey,
         ) {
     stream = _subject.stream;
 
@@ -131,6 +139,7 @@ class ListInput<T> extends Input<List<T>> with ListMixin<T> {
     bool isDistinct = false,
     int? forceCapacity,
     List<T> Function()? onReset,
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -140,6 +149,7 @@ class ListInput<T> extends Input<List<T>> with ListMixin<T> {
           isDistinct: isDistinct,
           printLog: printLog,
           onReset: onReset,
+          persistentKey: persistentKey,
         ) {
     _forceCapacity = forceCapacity;
   }
@@ -159,6 +169,7 @@ class ListOutput<T, ARG_TYPE> extends Output<List<T>, ARG_TYPE>
     int? forceCapacity,
     required _Fetch<List<T>, ARG_TYPE?> fetch,
     List<T> Function()? onReset,
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -167,6 +178,7 @@ class ListOutput<T, ARG_TYPE> extends Output<List<T>, ARG_TYPE>
           fetch: fetch,
           printLog: printLog,
           onReset: onReset,
+          persistentKey: persistentKey,
         ) {
     _forceCapacity = forceCapacity;
   }
@@ -187,6 +199,7 @@ class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
     int? forceCapacity,
     required _PageFetch<List<T>, ARG_TYPE?> pageFetch,
     List<T> Function()? onReset,
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -194,6 +207,7 @@ class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
           isBehavior: isBehavior,
           fetch: (_) => Future.value([]),
           onReset: onReset,
+          persistentKey: persistentKey,
         ) {
     _initPage = initPage;
     _currentPage = _initPage;
@@ -225,6 +239,7 @@ class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
     int? forceCapacity,
     _PageFetch<List<T>, ARG_TYPE?>? pageFetch,
     List<T> Function()? onReset,
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -232,6 +247,7 @@ class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
           isBehavior: isBehavior,
           fetch: (_) => Future.value([]),
           onReset: onReset,
+          persistentKey: persistentKey,
         ) {
     _initPage = initPage;
     _currentPage = _initPage;
@@ -256,6 +272,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin<T> {
     int? forceCapacity,
     _Fetch<List<T>, dynamic>? fetch,
     List<T> Function()? onReset,
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -266,6 +283,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin<T> {
           fetch: fetch,
           printLog: printLog,
           onReset: onReset,
+          persistentKey: persistentKey,
         ) {
     _forceCapacity = forceCapacity;
   }
@@ -286,6 +304,7 @@ class IntIO extends IO<int> with IntMixin {
     int? remainder,
     _Fetch<int, dynamic>? fetch,
     int Function()? onReset,
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -296,6 +315,7 @@ class IntIO extends IO<int> with IntMixin {
           fetch: fetch,
           printLog: printLog,
           onReset: onReset,
+          persistentKey: persistentKey,
         ) {
     _min = min;
     _max = max;
@@ -317,6 +337,7 @@ class IntInput extends Input<int> with IntMixin {
     int? remainder,
     bool printLog = true,
     int Function()? onReset,
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -326,6 +347,7 @@ class IntInput extends Input<int> with IntMixin {
           isDistinct: isDistinct,
           printLog: printLog,
           onReset: onReset,
+          persistentKey: persistentKey,
         ) {
     this._min = min;
     this._max = max;
@@ -345,6 +367,7 @@ class BoolIO extends IO<bool> with BoolMixin {
     bool printLog = true,
     _Fetch<bool, dynamic>? fetch,
     bool Function()? onReset,
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -355,6 +378,7 @@ class BoolIO extends IO<bool> with BoolMixin {
           fetch: fetch,
           printLog: printLog,
           onReset: onReset,
+          persistentKey: persistentKey,
         );
 }
 
@@ -368,6 +392,7 @@ class BoolOutput<ARG_TYPE> extends Output<bool, ARG_TYPE> with BoolMixin {
     bool printLog = true,
     required _Fetch<bool, ARG_TYPE?> fetch,
     bool Function()? onReset,
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -376,6 +401,7 @@ class BoolOutput<ARG_TYPE> extends Output<bool, ARG_TYPE> with BoolMixin {
           fetch: fetch,
           printLog: printLog,
           onReset: onReset,
+          persistentKey: persistentKey,
         );
 }
 

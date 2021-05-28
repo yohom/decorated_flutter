@@ -7,6 +7,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../persistence.dart';
+
 part 'optional.dart';
 part 'required.dart';
 
@@ -14,6 +16,12 @@ typedef _Fetch<R, T> = Future<R> Function(T arg);
 typedef _PageFetch<R, T> = Future<R> Function(int page, T arg);
 
 abstract class BaseIO<T> {
+  static Persistence? _persistence;
+
+  static void registerPersistence(Persistence persistence) {
+    _persistence = persistence;
+  }
+
   BaseIO({
     /// 初始值, 传递给内部的[_subject]
     required T seedValue,
@@ -32,6 +40,10 @@ abstract class BaseIO<T> {
 
     /// 重置回调方法, 如果设置了, 则调用reset的时候会优先使用此回调的返回值
     T Function()? onReset,
+
+    /// 是否持久化数据, 如果是持久化数据, 则数据变化时便会持久化, 且如果是BehaviorSubject
+    /// 则下次构造时会发射上一次持久化的数据
+    String? persistentKey,
   })  : _semantics = semantics,
         _seedValue = seedValue,
         _printLog = printLog,
@@ -44,10 +56,25 @@ abstract class BaseIO<T> {
             : PublishSubject<T>(sync: sync) {
     _subject.listen((data) {
       latest = data;
+      if (persistentKey != null) {
+        if (_persistence != null) {
+          _persistence!.writeValue(persistentKey, data);
+        } else {
+          L.w('未注册持久层! 请调用BaseIO.registerPersistence注册持久层');
+        }
+      }
       if (_printLog)
         L.d('当前$semantics latest: $latest'
             '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
     });
+    // 如果是BehaviorSubject, 则检查是否有持久化下来的数据, 有则发射
+    if (isBehavior) {
+      if (persistentKey != null) {
+        final value = _persistence?.readValue(persistentKey);
+
+        if (value != null) _subject.add(value);
+      }
+    }
   }
 
   /// 最新的值
@@ -79,19 +106,19 @@ abstract class BaseIO<T> {
     _subject.addError(error, stackTrace);
   }
 
-  Stream<S> map<S>(S Function(T? event) convert) {
+  Stream<S> map<S>(S Function(T event) convert) {
     return _subject.map(convert);
   }
 
-  Stream<T?> where(bool Function(T? event) test) {
+  Stream<T> where(bool Function(T event) test) {
     return _subject.where(test);
   }
 
-  Stream<T?> distinct([bool Function(T? previous, T? next)? test]) {
+  Stream<T> distinct([bool Function(T previous, T next)? test]) {
     return test != null ? _subject.distinct(test) : _subject.distinct();
   }
 
-  Stream<T?> sample(Duration duration) {
+  Stream<T> sample(Duration duration) {
     return _subject.sampleTime(duration);
   }
 

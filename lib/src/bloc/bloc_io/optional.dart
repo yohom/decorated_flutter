@@ -20,6 +20,9 @@ abstract class BaseOptionalIO<T> extends BaseIO<T?> {
 
     /// 重置回调方法, 如果设置了, 则调用reset的时候会优先使用此回调的返回值
     T? Function()? onReset,
+
+    /// 持久化的key
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -27,6 +30,7 @@ abstract class BaseOptionalIO<T> extends BaseIO<T?> {
           printLog: printLog,
           isBehavior: isBehavior,
           onReset: onReset,
+          persistentKey: persistentKey,
         );
 }
 
@@ -52,12 +56,14 @@ class OptionalInput<T> extends BaseOptionalIO<T> with OptionalInputMixin<T> {
     bool acceptEmpty = true,
     bool isDistinct = false,
     T? Function()? onReset,
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
           sync: sync,
           isBehavior: isBehavior,
           onReset: onReset,
+          persistentKey: persistentKey,
         ) {
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
@@ -76,12 +82,14 @@ class OptionalOutput<T, ARG_TYPE> extends BaseOptionalIO<T?>
     bool isBehavior = true,
     required _Fetch<T, ARG_TYPE?> fetch,
     T? Function()? onReset,
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
           sync: sync,
           isBehavior: isBehavior,
           onReset: onReset,
+          persistentKey: persistentKey,
         ) {
     stream = _subject.stream;
     _fetch = fetch;
@@ -102,12 +110,14 @@ class OptionalIO<T> extends BaseOptionalIO<T?>
     bool printLog = true,
     _Fetch<T, dynamic>? fetch,
     T? Function()? onReset,
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
           sync: sync,
           isBehavior: isBehavior,
           onReset: onReset,
+          persistentKey: persistentKey,
         ) {
     stream = _subject.stream;
 
@@ -132,6 +142,7 @@ class OptionalListInput<T> extends OptionalInput<List<T>?>
     bool isDistinct = false,
     int? forceCapacity,
     List<T>? Function()? onReset,
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -141,6 +152,7 @@ class OptionalListInput<T> extends OptionalInput<List<T>?>
           isDistinct: isDistinct,
           printLog: printLog,
           onReset: onReset,
+          persistentKey: persistentKey,
         ) {
     _forceCapacity = forceCapacity;
   }
@@ -160,6 +172,7 @@ class OptionalListOutput<T, ARG_TYPE> extends OptionalOutput<List<T>?, ARG_TYPE>
     int? forceCapacity,
     required _Fetch<List<T>, ARG_TYPE?> fetch,
     List<T>? Function()? onReset,
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -168,6 +181,7 @@ class OptionalListOutput<T, ARG_TYPE> extends OptionalOutput<List<T>?, ARG_TYPE>
           fetch: fetch,
           printLog: printLog,
           onReset: onReset,
+          persistentKey: persistentKey,
         ) {
     _forceCapacity = forceCapacity;
   }
@@ -188,6 +202,7 @@ class OptionalPageOutput<T, ARG_TYPE> extends OptionalListOutput<T, int>
     int? forceCapacity,
     required _PageFetch<List<T>, ARG_TYPE?> pageFetch,
     List<T>? Function()? onReset,
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -195,6 +210,7 @@ class OptionalPageOutput<T, ARG_TYPE> extends OptionalListOutput<T, int>
           isBehavior: isBehavior,
           fetch: (_) => Future.value([]),
           onReset: onReset,
+          persistentKey: persistentKey,
         ) {
     _initPage = initPage;
     _currentPage = _initPage;
@@ -227,6 +243,7 @@ class OptionalPageIO<T, ARG_TYPE> extends OptionalListIO<T>
     int? forceCapacity,
     _PageFetch<List<T>, ARG_TYPE?>? pageFetch,
     List<T>? Function()? onReset,
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -234,6 +251,7 @@ class OptionalPageIO<T, ARG_TYPE> extends OptionalListIO<T>
           isBehavior: isBehavior,
           fetch: (_) => Future.value([]),
           onReset: onReset,
+          persistentKey: persistentKey,
         ) {
     _initPage = initPage;
     _currentPage = _initPage;
@@ -258,6 +276,7 @@ class OptionalListIO<T> extends OptionalIO<List<T>> with OptionalListMixin<T> {
     int? forceCapacity,
     _Fetch<List<T>, dynamic>? fetch,
     List<T>? Function()? onReset,
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -268,6 +287,7 @@ class OptionalListIO<T> extends OptionalIO<List<T>> with OptionalListMixin<T> {
           fetch: fetch,
           printLog: printLog,
           onReset: onReset,
+          persistentKey: persistentKey,
         ) {
     _forceCapacity = forceCapacity;
   }
@@ -288,6 +308,7 @@ class OptionalIntIO extends OptionalIO<int?> with OptionalIntMixin {
     int? remainder,
     _Fetch<int, dynamic>? fetch,
     int? Function()? onReset,
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -298,6 +319,7 @@ class OptionalIntIO extends OptionalIO<int?> with OptionalIntMixin {
           fetch: fetch,
           printLog: printLog,
           onReset: onReset,
+          persistentKey: persistentKey,
         ) {
     _min = min;
     _max = max;
@@ -319,6 +341,7 @@ class OptionalIntInput extends OptionalInput<int?> with OptionalIntMixin {
     int? remainder,
     bool printLog = true,
     int? Function()? onReset,
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -328,6 +351,7 @@ class OptionalIntInput extends OptionalInput<int?> with OptionalIntMixin {
           isDistinct: isDistinct,
           printLog: printLog,
           onReset: onReset,
+          persistentKey: persistentKey,
         ) {
     this._min = min;
     this._max = max;
@@ -347,6 +371,7 @@ class OptionalBoolIO extends OptionalIO<bool?> with OptionalBoolMixin {
     bool printLog = true,
     _Fetch<bool, dynamic>? fetch,
     bool? Function()? onReset,
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -357,6 +382,7 @@ class OptionalBoolIO extends OptionalIO<bool?> with OptionalBoolMixin {
           fetch: fetch,
           printLog: printLog,
           onReset: onReset,
+          persistentKey: persistentKey,
         );
 }
 
@@ -371,6 +397,7 @@ class OptionalBoolOutput<ARG_TYPE> extends OptionalOutput<bool, ARG_TYPE>
     bool printLog = true,
     required _Fetch<bool, ARG_TYPE?> fetch,
     bool? Function()? onReset,
+    String? persistentKey,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -379,6 +406,7 @@ class OptionalBoolOutput<ARG_TYPE> extends OptionalOutput<bool, ARG_TYPE>
           fetch: fetch,
           printLog: printLog,
           onReset: onReset,
+          persistentKey: persistentKey,
         );
 }
 //endregion

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 
 void toast(
-  String message, {
+  String? message, {
   ToastPosition position = ToastPosition.center,
   double? radius,
   EdgeInsets? padding,
@@ -14,9 +14,9 @@ void toast(
   Duration? duration,
   bool error = false,
 }) {
-  if (isNotEmpty(message))
+  if (isNotEmpty(message)) {
     showToast(
-      message,
+      message!,
       position: position,
       radius: radius,
       duration: duration,
@@ -26,4 +26,7 @@ void toast(
       dismissOtherToast: dismissOtherToast,
       textAlign: textAlign,
     );
+  } else {
+    L.w('toast传入null值, 略过');
+  }
 }
