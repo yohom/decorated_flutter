@@ -416,7 +416,10 @@ mixin InputMixin<T> on BaseRequiredIO<T> {
 
   /// 发射数据
   T? add(T data) {
-    if (_subject.isClosed) return null;
+    if (_subject.isClosed) {
+      L.w('IO在close状态下请求发送数据');
+      return null;
+    }
 
     if (_printLog)
       L.d('+++++++++++++++++++++++++++BEGIN+++++++++++++++++++++++++++++\n'
@@ -450,7 +453,10 @@ mixin InputMixin<T> on BaseRequiredIO<T> {
   }
 
   T? addIfAbsent(T data) {
-    if (_subject.isClosed) return null;
+    if (_subject.isClosed) {
+      L.w('IO在close状态下请求发送数据');
+      return null;
+    }
 
     // 如果最新值是_seedValue或者是空, 那么才add新数据, 换句话说, 就是如果event已经被add过
     // 了的话那就不add了, 用于第一次add
@@ -514,7 +520,10 @@ mixin ListMixin<T> on BaseRequiredIO<List<T>> {
 
   /// 按条件过滤, 并发射过滤后的数据
   List<T>? filterItem(bool Function(T element) test) {
-    if (_subject.isClosed) return null;
+    if (_subject.isClosed) {
+      L.w('IO在close状态下请求发送数据');
+      return null;
+    }
 
     final List<T> filtered = latest.where(test).toList();
     _subject.add(filtered);
@@ -523,7 +532,10 @@ mixin ListMixin<T> on BaseRequiredIO<List<T>> {
 
   /// 追加, 并发射
   T? append(T element, {bool fromHead = false}) {
-    if (_subject.isClosed) return null;
+    if (_subject.isClosed) {
+      L.w('IO在close状态下请求发送数据');
+      return null;
+    }
 
     if (fromHead) {
       final List<T> pending = latest..insert(0, element);
@@ -545,7 +557,10 @@ mixin ListMixin<T> on BaseRequiredIO<List<T>> {
 
   /// 追加一个list, 并发射
   List<T>? appendAll(List<T> elements, {bool fromHead = false}) {
-    if (_subject.isClosed) return null;
+    if (_subject.isClosed) {
+      L.w('IO在close状态下请求发送数据');
+      return null;
+    }
 
     if (fromHead) {
       final List<T> pending = latest..insertAll(0, elements);
@@ -572,7 +587,10 @@ mixin ListMixin<T> on BaseRequiredIO<List<T>> {
 
   /// 替换指定index的元素, 并发射
   T? replace(int index, T element) {
-    if (_subject.isClosed) return null;
+    if (_subject.isClosed) {
+      L.w('IO在close状态下请求发送数据');
+      return null;
+    }
 
     _subject.add(latest..replaceRange(index, index + 1, <T>[element]));
     return element;
@@ -580,7 +598,10 @@ mixin ListMixin<T> on BaseRequiredIO<List<T>> {
 
   /// 替换最后一个的元素, 并发射
   T? replaceLast(T element) {
-    if (_subject.isClosed) return null;
+    if (_subject.isClosed) {
+      L.w('IO在close状态下请求发送数据');
+      return null;
+    }
 
     if (latest.isNotEmpty) {
       _subject.add(latest
@@ -595,7 +616,10 @@ mixin ListMixin<T> on BaseRequiredIO<List<T>> {
 
   /// 替换第一个的元素, 并发射
   T? replaceFirst(T element) {
-    if (_subject.isClosed) return null;
+    if (_subject.isClosed) {
+      L.w('IO在close状态下请求发送数据');
+      return null;
+    }
 
     if (latest.isNotEmpty) {
       _subject.add(latest..replaceRange(0, 1, [element]));
@@ -605,7 +629,10 @@ mixin ListMixin<T> on BaseRequiredIO<List<T>> {
 
   /// 删除最后一个的元素, 并发射
   T? removeLast() {
-    if (_subject.isClosed) return null;
+    if (_subject.isClosed) {
+      L.w('IO在close状态下请求发送数据');
+      return null;
+    }
 
     final T lastElement = latest.last;
     if (latest.isNotEmpty) {
@@ -616,7 +643,10 @@ mixin ListMixin<T> on BaseRequiredIO<List<T>> {
 
   /// 删除一个的元素, 并发射
   T? remove(T element) {
-    if (_subject.isClosed) return null;
+    if (_subject.isClosed) {
+      L.w('IO在close状态下请求发送数据');
+      return null;
+    }
 
     _subject.add(latest..remove(element));
     return element;
@@ -624,7 +654,10 @@ mixin ListMixin<T> on BaseRequiredIO<List<T>> {
 
   /// 删除一组的元素, 并发射
   Iterable<T>? removeBatch(Iterable<T> elements) {
-    if (_subject.isClosed) return null;
+    if (_subject.isClosed) {
+      L.w('IO在close状态下请求发送数据');
+      return null;
+    }
 
     _subject.add(latest..removeWhere((it) => elements.contains(it)));
     return elements;
@@ -639,7 +672,10 @@ mixin ListMixin<T> on BaseRequiredIO<List<T>> {
 
   /// 删除第一个的元素, 并发射
   T? removeFirst() {
-    if (_subject.isClosed) return null;
+    if (_subject.isClosed) {
+      L.w('IO在close状态下请求发送数据');
+      return null;
+    }
 
     final T firstElement = latest.first;
     if (latest.isNotEmpty) {
@@ -650,7 +686,10 @@ mixin ListMixin<T> on BaseRequiredIO<List<T>> {
 
   /// 删除指定索引的元素, 并发射
   T? removeAt(int index) {
-    if (_subject.isClosed) return null;
+    if (_subject.isClosed) {
+      L.w('IO在close状态下请求发送数据');
+      return null;
+    }
 
     final T element = latest.elementAt(index);
     if (element != null) {
@@ -661,7 +700,10 @@ mixin ListMixin<T> on BaseRequiredIO<List<T>> {
 
   /// 对元素逐个执行操作后, 重新发射
   List<T>? forEach(ValueChanged<T> action) {
-    if (_subject.isClosed) return null;
+    if (_subject.isClosed) {
+      L.w('IO在close状态下请求发送数据');
+      return null;
+    }
 
     latest.forEach(action);
     _subject.add(latest);
@@ -670,7 +712,10 @@ mixin ListMixin<T> on BaseRequiredIO<List<T>> {
 
   /// 对[target]进行单选操作, 如果[T]不为[Selectable]则什么都不做, 直接透传
   List<T>? select(T target) {
-    if (_subject.isClosed) return null;
+    if (_subject.isClosed) {
+      L.w('IO在close状态下请求发送数据');
+      return null;
+    }
 
     assert(latest is List<Selectable>);
     return forEach((T data) {
@@ -684,7 +729,10 @@ mixin ListMixin<T> on BaseRequiredIO<List<T>> {
 mixin BoolMixin on BaseRequiredIO<bool> {
   /// 切换true/false 并发射
   bool? toggle() {
-    if (_subject.isClosed) return null;
+    if (_subject.isClosed) {
+      L.w('IO在close状态下请求发送数据');
+      return null;
+    }
 
     final toggled = !latest;
     _subject.add(toggled);
@@ -699,7 +747,10 @@ mixin IntMixin on BaseRequiredIO<int> {
 
   /// 加一个值 并发射
   int? plus([int value = 1]) {
-    if (_subject.isClosed) return null;
+    if (_subject.isClosed) {
+      L.w('IO在close状态下请求发送数据');
+      return null;
+    }
 
     int result;
     if (_remainder != null) {
@@ -720,7 +771,10 @@ mixin IntMixin on BaseRequiredIO<int> {
 
   /// 减一个值 并发射
   int? minus([int value = 1]) {
-    if (_subject.isClosed) return null;
+    if (_subject.isClosed) {
+      L.w('IO在close状态下请求发送数据');
+      return null;
+    }
 
     int result;
     if (_remainder != null) {
