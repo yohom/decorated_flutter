@@ -11,12 +11,14 @@ class BLoCProvider<T extends BLoC> extends StatefulWidget {
     required this.bloc,
     this.init,
     this.onDispose,
+    this.autoDispose = true,
   }) : super(key: key);
 
   final T bloc;
   final _Init<T>? init;
   final Widget child;
   final VoidCallback? onDispose;
+  final bool autoDispose;
 
   @override
   _BLoCProviderState<T> createState() => _BLoCProviderState<T>();
@@ -47,7 +49,9 @@ class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
 
   @override
   void dispose() {
-    widget.bloc.dispose();
+    if (widget.autoDispose) {
+      widget.bloc.dispose();
+    }
 
     if (widget.onDispose != null) {
       widget.onDispose!();
