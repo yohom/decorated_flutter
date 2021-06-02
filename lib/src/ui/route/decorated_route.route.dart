@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:decorated_flutter/src/bloc/bloc.dart';
 import 'package:decorated_flutter/src/bloc/bloc_provider.widget.dart';
+import 'package:decorated_flutter/src/model/tab_controller_config.dart';
 import 'package:decorated_flutter/src/ui/widget/nonvisual/auto_close_keyboard.widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +24,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
     this.animate = true,
     this.withForm = false,
     this.withLocalNavigator = false,
-    this.withDefaultTabController = false,
-    this.tabLength,
+    this.tabControllerConfig,
     this.onDispose,
     this.systemUiOverlayStyle,
     this.animationBuilder,
@@ -33,9 +33,6 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
     bool maintainState = true,
   })  : // 要么同时设置泛型B和bloc参数, 要么就都不设置
         assert((B != BLoC && bloc != null) || (B == BLoC && bloc == null)),
-        // 如果withDefaultTabController为true, 那么必须设置tabLength
-        assert((withDefaultTabController && tabLength != null) ||
-            !withDefaultTabController),
         super(
           fullscreenDialog: fullscreenDialog,
           maintainState: maintainState,
@@ -71,11 +68,8 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
   /// 是否局部navigator
   final bool withLocalNavigator;
 
-  /// 是否含有TabBar
-  final bool withDefaultTabController;
-
-  /// tab bar长度, 必须和[withDefaultTabController]一起设置
-  final int? tabLength;
+  /// 如果需要TabBar, 则配置这个对象
+  final TabControllerConfig? tabControllerConfig;
 
   final VoidCallback? onDispose;
 
@@ -120,8 +114,12 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
       result = Form(child: result);
     }
 
-    if (withDefaultTabController && tabLength != null) {
-      result = DefaultTabController(length: tabLength!, child: result);
+    if (tabControllerConfig != null) {
+      result = DefaultTabController(
+        length: tabControllerConfig!.length,
+        initialIndex: tabControllerConfig!.initialIndex,
+        child: result,
+      );
     }
 
     if (systemUiOverlayStyle != null) {
@@ -192,8 +190,7 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
     this.onLateinit,
     this.withForm = false,
     this.withAnalytics = true,
-    this.withDefaultTabController = false,
-    this.tabLength,
+    this.tabControllerConfig,
     this.onDispose,
     this.systemUiOverlayStyle,
     required String routeName,
@@ -201,9 +198,6 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
     bool maintainState = true,
   })  : // 要么同时设置泛型B和bloc参数, 要么就都不设置
         assert((B != BLoC && bloc != null) || (B == BLoC && bloc == null)),
-        // 如果withDefaultTabController为true, 那么必须设置tabLength
-        assert((withDefaultTabController && tabLength != null) ||
-            !withDefaultTabController),
         super(
           fullscreenDialog: fullscreenDialog,
           maintainState: maintainState,
@@ -235,11 +229,8 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
   /// 是否分析页面并上传
   final bool withAnalytics;
 
-  /// 是否含有TabBar
-  final bool withDefaultTabController;
-
-  /// tab bar长度, 必须和[withDefaultTabController]一起设置
-  final int? tabLength;
+  /// 如果需要TabBar, 则配置这个对象
+  final TabControllerConfig? tabControllerConfig;
 
   final VoidCallback? onDispose;
 
@@ -277,10 +268,13 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
       result = Form(child: result);
     }
 
-    if (withDefaultTabController && tabLength != null) {
-      result = DefaultTabController(length: tabLength!, child: result);
+    if (tabControllerConfig != null) {
+      result = DefaultTabController(
+        length: tabControllerConfig!.length,
+        initialIndex: tabControllerConfig!.initialIndex,
+        child: result,
+      );
     }
-
     if (systemUiOverlayStyle != null) {
       result = AnnotatedRegion(child: result, value: systemUiOverlayStyle!);
     }
