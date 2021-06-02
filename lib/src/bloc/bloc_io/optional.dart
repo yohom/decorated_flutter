@@ -825,34 +825,6 @@ mixin OptionalPageMixin<T, ARG_TYPE> on OptionalListMixin<T> {
   /// 请求下一页数据
   ///
   /// 返回是否还有更多数据 true为还有更多数据 false为没有更多数据
-  @Deprecated('使用[loadMore]代替, 仅仅是名称替换')
-  Future<bool> nextPage([ARG_TYPE? args]) async {
-    // 如果已经没有更多数据的话, 就不再请求
-    if (!_noMoreData) {
-      try {
-        final nextPageData = await _pageFetch(++_currentPage, args);
-        if (_receiveFullData) {
-          _dataList = [..._dataList, ...nextPageData];
-        } else {
-          _dataList = nextPageData;
-        }
-        // 如果当前页列表大小已经小于设置的每页大小, 那么说明已经到最后一页
-        // 或者当前页是空, 也说明已经是最后一页
-        _noMoreData = nextPageData.length < _pageSize || nextPageData.isEmpty;
-
-        if (_subject.isClosed) return false;
-        _subject.add(_dataList);
-      } catch (e) {
-        if (_subject.isClosed) return false;
-        _subject.addError(e);
-      }
-    }
-    return !_noMoreData;
-  }
-
-  /// 请求下一页数据
-  ///
-  /// 返回是否还有更多数据 true为还有更多数据 false为没有更多数据
   Future<bool> loadMore([ARG_TYPE? args]) async {
     // 如果已经没有更多数据的话, 就不再请求
     if (!_noMoreData) {
@@ -880,18 +852,19 @@ mixin OptionalPageMixin<T, ARG_TYPE> on OptionalListMixin<T> {
   /// 刷新列表
   ///
   /// 会重新加载第一页
-  Future<void> refresh([ARG_TYPE? args]) async {
+  Future<List<T>?> refresh([ARG_TYPE? args]) async {
     _currentPage = _initPage;
     _noMoreData = false;
     try {
       _dataList = await _pageFetch(_currentPage, args);
 
-      if (_subject.isClosed) return;
+      if (_subject.isClosed) return null;
       _subject.add(_dataList);
     } catch (e) {
-      if (_subject.isClosed) return;
+      if (_subject.isClosed) return null;
       _subject.addError(e);
     }
+    return _dataList;
   }
 
   /// 当前是否是第一页
@@ -902,60 +875,5 @@ mixin OptionalPageMixin<T, ARG_TYPE> on OptionalListMixin<T> {
   /// 是否还有更多数据
   bool get hasMoreData {
     return !_noMoreData;
-  }
-}
-
-/// 内部数据是[EvictingQueue]特有的成员
-mixin EvictingQueueMixin<T> on BaseOptionalIO<EvictingQueue<T>> {
-  /// 追加, 并发射
-  T? append(T element, {bool fromHead = false}) {
-    if (_subject.isClosed) {
-      L.w('IO在close状态下请求发送数据');
-      return null;
-    }
-
-    if (fromHead) {
-      _subject.add(latest?..addFirst(element));
-    } else {
-      _subject.add(latest?..add(element));
-    }
-    return element;
-  }
-
-  /// 对list的item做变换之后重新组成list
-  Stream<List<S>> flatMap<S>(S Function(T value) mapper) {
-    return _subject.map((list) => list!.map(mapper).toList());
-  }
-
-  /// 删除一个的元素, 并发射
-  T? remove(T element) {
-    if (_subject.isClosed) {
-      L.w('IO在close状态下请求发送数据');
-      return null;
-    }
-
-    _subject.add(latest?..remove(element));
-    return element;
-  }
-
-  /// 删除指定条件的元素
-  void removeWhere(bool Function(T t) test) {
-    if (_subject.isClosed) return;
-
-    _subject.add(latest?..removeWhere(test));
-  }
-
-  /// 删除第一个的元素, 并发射
-  T? removeFirst() {
-    if (_subject.isClosed) {
-      L.w('IO在close状态下请求发送数据');
-      return null;
-    }
-
-    final T firstElement = latest!.first;
-    if (latest!.isNotEmpty) {
-      _subject.add(latest?..removeFirst());
-    }
-    return firstElement;
   }
 }
