@@ -58,14 +58,14 @@ class __DatePickerDialogState extends State<_DatePickerDialog> {
         DecoratedRow(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            FlatButton(
+            TextButton(
               onPressed: () => _handleCancel(context),
               child: Text(
                 widget.cancelText,
                 style: context.textTheme.bodyText1!.copyWith(color: Colors.red),
               ),
             ),
-            FlatButton(
+            TextButton(
               onPressed: () => _handleConfirm(context),
               child: Text(widget.confirmText),
             ),

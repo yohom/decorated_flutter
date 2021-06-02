@@ -21,7 +21,6 @@ class DecoratedStack extends StatelessWidget {
     this.onVerticalDragEnd,
     this.onHorizontalDragEnd,
     this.behavior,
-    this.overflow,
     this.constraints,
     this.expanded = false,
     this.stackFit,
@@ -80,7 +79,6 @@ class DecoratedStack extends StatelessWidget {
 
   final StackFit? stackFit;
   final AlignmentGeometry? alignment;
-  final Overflow? overflow;
 
   final bool sliver;
   final ZIndex? childrenZIndex;
@@ -97,7 +95,6 @@ class DecoratedStack extends StatelessWidget {
     Widget result = Stack(
       alignment: alignment ?? AlignmentDirectional.topStart,
       fit: stackFit ?? StackFit.loose,
-      overflow: overflow ?? Overflow.clip,
       clipBehavior: clipBehavior,
       children: <Widget>[
         if (childrenZIndex == ZIndex.bottom) ...children,

@@ -1,4 +1,3 @@
-
 export 'animation/fade_slide.transition.dart';
 export 'animation/show_up.transition.dart';
 export 'misc/grid_delegate.dart';
@@ -43,7 +42,6 @@ export 'widget/visual/special_affect/countdown.widget.dart';
 export 'widget/visual/special_affect/cover_card.widget.dart';
 export 'widget/visual/special_affect/dot_indicator.widget.dart';
 export 'widget/visual/special_affect/edge_fade.widget.dart';
-export 'widget/visual/special_affect/form_sheet.widget.dart';
 export 'widget/visual/special_affect/gradient_button.widget.dart';
 export 'widget/visual/special_affect/notification_badge.widget.dart';
 export 'widget/visual/special_affect/rating_bar.widget.dart';

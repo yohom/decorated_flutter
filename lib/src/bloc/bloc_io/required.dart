@@ -825,7 +825,7 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
     // 如果已经没有更多数据的话, 就不再请求
     if (!_noMoreData) {
       try {
-        final nextPageData = await _pageFetch!(++_currentPage, args);
+        final nextPageData = await _pageFetch(++_currentPage, args);
         if (_receiveFullData) {
           _dataList = [..._dataList, ...nextPageData];
         } else {
