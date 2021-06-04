@@ -1,3 +1,7 @@
+import 'dart:math';
+
+import 'package:decorated_flutter/src/utils/utils.export.dart';
+
 extension IterableX<T> on Iterable<T> {
   T? find(bool Function(T) test) {
     try {
@@ -47,5 +51,15 @@ extension ListX<T> on List<T> {
     }
 
     return result;
+  }
+
+  List<T> sublistOrEmpty(int start, [int? end]) {
+    if (end != null) end = min(end, length);
+    try {
+      return sublist(start, end);
+    } catch (e) {
+      L.d(e);
+      return [];
+    }
   }
 }
