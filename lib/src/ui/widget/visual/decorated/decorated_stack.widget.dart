@@ -12,6 +12,7 @@ class DecoratedStack extends StatelessWidget {
     this.padding,
     this.margin,
     this.decoration,
+    this.foregroundDecoration,
     this.width,
     this.height,
     this.textStyle,
@@ -48,6 +49,7 @@ class DecoratedStack extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
   final BoxDecoration? decoration;
+  final BoxDecoration? foregroundDecoration;
   final BoxConstraints? constraints;
   final double? width;
   final double? height;
@@ -135,6 +137,7 @@ class DecoratedStack extends StatelessWidget {
     }
 
     if (decoration != null ||
+        foregroundDecoration != null ||
         padding != null ||
         margin != null ||
         width != null ||
@@ -144,6 +147,7 @@ class DecoratedStack extends StatelessWidget {
       if (animationDuration != null && animationDuration != Duration.zero) {
         result = AnimatedContainer(
           duration: animationDuration!,
+          foregroundDecoration: foregroundDecoration,
           curve: animationCurve ?? Curves.linear,
           padding: padding,
           margin: margin,
@@ -157,6 +161,7 @@ class DecoratedStack extends StatelessWidget {
       } else {
         result = Container(
           padding: padding,
+          foregroundDecoration: foregroundDecoration,
           margin: margin,
           width: width,
           height: height,
