@@ -17,6 +17,7 @@ const kSpace56 = 56.0;
 const kSpace64 = 64.0;
 
 const SPACE_ZERO = SizedBox.shrink();
+const SLIVER_SPACE_ZERO = SliverToBoxAdapter(child: SizedBox.shrink());
 
 const SPACE_1 = SizedBox(width: kSpace1, height: kSpace1);
 const SPACE_1_HORIZONTAL = SizedBox(width: kSpace1, height: kSpace0);

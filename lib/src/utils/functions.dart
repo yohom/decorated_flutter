@@ -78,3 +78,11 @@ Future<void> polling({
   }
   L.d('轮询执行结束');
 }
+
+T maxValue<T extends Comparable>(T value1, T value2) {
+  return value1.compareTo(value2) >= 0 ? value1 : value2;
+}
+
+T minValue<T extends Comparable>(T value1, T value2) {
+  return value1.compareTo(value2) < 0 ? value1 : value2;
+}
