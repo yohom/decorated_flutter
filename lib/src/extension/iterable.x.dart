@@ -62,4 +62,18 @@ extension ListX<T> on List<T> {
       return [];
     }
   }
+
+  List<T> padRight(int width, T padding) {
+    if (length >= width) return this;
+
+    addAll([for (int i = 0; i < width - length; i++) padding]);
+    return this;
+  }
+
+  List<T> padLeft(int width, T padding) {
+    if (length >= width) return this;
+
+    insertAll(0, [for (int i = 0; i < width - length; i++) padding]);
+    return this;
+  }
 }
