@@ -26,4 +26,14 @@ extension StringX on String {
   String get packed {
     return replaceAll(RegExp(r"\s+"), '');
   }
+
+  String substringBeforeLast(String separator) {
+    final index = lastIndexOf(separator);
+    return substring(0, index);
+  }
+
+  String substringAfterLast(String separator) {
+    final index = lastIndexOf(separator);
+    return substring(index);
+  }
 }

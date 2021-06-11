@@ -5,6 +5,10 @@ extension FileX on FileSystemEntity {
     return path.split(Platform.pathSeparator).last;
   }
 
+  String get nameWithoutExtension {
+    return path.split(Platform.pathSeparator).last.split('.').first;
+  }
+
   void deleteIfExists({bool recursive = false}) {
     if (existsSync()) deleteSync(recursive: recursive);
   }
