@@ -1,5 +1,3 @@
-
-
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +9,6 @@ class CoverCard extends StatefulWidget {
     this.overlay = const SizedBox.shrink(),
     this.alignment = AlignmentDirectional.topCenter,
     this.fit = StackFit.loose,
-    this.overflow = Overflow.clip,
     this.parallaxRate = 0.2,
     required this.cover,
     required this.card,
@@ -33,9 +30,6 @@ class CoverCard extends StatefulWidget {
 
   /// 内部[Stack]的[fit]
   final StackFit fit;
-
-  /// 内部[Stack]的[overflow]
-  final Overflow overflow;
 
   /// 视差率, 也就是前景移动时, 背景移动的速率
   final double parallaxRate;

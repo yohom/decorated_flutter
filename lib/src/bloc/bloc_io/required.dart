@@ -816,17 +816,16 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
   /// 每页大小 用于判断是否已加载完全部数据
   int _pageSize = 0;
 
-  late _PageFetch<List<T>, ARG_TYPE?>? _pageFetch;
+  late _PageFetch<List<T>, ARG_TYPE?> _pageFetch;
 
   /// 请求下一页数据
   ///
   /// 返回是否还有更多数据 true为还有更多数据 false为没有更多数据
   Future<bool> loadMore([ARG_TYPE? args]) async {
-    if (_pageFetch == null) return false;
     // 如果已经没有更多数据的话, 就不再请求
     if (!_noMoreData) {
       try {
-        final nextPageData = await _pageFetch!(++_currentPage, args);
+        final nextPageData = await _pageFetch(++_currentPage, args);
         if (_receiveFullData) {
           _dataList = [..._dataList, ...nextPageData];
         } else {
@@ -849,20 +848,19 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
   /// 刷新列表
   ///
   /// 会重新加载第一页
-  Future<void> refresh([ARG_TYPE? args]) async {
-    if (_pageFetch == null) return;
-
+  Future<List<T>?> refresh([ARG_TYPE? args]) async {
     _currentPage = _initPage;
     _noMoreData = false;
     try {
-      _dataList = await _pageFetch!(_currentPage, args);
+      _dataList = await _pageFetch(_currentPage, args);
 
-      if (_subject.isClosed) return;
+      if (_subject.isClosed) return null;
       _subject.add(_dataList);
     } catch (e) {
-      if (_subject.isClosed) return;
+      if (_subject.isClosed) return null;
       _subject.addError(e);
     }
+    return _dataList;
   }
 
   /// 当前是否是第一页

@@ -52,6 +52,7 @@ class RuntimeScaffold<T extends LocalBLoC> extends StatelessWidget {
     if (!kReleaseMode) {
       final bloc = BLoCProvider.of<T>(context);
       runtimeInfoWidget = Drawer(
+        // ignore: invalid_use_of_protected_member
         child: SafeArea(child: Runtime(runtimeInfo: bloc?.disposeBag ?? [])),
       );
     }

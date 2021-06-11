@@ -124,7 +124,7 @@ class _SingleSubscriberState<T> extends State<SingleSubscriber<T>> {
               SingleSubscriber._defaultLoadingPlaceholder ??
               LoadingWidget(sliver: widget.sliver);
         } else {
-          result ??= SizedBox.shrink();
+          result ??= (widget.sliver ? SLIVER_SPACE_ZERO : SPACE_ZERO);
         }
 
         if (widget.width != null ||
@@ -229,22 +229,25 @@ class Subscriber<T> extends StatelessWidget {
             result ??=
                 _defaultErrorPlaceholder ?? ErrorPlaceholder(sliver: sliver);
           }
+          if (sliver) result = SliverToBoxAdapter(child: result);
         }
 
         if (snapshot.hasData) {
           if (isEmpty(snapshot.data) && handleEmpty) {
             result ??= emptyPlaceholder ??
                 _defaultEmptyPlaceholder ??
-                EmptyPlaceholder(sliver: sliver);
+                EmptyPlaceholder();
+            if (sliver) result = SliverToBoxAdapter(child: result);
           } else {
             result ??= builder(snapshot.data!);
           }
         } else if (showLoading) {
           result ??= loadingPlaceholder ??
               _defaultLoadingPlaceholder ??
-              LoadingWidget(sliver: sliver);
+              LoadingWidget();
+          if (sliver) result = SliverToBoxAdapter(child: result);
         } else {
-          result ??= SizedBox.shrink();
+          result ??= (sliver ? SLIVER_SPACE_ZERO : SPACE_ZERO);
         }
 
         if (width != null || height != null || decoration != null) {
@@ -254,6 +257,7 @@ class Subscriber<T> extends StatelessWidget {
             decoration: decoration,
             child: result,
           );
+          if (sliver) result = SliverToBoxAdapter(child: result);
         }
 
         return result;

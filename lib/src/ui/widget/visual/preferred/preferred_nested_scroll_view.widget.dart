@@ -5,14 +5,17 @@ class PreferredNestedScrollView extends StatelessWidget {
     Key? key,
     required this.headers,
     required this.body,
+    this.physics,
   }) : super(key: key);
 
   final List<Widget> headers;
   final Widget body;
+  final ScrollPhysics? physics;
 
   @override
   Widget build(BuildContext context) {
     return NestedScrollView(
+      physics: physics,
       headerSliverBuilder: (context, innerBoxIsScrolled) {
         return [
           for (final header in headers) SliverToBoxAdapter(child: header)

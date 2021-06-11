@@ -114,6 +114,10 @@ abstract class BaseIO<T> {
     return _subject.where(test);
   }
 
+  Stream<R> whereType<R>() {
+    return _subject.whereType<R>();
+  }
+
   Stream<T> distinct([bool Function(T previous, T next)? test]) {
     return test != null ? _subject.distinct(test) : _subject.distinct();
   }
