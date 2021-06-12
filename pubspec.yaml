@@ -30,9 +30,9 @@ dependencies:
   logger: ^1.0.0-nullsafety.0
   # 获取路径 https://pub.flutter-io.cn/packages/path_provider
   path_provider: ^2.0.1
-  # android intent
+  # android intent https://pub.flutter-io.cn/packages/android_intent
   android_intent: ^2.0.0
-  # svg
+  # svg https://pub.flutter-io.cn/packages/flutter_svg
   flutter_svg: ^0.22.0
 
 dev_dependencies:
