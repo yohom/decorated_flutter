@@ -520,8 +520,10 @@ class DecoratedFlex extends StatelessWidget {
     double itemSpacing,
     Widget? divider,
   ) {
+    final result = List<Widget>.from(children);
+
     // 确认要往哪几个index(以最终的插入后的List为参考系)插空间
-    int currentLength = children.length;
+    int currentLength = result.length;
     if (currentLength > 1) {
       final indexes = <int>[];
       // `currentLength + (currentLength - 1)`是插入后的长度
@@ -532,15 +534,15 @@ class DecoratedFlex extends StatelessWidget {
 
       if (direction == Axis.horizontal) {
         indexes.forEach((index) {
-          children.insert(index, divider ?? SizedBox(width: itemSpacing));
+          result.insert(index, divider ?? SizedBox(width: itemSpacing));
         });
       } else if (direction == Axis.vertical) {
         indexes.forEach((index) {
-          children.insert(index, divider ?? SizedBox(height: itemSpacing));
+          result.insert(index, divider ?? SizedBox(height: itemSpacing));
         });
       }
     }
 
-    return children;
+    return result;
   }
 }
