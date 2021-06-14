@@ -16,14 +16,10 @@ class DecoratedWidget<B extends BLoC> extends StatefulWidget {
     this.autoCloseKeyboard = true,
     this.init,
     this.withForm = false,
-    this.withDefaultTabController = false,
     this.systemUiOverlayStyle,
-    this.tabLength,
+    this.tabControllerConfig,
   })  : // 要么同时设置泛型B和bloc参数, 要么就都不设置
         assert((B != BLoC && bloc != null) || (B == BLoC && bloc == null)),
-        // 如果withDefaultTabController为true, 那么必须设置tabLength
-        assert((withDefaultTabController && tabLength != null) ||
-            !withDefaultTabController),
         super();
 
   /// 直接传递的BLoC
@@ -41,14 +37,11 @@ class DecoratedWidget<B extends BLoC> extends StatefulWidget {
   /// 是否带有表单
   final bool withForm;
 
-  /// 是否含有TabBar
-  final bool withDefaultTabController;
-
-  /// tab bar长度, 必须和[withDefaultTabController]一起设置
-  final int? tabLength;
-
   /// 系统ui
   final SystemUiOverlayStyle? systemUiOverlayStyle;
+
+  /// 如果需要TabBar, 则配置这个对象
+  final TabControllerConfig? tabControllerConfig;
 
   @override
   _DecoratedWidgetState createState() => _DecoratedWidgetState<B>();
@@ -78,8 +71,12 @@ class _DecoratedWidgetState<B extends BLoC> extends State<DecoratedWidget<B>> {
       result = Form(child: result);
     }
 
-    if (widget.withDefaultTabController == true && widget.tabLength != null) {
-      result = DefaultTabController(length: widget.tabLength!, child: result);
+    if (widget.tabControllerConfig != null) {
+      result = DefaultTabController(
+        length: widget.tabControllerConfig!.length,
+        initialIndex: widget.tabControllerConfig!.initialIndex,
+        child: result,
+      );
     }
 
     if (widget.systemUiOverlayStyle != null) {
