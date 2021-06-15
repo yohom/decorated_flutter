@@ -34,7 +34,9 @@ abstract class BaseRequiredIO<T> extends BaseIO<T> {
 
 /// BLoC内的静态值, 也就是供初始化时的值, 之前都是直接写成字段, 这里提供一个类, 保持与IO的一致性
 class Static<T> {
-  late T _content;
+  Static(this._content);
+
+  T _content;
 
   void set(T value) {
     _content = value;
