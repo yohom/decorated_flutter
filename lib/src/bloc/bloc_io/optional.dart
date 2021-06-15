@@ -36,6 +36,8 @@ abstract class BaseOptionalIO<T> extends BaseIO<T?> {
 
 /// BLoC内的静态值, 也就是供初始化时的值, 之前都是直接写成字段, 这里提供一个类, 保持与IO的一致性
 class OptionalStatic<T> {
+  OptionalStatic([this._content]);
+
   T? _content;
 
   void set(T value) {
