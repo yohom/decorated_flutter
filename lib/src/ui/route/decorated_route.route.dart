@@ -28,6 +28,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
     this.onDispose,
     this.systemUiOverlayStyle,
     this.animationBuilder,
+    this.autoDispose = true,
     required String routeName,
     bool fullscreenDialog = false,
     bool maintainState = true,
@@ -79,6 +80,9 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
   /// 自定义的动画
   final Widget Function(Animation<double>, Widget)? animationBuilder;
 
+  /// 是否自动dispose BLoC
+  final bool autoDispose;
+
   /// 是否已经初始化
   bool _inited = false;
 
@@ -101,6 +105,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
         init: init,
         child: result,
         onDispose: onDispose,
+        autoDispose: autoDispose,
       );
     }
 
@@ -193,6 +198,7 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
     this.tabControllerConfig,
     this.onDispose,
     this.systemUiOverlayStyle,
+    this.autoDispose = true,
     required String routeName,
     bool fullscreenDialog = false,
     bool maintainState = true,
@@ -237,6 +243,9 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
   /// 系统ui
   final SystemUiOverlayStyle? systemUiOverlayStyle;
 
+  /// 是否自动dispose BLoC
+  final bool autoDispose;
+
   /// 是否已经初始化
   bool _inited = false;
 
@@ -253,6 +262,7 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
         init: init,
         child: builder(context),
         onDispose: onDispose,
+        autoDispose: autoDispose,
       );
     } else {
       result = builder(context);
