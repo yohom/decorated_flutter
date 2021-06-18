@@ -480,7 +480,23 @@ mixin InputMixin<T> on BaseRequiredIO<T> {
 /// 直接使用该参数的类型, 如果有多个时, 就使用List接收.
 mixin OutputMixin<T, ARG_TYPE> on BaseRequiredIO<T> {
   /// 输出Future
-  Future<T> get future => stream.first;
+  @Deprecated('使用first()方法代替')
+  Future<T> get future => first(true);
+
+  /// 输出Future, [cancelSubscription]决定是否取消订阅
+  ///
+  /// 由于[stream.first]会自动结束流的订阅, 但是又想继续流的话, 就使用这个方法获取Future
+  Future<T> first([bool cancelSubscription = false]) async {
+    if (cancelSubscription) {
+      return stream.first;
+    } else {
+      final completer = Completer<T>();
+      final subscription = stream.listen(completer.complete);
+      final result = await completer.future;
+      subscription.cancel();
+      return result;
+    }
+  }
 
   /// 输出Stream
   late Stream<T> stream;
