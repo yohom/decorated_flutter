@@ -40,7 +40,7 @@ class OptionalStatic<T> {
 
   T? _content;
 
-  void set(T value) {
+  void set(T? value) {
     _content = value;
   }
 

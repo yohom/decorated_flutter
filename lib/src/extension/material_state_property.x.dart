@@ -12,3 +12,21 @@ extension MaterialStateProperty_ColorX on Color {
     return MaterialStateProperty.all(this);
   }
 }
+
+extension MaterialStateProperty_OutlinedBorderX on OutlinedBorder {
+  MaterialStateProperty<OutlinedBorder> get asMaterial {
+    return MaterialStateProperty.all(this);
+  }
+}
+
+extension MaterialStateProperty_doubleX on double {
+  MaterialStateProperty<double> get asMaterial {
+    return MaterialStateProperty.all(this);
+  }
+}
+
+extension MaterialStateProperty_intX on int {
+  MaterialStateProperty<int> get asMaterial {
+    return MaterialStateProperty.all(this);
+  }
+}
