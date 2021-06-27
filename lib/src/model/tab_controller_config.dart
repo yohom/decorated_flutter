@@ -1,5 +1,5 @@
 class TabControllerConfig {
-  TabControllerConfig({
+  const TabControllerConfig({
     required this.length,
     this.initialIndex = 0,
   });

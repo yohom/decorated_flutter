@@ -76,4 +76,8 @@ extension ListX<T> on List<T> {
     insertAll(0, [for (int i = 0; i < width - length; i++) padding]);
     return this;
   }
+
+  T get random {
+    return this[Random().nextInt(length - 1)];
+  }
 }

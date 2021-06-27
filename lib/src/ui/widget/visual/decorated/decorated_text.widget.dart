@@ -29,6 +29,7 @@ class DecoratedText extends StatelessWidget {
     this.softWrap = true,
     this.material,
     this.mainAxisAlignment,
+    this.crossAxisAlignment,
   }) : super(key: key);
 
   final EdgeInsetsGeometry? padding;
@@ -55,6 +56,7 @@ class DecoratedText extends StatelessWidget {
   final bool softWrap;
   final bool? material;
   final MainAxisAlignment? mainAxisAlignment;
+  final CrossAxisAlignment? crossAxisAlignment;
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +69,18 @@ class DecoratedText extends StatelessWidget {
       overflow: overflow,
       softWrap: softWrap,
     );
+
+    if (rightWidget != null || leftWidget != null) {
+      result = Row(
+        mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.center,
+        crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.center,
+        children: [
+          if (leftWidget != null) leftWidget!,
+          Flexible(child: result),
+          if (rightWidget != null) rightWidget!,
+        ],
+      );
+    }
 
     if (center == true) {
       result = Center(child: result);
@@ -88,17 +102,6 @@ class DecoratedText extends StatelessWidget {
         constraints: constraints,
         transform: transform,
         child: result,
-      );
-    }
-
-    if (rightWidget != null || leftWidget != null) {
-      result = Row(
-        mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.center,
-        children: [
-          if (leftWidget != null) leftWidget!,
-          result,
-          if (rightWidget != null) rightWidget!,
-        ],
       );
     }
 

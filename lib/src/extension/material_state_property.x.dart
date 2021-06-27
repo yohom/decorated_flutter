@@ -30,3 +30,15 @@ extension MaterialStateProperty_intX on int {
     return MaterialStateProperty.all(this);
   }
 }
+
+extension MaterialStateProperty_EdgeInsetsX on EdgeInsets {
+  MaterialStateProperty<EdgeInsets> get asMaterial {
+    return MaterialStateProperty.all(this);
+  }
+}
+
+extension MaterialStateProperty_BorderSideX on BorderSide {
+  MaterialStateProperty<BorderSide> get asMaterial {
+    return MaterialStateProperty.all(this);
+  }
+}

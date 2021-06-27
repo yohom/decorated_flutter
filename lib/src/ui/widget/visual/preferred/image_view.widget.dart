@@ -109,6 +109,7 @@ class ImageView extends StatelessWidget {
       if (_imagePath.endsWith('svg')) {
         result = SvgPicture.asset(
           _imagePath,
+          key: Key(_imagePath),
           width: size ?? width,
           height: size ?? height,
           fit: fit ?? BoxFit.contain,
@@ -118,6 +119,7 @@ class ImageView extends StatelessWidget {
       } else {
         result = Image.asset(
           _imagePath,
+          key: Key(_imagePath),
           width: size ?? width,
           height: size ?? height,
           fit: fit,
@@ -129,6 +131,7 @@ class ImageView extends StatelessWidget {
       if (imageUrl!.endsWith('svg')) {
         result = SvgPicture.network(
           imageUrl!,
+          key: Key(imageUrl!),
           width: size ?? width,
           height: size ?? height,
           fit: fit ?? BoxFit.contain,
@@ -138,6 +141,7 @@ class ImageView extends StatelessWidget {
       } else {
         result = CachedNetworkImage(
           imageUrl: imageUrl!,
+          key: Key(imageUrl!),
           width: size ?? width,
           height: size ?? height,
           fit: fit,
