@@ -76,7 +76,7 @@ class DecoratedText extends StatelessWidget {
         crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.center,
         children: [
           if (leftWidget != null) leftWidget!,
-          Flexible(child: result),
+          result,
           if (rightWidget != null) rightWidget!,
         ],
       );
