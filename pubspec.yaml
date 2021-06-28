@@ -1,6 +1,6 @@
 name: decorated_flutter
 description: Common encapsulation of Flutter includes the implementation of BLoC pattern and other widget combination.
-version: 0.32.0-pre.4
+version: 0.32.0-pre.5
 authors:
   - yohombao@gmail.com
 homepage: https://github.com/yohom/decorated_flutter.git
@@ -19,7 +19,7 @@ dependencies:
   # 网络请求 https://pub.flutter-io.cn/packages/dio
   dio: ^4.0.0
   # rx https://pub.flutter-io.cn/packages/rxdart
-  rxdart: ^0.27.0
+  rxdart: ^0.27.1
   # 图片加载增强 https://pub.flutter-io.cn/packages/cached_network_image
   cached_network_image: ^3.0.0
   # toast https://pub.flutter-io.cn/packages/oktoast
@@ -27,15 +27,15 @@ dependencies:
   # 模态对话框增强 https://pub.flutter-io.cn/packages/modal_bottom_sheet
   modal_bottom_sheet: ^2.0.0
   # 日志打印 https://pub.flutter-io.cn/packages/logger
-  logger: ^1.0.0-nullsafety.0
+  logger: ^1.0.0
   # 获取路径 https://pub.flutter-io.cn/packages/path_provider
-  path_provider: ^2.0.1
+  path_provider: ^2.0.2
   # android intent https://pub.flutter-io.cn/packages/android_intent
-  android_intent: ^2.0.0
+  android_intent: ^2.0.2
   # svg https://pub.flutter-io.cn/packages/flutter_svg
   flutter_svg: ^0.22.0
 
 dev_dependencies:
-  mockito: ^5.0.4
+  mockito: ^5.0.10
   flutter_test:
     sdk: flutter
