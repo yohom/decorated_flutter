@@ -8,6 +8,7 @@ export 'iterable.x.dart';
 export 'material_state_property.x.dart';
 export 'navigator.x.dart';
 export 'num.x.dart';
+export 'route_settings.x.dart';
 export 'stream.x.dart';
 export 'string.x.dart';
 export 'text.x.dart';
