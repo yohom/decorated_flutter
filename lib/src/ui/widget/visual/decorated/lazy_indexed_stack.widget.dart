@@ -9,7 +9,7 @@ class LazyIndexedStack extends StatefulWidget {
     required this.index,
     this.reuse = true,
     required this.itemBuilder,
-    this.itemCount = 0,
+    required this.itemCount,
   }) : super(key: key);
 
   final AlignmentGeometry alignment;
