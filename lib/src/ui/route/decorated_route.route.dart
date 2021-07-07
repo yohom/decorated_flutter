@@ -145,7 +145,10 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
       );
     }
 
-    return Material(child: result);
+    return Material(
+      key: settings.name == null ? null : Key(settings.name!),
+      child: result,
+    );
   }
 
   @override
@@ -289,7 +292,10 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
       result = AnnotatedRegion(child: result, value: systemUiOverlayStyle!);
     }
 
-    return Material(child: result);
+    return Material(
+      key: settings.name == null ? null : Key(settings.name!),
+      child: result,
+    );
   }
 
   @override
