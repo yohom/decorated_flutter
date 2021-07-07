@@ -245,7 +245,7 @@ class Subscriber<T> extends StatelessWidget {
           result ??= loadingPlaceholder ??
               _defaultLoadingPlaceholder ??
               LoadingWidget();
-          if (sliver) result = SliverToBoxAdapter(child: result);
+          if (sliver) result = SliverFillRemaining(child: result);
         } else {
           result ??= (sliver ? SLIVER_SPACE_ZERO : SPACE_ZERO);
         }

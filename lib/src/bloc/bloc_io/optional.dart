@@ -91,11 +91,11 @@ class OptionalOutput<T, ARG_TYPE> extends BaseOptionalIO<T?>
           sync: sync,
           isBehavior: isBehavior,
           onReset: onReset,
+          printLog: printLog,
           persistentKey: persistentKey,
         ) {
     stream = _subject.stream;
     _fetch = fetch;
-    _printLog = printLog;
   }
 }
 
