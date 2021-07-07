@@ -378,6 +378,16 @@ class DecoratedFlex extends StatelessWidget {
           : _children,
     );
 
+    if (safeArea != null) {
+      result = SafeArea(
+        child: result,
+        top: safeArea?.top ?? true,
+        bottom: safeArea?.bottom ?? true,
+        left: safeArea?.left ?? true,
+        right: safeArea?.right ?? true,
+      );
+    }
+
     if (topEnd != null) {
       result = Stack(children: <Widget>[
         result,
@@ -451,16 +461,6 @@ class DecoratedFlex extends StatelessWidget {
         onHorizontalDragEnd: onHorizontalDragEnd,
         onDoubleTap: onDoubleTap == null ? null : () => onDoubleTap!(context),
         child: result,
-      );
-    }
-
-    if (safeArea != null) {
-      result = SafeArea(
-        child: result,
-        top: safeArea?.top ?? true,
-        bottom: safeArea?.bottom ?? true,
-        left: safeArea?.left ?? true,
-        right: safeArea?.right ?? true,
       );
     }
 
