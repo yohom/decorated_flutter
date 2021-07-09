@@ -18,6 +18,7 @@ class ImageView extends StatelessWidget {
     this.margin,
     this.darkImagePath,
     this.autoDarkMode = false,
+    this.autoApplyKey = true,
   })  : imageUrl = null,
         errorWidget = const SizedBox.shrink(),
         placeholder = const SizedBox.shrink(),
@@ -42,6 +43,7 @@ class ImageView extends StatelessWidget {
     this.margin,
     this.darkImagePath,
     this.autoDarkMode = false,
+    this.autoApplyKey = true,
   })  : imagePath = null,
         assert(
           (darkImagePath != null && autoDarkMode == false) ||
@@ -93,6 +95,12 @@ class ImageView extends StatelessWidget {
   /// 实现方式为在暗黑模式下设置颜色为白色
   final bool autoDarkMode;
 
+  /// 是否自动设置图片路径为key
+  ///
+  /// 默认为true, 这个是为了测试时方便通过key来寻找widget. 有的时候希望内部的Image保持一个实例,
+  /// 不因为图片切换而改变(造成闪烁), 此时可以设置[autoApplyKey]为false.
+  final bool autoApplyKey;
+
   @override
   Widget build(BuildContext context) {
     final isDarkMode = context.isDarkMode;
@@ -109,7 +117,7 @@ class ImageView extends StatelessWidget {
       if (_imagePath.endsWith('svg')) {
         result = SvgPicture.asset(
           _imagePath,
-          key: Key(_imagePath),
+          key: autoApplyKey ? Key(_imagePath) : null,
           width: size ?? width,
           height: size ?? height,
           fit: fit ?? BoxFit.contain,
@@ -119,7 +127,7 @@ class ImageView extends StatelessWidget {
       } else {
         result = Image.asset(
           _imagePath,
-          key: Key(_imagePath),
+          key: autoApplyKey ? Key(_imagePath) : null,
           width: size ?? width,
           height: size ?? height,
           fit: fit,
@@ -131,7 +139,7 @@ class ImageView extends StatelessWidget {
       if (imageUrl!.endsWith('svg')) {
         result = SvgPicture.network(
           imageUrl!,
-          key: Key(imageUrl!),
+          key: autoApplyKey ? Key(imageUrl!) : null,
           width: size ?? width,
           height: size ?? height,
           fit: fit ?? BoxFit.contain,
@@ -141,7 +149,7 @@ class ImageView extends StatelessWidget {
       } else {
         result = CachedNetworkImage(
           imageUrl: imageUrl!,
-          key: Key(imageUrl!),
+          key: autoApplyKey ? Key(imageUrl!) : null,
           width: size ?? width,
           height: size ?? height,
           fit: fit,
