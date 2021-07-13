@@ -11,7 +11,7 @@ const _kDioOther = 100002;
 const _kSocketException = 100001;
 const _kUnknownException = 100003;
 
-void handleError(Object error) {
+dynamic handleError(Object error) {
   L.d('handleError: $error');
   if (error is DioError) {
     String message = error.message;
@@ -49,6 +49,9 @@ void handleError(Object error) {
   } else {
     toast('遇到未知错误 $_kUnknownException');
   }
+  // catchError要求一个和Future一样类型的返回值, 但是这里无法提供一个通用的, 只能返回null了
+  // 参考 http://5.9.10.113/66396293/the-return-type-void-isnt-assignable-to-futureordirectory-as-required-by
+  return null;
 }
 
 Color highContrast(Color input) {
