@@ -495,7 +495,11 @@ mixin OptionalOutputMixin<T, ARG_TYPE> on BaseOptionalIO<T> {
       return stream.first;
     } else {
       final completer = Completer<T>();
-      final subscription = stream.listen(completer.complete);
+      final subscription = stream.listen((e) {
+        if (!completer.isCompleted) {
+          completer.complete(e);
+        }
+      });
       final result = await completer.future;
       subscription.cancel();
       return result;
