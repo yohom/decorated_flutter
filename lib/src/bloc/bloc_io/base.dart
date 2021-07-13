@@ -49,6 +49,7 @@ abstract class BaseIO<T> {
         _printLog = printLog,
         latest = seedValue,
         _onReset = onReset,
+        _persistentKey = persistentKey,
         _subject = isBehavior
             ? seedValue != null
                 ? BehaviorSubject<T>.seeded(seedValue, sync: sync)
@@ -100,6 +101,9 @@ abstract class BaseIO<T> {
   @protected
   T Function()? _onReset;
 
+  /// 持久化key
+  String? _persistentKey;
+
   void addError(Object error, [StackTrace? stackTrace]) {
     if (_subject.isClosed) return;
 
@@ -136,7 +140,13 @@ abstract class BaseIO<T> {
       L.d('-----------------------------BEGIN---------------------------------\n'
           '$_semantics事件 重置 '
           '\n------------------------------END----------------------------------');
-    _subject.add(_onReset != null ? _onReset!() : _seedValue);
+
+    final _resetValue = _onReset != null ? _onReset!() : _seedValue;
+    _subject.add(_resetValue);
+
+    if (_persistentKey != null) {
+      _persistence?.writeValue(_persistentKey!, _resetValue);
+    }
   }
 
   /// 重新发送数据 用户修改数据后刷新的场景
