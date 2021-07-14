@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:jiffy/jiffy.dart';
 
 extension DateTimeX on DateTime {
   String yMd() {
@@ -11,7 +12,7 @@ extension DateTimeX on DateTime {
   }
 
   String format([String format = 'yyyy-MM-dd HH:mm:ss']) {
-    return DateFormat(format).format(this);
+    return Jiffy(this).format(format);
   }
 
   bool isSameDay(DateTime other) {

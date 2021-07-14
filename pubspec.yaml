@@ -34,6 +34,8 @@ dependencies:
   android_intent: ^2.0.2
   # svg https://pub.flutter-io.cn/packages/flutter_svg
   flutter_svg: ^0.22.0
+  # 日期处理 https://pub.flutter-io.cn/packages/jiffy
+  jiffy: ^4.1.0
 
 dev_dependencies:
   mockito: ^5.0.10
