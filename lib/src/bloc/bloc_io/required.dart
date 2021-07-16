@@ -419,7 +419,7 @@ mixin InputMixin<T> on BaseRequiredIO<T> {
   /// 发射数据
   T? add(T data) {
     if (_subject.isClosed) {
-      L.w('IO在close状态下请求发送数据');
+      L.w('$_semantics IO在close状态下请求发送数据');
       return null;
     }
 
@@ -456,7 +456,7 @@ mixin InputMixin<T> on BaseRequiredIO<T> {
 
   T? addIfAbsent(T data) {
     if (_subject.isClosed) {
-      L.w('IO在close状态下请求发送数据');
+      L.w('$_semantics IO在close状态下请求发送数据');
       return null;
     }
 
