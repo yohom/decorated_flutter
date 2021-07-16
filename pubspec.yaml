@@ -21,7 +21,7 @@ dependencies:
   # rx https://pub.flutter-io.cn/packages/rxdart
   rxdart: ^0.27.1
   # 图片加载增强 https://pub.flutter-io.cn/packages/cached_network_image
-  cached_network_image: ^3.0.0
+  cached_network_image: ^3.1.0
   # toast https://pub.flutter-io.cn/packages/oktoast
   oktoast: ^3.0.0
   # 模态对话框增强 https://pub.flutter-io.cn/packages/modal_bottom_sheet
