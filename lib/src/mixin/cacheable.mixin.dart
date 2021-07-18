@@ -5,7 +5,7 @@ mixin Cacheable {
     _cache[key] = object;
   }
 
-  T? get<T>(String key, {T? initialValue}) {
+  T? fetch<T>(String key, {T? initialValue}) {
     final value = _cache[key];
     if (value != null) {
       return value;
