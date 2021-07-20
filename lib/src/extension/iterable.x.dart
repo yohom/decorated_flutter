@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:decorated_flutter/src/utils/utils.export.dart';
 
 extension IterableX<T> on Iterable<T> {
+  /// 寻找元素, 找不到就返回null, 如果多余一个就返回第一个
   T? find(bool Function(T) test) {
     try {
       return firstWhere(test);
@@ -34,6 +35,12 @@ extension ListX<T> on List<T> {
     }
   }
 
+  /// 重复列表[factor]次
+  List<T> operator *(int factor) {
+    return [for (int i = 0; i < factor; i++) ...this];
+  }
+
+  /// 按[count]数给列表分组
   List<List<T>> buffer(int count) {
     final result = <List<T>>[];
 
@@ -53,6 +60,7 @@ extension ListX<T> on List<T> {
     return result;
   }
 
+  /// 获取子列表, 如果获取失败就返回空列表
   List<T> sublistOrEmpty(int start, [int? end]) {
     if (end != null) end = min(end, length);
     try {
@@ -63,6 +71,7 @@ extension ListX<T> on List<T> {
     }
   }
 
+  /// 右补齐
   List<T> padRight(int width, T padding) {
     if (length >= width) return this;
 
@@ -70,6 +79,7 @@ extension ListX<T> on List<T> {
     return this;
   }
 
+  /// 左补齐
   List<T> padLeft(int width, T padding) {
     if (length >= width) return this;
 
@@ -77,6 +87,7 @@ extension ListX<T> on List<T> {
     return this;
   }
 
+  /// 获取随机元素
   T get random {
     return this[Random().nextInt(length - 1)];
   }
