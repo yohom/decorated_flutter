@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:decorated_flutter/src/ui/widget/nonvisual/auto_close_keyboard.widget.dart';
 import 'package:flutter/material.dart';
@@ -82,13 +80,11 @@ class _DecoratedWidgetState<B extends BLoC> extends State<DecoratedWidget<B>> {
     if (widget.systemUiOverlayStyle != null) {
       // 自动对暗黑模式做切换
       SystemUiOverlayStyle style = widget.systemUiOverlayStyle!;
-      if (Platform.isIOS) {
-        if (context.isDarkMode) {
-          if (style == SystemUiOverlayStyle.dark) {
-            style = SystemUiOverlayStyle.light;
-          } else if (style == SystemUiOverlayStyle.light) {
-            style = SystemUiOverlayStyle.dark;
-          }
+      if (context.isDarkMode) {
+        if (style == SystemUiOverlayStyle.dark) {
+          style = SystemUiOverlayStyle.light;
+        } else if (style == SystemUiOverlayStyle.light) {
+          style = SystemUiOverlayStyle.dark;
         }
       }
       result = AnnotatedRegion<SystemUiOverlayStyle>(
