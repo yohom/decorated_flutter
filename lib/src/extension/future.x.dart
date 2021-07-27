@@ -69,8 +69,7 @@ extension FutureX<T> on Future<T> {
     this.timeout(timeout);
 
     whenComplete(() {
-      // 由于showDialog会强制使用rootNavigator, 所以这里pop的时候也要用rootNavigator
-      if (popByFuture) {
+      if (popByFuture && navigator.canPop()) {
         navigator.pop();
       }
     });
