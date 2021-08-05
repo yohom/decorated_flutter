@@ -509,6 +509,9 @@ mixin OptionalOutputMixin<T, ARG_TYPE> on BaseOptionalIO<T> {
   /// 输出Stream
   late Stream<T> stream;
 
+  /// 请求回调
+  late _Fetch<T, ARG_TYPE?> _fetch;
+
   /// 监听流
   StreamSubscription<T> listen(
     ValueChanged<T> listener, {
@@ -523,9 +526,6 @@ mixin OptionalOutputMixin<T, ARG_TYPE> on BaseOptionalIO<T> {
       cancelOnError: cancelOnError,
     );
   }
-
-  /// 输出Stream
-  late _Fetch<T, ARG_TYPE?> _fetch;
 
   /// 使用内部的trigger获取数据
   Future<T> update([ARG_TYPE? arg]) {

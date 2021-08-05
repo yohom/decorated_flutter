@@ -36,4 +36,12 @@ extension StringX on String {
     final index = lastIndexOf(separator);
     return substring(index);
   }
+
+  String insert(int index, String divider) {
+    return substring(0, index + 1) + divider + substring(index + 1);
+  }
+
+  String remove(int index) {
+    return substring(0, index) + substring(index + 1);
+  }
 }
