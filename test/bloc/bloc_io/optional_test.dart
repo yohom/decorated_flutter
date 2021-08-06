@@ -24,7 +24,10 @@ void main() {
     });
 
     test('acceptEmpty为FALSE时, 不接受被判定为空的值', () {
-      // TODO
+      final input = OptionalInput<String>(semantics: '测试', acceptEmpty: false);
+
+      input.add('');
+      expect(input.latest == null, true);
     });
 
     test('isDistinct为true时, 不接受被判定为相等的值', () {
