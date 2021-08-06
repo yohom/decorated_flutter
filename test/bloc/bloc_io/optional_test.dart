@@ -34,6 +34,13 @@ void main() {
       // TODO
     });
 
+    test('调用reset方法, latest应该是seedValue', () {
+      final input = OptionalInput<String>(semantics: '测试', seedValue: 'seed');
+
+      input.reset();
+      expect(input.latest == 'seed', true);
+    });
+
     test('设置了onReset时, 调用reset方法, latest应该是onReset的返回值', () {
       // TODO
     });
