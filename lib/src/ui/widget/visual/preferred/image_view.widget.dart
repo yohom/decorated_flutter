@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 
 typedef void LoadingProgress(double progress, List<int> data);
 
+// TODO 透明图片颜色 https://api.flutter.dev/flutter/widgets/Opacity-class.html#transparent-image
 class ImageView extends StatelessWidget {
   const ImageView.asset(
     this.imagePath, {
