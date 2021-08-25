@@ -23,7 +23,8 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
     this.withForm = false,
     this.withLocalNavigator = false,
     this.tabControllerConfig,
-    this.onDispose,
+    this.onDisposed,
+    this.onWillPop,
     this.systemUiOverlayStyle,
     this.animationBuilder,
     this.autoDispose = true,
@@ -70,7 +71,9 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
   /// 如果需要TabBar, 则配置这个对象
   final TabControllerConfig? tabControllerConfig;
 
-  final VoidCallback? onDispose;
+  final VoidCallback? onDisposed;
+
+  final WillPopCallback? onWillPop;
 
   /// 系统ui
   final SystemUiOverlayStyle? systemUiOverlayStyle;
@@ -102,7 +105,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
         bloc: bloc!,
         init: init,
         child: result,
-        onDispose: onDispose,
+        onDispose: onDisposed,
         autoDispose: autoDispose,
       );
     }
@@ -139,6 +142,10 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
         value: style,
         child: result,
       );
+    }
+
+    if (onWillPop != null) {
+      result = WillPopScope(child: result, onWillPop: onWillPop);
     }
 
     return Material(
@@ -195,7 +202,8 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
     this.withForm = false,
     this.withAnalytics = true,
     this.tabControllerConfig,
-    this.onDispose,
+    this.onDisposed,
+    this.onWillPop,
     this.systemUiOverlayStyle,
     this.autoDispose = true,
     required String routeName,
@@ -237,7 +245,9 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
   /// 如果需要TabBar, 则配置这个对象
   final TabControllerConfig? tabControllerConfig;
 
-  final VoidCallback? onDispose;
+  final VoidCallback? onDisposed;
+
+  final WillPopCallback? onWillPop;
 
   /// 系统ui
   final SystemUiOverlayStyle? systemUiOverlayStyle;
@@ -260,7 +270,7 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
         bloc: bloc!,
         init: init,
         child: builder(context),
-        onDispose: onDispose,
+        onDispose: onDisposed,
         autoDispose: autoDispose,
       );
     } else {
@@ -300,6 +310,11 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
         child: result,
       );
     }
+
+    if (onWillPop != null) {
+      result = WillPopScope(child: result, onWillPop: onWillPop);
+    }
+
     return Material(
       key: settings.name == null ? null : Key(settings.name!),
       child: result,
