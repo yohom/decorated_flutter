@@ -38,6 +38,16 @@ extension BuildContextX on BuildContext {
     return MediaQuery.of(this).size.width;
   }
 
+  double get physicalHeight {
+    final data = MediaQuery.of(this);
+    return data.size.height * data.devicePixelRatio;
+  }
+
+  double get physicalWidth {
+    final data = MediaQuery.of(this);
+    return data.size.width * data.devicePixelRatio;
+  }
+
   EdgeInsets get padding {
     return MediaQuery.of(this).padding;
   }
