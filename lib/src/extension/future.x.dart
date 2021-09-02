@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:decorated_flutter/src/ui/ui.export.dart';
 import 'package:decorated_flutter/src/utils/objects.dart';
+import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -15,7 +16,7 @@ extension FutureX<T> on Future<T> {
 
   Future<T> loading({
     bool? cancelable,
-    Duration timeout = const Duration(seconds: 60),
+    Duration timeLimit = const Duration(seconds: 60),
     String? loadingText,
     Color? backgroundColor,
   }) {
@@ -66,15 +67,11 @@ extension FutureX<T> on Future<T> {
       popByFuture = false;
     });
 
-    this.timeout(timeout);
-
-    whenComplete(() {
+    return timeout(timeLimit).whenComplete(() {
       if (popByFuture && navigator.canPop()) {
         navigator.pop();
       }
     });
-
-    return this;
   }
 
   Future<T> apply<R>(FutureOr<R> onValue(T value), {Function? onError}) async {
