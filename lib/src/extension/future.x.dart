@@ -74,9 +74,18 @@ extension FutureX<T> on Future<T> {
     });
   }
 
+  /// apply一个回调, 然后返回当前对象
   Future<T> apply<R>(FutureOr<R> onValue(T value), {Function? onError}) async {
     await then(onValue, onError: onError);
     return this;
+  }
+
+  /// 延迟一段时间
+  Future<T> delay(Duration duration) async {
+    return then((value) async {
+      await Future.delayed(duration);
+      return value;
+    });
   }
 }
 
