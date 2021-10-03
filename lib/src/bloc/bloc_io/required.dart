@@ -33,6 +33,7 @@ abstract class BaseRequiredIO<T> extends BaseIO<T> {
 }
 
 /// BLoC内的静态值, 也就是供初始化时的值, 之前都是直接写成字段, 这里提供一个类, 保持与IO的一致性
+@Deprecated('直接使用被包裹的对象即可, 如果不能直接实例化的话就使用late修饰')
 class Static<T> {
   Static(this._content);
 
