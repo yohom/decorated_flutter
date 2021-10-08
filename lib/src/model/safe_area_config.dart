@@ -4,7 +4,7 @@ class SafeAreaConfig {
   final bool left;
   final bool right;
 
-  SafeAreaConfig({
+  const SafeAreaConfig({
     this.top = true,
     this.bottom = true,
     this.left = true,
