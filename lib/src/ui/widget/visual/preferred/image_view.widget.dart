@@ -20,6 +20,8 @@ class ImageView extends StatelessWidget {
     this.darkImagePath,
     this.autoDarkMode = false,
     this.autoApplyKey = true,
+    this.decoration,
+    this.clipBehavior = Clip.hardEdge,
   })  : imageUrl = null,
         errorWidget = const SizedBox.shrink(),
         placeholder = const SizedBox.shrink(),
@@ -45,6 +47,8 @@ class ImageView extends StatelessWidget {
     this.darkImagePath,
     this.autoDarkMode = false,
     this.autoApplyKey = true,
+    this.decoration,
+    this.clipBehavior = Clip.hardEdge,
   })  : imagePath = null,
         assert(
           (darkImagePath != null && autoDarkMode == false) ||
@@ -101,6 +105,12 @@ class ImageView extends StatelessWidget {
   /// 默认为true, 这个是为了测试时方便通过key来寻找widget. 有的时候希望内部的Image保持一个实例,
   /// 不因为图片切换而改变(造成闪烁), 此时可以设置[autoApplyKey]为false.
   final bool autoApplyKey;
+
+  /// 装饰
+  final BoxDecoration? decoration;
+
+  /// 剪裁行为
+  final Clip? clipBehavior;
 
   @override
   Widget build(BuildContext context) {
@@ -172,8 +182,14 @@ class ImageView extends StatelessWidget {
       );
     }
 
-    if (padding != null || margin != null) {
-      result = Container(padding: padding, margin: margin, child: result);
+    if (padding != null || margin != null || decoration != null) {
+      result = Container(
+        clipBehavior: Clip.hardEdge,
+        padding: padding,
+        margin: margin,
+        decoration: decoration,
+        child: result,
+      );
     }
 
     return result;
