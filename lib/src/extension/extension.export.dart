@@ -11,6 +11,7 @@ export 'num.x.dart';
 export 'route_settings.x.dart';
 export 'stream.x.dart';
 export 'string.x.dart';
+export 'tab_controller.x.dart';
 export 'text.x.dart';
 export 'text_editing_controller.x.dart';
 export 'widget.x.dart';
