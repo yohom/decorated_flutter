@@ -3,7 +3,7 @@ import 'package:decorated_flutter/src/extension/extension.export.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-typedef void LoadingProgress(double progress, List<int> data);
+typedef LoadingProgress = void Function(double progress, List<int> data);
 
 // TODO 透明图片颜色 https://api.flutter.dev/flutter/widgets/Opacity-class.html#transparent-image
 class ImageView extends StatelessWidget {
@@ -21,6 +21,7 @@ class ImageView extends StatelessWidget {
     this.autoDarkMode = false,
     this.autoApplyKey = true,
     this.decoration,
+    this.foregroundDecoration,
     this.clipBehavior = Clip.hardEdge,
   })  : imageUrl = null,
         errorWidget = const SizedBox.shrink(),
@@ -48,6 +49,7 @@ class ImageView extends StatelessWidget {
     this.autoDarkMode = false,
     this.autoApplyKey = true,
     this.decoration,
+    this.foregroundDecoration,
     this.clipBehavior = Clip.hardEdge,
   })  : imagePath = null,
         assert(
@@ -106,8 +108,11 @@ class ImageView extends StatelessWidget {
   /// 不因为图片切换而改变(造成闪烁), 此时可以设置[autoApplyKey]为false.
   final bool autoApplyKey;
 
-  /// 装饰
+  /// 背景
   final BoxDecoration? decoration;
+
+  /// 前景
+  final BoxDecoration? foregroundDecoration;
 
   /// 剪裁行为
   final Clip? clipBehavior;
@@ -171,7 +176,7 @@ class ImageView extends StatelessWidget {
       }
     } else {
       // 如果图片地址为null的话, 那就不显示
-      result = SizedBox.shrink();
+      result = const SizedBox.shrink();
     }
 
     if (size != null || width != null || height != null) {
@@ -182,11 +187,15 @@ class ImageView extends StatelessWidget {
       );
     }
 
-    if (padding != null || margin != null || decoration != null) {
+    if (padding != null ||
+        margin != null ||
+        decoration != null ||
+        foregroundDecoration != null) {
       result = Container(
-        clipBehavior: Clip.hardEdge,
+        clipBehavior: decoration != null ? Clip.hardEdge : Clip.none,
         padding: padding,
         margin: margin,
+        foregroundDecoration: foregroundDecoration,
         decoration: decoration,
         child: result,
       );
