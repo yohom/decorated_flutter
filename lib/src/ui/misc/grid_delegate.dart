@@ -11,9 +11,9 @@ class SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight
   /// and `childAspectRatio` arguments must be greater than zero.
   const SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight({
     required this.crossAxisCount,
+    required this.height,
     this.mainAxisSpacing = 0.0,
     this.crossAxisSpacing = 0.0,
-    this.height = 56.0,
   })  : assert(crossAxisCount > 0),
         assert(mainAxisSpacing >= 0),
         assert(crossAxisSpacing >= 0),
