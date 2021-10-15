@@ -130,7 +130,7 @@ class ImageView extends StatelessWidget {
       if (darkImagePath != null) {
         _imagePath = isDarkMode ? darkImagePath! : imagePath!;
       }
-      if (_imagePath.endsWith('svg')) {
+      if (_imagePath.endsWith('.svg')) {
         result = SvgPicture.asset(
           _imagePath,
           key: autoApplyKey ? Key(_imagePath) : null,
@@ -152,7 +152,7 @@ class ImageView extends StatelessWidget {
         );
       }
     } else if (imageUrl != null) {
-      if (imageUrl!.endsWith('svg')) {
+      if (imageUrl!.endsWith('.svg')) {
         result = SvgPicture.network(
           imageUrl!,
           key: autoApplyKey ? Key(imageUrl!) : null,
