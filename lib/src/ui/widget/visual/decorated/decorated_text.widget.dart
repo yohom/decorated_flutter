@@ -30,6 +30,7 @@ class DecoratedText extends StatelessWidget {
     this.material,
     this.mainAxisAlignment,
     this.crossAxisAlignment,
+    this.textBaseline,
   }) : super(key: key);
 
   final EdgeInsetsGeometry? padding;
@@ -57,6 +58,7 @@ class DecoratedText extends StatelessWidget {
   final bool? material;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
+  final TextBaseline? textBaseline;
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +76,7 @@ class DecoratedText extends StatelessWidget {
       result = Row(
         mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.center,
         crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.center,
+        textBaseline: textBaseline,
         children: [
           if (leftWidget != null) leftWidget!,
           result,
