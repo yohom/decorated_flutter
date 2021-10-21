@@ -31,7 +31,7 @@ dependencies:
   # android intent https://pub.flutter-io.cn/packages/android_intent
   android_intent: ^2.0.2
   # svg https://pub.flutter-io.cn/packages/flutter_svg
-  flutter_svg: ^0.22.0
+  flutter_svg: ^0.23.0+1
 
 dev_dependencies:
   mockito: ^5.0.16
