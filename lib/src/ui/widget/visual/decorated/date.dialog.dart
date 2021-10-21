@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 Future<DateTime?> showDateDialog(
   BuildContext context, {
   DateTime? initialDateTime,
+  DateTime? maximumDate,
+  Widget? title,
   CupertinoDatePickerMode mode = CupertinoDatePickerMode.date,
   String cancelText = '取消',
   String confirmText = '确认',
@@ -16,6 +18,8 @@ Future<DateTime?> showDateDialog(
     context: context,
     builder: (context) => _DatePickerDialog(
       initialDateTime: initialDateTime,
+      maximumDate: maximumDate,
+      title: title,
       mode: mode,
       cancelText: cancelText,
       confirmText: confirmText,
@@ -27,12 +31,16 @@ class _DatePickerDialog extends StatefulWidget {
   const _DatePickerDialog({
     Key? key,
     this.initialDateTime,
+    this.maximumDate,
+    this.title,
     this.mode = CupertinoDatePickerMode.date,
     this.cancelText = '取消',
     this.confirmText = '确认',
   }) : super(key: key);
 
   final DateTime? initialDateTime;
+  final DateTime? maximumDate;
+  final Widget? title;
   final CupertinoDatePickerMode mode;
   final String cancelText;
   final String confirmText;
@@ -65,6 +73,7 @@ class __DatePickerDialogState extends State<_DatePickerDialog> {
                 style: context.textTheme.bodyText1!.copyWith(color: Colors.red),
               ),
             ),
+            if (widget.title != null) widget.title!,
             TextButton(
               onPressed: () => _handleConfirm(context),
               child: Text(widget.confirmText),
@@ -75,7 +84,7 @@ class __DatePickerDialogState extends State<_DatePickerDialog> {
         Expanded(
           child: CupertinoDatePicker(
             mode: widget.mode,
-            maximumDate: DateTime.now(),
+            maximumDate: widget.maximumDate,
             initialDateTime: _date,
             onDateTimeChanged: (date) {
               L.d('date: $date');
