@@ -13,8 +13,8 @@ const _kUnknownException = 100003;
 
 ValueChanged<Object>? handleCustomError;
 
-dynamic handleError(Object error) {
-  L.d('handleError: $error');
+dynamic handleError(Object error, [StackTrace? trace]) {
+  L.d('handleError: $error, trace: $trace');
   if (error is DioError) {
     String message = error.message;
     switch (error.type) {
