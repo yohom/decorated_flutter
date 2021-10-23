@@ -31,6 +31,7 @@ class DecoratedText extends StatelessWidget {
     this.mainAxisAlignment,
     this.crossAxisAlignment,
     this.textBaseline,
+    this.behavior,
   }) : super(key: key);
 
   final EdgeInsetsGeometry? padding;
@@ -59,6 +60,7 @@ class DecoratedText extends StatelessWidget {
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
   final TextBaseline? textBaseline;
+  final HitTestBehavior? behavior;
 
   @override
   Widget build(BuildContext context) {
@@ -120,6 +122,7 @@ class DecoratedText extends StatelessWidget {
 
     if (onPressed != null) {
       result = GestureDetector(
+        behavior: behavior ?? HitTestBehavior.opaque,
         onTap: () => onPressed!(context),
         child: result,
       );
