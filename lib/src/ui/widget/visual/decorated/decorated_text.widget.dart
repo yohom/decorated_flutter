@@ -35,8 +35,13 @@ class DecoratedText extends StatelessWidget {
     this.textExpanded = false,
   }) : super(key: key);
 
+  /// 内边距
   final EdgeInsetsGeometry? padding;
+
+  /// 外边距
   final EdgeInsetsGeometry? margin;
+
+  /// 作用于Container的decoration
   final BoxDecoration? decoration;
   final TextStyle? style;
   final StrutStyle strutStyle;
