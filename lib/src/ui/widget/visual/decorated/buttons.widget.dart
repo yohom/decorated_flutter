@@ -32,7 +32,7 @@ class _AnimatedScaleButtonState extends State<AnimatedScaleButton> {
   @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder<double>(
-      duration: Duration(milliseconds: 100),
+      duration: const Duration(milliseconds: 100),
       curve: Curves.easeOut,
       builder: (BuildContext context, value, Widget? child) {
         return Transform.scale(

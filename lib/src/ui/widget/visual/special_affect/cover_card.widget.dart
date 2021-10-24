@@ -70,7 +70,7 @@ class _CoverCardState extends State<CoverCard> {
       children: <Widget>[
         Transform.translate(
           offset: Offset(0.0, _parallaxOffset),
-          child: Container(
+          child: SizedBox(
             height: widget.coverHeight,
             child: widget.cover,
           ),

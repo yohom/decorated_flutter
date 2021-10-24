@@ -11,7 +11,7 @@ abstract class BLoC {
   /// BLoC代表的语义
   final String semantics;
 
-  BLoC(this.semantics);
+  const BLoC(this.semantics);
 
   /// 重试
   Future<void> onErrorRetry() async {}
@@ -29,18 +29,23 @@ abstract class BLoC {
 
 /// 顶层[BLoC], 这个[BLoC]只有子[BLoC], 没有[Event], 并且子[BLoC]都是[GlobalBLoC]
 abstract class RootBLoC extends BLoC {
-  RootBLoC(String semantics) : super(semantics);
+  const RootBLoC(String semantics) : super(semantics);
 
   @protected
   List<GlobalBLoC> get disposeBag => [];
 
+  @override
   void reset() {
-    disposeBag.forEach((bloc) => bloc.reset());
+    for (var bloc in disposeBag) {
+      bloc.reset();
+    }
   }
 
   @override
   void dispose() {
-    disposeBag.forEach((bloc) => bloc.dispose());
+    for (var bloc in disposeBag) {
+      bloc.dispose();
+    }
     super.dispose();
   }
 }
@@ -55,13 +60,18 @@ abstract class LocalBLoC extends BLoC {
   @protected
   final CompositeSubscription compositeSubscription = CompositeSubscription();
 
+  @override
   void reset() {
-    disposeBag.forEach((io) => io.reset());
+    for (var io in disposeBag) {
+      io.reset();
+    }
   }
 
   @override
   void dispose() {
-    disposeBag.forEach((event) => event.dispose());
+    for (var event in disposeBag) {
+      event.dispose();
+    }
     if (!compositeSubscription.isDisposed) compositeSubscription.dispose();
     super.dispose();
   }
@@ -77,13 +87,18 @@ abstract class GlobalBLoC extends BLoC {
   @protected
   final CompositeSubscription compositeSubscription = CompositeSubscription();
 
+  @override
   void reset() {
-    disposeBag.forEach((io) => io.reset());
+    for (var io in disposeBag) {
+      io.reset();
+    }
   }
 
   @override
   void dispose() {
-    disposeBag.forEach((event) => event.dispose());
+    for (var event in disposeBag) {
+      event.dispose();
+    }
     if (!compositeSubscription.isDisposed) compositeSubscription.dispose();
     super.dispose();
   }

@@ -9,7 +9,7 @@ import 'package:rxdart/rxdart.dart';
 /// 根据输入的节奏来调整网络请求的次数, [interval]参数可以设置在用户停止输入多久之后, 开始网络
 /// 请求(或其他耗资源操作).
 class DebouncedTextFormField extends StatefulWidget {
-  DebouncedTextFormField({
+  const DebouncedTextFormField({
     Key? key,
     this.onChanged,
     this.interval = const Duration(milliseconds: 500),

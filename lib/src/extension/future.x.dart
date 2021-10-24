@@ -6,7 +6,8 @@ import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-typedef Widget LoadingBuilder(BuildContext context, String loadingText);
+typedef LoadingBuilder = Widget Function(
+    BuildContext context, String loadingText);
 
 extension FutureX<T> on Future<T> {
   static LoadingBuilder? loadingWidgetBuilder;
@@ -46,7 +47,7 @@ extension FutureX<T> on Future<T> {
                     context,
                     loadingText ?? defaultLoadingText,
                   ) ??
-                  LoadingWidget(),
+                  const LoadingWidget(),
             );
           },
         );
@@ -75,7 +76,8 @@ extension FutureX<T> on Future<T> {
   }
 
   /// apply一个回调, 然后返回当前对象
-  Future<T> apply<R>(FutureOr<R> onValue(T value), {Function? onError}) async {
+  Future<T> apply<R>(FutureOr<R> Function(T value) onValue,
+      {Function? onError}) async {
     await then(onValue, onError: onError);
     return this;
   }

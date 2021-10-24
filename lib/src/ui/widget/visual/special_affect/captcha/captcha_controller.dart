@@ -1,5 +1,3 @@
-
-
 import 'dart:async';
 import 'dart:ui';
 
@@ -19,7 +17,7 @@ class CaptchaController {
     return controllerMap[key]!;
   }
 
-  static final controllerMap = Map<Type, CaptchaController>();
+  static final controllerMap = <Type, CaptchaController>{};
 
   static void disposeAll() {
     controllerMap.forEach((_, controller) => controller.dispose());
@@ -41,7 +39,7 @@ class CaptchaController {
     started = true;
     if (done || _subscription == null) {
       done = false;
-      _timer = Stream.periodic(Duration(seconds: 1), (data) {
+      _timer = Stream.periodic(const Duration(seconds: 1), (data) {
         return kDuration - 1 - data;
       }).take(kDuration).doOnDone(() {
         done = true;

@@ -2,10 +2,10 @@ import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:decorated_flutter/src/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
-typedef void _Init<T extends BLoC>(T bloc);
+typedef _Init<T extends BLoC> = void Function(T bloc);
 
 class BLoCProvider<T extends BLoC> extends StatefulWidget {
-  BLoCProvider({
+  const BLoCProvider({
     Key? key,
     required this.child,
     required this.bloc,
@@ -61,7 +61,7 @@ class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
 }
 
 class _BLoCProviderInherited<T> extends InheritedWidget {
-  _BLoCProviderInherited({
+  const _BLoCProviderInherited({
     Key? key,
     required Widget child,
     required this.bloc,

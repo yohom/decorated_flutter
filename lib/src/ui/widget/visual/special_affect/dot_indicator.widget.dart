@@ -15,7 +15,7 @@ class DotTabIndicator extends Decoration {
   @override
   Decoration? lerpFrom(Decoration? a, double t) {
     if (a is DotTabIndicator) {
-      return DotTabIndicator();
+      return const DotTabIndicator();
     }
     return super.lerpFrom(a, t);
   }
@@ -23,7 +23,7 @@ class DotTabIndicator extends Decoration {
   @override
   Decoration? lerpTo(Decoration? b, double t) {
     if (b is DotTabIndicator) {
-      return DotTabIndicator();
+      return const DotTabIndicator();
     }
     return super.lerpTo(b, t);
   }

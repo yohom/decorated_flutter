@@ -9,8 +9,8 @@ class SnapList extends StatelessWidget {
     this.padding = EdgeInsets.zero,
     required IndexedWidgetBuilder itemBuilder,
     int? itemCount,
-    bool addAutomaticKeepAlive: true,
-    bool addRepaintBoundaries: true,
+    bool addAutomaticKeepAlive = true,
+    bool addRepaintBoundaries = true,
   })  : childrenDelegate = SliverChildBuilderDelegate(
           itemBuilder,
           childCount: itemCount,
@@ -32,7 +32,7 @@ class SnapList extends StatelessWidget {
         final itemWidth =
             (constraints.maxWidth - padding.horizontal) * viewportFraction;
         final itemHeight = itemWidth * aspectRatio;
-        return Container(
+        return SizedBox(
           height: itemHeight,
           child: ListView.custom(
             scrollDirection: Axis.horizontal,
@@ -57,12 +57,13 @@ class FeaturedItem extends StatelessWidget {
   final VoidCallback? onTap;
   final Widget child;
 
-  FeaturedItem({
+  const FeaturedItem({
+    Key? key,
     required this.title,
     required this.price,
     this.onTap,
     required this.child,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +94,8 @@ class FeaturedItem extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 12.0),
-            child: Text(price, style: TextStyle(fontWeight: FontWeight.bold)),
+            child: Text(price,
+                style: const TextStyle(fontWeight: FontWeight.bold)),
           ),
         ],
       ),

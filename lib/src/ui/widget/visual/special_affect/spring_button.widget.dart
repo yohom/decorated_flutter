@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 enum SpringButtonType {
-  OnlyScale,
-  WithOpacity,
+  onlyScale,
+  withOpacity,
 }
 
 class SpringButton extends StatefulWidget {
@@ -133,10 +133,10 @@ class SpringButton extends StatefulWidget {
     this.springButtonType,
     this.uiChild, {
     Key? key,
-    this.useCache: true,
-    this.alignment: Alignment.center,
-    this.scaleCoefficient: 0.75,
-    this.duration: 1000,
+    this.useCache = true,
+    this.alignment = Alignment.center,
+    this.scaleCoefficient = 0.75,
+    this.duration = 1000,
     this.onTapDown,
     this.onTapUp,
     this.onTap,
@@ -318,7 +318,7 @@ class SpringButtonState extends State<SpringButton>
   void springDown() {
     if (!isEnabled) return;
 
-    if (_debugLevel > 0) print("springDown");
+    if (_debugLevel > 0) debugPrint("springDown");
 
     isSpringDown = true;
     animationController.value = 0;
@@ -327,13 +327,13 @@ class SpringButtonState extends State<SpringButton>
   Future spring() async {
     if (!isEnabled) return;
 
-    if (_debugLevel > 0) print("spring-1");
+    if (_debugLevel > 0) debugPrint("spring-1");
 
     isSpringDown = false;
 
     if (hasMultiple) await Future.delayed(const Duration(milliseconds: 5));
 
-    if (_debugLevel > 0) print("spring-2");
+    if (_debugLevel > 0) debugPrint("spring-2");
 
     if (!isSpringDown) animationController.forward();
   }
@@ -341,13 +341,13 @@ class SpringButtonState extends State<SpringButton>
   Future springUp() async {
     if (!isEnabled) return;
 
-    if (_debugLevel > 0) print("springUp-1");
+    if (_debugLevel > 0) debugPrint("springUp-1");
 
     isSpringDown = false;
 
     if (hasMultiple) await Future.delayed(const Duration(milliseconds: 500));
 
-    if (_debugLevel > 0) print("springUp-2");
+    if (_debugLevel > 0) debugPrint("springUp-2");
 
     if (!isSpringDown) animationController.value = 1;
   }
@@ -376,161 +376,185 @@ class SpringButtonState extends State<SpringButton>
           ? null
           : () {
               springUp();
-              if (widget.onTapCancel != null && isEnabled)
+              if (widget.onTapCancel != null && isEnabled) {
                 widget.onTapCancel!();
+              }
             },
       onSecondaryTapDown: !hasSecondaryTap
           ? null
           : (_) {
               springDown();
-              if (widget.onSecondaryTapDown != null && isEnabled)
+              if (widget.onSecondaryTapDown != null && isEnabled) {
                 widget.onSecondaryTapDown!(_);
+              }
             },
       onSecondaryTapUp: !hasSecondaryTap
           ? null
           : (_) {
               spring();
-              if (widget.onSecondaryTapUp != null && isEnabled)
+              if (widget.onSecondaryTapUp != null && isEnabled) {
                 widget.onSecondaryTapUp!(_);
+              }
             },
       onSecondaryTapCancel: !hasSecondaryTap
           ? null
           : () {
               springUp();
-              if (widget.onSecondaryTapCancel != null && isEnabled)
+              if (widget.onSecondaryTapCancel != null && isEnabled) {
                 widget.onSecondaryTapCancel!();
+              }
             },
       onDoubleTap: !hasDoubleTap
           ? null
           : () {
               springDown();
               spring();
-              if (widget.onDoubleTap != null && isEnabled)
+              if (widget.onDoubleTap != null && isEnabled) {
                 widget.onDoubleTap!();
+              }
             },
       onLongPress: !hasLongPress
           ? null
           : () {
-              if (widget.onLongPress != null && isEnabled)
+              if (widget.onLongPress != null && isEnabled) {
                 widget.onLongPress!();
+              }
             },
       onLongPressStart: !hasLongPress
           ? null
           : (_) {
               springDown();
-              if (widget.onLongPressStart != null && isEnabled)
+              if (widget.onLongPressStart != null && isEnabled) {
                 widget.onLongPressStart!(_);
+              }
             },
       onLongPressMoveUpdate: !hasLongPress
           ? null
           : (_) {
-              if (widget.onLongPressMoveUpdate != null && isEnabled)
+              if (widget.onLongPressMoveUpdate != null && isEnabled) {
                 widget.onLongPressMoveUpdate!(_);
+              }
             },
       onLongPressUp: !hasLongPress
           ? null
           : () {
               spring();
-              if (widget.onLongPressUp != null && isEnabled)
+              if (widget.onLongPressUp != null && isEnabled) {
                 widget.onLongPressUp!();
+              }
             },
       onLongPressEnd: !hasLongPress
           ? null
           : (_) {
-              if (widget.onLongPressEnd != null && isEnabled)
+              if (widget.onLongPressEnd != null && isEnabled) {
                 widget.onLongPressEnd!(_);
+              }
             },
       onVerticalDragDown: !hasVerticalDrag
           ? null
           : (_) {
-              if (widget.onVerticalDragDown != null && isEnabled)
+              if (widget.onVerticalDragDown != null && isEnabled) {
                 widget.onVerticalDragDown!(_);
+              }
             },
       onVerticalDragStart: !hasVerticalDrag
           ? null
           : (_) {
               springDown();
-              if (widget.onVerticalDragStart != null && isEnabled)
+              if (widget.onVerticalDragStart != null && isEnabled) {
                 widget.onVerticalDragStart!(_);
+              }
             },
       onVerticalDragUpdate: !hasVerticalDrag
           ? null
           : (_) {
-              if (widget.onVerticalDragUpdate != null && isEnabled)
+              if (widget.onVerticalDragUpdate != null && isEnabled) {
                 widget.onVerticalDragUpdate!(_);
+              }
             },
       onVerticalDragEnd: !hasVerticalDrag
           ? null
           : (_) {
               spring();
-              if (widget.onVerticalDragEnd != null && isEnabled)
+              if (widget.onVerticalDragEnd != null && isEnabled) {
                 widget.onVerticalDragEnd!(_);
+              }
             },
       onVerticalDragCancel: !hasVerticalDrag
           ? null
           : () {
               springUp();
-              if (widget.onVerticalDragCancel != null && isEnabled)
+              if (widget.onVerticalDragCancel != null && isEnabled) {
                 widget.onVerticalDragCancel!();
+              }
             },
       onHorizontalDragDown: !hasHorizontalDrag
           ? null
           : (_) {
-              if (widget.onHorizontalDragDown != null && isEnabled)
+              if (widget.onHorizontalDragDown != null && isEnabled) {
                 widget.onHorizontalDragDown!(_);
+              }
             },
       onHorizontalDragStart: !hasHorizontalDrag
           ? null
           : (_) {
               springDown();
-              if (widget.onHorizontalDragStart != null && isEnabled)
+              if (widget.onHorizontalDragStart != null && isEnabled) {
                 widget.onHorizontalDragStart!(_);
+              }
             },
       onHorizontalDragUpdate: !hasHorizontalDrag
           ? null
           : (_) {
-              if (widget.onHorizontalDragUpdate != null && isEnabled)
+              if (widget.onHorizontalDragUpdate != null && isEnabled) {
                 widget.onHorizontalDragUpdate!(_);
+              }
             },
       onHorizontalDragEnd: !hasHorizontalDrag
           ? null
           : (_) {
               spring();
-              if (widget.onHorizontalDragEnd != null && isEnabled)
+              if (widget.onHorizontalDragEnd != null && isEnabled) {
                 widget.onHorizontalDragEnd!(_);
+              }
             },
       onHorizontalDragCancel: !hasHorizontalDrag
           ? null
           : () {
               springUp();
-              if (widget.onHorizontalDragCancel != null && isEnabled)
+              if (widget.onHorizontalDragCancel != null && isEnabled) {
                 widget.onHorizontalDragCancel!();
+              }
             },
       onForcePressStart: !hasForcePress
           ? null
           : (_) {
               springDown();
-              if (widget.onForcePressStart != null && isEnabled)
+              if (widget.onForcePressStart != null && isEnabled) {
                 widget.onForcePressStart!(_);
+              }
             },
       onForcePressPeak: !hasForcePress
           ? null
           : (_) {
-              if (widget.onForcePressPeak != null && isEnabled)
+              if (widget.onForcePressPeak != null && isEnabled) {
                 widget.onForcePressPeak!(_);
+              }
             },
       onForcePressUpdate: !hasForcePress
           ? null
           : (_) {
-              if (widget.onForcePressUpdate != null && isEnabled)
+              if (widget.onForcePressUpdate != null && isEnabled) {
                 widget.onForcePressUpdate!(_);
+              }
             },
       onForcePressEnd: !hasForcePress
           ? null
           : (_) {
               spring();
-              if (widget.onForcePressEnd != null && isEnabled)
+              if (widget.onForcePressEnd != null && isEnabled) {
                 widget.onForcePressEnd!(_);
+              }
             },
       onPanDown: !hasPan
           ? null
@@ -546,8 +570,9 @@ class SpringButtonState extends State<SpringButton>
       onPanUpdate: !hasPan
           ? null
           : (_) {
-              if (widget.onPanUpdate != null && isEnabled)
+              if (widget.onPanUpdate != null && isEnabled) {
                 widget.onPanUpdate!(_);
+              }
             },
       onPanEnd: !hasPan
           ? null
@@ -559,21 +584,24 @@ class SpringButtonState extends State<SpringButton>
           ? null
           : () {
               springUp();
-              if (widget.onPanCancel != null && isEnabled)
+              if (widget.onPanCancel != null && isEnabled) {
                 widget.onPanCancel!();
+              }
             },
       onScaleStart: !hasScale
           ? null
           : (_) {
               springDown();
-              if (widget.onScaleStart != null && isEnabled)
+              if (widget.onScaleStart != null && isEnabled) {
                 widget.onScaleStart!(_);
+              }
             },
       onScaleUpdate: !hasScale
           ? null
           : (_) {
-              if (widget.onScaleUpdate != null && isEnabled)
+              if (widget.onScaleUpdate != null && isEnabled) {
                 widget.onScaleUpdate!(_);
+              }
             },
       onScaleEnd: !hasScale
           ? null
@@ -587,7 +615,7 @@ class SpringButtonState extends State<SpringButton>
 
   @override
   Widget build(BuildContext context) {
-    if (springButtonType == SpringButtonType.WithOpacity)
+    if (springButtonType == SpringButtonType.withOpacity) {
       return AnimatedBuilder(
         animation: animation,
         child: useCache ? uiChild : null,
@@ -602,6 +630,7 @@ class SpringButtonState extends State<SpringButton>
           );
         },
       );
+    }
     return AnimatedBuilder(
       animation: animation,
       child: useCache ? uiChild : null,

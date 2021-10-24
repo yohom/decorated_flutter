@@ -13,7 +13,7 @@ class ErrorPlaceholder extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget result = Center(
       child: kDebugMode
-          ? Icon(Icons.error_outline, color: Colors.red)
+          ? const Icon(Icons.error_outline, color: Colors.red)
           : Container(),
     );
     if (sliver) {

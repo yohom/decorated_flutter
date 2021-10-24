@@ -23,7 +23,7 @@ class EdgeFade extends StatelessWidget {
           begin: begin,
           end: end,
           stops: stops,
-          colors: [Colors.black, Colors.transparent],
+          colors: const [Colors.black, Colors.transparent],
         ).createShader(rect);
       },
       blendMode: BlendMode.dstIn,

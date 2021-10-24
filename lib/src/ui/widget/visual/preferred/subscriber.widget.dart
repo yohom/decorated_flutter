@@ -236,7 +236,7 @@ class Subscriber<T> extends StatelessWidget {
           if (isEmpty(snapshot.data) && handleEmpty) {
             result ??= emptyPlaceholder ??
                 _defaultEmptyPlaceholder ??
-                EmptyPlaceholder();
+                const EmptyPlaceholder();
             if (sliver) result = SliverToBoxAdapter(child: result);
           } else {
             result ??= builder(snapshot.data!);
@@ -244,7 +244,7 @@ class Subscriber<T> extends StatelessWidget {
         } else if (showLoading) {
           result ??= loadingPlaceholder ??
               _defaultLoadingPlaceholder ??
-              LoadingWidget();
+              const LoadingWidget();
           if (sliver) result = SliverFillRemaining(child: result);
         } else {
           result ??= (sliver ? SLIVER_SPACE_ZERO : SPACE_ZERO);

@@ -25,7 +25,7 @@ class Blur extends StatelessWidget {
       padding: applyInsets
           ? EdgeInsets.symmetric(horizontal: sigmaX * 3, vertical: sigmaY * 3)
           : EdgeInsets.zero,
-      constraints: constraints ?? BoxConstraints.expand(),
+      constraints: constraints ?? const BoxConstraints.expand(),
       child: ImageFiltered(
         imageFilter: ui.ImageFilter.blur(sigmaX: sigmaX, sigmaY: sigmaY),
         child: child,

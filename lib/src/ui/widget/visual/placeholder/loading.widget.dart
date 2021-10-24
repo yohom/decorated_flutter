@@ -30,7 +30,7 @@ class LoadingWidget extends StatelessWidget {
                 color ?? Theme.of(context).primaryColor,
               ),
             )
-          : CupertinoActivityIndicator(),
+          : const CupertinoActivityIndicator(),
     );
     if (height != null || width != null) {
       result = SizedBox(height: height, width: width, child: result);

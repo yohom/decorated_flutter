@@ -31,7 +31,7 @@ class _RuntimeState extends State<Runtime> {
         // ignore: invalid_use_of_protected_member
         Runtime._globalBLoCList.expand((bloc) => bloc.disposeBag).toList();
     return SingleChildScrollView(
-      physics: ClampingScrollPhysics(),
+      physics: const ClampingScrollPhysics(),
       child: ExpansionPanelList(
         expansionCallback: (index, isExpanded) {
           setState(() {
@@ -48,13 +48,13 @@ class _RuntimeState extends State<Runtime> {
           // 全局BLoC运行时信息
           ExpansionPanel(
             isExpanded: _globalBLoCExpanded,
-            headerBuilder: (_, __) => _Header(title: 'Global BLoCs'),
+            headerBuilder: (_, __) => const _Header(title: 'Global BLoCs'),
             body: _Body(ioList: globalIOList),
           ),
           // 局部BLoC运行时信息
           ExpansionPanel(
             isExpanded: _localBLoCExpanded,
-            headerBuilder: (_, __) => _Header(title: 'Local BLoC'),
+            headerBuilder: (_, __) => const _Header(title: 'Local BLoC'),
             body: _Body(ioList: widget.runtimeInfo),
           ),
         ],
@@ -92,7 +92,7 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      physics: ClampingScrollPhysics(),
+      physics: const ClampingScrollPhysics(),
       shrinkWrap: true,
       itemCount: ioList.length,
       itemBuilder: (context, index) {

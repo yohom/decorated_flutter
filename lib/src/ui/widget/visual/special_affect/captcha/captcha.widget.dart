@@ -7,7 +7,7 @@ const _kInitLabel = '获取验证码';
 const _kRefetchLabel = '重新获取';
 const _kLabelTemplate = '倒计时%s秒';
 
-typedef Widget _Builder(bool? countdowning, String? label);
+typedef _Builder = Widget Function(bool? countdowning, String? label);
 
 /// 倒计时控件
 /// 目标:
@@ -17,7 +17,7 @@ typedef Widget _Builder(bool? countdowning, String? label);
 ///   3. 一轮倒计时结束后, 自动复原到初始值
 ///   4. 自动管理所有注册的定时器
 class CaptchaBuilder extends StatefulWidget {
-  CaptchaBuilder({
+  const CaptchaBuilder({
     Key? key,
     required this.controller,
     this.labelTemplate = _kLabelTemplate,

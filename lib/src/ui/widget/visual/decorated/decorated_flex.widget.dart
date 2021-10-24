@@ -533,13 +533,13 @@ class DecoratedFlex extends StatelessWidget {
       }
 
       if (direction == Axis.horizontal) {
-        indexes.forEach((index) {
+        for (var index in indexes) {
           result.insert(index, divider ?? SizedBox(width: itemSpacing));
-        });
+        }
       } else if (direction == Axis.vertical) {
-        indexes.forEach((index) {
+        for (var index in indexes) {
           result.insert(index, divider ?? SizedBox(height: itemSpacing));
-        });
+        }
       }
     }
 
