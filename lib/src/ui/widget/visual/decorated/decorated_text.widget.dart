@@ -32,6 +32,7 @@ class DecoratedText extends StatelessWidget {
     this.crossAxisAlignment,
     this.textBaseline,
     this.behavior,
+    this.textExpanded = false,
   }) : super(key: key);
 
   final EdgeInsetsGeometry? padding;
@@ -61,6 +62,7 @@ class DecoratedText extends StatelessWidget {
   final CrossAxisAlignment? crossAxisAlignment;
   final TextBaseline? textBaseline;
   final HitTestBehavior? behavior;
+  final bool textExpanded;
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +83,7 @@ class DecoratedText extends StatelessWidget {
         textBaseline: textBaseline,
         children: [
           if (leftWidget != null) leftWidget!,
-          result,
+          if (textExpanded) Expanded(child: result) else result,
           if (rightWidget != null) rightWidget!,
         ],
       );
