@@ -225,6 +225,7 @@ class OptionalPageOutput<T, ARG_TYPE> extends OptionalListOutput<T, int>
   }
 
   /// 这里标记为protected, 防止被外部引用, 应该使用[refresh]方法
+  @override
   @protected
   Future<List<T>?> update([int? arg]) {
     return super.update(arg);
@@ -356,9 +357,9 @@ class OptionalIntInput extends OptionalInput<int?> with OptionalIntMixin {
           onReset: onReset,
           persistentKey: persistentKey,
         ) {
-    this._min = min;
-    this._max = max;
-    this._remainder = remainder;
+    _min = min;
+    _max = max;
+    _remainder = remainder;
   }
 }
 
@@ -428,14 +429,16 @@ mixin OptionalInputMixin<T> on BaseOptionalIO<T> {
       return null;
     }
 
-    if (_printLog)
+    if (_printLog) {
       L.d('+++++++++++++++++++++++++++BEGIN+++++++++++++++++++++++++++++\n'
           'IO接收到**$_semantics**数据: $data');
+    }
 
     if (isEmpty(data) && !_acceptEmpty) {
-      if (_printLog)
+      if (_printLog) {
         L.d('转发被拒绝! 原因: 需要非Empty值, 但是接收到Empty值'
             '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++++');
+      }
       return data;
     }
 
@@ -447,9 +450,10 @@ mixin OptionalInputMixin<T> on BaseOptionalIO<T> {
         if (_printLog) L.d('IO转发出**$_semantics**数据: $data');
         _subject.add(data);
       } else {
-        if (_printLog)
+        if (_printLog) {
           L.d('转发被拒绝! 原因: 需要唯一, 但是新数据与最新值相同'
               '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
+        }
       }
     } else {
       if (_printLog) L.d('IO转发出**$_semantics**数据: $data');
@@ -473,7 +477,7 @@ mixin OptionalInputMixin<T> on BaseOptionalIO<T> {
     return data;
   }
 
-  Future<T?> addStream(Stream<T> source, {bool cancelOnError: true}) {
+  Future<T?> addStream(Stream<T> source, {bool cancelOnError = true}) {
     return _subject.addStream(source, cancelOnError: cancelOnError)
         as Future<T?>;
   }
@@ -563,6 +567,10 @@ mixin OptionalListMixin<T> on BaseOptionalIO<List<T>?> {
       L.w('IO在close状态下请求发送数据');
       return null;
     }
+    if (latest == null) {
+      L.w('在latest为null时尝试append数据');
+      return null;
+    }
 
     if (fromHead) {
       final List<T>? pending = latest?..insert(0, element);
@@ -586,6 +594,10 @@ mixin OptionalListMixin<T> on BaseOptionalIO<List<T>?> {
   List<T>? appendAll(List<T> elements, {bool fromHead = false}) {
     if (_subject.isClosed) {
       L.w('IO在close状态下请求发送数据');
+      return null;
+    }
+    if (latest == null) {
+      L.w('在latest为null时尝试append数据');
       return null;
     }
 

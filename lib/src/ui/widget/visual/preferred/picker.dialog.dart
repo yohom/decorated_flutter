@@ -2,7 +2,7 @@ import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-typedef String Converter<T>(T data);
+typedef Converter<T> = String Function(T data);
 
 Future<T?> showPickerDialog<T>(
   BuildContext context, {
@@ -68,15 +68,15 @@ class _PickerDialogState<T> extends State<_PickerDialog<T>> {
           children: <Widget>[
             TextButton(
               onPressed: context.rootNavigator.pop,
-              child: Text('取消'),
+              child: const Text('取消'),
             ),
-            Spacer(),
+            const Spacer(),
             if (isNotEmpty(widget.title))
               Text(
                 widget.title!,
                 style: widget.titleStyle ?? context.textTheme.bodyText1,
               ),
-            Spacer(),
+            const Spacer(),
             TextButton(
               onPressed: () => context.rootNavigator.pop(_selected),
               child: Text(

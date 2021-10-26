@@ -24,7 +24,7 @@ class Delayed<T> extends StatelessWidget {
       loadingPlaceholder: loadingWidget ??
           Container(
             color: backgroundColor,
-            child: Center(child: CircularProgressIndicator()),
+            child: const Center(child: CircularProgressIndicator()),
           ),
       future: Future.delayed(duration, () => 0),
       builder: (_) => child,

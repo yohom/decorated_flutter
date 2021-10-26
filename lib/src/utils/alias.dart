@@ -1,4 +1,4 @@
 import 'package:flutter/material.dart';
 
-typedef void ContextCallback(BuildContext context);
-typedef void ContextValueChanged<T>(BuildContext context, T value);
+typedef ContextCallback = void Function(BuildContext context);
+typedef ContextValueChanged<T> = void Function(BuildContext context, T value);

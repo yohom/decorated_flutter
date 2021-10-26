@@ -11,9 +11,9 @@ enum Actions {
 }
 
 enum Gravity {
-  Start,
-  Center,
-  End,
+  start,
+  center,
+  end,
 }
 
 enum Gender {

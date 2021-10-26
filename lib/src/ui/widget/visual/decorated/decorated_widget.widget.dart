@@ -3,7 +3,7 @@ import 'package:decorated_flutter/src/ui/widget/nonvisual/auto_close_keyboard.wi
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-typedef void _InitAction<T extends BLoC>(T bloc);
+typedef _InitAction<T extends BLoC> = void Function(T bloc);
 
 /// [B]是指定的BLoC
 class DecoratedWidget<B extends BLoC> extends StatefulWidget {
@@ -18,7 +18,7 @@ class DecoratedWidget<B extends BLoC> extends StatefulWidget {
     this.tabControllerConfig,
   })  : // 要么同时设置泛型B和bloc参数, 要么就都不设置
         assert((B != BLoC && bloc != null) || (B == BLoC && bloc == null)),
-        super();
+        super(key: key);
 
   /// 直接传递的BLoC
   final B? bloc;

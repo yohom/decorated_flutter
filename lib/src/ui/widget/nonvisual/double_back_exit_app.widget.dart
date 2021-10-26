@@ -41,7 +41,7 @@ class _DoubleBackExitAppState extends State<DoubleBackExitApp> {
       L.d('回退间隔: $interval');
       if (interval.interval < widget.duration) {
         if (Platform.isAndroid) {
-          final intent = AndroidIntent(
+          const intent = AndroidIntent(
             action: 'android.intent.action.MAIN',
             flags: [Flag.FLAG_ACTIVITY_CLEAR_TOP],
             category: 'android.intent.category.HOME',

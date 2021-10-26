@@ -14,10 +14,10 @@ class _Logger {
 
   Directory? _logDir;
   File? _logFile;
-  StringBuffer _logBuffer = StringBuffer();
+  final StringBuffer _logBuffer = StringBuffer();
 
   _Logger() {
-    Stream.periodic(Duration(seconds: 5), passthrough).listen((event) {
+    Stream.periodic(const Duration(seconds: 5), passthrough).listen((event) {
       _logFile?.writeAsStringSync(_logBuffer.toString(), mode: FileMode.append);
       _logBuffer.clear();
     });

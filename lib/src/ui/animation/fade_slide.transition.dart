@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
-typedef Widget _Builder(BuildContext context, AnimationController controller);
+typedef _Builder = Widget Function(BuildContext context, AnimationController controller);
 
 enum SlideDirection {
   vertical,
@@ -37,7 +37,7 @@ class FadeSlideTransition extends StatefulWidget {
   /// 是否立即执行动画
   final bool immediately;
 
-  FadeSlideTransition({
+  const FadeSlideTransition({
     Key? key,
     this.originOffset = const Offset(0.0, 30.0),
     this.delay = const Duration(milliseconds: 0),

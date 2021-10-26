@@ -31,10 +31,17 @@ class DecoratedText extends StatelessWidget {
     this.mainAxisAlignment,
     this.crossAxisAlignment,
     this.textBaseline,
+    this.behavior,
+    this.textExpanded = false,
   }) : super(key: key);
 
+  /// 内边距
   final EdgeInsetsGeometry? padding;
+
+  /// 外边距
   final EdgeInsetsGeometry? margin;
+
+  /// 作用于Container的decoration
   final BoxDecoration? decoration;
   final TextStyle? style;
   final StrutStyle strutStyle;
@@ -59,6 +66,8 @@ class DecoratedText extends StatelessWidget {
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
   final TextBaseline? textBaseline;
+  final HitTestBehavior? behavior;
+  final bool textExpanded;
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +88,7 @@ class DecoratedText extends StatelessWidget {
         textBaseline: textBaseline,
         children: [
           if (leftWidget != null) leftWidget!,
-          result,
+          if (textExpanded) Expanded(child: result) else result,
           if (rightWidget != null) rightWidget!,
         ],
       );
@@ -120,6 +129,7 @@ class DecoratedText extends StatelessWidget {
 
     if (onPressed != null) {
       result = GestureDetector(
+        behavior: behavior ?? HitTestBehavior.opaque,
         onTap: () => onPressed!(context),
         child: result,
       );

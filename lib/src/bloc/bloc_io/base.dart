@@ -64,9 +64,10 @@ abstract class BaseIO<T> {
           L.w('未注册持久层! 请调用BaseIO.registerPersistence注册持久层');
         }
       }
-      if (_printLog)
+      if (_printLog) {
         L.d('当前$semantics latest: $latest'
             '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
+      }
     });
     // 如果是BehaviorSubject, 则检查是否有持久化下来的数据, 有则发射
     if (isBehavior) {
@@ -91,18 +92,18 @@ abstract class BaseIO<T> {
 
   /// 语义
   @protected
-  String _semantics;
+  final String _semantics;
 
   /// 内部中转对象
   @protected
-  Subject<T> _subject;
+  final Subject<T> _subject;
 
   /// 重置回调方法
   @protected
-  T Function()? _onReset;
+  final T Function()? _onReset;
 
   /// 持久化key
-  String? _persistentKey;
+  final String? _persistentKey;
 
   void addError(Object error, [StackTrace? stackTrace]) {
     if (_subject.isClosed) return;
@@ -136,10 +137,11 @@ abstract class BaseIO<T> {
   void reset() {
     if (_subject.isClosed) return;
 
-    if (_printLog)
+    if (_printLog) {
       L.d('-----------------------------BEGIN---------------------------------\n'
           '$_semantics事件 重置 '
           '\n------------------------------END----------------------------------');
+    }
 
     final _resetValue = _onReset != null ? _onReset!() : _seedValue;
     _subject.add(_resetValue);
@@ -160,10 +162,11 @@ abstract class BaseIO<T> {
   void dispose() {
     if (_subject.isClosed) return;
 
-    if (_printLog)
+    if (_printLog) {
       L.d('=============================BEGIN===============================\n'
           '$_semantics事件 disposed '
           '\n==============================END================================');
+    }
     _subject.close();
   }
 

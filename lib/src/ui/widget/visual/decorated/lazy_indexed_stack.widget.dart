@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 class LazyIndexedStack extends StatefulWidget {
-  LazyIndexedStack({
+  const LazyIndexedStack({
     Key? key,
     this.alignment = AlignmentDirectional.topStart,
     this.textDirection,
