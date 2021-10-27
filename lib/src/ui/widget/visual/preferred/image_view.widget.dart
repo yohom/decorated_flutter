@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:decorated_flutter/src/extension/extension.export.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,87 @@ typedef LoadingProgress = void Function(double progress, List<int> data);
 
 // TODO 透明图片颜色 https://api.flutter.dev/flutter/widgets/Opacity-class.html#transparent-image
 class ImageView extends StatelessWidget {
+  /// 根据图片uri自动判断是使用本地加载还是远程加载
+  ImageView(
+    String imageUri, {
+    Key? key,
+    this.width,
+    this.height,
+    this.size,
+    this.fit,
+    this.color,
+    this.padding,
+    this.margin,
+    this.darkImagePath,
+    this.autoDarkMode = false,
+    this.autoApplyKey = true,
+    this.decoration,
+    this.foregroundDecoration,
+    this.clipBehavior = Clip.hardEdge,
+  })  : imagePath = imageUri.startsWith('http') ? null : imageUri,
+        imageUrl = imageUri.startsWith('http') ? imageUri : null,
+        errorWidget = const SizedBox.shrink(),
+        placeholder = const SizedBox.shrink(),
+        assert(
+          (darkImagePath != null && autoDarkMode == false) ||
+              darkImagePath == null,
+          '不能同时设置darkImagePath和autoDarkMode',
+        ),
+        super(key: key);
+
+  const ImageView.local(
+    this.imagePath, {
+    Key? key,
+    this.width,
+    this.height,
+    this.size,
+    this.fit,
+    this.color,
+    this.padding,
+    this.margin,
+    this.darkImagePath,
+    this.autoDarkMode = false,
+    this.autoApplyKey = true,
+    this.decoration,
+    this.foregroundDecoration,
+    this.clipBehavior = Clip.hardEdge,
+  })  : imageUrl = null,
+        errorWidget = const SizedBox.shrink(),
+        placeholder = const SizedBox.shrink(),
+        assert(
+          (darkImagePath != null && autoDarkMode == false) ||
+              darkImagePath == null,
+          '不能同时设置darkImagePath和autoDarkMode',
+        ),
+        super(key: key);
+
+  const ImageView.remote(
+    this.imageUrl, {
+    Key? key,
+    this.width,
+    this.height,
+    this.size,
+    this.fit,
+    this.color,
+    this.errorWidget = const SizedBox.shrink(),
+    this.placeholder = const SizedBox.shrink(),
+    this.padding,
+    this.margin,
+    this.darkImagePath,
+    this.autoDarkMode = false,
+    this.autoApplyKey = true,
+    this.decoration,
+    this.foregroundDecoration,
+    this.clipBehavior = Clip.hardEdge,
+  })  : imagePath = null,
+        assert(
+          (darkImagePath != null && autoDarkMode == false) ||
+              darkImagePath == null,
+          '不能同时设置darkImagePath和autoDarkMode',
+        ),
+        super(key: key);
+
+  @Deprecated('使用ImageView.local代替')
   const ImageView.asset(
     this.imagePath, {
     Key? key,
@@ -33,6 +116,7 @@ class ImageView extends StatelessWidget {
         ),
         super(key: key);
 
+  @Deprecated('使用ImageView.remote代替')
   const ImageView.network(
     this.imageUrl, {
     Key? key,
@@ -139,6 +223,16 @@ class ImageView extends StatelessWidget {
           fit: fit ?? BoxFit.contain,
           color: _color,
           placeholderBuilder: (_) => placeholder,
+        );
+      } else if (_imagePath.startsWith('/')) {
+        result = Image.file(
+          File(_imagePath),
+          key: autoApplyKey ? Key(_imagePath) : null,
+          width: size ?? width,
+          height: size ?? height,
+          fit: fit,
+          color: _color,
+          gaplessPlayback: true,
         );
       } else {
         result = Image.asset(
