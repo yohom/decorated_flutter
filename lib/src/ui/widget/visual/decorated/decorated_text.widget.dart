@@ -9,6 +9,7 @@ class DecoratedText extends StatelessWidget {
     this.padding,
     this.margin,
     this.decoration,
+    this.foregroundDecoration,
     this.style,
     this.strutStyle = const StrutStyle(),
     this.safeArea,
@@ -43,6 +44,7 @@ class DecoratedText extends StatelessWidget {
 
   /// 作用于Container的decoration
   final BoxDecoration? decoration;
+  final BoxDecoration? foregroundDecoration;
   final TextStyle? style;
   final StrutStyle strutStyle;
   final String data;
@@ -101,6 +103,7 @@ class DecoratedText extends StatelessWidget {
     if (width != null ||
         height != null ||
         decoration != null ||
+        foregroundDecoration != null ||
         margin != null ||
         padding != null ||
         constraints != null ||
@@ -111,6 +114,7 @@ class DecoratedText extends StatelessWidget {
         margin: margin,
         padding: padding,
         decoration: decoration,
+        foregroundDecoration: foregroundDecoration,
         constraints: constraints,
         transform: transform,
         child: result,
