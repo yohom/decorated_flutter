@@ -857,6 +857,9 @@ mixin OptionalPageMixin<T, ARG_TYPE> on OptionalListMixin<T> {
 
   late _PageFetch<List<T>, ARG_TYPE?> _pageFetch;
 
+  /// 当前页数
+  int get currentPage => _currentPage;
+
   /// 请求下一页数据
   ///
   /// 返回是否还有更多数据 true为还有更多数据 false为没有更多数据
@@ -882,6 +885,20 @@ mixin OptionalPageMixin<T, ARG_TYPE> on OptionalListMixin<T> {
       }
     }
     return !_noMoreData;
+  }
+
+  /// 请求指定页数的数据
+  Future<void> loadPage(int page, [ARG_TYPE? args]) async {
+    try {
+      _dataList = await _pageFetch(page, args);
+      _currentPage = page;
+
+      if (_subject.isClosed) return;
+      _subject.add(_dataList);
+    } catch (e) {
+      if (_subject.isClosed) return;
+      _subject.addError(e);
+    }
   }
 
   /// 刷新列表
