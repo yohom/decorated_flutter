@@ -1,5 +1,6 @@
 export 'animation/fade_slide.transition.dart';
 export 'animation/show_up.transition.dart';
+export 'dialog/date.dialog.dart';
 export 'misc/grid_delegate.dart';
 export 'route/custom_material.route.dart';
 export 'route/decorated_route.route.dart';
@@ -9,7 +10,6 @@ export 'widget/nonvisual/delayed.widget.dart';
 export 'widget/nonvisual/double_back_exit_app.widget.dart';
 export 'widget/nonvisual/repeat.widget.dart';
 export 'widget/visual/decorated/buttons.widget.dart';
-export 'widget/visual/decorated/date.dialog.dart';
 export 'widget/visual/decorated/decorated_flex.widget.dart';
 export 'widget/visual/decorated/decorated_stack.widget.dart';
 export 'widget/visual/decorated/decorated_text.widget.dart';
