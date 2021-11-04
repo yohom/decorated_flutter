@@ -12,12 +12,12 @@ typedef _ErrorPlaceholderBuilder = Widget Function(
 
 class SingleSubscriber<T> extends StatefulWidget {
   static Widget? _defaultEmptyPlaceholder;
-  static Widget? _defaultErrorPlaceholder;
+  static _ErrorPlaceholderBuilder? _defaultErrorPlaceholder;
   static Widget? _defaultLoadingPlaceholder;
 
   static void setDefaultPlaceholder({
     Widget? emptyPlaceholder,
-    Widget? errorPlaceholder,
+    _ErrorPlaceholderBuilder? errorPlaceholder,
     Widget? loadingPlaceholder,
   }) {
     _defaultEmptyPlaceholder = emptyPlaceholder;
@@ -104,7 +104,8 @@ class _SingleSubscriberState<T> extends State<SingleSubscriber<T>> {
             result ??=
                 widget.errorPlaceholderBuilder!(context, snapshot.error!);
           } else {
-            result ??= SingleSubscriber._defaultErrorPlaceholder ??
+            result ??= SingleSubscriber._defaultErrorPlaceholder
+                    ?.call(context, snapshot.error!) ??
                 ErrorPlaceholder(sliver: widget.sliver);
           }
         }
@@ -146,12 +147,12 @@ class _SingleSubscriberState<T> extends State<SingleSubscriber<T>> {
 
 class Subscriber<T> extends StatelessWidget {
   static Widget? _defaultEmptyPlaceholder;
-  static Widget? _defaultErrorPlaceholder;
+  static _ErrorPlaceholderBuilder? _defaultErrorPlaceholder;
   static Widget? _defaultLoadingPlaceholder;
 
   static void setDefaultPlaceholder({
     Widget? emptyPlaceholder,
-    Widget? errorPlaceholder,
+    _ErrorPlaceholderBuilder? errorPlaceholder,
     Widget? loadingPlaceholder,
   }) {
     _defaultEmptyPlaceholder = emptyPlaceholder;
@@ -227,7 +228,8 @@ class Subscriber<T> extends StatelessWidget {
             result ??= errorPlaceholderBuilder!(context, snapshot.error!);
           } else {
             result ??=
-                _defaultErrorPlaceholder ?? ErrorPlaceholder(sliver: sliver);
+                _defaultErrorPlaceholder?.call(context, snapshot.error!) ??
+                    ErrorPlaceholder(sliver: sliver);
           }
           if (sliver) result = SliverToBoxAdapter(child: result);
         }
