@@ -1,3 +1,4 @@
+import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 
 class AutoScrollBottomSheet extends StatelessWidget {
@@ -14,11 +15,13 @@ class AutoScrollBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedPadding(
-      padding: MediaQuery.of(context).viewInsets,
-      duration: duration,
-      curve: curve,
-      child: child,
+    return AutoCloseKeyboard(
+      child: AnimatedPadding(
+        padding: MediaQuery.of(context).viewInsets,
+        duration: duration,
+        curve: curve,
+        child: child,
+      ),
     );
   }
 }
