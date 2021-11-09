@@ -15,35 +15,39 @@ ValueChanged<Object>? handleCustomError;
 
 dynamic handleError(Object error, [StackTrace? trace]) {
   L.d('handleError: $error, trace: $trace');
+  final locale = gNavigatorKey.currentContext == null
+      ? null
+      : Localizations.localeOf(gNavigatorKey.currentContext!);
+  final isEnglish = locale?.languageCode == 'en';
   if (error is DioError) {
     String message = error.message;
     switch (error.type) {
       case DioErrorType.cancel:
-        message = '取消请求';
+        message = isEnglish ? error.message : '取消请求';
         break;
       case DioErrorType.sendTimeout:
       case DioErrorType.connectTimeout:
       case DioErrorType.receiveTimeout:
-        message = '网络连接超时，请稍后重试';
+        message = isEnglish ? error.message : '网络连接超时，请稍后重试';
         break;
       case DioErrorType.response:
         final statusCode = error.response?.statusCode;
         if (statusCode != null) {
           if (statusCode >= 400 && statusCode <= 417) {
-            message = '访问地址异常，请稍后重试 $statusCode';
+            message = isEnglish ? error.message : '访问地址异常，请稍后重试 $statusCode';
           } else if (statusCode >= 500 && statusCode <= 505) {
-            message = '服务器繁忙 $statusCode';
+            message = isEnglish ? error.message : '服务器繁忙 $statusCode';
           }
         }
         break;
       default:
-        message = '网络不给力，请稍后重试 $_kDioOther';
+        message = isEnglish ? error.message : '网络不给力，请稍后重试 $_kDioOther';
     }
     toast(message);
   } else if (error is String) {
     toast(error);
   } else if (error is SocketException) {
-    toast('网络不给力，请稍后重试 $_kSocketException');
+    toast(isEnglish ? error.message : '网络不给力，请稍后重试 $_kSocketException');
   } else if (error is BizException) {
     toast(error.message);
   } else if (error is PlatformException) {
@@ -52,7 +56,7 @@ dynamic handleError(Object error, [StackTrace? trace]) {
     if (handleCustomError != null) {
       handleCustomError!(error);
     } else {
-      toast('遇到未知错误 $_kUnknownException');
+      toast(isEnglish ? 'Unknown Error' : '遇到未知错误 $_kUnknownException');
     }
   }
   // catchError要求一个和Future一样类型的返回值, 但是这里无法提供一个通用的, 只能返回null了
