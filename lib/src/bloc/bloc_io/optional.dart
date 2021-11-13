@@ -193,12 +193,14 @@ class OptionalListOutput<T, ARG_TYPE> extends OptionalOutput<List<T>?, ARG_TYPE>
 /// 分页业务单元
 class OptionalPageOutput<T, ARG_TYPE> extends OptionalListOutput<T, int>
     with OptionalPageMixin<T, ARG_TYPE> {
+  static int? defaultInitialPage;
+
   OptionalPageOutput({
     List<T>? seedValue,
     required String semantics,
     bool sync = true,
     bool isBehavior = true,
-    int initPage = 0,
+    int? initPage,
     bool receiveFullData = true,
     bool printLog = true,
     int pageSize = 0,
@@ -215,7 +217,7 @@ class OptionalPageOutput<T, ARG_TYPE> extends OptionalListOutput<T, int>
           onReset: onReset,
           persistentKey: persistentKey,
         ) {
-    _initPage = initPage;
+    _initPage = initPage ?? defaultInitialPage ?? 0;
     _currentPage = _initPage;
     _pageFetch = pageFetch;
     _receiveFullData = receiveFullData;
