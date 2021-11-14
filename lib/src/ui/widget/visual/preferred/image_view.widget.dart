@@ -233,6 +233,8 @@ class ImageView extends StatelessWidget {
           fit: fit,
           color: _color,
           gaplessPlayback: true,
+          cacheWidth: (size ?? width)?.toInt(),
+          cacheHeight: (size ?? height)?.toInt(),
         );
       } else {
         result = Image.asset(
@@ -243,6 +245,8 @@ class ImageView extends StatelessWidget {
           fit: fit,
           color: _color,
           gaplessPlayback: true,
+          cacheWidth: (size ?? width)?.toInt(),
+          cacheHeight: (size ?? height)?.toInt(),
         );
       }
     } else if (imageUrl != null) {
@@ -266,6 +270,8 @@ class ImageView extends StatelessWidget {
           color: _color,
           placeholder: (_, __) => placeholder,
           errorWidget: (_, __, ___) => errorWidget,
+          memCacheWidth: (size ?? width)?.toInt(),
+          memCacheHeight: (size ?? height)?.toInt(),
         );
       }
     } else {
