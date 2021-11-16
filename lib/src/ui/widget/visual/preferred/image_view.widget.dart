@@ -16,6 +16,9 @@ class ImageView extends StatelessWidget {
     this.width,
     this.height,
     this.size,
+    this.cacheWidth,
+    this.cacheHeight,
+    this.cacheSize,
     this.fit,
     this.color,
     this.padding,
@@ -43,6 +46,9 @@ class ImageView extends StatelessWidget {
     this.width,
     this.height,
     this.size,
+    this.cacheWidth,
+    this.cacheHeight,
+    this.cacheSize,
     this.fit,
     this.color,
     this.padding,
@@ -69,6 +75,9 @@ class ImageView extends StatelessWidget {
     this.width,
     this.height,
     this.size,
+    this.cacheWidth,
+    this.cacheHeight,
+    this.cacheSize,
     this.fit,
     this.color,
     this.errorWidget = const SizedBox.shrink(),
@@ -96,6 +105,9 @@ class ImageView extends StatelessWidget {
     this.width,
     this.height,
     this.size,
+    this.cacheWidth,
+    this.cacheHeight,
+    this.cacheSize,
     this.fit,
     this.color,
     this.padding,
@@ -123,6 +135,9 @@ class ImageView extends StatelessWidget {
     this.width,
     this.height,
     this.size,
+    this.cacheWidth,
+    this.cacheHeight,
+    this.cacheSize,
     this.fit,
     this.color,
     this.errorWidget = const SizedBox.shrink(),
@@ -149,11 +164,13 @@ class ImageView extends StatelessWidget {
   /// 图片url
   final String? imageUrl;
 
-  /// 宽度 如果同时设置了[width], [height]和[size], 那么优先[size]
-  final double? width;
+  /// 宽高 如果同时设置了[width], [height]和[size], 那么优先[size]
+  final double? width, height, size;
 
-  /// 高度 如果同时设置了[width], [height]和[size], 那么优先[size]
-  final double? height;
+  /// 缓存宽高
+  ///
+  /// 如果设置了, 会resize原始图片再显示, 可以优化过大的图片显示
+  final int? cacheWidth, cacheHeight, cacheSize;
 
   /// 适应模式
   final BoxFit? fit;
@@ -164,17 +181,11 @@ class ImageView extends StatelessWidget {
   /// 备用的asset image路径
   final Widget errorWidget;
 
-  /// 大小, 如果同时设置了[width], [height]和[size], 那么优先[size]
-  final double? size;
-
   /// 占位图
   final Widget placeholder;
 
-  /// 内边距
-  final EdgeInsets? padding;
-
-  /// 外边距
-  final EdgeInsets? margin;
+  /// 边距
+  final EdgeInsets? padding, margin;
 
   /// 暗黑模式路径模式
   ///
@@ -208,17 +219,11 @@ class ImageView extends StatelessWidget {
     if (autoDarkMode) {
       _color = isDarkMode ? Colors.white : null;
     }
-    final imageWidth = size ?? width;
-    final imageHeight = size ?? height;
+    final _width = size ?? width;
+    final _height = size ?? height;
+    final _cacheWidth = cacheSize ?? cacheWidth;
+    final _cacheHeight = cacheSize ?? cacheHeight;
 
-    final pixelRatio = MediaQuery.of(context).devicePixelRatio;
-    // final cacheWidth =
-    //     imageWidth == null ? null : (imageWidth * pixelRatio).toInt();
-    // final cacheHeight =
-    //     imageHeight == null ? null : (imageHeight * pixelRatio).toInt();
-    // 暂不实现
-    const cacheWidth = null;
-    const cacheHeight = null;
     Widget result;
     if (imagePath != null) {
       String _imagePath = imagePath!;
@@ -229,8 +234,8 @@ class ImageView extends StatelessWidget {
         result = SvgPicture.asset(
           _imagePath,
           key: autoApplyKey ? Key(_imagePath) : null,
-          width: imageWidth,
-          height: imageHeight,
+          width: _width,
+          height: _height,
           fit: fit ?? BoxFit.contain,
           color: _color,
           placeholderBuilder: (_) => placeholder,
@@ -239,25 +244,25 @@ class ImageView extends StatelessWidget {
         result = Image.file(
           File(_imagePath),
           key: autoApplyKey ? Key(_imagePath) : null,
-          width: imageWidth,
-          height: imageHeight,
+          width: _width,
+          height: _height,
           fit: fit,
           color: _color,
           gaplessPlayback: true,
-          cacheWidth: cacheWidth,
-          cacheHeight: cacheHeight,
+          cacheWidth: _cacheWidth,
+          cacheHeight: _cacheHeight,
         );
       } else {
         result = Image.asset(
           _imagePath,
           key: autoApplyKey ? Key(_imagePath) : null,
-          width: imageWidth,
-          height: imageHeight,
+          width: _width,
+          height: _height,
           fit: fit,
           color: _color,
           gaplessPlayback: true,
-          cacheWidth: cacheWidth,
-          cacheHeight: cacheHeight,
+          cacheWidth: _cacheWidth,
+          cacheHeight: _cacheHeight,
         );
       }
     } else if (imageUrl != null) {
@@ -265,8 +270,8 @@ class ImageView extends StatelessWidget {
         result = SvgPicture.network(
           imageUrl!,
           key: autoApplyKey ? Key(imageUrl!) : null,
-          width: imageWidth,
-          height: imageHeight,
+          width: _width,
+          height: _height,
           fit: fit ?? BoxFit.contain,
           color: _color,
           placeholderBuilder: (_) => placeholder,
@@ -275,14 +280,14 @@ class ImageView extends StatelessWidget {
         result = CachedNetworkImage(
           imageUrl: imageUrl!,
           key: autoApplyKey ? Key(imageUrl!) : null,
-          width: imageWidth,
-          height: imageHeight,
+          width: _width,
+          height: _height,
           fit: fit,
           color: _color,
           placeholder: (_, __) => placeholder,
           errorWidget: (_, __, ___) => errorWidget,
-          memCacheWidth: cacheWidth,
-          memCacheHeight: cacheHeight,
+          memCacheWidth: _cacheWidth,
+          memCacheHeight: _cacheHeight,
         );
       }
     } else {
@@ -292,8 +297,8 @@ class ImageView extends StatelessWidget {
 
     if (size != null || width != null || height != null) {
       result = SizedBox(
-        width: imageWidth,
-        height: imageHeight,
+        width: _width,
+        height: _height,
         child: result,
       );
     }
