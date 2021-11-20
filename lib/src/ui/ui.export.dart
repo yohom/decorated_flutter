@@ -10,6 +10,7 @@ export 'widget/nonvisual/delayed.widget.dart';
 export 'widget/nonvisual/double_back_exit_app.widget.dart';
 export 'widget/nonvisual/repeat.widget.dart';
 export 'widget/visual/decorated/buttons.widget.dart';
+export 'widget/visual/decorated/decorated_app.widget.dart';
 export 'widget/visual/decorated/decorated_flex.widget.dart';
 export 'widget/visual/decorated/decorated_stack.widget.dart';
 export 'widget/visual/decorated/decorated_text.widget.dart';
