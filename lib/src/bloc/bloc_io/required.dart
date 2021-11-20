@@ -190,12 +190,14 @@ class ListOutput<T, ARG_TYPE> extends Output<List<T>, ARG_TYPE>
 /// 分页业务单元
 class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
     with PageMixin<T, ARG_TYPE> {
+  static int? defaultInitialPage;
+
   PageOutput({
     required List<T> seedValue,
     required String semantics,
     bool sync = true,
     bool isBehavior = true,
-    int initPage = 0,
+    int? initPage = 0,
     bool receiveFullData = true,
     bool printLog = true,
     int pageSize = 0,
@@ -212,7 +214,7 @@ class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
           onReset: onReset,
           persistentKey: persistentKey,
         ) {
-    _initPage = initPage;
+    _initPage = initPage ?? defaultInitialPage ?? 0;
     _currentPage = _initPage;
     _pageFetch = pageFetch;
     _receiveFullData = receiveFullData;

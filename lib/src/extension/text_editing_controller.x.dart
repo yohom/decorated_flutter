@@ -12,6 +12,6 @@ extension TextEditingControllerX on TextEditingController {
   void backspace([int count = 1]) {
     final endIndex = max(0, text.length - count);
     text = text.substring(0, endIndex);
-    selection = TextSelection.collapsed(offset: endIndex);
+    selection = TextSelection.collapsed(offset: text.length);
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:decorated_flutter/src/extension/extension.export.dart';
 import 'package:decorated_flutter/src/res/dimens.dart';
 import 'package:decorated_flutter/src/ui/ui.export.dart';
@@ -11,8 +13,8 @@ Future<DateTime?> showDateDialog(
   DateTime? maximumDate,
   Widget? title,
   CupertinoDatePickerMode mode = CupertinoDatePickerMode.date,
-  String cancelText = '取消',
-  String confirmText = '确认',
+  String? cancelText,
+  String? confirmText,
 }) async {
   return showModalBottomSheet<DateTime>(
     context: context,
@@ -34,16 +36,16 @@ class _DatePickerDialog extends StatefulWidget {
     this.maximumDate,
     this.title,
     this.mode = CupertinoDatePickerMode.date,
-    this.cancelText = '取消',
-    this.confirmText = '确认',
+    this.cancelText,
+    this.confirmText,
   }) : super(key: key);
 
   final DateTime? initialDateTime;
   final DateTime? maximumDate;
   final Widget? title;
   final CupertinoDatePickerMode mode;
-  final String cancelText;
-  final String confirmText;
+  final String? cancelText;
+  final String? confirmText;
 
   @override
   __DatePickerDialogState createState() => __DatePickerDialogState();
@@ -60,6 +62,7 @@ class __DatePickerDialogState extends State<_DatePickerDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final chinese = Platform.localeName.contains('zh');
     return DecoratedColumn(
       height: 256,
       children: [
@@ -69,14 +72,14 @@ class __DatePickerDialogState extends State<_DatePickerDialog> {
             TextButton(
               onPressed: () => _handleCancel(context),
               child: Text(
-                widget.cancelText,
+                widget.cancelText ?? (chinese ? '取消' : 'Cancel'),
                 style: context.textTheme.bodyText1!.copyWith(color: Colors.red),
               ),
             ),
             if (widget.title != null) widget.title!,
             TextButton(
               onPressed: () => _handleConfirm(context),
-              child: Text(widget.confirmText),
+              child: Text(widget.confirmText ?? (chinese ? '确定' : 'Confirm')),
             ),
           ],
         ),

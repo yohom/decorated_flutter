@@ -4,7 +4,7 @@ import 'package:decorated_flutter/src/utils/utils.export.dart';
 
 extension IterableX<T> on Iterable<T> {
   /// 寻找元素, 找不到就返回null, 如果多余一个就返回第一个
-  T? find(bool Function(T) test) {
+  T? find(bool Function(T it) test) {
     try {
       return firstWhere(test);
     } catch (e) {
@@ -25,6 +25,10 @@ extension ListX<T> on List<T> {
   T? get firstOrNull => getOrNull(0);
 
   T? get lastOrNull => getOrNull(length - 1);
+
+  void replace(int index, T element) {
+    replaceRange(index, index + 1, [element]);
+  }
 
   T? getOrNull(int index) {
     try {

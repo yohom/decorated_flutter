@@ -193,12 +193,14 @@ class OptionalListOutput<T, ARG_TYPE> extends OptionalOutput<List<T>?, ARG_TYPE>
 /// 分页业务单元
 class OptionalPageOutput<T, ARG_TYPE> extends OptionalListOutput<T, int>
     with OptionalPageMixin<T, ARG_TYPE> {
+  static int? defaultInitialPage;
+
   OptionalPageOutput({
     List<T>? seedValue,
     required String semantics,
     bool sync = true,
     bool isBehavior = true,
-    int initPage = 0,
+    int? initPage,
     bool receiveFullData = true,
     bool printLog = true,
     int pageSize = 0,
@@ -215,7 +217,7 @@ class OptionalPageOutput<T, ARG_TYPE> extends OptionalListOutput<T, int>
           onReset: onReset,
           persistentKey: persistentKey,
         ) {
-    _initPage = initPage;
+    _initPage = initPage ?? defaultInitialPage ?? 0;
     _currentPage = _initPage;
     _pageFetch = pageFetch;
     _receiveFullData = receiveFullData;
@@ -857,6 +859,9 @@ mixin OptionalPageMixin<T, ARG_TYPE> on OptionalListMixin<T> {
 
   late _PageFetch<List<T>, ARG_TYPE?> _pageFetch;
 
+  /// 当前页数
+  int get currentPage => _currentPage;
+
   /// 请求下一页数据
   ///
   /// 返回是否还有更多数据 true为还有更多数据 false为没有更多数据
@@ -882,6 +887,20 @@ mixin OptionalPageMixin<T, ARG_TYPE> on OptionalListMixin<T> {
       }
     }
     return !_noMoreData;
+  }
+
+  /// 请求指定页数的数据
+  Future<void> loadPage(int page, [ARG_TYPE? args]) async {
+    try {
+      _dataList = await _pageFetch(page, args);
+      _currentPage = page;
+
+      if (_subject.isClosed) return;
+      _subject.add(_dataList);
+    } catch (e) {
+      if (_subject.isClosed) return;
+      _subject.addError(e);
+    }
   }
 
   /// 刷新列表
