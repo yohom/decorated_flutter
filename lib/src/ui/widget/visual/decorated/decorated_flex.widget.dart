@@ -41,6 +41,7 @@ class DecoratedRow extends DecoratedFlex {
     double? widthFactor,
     double? heightFactor,
     bool? scrollable,
+    ScrollController? scrollController,
     Duration? animationDuration,
     Curve? animationCurve,
     ThemeData? theme,
@@ -89,6 +90,7 @@ class DecoratedRow extends DecoratedFlex {
           textStyle: textStyle,
           repaintBoundaryKey: repaintBoundaryKey,
           scrollable: scrollable,
+          scrollController: scrollController,
           animationDuration: animationDuration,
           animationCurve: animationCurve,
           theme: theme,
@@ -140,6 +142,7 @@ class DecoratedColumn extends DecoratedFlex {
     double? widthFactor,
     double? heightFactor,
     bool? scrollable,
+    ScrollController? scrollController,
     Duration? animationDuration,
     Curve? animationCurve,
     ThemeData? theme,
@@ -188,6 +191,7 @@ class DecoratedColumn extends DecoratedFlex {
           textStyle: textStyle,
           repaintBoundaryKey: repaintBoundaryKey,
           scrollable: scrollable,
+          scrollController: scrollController,
           animationDuration: animationDuration,
           animationCurve: animationCurve,
           theme: theme,
@@ -235,6 +239,7 @@ class DecoratedFlex extends StatelessWidget {
     this.elevation,
     this.safeArea,
     this.scrollable,
+    this.scrollController,
     this.widthFactor,
     this.heightFactor,
     this.material = false,
@@ -325,6 +330,7 @@ class DecoratedFlex extends StatelessWidget {
 
   /// 是否可滚动
   final bool? scrollable;
+  final ScrollController? scrollController;
 
   /// 内部统一的TextStyle
   final TextStyle? textStyle;
@@ -481,7 +487,11 @@ class DecoratedFlex extends StatelessWidget {
     }
 
     if (scrollable == true) {
-      result = SingleChildScrollView(child: result, scrollDirection: direction);
+      result = SingleChildScrollView(
+        child: result,
+        scrollDirection: direction,
+        controller: scrollController,
+      );
     }
 
     if (visible != null) {
