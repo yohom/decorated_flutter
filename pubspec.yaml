@@ -26,8 +26,8 @@ dependencies:
   modal_bottom_sheet: ^2.0.0
   # 日志打印 https://pub.flutter-io.cn/packages/logger
   logger: ^1.1.0
-  # 获取路径 https://pub.flutter-io.cn/packages/path_provider
-  path_provider: ^2.0.7
+  # 获取路径 https://pub.flutter-io.cn/packages/path_provider 2.0.7以上使用federated packages, 编译出现问题
+  path_provider: 2.0.6
   # android intent https://pub.flutter-io.cn/packages/android_intent
   android_intent: ^2.0.2
   # svg https://pub.flutter-io.cn/packages/flutter_svg
