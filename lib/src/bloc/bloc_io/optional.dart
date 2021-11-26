@@ -203,12 +203,12 @@ class OptionalPageOutput<T, ARG_TYPE> extends OptionalListOutput<T, int>
     int? initPage,
     bool receiveFullData = true,
     bool printLog = true,
-    int pageSize = 0,
     int? forceCapacity,
     required _PageFetch<List<T>, ARG_TYPE?> pageFetch,
     List<T>? Function()? onReset,
     String? persistentKey,
     _OnMergeList<T>? onMergeList,
+    _IsNoMoreData<T>? isNoMoreData,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -222,10 +222,10 @@ class OptionalPageOutput<T, ARG_TYPE> extends OptionalListOutput<T, int>
     _currentPage = _initPage;
     _pageFetch = pageFetch;
     _receiveFullData = receiveFullData;
-    _pageSize = pageSize;
     _printLog = printLog;
     _forceCapacity = forceCapacity;
     _onMergeList = onMergeList;
+    _isNoMoreData = isNoMoreData;
   }
 
   /// 这里标记为protected, 防止被外部引用, 应该使用[refresh]方法
@@ -245,7 +245,6 @@ class OptionalPageIO<T, ARG_TYPE> extends OptionalListIO<T>
     bool sync = true,
     bool isBehavior = true,
     int initPage = 0,
-    int pageSize = 0,
     bool printLog = true,
     bool receiveFullData = true,
     int? forceCapacity,
@@ -265,7 +264,6 @@ class OptionalPageIO<T, ARG_TYPE> extends OptionalListIO<T>
     _currentPage = _initPage;
     _pageFetch = pageFetch ?? (_, __) => Future.value([]);
     _receiveFullData = receiveFullData;
-    _pageSize = pageSize;
     _printLog = printLog;
     _forceCapacity = forceCapacity;
   }
@@ -859,13 +857,13 @@ mixin OptionalPageMixin<T, ARG_TYPE> on OptionalListMixin<T> {
   ///   2. 没有设置过[_pageSize], 那么判断当前页是否为空列表.
   bool _noMoreData = false;
 
-  /// 每页大小 用于判断是否已加载完全部数据
-  int _pageSize = 0;
-
   late _PageFetch<List<T>, ARG_TYPE?> _pageFetch;
 
   /// 自定义的数据合并回调
   _OnMergeList<T>? _onMergeList;
+
+  /// 自定义的列表是否为空的回调
+  _IsNoMoreData<T>? _isNoMoreData;
 
   /// 当前页数
   int get currentPage => _currentPage;
@@ -893,9 +891,12 @@ mixin OptionalPageMixin<T, ARG_TYPE> on OptionalListMixin<T> {
         } else {
           _dataList = nextPageData;
         }
-        // 如果当前页列表大小已经小于设置的每页大小, 那么说明已经到最后一页
-        // 或者当前页是空, 也说明已经是最后一页
-        _noMoreData = nextPageData.length < _pageSize || nextPageData.isEmpty;
+        // 如果有提供判断是否列表为空的回调, 则调用之, 否则直接判断是否为空列表
+        if (_isNoMoreData != null) {
+          _noMoreData = _isNoMoreData!(nextPageData);
+        } else {
+          _noMoreData = nextPageData.isEmpty;
+        }
 
         if (_subject.isClosed) return false;
         _subject.add(_dataList);
