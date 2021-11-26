@@ -845,6 +845,9 @@ mixin OptionalPageMixin<T, ARG_TYPE> on OptionalListMixin<T> {
   /// 当前页数
   int _currentPage = 0;
 
+  /// 是否在加载中
+  bool _inLoading = false;
+
   /// 全部数据
   List<T> _dataList = [];
 
@@ -867,10 +870,15 @@ mixin OptionalPageMixin<T, ARG_TYPE> on OptionalListMixin<T> {
   /// 当前页数
   int get currentPage => _currentPage;
 
+  /// 是否在加载中
+  bool get inLoading => _inLoading;
+
   /// 请求下一页数据
   ///
   /// 返回是否还有更多数据 true为还有更多数据 false为没有更多数据
   Future<bool> loadMore([ARG_TYPE? args]) async {
+    _inLoading = true;
+
     // 如果已经没有更多数据的话, 就不再请求
     if (!_noMoreData) {
       try {
@@ -898,11 +906,15 @@ mixin OptionalPageMixin<T, ARG_TYPE> on OptionalListMixin<T> {
     } else {
       L.d('$_semantics 没有更多数据!');
     }
+
+    _inLoading = false;
     return !_noMoreData;
   }
 
   /// 请求指定页数的数据
   Future<void> loadPage(int page, [ARG_TYPE? args]) async {
+    _inLoading = true;
+
     try {
       _dataList = await _pageFetch(page, args);
       _currentPage = page;
@@ -913,12 +925,16 @@ mixin OptionalPageMixin<T, ARG_TYPE> on OptionalListMixin<T> {
       if (_subject.isClosed) return;
       _subject.addError(e);
     }
+
+    _inLoading = false;
   }
 
   /// 刷新列表
   ///
   /// 会重新加载第一页
   Future<List<T>?> refresh([ARG_TYPE? args]) async {
+    _inLoading = true;
+
     _currentPage = _initPage;
     _noMoreData = false;
     try {
@@ -930,6 +946,8 @@ mixin OptionalPageMixin<T, ARG_TYPE> on OptionalListMixin<T> {
       if (_subject.isClosed) return null;
       _subject.addError(e);
     }
+
+    _inLoading = false;
     return _dataList;
   }
 
