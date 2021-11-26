@@ -208,6 +208,7 @@ class OptionalPageOutput<T, ARG_TYPE> extends OptionalListOutput<T, int>
     required _PageFetch<List<T>, ARG_TYPE?> pageFetch,
     List<T>? Function()? onReset,
     String? persistentKey,
+    _OnMergeList<T>? onMergeList,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -224,6 +225,7 @@ class OptionalPageOutput<T, ARG_TYPE> extends OptionalListOutput<T, int>
     _pageSize = pageSize;
     _printLog = printLog;
     _forceCapacity = forceCapacity;
+    _onMergeList = onMergeList;
   }
 
   /// 这里标记为protected, 防止被外部引用, 应该使用[refresh]方法
@@ -859,6 +861,9 @@ mixin OptionalPageMixin<T, ARG_TYPE> on OptionalListMixin<T> {
 
   late _PageFetch<List<T>, ARG_TYPE?> _pageFetch;
 
+  /// 自定义的数据合并回调
+  _OnMergeList<T>? _onMergeList;
+
   /// 当前页数
   int get currentPage => _currentPage;
 
@@ -871,7 +876,12 @@ mixin OptionalPageMixin<T, ARG_TYPE> on OptionalListMixin<T> {
       try {
         final nextPageData = await _pageFetch(++_currentPage, args);
         if (_receiveFullData) {
-          _dataList = [..._dataList, ...nextPageData];
+          // 如果有自定义的合并逻辑, 则调用之, 否则直接合并列表
+          if (_onMergeList != null) {
+            _dataList = _onMergeList!(_dataList, nextPageData);
+          } else {
+            _dataList = [..._dataList, ...nextPageData];
+          }
         } else {
           _dataList = nextPageData;
         }
@@ -885,6 +895,8 @@ mixin OptionalPageMixin<T, ARG_TYPE> on OptionalListMixin<T> {
         if (_subject.isClosed) return false;
         _subject.addError(e);
       }
+    } else {
+      L.d('$_semantics 没有更多数据!');
     }
     return !_noMoreData;
   }

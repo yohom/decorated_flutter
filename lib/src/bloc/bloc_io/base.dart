@@ -14,6 +14,7 @@ part 'required.dart';
 
 typedef _Fetch<R, T> = Future<R> Function(T arg);
 typedef _PageFetch<R, T> = Future<R> Function(int page, T arg);
+typedef _OnMergeList<T> = List<T> Function(List<T> current, List<T> newList);
 
 abstract class BaseIO<T> {
   static Persistence? _persistence;
