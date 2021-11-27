@@ -32,6 +32,8 @@ dependencies:
   android_intent: ^2.0.2
   # svg https://pub.flutter-io.cn/packages/flutter_svg
   flutter_svg: ^0.23.0+1
+  # sliver增强
+  sliver_tools: ^0.2.5
 
 dev_dependencies:
   mockito: ^5.0.16
