@@ -73,3 +73,27 @@ class BackgroundBlur extends StatelessWidget {
     return result;
   }
 }
+
+class BlurDialog extends StatelessWidget {
+  const BlurDialog({
+    Key? key,
+    required this.child,
+    this.dismissible = true,
+  }) : super(key: key);
+
+  final Widget child;
+  final bool dismissible;
+
+  @override
+  Widget build(BuildContext context) {
+    return BackdropFilter(
+      filter: ui.ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+      child: Stack(
+        children: [
+          ModalBarrier(color: Colors.black54, dismissible: dismissible),
+          Dialog(insetPadding: const EdgeInsets.all(24), child: child),
+        ],
+      ),
+    );
+  }
+}
