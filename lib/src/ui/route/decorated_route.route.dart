@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-typedef _InitAction<T extends BLoC> = void Function(T bloc);
+typedef _OnInit<T extends BLoC> = void Function(T bloc);
+typedef _OnLateInit<T extends BLoC> = void Function(T bloc, BuildContext);
 
 /// [B]是指定的BLoC, [T]是Route的返回类型
 class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
@@ -54,10 +55,10 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
   /// [init]与[onLateinit]设计目的是[init]用来设置静态数据, [onLateinit]设置网络请求数据.
   /// 因为在使用lateinit的过程中, 发现如果widget中需要在初始化的时候用到静态数据, 由于lateinit的缘故
   /// 会导致拿不到静态数据, 所以这里区分一下静态的初始化和动态的初始化(网络请求数据)
-  final _InitAction<B>? init;
+  final _OnInit<B>? init;
 
   /// 入场动画结束后的初始化方法
-  final _InitAction<B>? onLateinit;
+  final _OnLateInit<B>? onLateinit;
 
   /// 是否执行动画
   final bool animate;
@@ -167,7 +168,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
           onLateinit != null &&
           bloc != null &&
           !_inited) {
-        onLateinit!(bloc!);
+        onLateinit!(bloc!, context);
         _inited = true;
       }
     });
@@ -228,13 +229,13 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
   final bool autoCloseKeyboard;
 
   /// 初始化方法
-  final _InitAction<B>? init;
+  final _OnInit<B>? init;
 
   /// 是否执行动画
   final bool animate;
 
   /// 入场动画结束后的初始化方法
-  final _InitAction<B>? onLateinit;
+  final _OnInit<B>? onLateinit;
 
   /// 是否带有表单
   final bool withForm;
