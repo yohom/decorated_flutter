@@ -78,22 +78,21 @@ class BlurDialog extends StatelessWidget {
   const BlurDialog({
     Key? key,
     required this.child,
+    this.sigmaX = 2,
+    this.sigmaY = 2,
     this.dismissible = true,
   }) : super(key: key);
 
   final Widget child;
   final bool dismissible;
+  final double sigmaX;
+  final double sigmaY;
 
   @override
   Widget build(BuildContext context) {
     return BackdropFilter(
-      filter: ui.ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-      child: Stack(
-        children: [
-          ModalBarrier(color: Colors.black54, dismissible: dismissible),
-          Dialog(insetPadding: const EdgeInsets.all(24), child: child),
-        ],
-      ),
+      filter: ui.ImageFilter.blur(sigmaX: sigmaX, sigmaY: sigmaY),
+      child: Dialog(insetPadding: const EdgeInsets.all(24), child: child),
     );
   }
 }
