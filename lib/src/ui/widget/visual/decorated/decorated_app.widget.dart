@@ -22,7 +22,12 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
         dismissOtherOnShow: true,
         animationBuilder: const Miui10AnimBuilder(),
         movingOnWindowChange: false,
-        child: app,
+        child: ListTileTheme(
+          dense: true,
+          tileColor: Colors.white,
+          minLeadingWidth: 8,
+          child: app,
+        ),
       ),
     );
   }
