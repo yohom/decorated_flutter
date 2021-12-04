@@ -23,6 +23,7 @@ class DecoratedRow extends DecoratedFlex {
     ContextCallback? onPressed,
     ContextCallback? onLongPressed,
     ContextCallback? onDoubleTap,
+    GestureDragStartCallback? onVerticalDragStart,
     GestureDragEndCallback? onVerticalDragEnd,
     GestureDragEndCallback? onHorizontalDragEnd,
     HitTestBehavior? behavior,
@@ -72,6 +73,7 @@ class DecoratedRow extends DecoratedFlex {
           onPressed: onPressed,
           onLongPressed: onLongPressed,
           onDoubleTap: onDoubleTap,
+          onVerticalDragStart: onVerticalDragStart,
           onVerticalDragEnd: onVerticalDragEnd,
           onHorizontalDragEnd: onHorizontalDragEnd,
           behavior: behavior,
@@ -124,6 +126,7 @@ class DecoratedColumn extends DecoratedFlex {
     ContextCallback? onPressed,
     ContextCallback? onLongPressed,
     ContextCallback? onDoubleTap,
+    GestureDragStartCallback? onVerticalDragStart,
     GestureDragEndCallback? onVerticalDragEnd,
     GestureDragEndCallback? onHorizontalDragEnd,
     HitTestBehavior? behavior,
@@ -173,6 +176,7 @@ class DecoratedColumn extends DecoratedFlex {
           onPressed: onPressed,
           onLongPressed: onLongPressed,
           onDoubleTap: onDoubleTap,
+          onVerticalDragStart: onVerticalDragStart,
           onVerticalDragEnd: onVerticalDragEnd,
           onHorizontalDragEnd: onHorizontalDragEnd,
           behavior: behavior,
@@ -226,6 +230,7 @@ class DecoratedFlex extends StatelessWidget {
     this.onPressed,
     this.onLongPressed,
     this.onDoubleTap,
+    this.onVerticalDragStart,
     this.onVerticalDragEnd,
     this.onHorizontalDragEnd,
     this.behavior,
@@ -283,6 +288,7 @@ class DecoratedFlex extends StatelessWidget {
   final ContextCallback? onPressed;
   final ContextCallback? onLongPressed;
   final ContextCallback? onDoubleTap;
+  final GestureDragStartCallback? onVerticalDragStart;
   final GestureDragEndCallback? onVerticalDragEnd;
   final GestureDragEndCallback? onHorizontalDragEnd;
   final HitTestBehavior? behavior;
@@ -464,6 +470,7 @@ class DecoratedFlex extends StatelessWidget {
         onLongPress:
             onLongPressed == null ? null : () => onLongPressed!(context),
         onVerticalDragEnd: onVerticalDragEnd,
+        onVerticalDragStart: onVerticalDragStart,
         onHorizontalDragEnd: onHorizontalDragEnd,
         onDoubleTap: onDoubleTap == null ? null : () => onDoubleTap!(context),
         child: result,
