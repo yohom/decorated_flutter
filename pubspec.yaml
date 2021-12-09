@@ -15,7 +15,7 @@ dependencies:
   # 国际化 https://pub.flutter-io.cn/packages/intl
   intl: ^0.17.0
   # 网络请求 https://pub.flutter-io.cn/packages/dio
-  dio: ^4.0.3
+  dio: ^4.0.4
   # rx https://pub.flutter-io.cn/packages/rxdart
   rxdart: ^0.27.3
   # 图片加载增强 https://pub.flutter-io.cn/packages/cached_network_image
@@ -31,7 +31,7 @@ dependencies:
   # android intent https://pub.flutter-io.cn/packages/android_intent
   android_intent: ^2.0.2
   # svg https://pub.flutter-io.cn/packages/flutter_svg
-  flutter_svg: ^0.23.0+1
+  flutter_svg: ^1.0.0
   # sliver增强
   sliver_tools: ^0.2.5
 
