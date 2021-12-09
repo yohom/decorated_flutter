@@ -74,11 +74,11 @@ class Square extends StatelessWidget {
 class Line extends StatelessWidget {
   const Line({
     Key? key,
-    required this.width,
-    required this.height,
-    this.color = Colors.grey,
+    this.width = double.infinity,
+    this.height = 1,
+    this.color = Colors.black12,
     this.padding = EdgeInsets.zero,
-    this.margin = EdgeInsets.zero,
+    this.margin = const EdgeInsets.symmetric(vertical: 8),
   }) : super(key: key);
 
   final double width, height;
@@ -92,9 +92,7 @@ class Line extends StatelessWidget {
       height: height,
       padding: padding,
       margin: margin,
-      decoration: BoxDecoration(
-        color: color,
-      ),
+      decoration: BoxDecoration(color: color),
     );
   }
 }
