@@ -2,8 +2,6 @@ import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:decorated_flutter/src/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
-typedef _Init<T extends BLoC> = void Function(T bloc);
-
 class BLoCProvider<T extends BLoC> extends StatefulWidget {
   const BLoCProvider({
     Key? key,
@@ -15,7 +13,7 @@ class BLoCProvider<T extends BLoC> extends StatefulWidget {
   }) : super(key: key);
 
   final T bloc;
-  final _Init<T>? init;
+  final ValueChanged<T>? init;
   final Widget child;
   final VoidCallback? onDispose;
   final bool autoDispose;
@@ -24,7 +22,7 @@ class BLoCProvider<T extends BLoC> extends StatefulWidget {
   _BLoCProviderState<T> createState() => _BLoCProviderState<T>();
 
   static T? of<T extends BLoC>(BuildContext context) {
-    _BLoCProviderInherited<T>? provider = context
+    final provider = context
         .getElementForInheritedWidgetOfExactType<_BLoCProviderInherited<T>>()
         ?.widget as _BLoCProviderInherited<T>?;
     return provider?.bloc;
