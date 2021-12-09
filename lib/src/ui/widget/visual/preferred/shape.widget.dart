@@ -70,3 +70,31 @@ class Square extends StatelessWidget {
     );
   }
 }
+
+class Line extends StatelessWidget {
+  const Line({
+    Key? key,
+    required this.width,
+    required this.height,
+    this.color = Colors.grey,
+    this.padding = EdgeInsets.zero,
+    this.margin = EdgeInsets.zero,
+  }) : super(key: key);
+
+  final double width, height;
+  final Color color;
+  final EdgeInsets padding, margin;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: width,
+      height: height,
+      padding: padding,
+      margin: margin,
+      decoration: BoxDecoration(
+        color: color,
+      ),
+    );
+  }
+}
