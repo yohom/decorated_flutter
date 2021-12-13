@@ -34,7 +34,10 @@ class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
   void initState() {
     super.initState();
 
-    if (isNotEmpty(widget.init)) widget.init!(widget.bloc);
+    if (widget.init != null) {
+      widget.init!(widget.bloc);
+      widget.bloc.init();
+    }
   }
 
   @override
