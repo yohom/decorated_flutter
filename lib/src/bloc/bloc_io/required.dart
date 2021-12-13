@@ -65,10 +65,10 @@ class Input<T> extends BaseRequiredIO<T> with InputMixin<T> {
           isBehavior: isBehavior,
           onReset: onReset,
           persistentKey: persistentKey,
+          printLog: printLog,
         ) {
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
-    _printLog = printLog;
   }
 }
 
@@ -91,10 +91,10 @@ class Output<T, ARG_TYPE> extends BaseRequiredIO<T>
           isBehavior: isBehavior,
           onReset: onReset,
           persistentKey: persistentKey,
+          printLog: printLog,
         ) {
     stream = _subject.stream;
     _fetch = fetch;
-    _printLog = printLog;
   }
 }
 
@@ -119,13 +119,13 @@ class IO<T> extends BaseRequiredIO<T>
           isBehavior: isBehavior,
           onReset: onReset,
           persistentKey: persistentKey,
+          printLog: printLog,
         ) {
     stream = _subject.stream;
 
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
     _fetch = fetch ?? (_) => Future.value();
-    _printLog = printLog;
   }
 }
 
@@ -213,13 +213,13 @@ class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
           fetch: (_) => Future.value([]),
           onReset: onReset,
           persistentKey: persistentKey,
+          printLog: printLog,
         ) {
     _initPage = initPage ?? defaultInitialPage ?? 0;
     _currentPage = _initPage;
     _pageFetch = pageFetch;
     _receiveFullData = receiveFullData;
     _pageSize = pageSize;
-    _printLog = printLog;
     _forceCapacity = forceCapacity;
   }
 
@@ -254,13 +254,13 @@ class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
           fetch: (_) => Future.value([]),
           onReset: onReset,
           persistentKey: persistentKey,
+          printLog: printLog,
         ) {
     _initPage = initPage;
     _currentPage = _initPage;
     _pageFetch = pageFetch ?? (_, __) => Future.value([]);
     _receiveFullData = receiveFullData;
     _pageSize = pageSize;
-    _printLog = printLog;
     _forceCapacity = forceCapacity;
   }
 }

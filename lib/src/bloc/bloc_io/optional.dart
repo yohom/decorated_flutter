@@ -67,10 +67,10 @@ class OptionalInput<T> extends BaseOptionalIO<T> with OptionalInputMixin<T> {
           isBehavior: isBehavior,
           onReset: onReset,
           persistentKey: persistentKey,
+          printLog: printLog,
         ) {
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
-    _printLog = printLog;
   }
 }
 
@@ -121,13 +121,13 @@ class OptionalIO<T> extends BaseOptionalIO<T?>
           isBehavior: isBehavior,
           onReset: onReset,
           persistentKey: persistentKey,
+          printLog: printLog,
         ) {
     stream = _subject.stream;
 
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
     _fetch = fetch ?? (_) => Future.value();
-    _printLog = printLog;
   }
 }
 
@@ -217,12 +217,12 @@ class OptionalPageOutput<T, ARG_TYPE> extends OptionalListOutput<T, int>
           fetch: (_) => Future.value([]),
           onReset: onReset,
           persistentKey: persistentKey,
+          printLog: printLog,
         ) {
     _initPage = initPage ?? defaultInitialPage ?? 0;
     _currentPage = _initPage;
     _pageFetch = pageFetch;
     _receiveFullData = receiveFullData;
-    _printLog = printLog;
     _forceCapacity = forceCapacity;
     _onMergeList = onMergeList;
     _isNoMoreData = isNoMoreData;
@@ -259,12 +259,12 @@ class OptionalPageIO<T, ARG_TYPE> extends OptionalListIO<T>
           fetch: (_) => Future.value([]),
           onReset: onReset,
           persistentKey: persistentKey,
+          printLog: printLog,
         ) {
     _initPage = initPage;
     _currentPage = _initPage;
     _pageFetch = pageFetch ?? (_, __) => Future.value([]);
     _receiveFullData = receiveFullData;
-    _printLog = printLog;
     _forceCapacity = forceCapacity;
   }
 }

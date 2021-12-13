@@ -86,11 +86,11 @@ abstract class BaseIO<T> {
 
   /// 初始值
   @protected
-  T _seedValue;
+  final T _seedValue;
 
   /// 初始值
   @protected
-  bool _printLog;
+  final bool _printLog;
 
   /// 语义
   @protected
