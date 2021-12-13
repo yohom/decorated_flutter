@@ -431,15 +431,9 @@ mixin OptionalInputMixin<T> on BaseOptionalIO<T> {
       return null;
     }
 
-    if (_printLog) {
-      L.d('+++++++++++++++++++++++++++BEGIN+++++++++++++++++++++++++++++\n'
-          'IO接收到**$_semantics**数据: $data');
-    }
-
     if (isEmpty(data) && !_acceptEmpty) {
       if (_printLog) {
-        L.d('转发被拒绝! 原因: 需要非Empty值, 但是接收到Empty值'
-            '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++++');
+        L.w('转发被拒绝! 原因: 需要非Empty值, 但是接收到Empty值');
       }
       return data;
     }
@@ -453,8 +447,7 @@ mixin OptionalInputMixin<T> on BaseOptionalIO<T> {
         _subject.add(data);
       } else {
         if (_printLog) {
-          L.d('转发被拒绝! 原因: 需要唯一, 但是新数据与最新值相同'
-              '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
+          L.w('转发被拒绝! 原因: 需要唯一, 但是新数据与最新值相同');
         }
       }
     } else {
