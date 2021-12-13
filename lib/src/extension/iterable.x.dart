@@ -19,6 +19,12 @@ extension IterableX<T> on Iterable<T> {
     }
     return map;
   }
+
+  T? fallback({bool Function(T?) until = isNotEmpty}) {
+    for (final item in this) {
+      if (until(item)) return item;
+    }
+  }
 }
 
 extension ListX<T> on List<T> {
