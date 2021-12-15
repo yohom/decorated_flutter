@@ -67,8 +67,7 @@ abstract class BaseIO<T> {
         }
       }
       if (_printLog) {
-        L.d('当前$semantics latest: $latest'
-            '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
+        L.d('当前$semantics latest: $latest');
       }
     });
     // 如果是BehaviorSubject, 则检查是否有持久化下来的数据, 有则发射
@@ -140,9 +139,7 @@ abstract class BaseIO<T> {
     if (_subject.isClosed) return;
 
     if (_printLog) {
-      L.d('-----------------------------BEGIN---------------------------------\n'
-          '$_semantics事件 重置 '
-          '\n------------------------------END----------------------------------');
+      L.d('$_semantics事件 重置 ');
     }
 
     final _resetValue = _onReset != null ? _onReset!() : _seedValue;
@@ -165,9 +162,7 @@ abstract class BaseIO<T> {
     if (_subject.isClosed) return;
 
     if (_printLog) {
-      L.d('=============================BEGIN===============================\n'
-          '$_semantics事件 disposed '
-          '\n==============================END================================');
+      L.d('$_semantics事件 disposed ');
     }
     _subject.close();
   }
