@@ -562,10 +562,9 @@ mixin OptionalListMixin<T> on BaseOptionalIO<List<T>?> {
       L.w('IO在close状态下请求发送数据');
       return null;
     }
-    if (latest == null) {
-      L.w('在latest为null时尝试append数据');
-      return null;
-    }
+
+    // 如果没有设置原始数据, 那么就用空列表
+    latest ??= [];
 
     if (fromHead) {
       final List<T>? pending = latest?..insert(0, element);
@@ -591,10 +590,9 @@ mixin OptionalListMixin<T> on BaseOptionalIO<List<T>?> {
       L.w('IO在close状态下请求发送数据');
       return null;
     }
-    if (latest == null) {
-      L.w('在latest为null时尝试append数据');
-      return null;
-    }
+
+    // 如果没有设置原始数据, 那么就用空列表
+    latest ??= [];
 
     if (fromHead) {
       final List<T>? pending = latest?..insertAll(0, elements);
