@@ -127,7 +127,8 @@ class OptionalIO<T> extends BaseOptionalIO<T?>
 
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
-    _fetch = fetch ?? (_) => throw '在未设置fetch回调时调用了update方法, 请检查业务逻辑是否正确!';
+    _fetch =
+        fetch ?? (_) => throw '$semantics在未设置fetch回调时调用了update方法, 请检查业务逻辑是否正确!';
   }
 }
 
