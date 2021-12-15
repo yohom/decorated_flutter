@@ -125,7 +125,7 @@ class IO<T> extends BaseRequiredIO<T>
 
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
-    _fetch = fetch ?? (_) => Future.value();
+    _fetch = fetch ?? (_) => throw '在未设置fetch回调时调用了update方法, 请检查逻辑是否正确!';
   }
 }
 
@@ -251,14 +251,15 @@ class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
           semantics: semantics,
           sync: sync,
           isBehavior: isBehavior,
-          fetch: (_) => Future.value([]),
+          fetch: (_) => Future.error('请使用pageFetch回调!'),
           onReset: onReset,
           persistentKey: persistentKey,
           printLog: printLog,
         ) {
     _initPage = initPage;
     _currentPage = _initPage;
-    _pageFetch = pageFetch ?? (_, __) => Future.value([]);
+    _pageFetch = pageFetch ??
+        (_, __) => throw '在未设置pageFetch回调时调用了refresh/loadMore方法, 请检查业务逻辑是否正确!';
     _receiveFullData = receiveFullData;
     _pageSize = pageSize;
     _forceCapacity = forceCapacity;

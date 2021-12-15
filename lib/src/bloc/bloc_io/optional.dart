@@ -127,7 +127,7 @@ class OptionalIO<T> extends BaseOptionalIO<T?>
 
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
-    _fetch = fetch ?? (_) => Future.value();
+    _fetch = fetch ?? (_) => throw '在未设置fetch回调时调用了update方法, 请检查业务逻辑是否正确!';
   }
 }
 
@@ -214,7 +214,7 @@ class OptionalPageOutput<T, ARG_TYPE> extends OptionalListOutput<T, int>
           semantics: semantics,
           sync: sync,
           isBehavior: isBehavior,
-          fetch: (_) => Future.value([]),
+          fetch: (_) => Future.error('请使用pageFetch回调!'),
           onReset: onReset,
           persistentKey: persistentKey,
           printLog: printLog,
@@ -263,7 +263,8 @@ class OptionalPageIO<T, ARG_TYPE> extends OptionalListIO<T>
         ) {
     _initPage = initPage;
     _currentPage = _initPage;
-    _pageFetch = pageFetch ?? (_, __) => Future.value([]);
+    _pageFetch =
+        pageFetch ?? (_, __) => throw '在未设置fetch回调时调用了update方法, 请检查逻辑是否正确!';
     _receiveFullData = receiveFullData;
     _forceCapacity = forceCapacity;
   }
