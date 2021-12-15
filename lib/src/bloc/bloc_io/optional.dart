@@ -67,10 +67,10 @@ class OptionalInput<T> extends BaseOptionalIO<T> with OptionalInputMixin<T> {
           isBehavior: isBehavior,
           onReset: onReset,
           persistentKey: persistentKey,
+          printLog: printLog,
         ) {
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
-    _printLog = printLog;
   }
 }
 
@@ -121,13 +121,14 @@ class OptionalIO<T> extends BaseOptionalIO<T?>
           isBehavior: isBehavior,
           onReset: onReset,
           persistentKey: persistentKey,
+          printLog: printLog,
         ) {
     stream = _subject.stream;
 
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
-    _fetch = fetch ?? (_) => Future.value();
-    _printLog = printLog;
+    _fetch =
+        fetch ?? (_) => throw '$semantics在未设置fetch回调时调用了update方法, 请检查业务逻辑是否正确!';
   }
 }
 
@@ -214,15 +215,15 @@ class OptionalPageOutput<T, ARG_TYPE> extends OptionalListOutput<T, int>
           semantics: semantics,
           sync: sync,
           isBehavior: isBehavior,
-          fetch: (_) => Future.value([]),
+          fetch: (_) => Future.error('请使用pageFetch回调!'),
           onReset: onReset,
           persistentKey: persistentKey,
+          printLog: printLog,
         ) {
     _initPage = initPage ?? defaultInitialPage ?? 0;
     _currentPage = _initPage;
     _pageFetch = pageFetch;
     _receiveFullData = receiveFullData;
-    _printLog = printLog;
     _forceCapacity = forceCapacity;
     _onMergeList = onMergeList;
     _isNoMoreData = isNoMoreData;
@@ -259,12 +260,13 @@ class OptionalPageIO<T, ARG_TYPE> extends OptionalListIO<T>
           fetch: (_) => Future.value([]),
           onReset: onReset,
           persistentKey: persistentKey,
+          printLog: printLog,
         ) {
     _initPage = initPage;
     _currentPage = _initPage;
-    _pageFetch = pageFetch ?? (_, __) => Future.value([]);
+    _pageFetch =
+        pageFetch ?? (_, __) => throw '在未设置fetch回调时调用了update方法, 请检查逻辑是否正确!';
     _receiveFullData = receiveFullData;
-    _printLog = printLog;
     _forceCapacity = forceCapacity;
   }
 }
@@ -431,15 +433,9 @@ mixin OptionalInputMixin<T> on BaseOptionalIO<T> {
       return null;
     }
 
-    if (_printLog) {
-      L.d('+++++++++++++++++++++++++++BEGIN+++++++++++++++++++++++++++++\n'
-          'IO接收到**$_semantics**数据: $data');
-    }
-
     if (isEmpty(data) && !_acceptEmpty) {
       if (_printLog) {
-        L.d('转发被拒绝! 原因: 需要非Empty值, 但是接收到Empty值'
-            '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++++');
+        L.w('转发被拒绝! 原因: 需要非Empty值, 但是接收到Empty值');
       }
       return data;
     }
@@ -453,8 +449,7 @@ mixin OptionalInputMixin<T> on BaseOptionalIO<T> {
         _subject.add(data);
       } else {
         if (_printLog) {
-          L.d('转发被拒绝! 原因: 需要唯一, 但是新数据与最新值相同'
-              '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
+          L.w('转发被拒绝! 原因: 需要唯一, 但是新数据与最新值相同');
         }
       }
     } else {
@@ -569,10 +564,9 @@ mixin OptionalListMixin<T> on BaseOptionalIO<List<T>?> {
       L.w('IO在close状态下请求发送数据');
       return null;
     }
-    if (latest == null) {
-      L.w('在latest为null时尝试append数据');
-      return null;
-    }
+
+    // 如果没有设置原始数据, 那么就用空列表
+    latest ??= [];
 
     if (fromHead) {
       final List<T>? pending = latest?..insert(0, element);
@@ -598,10 +592,9 @@ mixin OptionalListMixin<T> on BaseOptionalIO<List<T>?> {
       L.w('IO在close状态下请求发送数据');
       return null;
     }
-    if (latest == null) {
-      L.w('在latest为null时尝试append数据');
-      return null;
-    }
+
+    // 如果没有设置原始数据, 那么就用空列表
+    latest ??= [];
 
     if (fromHead) {
       final List<T>? pending = latest?..insertAll(0, elements);

@@ -19,6 +19,10 @@ abstract class BLoC {
   /// 重置BLoC, 发射初始值
   void reset();
 
+  /// 初始化
+  @mustCallSuper
+  void init() {}
+
   @mustCallSuper
   void dispose() {
     L.d('=============================================\n'

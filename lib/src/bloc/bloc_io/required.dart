@@ -65,10 +65,10 @@ class Input<T> extends BaseRequiredIO<T> with InputMixin<T> {
           isBehavior: isBehavior,
           onReset: onReset,
           persistentKey: persistentKey,
+          printLog: printLog,
         ) {
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
-    _printLog = printLog;
   }
 }
 
@@ -91,10 +91,10 @@ class Output<T, ARG_TYPE> extends BaseRequiredIO<T>
           isBehavior: isBehavior,
           onReset: onReset,
           persistentKey: persistentKey,
+          printLog: printLog,
         ) {
     stream = _subject.stream;
     _fetch = fetch;
-    _printLog = printLog;
   }
 }
 
@@ -119,13 +119,13 @@ class IO<T> extends BaseRequiredIO<T>
           isBehavior: isBehavior,
           onReset: onReset,
           persistentKey: persistentKey,
+          printLog: printLog,
         ) {
     stream = _subject.stream;
 
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
-    _fetch = fetch ?? (_) => Future.value();
-    _printLog = printLog;
+    _fetch = fetch ?? (_) => throw '在未设置fetch回调时调用了update方法, 请检查逻辑是否正确!';
   }
 }
 
@@ -213,13 +213,13 @@ class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
           fetch: (_) => Future.value([]),
           onReset: onReset,
           persistentKey: persistentKey,
+          printLog: printLog,
         ) {
     _initPage = initPage ?? defaultInitialPage ?? 0;
     _currentPage = _initPage;
     _pageFetch = pageFetch;
     _receiveFullData = receiveFullData;
     _pageSize = pageSize;
-    _printLog = printLog;
     _forceCapacity = forceCapacity;
   }
 
@@ -251,16 +251,18 @@ class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
           semantics: semantics,
           sync: sync,
           isBehavior: isBehavior,
-          fetch: (_) => Future.value([]),
+          fetch: (_) => Future.error('请使用pageFetch回调!'),
           onReset: onReset,
           persistentKey: persistentKey,
+          printLog: printLog,
         ) {
     _initPage = initPage;
     _currentPage = _initPage;
-    _pageFetch = pageFetch ?? (_, __) => Future.value([]);
+    _pageFetch = pageFetch ??
+        (_, __) =>
+            throw '$semantics在未设置pageFetch回调时调用了refresh/loadMore方法, 请检查业务逻辑是否正确!';
     _receiveFullData = receiveFullData;
     _pageSize = pageSize;
-    _printLog = printLog;
     _forceCapacity = forceCapacity;
   }
 }
@@ -427,15 +429,9 @@ mixin InputMixin<T> on BaseRequiredIO<T> {
       return null;
     }
 
-    if (_printLog) {
-      L.d('+++++++++++++++++++++++++++BEGIN+++++++++++++++++++++++++++++\n'
-          'IO接收到**$_semantics**数据: $data');
-    }
-
     if (isEmpty(data) && !_acceptEmpty) {
       if (_printLog) {
-        L.d('转发被拒绝! 原因: 需要非Empty值, 但是接收到Empty值'
-            '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++++');
+        L.w('转发被拒绝! 原因: 需要非Empty值, 但是接收到Empty值');
       }
       return data;
     }
@@ -449,8 +445,7 @@ mixin InputMixin<T> on BaseRequiredIO<T> {
         _subject.add(data);
       } else {
         if (_printLog) {
-          L.d('转发被拒绝! 原因: 需要唯一, 但是新数据与最新值相同'
-              '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
+          L.w('转发被拒绝! 原因: 需要唯一, 但是新数据与最新值相同');
         }
       }
     } else {

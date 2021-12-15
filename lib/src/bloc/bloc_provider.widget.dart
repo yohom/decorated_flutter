@@ -22,8 +22,9 @@ class BLoCProvider<T extends BLoC> extends StatefulWidget {
   _BLoCProviderState<T> createState() => _BLoCProviderState<T>();
 
   static T? of<T extends BLoC>(BuildContext context) {
-    final provider =
-        context.findAncestorStateOfType<_BLoCProviderState<T>>()?.widget;
+    final provider = context
+        .getElementForInheritedWidgetOfExactType<_BLoCProviderInherited<T>>()
+        ?.widget as _BLoCProviderInherited<T>?;
     return provider?.bloc;
   }
 }
@@ -32,11 +33,20 @@ class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
   @override
   void initState() {
     super.initState();
-    if (widget.init != null) widget.init!(widget.bloc);
+
+    if (widget.init != null) {
+      widget.init!(widget.bloc);
+      widget.bloc.init();
+    }
   }
 
   @override
-  Widget build(BuildContext context) => widget.child;
+  Widget build(BuildContext context) {
+    return _BLoCProviderInherited(
+      child: widget.child,
+      bloc: widget.bloc,
+    );
+  }
 
   @override
   void dispose() {
@@ -49,4 +59,17 @@ class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
     }
     super.dispose();
   }
+}
+
+class _BLoCProviderInherited<T> extends InheritedWidget {
+  const _BLoCProviderInherited({
+    Key? key,
+    required Widget child,
+    required this.bloc,
+  }) : super(key: key, child: child);
+
+  final T bloc;
+
+  @override
+  bool updateShouldNotify(_BLoCProviderInherited oldWidget) => false;
 }
