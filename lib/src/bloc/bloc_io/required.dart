@@ -125,7 +125,8 @@ class IO<T> extends BaseRequiredIO<T>
 
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
-    _fetch = fetch ?? (_) => throw '在未设置fetch回调时调用了update方法, 请检查逻辑是否正确!';
+    _fetch = fetch ??
+        (_) => throw '[$semantics] 在未设置fetch回调时调用了update方法, 请检查逻辑是否正确!';
   }
 }
 
@@ -260,7 +261,7 @@ class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
     _currentPage = _initPage;
     _pageFetch = pageFetch ??
         (_, __) =>
-            throw '$semantics在未设置pageFetch回调时调用了refresh/loadMore方法, 请检查业务逻辑是否正确!';
+            throw '[$semantics] 在未设置pageFetch回调时调用了refresh/loadMore方法, 请检查业务逻辑是否正确!';
     _receiveFullData = receiveFullData;
     _pageSize = pageSize;
     _forceCapacity = forceCapacity;
