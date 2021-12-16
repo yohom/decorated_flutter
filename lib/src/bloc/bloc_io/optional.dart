@@ -127,8 +127,8 @@ class OptionalIO<T> extends BaseOptionalIO<T?>
 
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
-    _fetch =
-        fetch ?? (_) => throw '$semantics在未设置fetch回调时调用了update方法, 请检查业务逻辑是否正确!';
+    _fetch = fetch ??
+        (_) => throw '[$semantics] 在未设置fetch回调时调用了update方法, 请检查业务逻辑是否正确!';
   }
 }
 
@@ -265,7 +265,7 @@ class OptionalPageIO<T, ARG_TYPE> extends OptionalListIO<T>
     _initPage = initPage;
     _currentPage = _initPage;
     _pageFetch =
-        pageFetch ?? (_, __) => throw '在未设置fetch回调时调用了update方法, 请检查逻辑是否正确!';
+        pageFetch ?? (_, __) => throw '[$semantics] 在未设置fetch回调时调用了update方法, 请检查逻辑是否正确!';
     _receiveFullData = receiveFullData;
     _forceCapacity = forceCapacity;
   }
