@@ -19,7 +19,7 @@ dependencies:
   # rx https://pub.flutter-io.cn/packages/rxdart
   rxdart: ^0.27.3
   # 图片加载增强 https://pub.flutter-io.cn/packages/cached_network_image
-  cached_network_image: ^3.1.0+1
+  cached_network_image: ^3.2.0
   # toast https://pub.flutter-io.cn/packages/oktoast
   oktoast: ^3.1.5
   # 模态对话框增强 https://pub.flutter-io.cn/packages/modal_bottom_sheet
@@ -32,7 +32,7 @@ dependencies:
   android_intent_plus: ^3.0.2
   # svg https://pub.flutter-io.cn/packages/flutter_svg
   flutter_svg: ^1.0.0
-  # sliver增强
+  # sliver增强 https://pub.flutter-io.cn/packages/sliver_tools
   sliver_tools: ^0.2.5
 
 dev_dependencies:
