@@ -88,7 +88,6 @@ class BlurDialog extends StatelessWidget {
     this.insetPadding = const EdgeInsets.all(24),
     this.clipBehavior = Clip.none,
     this.shape,
-    this.alignment,
   }) : super(key: key);
 
   final Widget child;
@@ -102,7 +101,6 @@ class BlurDialog extends StatelessWidget {
   final EdgeInsets? insetPadding;
   final Clip clipBehavior;
   final ShapeBorder? shape;
-  final AlignmentGeometry? alignment;
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +114,6 @@ class BlurDialog extends StatelessWidget {
         insetPadding: insetPadding,
         clipBehavior: clipBehavior,
         shape: shape,
-        alignment: alignment,
         child: child,
       ),
     );

@@ -108,6 +108,7 @@ class IO<T> extends BaseRequiredIO<T>
     bool isBehavior = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
+    bool Function(T, T)? isSame,
     bool printLog = true,
     _Fetch<T, dynamic>? fetch,
     T Function()? onReset,
@@ -125,6 +126,7 @@ class IO<T> extends BaseRequiredIO<T>
 
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
+    if (isSame != null) _isSame = isSame;
     _fetch = fetch ??
         (_) => throw '[$semantics] 在未设置fetch回调时调用了update方法, 请检查逻辑是否正确!';
   }
@@ -141,6 +143,7 @@ class ListInput<T> extends Input<List<T>> with ListMixin<T> {
     bool acceptEmpty = true,
     bool printLog = true,
     bool isDistinct = false,
+    bool Function(List<T>, List<T>)? isSame,
     int? forceCapacity,
     List<T> Function()? onReset,
     String? persistentKey,
@@ -156,6 +159,7 @@ class ListInput<T> extends Input<List<T>> with ListMixin<T> {
           persistentKey: persistentKey,
         ) {
     _forceCapacity = forceCapacity;
+    _isSame = isSame ?? listEquals;
   }
 }
 
@@ -277,6 +281,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin<T> {
     bool isBehavior = true,
     bool acceptEmpty = true,
     bool isDistinct = false,
+    bool Function(List<T>, List<T>)? isSame,
     bool printLog = true,
     int? forceCapacity,
     _Fetch<List<T>, dynamic>? fetch,
@@ -292,6 +297,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin<T> {
           fetch: fetch,
           printLog: printLog,
           onReset: onReset,
+          isSame: isSame ?? listEquals,
           persistentKey: persistentKey,
         ) {
     _forceCapacity = forceCapacity;
@@ -422,6 +428,8 @@ class BoolOutput<ARG_TYPE> extends Output<bool, ARG_TYPE> with BoolMixin {
 mixin InputMixin<T> on BaseRequiredIO<T> {
   bool _acceptEmpty = true;
   bool _isDistinct = false;
+  // ignore: prefer_function_declarations_over_variables
+  bool Function(T, T) _isSame = (a, b) => a == b;
 
   /// 发射数据
   T? add(T data) {
@@ -441,7 +449,7 @@ mixin InputMixin<T> on BaseRequiredIO<T> {
     if (_isDistinct) {
       // 如果是不一样的数据, 才发射新的通知,防止TabBar的addListener那种
       // 不停地发送通知(但是值又是一样)的情况
-      if (data != latest) {
+      if (!_isSame(data, latest)) {
         if (_printLog) L.d('IO转发出**$_semantics**数据: $data');
         _subject.add(data);
       } else {
