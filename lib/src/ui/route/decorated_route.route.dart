@@ -21,7 +21,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
     this.init,
     this.onLateinit,
     this.animate = true,
-    this.withForm = false,
+    this.withForm = true,
     this.withLocalNavigator = false,
     this.tabControllerConfig,
     this.onDisposed,

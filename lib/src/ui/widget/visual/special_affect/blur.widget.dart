@@ -81,18 +81,41 @@ class BlurDialog extends StatelessWidget {
     this.sigmaX = 2,
     this.sigmaY = 2,
     this.dismissible = true,
+    this.backgroundColor,
+    this.elevation,
+    this.insetAnimationDuration = const Duration(milliseconds: 100),
+    this.insetAnimationCurve = Curves.decelerate,
+    this.insetPadding = const EdgeInsets.all(24),
+    this.clipBehavior = Clip.none,
+    this.shape,
   }) : super(key: key);
 
   final Widget child;
   final bool dismissible;
   final double sigmaX;
   final double sigmaY;
+  final Color? backgroundColor;
+  final double? elevation;
+  final Duration insetAnimationDuration;
+  final Curve insetAnimationCurve;
+  final EdgeInsets? insetPadding;
+  final Clip clipBehavior;
+  final ShapeBorder? shape;
 
   @override
   Widget build(BuildContext context) {
     return BackdropFilter(
       filter: ui.ImageFilter.blur(sigmaX: sigmaX, sigmaY: sigmaY),
-      child: Dialog(insetPadding: const EdgeInsets.all(24), child: child),
+      child: Dialog(
+        backgroundColor: backgroundColor,
+        elevation: elevation,
+        insetAnimationDuration: insetAnimationDuration,
+        insetAnimationCurve: insetAnimationCurve,
+        insetPadding: insetPadding,
+        clipBehavior: clipBehavior,
+        shape: shape,
+        child: child,
+      ),
     );
   }
 }

@@ -51,6 +51,7 @@ class DecoratedRow extends DecoratedFlex {
     bool sliver = false,
     VerticalDirection? verticalDirection,
     Clip clipBehavior = Clip.none,
+    Color? iconColor,
     List<Widget> children = const [],
   }) : super(
           key: key,
@@ -101,6 +102,7 @@ class DecoratedRow extends DecoratedFlex {
           sliver: sliver,
           verticalDirection: verticalDirection,
           clipBehavior: clipBehavior,
+          iconColor: iconColor,
           children: children,
         );
 }
@@ -154,6 +156,7 @@ class DecoratedColumn extends DecoratedFlex {
     bool sliver = false,
     VerticalDirection? verticalDirection,
     Clip clipBehavior = Clip.none,
+    Color? iconColor,
     List<Widget> children = const [],
   }) : super(
           key: key,
@@ -204,6 +207,7 @@ class DecoratedColumn extends DecoratedFlex {
           sliver: sliver,
           verticalDirection: verticalDirection,
           clipBehavior: clipBehavior,
+          iconColor: iconColor,
           children: children,
         );
 }
@@ -258,6 +262,7 @@ class DecoratedFlex extends StatelessWidget {
     this.sliver = false,
     this.verticalDirection,
     this.clipBehavior = Clip.none,
+    this.iconColor,
     this.children = const [],
   }) : super(key: key);
 
@@ -366,6 +371,8 @@ class DecoratedFlex extends StatelessWidget {
   final VerticalDirection? verticalDirection;
 
   final Clip clipBehavior;
+
+  final Color? iconColor;
 
   /// 子元素
   final List<Widget> children;
@@ -515,6 +522,10 @@ class DecoratedFlex extends StatelessWidget {
 
     if (offset != null) {
       result = Transform.translate(offset: offset!, child: result);
+    }
+
+    if (iconColor != null) {
+      result = IconTheme(data: IconThemeData(color: iconColor), child: result);
     }
 
     if (expanded == true) {
