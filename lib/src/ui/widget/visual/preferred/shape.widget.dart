@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class Circle extends StatelessWidget {
   const Circle({
@@ -76,13 +75,13 @@ class Line extends StatelessWidget {
     Key? key,
     this.width = double.infinity,
     this.height = 1,
-    this.color = Colors.black12,
+    this.color,
     this.padding = EdgeInsets.zero,
     this.margin = const EdgeInsets.symmetric(vertical: 8),
   }) : super(key: key);
 
   final double width, height;
-  final Color color;
+  final Color? color;
   final EdgeInsets padding, margin;
 
   @override
@@ -92,7 +91,7 @@ class Line extends StatelessWidget {
       height: height,
       padding: padding,
       margin: margin,
-      decoration: BoxDecoration(color: color),
+      decoration: BoxDecoration(color: color ?? Colors.grey.shade200),
     );
   }
 }
