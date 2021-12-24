@@ -34,20 +34,6 @@ abstract class BaseOptionalIO<T> extends BaseIO<T?> {
         );
 }
 
-/// BLoC内的静态值, 也就是供初始化时的值, 之前都是直接写成字段, 这里提供一个类, 保持与IO的一致性
-@Deprecated('直接使用被包裹的对象即可, 如果不能直接实例化的话就使用late修饰')
-class OptionalStatic<T> {
-  OptionalStatic([this._content]);
-
-  T? _content;
-
-  void set(T? value) {
-    _content = value;
-  }
-
-  T? get() => _content;
-}
-
 /// 只输入数据的业务单元
 class OptionalInput<T> extends BaseOptionalIO<T> with OptionalInputMixin<T> {
   OptionalInput({
@@ -264,8 +250,8 @@ class OptionalPageIO<T, ARG_TYPE> extends OptionalListIO<T>
         ) {
     _initPage = initPage;
     _currentPage = _initPage;
-    _pageFetch =
-        pageFetch ?? (_, __) => throw '[$semantics] 在未设置fetch回调时调用了update方法, 请检查逻辑是否正确!';
+    _pageFetch = pageFetch ??
+        (_, __) => throw '[$semantics] 在未设置fetch回调时调用了update方法, 请检查逻辑是否正确!';
     _receiveFullData = receiveFullData;
     _forceCapacity = forceCapacity;
   }
