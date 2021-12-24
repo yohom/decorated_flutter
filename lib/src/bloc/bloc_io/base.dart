@@ -209,3 +209,29 @@ class Signal extends IO<dynamic> {
     add(Object());
   }
 }
+
+/// 对某个io进行变换
+class Mapper<T, R> extends BaseIO<R> {
+  Mapper({
+    required BaseIO<T> parent,
+    required String semantics,
+    required R Function(T) mapper,
+  }) : super(
+          seedValue: mapper(parent._seedValue),
+          semantics: semantics,
+        ) {
+    _subscription = parent._subject.map(mapper).listen(_subject.add);
+  }
+
+  late final StreamSubscription _subscription;
+
+  Stream<R> get stream {
+    return _subject.stream;
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
+}
