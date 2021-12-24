@@ -2,12 +2,7 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:decorated_flutter/decorated_flutter.dart';
-import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:rxdart/rxdart.dart';
-
-import '../persistence.dart';
 
 part 'optional.dart';
 part 'required.dart';
