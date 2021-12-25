@@ -2,7 +2,6 @@ part of '../base.dart';
 
 /// 只输入数据的业务单元
 class OptionalInput<T> extends Input<T?> {
-  @Deprecated('使用Input.optional代替')
   OptionalInput({
     T? seedValue,
     required String semantics,
@@ -28,7 +27,6 @@ class OptionalInput<T> extends Input<T?> {
 
 /// 只输出数据的业务单元
 class OptionalOutput<T, ARG> extends Output<T?, ARG> {
-  @Deprecated('使用Output.optional代替')
   OptionalOutput({
     T? seedValue,
     required String semantics,
@@ -54,7 +52,6 @@ class OptionalOutput<T, ARG> extends Output<T?, ARG> {
 
 /// 既可以输入又可以输出的事件
 class OptionalIO<T> extends IO<T?> {
-  @Deprecated('使用IO.optional代替')
   OptionalIO({
     T? seedValue,
     required String semantics,
