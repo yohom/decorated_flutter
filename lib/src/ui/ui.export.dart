@@ -17,6 +17,7 @@ export 'widget/visual/decorated/decorated_flex.widget.dart';
 export 'widget/visual/decorated/decorated_stack.widget.dart';
 export 'widget/visual/decorated/decorated_text.widget.dart';
 export 'widget/visual/decorated/decorated_widget.widget.dart';
+export 'widget/visual/decorated/decorated_wrap.widget.dart';
 export 'widget/visual/decorated/fractional_screen.widget.dart';
 export 'widget/visual/decorated/lazy_indexed_stack.widget.dart';
 export 'widget/visual/decorated/local_navigator.widget.dart';
