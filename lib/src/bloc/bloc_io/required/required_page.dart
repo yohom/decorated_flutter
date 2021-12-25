@@ -1,8 +1,7 @@
 part of '../base.dart';
 
 /// 分页业务单元
-class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
-    with PageMixin<T, ARG_TYPE> {
+class PageOutput<T, ARG> extends ListOutput<T, int> with PageMixin<T, ARG> {
   static int? defaultInitialPage;
 
   PageOutput({
@@ -15,7 +14,7 @@ class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
     bool printLog = true,
     int pageSize = 0,
     int? forceCapacity,
-    required _PageFetchCallback<List<T>, ARG_TYPE?> pageFetch,
+    required _PageFetchCallback<List<T>, ARG?> pageFetch,
     List<T> Function()? onReset,
     String? persistentKey,
   }) : super(
@@ -45,7 +44,7 @@ class PageOutput<T, ARG_TYPE> extends ListOutput<T, int>
 }
 
 /// 分页业务单元
-class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
+class PageIO<T, ARG> extends ListIO<T> with PageMixin<T, ARG> {
   PageIO({
     required List<T> seedValue,
     required String semantics,
@@ -56,7 +55,7 @@ class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
     bool printLog = true,
     bool receiveFullData = true,
     int? forceCapacity,
-    _PageFetchCallback<List<T>, ARG_TYPE?>? pageFetch,
+    _PageFetchCallback<List<T>, ARG?>? pageFetch,
     List<T> Function()? onReset,
     String? persistentKey,
   }) : super(
@@ -80,7 +79,7 @@ class PageIO<T, ARG_TYPE> extends ListIO<T> with PageMixin<T, ARG_TYPE> {
   }
 }
 
-mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
+mixin PageMixin<T, ARG> on ListMixin<T> {
   /// 初始页 因为后端业务对初始页的定义不一定一样, 这里提供设置参数
   int _initPage = 0;
 
@@ -104,12 +103,12 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
   /// 每页大小 用于判断是否已加载完全部数据
   int _pageSize = 0;
 
-  late _PageFetchCallback<List<T>, ARG_TYPE?> _pageFetch;
+  late _PageFetchCallback<List<T>, ARG?> _pageFetch;
 
   /// 请求下一页数据
   ///
   /// 返回是否还有更多数据 true为还有更多数据 false为没有更多数据
-  Future<bool> loadMore([ARG_TYPE? args]) async {
+  Future<bool> loadMore([ARG? args]) async {
     // 如果已经没有更多数据的话, 就不再请求
     if (!_noMoreData) {
       try {
@@ -136,7 +135,7 @@ mixin PageMixin<T, ARG_TYPE> on ListMixin<T> {
   /// 刷新列表
   ///
   /// 会重新加载第一页
-  Future<List<T>?> refresh([ARG_TYPE? args]) async {
+  Future<List<T>?> refresh([ARG? args]) async {
     _currentPage = _initPage;
     _noMoreData = false;
     try {

@@ -1,8 +1,8 @@
 part of '../base.dart';
 
 /// 分页业务单元
-class OptionalPageOutput<T, ARG_TYPE> extends OptionalListOutput<T, int>
-    with OptionalPageMixin<T, ARG_TYPE> {
+class OptionalPageOutput<T, ARG> extends OptionalListOutput<T, int>
+    with OptionalPageMixin<T, ARG> {
   static int? defaultInitialPage;
 
   OptionalPageOutput({
@@ -14,7 +14,7 @@ class OptionalPageOutput<T, ARG_TYPE> extends OptionalListOutput<T, int>
     bool receiveFullData = true,
     bool printLog = true,
     int? forceCapacity,
-    required _PageFetchCallback<List<T>, ARG_TYPE?> pageFetch,
+    required _PageFetchCallback<List<T>, ARG?> pageFetch,
     List<T>? Function()? onReset,
     String? persistentKey,
     _MergeListCallback<T>? onMergeList,
@@ -47,8 +47,8 @@ class OptionalPageOutput<T, ARG_TYPE> extends OptionalListOutput<T, int>
 }
 
 /// 分页业务单元
-class OptionalPageIO<T, ARG_TYPE> extends OptionalListIO<T>
-    with OptionalPageMixin<T, ARG_TYPE> {
+class OptionalPageIO<T, ARG> extends OptionalListIO<T>
+    with OptionalPageMixin<T, ARG> {
   OptionalPageIO({
     List<T>? seedValue,
     required String semantics,
@@ -58,7 +58,7 @@ class OptionalPageIO<T, ARG_TYPE> extends OptionalListIO<T>
     bool printLog = true,
     bool receiveFullData = true,
     int? forceCapacity,
-    _PageFetchCallback<List<T>, ARG_TYPE?>? pageFetch,
+    _PageFetchCallback<List<T>, ARG?>? pageFetch,
     List<T>? Function()? onReset,
     String? persistentKey,
   }) : super(
@@ -80,7 +80,7 @@ class OptionalPageIO<T, ARG_TYPE> extends OptionalListIO<T>
   }
 }
 
-mixin OptionalPageMixin<T, ARG_TYPE> on OptionalListMixin<T> {
+mixin OptionalPageMixin<T, ARG> on OptionalListMixin<T> {
   /// 初始页 因为后端业务对初始页的定义不一定一样, 这里提供设置参数
   int _initPage = 0;
 
@@ -104,7 +104,7 @@ mixin OptionalPageMixin<T, ARG_TYPE> on OptionalListMixin<T> {
   ///   2. 没有设置过[_pageSize], 那么判断当前页是否为空列表.
   bool _noMoreData = false;
 
-  late _PageFetchCallback<List<T>, ARG_TYPE?> _pageFetch;
+  late _PageFetchCallback<List<T>, ARG?> _pageFetch;
 
   /// 自定义的数据合并回调
   _MergeListCallback<T>? _onMergeList;
@@ -121,7 +121,7 @@ mixin OptionalPageMixin<T, ARG_TYPE> on OptionalListMixin<T> {
   /// 请求下一页数据
   ///
   /// 返回是否还有更多数据 true为还有更多数据 false为没有更多数据
-  Future<bool> loadMore([ARG_TYPE? args]) async {
+  Future<bool> loadMore([ARG? args]) async {
     _inLoading = true;
 
     // 如果已经没有更多数据的话, 就不再请求
@@ -160,7 +160,7 @@ mixin OptionalPageMixin<T, ARG_TYPE> on OptionalListMixin<T> {
   }
 
   /// 请求指定页数的数据
-  Future<void> loadPage(int page, [ARG_TYPE? args]) async {
+  Future<void> loadPage(int page, [ARG? args]) async {
     _inLoading = true;
 
     try {
@@ -180,7 +180,7 @@ mixin OptionalPageMixin<T, ARG_TYPE> on OptionalListMixin<T> {
   /// 刷新列表
   ///
   /// 会重新加载第一页
-  Future<List<T>?> refresh([ARG_TYPE? args]) async {
+  Future<List<T>?> refresh([ARG? args]) async {
     _inLoading = true;
 
     _currentPage = _initPage;

@@ -28,14 +28,14 @@ class BoolIO extends IO<bool> with BoolMixin {
 }
 
 /// 只接收bool类型数据的Output
-class BoolOutput<ARG_TYPE> extends Output<bool, ARG_TYPE> with BoolMixin {
+class BoolOutput<ARG> extends Output<bool, ARG> with BoolMixin {
   BoolOutput({
     required bool seedValue,
     required String semantics,
     bool sync = true,
     bool isBehavior = true,
     bool printLog = true,
-    required _FetchCallback<bool, ARG_TYPE?> fetch,
+    required _FetchCallback<bool, ARG?> fetch,
     bool Function()? onReset,
     String? persistentKey,
   }) : super(
@@ -50,7 +50,7 @@ class BoolOutput<ARG_TYPE> extends Output<bool, ARG_TYPE> with BoolMixin {
         );
 }
 
-mixin BoolMixin on BaseRequiredIO<bool> {
+mixin BoolMixin on BaseIO<bool> {
   /// 切换true/false 并发射
   bool? toggle() {
     if (_subject.isClosed) {

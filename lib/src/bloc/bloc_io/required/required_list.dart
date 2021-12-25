@@ -33,8 +33,7 @@ class ListInput<T> extends Input<List<T>> with ListMixin<T> {
 /// 内部数据类型是[List]的输出业务单元
 ///
 /// 泛型[T]为列表项的类型
-class ListOutput<T, ARG_TYPE> extends Output<List<T>, ARG_TYPE>
-    with ListMixin<T> {
+class ListOutput<T, ARG> extends Output<List<T>, ARG> with ListMixin<T> {
   ListOutput({
     required List<T> seedValue,
     required String semantics,
@@ -42,7 +41,7 @@ class ListOutput<T, ARG_TYPE> extends Output<List<T>, ARG_TYPE>
     bool isBehavior = true,
     bool printLog = true,
     int? forceCapacity,
-    required _FetchCallback<List<T>, ARG_TYPE?> fetch,
+    required _FetchCallback<List<T>, ARG?> fetch,
     List<T> Function()? onReset,
     String? persistentKey,
   }) : super(
@@ -92,7 +91,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin<T> {
 }
 
 /// 内部数据是[List]特有的成员
-mixin ListMixin<T> on BaseRequiredIO<List<T>> {
+mixin ListMixin<T> on BaseIO<List<T>> {
   /// 强制内部列表最大长度, 超过这个长度后, 如果是从前面添加数据则弹出最后的数据, 从后面添加则反之.
   int? _forceCapacity;
 

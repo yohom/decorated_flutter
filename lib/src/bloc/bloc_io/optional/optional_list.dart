@@ -1,8 +1,7 @@
 part of '../base.dart';
 
 /// 内部数据类型是[List]的输入业务单元
-class OptionalListInput<T> extends OptionalInput<List<T>?>
-    with OptionalListMixin<T> {
+class OptionalListInput<T> extends Input<List<T>?> with OptionalListMixin<T> {
   OptionalListInput({
     List<T>? seedValue,
     required String semantics,
@@ -32,7 +31,7 @@ class OptionalListInput<T> extends OptionalInput<List<T>?>
 /// 内部数据类型是[List]的输出业务单元
 ///
 /// 泛型[T]为列表项的类型
-class OptionalListOutput<T, ARG_TYPE> extends OptionalOutput<List<T>?, ARG_TYPE>
+class OptionalListOutput<T, ARG> extends Output<List<T>?, ARG>
     with OptionalListMixin<T> {
   OptionalListOutput({
     List<T>? seedValue,
@@ -41,7 +40,7 @@ class OptionalListOutput<T, ARG_TYPE> extends OptionalOutput<List<T>?, ARG_TYPE>
     bool isBehavior = true,
     bool printLog = true,
     int? forceCapacity,
-    required _FetchCallback<List<T>, ARG_TYPE?> fetch,
+    required _FetchCallback<List<T>, ARG?> fetch,
     List<T>? Function()? onReset,
     String? persistentKey,
   }) : super(
@@ -59,7 +58,7 @@ class OptionalListOutput<T, ARG_TYPE> extends OptionalOutput<List<T>?, ARG_TYPE>
 }
 
 /// 内部数据类型是[List]的输入输出业务单元
-class OptionalListIO<T> extends OptionalIO<List<T>> with OptionalListMixin<T> {
+class OptionalListIO<T> extends IO<List<T>?> with OptionalListMixin {
   OptionalListIO({
     List<T>? seedValue,
     required String semantics,
@@ -89,7 +88,7 @@ class OptionalListIO<T> extends OptionalIO<List<T>> with OptionalListMixin<T> {
 }
 
 /// 内部数据是[List]特有的成员
-mixin OptionalListMixin<T> on BaseOptionalIO<List<T>?> {
+mixin OptionalListMixin<T> on BaseIO<List<T>?> {
   /// 强制内部列表最大长度, 超过这个长度后, 如果是从前面添加数据则弹出最后的数据, 从后面添加则反之.
   int? _forceCapacity;
 

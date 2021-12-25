@@ -5,7 +5,6 @@ import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/foundation.dart';
 
 part 'optional/optional.dart';
-part 'optional/optional_bool.dart';
 part 'optional/optional_int.dart';
 part 'optional/optional_list.dart';
 part 'optional/optional_page.dart';

@@ -1,7 +1,7 @@
 part of '../base.dart';
 
 /// 只接收int类型数据的IO
-class OptionalIntIO extends OptionalIO<int?> with OptionalIntMixin {
+class OptionalIntIO extends IO<int?> with OptionalIntMixin {
   OptionalIntIO({
     int? seedValue,
     required String semantics,
@@ -35,7 +35,7 @@ class OptionalIntIO extends OptionalIO<int?> with OptionalIntMixin {
 }
 
 /// 只接收int类型数据的Input
-class OptionalIntInput extends OptionalInput<int?> with OptionalIntMixin {
+class OptionalIntInput extends Input<int?> with OptionalIntMixin {
   OptionalIntInput({
     int? seedValue,
     required String semantics,
@@ -66,7 +66,7 @@ class OptionalIntInput extends OptionalInput<int?> with OptionalIntMixin {
   }
 }
 
-mixin OptionalIntMixin on BaseOptionalIO<int?> {
+mixin OptionalIntMixin on BaseIO<int?> {
   int? _min;
   int? _max;
   int? _remainder;

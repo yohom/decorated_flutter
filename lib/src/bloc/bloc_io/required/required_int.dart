@@ -66,7 +66,7 @@ class IntInput extends Input<int> with IntMixin {
   }
 }
 
-mixin IntMixin on BaseRequiredIO<int> {
+mixin IntMixin on BaseIO<int> {
   int? _min;
   int? _max;
   int? _remainder;

@@ -1,39 +1,7 @@
 part of '../base.dart';
 
-/// 业务单元基类
-abstract class BaseRequiredIO<T> extends BaseIO<T> {
-  BaseRequiredIO({
-    /// 初始值, 传递给内部的[_subject]
-    required T seedValue,
-
-    /// Event代表的语义
-    required String semantics,
-
-    /// 是否同步发射数据, 传递给内部的[_subject]
-    bool sync = true,
-
-    /// 是否打印日志, 有些IO add比较频繁时, 影响日志观看
-    bool printLog = true,
-
-    /// 是否使用BehaviorSubject, 如果使用, 那么Event内部的[_subject]会保存最近一次的值
-    bool isBehavior = true,
-
-    /// 重置回调方法, 如果设置了, 则调用reset的时候会优先使用此回调的返回值
-    T Function()? onReset,
-    String? persistentKey,
-  }) : super(
-          seedValue: seedValue,
-          semantics: semantics,
-          sync: sync,
-          printLog: printLog,
-          isBehavior: isBehavior,
-          onReset: onReset,
-          persistentKey: persistentKey,
-        );
-}
-
 /// 只输入数据的业务单元
-class Input<T> extends BaseRequiredIO<T> with InputMixin<T> {
+class Input<T> extends BaseIO<T> with InputMixin<T> {
   Input({
     required T seedValue,
     required String semantics,
@@ -83,15 +51,14 @@ class Input<T> extends BaseRequiredIO<T> with InputMixin<T> {
 }
 
 /// 只输出数据的业务单元
-class Output<T, ARG_TYPE> extends BaseRequiredIO<T>
-    with OutputMixin<T, ARG_TYPE> {
+class Output<T, ARG> extends BaseIO<T> with OutputMixin<T, ARG> {
   Output({
     required T seedValue,
     required String semantics,
     bool sync = true,
     bool printLog = true,
     bool isBehavior = true,
-    required _FetchCallback<T, ARG_TYPE?> fetch,
+    required _FetchCallback<T, ARG?> fetch,
     T Function()? onReset,
     String? persistentKey,
   }) : super(
@@ -131,8 +98,7 @@ class Output<T, ARG_TYPE> extends BaseRequiredIO<T>
 }
 
 /// 既可以输入又可以输出的事件
-class IO<T> extends BaseRequiredIO<T>
-    with InputMixin<T>, OutputMixin<T, dynamic> {
+class IO<T> extends BaseIO<T> with InputMixin<T>, OutputMixin<T, dynamic> {
   IO({
     required T seedValue,
     required String semantics,
@@ -193,7 +159,7 @@ class IO<T> extends BaseRequiredIO<T>
 /// 输入单元特有的成员
 ///
 /// 泛型[T]为数据数据的类型
-mixin InputMixin<T> on BaseRequiredIO<T> {
+mixin InputMixin<T> on BaseIO<T> {
   bool _acceptEmpty = true;
   bool _isDistinct = false;
   // ignore: prefer_function_declarations_over_variables
@@ -255,9 +221,9 @@ mixin InputMixin<T> on BaseRequiredIO<T> {
 
 /// 输出单元特有的成员
 ///
-/// 泛型[T]为输出数据的类型, 泛型[ARG_TYPE]为请求数据时的参数类型. 一般参数只有一个时, 就
+/// 泛型[T]为输出数据的类型, 泛型[ARG]为请求数据时的参数类型. 一般参数只有一个时, 就
 /// 直接使用该参数的类型, 如果有多个时, 就使用List接收.
-mixin OutputMixin<T, ARG_TYPE> on BaseRequiredIO<T> {
+mixin OutputMixin<T, ARG> on BaseIO<T> {
   /// 输出Future
   @Deprecated('使用first()方法代替')
   Future<T> get future => first(true);
@@ -296,10 +262,10 @@ mixin OutputMixin<T, ARG_TYPE> on BaseRequiredIO<T> {
   }
 
   /// 输出Stream
-  late _FetchCallback<T, ARG_TYPE?> _fetch;
+  late _FetchCallback<T, ARG?> _fetch;
 
   /// 使用内部的trigger获取数据
-  Future<T> update([ARG_TYPE? arg]) {
+  Future<T> update([ARG? arg]) {
     return _fetch(arg)
       ..then((data) {
         if (!_subject.isClosed) _subject.add(data);
