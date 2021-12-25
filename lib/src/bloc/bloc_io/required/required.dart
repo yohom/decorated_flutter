@@ -56,6 +56,30 @@ class Input<T> extends BaseRequiredIO<T> with InputMixin<T> {
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
   }
+
+  static OptionalInput<T> optional<T>({
+    T? seedValue,
+    required String semantics,
+    bool sync = true,
+    bool isBehavior = true,
+    bool printLog = true,
+    bool acceptEmpty = true,
+    bool isDistinct = false,
+    T? Function()? onReset,
+    String? persistentKey,
+  }) {
+    return OptionalInput<T>(
+      semantics: semantics,
+      seedValue: seedValue,
+      sync: sync,
+      isBehavior: isBehavior,
+      printLog: printLog,
+      acceptEmpty: acceptEmpty,
+      isDistinct: isDistinct,
+      onReset: onReset,
+      persistentKey: persistentKey,
+    );
+  }
 }
 
 /// 只输出数据的业务单元
@@ -81,6 +105,28 @@ class Output<T, ARG_TYPE> extends BaseRequiredIO<T>
         ) {
     stream = _subject.stream;
     _fetch = fetch;
+  }
+
+  static OptionalOutput<T, ARG> optional<T, ARG>({
+    T? seedValue,
+    required String semantics,
+    bool sync = true,
+    bool printLog = true,
+    bool isBehavior = true,
+    required _FetchCallback<T, ARG?> fetch,
+    T? Function()? onReset,
+    String? persistentKey,
+  }) {
+    return OptionalOutput<T, ARG>(
+      semantics: semantics,
+      seedValue: seedValue,
+      sync: sync,
+      isBehavior: isBehavior,
+      printLog: printLog,
+      fetch: fetch,
+      onReset: onReset,
+      persistentKey: persistentKey,
+    );
   }
 }
 
@@ -115,6 +161,32 @@ class IO<T> extends BaseRequiredIO<T>
     if (isSame != null) _isSame = isSame;
     _fetch = fetch ??
         (_) => throw '[$semantics] 在未设置fetch回调时调用了update方法, 请检查逻辑是否正确!';
+  }
+
+  static OptionalIO<T> optional<T>({
+    T? seedValue,
+    required String semantics,
+    bool sync = true,
+    bool isBehavior = true,
+    bool acceptEmpty = true,
+    bool isDistinct = false,
+    bool printLog = true,
+    _FetchCallback<T, dynamic>? fetch,
+    T? Function()? onReset,
+    String? persistentKey,
+  }) {
+    return OptionalIO<T>(
+      semantics: semantics,
+      seedValue: seedValue,
+      sync: sync,
+      isBehavior: isBehavior,
+      acceptEmpty: acceptEmpty,
+      printLog: printLog,
+      isDistinct: isDistinct,
+      fetch: fetch,
+      onReset: onReset,
+      persistentKey: persistentKey,
+    );
   }
 }
 
