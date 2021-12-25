@@ -28,11 +28,33 @@ class ListInput<T> extends Input<List<T>> with ListMixin<T> {
     _forceCapacity = forceCapacity;
     _isSame = isSame ?? listEquals;
   }
+
+  static OptionalListInput<T> optional<T>({
+    List<T>? seedValue,
+    required String semantics,
+    bool sync = true,
+    bool isBehavior = true,
+    bool acceptEmpty = true,
+    bool isDistinct = false,
+    bool printLog = true,
+    List<T>? Function()? onReset,
+    String? persistentKey,
+  }) {
+    return OptionalListInput<T>(
+      semantics: semantics,
+      seedValue: seedValue,
+      sync: sync,
+      isBehavior: isBehavior,
+      acceptEmpty: acceptEmpty,
+      printLog: printLog,
+      isDistinct: isDistinct,
+      onReset: onReset,
+      persistentKey: persistentKey,
+    );
+  }
 }
 
 /// 内部数据类型是[List]的输出业务单元
-///
-/// 泛型[T]为列表项的类型
 class ListOutput<T, ARG> extends Output<List<T>, ARG> with ListMixin<T> {
   ListOutput({
     required List<T> seedValue,
@@ -55,6 +77,30 @@ class ListOutput<T, ARG> extends Output<List<T>, ARG> with ListMixin<T> {
           persistentKey: persistentKey,
         ) {
     _forceCapacity = forceCapacity;
+  }
+
+  static OptionalListOutput<T, ARG> optional<T, ARG>({
+    List<T>? seedValue,
+    required String semantics,
+    bool sync = true,
+    bool isBehavior = true,
+    bool printLog = true,
+    int? forceCapacity,
+    required _FetchCallback<List<T>, ARG?> fetch,
+    List<T> Function()? onReset,
+    String? persistentKey,
+  }) {
+    return OptionalListOutput<T, ARG>(
+      semantics: semantics,
+      seedValue: seedValue,
+      sync: sync,
+      isBehavior: isBehavior,
+      fetch: fetch,
+      printLog: printLog,
+      onReset: onReset,
+      forceCapacity: forceCapacity,
+      persistentKey: persistentKey,
+    );
   }
 }
 
@@ -87,6 +133,30 @@ class ListIO<T> extends IO<List<T>> with ListMixin<T> {
           persistentKey: persistentKey,
         ) {
     _forceCapacity = forceCapacity;
+  }
+
+  static OptionalListIO<T> optional<T>({
+    List<T>? seedValue,
+    required String semantics,
+    bool sync = true,
+    bool isBehavior = true,
+    bool printLog = true,
+    int? forceCapacity,
+    required _FetchCallback<List<T>, dynamic> fetch,
+    List<T> Function()? onReset,
+    String? persistentKey,
+  }) {
+    return OptionalListIO<T>(
+      semantics: semantics,
+      seedValue: seedValue,
+      sync: sync,
+      isBehavior: isBehavior,
+      fetch: fetch,
+      printLog: printLog,
+      onReset: onReset,
+      forceCapacity: forceCapacity,
+      persistentKey: persistentKey,
+    );
   }
 }
 
