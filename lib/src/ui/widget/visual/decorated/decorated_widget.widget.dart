@@ -1,5 +1,4 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
-import 'package:decorated_flutter/src/ui/widget/nonvisual/auto_close_keyboard.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

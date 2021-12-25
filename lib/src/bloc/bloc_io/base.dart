@@ -2,20 +2,23 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:decorated_flutter/decorated_flutter.dart';
-import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:rxdart/rxdart.dart';
 
-import '../persistence.dart';
+part 'optional/optional.dart';
+part 'optional/optional_int.dart';
+part 'optional/optional_list.dart';
+part 'optional/optional_page.dart';
+part 'required/required.dart';
+part 'required/required_bool.dart';
+part 'required/required_int.dart';
+part 'required/required_list.dart';
+part 'required/required_page.dart';
 
-part 'optional.dart';
-part 'required.dart';
-
-typedef _Fetch<R, T> = Future<R> Function(T arg);
-typedef _PageFetch<R, T> = Future<R> Function(int page, T arg);
-typedef _OnMergeList<T> = List<T> Function(List<T> current, List<T> newList);
-typedef _IsNoMoreData<T> = bool Function(List<T> newList);
+typedef _FetchCallback<R, T> = Future<R> Function(T arg);
+typedef _PageFetchCallback<R, T> = Future<R> Function(int page, T arg);
+typedef _MergeListCallback<T> = List<T> Function(
+    List<T> current, List<T> newList);
+typedef _NoMoreDataCallback<T> = bool Function(List<T> newList);
 
 abstract class BaseIO<T> {
   static Persistence? _persistence;
@@ -203,5 +206,31 @@ class Signal extends IO<dynamic> {
   /// 发射信号
   void emit() {
     add(Object());
+  }
+}
+
+/// 对某个io进行变换
+class Mapper<T, R> extends BaseIO<R> {
+  Mapper({
+    required BaseIO<T> upstream,
+    required String semantics,
+    required R Function(T) mapper,
+  }) : super(
+          seedValue: mapper(upstream._seedValue),
+          semantics: semantics,
+        ) {
+    _subscription = upstream._subject.map(mapper).listen(_subject.add);
+  }
+
+  late final StreamSubscription _subscription;
+
+  Stream<R> get stream {
+    return _subject.stream;
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
   }
 }

@@ -5,6 +5,7 @@ export 'file.x.dart';
 export 'future.x.dart';
 export 'global_key.x.dart';
 export 'iterable.x.dart';
+export 'map.x.dart';
 export 'material_state_property.x.dart';
 export 'navigator.x.dart';
 export 'num.x.dart';

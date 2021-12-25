@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:decorated_flutter/decorated_flutter.dart';
-import 'package:rxdart/rxdart.dart';
 
 const int kDuration = 60;
 
