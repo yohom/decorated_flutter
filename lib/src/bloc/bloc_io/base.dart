@@ -213,14 +213,14 @@ class Signal extends IO<dynamic> {
 /// 对某个io进行变换
 class Mapper<T, R> extends BaseIO<R> {
   Mapper({
-    required BaseIO<T> parent,
+    required BaseIO<T> upstream,
     required String semantics,
     required R Function(T) mapper,
   }) : super(
-          seedValue: mapper(parent._seedValue),
+          seedValue: mapper(upstream._seedValue),
           semantics: semantics,
         ) {
-    _subscription = parent._subject.map(mapper).listen(_subject.add);
+    _subscription = upstream._subject.map(mapper).listen(_subject.add);
   }
 
   late final StreamSubscription _subscription;
