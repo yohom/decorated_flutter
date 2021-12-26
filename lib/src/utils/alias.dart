@@ -5,3 +5,4 @@ typedef ContextCallback = void Function(BuildContext context);
 typedef ContextValueChanged<T> = void Function(BuildContext context, T value);
 typedef InitCallback<T extends BLoC> = void Function(T bloc);
 typedef LateInitCallback<T extends BLoC> = void Function(T bloc, BuildContext);
+typedef SearchCallback<T> = bool Function(T, String keyword);

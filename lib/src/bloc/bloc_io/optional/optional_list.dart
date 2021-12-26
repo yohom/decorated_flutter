@@ -104,6 +104,16 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
     return filtered;
   }
 
+  /// 搜索关键字
+  Stream<List<T>> search(IO<String> keyword, {required SearchCallback<T> by}) {
+    return whereNotNull().search(keyword.stream, by: by);
+  }
+
+  /// 转换为非空流
+  Stream<List<T>> whereNotNull() {
+    return _subject.stream.where(notNull).cast<List<T>>();
+  }
+
   /// 追加, 并发射
   T? append(T element, {bool fromHead = false}) {
     if (_subject.isClosed) {

@@ -165,6 +165,11 @@ mixin ListMixin<T> on BaseIO<List<T>> {
   /// 强制内部列表最大长度, 超过这个长度后, 如果是从前面添加数据则弹出最后的数据, 从后面添加则反之.
   int? _forceCapacity;
 
+  /// 搜索关键字
+  Stream<List<T>> search(IO<String> keyword, {required SearchCallback<T> by}) {
+    return _subject.stream.search(keyword.stream, by: by);
+  }
+
   /// 按条件过滤, 并发射过滤后的数据
   List<T>? filterItem(bool Function(T element) test) {
     if (_subject.isClosed) {
