@@ -9,7 +9,6 @@ import 'package:flutter/services.dart';
 
 const _kDioOther = 100002;
 const _kSocketException = 100001;
-const _kUnknownException = 100003;
 
 ValueChanged<Object>? handleCustomError;
 
@@ -56,7 +55,7 @@ dynamic handleError(Object error, [StackTrace? trace]) {
     if (handleCustomError != null) {
       handleCustomError!(error);
     } else {
-      toast(isEnglish ? 'Unknown Error' : '遇到未知错误 $_kUnknownException');
+      toast(isEnglish ? 'Unknown Error' : '遇到未知错误 $error');
     }
   }
   // catchError要求一个和Future一样类型的返回值, 但是这里无法提供一个通用的, 只能返回null了
