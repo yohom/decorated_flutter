@@ -182,7 +182,7 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
       return null;
     }
 
-    _subject.add(latest?..replaceRange(index, index + 1, <T>[element]));
+    _subject.add(latest?..[index] = element);
     return element;
   }
 
