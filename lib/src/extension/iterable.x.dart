@@ -28,7 +28,7 @@ extension IterableX<T> on Iterable<T> {
 }
 
 extension Unwrap<T> on List<T?>? {
-  List<T> unwrap() => (this ?? []).whereType<T>().toList();
+  List<T> whereNotNull() => (this ?? []).whereType<T>().toList();
 }
 
 extension ListX<T> on List<T> {
