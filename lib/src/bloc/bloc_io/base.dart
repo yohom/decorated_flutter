@@ -215,17 +215,28 @@ class Mapper<T, R> extends BaseIO<R> {
     required BaseIO<T> upstream,
     required String semantics,
     required R Function(T) mapper,
-  }) : super(
-          seedValue: mapper(upstream._seedValue),
+    R? seedValue,
+  })  : _upstream = upstream,
+        _mapper = mapper,
+        super(
+          seedValue: seedValue ?? mapper(upstream._seedValue),
           semantics: semantics,
         ) {
     _subscription = upstream._subject.map(mapper).listen(_subject.add);
   }
 
+  final BaseIO<T> _upstream;
+
+  final R Function(T) _mapper;
+
   late final StreamSubscription _subscription;
 
   Stream<R> get stream {
     return _subject.stream;
+  }
+
+  void pull() {
+    _subject.add(_mapper(_upstream.latest));
   }
 
   @override
