@@ -183,13 +183,18 @@ abstract class BaseIO<T> {
 
 /// 没有数据, 只发射信号的IO
 class Signal extends IO<dynamic> {
-  Signal({required String semantics})
+  Signal({required String semantics, bool isBehavior = false})
       : super(
           seedValue: anyObject,
           semantics: semantics,
-          isBehavior: false,
-          fetch: (_) => Future.value(anyObject),
+          isBehavior: isBehavior,
+          fetch: (_) => throw '不能在 [$semantics] Signal中调用update方法',
         );
+
+  /// 是否有粘性信号可以处理
+  bool get hasStickySignal {
+    return latest != null;
+  }
 
   @override
   void reset() {
