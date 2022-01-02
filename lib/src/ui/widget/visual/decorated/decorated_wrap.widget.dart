@@ -4,7 +4,7 @@ class DecoratedWrap extends StatelessWidget {
   const DecoratedWrap({
     Key? key,
     this.direction = Axis.horizontal,
-    this.alignment = WrapAlignment.start,
+    this.alignment = WrapAlignment.spaceBetween,
     this.runAlignment = WrapAlignment.start,
     this.spacing = 0.0,
     this.runSpacing = 0.0,
@@ -12,6 +12,8 @@ class DecoratedWrap extends StatelessWidget {
     this.textDirection,
     this.verticalDirection = VerticalDirection.down,
     this.clipBehavior = Clip.none,
+    this.padding,
+    this.margin,
     required this.crossAxisCount,
     required this.children,
   }) : super(key: key);
@@ -25,14 +27,18 @@ class DecoratedWrap extends StatelessWidget {
   final WrapCrossAlignment crossAxisAlignment;
   final TextDirection? textDirection;
   final VerticalDirection verticalDirection;
+  final EdgeInsets? padding;
+  final EdgeInsets? margin;
   final Clip clipBehavior;
   final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
+    Widget result = LayoutBuilder(
       builder: (context, constraints) {
-        final availableWidth = constraints.maxWidth - crossAxisCount * spacing;
+        // 空白部分宽度, 比如一行为2个时, 空余宽度为 (2-1)*spacing;
+        final spaceWidth = (crossAxisCount - 1) * spacing;
+        final availableWidth = constraints.maxWidth - spaceWidth;
         final itemWidth = availableWidth / crossAxisCount;
         return Wrap(
           direction: direction,
@@ -51,5 +57,15 @@ class DecoratedWrap extends StatelessWidget {
         );
       },
     );
+
+    if (padding != null || margin != null) {
+      result = Container(
+        padding: padding,
+        margin: margin,
+        child: result,
+      );
+    }
+
+    return result;
   }
 }
