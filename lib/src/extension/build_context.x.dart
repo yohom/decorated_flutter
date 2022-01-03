@@ -71,4 +71,12 @@ extension BuildContextX on BuildContext {
   TabController? get tabController {
     return DefaultTabController.of(this);
   }
+
+  Future<void> scrollToTop({Duration? duration, Curve? curve}) async {
+    return PrimaryScrollController.of(this)?.animateTo(
+      0,
+      duration: duration ?? const Duration(milliseconds: 300),
+      curve: curve ?? Curves.ease,
+    );
+  }
 }
