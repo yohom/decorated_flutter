@@ -92,3 +92,7 @@ DateTime logTime([String? tag]) {
   L.d('${tag != null ? '[$tag] ' : ''}当前时间戳: $now');
   return now;
 }
+
+String toString(Object object) {
+  return object.toString();
+}

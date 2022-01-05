@@ -1,10 +1,24 @@
 import 'dart:convert';
 
+import 'package:decorated_flutter/src/utils/objects.dart';
+
 extension StringX on String {
   String plus(String addend) {
     final additionNum = num.parse(addend);
     final thisNum = num.parse(this);
     return '${additionNum + thisNum}';
+  }
+
+  bool get isMobile {
+    return kMobileRegex.hasMatch(this);
+  }
+
+  bool get isEmail {
+    return kEmailRegex.hasMatch(this);
+  }
+
+  bool get isMoney {
+    return kMoneyRegex.hasMatch(this);
   }
 
   dynamic get json {

@@ -35,6 +35,38 @@ class PageOutput<T, ARG> extends ListOutput<T, int> with PageMixin<T, ARG> {
     _forceCapacity = forceCapacity;
   }
 
+  static OptionalPageOutput<T, ARG> optional<T, ARG>({
+    List<T>? seedValue,
+    required String semantics,
+    bool sync = true,
+    bool isBehavior = true,
+    int? initPage,
+    bool receiveFullData = true,
+    bool printLog = true,
+    int? forceCapacity,
+    required _PageFetchCallback<List<T>, ARG?> pageFetch,
+    List<T>? Function()? onReset,
+    String? persistentKey,
+    _MergeListCallback<T>? onMergeList,
+    _NoMoreDataCallback<T>? isNoMoreData,
+  }) {
+    return OptionalPageOutput<T, ARG>(
+      seedValue: seedValue,
+      semantics: semantics,
+      sync: sync,
+      isBehavior: isBehavior,
+      initPage: initPage,
+      receiveFullData: receiveFullData,
+      printLog: printLog,
+      forceCapacity: forceCapacity,
+      pageFetch: pageFetch,
+      onReset: onReset,
+      persistentKey: persistentKey,
+      onMergeList: onMergeList,
+      isNoMoreData: isNoMoreData,
+    );
+  }
+
   /// 这里标记为protected, 防止被外部引用, 应该使用[refresh]方法
   @override
   @protected

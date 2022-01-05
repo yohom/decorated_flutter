@@ -2,8 +2,6 @@ import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-typedef _InitAction<T extends BLoC> = void Function(T bloc);
-
 /// [B]是指定的BLoC
 class DecoratedWidget<B extends BLoC> extends StatefulWidget {
   DecoratedWidget({
@@ -12,6 +10,7 @@ class DecoratedWidget<B extends BLoC> extends StatefulWidget {
     this.bloc,
     this.autoCloseKeyboard = true,
     this.init,
+    this.onLateinit,
     this.withForm = false,
     this.systemUiOverlayStyle,
     this.tabControllerConfig,
@@ -29,7 +28,10 @@ class DecoratedWidget<B extends BLoC> extends StatefulWidget {
   final bool autoCloseKeyboard;
 
   /// 初始化方法
-  final _InitAction<B>? init;
+  final InitCallback<B>? init;
+
+  /// 懒加载
+  final LateInitCallback<B>? onLateinit;
 
   /// 是否带有表单
   final bool withForm;
@@ -45,6 +47,18 @@ class DecoratedWidget<B extends BLoC> extends StatefulWidget {
 }
 
 class _DecoratedWidgetState<B extends BLoC> extends State<DecoratedWidget<B>> {
+  @override
+  void initState() {
+    super.initState();
+    if (widget.onLateinit != null && widget.bloc != null) {
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        if (mounted) {
+          widget.onLateinit!(widget.bloc!, context);
+        }
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget result;

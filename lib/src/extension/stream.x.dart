@@ -1,5 +1,8 @@
 import 'dart:async';
 
+import 'package:decorated_flutter/src/utils/utils.export.dart';
+import 'package:rxdart/rxdart.dart';
+
 extension ListStreamX<T> on Stream<List<T>> {
   /// 在一个列表Stream中, 找出目标项, 并转换为该项的Stream
   ///
@@ -14,6 +17,20 @@ extension ListStreamX<T> on Stream<List<T>> {
     } else {
       return map((list) => list.firstWhere((e) => e == t));
     }
+  }
+
+  /// 根据搜索关键字[keyword]流来过滤原始流[this]
+  Stream<List<T>> search(
+    Stream<String> keyword, {
+    required SearchCallback<T> by,
+  }) {
+    return Rx.combineLatest2<List<T>?, String, List<T>>(
+      this,
+      keyword,
+      (source, keyword) {
+        return source?.where((it) => by(it, keyword)).toList() ?? [];
+      },
+    );
   }
 }
 

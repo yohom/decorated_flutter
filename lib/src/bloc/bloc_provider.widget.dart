@@ -33,19 +33,13 @@ class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
   @override
   void initState() {
     super.initState();
-
-    if (widget.init != null) {
-      widget.init!(widget.bloc);
-      widget.bloc.init();
-    }
+    widget.init?.call(widget.bloc);
+    widget.bloc.init();
   }
 
   @override
   Widget build(BuildContext context) {
-    return _BLoCProviderInherited(
-      child: widget.child,
-      bloc: widget.bloc,
-    );
+    return _BLoCProviderInherited(child: widget.child, bloc: widget.bloc);
   }
 
   @override
@@ -54,9 +48,7 @@ class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
       widget.bloc.dispose();
     }
 
-    if (widget.onDispose != null) {
-      widget.onDispose!();
-    }
+    widget.onDispose?.call();
     super.dispose();
   }
 }

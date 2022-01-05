@@ -183,13 +183,18 @@ abstract class BaseIO<T> {
 
 /// 没有数据, 只发射信号的IO
 class Signal extends IO<dynamic> {
-  Signal({required String semantics})
+  Signal({required String semantics, bool isBehavior = false})
       : super(
-          seedValue: anyObject,
+          seedValue: null,
           semantics: semantics,
-          isBehavior: false,
-          fetch: (_) => Future.value(anyObject),
+          isBehavior: isBehavior,
+          fetch: (_) => throw '不能在 [$semantics] Signal中调用update方法',
         );
+
+  /// 是否有粘性信号可以处理
+  bool get hasStickySignal {
+    return latest != null;
+  }
 
   @override
   void reset() {
@@ -215,17 +220,28 @@ class Mapper<T, R> extends BaseIO<R> {
     required BaseIO<T> upstream,
     required String semantics,
     required R Function(T) mapper,
-  }) : super(
-          seedValue: mapper(upstream._seedValue),
+    R? seedValue,
+  })  : _upstream = upstream,
+        _mapper = mapper,
+        super(
+          seedValue: seedValue ?? mapper(upstream._seedValue),
           semantics: semantics,
         ) {
     _subscription = upstream._subject.map(mapper).listen(_subject.add);
   }
 
+  final BaseIO<T> _upstream;
+
+  final R Function(T) _mapper;
+
   late final StreamSubscription _subscription;
 
   Stream<R> get stream {
     return _subject.stream;
+  }
+
+  void pull() {
+    _subject.add(_mapper(_upstream.latest));
   }
 
   @override

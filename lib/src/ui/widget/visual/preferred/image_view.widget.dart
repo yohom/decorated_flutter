@@ -29,6 +29,7 @@ class ImageView extends StatelessWidget {
     this.decoration,
     this.foregroundDecoration,
     this.clipBehavior = Clip.hardEdge,
+    this.aspectRatio,
   })  : imagePath = imageUri.startsWith('http') ? null : imageUri,
         imageUrl = imageUri.startsWith('http') ? imageUri : null,
         errorWidget = const SizedBox.shrink(),
@@ -59,6 +60,7 @@ class ImageView extends StatelessWidget {
     this.decoration,
     this.foregroundDecoration,
     this.clipBehavior = Clip.hardEdge,
+    this.aspectRatio,
   })  : imageUrl = null,
         errorWidget = const SizedBox.shrink(),
         placeholder = const SizedBox.shrink(),
@@ -90,6 +92,7 @@ class ImageView extends StatelessWidget {
     this.decoration,
     this.foregroundDecoration,
     this.clipBehavior = Clip.hardEdge,
+    this.aspectRatio,
   })  : imagePath = null,
         assert(
           (darkImagePath != null && autoDarkMode == false) ||
@@ -118,6 +121,7 @@ class ImageView extends StatelessWidget {
     this.decoration,
     this.foregroundDecoration,
     this.clipBehavior = Clip.hardEdge,
+    this.aspectRatio,
   })  : imageUrl = null,
         errorWidget = const SizedBox.shrink(),
         placeholder = const SizedBox.shrink(),
@@ -150,6 +154,7 @@ class ImageView extends StatelessWidget {
     this.decoration,
     this.foregroundDecoration,
     this.clipBehavior = Clip.hardEdge,
+    this.aspectRatio,
   })  : imagePath = null,
         assert(
           (darkImagePath != null && autoDarkMode == false) ||
@@ -211,6 +216,9 @@ class ImageView extends StatelessWidget {
 
   /// 剪裁行为
   final Clip? clipBehavior;
+
+  /// 如果部位空, 则使用AspectRatio包裹
+  final double? aspectRatio;
 
   @override
   Widget build(BuildContext context) {
@@ -315,6 +323,10 @@ class ImageView extends StatelessWidget {
         decoration: decoration,
         child: result,
       );
+    }
+
+    if (aspectRatio != null) {
+      result = AspectRatio(aspectRatio: aspectRatio!, child: result);
     }
 
     return result;
