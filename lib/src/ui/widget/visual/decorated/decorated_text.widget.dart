@@ -34,6 +34,7 @@ class DecoratedText extends StatelessWidget {
     this.textBaseline,
     this.behavior,
     this.textExpanded = false,
+    this.textFlexible = false,
   }) : super(key: key);
 
   /// 内边距
@@ -70,6 +71,7 @@ class DecoratedText extends StatelessWidget {
   final TextBaseline? textBaseline;
   final HitTestBehavior? behavior;
   final bool textExpanded;
+  final bool textFlexible;
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +92,12 @@ class DecoratedText extends StatelessWidget {
         textBaseline: textBaseline,
         children: [
           if (leftWidget != null) leftWidget!,
-          if (textExpanded) Expanded(child: result) else result,
+          if (textExpanded)
+            Expanded(child: result)
+          else if (textFlexible)
+            Flexible(child: result)
+          else
+            result,
           if (rightWidget != null) rightWidget!,
         ],
       );
