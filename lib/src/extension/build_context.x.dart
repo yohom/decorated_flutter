@@ -79,4 +79,27 @@ extension BuildContextX on BuildContext {
       curve: curve ?? Curves.ease,
     );
   }
+
+  Rect get rect {
+    final box = findRenderObject() as RenderBox;
+    return box.paintBounds;
+  }
+
+  /// 获取相对矩形
+  ///
+  /// offset还不是很好用, 参考的PopupMenuButton, 但是效果不好
+  RelativeRect relativeRect([Offset offset = Offset.zero]) {
+    final self = findRenderObject()! as RenderBox;
+    final overlay = navigator.overlay!.context.findRenderObject()! as RenderBox;
+    return RelativeRect.fromRect(
+      Rect.fromPoints(
+        self.localToGlobal(offset, ancestor: overlay),
+        self.localToGlobal(
+          self.size.bottomRight(Offset.zero) + offset,
+          ancestor: overlay,
+        ),
+      ),
+      Offset.zero & overlay.size,
+    );
+  }
 }
