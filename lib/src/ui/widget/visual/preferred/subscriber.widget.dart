@@ -3,9 +3,8 @@ import 'dart:async';
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 
-typedef _Builder<DATA> = Widget Function(DATA data);
-typedef _ErrorPlaceholderBuilder = Widget Function(
-    BuildContext context, Object error);
+typedef _SubscriberBuilder<T> = Widget Function(T data, Widget? child);
+typedef _ErrorPlaceholderBuilder = Widget Function(BuildContext, Object);
 
 class SingleSubscriber<T> extends StatefulWidget {
   static Widget? _defaultEmptyPlaceholder;
@@ -37,13 +36,14 @@ class SingleSubscriber<T> extends StatefulWidget {
     this.width,
     this.height,
     this.decoration,
+    this.child,
   }) : super(key: key);
 
   /// 流
   final Future<T> future;
 
   /// widget builder
-  final _Builder<T> builder;
+  final _SubscriberBuilder<T> builder;
 
   /// 是否显示loading
   final bool showLoading;
@@ -76,6 +76,8 @@ class SingleSubscriber<T> extends StatefulWidget {
   final double? height;
 
   final Decoration? decoration;
+
+  final Widget? child;
 
   @override
   _SingleSubscriberState<T> createState() => _SingleSubscriberState<T>();
@@ -115,7 +117,7 @@ class _SingleSubscriberState<T> extends State<SingleSubscriber<T>> {
           } else {
             if (widget.cacheable) _cache = snapshot.data;
 
-            result ??= widget.builder(snapshot.data!);
+            result ??= widget.builder(snapshot.data!, widget.child);
           }
         } else if (widget.showLoading) {
           result ??= widget.loadingPlaceholder ??
@@ -172,13 +174,14 @@ class Subscriber<T> extends StatelessWidget {
     this.width,
     this.height,
     this.decoration,
+    this.child,
   }) : super(key: key);
 
   /// 流
   final Stream<T> stream;
 
   /// widget builder
-  final _Builder<T> builder;
+  final _SubscriberBuilder<T> builder;
 
   /// 是否显示loading
   final bool showLoading;
@@ -209,6 +212,9 @@ class Subscriber<T> extends StatelessWidget {
 
   final Decoration? decoration;
 
+  /// 可复用child
+  final Widget? child;
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<T>(
@@ -237,7 +243,7 @@ class Subscriber<T> extends StatelessWidget {
                 _defaultEmptyPlaceholder ??
                 const EmptyPlaceholder();
           } else {
-            result ??= builder(snapshot.data!);
+            result ??= builder(snapshot.data!, child);
           }
         } else if (showLoading) {
           result ??= loadingPlaceholder ??

@@ -18,7 +18,7 @@ class VisibilityBuilder extends StatelessWidget {
     return Subscriber<bool>(
       initialData: initialValue,
       stream: visibilityStream,
-      builder: (data) {
+      builder: (data, _) {
         return Visibility(visible: data, child: child);
       },
     );

@@ -27,7 +27,7 @@ class Delayed<T> extends StatelessWidget {
             child: const Center(child: CircularProgressIndicator()),
           ),
       future: Future.delayed(duration, () => 0),
-      builder: (_) => child,
+      builder: (_, __) => child,
     );
   }
 }
