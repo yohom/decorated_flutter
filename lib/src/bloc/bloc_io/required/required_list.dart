@@ -23,10 +23,10 @@ class ListInput<T> extends Input<List<T>> with ListMixin<T> {
           isDistinct: isDistinct,
           printLog: printLog,
           onReset: onReset,
+          isSame: isSame,
           persistentKey: persistentKey,
         ) {
     _forceCapacity = forceCapacity;
-    _isSame = isSame ?? listEquals;
   }
 
   static OptionalListInput<T> optional<T>({
@@ -38,6 +38,7 @@ class ListInput<T> extends Input<List<T>> with ListMixin<T> {
     bool isDistinct = false,
     bool printLog = true,
     List<T>? Function()? onReset,
+    bool Function(List<T>?, List<T>?)? isSame,
     String? persistentKey,
   }) {
     return OptionalListInput<T>(
@@ -49,6 +50,7 @@ class ListInput<T> extends Input<List<T>> with ListMixin<T> {
       printLog: printLog,
       isDistinct: isDistinct,
       onReset: onReset,
+      isSame: isSame,
       persistentKey: persistentKey,
     );
   }
@@ -212,6 +214,11 @@ mixin ListMixin<T> on BaseIO<List<T>> {
     if (_subject.isClosed) {
       L.w('IO在close状态下请求发送数据');
       return null;
+    }
+
+    if (elements.isEmpty) {
+      L.d('append空列表, 略过');
+      return latest;
     }
 
     if (fromHead) {

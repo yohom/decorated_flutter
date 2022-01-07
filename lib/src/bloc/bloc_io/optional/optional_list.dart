@@ -12,6 +12,7 @@ class OptionalListInput<T> extends Input<List<T>?> with OptionalListMixin<T> {
     bool isDistinct = false,
     int? forceCapacity,
     List<T>? Function()? onReset,
+    bool Function(List<T>?, List<T>?)? isSame,
     String? persistentKey,
   }) : super(
           seedValue: seedValue,
@@ -22,6 +23,7 @@ class OptionalListInput<T> extends Input<List<T>?> with OptionalListMixin<T> {
           isDistinct: isDistinct,
           printLog: printLog,
           onReset: onReset,
+          isSame: isSame ?? listEquals,
           persistentKey: persistentKey,
         ) {
     _forceCapacity = forceCapacity;
@@ -69,6 +71,7 @@ class OptionalListIO<T> extends IO<List<T>?> with OptionalListMixin {
     bool printLog = true,
     int? forceCapacity,
     _FetchCallback<List<T>, dynamic>? fetch,
+    bool Function(List<T>?, List<T>?)? isSame,
     List<T>? Function()? onReset,
     String? persistentKey,
   }) : super(
@@ -81,6 +84,7 @@ class OptionalListIO<T> extends IO<List<T>?> with OptionalListMixin {
           fetch: fetch,
           printLog: printLog,
           onReset: onReset,
+          isSame: isSame ?? listEquals,
           persistentKey: persistentKey,
         ) {
     _forceCapacity = forceCapacity;
@@ -147,6 +151,11 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
     if (_subject.isClosed) {
       L.w('IO在close状态下请求发送数据');
       return null;
+    }
+
+    if(elements.isEmpty) {
+      L.d('append空列表, 略过');
+      return latest;
     }
 
     // 如果没有设置原始数据, 那么就用空列表

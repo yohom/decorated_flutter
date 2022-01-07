@@ -92,11 +92,7 @@ class _SingleSubscriberState<T> extends State<SingleSubscriber<T>> {
       builder: (ctx, snapshot) {
         Widget? result;
         if (snapshot.hasError) {
-          if (snapshot.error is Error) {
-            L.e('SingleSubscriber出现错误: ${(snapshot.error as Error).stackTrace}');
-          } else {
-            L.e('SingleSubscriber出现错误: ${snapshot.error}');
-          }
+          L.e('Subscriber出现错误: ${snapshot.error}, 调用栈:\n ${snapshot.stackTrace}');
           if (widget.errorPlaceholderBuilder != null) {
             result ??=
                 widget.errorPlaceholderBuilder!(context, snapshot.error!);
@@ -217,11 +213,7 @@ class Subscriber<T> extends StatelessWidget {
       builder: (ctx, snapshot) {
         Widget? result;
         if (snapshot.hasError) {
-          if (snapshot.error is Error) {
-            L.e('Subscriber出现错误: ${(snapshot.error as Error).stackTrace}');
-          } else {
-            L.e('Subscriber出现错误: ${snapshot.error}');
-          }
+          L.e('Subscriber出现错误: ${snapshot.error}, 调用栈:\n ${snapshot.stackTrace}');
           if (errorPlaceholderBuilder != null) {
             result ??= errorPlaceholderBuilder!(context, snapshot.error!);
           } else {
