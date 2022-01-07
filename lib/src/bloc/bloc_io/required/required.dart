@@ -12,6 +12,7 @@ class Input<T> extends BaseIO<T> with InputMixin<T> {
     bool isDistinct = false,
     T Function()? onReset,
     String? persistentKey,
+    bool Function(T, T)? isSame,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -23,6 +24,7 @@ class Input<T> extends BaseIO<T> with InputMixin<T> {
         ) {
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
+    _isSame = isSame ?? (a, b) => a == b;
   }
 
   static OptionalInput<T> optional<T>({
