@@ -216,6 +216,11 @@ mixin ListMixin<T> on BaseIO<List<T>> {
       return null;
     }
 
+    if (elements.isEmpty) {
+      L.d('append空列表, 略过');
+      return latest;
+    }
+
     if (fromHead) {
       final List<T> pending = latest..insertAll(0, elements);
       // 从前面添加, 就把后面的挤出去

@@ -153,6 +153,11 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
       return null;
     }
 
+    if(elements.isEmpty) {
+      L.d('append空列表, 略过');
+      return latest;
+    }
+
     // 如果没有设置原始数据, 那么就用空列表
     latest ??= [];
 
