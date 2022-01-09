@@ -127,8 +127,8 @@ class IO<T> extends BaseIO<T> with InputMixin<T>, OutputMixin<T, dynamic> {
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
     if (isSame != null) _isSame = isSame;
-    _fetch = fetch ??
-        (_) => throw '[$semantics] 在未设置fetch回调时调用了update方法, 请检查逻辑是否正确!';
+    _fetch =
+        fetch ?? (_) => throw '[$semantics]在未设置fetch回调时调用了update方法, 请检查逻辑是否正确!';
   }
 
   static OptionalIO<T> optional<T>({
@@ -170,13 +170,13 @@ mixin InputMixin<T> on BaseIO<T> {
   /// 发射数据
   T? add(T data) {
     if (_subject.isClosed) {
-      L.w('$_semantics IO在close状态下请求发送数据');
+      L.w('[$_semantics]IO在close状态下请求发送数据');
       return null;
     }
 
     if (isEmpty(data) && !_acceptEmpty) {
       if (_printLog) {
-        L.w('转发被拒绝! 原因: 需要非Empty值, 但是接收到Empty值');
+        L.w('[$_semantics]转发被拒绝! 原因: 需要非Empty值, 但是接收到Empty值');
       }
       return data;
     }
@@ -186,15 +186,15 @@ mixin InputMixin<T> on BaseIO<T> {
       // 如果是不一样的数据, 才发射新的通知,防止TabBar的addListener那种
       // 不停地发送通知(但是值又是一样)的情况
       if (!_isSame(data, latest)) {
-        if (_printLog) L.d('IO转发出**$_semantics**数据: $data');
+        if (_printLog) L.d('IO转发出[$_semantics]数据: $data');
         _subject.add(data);
       } else {
         if (_printLog) {
-          L.w('转发被拒绝! 原因: 需要唯一, 但是新数据与最新值相同');
+          L.w('[$_semantics]转发被拒绝! 原因: 需要唯一, 但是新数据与最新值相同');
         }
       }
     } else {
-      if (_printLog) L.d('IO转发出**$_semantics**数据: $data');
+      if (_printLog) L.d('IO转发出[$_semantics]数据: $data');
       _subject.add(data);
     }
 
@@ -203,7 +203,7 @@ mixin InputMixin<T> on BaseIO<T> {
 
   T? addIfAbsent(T data) {
     if (_subject.isClosed) {
-      L.w('$_semantics IO在close状态下请求发送数据');
+      L.w('[$_semantics]IO在close状态下请求发送数据');
       return null;
     }
 
