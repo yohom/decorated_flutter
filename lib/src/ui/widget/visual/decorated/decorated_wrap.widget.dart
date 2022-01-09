@@ -4,7 +4,7 @@ class DecoratedWrap extends StatelessWidget {
   const DecoratedWrap({
     Key? key,
     this.direction = Axis.horizontal,
-    this.alignment = WrapAlignment.spaceBetween,
+    this.alignment = WrapAlignment.start,
     this.runAlignment = WrapAlignment.start,
     this.spacing = 0.0,
     this.runSpacing = 0.0,
