@@ -35,6 +35,14 @@ abstract class BLoC {
 abstract class RootBLoC extends BLoC {
   const RootBLoC(String semantics) : super(semantics);
 
+  @override
+  void init() {
+    super.init();
+    for (final item in disposeBag) {
+      item.init();
+    }
+  }
+
   @protected
   List<GlobalBLoC> get disposeBag => [];
 
