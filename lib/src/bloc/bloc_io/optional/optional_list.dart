@@ -153,7 +153,7 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
       return null;
     }
 
-    if(elements.isEmpty) {
+    if (elements.isEmpty && latest != null) {
       L.d('append空列表, 略过');
       return latest;
     }
