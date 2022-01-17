@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
 import 'log.dart';
 
@@ -95,4 +97,34 @@ DateTime logTime([String? tag]) {
 
 String toString(Object object) {
   return object.toString();
+}
+
+void runDecoratedApp(
+  Widget app, {
+  Future<void> Function()? beforeApp,
+  Future<void> Function()? afterApp,
+  Future<void> Function(Object, StackTrace)? onError,
+}) async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  if (beforeApp != null) {
+    try {
+      await beforeApp();
+    } catch (e, s) {
+      L.w('运行app前置工作出现异常, 请检查是否有bug!. $e\n $s');
+    }
+  }
+
+  runZonedGuarded<void>(
+    () => runApp(app),
+    (e, s) => onError?.call(e, s) ?? L.d('error: $e, stacktrace: $s'),
+  );
+
+  if (afterApp != null) {
+    try {
+      await afterApp();
+    } catch (e, s) {
+      L.w('运行app后置工作出现异常, 请检查是否有bug!. $e\n $s');
+    }
+  }
 }
