@@ -12,9 +12,20 @@ class LoadingWidget extends StatelessWidget {
     this.margin,
     this.color,
     this.backgroundColor,
-    this.sliver = false,
     this.material = false,
-  }) : super(key: key);
+  })  : sliver = false,
+        super(key: key);
+
+  const LoadingWidget.sliver({
+    Key? key,
+    this.height,
+    this.width,
+    this.margin,
+    this.color,
+    this.backgroundColor,
+    this.material = false,
+  })  : sliver = true,
+        super(key: key);
 
   final double? width;
   final double? height;
