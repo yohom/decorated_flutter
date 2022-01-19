@@ -164,7 +164,7 @@ class Subscriber<T> extends StatelessWidget {
     this.errorPlaceholderBuilder,
     this.loadingPlaceholder,
     this.handleEmpty = true,
-    @Deprecated('自行在参数中处理sliver') this.sliver = false,
+    this.sliver = false,
     this.width,
     this.height,
     this.decoration,
@@ -197,7 +197,6 @@ class Subscriber<T> extends StatelessWidget {
   final bool handleEmpty;
 
   /// 是否使用Sliver
-  @Deprecated('自行在参数中处理sliver')
   final bool sliver;
 
   /// 宽高
