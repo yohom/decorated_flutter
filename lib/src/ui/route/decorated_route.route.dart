@@ -21,6 +21,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
     this.systemUiOverlayStyle,
     this.animationBuilder,
     this.autoDispose = true,
+    this.decorationBuilder,
     required String routeName,
     bool fullscreenDialog = false,
     bool maintainState = true,
@@ -76,6 +77,9 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
 
   /// 是否自动dispose BLoC
   final bool autoDispose;
+
+  /// 自定义的样式
+  final BoxDecoration Function(BuildContext)? decorationBuilder;
 
   /// 是否已经初始化
   bool _inited = false;
@@ -139,6 +143,13 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
 
     if (onWillPop != null) {
       result = WillPopScope(child: result, onWillPop: onWillPop);
+    }
+
+    if (decorationBuilder != null) {
+      result = DecoratedBox(
+        decoration: decorationBuilder!.call(context),
+        child: result,
+      );
     }
 
     return Material(

@@ -86,6 +86,13 @@ extension FutureX<T> on Future<T> {
       return value;
     });
   }
+
+  /// 当前Future正常结束后执行pop
+  Future<void> thenPop({String? until}) {
+    return then((_) => until == null
+        ? gNavigatorKey.currentState?.pop()
+        : gNavigatorKey.currentState?.popUntil(ModalRoute.withName(until)));
+  }
 }
 
 extension StringFutureX on Future<String> {

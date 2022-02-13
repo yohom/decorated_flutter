@@ -76,9 +76,13 @@ abstract class BaseIO<T> {
     // 如果是BehaviorSubject, 则检查是否有持久化下来的数据, 有则发射
     if (isBehavior) {
       if (persistentKey != null) {
-        final value = _persistence?.readValue(persistentKey);
-
-        if (value != null) _subject.add(value);
+        try {
+          final value = _persistence?.readValue(persistentKey);
+          if (value != null) _subject.add(value);
+        } catch (e) {
+          L.w('读取持久层数据发生异常, 删除key: [$persistentKey]');
+          _persistence?.removeKey(persistentKey);
+        }
       }
     }
   }

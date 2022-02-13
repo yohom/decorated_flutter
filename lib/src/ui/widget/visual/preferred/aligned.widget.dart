@@ -30,6 +30,36 @@ class Start extends StatelessWidget {
   }
 }
 
+class Left extends StatelessWidget {
+  const Left({
+    Key? key,
+    required this.child,
+    this.widthFactor,
+    this.heightFactor,
+    this.padding,
+  }) : super(key: key);
+
+  final Widget child;
+  final double? widthFactor;
+  final double? heightFactor;
+  final EdgeInsets? padding;
+
+  @override
+  Widget build(BuildContext context) {
+    Widget result = Align(
+      alignment: Alignment.centerLeft,
+      widthFactor: widthFactor,
+      heightFactor: heightFactor,
+      child: child,
+    );
+
+    if (padding != null) {
+      result = Container(padding: padding, child: result);
+    }
+    return result;
+  }
+}
+
 class End extends StatelessWidget {
   const End({
     Key? key,
@@ -48,6 +78,36 @@ class End extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget result = Align(
       alignment: AlignmentDirectional.centerEnd,
+      widthFactor: widthFactor,
+      heightFactor: heightFactor,
+      child: child,
+    );
+
+    if (padding != null) {
+      result = Container(padding: padding, child: result);
+    }
+    return result;
+  }
+}
+
+class Right extends StatelessWidget {
+  const Right({
+    Key? key,
+    required this.child,
+    this.widthFactor,
+    this.heightFactor,
+    this.padding,
+  }) : super(key: key);
+
+  final Widget child;
+  final double? widthFactor;
+  final double? heightFactor;
+  final EdgeInsets? padding;
+
+  @override
+  Widget build(BuildContext context) {
+    Widget result = Align(
+      alignment: Alignment.centerRight,
       widthFactor: widthFactor,
       heightFactor: heightFactor,
       child: child,

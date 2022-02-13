@@ -8,12 +8,14 @@ class Countdown extends StatefulWidget {
     this.interval = const Duration(seconds: 1),
     required this.builder,
     this.onPressed,
+    this.onZero,
   }) : super(key: key);
 
   final int initialData;
   final Duration interval;
   final Widget Function(BuildContext, int) builder;
   final ContextCallback? onPressed;
+  final VoidCallback? onZero;
 
   @override
   _CountdownState createState() => _CountdownState();
@@ -37,6 +39,11 @@ class _CountdownState extends State<Countdown> {
       initialData: widget.initialData,
       stream: _countStream,
       builder: (context, snapshot) {
+        if (snapshot.requireData <= 0) {
+          WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+            widget.onZero?.call();
+          });
+        }
         return widget.builder(context, snapshot.data!);
       },
     );
