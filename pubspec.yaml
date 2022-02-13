@@ -30,7 +30,7 @@ dependencies:
   # android intent https://pub.flutter-io.cn/packages/android_intent_plus
   android_intent_plus: 3.1.0
   # svg https://pub.flutter-io.cn/packages/flutter_svg
-  flutter_svg: 1.0.0
+  flutter_svg: 1.0.3
   # sliver增强 https://pub.flutter-io.cn/packages/sliver_tools
   sliver_tools: 0.2.5
 
