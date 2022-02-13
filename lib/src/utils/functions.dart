@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/services.dart';
@@ -126,5 +127,15 @@ void runDecoratedApp(
     } catch (e, s) {
       L.w('运行app后置工作出现异常, 请检查是否有bug!. $e\n $s');
     }
+  }
+}
+
+/// 是否可以转换为json的
+bool isJsonable(Object? object) {
+  try {
+    jsonEncode(object);
+    return true;
+  } catch (_) {
+    return false;
   }
 }
