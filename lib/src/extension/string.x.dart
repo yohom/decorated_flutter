@@ -58,4 +58,16 @@ extension StringX on String {
   String remove(int index) {
     return substring(0, index) + substring(index + 1);
   }
+
+  /// 首字母大写
+  String capitalize() {
+    if (isEmpty) return this;
+    return '${this[0].toUpperCase()}${substring(1)}';
+  }
+
+  /// 首字母小写
+  String decapitalize() {
+    if (isEmpty) return this;
+    return '${this[0].toLowerCase()}${substring(1)}';
+  }
 }
