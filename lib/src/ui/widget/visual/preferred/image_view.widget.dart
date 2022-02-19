@@ -101,68 +101,6 @@ class ImageView extends StatelessWidget {
         ),
         super(key: key);
 
-  @Deprecated('使用ImageView.local代替')
-  const ImageView.asset(
-    this.imagePath, {
-    Key? key,
-    this.width,
-    this.height,
-    this.size,
-    this.cacheWidth,
-    this.cacheHeight,
-    this.cacheSize,
-    this.fit,
-    this.color,
-    this.padding,
-    this.margin,
-    this.darkImagePath,
-    this.autoDarkMode = false,
-    this.autoApplyKey = true,
-    this.decoration,
-    this.foregroundDecoration,
-    this.clipBehavior = Clip.hardEdge,
-    this.aspectRatio,
-  })  : imageUrl = null,
-        errorWidget = const SizedBox.shrink(),
-        placeholder = const SizedBox.shrink(),
-        assert(
-          (darkImagePath != null && autoDarkMode == false) ||
-              darkImagePath == null,
-          '不能同时设置darkImagePath和autoDarkMode',
-        ),
-        super(key: key);
-
-  @Deprecated('使用ImageView.remote代替')
-  const ImageView.network(
-    this.imageUrl, {
-    Key? key,
-    this.width,
-    this.height,
-    this.size,
-    this.cacheWidth,
-    this.cacheHeight,
-    this.cacheSize,
-    this.fit,
-    this.color,
-    this.errorWidget = const SizedBox.shrink(),
-    this.placeholder = const SizedBox.shrink(),
-    this.padding,
-    this.margin,
-    this.darkImagePath,
-    this.autoDarkMode = false,
-    this.autoApplyKey = true,
-    this.decoration,
-    this.foregroundDecoration,
-    this.clipBehavior = Clip.hardEdge,
-    this.aspectRatio,
-  })  : imagePath = null,
-        assert(
-          (darkImagePath != null && autoDarkMode == false) ||
-              darkImagePath == null,
-          '不能同时设置darkImagePath和autoDarkMode',
-        ),
-        super(key: key);
-
   /// 本地图片路径
   final String? imagePath;
 
