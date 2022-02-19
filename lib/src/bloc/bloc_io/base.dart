@@ -80,7 +80,7 @@ abstract class BaseIO<T> {
           final value = _persistence?.readValue(persistentKey);
           if (value != null) _subject.add(value);
         } catch (e) {
-          L.w('读取持久层数据发生异常, 删除key: [$persistentKey]');
+          L.w('读取持久层数据发生异常 $e, 删除key: [$persistentKey]');
           _persistence?.removeKey(persistentKey);
         }
       }
