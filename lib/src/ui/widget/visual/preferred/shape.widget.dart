@@ -76,6 +76,8 @@ class Line extends StatelessWidget {
     this.width = double.infinity,
     this.height = 1,
     this.color,
+    this.borderRadius,
+    this.centered,
     this.padding = EdgeInsets.zero,
     this.margin = const EdgeInsets.symmetric(vertical: 8),
   }) : super(key: key);
@@ -83,15 +85,26 @@ class Line extends StatelessWidget {
   final double width, height;
   final Color? color;
   final EdgeInsets padding, margin;
+  final BorderRadius? borderRadius;
+  final bool? centered;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    Widget result = Container(
       width: width,
       height: height,
       padding: padding,
       margin: margin,
-      decoration: BoxDecoration(color: color ?? Colors.grey.shade200),
+      decoration: BoxDecoration(
+        color: color ?? Colors.grey.shade200,
+        borderRadius: borderRadius,
+      ),
     );
+
+    if (centered == true) {
+      result = Center(child: result);
+    }
+
+    return result;
   }
 }
