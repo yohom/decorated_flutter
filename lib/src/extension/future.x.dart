@@ -5,6 +5,8 @@ import 'package:decorated_flutter/src/utils/objects.dart';
 import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:flutter/material.dart';
 
+import 'navigator.x.dart';
+
 typedef LoadingBuilder = Widget Function(
     BuildContext context, String loadingText);
 
@@ -92,6 +94,11 @@ extension FutureX<T> on Future<T> {
     return then((_) => until == null
         ? gNavigatorKey.currentState?.pop()
         : gNavigatorKey.currentState?.popUntil(ModalRoute.withName(until)));
+  }
+
+  /// 当前Future正常结束后执行pop
+  Future<void> thenPopToRoot() {
+    return then((_) => gNavigatorKey.currentState?.clearToRoot());
   }
 }
 
