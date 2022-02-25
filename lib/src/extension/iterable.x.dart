@@ -24,11 +24,18 @@ extension IterableX<T> on Iterable<T> {
     for (final item in this) {
       if (until(item)) return item;
     }
+    return null;
   }
 }
 
 extension NullableIterableX<T> on Iterable<T?>? {
   List<T> whereNotNull() => (this ?? []).where(notNull).cast<T>().toList();
+}
+
+extension NumIterableX on Iterable<num> {
+  num sum() {
+    return reduce((value, element) => value + element);
+  }
 }
 
 extension ListX<T> on List<T> {
