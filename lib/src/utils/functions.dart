@@ -139,3 +139,18 @@ bool isJsonable(Object? object) {
     return false;
   }
 }
+
+/// 强制解析出一个日期
+///
+/// 如果解析出错, 就根据[fallback]逻辑构造一个代替时间
+DateTime requireDate(
+  String? dateString, {
+  DateTime Function()? fallback,
+}) {
+  try {
+    return DateTime.parse(dateString!);
+  } catch (e) {
+    L.w('解析日期出错, 使用当前时间代替, 错误信息: $e');
+    return fallback?.call() ?? DateTime.now();
+  }
+}
