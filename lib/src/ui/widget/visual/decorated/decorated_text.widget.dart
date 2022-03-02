@@ -16,7 +16,7 @@ class DecoratedText extends StatelessWidget {
     this.onPressed,
     this.maxLines,
     this.textAlign,
-    this.overflow,
+    this.overflow = TextOverflow.ellipsis,
     this.constraints,
     this.expanded = false,
     this.visible,
@@ -53,7 +53,7 @@ class DecoratedText extends StatelessWidget {
   final ContextCallback? onPressed;
   final int? maxLines;
   final TextAlign? textAlign;
-  final TextOverflow? overflow;
+  final TextOverflow overflow;
   final BoxConstraints? constraints;
   final bool expanded;
   final double? width;

@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 
 typedef _Builder<DATA> = Widget Function(DATA data);
 typedef _ErrorPlaceholderBuilder = Widget Function(
-    BuildContext context, Object error);
+  BuildContext context,
+  Object error,
+);
 
 class SingleSubscriber<T> extends StatefulWidget {
   static Widget? _defaultEmptyPlaceholder;
