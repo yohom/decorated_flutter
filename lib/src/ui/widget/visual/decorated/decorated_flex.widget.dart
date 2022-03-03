@@ -1,5 +1,6 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class DecoratedRow extends DecoratedFlex {
   const DecoratedRow({
@@ -51,6 +52,7 @@ class DecoratedRow extends DecoratedFlex {
     VerticalDirection? verticalDirection,
     Clip clipBehavior = Clip.none,
     Color? iconColor,
+    SystemUiOverlayStyle? systemOverlayStyle,
     List<Widget> children = const [],
   }) : super(
           key: key,
@@ -102,6 +104,7 @@ class DecoratedRow extends DecoratedFlex {
           verticalDirection: verticalDirection,
           clipBehavior: clipBehavior,
           iconColor: iconColor,
+          systemOverlayStyle: systemOverlayStyle,
           children: children,
         );
 }
@@ -156,6 +159,7 @@ class DecoratedColumn extends DecoratedFlex {
     VerticalDirection? verticalDirection,
     Clip clipBehavior = Clip.none,
     Color? iconColor,
+    SystemUiOverlayStyle? systemOverlayStyle,
     List<Widget> children = const [],
   }) : super(
           key: key,
@@ -207,6 +211,7 @@ class DecoratedColumn extends DecoratedFlex {
           verticalDirection: verticalDirection,
           clipBehavior: clipBehavior,
           iconColor: iconColor,
+          systemOverlayStyle: systemOverlayStyle,
           children: children,
         );
 }
@@ -262,6 +267,7 @@ class DecoratedFlex extends StatelessWidget {
     this.verticalDirection,
     this.clipBehavior = Clip.none,
     this.iconColor,
+    this.systemOverlayStyle,
     this.children = const [],
   }) : super(key: key);
 
@@ -372,6 +378,8 @@ class DecoratedFlex extends StatelessWidget {
   final Clip clipBehavior;
 
   final Color? iconColor;
+
+  final SystemUiOverlayStyle? systemOverlayStyle;
 
   /// 子元素
   final List<Widget> children;
