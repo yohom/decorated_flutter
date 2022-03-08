@@ -16,7 +16,7 @@ class DecoratedText extends StatelessWidget {
     this.onPressed,
     this.maxLines,
     this.textAlign,
-    this.overflow,
+    this.overflow, // 默认TextOverflow.ellipsis时, 会只有一行文字+省略号
     this.constraints,
     this.expanded = false,
     this.visible,
