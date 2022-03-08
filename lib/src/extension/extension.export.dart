@@ -10,6 +10,7 @@ export 'material_state_property.x.dart';
 export 'navigator.x.dart';
 export 'num.x.dart';
 export 'route_settings.x.dart';
+export 'scroll_controller.x.dart';
 export 'stream.x.dart';
 export 'string.x.dart';
 export 'tab_controller.x.dart';
