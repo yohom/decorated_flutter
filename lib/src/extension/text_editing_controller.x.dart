@@ -1,8 +1,14 @@
+import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 extension TextEditingControllerX on TextEditingController {
-  void append(String appending) {
+  void append(String appending, {bool distinct = false}) {
+    if (distinct && text.endsWith(appending)) {
+      L.d('要求不重复添加, 直接返回');
+      return;
+    }
+
     final beforeString = text.substring(0, selection.start);
     final afterString = text.substring(selection.end);
 
