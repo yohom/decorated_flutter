@@ -52,6 +52,10 @@ extension BuildContextX on BuildContext {
     return MediaQuery.of(this).viewPadding;
   }
 
+  EdgeInsets get viewInsets {
+    return MediaQuery.of(this).viewInsets;
+  }
+
   Size get size {
     return MediaQuery.of(this).size;
   }
