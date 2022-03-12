@@ -9,12 +9,18 @@ extension TextEditingControllerX on TextEditingController {
       return;
     }
 
-    final beforeString = text.substring(0, selection.start);
-    final afterString = text.substring(selection.end);
+    if (selection.isValid) {
+      final beforeString = text.substring(0, selection.start);
+      final afterString = text.substring(selection.end);
 
-    text = beforeString + appending + afterString;
-    selection =
-        TextSelection.collapsed(offset: (beforeString + appending).length);
+      text = beforeString + appending + afterString;
+      selection =
+          TextSelection.collapsed(offset: (beforeString + appending).length);
+    } else {
+      // 如果没在文字内部, 就直接加到最后
+      text += appending;
+      selection = TextSelection.collapsed(offset: text.length);
+    }
   }
 
   void backspace() {
