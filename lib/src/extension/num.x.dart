@@ -4,6 +4,17 @@ extension DoubleX on double {
   double asFixed(int fractionDigits) {
     return double.parse(toStringAsFixed(fractionDigits));
   }
+
+  double normalized(
+    double selfRangeMin,
+    double selfRangeMax, [
+    double normalizedRangeMin = 0.0,
+    double normalizedRangeMax = 1.0,
+  ]) {
+    return (normalizedRangeMax - normalizedRangeMin) *
+            ((this - selfRangeMin) / (selfRangeMax - selfRangeMin)) +
+        normalizedRangeMin;
+  }
 }
 
 extension IntX on int {
@@ -12,6 +23,16 @@ extension IntX on int {
     final dateTime = DateTime.fromMillisecondsSinceEpoch(this);
     return DateFormat(format).format(dateTime);
   }
+
+  Duration get milliseconds => Duration(milliseconds: this);
+
+  Duration get seconds => Duration(seconds: this);
+
+  Duration get minutes => Duration(minutes: this);
+
+  Duration get hours => Duration(hours: this);
+
+  Duration get days => Duration(days: this);
 
   /// 左补齐
   String padLeft(int width, [String padding = '']) {
