@@ -145,11 +145,12 @@ abstract class BaseIO<T> {
   void reset() {
     if (_subject.isClosed) return;
 
+    final _resetValue = _onReset != null ? _onReset!() : _seedValue;
+
     if (_printLog) {
-      L.d('$_semantics事件 重置 ');
+      L.d('[$_semantics]事件 重置为 $_resetValue');
     }
 
-    final _resetValue = _onReset != null ? _onReset!() : _seedValue;
     _subject.add(_resetValue);
 
     if (_persistentKey != null) {
