@@ -12,6 +12,12 @@ extension IterableX<T> on Iterable<T> {
     }
   }
 
+  T? operator [](int index) => length > index ? elementAt(index) : null;
+
+  Iterable<T> operator +(T other) => followedBy([other]);
+
+  Iterable<T> operator -(T other) => where((element) => element != other);
+
   Map<S, List<T>> groupBy<S>(S Function(T) key) {
     var map = <S, List<T>>{};
     for (var element in this) {

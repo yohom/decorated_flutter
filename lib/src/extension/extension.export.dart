@@ -9,6 +9,7 @@ export 'map.x.dart';
 export 'material_state_property.x.dart';
 export 'navigator.x.dart';
 export 'num.x.dart';
+export 'object.x.dart';
 export 'route_settings.x.dart';
 export 'scroll_controller.x.dart';
 export 'stream.x.dart';

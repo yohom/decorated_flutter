@@ -191,15 +191,18 @@ mixin ListMixin<T> on BaseIO<List<T>> {
       return null;
     }
 
+    // 需要拷贝一份, 防止影响原始数据, 比如说改变了_seedValue的内容
+    final copied = List.of(latest);
+
     if (fromHead) {
-      final List<T> pending = latest..insert(0, element);
+      final List<T> pending = copied..insert(0, element);
       // 从前面添加, 就把后面的挤出去
       if (_forceCapacity != null && pending.length > _forceCapacity!) {
         pending.removeLast();
       }
       _subject.add(pending);
     } else {
-      final List<T> pending = latest..add(element);
+      final List<T> pending = copied..add(element);
       // 从后面添加, 就把前面的挤出去
       if (_forceCapacity != null && pending.length > _forceCapacity!) {
         pending.removeAt(0);
@@ -221,15 +224,18 @@ mixin ListMixin<T> on BaseIO<List<T>> {
       return latest;
     }
 
+    // 需要拷贝一份, 防止影响原始数据, 比如说改变了_seedValue的内容
+    final copied = List.of(latest);
+
     if (fromHead) {
-      final List<T> pending = latest..insertAll(0, elements);
+      final List<T> pending = copied..insertAll(0, elements);
       // 从前面添加, 就把后面的挤出去
       if (_forceCapacity != null && pending.length > _forceCapacity!) {
         pending.removeRange(_forceCapacity! - 1, pending.length);
       }
       _subject.add(pending);
     } else {
-      final List<T> pending = latest..addAll(elements);
+      final List<T> pending = copied..addAll(elements);
       // 从后面添加, 就把前面的挤出去
       if (_forceCapacity != null && pending.length > _forceCapacity!) {
         pending.removeRange(0, _forceCapacity!);
@@ -251,7 +257,10 @@ mixin ListMixin<T> on BaseIO<List<T>> {
       return null;
     }
 
-    _subject.add(latest..[index] = element);
+    // 需要拷贝一份, 防止影响原始数据, 比如说改变了_seedValue的内容
+    final copied = List.of(latest);
+
+    _subject.add(copied..[index] = element);
     return element;
   }
 
@@ -262,11 +271,13 @@ mixin ListMixin<T> on BaseIO<List<T>> {
       return null;
     }
 
+    final copied = List.of(latest);
+
     if (latest.isNotEmpty) {
-      _subject.add(latest
+      _subject.add(copied
         ..replaceRange(
-          latest.length - 1,
-          latest.length,
+          copied.length - 1,
+          copied.length,
           [element],
         ));
     }
@@ -281,7 +292,8 @@ mixin ListMixin<T> on BaseIO<List<T>> {
     }
 
     if (latest.isNotEmpty) {
-      _subject.add(latest..replaceRange(0, 1, [element]));
+      final copied = List.of(latest);
+      _subject.add(copied..replaceRange(0, 1, [element]));
     }
     return element;
   }
@@ -293,9 +305,11 @@ mixin ListMixin<T> on BaseIO<List<T>> {
       return null;
     }
 
-    final T lastElement = latest.last;
+    final copied = List.of(latest);
+
+    final T lastElement = copied.last;
     if (latest.isNotEmpty) {
-      _subject.add(latest..removeLast());
+      _subject.add(copied..removeLast());
     }
     return lastElement;
   }
@@ -307,7 +321,8 @@ mixin ListMixin<T> on BaseIO<List<T>> {
       return null;
     }
 
-    _subject.add(latest..remove(element));
+    final copied = List.of(latest);
+    _subject.add(copied..remove(element));
     return element;
   }
 
@@ -318,7 +333,8 @@ mixin ListMixin<T> on BaseIO<List<T>> {
       return null;
     }
 
-    _subject.add(latest..removeWhere((it) => elements.contains(it)));
+    final copied = List.of(latest);
+    _subject.add(copied..removeWhere((it) => elements.contains(it)));
     return elements;
   }
 
@@ -326,7 +342,8 @@ mixin ListMixin<T> on BaseIO<List<T>> {
   void removeWhere(bool Function(T t) test) {
     if (_subject.isClosed) return;
 
-    _subject.add(latest..removeWhere(test));
+    final copied = List.of(latest);
+    _subject.add(copied..removeWhere(test));
   }
 
   /// 删除第一个的元素, 并发射
@@ -336,9 +353,11 @@ mixin ListMixin<T> on BaseIO<List<T>> {
       return null;
     }
 
-    final T firstElement = latest.first;
+    final copied = List.of(latest);
+
+    final T firstElement = copied.first;
     if (latest.isNotEmpty) {
-      _subject.add(latest..removeAt(0));
+      _subject.add(copied..removeAt(0));
     }
     return firstElement;
   }
@@ -350,9 +369,11 @@ mixin ListMixin<T> on BaseIO<List<T>> {
       return null;
     }
 
-    final T element = latest.elementAt(index);
+    final copied = List.of(latest);
+
+    final T element = copied.elementAt(index);
     if (element != null) {
-      _subject.add(latest..removeAt(index));
+      _subject.add(copied..removeAt(index));
     }
     return element;
   }
@@ -363,9 +384,10 @@ mixin ListMixin<T> on BaseIO<List<T>> {
       L.w('IO在close状态下请求发送数据');
       return null;
     }
+    final copied = List.of(latest);
 
-    latest.forEach(action);
-    _subject.add(latest);
+    copied.forEach(action);
+    _subject.add(copied);
     return latest;
   }
 

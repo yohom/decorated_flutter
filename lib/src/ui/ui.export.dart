@@ -3,6 +3,7 @@ export 'animation/show_up.transition.dart';
 export 'dialog/date.dialog.dart';
 export 'dialog/popup_window.dialog.dart';
 export 'misc/bouncing_scroll_behavior.dart';
+export 'misc/emoji_text_span.dart';
 export 'misc/grid_delegate.dart';
 export 'route/custom_material.route.dart';
 export 'route/decorated_route.route.dart';
