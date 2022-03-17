@@ -35,6 +35,7 @@ class DecoratedText extends StatelessWidget {
     this.behavior,
     this.textExpanded = false,
     this.textFlexible = false,
+    this.alignment,
   }) : super(key: key);
 
   /// 内边距
@@ -59,6 +60,7 @@ class DecoratedText extends StatelessWidget {
   final double? width;
   final double? height;
   final bool? visible;
+  @Deprecated('使用alignment代替')
   final bool? center;
   final bool? sliver;
   final Matrix4? transform;
@@ -72,6 +74,7 @@ class DecoratedText extends StatelessWidget {
   final HitTestBehavior? behavior;
   final bool textExpanded;
   final bool textFlexible;
+  final Alignment? alignment;
 
   @override
   Widget build(BuildContext context) {
@@ -103,10 +106,6 @@ class DecoratedText extends StatelessWidget {
       );
     }
 
-    if (center == true) {
-      result = Center(child: result);
-    }
-
     if (width != null ||
         height != null ||
         decoration != null ||
@@ -114,7 +113,9 @@ class DecoratedText extends StatelessWidget {
         margin != null ||
         padding != null ||
         constraints != null ||
-        transform != null) {
+        transform != null ||
+        alignment != null ||
+        center != null) {
       result = Container(
         width: width,
         height: height,
@@ -124,6 +125,7 @@ class DecoratedText extends StatelessWidget {
         foregroundDecoration: foregroundDecoration,
         constraints: constraints,
         transform: transform,
+        alignment: alignment ?? (center == true ? Alignment.center : null),
         child: result,
       );
     }
