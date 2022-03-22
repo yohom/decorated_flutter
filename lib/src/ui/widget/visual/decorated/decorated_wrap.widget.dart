@@ -15,6 +15,7 @@ class DecoratedWrap extends StatelessWidget {
     this.padding,
     this.margin,
     this.expanded,
+    this.textStyle,
     required this.crossAxisCount,
     required this.children,
   }) : super(key: key);
@@ -31,6 +32,7 @@ class DecoratedWrap extends StatelessWidget {
   final EdgeInsets? padding;
   final EdgeInsets? margin;
   final bool? expanded;
+  final TextStyle? textStyle;
   final Clip clipBehavior;
   final List<Widget> children;
 
@@ -64,6 +66,13 @@ class DecoratedWrap extends StatelessWidget {
       result = Container(
         padding: padding,
         margin: margin,
+        child: result,
+      );
+    }
+
+    if (textStyle != null) {
+      result = DefaultTextStyle(
+        style: textStyle!,
         child: result,
       );
     }

@@ -8,6 +8,9 @@ class DecoratedList extends StatelessWidget {
     this.itemBuilder,
     this.itemCount,
     this.children,
+    this.scrollDirection,
+    this.width,
+    this.height,
     this.addAutomaticKeepAlives = true,
     this.addRepaintBoundaries = true,
     this.addSemanticIndexes = true,
@@ -22,6 +25,8 @@ class DecoratedList extends StatelessWidget {
     this.itemBuilder,
     this.itemCount,
     this.children,
+    this.width,
+    this.height,
     this.addAutomaticKeepAlives = true,
     this.addRepaintBoundaries = true,
     this.addSemanticIndexes = true,
@@ -29,6 +34,7 @@ class DecoratedList extends StatelessWidget {
     this.prototypeItem,
   })  : _sliver = true,
         shrinkWrap = false,
+        scrollDirection = null,
         super(key: key);
 
   final bool _sliver;
@@ -36,16 +42,22 @@ class DecoratedList extends StatelessWidget {
   final bool shrinkWrap;
   final IndexedWidgetBuilder? itemBuilder;
   final int? itemCount;
+  final Axis? scrollDirection;
   final List<Widget>? children;
-  final bool addAutomaticKeepAlives;
-  final bool addRepaintBoundaries;
-  final bool addSemanticIndexes;
+  final double? width, height;
+  final bool addAutomaticKeepAlives, addRepaintBoundaries, addSemanticIndexes;
   final double? itemExtent;
   final Widget? prototypeItem;
 
   @override
   Widget build(BuildContext context) {
-    return _sliver ? _sliverList() : _boxList();
+    Widget result = _sliver ? _sliverList() : _boxList();
+
+    if (width != null || height != null) {
+      result = SizedBox(width: width, height: height, child: result);
+    }
+
+    return result;
   }
 
   Widget _sliverList() {
@@ -94,6 +106,7 @@ class DecoratedList extends StatelessWidget {
         children: children!,
         shrinkWrap: shrinkWrap,
         itemExtent: itemExtent,
+        scrollDirection: scrollDirection ?? Axis.vertical,
         prototypeItem: prototypeItem,
         addAutomaticKeepAlives: addAutomaticKeepAlives,
         addRepaintBoundaries: addRepaintBoundaries,
@@ -105,6 +118,7 @@ class DecoratedList extends StatelessWidget {
         itemBuilder: itemBuilder!,
         itemCount: itemCount,
         shrinkWrap: shrinkWrap,
+        scrollDirection: scrollDirection ?? Axis.vertical,
         itemExtent: itemExtent,
         prototypeItem: prototypeItem,
         addAutomaticKeepAlives: addAutomaticKeepAlives,
