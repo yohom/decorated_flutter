@@ -39,6 +39,7 @@ export 'widget/visual/preferred/runtime_scaffold.widget.dart';
 export 'widget/visual/preferred/shape.widget.dart';
 export 'widget/visual/preferred/subscriber.widget.dart';
 export 'widget/visual/preferred/toggleable.widget.dart';
+export 'widget/visual/preferred/vertical_button.widget.dart';
 export 'widget/visual/preferred/visibility_builder.widget.dart';
 export 'widget/visual/special_affect/animated_number.widget.dart';
 export 'widget/visual/special_affect/blur.widget.dart';
