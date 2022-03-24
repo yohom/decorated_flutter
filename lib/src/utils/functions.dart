@@ -105,8 +105,15 @@ void runDecoratedApp(
   Future<void> Function()? beforeApp,
   Future<void> Function()? afterApp,
   Future<void> Function(Object, StackTrace)? onError,
+  Color? statusBarColor,
 }) async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  if (statusBarColor != null) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle.dark.copyWith(statusBarColor: statusBarColor),
+    );
+  }
 
   if (beforeApp != null) {
     try {

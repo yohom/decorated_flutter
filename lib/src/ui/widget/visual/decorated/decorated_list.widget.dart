@@ -16,6 +16,7 @@ class DecoratedList extends StatelessWidget {
     this.addSemanticIndexes = true,
     this.itemExtent,
     this.prototypeItem,
+    this.controller,
   })  : _sliver = false,
         super(key: key);
 
@@ -35,6 +36,7 @@ class DecoratedList extends StatelessWidget {
   })  : _sliver = true,
         shrinkWrap = false,
         scrollDirection = null,
+        controller = null,
         super(key: key);
 
   final bool _sliver;
@@ -48,6 +50,7 @@ class DecoratedList extends StatelessWidget {
   final bool addAutomaticKeepAlives, addRepaintBoundaries, addSemanticIndexes;
   final double? itemExtent;
   final Widget? prototypeItem;
+  final ScrollController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -104,6 +107,7 @@ class DecoratedList extends StatelessWidget {
       result = ListView(
         padding: padding,
         children: children!,
+        controller: controller,
         shrinkWrap: shrinkWrap,
         itemExtent: itemExtent,
         scrollDirection: scrollDirection ?? Axis.vertical,
@@ -118,6 +122,7 @@ class DecoratedList extends StatelessWidget {
         itemBuilder: itemBuilder!,
         itemCount: itemCount,
         shrinkWrap: shrinkWrap,
+        controller: controller,
         scrollDirection: scrollDirection ?? Axis.vertical,
         itemExtent: itemExtent,
         prototypeItem: prototypeItem,

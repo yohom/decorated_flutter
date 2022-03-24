@@ -19,6 +19,8 @@ class DecoratedStack extends StatelessWidget {
     this.safeArea,
     this.onPressed,
     this.onLongPressed,
+    this.onDoubleTap,
+    this.onDoubleTapDown,
     this.onVerticalDragEnd,
     this.onHorizontalDragEnd,
     this.behavior,
@@ -62,6 +64,8 @@ class DecoratedStack extends StatelessWidget {
   final SafeAreaConfig? safeArea;
 
   final ContextCallback? onPressed;
+  final ContextCallback? onDoubleTap;
+  final ContextValueChanged? onDoubleTapDown;
   final ContextCallback? onLongPressed;
   final GestureDragEndCallback? onVerticalDragEnd;
   final GestureDragEndCallback? onHorizontalDragEnd;
@@ -175,11 +179,16 @@ class DecoratedStack extends StatelessWidget {
     }
 
     if (onPressed != null ||
+        onDoubleTap != null ||
         onLongPressed != null ||
         onVerticalDragEnd != null ||
         onHorizontalDragEnd != null) {
       result = GestureDetector(
         behavior: behavior,
+        onDoubleTapDown: onDoubleTapDown == null
+            ? null
+            : (details) => onDoubleTapDown!(context, details),
+        onDoubleTap: onDoubleTap == null ? null : () => onDoubleTap!(context),
         onTap: onPressed == null ? null : () => onPressed!(context),
         onLongPress:
             onLongPressed == null ? null : () => onLongPressed!(context),
