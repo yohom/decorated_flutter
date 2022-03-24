@@ -65,7 +65,7 @@ class DecoratedStack extends StatelessWidget {
 
   final ContextCallback? onPressed;
   final ContextCallback? onDoubleTap;
-  final ContextValueChanged? onDoubleTapDown;
+  final ContextValueChanged<TapDownDetails>? onDoubleTapDown;
   final ContextCallback? onLongPressed;
   final GestureDragEndCallback? onVerticalDragEnd;
   final GestureDragEndCallback? onHorizontalDragEnd;
@@ -180,6 +180,7 @@ class DecoratedStack extends StatelessWidget {
 
     if (onPressed != null ||
         onDoubleTap != null ||
+        onDoubleTapDown != null ||
         onLongPressed != null ||
         onVerticalDragEnd != null ||
         onHorizontalDragEnd != null) {
