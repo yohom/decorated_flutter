@@ -14,3 +14,4 @@ export 'src/model/model.export.dart';
 export 'src/res/res.export.dart';
 export 'src/ui/ui.export.dart';
 export 'src/utils/utils.export.dart';
+export 'src/experimental/experimental.export.dart';

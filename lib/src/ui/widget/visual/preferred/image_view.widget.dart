@@ -19,7 +19,7 @@ class ImageView extends StatelessWidget {
     this.cacheWidth,
     this.cacheHeight,
     this.cacheSize,
-    this.fit,
+    this.fit = BoxFit.cover,
     this.color,
     this.padding,
     this.margin,
