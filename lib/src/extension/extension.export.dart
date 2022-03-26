@@ -19,3 +19,4 @@ export 'tab_controller.x.dart';
 export 'text.x.dart';
 export 'text_editing_controller.x.dart';
 export 'widget.x.dart';
+export 'page_controller.x.dart';
