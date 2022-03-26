@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 class ThumbnailImage extends StatelessWidget {
   final String videoUrl;
@@ -268,18 +268,20 @@ class ThumbnailImage extends StatelessWidget {
 }
 
 class VideoThumbnail {
+  static final _dio = Dio();
+
   static Future<Uint8List> getBytes(String videoUrl) async {
     String input = '{"videoUrl" : "$videoUrl"}';
     String url =
         "https://video-thumbnail-generator-pub.herokuapp.com/generate/thumbnail";
     try {
-      http.Response response = await http.post(
-        Uri.parse(url),
-        headers: {"Content-type": "application/json"},
-        body: input,
+      Response response = await _dio.post(
+        url,
+        options: Options(headers: {"Content-type": "application/json"}),
+        data: input,
       );
       if (response.statusCode == 200) {
-        var data = response.body;
+        var data = response.data;
         return base64Decode(data);
       } else {
         throw 'Could not fetch data from api | Error Code: ${response.statusCode}';
