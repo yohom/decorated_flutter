@@ -10,6 +10,7 @@ class VerticalButton extends StatelessWidget {
     this.onLongPressed,
     this.spacing = 8,
     this.width,
+    this.mainAxisAlignment = MainAxisAlignment.start,
   }) : super(key: key);
 
   final Widget icon;
@@ -18,6 +19,7 @@ class VerticalButton extends StatelessWidget {
   final ContextCallback onPressed;
   final ContextCallback? onLongPressed;
   final double? width;
+  final MainAxisAlignment mainAxisAlignment;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class VerticalButton extends StatelessWidget {
       onPressed: onPressed,
       onLongPressed: onLongPressed,
       itemSpacing: spacing,
+      mainAxisAlignment: mainAxisAlignment,
       children: [
         icon,
         DefaultTextStyle(
