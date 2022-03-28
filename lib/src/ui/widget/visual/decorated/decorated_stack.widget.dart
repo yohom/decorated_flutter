@@ -29,14 +29,14 @@ class DecoratedStack extends StatelessWidget {
     this.expanded = false,
     this.stackFit,
     this.alignment,
-    this.topStart,
-    this.topEnd,
-    this.bottomStart,
-    this.bottomEnd,
+    this.topLeft,
+    this.topRight,
+    this.bottomLeft,
+    this.bottomRight,
     this.top,
     this.bottom,
-    this.start,
-    this.end,
+    this.left,
+    this.right,
     this.center,
     this.sliver = false,
     this.aspectRatio,
@@ -75,14 +75,14 @@ class DecoratedStack extends StatelessWidget {
 
   final bool expanded;
 
-  final Widget? topStart;
-  final Widget? topEnd;
-  final Widget? bottomStart;
-  final Widget? bottomEnd;
+  final Widget? topLeft;
+  final Widget? topRight;
+  final Widget? bottomLeft;
+  final Widget? bottomRight;
   final Widget? top;
   final Widget? bottom;
-  final Widget? start;
-  final Widget? end;
+  final Widget? left;
+  final Widget? right;
   final Widget? center;
 
   final StackFit? stackFit;
@@ -106,18 +106,18 @@ class DecoratedStack extends StatelessWidget {
       clipBehavior: clipBehavior,
       children: <Widget>[
         if (childrenZIndex == ZIndex.bottom) ...children,
-        if (topStart != null) Positioned(top: 0, left: 0, child: topStart!),
-        if (topEnd != null) Positioned(top: 0, right: 0, child: topEnd!),
-        if (bottomStart != null)
-          Positioned(bottom: 0, left: 0, child: bottomStart!),
-        if (bottomEnd != null)
-          Positioned(bottom: 0, right: 0, child: bottomEnd!),
+        if (topLeft != null) Positioned(top: 0, left: 0, child: topLeft!),
+        if (topRight != null) Positioned(top: 0, right: 0, child: topRight!),
+        if (bottomLeft != null)
+          Positioned(bottom: 0, left: 0, child: bottomLeft!),
+        if (bottomRight != null)
+          Positioned(bottom: 0, right: 0, child: bottomRight!),
         if (top != null) Positioned(top: 0, left: 0, right: 0, child: top!),
         if (bottom != null)
           Positioned(bottom: 0, right: 0, left: 0, child: bottom!),
-        if (start != null)
-          Positioned(bottom: 0, top: 0, left: 0, child: start!),
-        if (end != null) Positioned(bottom: 0, top: 0, right: 0, child: end!),
+        if (left != null) Positioned(bottom: 0, top: 0, left: 0, child: left!),
+        if (right != null)
+          Positioned(bottom: 0, top: 0, right: 0, child: right!),
         if (center != null)
           Positioned(bottom: 0, right: 0, top: 0, left: 0, child: center!),
         if (childrenZIndex == ZIndex.top) ...children,
