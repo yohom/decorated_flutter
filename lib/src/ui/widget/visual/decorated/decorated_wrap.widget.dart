@@ -16,11 +16,11 @@ class DecoratedWrap extends StatelessWidget {
     this.margin,
     this.expanded,
     this.textStyle,
-    required this.crossAxisCount,
+    this.crossAxisCount,
     required this.children,
   }) : super(key: key);
 
-  final int crossAxisCount;
+  final int? crossAxisCount;
   final Axis direction;
   final WrapAlignment alignment;
   final WrapAlignment runAlignment;
@@ -38,29 +38,45 @@ class DecoratedWrap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget result = LayoutBuilder(
-      builder: (context, constraints) {
-        // 空白部分宽度, 比如一行为2个时, 空余宽度为 (2-1)*spacing;
-        final spaceWidth = (crossAxisCount - 1) * spacing;
-        final availableWidth = constraints.maxWidth - spaceWidth;
-        final itemWidth = availableWidth / crossAxisCount;
-        return Wrap(
-          direction: direction,
-          alignment: alignment,
-          runAlignment: runAlignment,
-          runSpacing: runSpacing,
-          spacing: spacing,
-          crossAxisAlignment: crossAxisAlignment,
-          textDirection: textDirection,
-          verticalDirection: verticalDirection,
-          clipBehavior: clipBehavior,
-          children: [
-            for (final item in children)
-              SizedBox(width: itemWidth, child: item),
-          ],
-        );
-      },
-    );
+    Widget result;
+    if (crossAxisCount != null) {
+      result = LayoutBuilder(
+        builder: (context, constraints) {
+          // 空白部分宽度, 比如一行为2个时, 空余宽度为 (2-1)*spacing;
+          final spaceWidth = (crossAxisCount! - 1) * spacing;
+          final availableWidth = constraints.maxWidth - spaceWidth;
+          final itemWidth = availableWidth / crossAxisCount!;
+          return Wrap(
+            direction: direction,
+            alignment: alignment,
+            runAlignment: runAlignment,
+            runSpacing: runSpacing,
+            spacing: spacing,
+            crossAxisAlignment: crossAxisAlignment,
+            textDirection: textDirection,
+            verticalDirection: verticalDirection,
+            clipBehavior: clipBehavior,
+            children: [
+              for (final item in children)
+                SizedBox(width: itemWidth, child: item),
+            ],
+          );
+        },
+      );
+    } else {
+      result = Wrap(
+        direction: direction,
+        alignment: alignment,
+        runAlignment: runAlignment,
+        runSpacing: runSpacing,
+        spacing: spacing,
+        crossAxisAlignment: crossAxisAlignment,
+        textDirection: textDirection,
+        verticalDirection: verticalDirection,
+        clipBehavior: clipBehavior,
+        children: children,
+      );
+    }
 
     if (padding != null || margin != null) {
       result = Container(
