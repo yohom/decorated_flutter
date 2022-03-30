@@ -26,11 +26,20 @@ extension IterableX<T> on Iterable<T> {
     return map;
   }
 
+  /// 从第0个元素向后fallback, 直到符合[until]的条件
+  ///
+  /// 使用场景: 有时候数据源获取来的数据是空字符串(''), 要过滤这种情况非常繁琐, 这个时候就可以
+  /// 使用此方法来简化操作
   T? fallback({bool Function(T?) until = isNotEmpty}) {
     for (final item in this) {
       if (until(item)) return item;
     }
     return null;
+  }
+
+  /// 获取随机元素
+  T get randomOne {
+    return elementAt(Random().nextInt(length));
   }
 }
 
@@ -112,10 +121,5 @@ extension ListX<T> on List<T> {
 
     insertAll(0, [for (int i = 0; i < width - length; i++) padding]);
     return this;
-  }
-
-  /// 获取随机元素
-  T get random {
-    return this[Random().nextInt(length - 1)];
   }
 }

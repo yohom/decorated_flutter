@@ -17,6 +17,7 @@ class DecoratedList extends StatelessWidget {
     this.itemExtent,
     this.prototypeItem,
     this.controller,
+    this.expanded,
   })  : _sliver = false,
         super(key: key);
 
@@ -33,6 +34,7 @@ class DecoratedList extends StatelessWidget {
     this.addSemanticIndexes = true,
     this.itemExtent,
     this.prototypeItem,
+    this.expanded,
   })  : _sliver = true,
         shrinkWrap = false,
         scrollDirection = null,
@@ -51,6 +53,7 @@ class DecoratedList extends StatelessWidget {
   final double? itemExtent;
   final Widget? prototypeItem;
   final ScrollController? controller;
+  final bool? expanded;
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +61,10 @@ class DecoratedList extends StatelessWidget {
 
     if (width != null || height != null) {
       result = SizedBox(width: width, height: height, child: result);
+    }
+
+    if (expanded == true) {
+      result = Expanded(child: result);
     }
 
     return result;
