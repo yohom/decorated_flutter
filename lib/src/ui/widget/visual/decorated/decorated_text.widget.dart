@@ -35,6 +35,7 @@ class DecoratedText extends StatelessWidget {
     this.behavior,
     this.textExpanded = false,
     this.textFlexible = false,
+    this.widgetPadding,
     this.alignment,
   }) : super(key: key);
 
@@ -74,6 +75,7 @@ class DecoratedText extends StatelessWidget {
   final HitTestBehavior? behavior;
   final bool textExpanded;
   final bool textFlexible;
+  final double? widgetPadding;
   final Alignment? alignment;
 
   @override
@@ -95,12 +97,14 @@ class DecoratedText extends StatelessWidget {
         textBaseline: textBaseline,
         children: [
           if (leftWidget != null) leftWidget!,
+          if (widgetPadding != null) SizedBox(width: widgetPadding!),
           if (textExpanded)
             Expanded(child: result)
           else if (textFlexible)
             Flexible(child: result)
           else
             result,
+          if (widgetPadding != null) SizedBox(width: widgetPadding!),
           if (rightWidget != null) rightWidget!,
         ],
       );
