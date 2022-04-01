@@ -2,6 +2,7 @@ import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// TODO 实现一下点击半透明黑的效果
 class DecoratedRow extends DecoratedFlex {
   const DecoratedRow({
     Key? key,

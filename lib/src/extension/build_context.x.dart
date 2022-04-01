@@ -1,6 +1,8 @@
 import 'package:decorated_flutter/src/bloc/bloc.export.dart';
 import 'package:flutter/material.dart';
 
+import 'size.x.dart';
+
 extension BuildContextX on BuildContext {
   T of<T extends BLoC>() {
     return BLoCProvider.of<T>(this)!;
@@ -56,8 +58,17 @@ extension BuildContextX on BuildContext {
     return MediaQuery.of(this).viewInsets;
   }
 
+  @Deprecated('跟BuildContext自身的size属性冲突')
   Size get size {
     return MediaQuery.of(this).size;
+  }
+
+  bool get isPortrait {
+    return MediaQuery.of(this).size.isPortrait;
+  }
+
+  bool get isLandscape {
+    return MediaQuery.of(this).size.isLandscape;
   }
 
   TextTheme get textTheme {

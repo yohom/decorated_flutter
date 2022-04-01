@@ -14,6 +14,7 @@ export 'object.x.dart';
 export 'page_controller.x.dart';
 export 'route_settings.x.dart';
 export 'scroll_controller.x.dart';
+export 'size.x.dart';
 export 'stream.x.dart';
 export 'string.x.dart';
 export 'tab_controller.x.dart';
