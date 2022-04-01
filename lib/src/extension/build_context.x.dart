@@ -1,8 +1,6 @@
 import 'package:decorated_flutter/src/bloc/bloc.export.dart';
 import 'package:flutter/material.dart';
 
-import 'size.x.dart';
-
 extension BuildContextX on BuildContext {
   T of<T extends BLoC>() {
     return BLoCProvider.of<T>(this)!;
@@ -64,11 +62,11 @@ extension BuildContextX on BuildContext {
   }
 
   bool get isPortrait {
-    return MediaQuery.of(this).size.isPortrait;
+    return MediaQuery.of(this).orientation == Orientation.portrait;
   }
 
   bool get isLandscape {
-    return MediaQuery.of(this).size.isLandscape;
+    return MediaQuery.of(this).orientation == Orientation.landscape;
   }
 
   TextTheme get textTheme {
