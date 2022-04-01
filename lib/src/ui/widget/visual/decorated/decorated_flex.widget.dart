@@ -54,6 +54,7 @@ class DecoratedRow extends DecoratedFlex {
     Clip clipBehavior = Clip.none,
     Color? iconColor,
     SystemUiOverlayStyle? systemOverlayStyle,
+    bool? ignorePointer,
     List<Widget> children = const [],
   }) : super(
           key: key,
@@ -106,6 +107,7 @@ class DecoratedRow extends DecoratedFlex {
           clipBehavior: clipBehavior,
           iconColor: iconColor,
           systemOverlayStyle: systemOverlayStyle,
+          ignorePointer: ignorePointer,
           children: children,
         );
 }
@@ -161,6 +163,7 @@ class DecoratedColumn extends DecoratedFlex {
     Clip clipBehavior = Clip.none,
     Color? iconColor,
     SystemUiOverlayStyle? systemOverlayStyle,
+    bool? ignorePointer,
     List<Widget> children = const [],
   }) : super(
           key: key,
@@ -213,6 +216,7 @@ class DecoratedColumn extends DecoratedFlex {
           clipBehavior: clipBehavior,
           iconColor: iconColor,
           systemOverlayStyle: systemOverlayStyle,
+          ignorePointer: ignorePointer,
           children: children,
         );
 }
@@ -269,6 +273,7 @@ class DecoratedFlex extends StatelessWidget {
     this.clipBehavior = Clip.none,
     this.iconColor,
     this.systemOverlayStyle,
+    this.ignorePointer,
     this.children = const [],
   }) : super(key: key);
 
@@ -381,6 +386,8 @@ class DecoratedFlex extends StatelessWidget {
   final Color? iconColor;
 
   final SystemUiOverlayStyle? systemOverlayStyle;
+
+  final bool? ignorePointer;
 
   /// 子元素
   final List<Widget> children;
@@ -534,6 +541,10 @@ class DecoratedFlex extends StatelessWidget {
 
     if (iconColor != null) {
       result = IconTheme(data: IconThemeData(color: iconColor), child: result);
+    }
+
+    if (ignorePointer != null) {
+      result = IgnorePointer(ignoring: ignorePointer!, child: result);
     }
 
     if (expanded == true) {
