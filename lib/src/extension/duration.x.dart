@@ -21,4 +21,16 @@ extension DurationX on Duration {
   Duration operator ~/(int divider) {
     return Duration(milliseconds: inMilliseconds ~/ divider);
   }
+
+  Duration operator /(int divider) {
+    return this ~/ divider;
+  }
+
+  Duration operator *(num multiplier) {
+    return Duration(milliseconds: (inMilliseconds * multiplier).toInt());
+  }
+
+  double percentOf(Duration other) {
+    return inMilliseconds / other.inMilliseconds;
+  }
 }

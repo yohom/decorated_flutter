@@ -56,8 +56,17 @@ extension BuildContextX on BuildContext {
     return MediaQuery.of(this).viewInsets;
   }
 
+  @Deprecated('跟BuildContext自身的size属性冲突')
   Size get size {
     return MediaQuery.of(this).size;
+  }
+
+  bool get isPortrait {
+    return MediaQuery.of(this).orientation == Orientation.portrait;
+  }
+
+  bool get isLandscape {
+    return MediaQuery.of(this).orientation == Orientation.landscape;
   }
 
   TextTheme get textTheme {
