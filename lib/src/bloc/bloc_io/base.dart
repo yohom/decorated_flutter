@@ -62,9 +62,9 @@ abstract class BaseIO<T> {
             : PublishSubject<T>(sync: sync) {
     _subject.listen((data) {
       latest = data;
-      if (persistentKey != null) {
+      if (_persistentKey != null) {
         if (_persistence != null) {
-          _persistence!.writeValue(persistentKey, data);
+          _persistence!.writeValue(_persistentKey!, data);
         } else {
           L.w('未注册持久层! 请调用BaseIO.registerPersistence注册持久层');
         }
@@ -75,13 +75,13 @@ abstract class BaseIO<T> {
     });
     // 如果是BehaviorSubject, 则检查是否有持久化下来的数据, 有则发射
     if (isBehavior) {
-      if (persistentKey != null) {
+      if (_persistentKey != null) {
         try {
-          final value = _persistence?.readValue(persistentKey);
+          final value = _persistence?.readValue(_persistentKey!);
           if (value != null) _subject.add(value);
         } catch (e) {
-          L.w('读取持久层数据发生异常 $e, 删除key: [$persistentKey]');
-          _persistence?.removeKey(persistentKey);
+          L.w('读取持久层数据发生异常 $e, 删除key: [$_persistentKey]');
+          _persistence?.removeKey(_persistentKey!);
         }
       }
     }
