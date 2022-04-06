@@ -192,19 +192,20 @@ class __ShrinkableSizeState extends State<_ShrinkableSize>
 /// ##
 /// * For more info on Modal Side Sheet see also : https://material.io/components/sheets-side#modal-side-sheet
 
-Future<T?> showModalSideSheet<T extends Object?>(
-    {required BuildContext context,
-    required Widget body,
-    bool barrierDismissible = false,
-    Color barrierColor = const Color(0x80000000),
-    double? width,
-    double elevation = 8.0,
-    Duration transitionDuration = const Duration(milliseconds: 300),
-    String? barrierLabel = "Side Sheet",
-    bool useRootNavigator = true,
-    RouteSettings? routeSettings,
-    bool withCloseControll = true,
-    bool ignoreAppBar = true}) {
+Future<T?> showModalSideSheet<T extends Object?>({
+  required BuildContext context,
+  required Widget body,
+  bool barrierDismissible = false,
+  Color barrierColor = const Color(0x80000000),
+  double? width,
+  double elevation = 8.0,
+  Duration transitionDuration = const Duration(milliseconds: 300),
+  String? barrierLabel = "Side Sheet",
+  bool useRootNavigator = true,
+  RouteSettings? routeSettings,
+  bool ignoreAppBar = true,
+  Color? backgroundColor,
+}) {
   var of = MediaQuery.of(context);
   var platform = Theme.of(context).platform;
   if (width == null) {
@@ -233,26 +234,18 @@ Future<T?> showModalSideSheet<T extends Object?>(
       return Align(
         alignment: Alignment.bottomRight,
         child: Material(
-            elevation: elevation,
-            child: SizedBox(
-              width: width,
-              height: height,
-              child: withCloseControll
-                  ? Stack(
-                      children: [
-                        body,
-                        const Positioned(top: 5, right: 5, child: CloseButton())
-                      ],
-                    )
-                  : body,
-            )),
+          elevation: elevation,
+          color: backgroundColor ?? Colors.white,
+          child: SizedBox(width: width, height: height, child: body),
+        ),
       );
     },
     transitionBuilder: (_, animation, __, child) {
       return SlideTransition(
-          child: child,
-          position: Tween<Offset>(begin: const Offset(1, 0), end: Offset.zero)
-              .animate(animation));
+        child: child,
+        position: Tween<Offset>(begin: const Offset(1, 0), end: Offset.zero)
+            .animate(animation),
+      );
     },
   );
 }
