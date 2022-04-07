@@ -12,6 +12,7 @@ extension TextX on Text {
           otherSpan,
         ],
       ),
+      style: style,
       softWrap: softWrap,
       overflow: overflow,
       maxLines: maxLines,
