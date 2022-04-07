@@ -22,6 +22,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
     this.animationBuilder,
     this.autoDispose = true,
     this.decorationBuilder,
+    this.backgroundBuilder,
     required String routeName,
     bool fullscreenDialog = false,
     bool maintainState = true,
@@ -80,6 +81,9 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
 
   /// 自定义的样式
   final BoxDecoration Function(BuildContext)? decorationBuilder;
+
+  /// 背景
+  final Widget Function(BuildContext)? backgroundBuilder;
 
   /// 是否已经初始化
   bool _inited = false;
@@ -150,6 +154,10 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
         decoration: decorationBuilder!.call(context),
         child: result,
       );
+    }
+
+    if (backgroundBuilder != null) {
+      result = Stack(children: [backgroundBuilder!.call(context), result]);
     }
 
     return Material(
