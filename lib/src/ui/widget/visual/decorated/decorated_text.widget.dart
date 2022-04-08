@@ -1,5 +1,6 @@
 import 'package:decorated_flutter/src/model/model.export.dart';
 import 'package:decorated_flutter/src/utils/utils.export.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DecoratedText extends StatelessWidget {
@@ -32,7 +33,7 @@ class DecoratedText extends StatelessWidget {
     this.mainAxisAlignment,
     this.crossAxisAlignment,
     this.textBaseline,
-    this.behavior,
+    @Deprecated('暂已不使用') this.behavior,
     this.textExpanded = false,
     this.textFlexible = false,
     this.widgetPadding,
@@ -61,7 +62,6 @@ class DecoratedText extends StatelessWidget {
   final double? width;
   final double? height;
   final bool? visible;
-  @Deprecated('使用alignment代替')
   final bool? center;
   final bool? sliver;
   final Matrix4? transform;
@@ -145,9 +145,10 @@ class DecoratedText extends StatelessWidget {
     }
 
     if (onPressed != null) {
-      result = GestureDetector(
-        behavior: behavior ?? HitTestBehavior.opaque,
-        onTap: () => onPressed!(context),
+      result = CupertinoButton(
+        padding: EdgeInsets.zero,
+        minSize: 0,
+        onPressed: () => onPressed!(context),
         child: result,
       );
     }

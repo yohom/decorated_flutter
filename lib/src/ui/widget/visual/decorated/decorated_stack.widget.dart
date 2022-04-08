@@ -1,4 +1,5 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 enum ZIndex {
@@ -180,7 +181,14 @@ class DecoratedStack extends StatelessWidget {
       }
     }
 
-    if (onPressed != null ||
+    if (onPressed != null) {
+      result = CupertinoButton(
+        padding: EdgeInsets.zero,
+        minSize: 0,
+        onPressed: () => onPressed!(context),
+        child: result,
+      );
+    } else if (onPressed != null ||
         onDoubleTap != null ||
         onTapDown != null ||
         onDoubleTapDown != null ||
