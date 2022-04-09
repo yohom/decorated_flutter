@@ -52,6 +52,7 @@ export 'widget/visual/special_affect/cover_card.widget.dart';
 export 'widget/visual/special_affect/dot_indicator.widget.dart';
 export 'widget/visual/special_affect/edge_fade.widget.dart';
 export 'widget/visual/special_affect/gradient_button.widget.dart';
+export 'widget/visual/special_affect/modal_side_sheet.dart';
 export 'widget/visual/special_affect/notification_badge.widget.dart';
 export 'widget/visual/special_affect/rating_bar.widget.dart';
 export 'widget/visual/special_affect/runtime.widget.dart';
