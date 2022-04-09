@@ -19,6 +19,29 @@ class DecoratedList extends StatelessWidget {
     this.controller,
     this.expanded,
   })  : _sliver = false,
+        separatorBuilder = null,
+        super(key: key);
+
+  const DecoratedList.boxSeparated({
+    Key? key,
+    this.padding,
+    this.shrinkWrap = false,
+    this.itemBuilder,
+    required this.itemCount,
+    this.children,
+    this.scrollDirection,
+    this.width,
+    this.height,
+    this.addAutomaticKeepAlives = true,
+    this.addRepaintBoundaries = true,
+    this.addSemanticIndexes = true,
+    this.controller,
+    this.expanded,
+    this.separatorBuilder,
+  })  : assert(itemCount != null),
+        _sliver = false,
+        itemExtent = null,
+        prototypeItem = null,
         super(key: key);
 
   const DecoratedList.sliver({
@@ -39,6 +62,7 @@ class DecoratedList extends StatelessWidget {
         shrinkWrap = false,
         scrollDirection = null,
         controller = null,
+        separatorBuilder = null,
         super(key: key);
 
   final bool _sliver;
@@ -54,6 +78,7 @@ class DecoratedList extends StatelessWidget {
   final Widget? prototypeItem;
   final ScrollController? controller;
   final bool? expanded;
+  final IndexedWidgetBuilder? separatorBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -124,19 +149,34 @@ class DecoratedList extends StatelessWidget {
         addSemanticIndexes: addSemanticIndexes,
       );
     } else if (itemBuilder != null) {
-      result = ListView.builder(
-        padding: padding,
-        itemBuilder: itemBuilder!,
-        itemCount: itemCount,
-        shrinkWrap: shrinkWrap,
-        controller: controller,
-        scrollDirection: scrollDirection ?? Axis.vertical,
-        itemExtent: itemExtent,
-        prototypeItem: prototypeItem,
-        addAutomaticKeepAlives: addAutomaticKeepAlives,
-        addRepaintBoundaries: addRepaintBoundaries,
-        addSemanticIndexes: addSemanticIndexes,
-      );
+      if (separatorBuilder != null && itemCount != null) {
+        result = ListView.separated(
+          padding: padding,
+          separatorBuilder: separatorBuilder!,
+          itemBuilder: itemBuilder!,
+          itemCount: itemCount!,
+          shrinkWrap: shrinkWrap,
+          controller: controller,
+          scrollDirection: scrollDirection ?? Axis.vertical,
+          addAutomaticKeepAlives: addAutomaticKeepAlives,
+          addRepaintBoundaries: addRepaintBoundaries,
+          addSemanticIndexes: addSemanticIndexes,
+        );
+      } else {
+        result = ListView.builder(
+          padding: padding,
+          itemBuilder: itemBuilder!,
+          itemCount: itemCount,
+          shrinkWrap: shrinkWrap,
+          controller: controller,
+          scrollDirection: scrollDirection ?? Axis.vertical,
+          itemExtent: itemExtent,
+          prototypeItem: prototypeItem,
+          addAutomaticKeepAlives: addAutomaticKeepAlives,
+          addRepaintBoundaries: addRepaintBoundaries,
+          addSemanticIndexes: addSemanticIndexes,
+        );
+      }
     } else {
       throw '必须传入children或itemBuilder';
     }
