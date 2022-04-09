@@ -1,8 +1,8 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// TODO 实现一下点击半透明黑的效果
 class DecoratedRow extends DecoratedFlex {
   const DecoratedRow({
     Key? key,
@@ -55,6 +55,7 @@ class DecoratedRow extends DecoratedFlex {
     Color? iconColor,
     SystemUiOverlayStyle? systemOverlayStyle,
     bool? ignorePointer,
+    bool? enableFeedback,
     List<Widget> children = const [],
   }) : super(
           key: key,
@@ -108,6 +109,7 @@ class DecoratedRow extends DecoratedFlex {
           iconColor: iconColor,
           systemOverlayStyle: systemOverlayStyle,
           ignorePointer: ignorePointer,
+          enableFeedback: enableFeedback,
           children: children,
         );
 }
@@ -164,6 +166,7 @@ class DecoratedColumn extends DecoratedFlex {
     Color? iconColor,
     SystemUiOverlayStyle? systemOverlayStyle,
     bool? ignorePointer,
+    bool? enableFeedback,
     List<Widget> children = const [],
   }) : super(
           key: key,
@@ -217,6 +220,7 @@ class DecoratedColumn extends DecoratedFlex {
           iconColor: iconColor,
           systemOverlayStyle: systemOverlayStyle,
           ignorePointer: ignorePointer,
+          enableFeedback: enableFeedback,
           children: children,
         );
 }
@@ -274,6 +278,7 @@ class DecoratedFlex extends StatelessWidget {
     this.iconColor,
     this.systemOverlayStyle,
     this.ignorePointer,
+    this.enableFeedback,
     this.children = const [],
   }) : super(key: key);
 
@@ -389,6 +394,8 @@ class DecoratedFlex extends StatelessWidget {
 
   final bool? ignorePointer;
 
+  final bool? enableFeedback;
+
   /// 子元素
   final List<Widget> children;
 
@@ -408,7 +415,7 @@ class DecoratedFlex extends StatelessWidget {
       textBaseline: textBaseline,
       verticalDirection: verticalDirection ?? VerticalDirection.down,
       children: itemSpacing != 0 || divider != null
-          ? addItemDivider(_children, itemSpacing!, divider)
+          ? _addItemDivider(_children, itemSpacing!, divider)
           : _children,
     );
 
@@ -481,7 +488,14 @@ class DecoratedFlex extends StatelessWidget {
       }
     }
 
-    if (onPressed != null ||
+    if (onPressed != null && enableFeedback == true) {
+      result = CupertinoButton(
+        padding: EdgeInsets.zero,
+        minSize: 0,
+        onPressed: () => onPressed!(context),
+        child: result,
+      );
+    } else if (onPressed != null ||
         onLongPressed != null ||
         onVerticalDragEnd != null ||
         onHorizontalDragEnd != null ||
@@ -562,7 +576,7 @@ class DecoratedFlex extends StatelessWidget {
     return result;
   }
 
-  List<Widget> addItemDivider(
+  List<Widget> _addItemDivider(
     List<Widget> children,
     double itemSpacing,
     Widget? divider,
