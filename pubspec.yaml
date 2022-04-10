@@ -33,6 +33,8 @@ dependencies:
   flutter_svg: 1.0.3
   # sliver增强 https://pub.flutter-io.cn/packages/sliver_tools
   sliver_tools: 0.2.5
+  # 持久化 https://pub.flutter-io.cn/packages/hive
+  hive_flutter: 1.1.0
 
 dev_dependencies:
   flutter_test:

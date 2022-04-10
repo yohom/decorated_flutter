@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 /// 当不关心对象是什么, 但是又必须存在一个对象的时候, 使用这个
 final anyObject = Object();
@@ -15,3 +16,5 @@ final kEmailRegex = RegExp(
 
 final kMoneyRegex = RegExp(
     r'(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)');
+
+Future<Box> get gHiveBox => Hive.openBox('decorated_flutter_box');
