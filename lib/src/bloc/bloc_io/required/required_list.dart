@@ -95,8 +95,8 @@ class ListOutput<T, ARG> extends Output<List<T>, ARG> with ListMixin<T> {
     required _FetchCallback<List<T>, ARG?> fetch,
     List<T> Function()? onReset,
     String? persistentKey,
-    _SerializeCallback<List<T>?>? onSerialize,
-    _DeserializeCallback<List<T>?>? onDeserialize,
+    _SerializeCallback<List<T>>? onSerialize,
+    _DeserializeCallback<List<T>>? onDeserialize,
   }) {
     return OptionalListOutput<T, ARG>(
       semantics: semantics,
@@ -159,8 +159,8 @@ class ListIO<T> extends IO<List<T>> with ListMixin<T> {
     required _FetchCallback<List<T>, dynamic> fetch,
     List<T> Function()? onReset,
     String? persistentKey,
-    _SerializeCallback<List<T>?>? onSerialize,
-    _DeserializeCallback<List<T>?>? onDeserialize,
+    _SerializeCallback<List<T>>? onSerialize,
+    _DeserializeCallback<List<T>>? onDeserialize,
   }) {
     return OptionalListIO<T>(
       semantics: semantics,

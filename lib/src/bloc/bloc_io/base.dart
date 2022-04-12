@@ -90,8 +90,12 @@ abstract class BaseIO<T> {
         }
 
         // 新版内建持久层
-        if (_onSerialize != null) {
-          gHiveBox.then((it) => it.put(_persistentKey!, _onSerialize!(data)));
+        if (_onSerialize != null && data != null) {
+          // 这里只持久化非空的值
+          final serialized = _onSerialize!(data);
+          assert(isJsonable(serialized), '序列化之后应是jsonable值!');
+
+          gHiveBox.then((it) => it.put(_persistentKey!, serialized));
         }
       }
       if (_printLog) {
@@ -202,9 +206,11 @@ abstract class BaseIO<T> {
       // 兼容旧版逻辑
       _persistence?.writeValue(_persistentKey!, _resetValue);
       // 新版内建持久层
-      if (_onSerialize != null) {
-        gHiveBox.then(
-            (box) => box.put(_persistentKey!, _onSerialize!(_resetValue)));
+      if (_onSerialize != null && _resetValue != null) {
+        final serialized = _onSerialize!(_resetValue);
+        assert(isJsonable(serialized), '序列化之后应是jsonable值!');
+
+        gHiveBox.then((box) => box.put(_persistentKey!, serialized));
       }
     }
   }
