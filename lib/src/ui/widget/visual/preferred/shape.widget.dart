@@ -1,3 +1,4 @@
+import 'package:decorated_flutter/src/extension/extension.export.dart';
 import 'package:flutter/material.dart';
 
 class Circle extends StatelessWidget {
@@ -96,7 +97,7 @@ class Line extends StatelessWidget {
       padding: padding,
       margin: margin,
       decoration: BoxDecoration(
-        color: color ?? Colors.grey.shade200,
+        color: color ?? context.theme.dividerTheme.color,
         borderRadius: borderRadius,
       ),
     );

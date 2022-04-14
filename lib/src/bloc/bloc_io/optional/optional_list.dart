@@ -45,6 +45,8 @@ class OptionalListOutput<T, ARG> extends Output<List<T>?, ARG>
     required _FetchCallback<List<T>, ARG?> fetch,
     List<T>? Function()? onReset,
     String? persistentKey,
+    _SerializeCallback<List<T>>? onSerialize,
+    _DeserializeCallback<List<T>?>? onDeserialize,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -54,6 +56,10 @@ class OptionalListOutput<T, ARG> extends Output<List<T>?, ARG>
           printLog: printLog,
           onReset: onReset,
           persistentKey: persistentKey,
+          onDeserialize: onDeserialize,
+          // 上层只会序序列化非null值
+          onSerialize:
+              onSerialize != null ? (data) => onSerialize(data!) : null,
         ) {
     _forceCapacity = forceCapacity;
   }
@@ -74,6 +80,8 @@ class OptionalListIO<T> extends IO<List<T>?> with OptionalListMixin {
     bool Function(List<T>?, List<T>?)? isSame,
     List<T>? Function()? onReset,
     String? persistentKey,
+    _SerializeCallback<List<T>>? onSerialize,
+    _DeserializeCallback<List<T>>? onDeserialize,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -86,6 +94,9 @@ class OptionalListIO<T> extends IO<List<T>?> with OptionalListMixin {
           onReset: onReset,
           isSame: isSame ?? listEquals,
           persistentKey: persistentKey,
+          onDeserialize: onDeserialize,
+          onSerialize:
+              onSerialize != null ? (data) => onSerialize(data!) : null,
         ) {
     _forceCapacity = forceCapacity;
   }

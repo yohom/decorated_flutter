@@ -82,16 +82,22 @@ abstract class BaseIO<T> {
     _subject.listen((data) {
       latest = data;
       if (_persistentKey != null) {
+        // 新版内建持久层
+        if (_onSerialize != null && data != null) {
+          // 这里只持久化非空的值
+          final serialized = _onSerialize!(data);
+          assert(isJsonable(serialized), '序列化之后应是jsonable值!');
+
+          gHiveBox.then((it) => it.put(_persistentKey!, serialized));
+
+          return;
+        }
+
         // 维持旧版兼容
         if (_persistence != null) {
           _persistence!.writeValue(_persistentKey!, data);
         } else {
           L.w('未注册持久层! 请调用BaseIO.registerPersistence注册持久层');
-        }
-
-        // 新版内建持久层
-        if (_onSerialize != null) {
-          gHiveBox.then((it) => it.put(_persistentKey!, _onSerialize!(data)));
         }
       }
       if (_printLog) {
@@ -101,6 +107,27 @@ abstract class BaseIO<T> {
     // 如果是BehaviorSubject, 则检查是否有持久化下来的数据, 有则发射
     if (isBehavior) {
       if (_persistentKey != null) {
+        // 新版内建持久层
+        if (_onDeserialize != null) {
+          try {
+            gHiveBox.then((box) {
+              final deserialized = box.get(_persistentKey!);
+              // 只发射非空值
+              if (deserialized == null) {
+                return L.w('读取到 [$_semantics] null缓存值, 直接略过');
+              }
+
+              final value = _onDeserialize!(deserialized);
+              if (value != null) _subject.add(value);
+            });
+          } catch (e) {
+            L.w('读取持久层数据发生异常 $e, 删除key: [$_persistentKey]');
+            gHiveBox.then((box) => box.delete(_persistentKey!));
+          }
+
+          return;
+        }
+
         // 维持旧版兼容
         try {
           final value = _persistence?.readValue(_persistentKey!);
@@ -108,19 +135,6 @@ abstract class BaseIO<T> {
         } catch (e) {
           L.w('读取持久层数据发生异常 $e, 删除key: [$_persistentKey]');
           _persistence?.removeKey(_persistentKey!);
-        }
-
-        // 新版内建持久层
-        if (_onDeserialize != null) {
-          try {
-            gHiveBox.then((box) {
-              final value = _onDeserialize!(box.get(_persistentKey!));
-              if (value != null) _subject.add(value);
-            });
-          } catch (e) {
-            L.w('读取持久层数据发生异常 $e, 删除key: [$_persistentKey]');
-            gHiveBox.then((box) => box.delete(_persistentKey!));
-          }
         }
       }
     }
@@ -199,13 +213,18 @@ abstract class BaseIO<T> {
     _subject.add(_resetValue);
 
     if (_persistentKey != null) {
+      // 新版内建持久层
+      if (_onSerialize != null && _resetValue != null) {
+        final serialized = _onSerialize!(_resetValue);
+        assert(isJsonable(serialized), '序列化之后应是jsonable值!');
+
+        gHiveBox.then((box) => box.put(_persistentKey!, serialized));
+
+        return;
+      }
+
       // 兼容旧版逻辑
       _persistence?.writeValue(_persistentKey!, _resetValue);
-      // 新版内建持久层
-      if (_onSerialize != null) {
-        gHiveBox.then(
-            (box) => box.put(_persistentKey!, _onSerialize!(_resetValue)));
-      }
     }
   }
 
