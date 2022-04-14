@@ -35,6 +35,7 @@ export 'widget/visual/preferred/image_view.widget.dart';
 export 'widget/visual/preferred/max_scale_text.widget.dart';
 export 'widget/visual/preferred/picker.dialog.dart';
 export 'widget/visual/preferred/preferred_nested_scroll_view.widget.dart';
+export 'widget/visual/preferred/preferred_tab_controller.widget.dart';
 export 'widget/visual/preferred/primary_icon.widget.dart';
 export 'widget/visual/preferred/runtime_scaffold.widget.dart';
 export 'widget/visual/preferred/scale_tab_bar.widget.dart';
