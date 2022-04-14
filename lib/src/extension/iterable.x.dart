@@ -12,6 +12,11 @@ extension IterableX<T> on Iterable<T> {
     }
   }
 
+  /// 最后一个索引
+  int get lastIndex {
+    return length - 1;
+  }
+
   T? operator [](int index) => length > index ? elementAt(index) : null;
 
   Iterable<T> operator +(T other) => followedBy([other]);

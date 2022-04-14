@@ -36,6 +36,8 @@ class OptionalOutput<T, ARG> extends Output<T?, ARG> {
     required _FetchCallback<T, ARG?> fetch,
     T? Function()? onReset,
     String? persistentKey,
+    _SerializeCallback<T>? onSerialize,
+    _DeserializeCallback<T>? onDeserialize,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -45,6 +47,9 @@ class OptionalOutput<T, ARG> extends Output<T?, ARG> {
           onReset: onReset,
           printLog: printLog,
           persistentKey: persistentKey,
+          onDeserialize: onDeserialize,
+          onSerialize:
+              onSerialize != null ? (data) => onSerialize(data!) : null,
         ) {
     stream = _subject.stream;
   }
