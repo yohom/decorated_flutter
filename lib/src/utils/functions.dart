@@ -161,3 +161,8 @@ DateTime requireDate(
     return fallback?.call() ?? DateTime.now();
   }
 }
+
+/// 下一帧回调
+void nextFrame(VoidCallback cb) {
+  WidgetsBinding.instance?.addPostFrameCallback((_) => cb());
+}
