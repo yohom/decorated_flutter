@@ -17,4 +17,4 @@ final kEmailRegex = RegExp(
 final kMoneyRegex = RegExp(
     r'(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)');
 
-Future<Box> get gHiveBox => Hive.openBox('decorated_flutter_box');
+Future<Box> get gDecoratedStorage => Hive.openBox('decorated_flutter_box');
