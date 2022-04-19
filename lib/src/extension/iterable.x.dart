@@ -42,6 +42,10 @@ extension IterableX<T> on Iterable<T> {
     return null;
   }
 
+  Iterable<R> mapIndex<R>(R Function(int index, T e) cb) {
+    return [for (var i = 0; i < length; i++) cb(i, elementAt(i))];
+  }
+
   /// 获取随机元素
   T get randomOne {
     return elementAt(Random().nextInt(length));
