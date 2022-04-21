@@ -18,6 +18,7 @@ class DecoratedWrap extends StatelessWidget {
     this.textStyle,
     this.crossAxisCount,
     this.childAspectRatio,
+    this.decoration,
     required this.children,
   }) : super(key: key);
 
@@ -36,6 +37,7 @@ class DecoratedWrap extends StatelessWidget {
   final TextStyle? textStyle;
   final Clip clipBehavior;
   final double? childAspectRatio;
+  final BoxDecoration? decoration;
   final List<Widget> children;
 
   @override
@@ -86,10 +88,11 @@ class DecoratedWrap extends StatelessWidget {
       );
     }
 
-    if (padding != null || margin != null) {
+    if (padding != null || margin != null || decoration != null) {
       result = Container(
         padding: padding,
         margin: margin,
+        decoration: decoration,
         child: result,
       );
     }
