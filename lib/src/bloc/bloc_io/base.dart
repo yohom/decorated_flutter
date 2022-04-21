@@ -88,7 +88,7 @@ abstract class BaseIO<T> {
           final serialized = _onSerialize!(data);
           assert(isJsonable(serialized), '序列化之后应是jsonable值!');
 
-          gHiveBox.then((it) => it.put(_persistentKey!, serialized));
+          gDecoratedStorage.then((it) => it.put(_persistentKey!, serialized));
 
           return;
         }
@@ -110,7 +110,7 @@ abstract class BaseIO<T> {
         // 新版内建持久层
         if (_onDeserialize != null) {
           try {
-            gHiveBox.then((box) {
+            gDecoratedStorage.then((box) {
               final deserialized = box.get(_persistentKey!);
               // 只发射非空值
               if (deserialized == null) {
@@ -122,7 +122,7 @@ abstract class BaseIO<T> {
             });
           } catch (e) {
             L.w('读取持久层数据发生异常 $e, 删除key: [$_persistentKey]');
-            gHiveBox.then((box) => box.delete(_persistentKey!));
+            gDecoratedStorage.then((box) => box.delete(_persistentKey!));
           }
 
           return;
@@ -218,7 +218,7 @@ abstract class BaseIO<T> {
         final serialized = _onSerialize!(_resetValue);
         assert(isJsonable(serialized), '序列化之后应是jsonable值!');
 
-        gHiveBox.then((box) => box.put(_persistentKey!, serialized));
+        gDecoratedStorage.then((box) => box.put(_persistentKey!, serialized));
 
         return;
       }

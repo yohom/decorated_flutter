@@ -74,7 +74,8 @@ class Output<T, ARG> extends BaseIO<T> with OutputMixin<T, ARG> {
           persistentKey: persistentKey,
           printLog: printLog,
           onDeserialize: onDeserialize,
-          onSerialize: onSerialize,
+          onSerialize:
+              onSerialize != null ? (data) => onSerialize(data!) : null,
         ) {
     stream = _subject.stream;
     _fetch = fetch;
@@ -89,6 +90,8 @@ class Output<T, ARG> extends BaseIO<T> with OutputMixin<T, ARG> {
     required _FetchCallback<T, ARG?> fetch,
     T? Function()? onReset,
     String? persistentKey,
+    _SerializeCallback<T>? onSerialize,
+    _DeserializeCallback<T>? onDeserialize,
   }) {
     return OptionalOutput<T, ARG>(
       semantics: semantics,
@@ -99,6 +102,8 @@ class Output<T, ARG> extends BaseIO<T> with OutputMixin<T, ARG> {
       fetch: fetch,
       onReset: onReset,
       persistentKey: persistentKey,
+      onDeserialize: onDeserialize,
+      onSerialize: onSerialize,
     );
   }
 }

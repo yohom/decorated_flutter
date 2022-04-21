@@ -30,6 +30,7 @@ class ImageView extends StatelessWidget {
     this.foregroundDecoration,
     this.clipBehavior = Clip.hardEdge,
     this.aspectRatio,
+    this.colorBlendMode,
   })  : imagePath = imageUri.startsWith('http') ? null : imageUri,
         imageUrl = imageUri.startsWith('http') ? imageUri : null,
         errorWidget = const SizedBox.shrink(),
@@ -61,6 +62,7 @@ class ImageView extends StatelessWidget {
     this.foregroundDecoration,
     this.clipBehavior = Clip.hardEdge,
     this.aspectRatio,
+    this.colorBlendMode,
   })  : imageUrl = null,
         errorWidget = const SizedBox.shrink(),
         placeholder = const SizedBox.shrink(),
@@ -93,6 +95,7 @@ class ImageView extends StatelessWidget {
     this.foregroundDecoration,
     this.clipBehavior = Clip.hardEdge,
     this.aspectRatio,
+    this.colorBlendMode,
   })  : imagePath = null,
         assert(
           (darkImagePath != null && autoDarkMode == false) ||
@@ -158,6 +161,9 @@ class ImageView extends StatelessWidget {
   /// 如果部位空, 则使用AspectRatio包裹
   final double? aspectRatio;
 
+  /// 颜色混合模式
+  final BlendMode? colorBlendMode;
+
   @override
   Widget build(BuildContext context) {
     final isDarkMode = context.isDarkMode;
@@ -195,6 +201,7 @@ class ImageView extends StatelessWidget {
           fit: fit,
           color: _color,
           gaplessPlayback: true,
+          colorBlendMode: colorBlendMode,
           cacheWidth: _cacheWidth,
           cacheHeight: _cacheHeight,
         );
@@ -207,6 +214,7 @@ class ImageView extends StatelessWidget {
           fit: fit,
           color: _color,
           gaplessPlayback: true,
+          colorBlendMode: colorBlendMode,
           cacheWidth: _cacheWidth,
           cacheHeight: _cacheHeight,
         );

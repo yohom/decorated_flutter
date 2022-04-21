@@ -327,11 +327,42 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
       return null;
     }
 
+    if (isEmpty(latest)) {
+      L.w('当前IO数据为null, 略过选择操作');
+      return null;
+    }
+
     assert(latest is List<Selectable>);
     return forEach((T data) {
       if (data is Selectable) {
         data.selected = (data == target);
       }
     });
+  }
+
+  /// 对[index]处进行单选操作, 如果[T]不为[Selectable]则什么都不做, 直接透传
+  List<T>? selectIndex(int index) {
+    if (_subject.isClosed) {
+      L.w('IO在close状态下请求发送数据');
+      return null;
+    }
+
+    if (isEmpty(latest)) {
+      L.w('当前IO数据为null, 略过选择操作');
+      return null;
+    }
+
+    assert(latest is List<Selectable>);
+    for (var i = 0; i < latest!.length; i++) {
+      final item = latest![i];
+      if (item is Selectable) {
+        item.selected = index == i;
+      }
+    }
+
+    // 刷新数据
+    invalidate();
+
+    return latest;
   }
 }
