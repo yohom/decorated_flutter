@@ -40,9 +40,7 @@ class _CountdownState extends State<Countdown> {
       stream: _countStream,
       builder: (context, snapshot) {
         if (snapshot.requireData <= 0) {
-          WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-            widget.onZero?.call();
-          });
+          widget.onZero?.call();
         }
         return widget.builder(context, snapshot.data!);
       },
