@@ -3,7 +3,15 @@ extension EnumX on Enum {
     return index > other.index;
   }
 
+  bool operator >=(Enum other) {
+    return index >= other.index;
+  }
+
   bool operator <(Enum other) {
     return index < other.index;
+  }
+
+  bool operator <=(Enum other) {
+    return index <= other.index;
   }
 }
