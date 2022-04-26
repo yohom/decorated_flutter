@@ -68,6 +68,8 @@ class OptionalIO<T> extends IO<T?> {
     _FetchCallback<T, dynamic>? fetch,
     T? Function()? onReset,
     String? persistentKey,
+    _SerializeCallback<T>? onSerialize,
+    _DeserializeCallback<T>? onDeserialize,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -78,6 +80,9 @@ class OptionalIO<T> extends IO<T?> {
           isDistinct: isDistinct,
           persistentKey: persistentKey,
           printLog: printLog,
+          onDeserialize: onDeserialize,
+          onSerialize:
+              onSerialize != null ? (data) => onSerialize(data!) : null,
         ) {
     stream = _subject.stream;
 

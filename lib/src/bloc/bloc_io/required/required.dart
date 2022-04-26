@@ -155,6 +155,8 @@ class IO<T> extends BaseIO<T> with InputMixin<T>, OutputMixin<T, dynamic> {
     _FetchCallback<T, dynamic>? fetch,
     T? Function()? onReset,
     String? persistentKey,
+    _SerializeCallback<T>? onSerialize,
+    _DeserializeCallback<T>? onDeserialize,
   }) {
     return OptionalIO<T>(
       semantics: semantics,
@@ -167,6 +169,8 @@ class IO<T> extends BaseIO<T> with InputMixin<T>, OutputMixin<T, dynamic> {
       fetch: fetch,
       onReset: onReset,
       persistentKey: persistentKey,
+      onDeserialize: onDeserialize,
+      onSerialize: onSerialize,
     );
   }
 }
