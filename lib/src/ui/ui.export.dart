@@ -30,6 +30,7 @@ export 'widget/visual/placeholder/error_placeholder.widget.dart';
 export 'widget/visual/placeholder/loading.widget.dart';
 export 'widget/visual/preferred/aligned.widget.dart';
 export 'widget/visual/preferred/auto_scroll_bottom_sheet.widget.dart';
+export 'widget/visual/preferred/circle_checkbox.widget.dart';
 export 'widget/visual/preferred/debounce_text_field.widget.dart';
 export 'widget/visual/preferred/image_view.widget.dart';
 export 'widget/visual/preferred/max_scale_text.widget.dart';
