@@ -91,6 +91,8 @@ abstract class LocalBLoC extends BLoC {
         component.dispose();
       } else if (component is ValueNotifier) {
         component.dispose();
+      } else if (component is PageController) {
+        component.dispose();
       } else {
         L.w('未支持自动dispose的类型 ${component.runtimeType}, 请检查代码是否有bug!');
       }
@@ -125,6 +127,8 @@ abstract class GlobalBLoC extends BLoC {
       } else if (component is TextEditingController) {
         component.dispose();
       } else if (component is ValueNotifier) {
+        component.dispose();
+      } else if (component is PageController) {
         component.dispose();
       } else {
         L.w('未支持自动dispose的类型 ${component.runtimeType}, 请检查代码是否有bug!');
