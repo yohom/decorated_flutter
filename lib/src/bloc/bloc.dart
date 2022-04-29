@@ -66,8 +66,11 @@ abstract class RootBLoC extends BLoC {
 abstract class LocalBLoC extends BLoC {
   LocalBLoC(String semantics) : super(semantics);
 
+  /// 目前在BLoC内使用非IO的情况越来越多, 这里开放成dynamic类型
+  ///
+  /// 如果有未支持的类型, 就警告之.
   @protected
-  List<BaseIO> get disposeBag => [];
+  List<dynamic> get disposeBag => [];
 
   @protected
   final CompositeSubscription compositeSubscription = CompositeSubscription();
@@ -81,8 +84,18 @@ abstract class LocalBLoC extends BLoC {
 
   @override
   void dispose() {
-    for (var event in disposeBag) {
-      event.dispose();
+    for (final component in disposeBag) {
+      if (component is BaseIO) {
+        component.dispose();
+      } else if (component is TextEditingController) {
+        component.dispose();
+      } else if (component is ValueNotifier) {
+        component.dispose();
+      } else if (component is PageController) {
+        component.dispose();
+      } else {
+        L.w('未支持自动dispose的类型 ${component.runtimeType}, 请检查代码是否有bug!');
+      }
     }
     if (!compositeSubscription.isDisposed) compositeSubscription.dispose();
     super.dispose();
@@ -94,7 +107,7 @@ abstract class GlobalBLoC extends BLoC {
   GlobalBLoC(String semantics) : super(semantics);
 
   @protected
-  List<BaseIO> get disposeBag => [];
+  List<dynamic> get disposeBag => [];
 
   @protected
   final CompositeSubscription compositeSubscription = CompositeSubscription();
@@ -108,8 +121,18 @@ abstract class GlobalBLoC extends BLoC {
 
   @override
   void dispose() {
-    for (var event in disposeBag) {
-      event.dispose();
+    for (final component in disposeBag) {
+      if (component is BaseIO) {
+        component.dispose();
+      } else if (component is TextEditingController) {
+        component.dispose();
+      } else if (component is ValueNotifier) {
+        component.dispose();
+      } else if (component is PageController) {
+        component.dispose();
+      } else {
+        L.w('未支持自动dispose的类型 ${component.runtimeType}, 请检查代码是否有bug!');
+      }
     }
     if (!compositeSubscription.isDisposed) compositeSubscription.dispose();
     super.dispose();
