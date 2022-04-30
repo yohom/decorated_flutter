@@ -67,6 +67,7 @@ class __DatePickerDialogState extends State<_DatePickerDialog> {
       height: 256,
       children: [
         DecoratedRow(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             TextButton(
