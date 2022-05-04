@@ -33,6 +33,7 @@ extension ConstellationX on Constellation {
       '天秤座',
       '天蝎座',
       '射手座',
+      '未知',
     ][index];
   }
 }
