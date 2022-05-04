@@ -11,6 +11,7 @@ class ValueListenableSwitcher<T> extends StatelessWidget {
     this.switchOutCurve = Curves.decelerate,
     this.width,
     this.height,
+    this.margin,
     this.child,
   }) : super(key: key);
 
@@ -20,6 +21,7 @@ class ValueListenableSwitcher<T> extends StatelessWidget {
   final Curve switchInCurve;
   final Curve switchOutCurve;
   final double? width, height;
+  final EdgeInsets? margin;
   final Widget? child;
 
   @override
@@ -37,8 +39,13 @@ class ValueListenableSwitcher<T> extends StatelessWidget {
       },
     );
 
-    if (width != null || height != null) {
-      return SizedBox(width: width, height: height, child: result);
+    if (width != null || height != null || margin != null) {
+      return Container(
+        margin: margin,
+        width: width,
+        height: height,
+        child: result,
+      );
     }
 
     return result;

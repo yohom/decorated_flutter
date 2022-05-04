@@ -11,6 +11,7 @@ export 'route/transparent_route.route.dart';
 export 'widget/nonvisual/auto_close_keyboard.widget.dart';
 export 'widget/nonvisual/delayed.widget.dart';
 export 'widget/nonvisual/double_back_exit_app.widget.dart';
+export 'widget/nonvisual/nil.widget.dart';
 export 'widget/nonvisual/repeat.widget.dart';
 export 'widget/visual/decorated/buttons.widget.dart';
 export 'widget/visual/decorated/decorated_app.widget.dart';
