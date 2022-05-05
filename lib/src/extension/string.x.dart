@@ -13,11 +13,23 @@ extension StringX on String {
     return kMobileRegex.hasMatch(this);
   }
 
+  bool get isNotMobile {
+    return !kMobileRegex.hasMatch(this);
+  }
+
   bool get isEmail {
     return kEmailRegex.hasMatch(this);
   }
 
+  bool get isNotEmail {
+    return kEmailRegex.hasMatch(this);
+  }
+
   bool get isMoney {
+    return kMoneyRegex.hasMatch(this);
+  }
+
+  bool get isNotMoney {
     return kMoneyRegex.hasMatch(this);
   }
 
