@@ -1,11 +1,12 @@
 import 'package:flutter/widgets.dart';
 
-/// A [Nil] instance, you can use in your layouts.
+// 这里使用SizedBox.shrink代替了
 // ignore: constant_identifier_names
-const NIL = Nil();
+const NIL = SizedBox.shrink();
 
 /// A widget which is not in the layout and does nothing.
 /// It is useful when you have to return a widget and can't return null.
+@Deprecated('不是很好用, 像StreamBuilder的场景就必须要有RenderObject')
 class Nil extends Widget {
   /// Creates a [Nil] widget.
   const Nil({Key? key}) : super(key: key);
