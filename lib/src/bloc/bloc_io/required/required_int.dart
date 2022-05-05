@@ -116,4 +116,8 @@ mixin IntMixin on BaseIO<int> {
     _subject.add(result);
     return result;
   }
+
+  Stream<String> mapToString([String Function(int)? mapper]) {
+    return map((event) => mapper != null ? mapper(event) : '$event');
+  }
 }
