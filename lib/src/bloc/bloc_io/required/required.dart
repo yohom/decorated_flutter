@@ -11,15 +11,15 @@ class Input<T> extends BaseIO<T> with InputMixin<T> {
     bool acceptEmpty = true,
     bool isDistinct = false,
     T Function()? onReset,
-    String? persistentKey,
     bool Function(T, T)? isSame,
+    PersistConfig<T>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
           sync: sync,
           isBehavior: isBehavior,
           onReset: onReset,
-          persistentKey: persistentKey,
+          persistConfig: persistConfig,
           printLog: printLog,
         ) {
     _acceptEmpty = acceptEmpty;
@@ -36,7 +36,7 @@ class Input<T> extends BaseIO<T> with InputMixin<T> {
     bool acceptEmpty = true,
     bool isDistinct = false,
     T? Function()? onReset,
-    String? persistentKey,
+    PersistConfig<T>? persistConfig,
   }) {
     return OptionalInput<T>(
       semantics: semantics,
@@ -47,7 +47,7 @@ class Input<T> extends BaseIO<T> with InputMixin<T> {
       acceptEmpty: acceptEmpty,
       isDistinct: isDistinct,
       onReset: onReset,
-      persistentKey: persistentKey,
+      persistConfig: persistConfig,
     );
   }
 }
@@ -62,20 +62,15 @@ class Output<T, ARG> extends BaseIO<T> with OutputMixin<T, ARG> {
     bool isBehavior = true,
     required _FetchCallback<T, ARG?> fetch,
     T Function()? onReset,
-    String? persistentKey,
-    _SerializeCallback<T>? onSerialize,
-    _DeserializeCallback<T>? onDeserialize,
+    PersistConfig<T>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
           sync: sync,
           isBehavior: isBehavior,
           onReset: onReset,
-          persistentKey: persistentKey,
           printLog: printLog,
-          onDeserialize: onDeserialize,
-          onSerialize:
-              onSerialize != null ? (data) => onSerialize(data!) : null,
+          persistConfig: persistConfig,
         ) {
     stream = _subject.stream;
     _fetch = fetch;
@@ -89,9 +84,7 @@ class Output<T, ARG> extends BaseIO<T> with OutputMixin<T, ARG> {
     bool isBehavior = true,
     required _FetchCallback<T, ARG?> fetch,
     T? Function()? onReset,
-    String? persistentKey,
-    _SerializeCallback<T>? onSerialize,
-    _DeserializeCallback<T>? onDeserialize,
+    PersistConfig<T>? persistConfig,
   }) {
     return OptionalOutput<T, ARG>(
       semantics: semantics,
@@ -101,9 +94,7 @@ class Output<T, ARG> extends BaseIO<T> with OutputMixin<T, ARG> {
       printLog: printLog,
       fetch: fetch,
       onReset: onReset,
-      persistentKey: persistentKey,
-      onDeserialize: onDeserialize,
-      onSerialize: onSerialize,
+      persistConfig: persistConfig,
     );
   }
 }
@@ -121,19 +112,15 @@ class IO<T> extends BaseIO<T> with InputMixin<T>, OutputMixin<T, dynamic> {
     bool printLog = true,
     _FetchCallback<T, dynamic>? fetch,
     T Function()? onReset,
-    String? persistentKey,
-    _SerializeCallback<T>? onSerialize,
-    _DeserializeCallback<T>? onDeserialize,
+    PersistConfig<T>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
           sync: sync,
           isBehavior: isBehavior,
           onReset: onReset,
-          persistentKey: persistentKey,
+          persistConfig: persistConfig,
           printLog: printLog,
-          onDeserialize: onDeserialize,
-          onSerialize: onSerialize,
         ) {
     stream = _subject.stream;
 
@@ -154,9 +141,7 @@ class IO<T> extends BaseIO<T> with InputMixin<T>, OutputMixin<T, dynamic> {
     bool printLog = true,
     _FetchCallback<T, dynamic>? fetch,
     T? Function()? onReset,
-    String? persistentKey,
-    _SerializeCallback<T>? onSerialize,
-    _DeserializeCallback<T>? onDeserialize,
+    PersistConfig<T>? persistConfig,
   }) {
     return OptionalIO<T>(
       semantics: semantics,
@@ -168,9 +153,7 @@ class IO<T> extends BaseIO<T> with InputMixin<T>, OutputMixin<T, dynamic> {
       isDistinct: isDistinct,
       fetch: fetch,
       onReset: onReset,
-      persistentKey: persistentKey,
-      onDeserialize: onDeserialize,
-      onSerialize: onSerialize,
+      persistConfig: persistConfig,
     );
   }
 }

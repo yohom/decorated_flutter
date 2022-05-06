@@ -15,7 +15,7 @@ class IntIO extends IO<int> with IntMixin {
     int? remainder,
     _FetchCallback<int, dynamic>? fetch,
     int Function()? onReset,
-    String? persistentKey,
+    PersistConfig<int>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -26,7 +26,7 @@ class IntIO extends IO<int> with IntMixin {
           fetch: fetch,
           printLog: printLog,
           onReset: onReset,
-          persistentKey: persistentKey,
+          persistConfig: persistConfig,
         ) {
     _min = min;
     _max = max;
@@ -48,7 +48,7 @@ class IntInput extends Input<int> with IntMixin {
     int? remainder,
     bool printLog = true,
     int Function()? onReset,
-    String? persistentKey,
+    PersistConfig<int>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -58,7 +58,7 @@ class IntInput extends Input<int> with IntMixin {
           isDistinct: isDistinct,
           printLog: printLog,
           onReset: onReset,
-          persistentKey: persistentKey,
+          persistConfig: persistConfig,
         ) {
     _min = min;
     _max = max;
@@ -115,5 +115,9 @@ mixin IntMixin on BaseIO<int> {
     }
     _subject.add(result);
     return result;
+  }
+
+  Stream<String> mapToString([String Function(int)? mapper]) {
+    return map((event) => mapper != null ? mapper(event) : '$event');
   }
 }

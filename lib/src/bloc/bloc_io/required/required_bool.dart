@@ -12,7 +12,7 @@ class BoolIO extends IO<bool> with BoolMixin {
     bool printLog = true,
     _FetchCallback<bool, dynamic>? fetch,
     bool Function()? onReset,
-    String? persistentKey,
+    PersistConfig<bool>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -23,7 +23,7 @@ class BoolIO extends IO<bool> with BoolMixin {
           fetch: fetch,
           printLog: printLog,
           onReset: onReset,
-          persistentKey: persistentKey,
+          persistConfig: persistConfig,
         );
 }
 
@@ -37,7 +37,7 @@ class BoolOutput<ARG> extends Output<bool, ARG> with BoolMixin {
     bool printLog = true,
     required _FetchCallback<bool, ARG?> fetch,
     bool Function()? onReset,
-    String? persistentKey,
+    PersistConfig<bool>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -46,7 +46,7 @@ class BoolOutput<ARG> extends Output<bool, ARG> with BoolMixin {
           fetch: fetch,
           printLog: printLog,
           onReset: onReset,
-          persistentKey: persistentKey,
+          persistConfig: persistConfig,
         );
 }
 

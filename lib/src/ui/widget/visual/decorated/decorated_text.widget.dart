@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class DecoratedText extends StatelessWidget {
   const DecoratedText(
-    this.data, {
+    this._data, {
     Key? key,
     this.padding,
     this.margin,
@@ -37,7 +37,50 @@ class DecoratedText extends StatelessWidget {
     this.textFlexible = false,
     this.widgetPadding,
     this.alignment,
-  }) : super(key: key);
+  })  : _stream = null,
+        initialData = null,
+        super(key: key);
+
+  const DecoratedText.reactive(
+    this._stream, {
+    Key? key,
+    this.initialData,
+    this.padding,
+    this.margin,
+    this.decoration,
+    this.foregroundDecoration,
+    this.style,
+    this.strutStyle = const StrutStyle(),
+    this.safeArea,
+    this.onPressed,
+    this.maxLines,
+    this.textAlign,
+    this.overflow, // 默认TextOverflow.ellipsis时, 会只有一行文字+省略号
+    this.constraints,
+    this.expanded = false,
+    this.visible,
+    this.width,
+    this.height,
+    this.center,
+    this.transform,
+    this.sliver,
+    this.leftWidget,
+    this.rightWidget,
+    this.softWrap = true,
+    this.material,
+    this.mainAxisAlignment,
+    this.crossAxisAlignment,
+    this.textBaseline,
+    this.behavior,
+    this.textExpanded = false,
+    this.textFlexible = false,
+    this.widgetPadding,
+    this.alignment,
+  })  : _data = null,
+        super(key: key);
+
+  final Stream<String>? _stream;
+  final String? initialData;
 
   /// 内边距
   final EdgeInsetsGeometry? padding;
@@ -50,7 +93,7 @@ class DecoratedText extends StatelessWidget {
   final BoxDecoration? foregroundDecoration;
   final TextStyle? style;
   final StrutStyle strutStyle;
-  final String data;
+  final String? _data;
   final SafeAreaConfig? safeArea;
   final ContextCallback? onPressed;
   final int? maxLines;
@@ -61,7 +104,6 @@ class DecoratedText extends StatelessWidget {
   final double? width;
   final double? height;
   final bool? visible;
-  @Deprecated('使用alignment代替')
   final bool? center;
   final bool? sliver;
   final Matrix4? transform;
@@ -80,15 +122,31 @@ class DecoratedText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget result = Text(
-      data,
-      maxLines: maxLines,
-      style: style ?? DefaultTextStyle.of(context).style,
-      strutStyle: strutStyle,
-      textAlign: textAlign,
-      overflow: overflow,
-      softWrap: softWrap,
-    );
+    Widget result = _data != null
+        ? Text(
+            _data!,
+            maxLines: maxLines,
+            style: style ?? DefaultTextStyle.of(context).style,
+            strutStyle: strutStyle,
+            textAlign: textAlign,
+            overflow: overflow,
+            softWrap: softWrap,
+          )
+        : StreamBuilder<String>(
+            stream: _stream!,
+            initialData: initialData,
+            builder: (context, snapshot) {
+              return Text(
+                snapshot.data ?? '',
+                maxLines: maxLines,
+                style: style ?? DefaultTextStyle.of(context).style,
+                strutStyle: strutStyle,
+                textAlign: textAlign,
+                overflow: overflow,
+                softWrap: softWrap,
+              );
+            },
+          );
 
     if (rightWidget != null || leftWidget != null) {
       result = Row(
