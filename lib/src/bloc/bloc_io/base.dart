@@ -150,7 +150,7 @@ abstract class BaseIO<T> {
   final T Function()? _onReset;
 
   /// 持久化配置
-  final PersistConfig? _persistConfig;
+  final PersistConfig<T>? _persistConfig;
 
   void addError(Object error, [StackTrace? stackTrace]) {
     if (_subject.isClosed) return;
