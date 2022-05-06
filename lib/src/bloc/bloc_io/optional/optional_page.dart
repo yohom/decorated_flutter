@@ -16,7 +16,7 @@ class OptionalPageOutput<T, ARG> extends OptionalListOutput<T, int>
     int? forceCapacity,
     required _PageFetchCallback<List<T>, ARG?> pageFetch,
     List<T>? Function()? onReset,
-    String? persistentKey,
+    PersistConfig<List<T>>? persistConfig,
     _MergeListCallback<T>? onMergeList,
     _NoMoreDataCallback<T>? isNoMoreData,
   }) : super(
@@ -26,7 +26,7 @@ class OptionalPageOutput<T, ARG> extends OptionalListOutput<T, int>
           isBehavior: isBehavior,
           fetch: (_) => Future.error('请使用pageFetch回调!'),
           onReset: onReset,
-          persistentKey: persistentKey,
+          persistConfig: persistConfig,
           printLog: printLog,
         ) {
     _initPage = initPage ?? defaultInitialPage ?? 0;
@@ -60,7 +60,7 @@ class OptionalPageIO<T, ARG> extends OptionalListIO<T>
     int? forceCapacity,
     _PageFetchCallback<List<T>, ARG?>? pageFetch,
     List<T>? Function()? onReset,
-    String? persistentKey,
+    PersistConfig<List<T>>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -68,7 +68,7 @@ class OptionalPageIO<T, ARG> extends OptionalListIO<T>
           isBehavior: isBehavior,
           fetch: (_) => Future.value([]),
           onReset: onReset,
-          persistentKey: persistentKey,
+          persistConfig: persistConfig,
           printLog: printLog,
         ) {
     _initPage = initPage;

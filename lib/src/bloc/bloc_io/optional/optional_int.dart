@@ -15,7 +15,7 @@ class OptionalIntIO extends IO<int?> with OptionalIntMixin {
     int? remainder,
     _FetchCallback<int, dynamic>? fetch,
     int? Function()? onReset,
-    String? persistentKey,
+    PersistConfig<int>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -26,7 +26,7 @@ class OptionalIntIO extends IO<int?> with OptionalIntMixin {
           fetch: fetch,
           printLog: printLog,
           onReset: onReset,
-          persistentKey: persistentKey,
+          persistConfig: persistConfig,
         ) {
     _min = min;
     _max = max;
@@ -48,7 +48,7 @@ class OptionalIntInput extends Input<int?> with OptionalIntMixin {
     int? remainder,
     bool printLog = true,
     int? Function()? onReset,
-    String? persistentKey,
+    PersistConfig<int>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -58,7 +58,7 @@ class OptionalIntInput extends Input<int?> with OptionalIntMixin {
           isDistinct: isDistinct,
           printLog: printLog,
           onReset: onReset,
-          persistentKey: persistentKey,
+          persistConfig: persistConfig,
         ) {
     _min = min;
     _max = max;

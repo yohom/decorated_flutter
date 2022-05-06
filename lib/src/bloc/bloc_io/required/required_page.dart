@@ -16,7 +16,7 @@ class PageOutput<T, ARG> extends ListOutput<T, int> with PageMixin<T, ARG> {
     int? forceCapacity,
     required _PageFetchCallback<List<T>, ARG?> pageFetch,
     List<T> Function()? onReset,
-    String? persistentKey,
+    PersistConfig<List<T>>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -24,7 +24,7 @@ class PageOutput<T, ARG> extends ListOutput<T, int> with PageMixin<T, ARG> {
           isBehavior: isBehavior,
           fetch: (_) => Future.value([]),
           onReset: onReset,
-          persistentKey: persistentKey,
+          persistConfig: persistConfig,
           printLog: printLog,
         ) {
     _initPage = initPage ?? defaultInitialPage ?? 0;
@@ -46,7 +46,7 @@ class PageOutput<T, ARG> extends ListOutput<T, int> with PageMixin<T, ARG> {
     int? forceCapacity,
     required _PageFetchCallback<List<T>, ARG?> pageFetch,
     List<T>? Function()? onReset,
-    String? persistentKey,
+    PersistConfig<List<T>>? persistConfig,
     _MergeListCallback<T>? onMergeList,
     _NoMoreDataCallback<T>? isNoMoreData,
   }) {
@@ -61,7 +61,7 @@ class PageOutput<T, ARG> extends ListOutput<T, int> with PageMixin<T, ARG> {
       forceCapacity: forceCapacity,
       pageFetch: pageFetch,
       onReset: onReset,
-      persistentKey: persistentKey,
+      persistConfig: persistConfig,
       onMergeList: onMergeList,
       isNoMoreData: isNoMoreData,
     );
@@ -89,7 +89,7 @@ class PageIO<T, ARG> extends ListIO<T> with PageMixin<T, ARG> {
     int? forceCapacity,
     _PageFetchCallback<List<T>, ARG?>? pageFetch,
     List<T> Function()? onReset,
-    String? persistentKey,
+    PersistConfig<List<T>>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -97,7 +97,7 @@ class PageIO<T, ARG> extends ListIO<T> with PageMixin<T, ARG> {
           isBehavior: isBehavior,
           fetch: (_) => Future.error('请使用pageFetch回调!'),
           onReset: onReset,
-          persistentKey: persistentKey,
+          persistConfig: persistConfig,
           printLog: printLog,
         ) {
     _initPage = initPage;

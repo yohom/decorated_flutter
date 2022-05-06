@@ -13,7 +13,7 @@ class OptionalListInput<T> extends Input<List<T>?> with OptionalListMixin<T> {
     int? forceCapacity,
     List<T>? Function()? onReset,
     bool Function(List<T>?, List<T>?)? isSame,
-    String? persistentKey,
+    PersistConfig<List<T>>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -24,7 +24,7 @@ class OptionalListInput<T> extends Input<List<T>?> with OptionalListMixin<T> {
           printLog: printLog,
           onReset: onReset,
           isSame: isSame ?? listEquals,
-          persistentKey: persistentKey,
+          persistConfig: persistConfig,
         ) {
     _forceCapacity = forceCapacity;
   }
@@ -44,9 +44,7 @@ class OptionalListOutput<T, ARG> extends Output<List<T>?, ARG>
     int? forceCapacity,
     required _FetchCallback<List<T>, ARG?> fetch,
     List<T>? Function()? onReset,
-    String? persistentKey,
-    _SerializeCallback<List<T>>? onSerialize,
-    _DeserializeCallback<List<T>?>? onDeserialize,
+    PersistConfig<List<T>>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -55,11 +53,7 @@ class OptionalListOutput<T, ARG> extends Output<List<T>?, ARG>
           fetch: fetch,
           printLog: printLog,
           onReset: onReset,
-          persistentKey: persistentKey,
-          onDeserialize: onDeserialize,
-          // 上层只会序序列化非null值
-          onSerialize:
-              onSerialize != null ? (data) => onSerialize(data!) : null,
+          persistConfig: persistConfig,
         ) {
     _forceCapacity = forceCapacity;
   }
@@ -79,9 +73,7 @@ class OptionalListIO<T> extends IO<List<T>?> with OptionalListMixin {
     _FetchCallback<List<T>, dynamic>? fetch,
     bool Function(List<T>?, List<T>?)? isSame,
     List<T>? Function()? onReset,
-    String? persistentKey,
-    _SerializeCallback<List<T>>? onSerialize,
-    _DeserializeCallback<List<T>>? onDeserialize,
+    PersistConfig<List<T>>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -93,10 +85,7 @@ class OptionalListIO<T> extends IO<List<T>?> with OptionalListMixin {
           printLog: printLog,
           onReset: onReset,
           isSame: isSame ?? listEquals,
-          persistentKey: persistentKey,
-          onDeserialize: onDeserialize,
-          onSerialize:
-              onSerialize != null ? (data) => onSerialize(data!) : null,
+          persistConfig: persistConfig,
         ) {
     _forceCapacity = forceCapacity;
   }

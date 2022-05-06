@@ -13,7 +13,7 @@ class ListInput<T> extends Input<List<T>> with ListMixin<T> {
     bool Function(List<T>, List<T>)? isSame,
     int? forceCapacity,
     List<T> Function()? onReset,
-    String? persistentKey,
+    PersistConfig<List<T>>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -24,7 +24,7 @@ class ListInput<T> extends Input<List<T>> with ListMixin<T> {
           printLog: printLog,
           onReset: onReset,
           isSame: isSame,
-          persistentKey: persistentKey,
+          persistConfig: persistConfig,
         ) {
     _forceCapacity = forceCapacity;
   }
@@ -39,7 +39,7 @@ class ListInput<T> extends Input<List<T>> with ListMixin<T> {
     bool printLog = true,
     List<T>? Function()? onReset,
     bool Function(List<T>?, List<T>?)? isSame,
-    String? persistentKey,
+    PersistConfig<List<T>>? persistConfig,
   }) {
     return OptionalListInput<T>(
       semantics: semantics,
@@ -51,7 +51,7 @@ class ListInput<T> extends Input<List<T>> with ListMixin<T> {
       isDistinct: isDistinct,
       onReset: onReset,
       isSame: isSame,
-      persistentKey: persistentKey,
+      persistConfig: persistConfig,
     );
   }
 }
@@ -67,9 +67,7 @@ class ListOutput<T, ARG> extends Output<List<T>, ARG> with ListMixin<T> {
     int? forceCapacity,
     required _FetchCallback<List<T>, ARG?> fetch,
     List<T> Function()? onReset,
-    String? persistentKey,
-    _SerializeCallback<List<T>>? onSerialize,
-    _DeserializeCallback<List<T>>? onDeserialize,
+    PersistConfig<List<T>>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -78,9 +76,7 @@ class ListOutput<T, ARG> extends Output<List<T>, ARG> with ListMixin<T> {
           fetch: fetch,
           printLog: printLog,
           onReset: onReset,
-          persistentKey: persistentKey,
-          onDeserialize: onDeserialize,
-          onSerialize: onSerialize,
+          persistConfig: persistConfig,
         ) {
     _forceCapacity = forceCapacity;
   }
@@ -94,9 +90,7 @@ class ListOutput<T, ARG> extends Output<List<T>, ARG> with ListMixin<T> {
     int? forceCapacity,
     required _FetchCallback<List<T>, ARG?> fetch,
     List<T> Function()? onReset,
-    String? persistentKey,
-    _SerializeCallback<List<T>>? onSerialize,
-    _DeserializeCallback<List<T>>? onDeserialize,
+    PersistConfig<List<T>>? persistConfig,
   }) {
     return OptionalListOutput<T, ARG>(
       semantics: semantics,
@@ -107,9 +101,7 @@ class ListOutput<T, ARG> extends Output<List<T>, ARG> with ListMixin<T> {
       printLog: printLog,
       onReset: onReset,
       forceCapacity: forceCapacity,
-      persistentKey: persistentKey,
-      onDeserialize: onDeserialize,
-      onSerialize: onSerialize,
+      persistConfig: persistConfig,
     );
   }
 }
@@ -128,9 +120,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin<T> {
     int? forceCapacity,
     _FetchCallback<List<T>, dynamic>? fetch,
     List<T> Function()? onReset,
-    String? persistentKey,
-    _SerializeCallback<List<T>>? onSerialize,
-    _DeserializeCallback<List<T>>? onDeserialize,
+    PersistConfig<List<T>>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -142,9 +132,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin<T> {
           printLog: printLog,
           onReset: onReset,
           isSame: isSame ?? listEquals,
-          persistentKey: persistentKey,
-          onDeserialize: onDeserialize,
-          onSerialize: onSerialize,
+          persistConfig: persistConfig,
         ) {
     _forceCapacity = forceCapacity;
   }
@@ -158,9 +146,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin<T> {
     int? forceCapacity,
     required _FetchCallback<List<T>, dynamic> fetch,
     List<T> Function()? onReset,
-    String? persistentKey,
-    _SerializeCallback<List<T>>? onSerialize,
-    _DeserializeCallback<List<T>>? onDeserialize,
+    PersistConfig<List<T>>? persistConfig,
   }) {
     return OptionalListIO<T>(
       semantics: semantics,
@@ -171,9 +157,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin<T> {
       printLog: printLog,
       onReset: onReset,
       forceCapacity: forceCapacity,
-      persistentKey: persistentKey,
-      onDeserialize: onDeserialize,
-      onSerialize: onSerialize,
+      persistConfig: persistConfig,
     );
   }
 }
