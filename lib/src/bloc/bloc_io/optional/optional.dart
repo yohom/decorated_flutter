@@ -11,7 +11,7 @@ class OptionalInput<T> extends Input<T?> {
     bool acceptEmpty = true,
     bool isDistinct = false,
     T? Function()? onReset,
-    PersistConfig<T>? persistConfig,
+    PersistConfig<T?>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -35,7 +35,7 @@ class OptionalOutput<T, ARG> extends Output<T?, ARG> {
     bool isBehavior = true,
     required _FetchCallback<T, ARG?> fetch,
     T? Function()? onReset,
-    PersistConfig<T>? persistConfig,
+    PersistConfig<T?>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -62,7 +62,7 @@ class OptionalIO<T> extends IO<T?> {
     bool printLog = true,
     _FetchCallback<T, dynamic>? fetch,
     T? Function()? onReset,
-    PersistConfig<T>? persistConfig,
+    PersistConfig<T?>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,

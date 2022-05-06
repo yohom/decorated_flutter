@@ -16,7 +16,7 @@ class OptionalPageOutput<T, ARG> extends OptionalListOutput<T, int>
     int? forceCapacity,
     required _PageFetchCallback<List<T>, ARG?> pageFetch,
     List<T>? Function()? onReset,
-    PersistConfig<List<T>>? persistConfig,
+    PersistConfig<List<T>?>? persistConfig,
     _MergeListCallback<T>? onMergeList,
     _NoMoreDataCallback<T>? isNoMoreData,
   }) : super(
@@ -60,7 +60,7 @@ class OptionalPageIO<T, ARG> extends OptionalListIO<T>
     int? forceCapacity,
     _PageFetchCallback<List<T>, ARG?>? pageFetch,
     List<T>? Function()? onReset,
-    PersistConfig<List<T>>? persistConfig,
+    PersistConfig<List<T>?>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,

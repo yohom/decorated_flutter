@@ -15,7 +15,7 @@ class OptionalIntIO extends IO<int?> with OptionalIntMixin {
     int? remainder,
     _FetchCallback<int, dynamic>? fetch,
     int? Function()? onReset,
-    PersistConfig<int>? persistConfig,
+    PersistConfig<int?>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -48,7 +48,7 @@ class OptionalIntInput extends Input<int?> with OptionalIntMixin {
     int? remainder,
     bool printLog = true,
     int? Function()? onReset,
-    PersistConfig<int>? persistConfig,
+    PersistConfig<int?>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,

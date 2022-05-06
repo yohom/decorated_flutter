@@ -39,7 +39,7 @@ class ListInput<T> extends Input<List<T>> with ListMixin<T> {
     bool printLog = true,
     List<T>? Function()? onReset,
     bool Function(List<T>?, List<T>?)? isSame,
-    PersistConfig<List<T>>? persistConfig,
+    PersistConfig<List<T>?>? persistConfig,
   }) {
     return OptionalListInput<T>(
       semantics: semantics,
@@ -90,7 +90,7 @@ class ListOutput<T, ARG> extends Output<List<T>, ARG> with ListMixin<T> {
     int? forceCapacity,
     required _FetchCallback<List<T>, ARG?> fetch,
     List<T> Function()? onReset,
-    PersistConfig<List<T>>? persistConfig,
+    PersistConfig<List<T>?>? persistConfig,
   }) {
     return OptionalListOutput<T, ARG>(
       semantics: semantics,
@@ -146,7 +146,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin<T> {
     int? forceCapacity,
     required _FetchCallback<List<T>, dynamic> fetch,
     List<T> Function()? onReset,
-    PersistConfig<List<T>>? persistConfig,
+    PersistConfig<List<T>?>? persistConfig,
   }) {
     return OptionalListIO<T>(
       semantics: semantics,

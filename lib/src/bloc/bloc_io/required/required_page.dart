@@ -46,7 +46,7 @@ class PageOutput<T, ARG> extends ListOutput<T, int> with PageMixin<T, ARG> {
     int? forceCapacity,
     required _PageFetchCallback<List<T>, ARG?> pageFetch,
     List<T>? Function()? onReset,
-    PersistConfig<List<T>>? persistConfig,
+    PersistConfig<List<T>?>? persistConfig,
     _MergeListCallback<T>? onMergeList,
     _NoMoreDataCallback<T>? isNoMoreData,
   }) {

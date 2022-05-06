@@ -13,7 +13,7 @@ class OptionalListInput<T> extends Input<List<T>?> with OptionalListMixin<T> {
     int? forceCapacity,
     List<T>? Function()? onReset,
     bool Function(List<T>?, List<T>?)? isSame,
-    PersistConfig<List<T>>? persistConfig,
+    PersistConfig<List<T>?>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -44,7 +44,7 @@ class OptionalListOutput<T, ARG> extends Output<List<T>?, ARG>
     int? forceCapacity,
     required _FetchCallback<List<T>, ARG?> fetch,
     List<T>? Function()? onReset,
-    PersistConfig<List<T>>? persistConfig,
+    PersistConfig<List<T>?>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -73,7 +73,7 @@ class OptionalListIO<T> extends IO<List<T>?> with OptionalListMixin {
     _FetchCallback<List<T>, dynamic>? fetch,
     bool Function(List<T>?, List<T>?)? isSame,
     List<T>? Function()? onReset,
-    PersistConfig<List<T>>? persistConfig,
+    PersistConfig<List<T>?>? persistConfig,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
