@@ -84,7 +84,7 @@ class Output<T, ARG> extends BaseIO<T> with OutputMixin<T, ARG> {
     bool isBehavior = true,
     required _FetchCallback<T, ARG?> fetch,
     T? Function()? onReset,
-    PersistConfig<T>? persistConfig,
+    PersistConfig<T?>? persistConfig,
   }) {
     return OptionalOutput<T, ARG>(
       semantics: semantics,
@@ -141,7 +141,7 @@ class IO<T> extends BaseIO<T> with InputMixin<T>, OutputMixin<T, dynamic> {
     bool printLog = true,
     _FetchCallback<T, dynamic>? fetch,
     T? Function()? onReset,
-    PersistConfig<T>? persistConfig,
+    PersistConfig<T?>? persistConfig,
   }) {
     return OptionalIO<T>(
       semantics: semantics,
