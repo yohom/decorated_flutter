@@ -23,14 +23,6 @@ typedef SerializeCallback<T> = dynamic Function(T);
 typedef DeserializeCallback<T> = T Function(dynamic);
 
 abstract class BaseIO<T> {
-  @Deprecated('使用自带的持久层')
-  static Persistence? _persistence;
-
-  @Deprecated('使用自带的持久层')
-  static void registerPersistence(Persistence persistence) {
-    _persistence = persistence;
-  }
-
   BaseIO({
     /// 初始值, 传递给内部的[_subject]
     required T seedValue,
@@ -66,25 +58,11 @@ abstract class BaseIO<T> {
             : PublishSubject<T>(sync: sync) {
     _subject.listen((data) {
       latest = data;
-      if (_persistConfig?.key != null) {
-        // 新版内建持久层
-        if (_persistConfig?.onSerialize != null && data != null) {
-          // 这里只持久化非空的值
-          final serialized = _persistConfig?.onSerialize(data);
-          assert(isJsonable(serialized), '序列化之后应是jsonable值!');
+      if (_persistConfig != null && data != null) {
+        final serialized = _persistConfig!.onSerialize(data);
+        assert(isJsonable(serialized), '序列化之后应是jsonable值!');
 
-          gDecoratedStorage
-              .then((it) => it.put(_persistConfig?.key, serialized));
-
-          return;
-        }
-
-        // 维持旧版兼容
-        if (_persistence != null) {
-          _persistence!.writeValue(_persistConfig!.key, data);
-        } else {
-          L.w('未注册持久层! 请调用BaseIO.registerPersistence注册持久层');
-        }
+        gDecoratedStorage.then((it) => it.put(_persistConfig!.key, serialized));
       }
       if (_printLog) {
         L.d('当前$semantics latest: $latest');
@@ -92,35 +70,21 @@ abstract class BaseIO<T> {
     });
     // 如果是BehaviorSubject, 则检查是否有持久化下来的数据, 有则发射
     if (isBehavior) {
-      if (_persistConfig?.key != null) {
-        // 新版内建持久层
-        if (_persistConfig?.onDeserialize != null) {
-          try {
-            gDecoratedStorage.then((box) {
-              final deserialized = box.get(_persistConfig?.key);
-              // 只发射非空值
-              if (deserialized == null) {
-                return L.w('读取到 [$_semantics] null缓存值, 直接略过');
-              }
-
-              final value = _persistConfig?.onDeserialize(deserialized);
-              if (value != null) _subject.add(value);
-            });
-          } catch (e) {
-            L.w('读取持久层数据发生异常 $e, 删除key: [$_persistConfig?.key]');
-            gDecoratedStorage.then((box) => box.delete(_persistConfig?.key));
-          }
-
-          return;
-        }
-
-        // 维持旧版兼容
+      if (_persistConfig != null) {
         try {
-          final value = _persistence?.readValue(_persistConfig!.key);
-          if (value != null) _subject.add(value);
+          gDecoratedStorage.then((box) {
+            final deserialized = box.get(_persistConfig!.key);
+            // 只发射非空值
+            if (deserialized == null) {
+              return L.w('读取到 [$_semantics] null缓存值, 直接略过');
+            }
+
+            final value = _persistConfig!.onDeserialize(deserialized);
+            if (value != null) _subject.add(value);
+          });
         } catch (e) {
-          L.w('读取持久层数据发生异常 $e, 删除key: [$_persistConfig?.key]');
-          _persistence?.removeKey(_persistConfig!.key);
+          L.w('读取持久层数据发生异常 $e, 删除key: [${_persistConfig!.key}]');
+          gDecoratedStorage.then((box) => box.delete(_persistConfig!.key));
         }
       }
     }
@@ -195,17 +159,14 @@ abstract class BaseIO<T> {
     if (_persistConfig?.key != null) {
       // 新版内建持久层
       if (_persistConfig?.onSerialize != null && _resetValue != null) {
-        final serialized = _persistConfig?.onSerialize(_resetValue);
+        final serialized = _persistConfig!.onSerialize(_resetValue);
         assert(isJsonable(serialized), '序列化之后应是jsonable值!');
 
         gDecoratedStorage
-            .then((box) => box.put(_persistConfig?.key, serialized));
+            .then((box) => box.put(_persistConfig!.key, serialized));
 
         return;
       }
-
-      // 兼容旧版逻辑
-      _persistence?.writeValue(_persistConfig!.key, _resetValue);
     }
   }
 
