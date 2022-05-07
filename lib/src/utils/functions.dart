@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
@@ -117,6 +118,7 @@ void runDecoratedApp(
 
   if (beforeApp != null) {
     try {
+      await initDecoratedBox();
       await beforeApp();
     } catch (e, s) {
       L.w('运行app前置工作出现异常, 请检查是否有bug!. $e\n $s');
