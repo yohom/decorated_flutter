@@ -15,6 +15,7 @@ class DecoratedWidget<B extends BLoC> extends StatefulWidget {
     this.systemUiOverlayStyle,
     this.tabControllerConfig,
     this.decorationBuilder,
+    this.onDispose,
   })  : // 要么同时设置泛型B和bloc参数, 要么就都不设置
         assert((B != BLoC && bloc != null) || (B == BLoC && bloc == null)),
         super(key: key);
@@ -45,6 +46,9 @@ class DecoratedWidget<B extends BLoC> extends StatefulWidget {
 
   /// 自定义的样式
   final BoxDecoration Function(BuildContext)? decorationBuilder;
+
+  /// dispose回调
+  final VoidCallback? onDispose;
 
   @override
   _DecoratedWidgetState createState() => _DecoratedWidgetState<B>();
@@ -118,5 +122,11 @@ class _DecoratedWidgetState<B extends BLoC> extends State<DecoratedWidget<B>> {
     }
 
     return result;
+  }
+
+  @override
+  void dispose() {
+    widget.onDispose?.call();
+    super.dispose();
   }
 }
