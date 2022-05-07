@@ -6,8 +6,6 @@ import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-import 'log.dart';
-
 bool notEqual(prev, next) => prev != next;
 
 bool notNull(data) => data != null;
