@@ -31,8 +31,8 @@ class ImageView extends StatelessWidget {
     this.clipBehavior = Clip.hardEdge,
     this.aspectRatio,
     this.colorBlendMode,
-  })  : imagePath = imageUri.startsWith('http') ? null : imageUri,
-        imageUrl = imageUri.startsWith('http') ? imageUri : null,
+  })  : imagePath = imageUri.isUrl ? null : imageUri,
+        imageUrl = imageUri.isUrl ? imageUri : null,
         errorWidget = const SizedBox.shrink(),
         placeholder = const SizedBox.shrink(),
         assert(
@@ -276,5 +276,11 @@ class ImageView extends StatelessWidget {
     }
 
     return result;
+  }
+}
+
+extension on String {
+  bool get isUrl {
+    return startsWith('http') || startsWith('blob:http');
   }
 }
