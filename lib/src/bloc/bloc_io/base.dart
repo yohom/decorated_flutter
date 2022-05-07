@@ -62,7 +62,7 @@ abstract class BaseIO<T> {
         final serialized = _persistConfig!.onSerialize(data);
         assert(isJsonable(serialized), '序列化之后应是jsonable值!');
 
-        gDecoratedStorage.then((it) => it.put(_persistConfig!.key, serialized));
+        gDecoratedStorage.put(_persistConfig!.key, serialized);
       }
       if (_printLog) {
         L.d('当前$semantics latest: $latest');
@@ -72,19 +72,18 @@ abstract class BaseIO<T> {
     if (isBehavior) {
       if (_persistConfig != null) {
         try {
-          gDecoratedStorage.then((box) {
-            final deserialized = box.get(_persistConfig!.key);
-            // 只发射非空值
-            if (deserialized == null) {
-              return L.w('读取到 [$_semantics] null缓存值, 直接略过');
-            }
+          final deserialized = gDecoratedStorage.get(_persistConfig!.key);
+          // 只发射非空值
+          if (deserialized == null) {
+            L.w('读取到 [$_semantics] null缓存值, 直接略过');
+            return;
+          }
 
-            final value = _persistConfig!.onDeserialize(deserialized);
-            if (value != null) _subject.add(value);
-          });
+          final value = _persistConfig!.onDeserialize(deserialized);
+          if (value != null) _subject.add(value);
         } catch (e) {
           L.w('读取持久层数据发生异常 $e, 删除key: [${_persistConfig!.key}]');
-          gDecoratedStorage.then((box) => box.delete(_persistConfig!.key));
+          gDecoratedStorage.delete(_persistConfig!.key);
         }
       }
     }
@@ -162,8 +161,7 @@ abstract class BaseIO<T> {
         final serialized = _persistConfig!.onSerialize(_resetValue);
         assert(isJsonable(serialized), '序列化之后应是jsonable值!');
 
-        gDecoratedStorage
-            .then((box) => box.put(_persistConfig!.key, serialized));
+        gDecoratedStorage.put(_persistConfig!.key, serialized);
 
         return;
       }

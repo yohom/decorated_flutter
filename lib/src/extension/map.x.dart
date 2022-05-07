@@ -7,6 +7,8 @@ extension MapX on Map {
       return thisValue;
     } else if (thisValue is Map) {
       return thisValue.valueFor(keyPath: keysSplit.join('.'));
+    } else {
+      return null;
     }
   }
 }
