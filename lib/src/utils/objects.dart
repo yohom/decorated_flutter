@@ -20,6 +20,7 @@ final kMoneyRegex = RegExp(
 // decorated专属存储
 late Box _box;
 Future<void> initDecoratedBox() async {
+  await Hive.initFlutter();
   _box = await Hive.openBox('decorated_flutter_box');
 }
 
