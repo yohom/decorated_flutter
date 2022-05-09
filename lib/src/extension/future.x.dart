@@ -100,6 +100,16 @@ extension FutureX<T> on Future<T> {
   Future<void> thenPopToRoot() {
     return then((_) => gNavigatorKey.currentState?.clearToRoot());
   }
+
+  /// 当前Future正常结束后推入route
+  Future<void> thenPushNamed(String routeName, {Object? arguments}) {
+    return then(
+      (_) => gNavigatorKey.currentState?.pushNamed(
+        routeName,
+        arguments: arguments,
+      ),
+    );
+  }
 }
 
 extension StringFutureX on Future<String> {
