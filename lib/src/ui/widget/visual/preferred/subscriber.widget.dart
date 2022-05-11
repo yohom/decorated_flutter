@@ -170,6 +170,7 @@ class Subscriber<T> extends StatelessWidget {
     this.width,
     this.height,
     this.decoration,
+    this.keepAlive = false,
   }) : super(key: key);
 
   /// 流
@@ -207,6 +208,8 @@ class Subscriber<T> extends StatelessWidget {
   final double? height;
 
   final Decoration? decoration;
+
+  final bool keepAlive;
 
   @override
   Widget build(BuildContext context) {
@@ -249,6 +252,10 @@ class Subscriber<T> extends StatelessWidget {
             decoration: decoration,
             child: result,
           );
+        }
+
+        if (keepAlive) {
+          result = KeepAlive(keepAlive: keepAlive, child: result);
         }
 
         if (sliver) result = SliverToBoxAdapter(child: result);
