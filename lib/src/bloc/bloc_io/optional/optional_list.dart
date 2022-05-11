@@ -118,6 +118,11 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
     return _subject.stream.where(notNull).cast<List<T>>();
   }
 
+  /// 转换为非空流
+  Stream<List<T>> whereNotEmpty() {
+    return _subject.stream.where(isNotEmpty).cast<List<T>>();
+  }
+
   /// 追加, 并发射
   T? append(T element, {bool fromHead = false}) {
     if (_subject.isClosed) {

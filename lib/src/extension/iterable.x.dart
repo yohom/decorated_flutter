@@ -50,6 +50,8 @@ extension IterableX<T> on Iterable<T> {
   T get randomOne {
     return elementAt(Random().nextInt(length));
   }
+
+  List<T> whereNotEmpty() => where(isNotEmpty).cast<T>().toList();
 }
 
 extension NullableIterableX<T> on Iterable<T?>? {

@@ -66,7 +66,7 @@ class DecoratedWrap extends StatelessWidget {
                   width: itemWidth,
                   height: childAspectRatio == null
                       ? null
-                      : childAspectRatio! * itemWidth,
+                      : itemWidth / childAspectRatio!,
                   child: item,
                 ),
             ],

@@ -7,7 +7,6 @@ import 'package:flutter_svg/svg.dart';
 
 typedef LoadingProgress = void Function(double progress, List<int> data);
 
-// TODO 透明图片颜色 https://api.flutter.dev/flutter/widgets/Opacity-class.html#transparent-image
 class ImageView extends StatelessWidget {
   /// 根据图片uri自动判断是使用本地加载还是远程加载
   ImageView(
@@ -30,6 +29,8 @@ class ImageView extends StatelessWidget {
     this.foregroundDecoration,
     this.clipBehavior = Clip.hardEdge,
     this.aspectRatio,
+    this.borderRadius,
+    this.shape,
     this.colorBlendMode,
   })  : imagePath = imageUri.isUrl ? null : imageUri,
         imageUrl = imageUri.isUrl ? imageUri : null,
@@ -62,6 +63,8 @@ class ImageView extends StatelessWidget {
     this.foregroundDecoration,
     this.clipBehavior = Clip.hardEdge,
     this.aspectRatio,
+    this.borderRadius,
+    this.shape,
     this.colorBlendMode,
   })  : imageUrl = null,
         errorWidget = const SizedBox.shrink(),
@@ -95,6 +98,8 @@ class ImageView extends StatelessWidget {
     this.foregroundDecoration,
     this.clipBehavior = Clip.hardEdge,
     this.aspectRatio,
+    this.borderRadius,
+    this.shape,
     this.colorBlendMode,
   })  : imagePath = null,
         assert(
@@ -158,8 +163,14 @@ class ImageView extends StatelessWidget {
   /// 剪裁行为
   final Clip? clipBehavior;
 
-  /// 如果部位空, 则使用AspectRatio包裹
+  /// 如果不为空, 则使用AspectRatio包裹
   final double? aspectRatio;
+
+  /// 圆角 是BoxDecoration的shortcut
+  final BorderRadius? borderRadius;
+
+  /// 圆形还是方形
+  final BoxShape? shape;
 
   /// 颜色混合模式
   final BlendMode? colorBlendMode;
@@ -260,13 +271,23 @@ class ImageView extends StatelessWidget {
     if (padding != null ||
         margin != null ||
         decoration != null ||
-        foregroundDecoration != null) {
+        foregroundDecoration != null ||
+        borderRadius != null ||
+        shape != null) {
+      Decoration? _decoration = decoration;
+      if (_decoration == null && (borderRadius != null || shape != null)) {
+        _decoration = BoxDecoration(
+          borderRadius: borderRadius,
+          shape: shape ?? BoxShape.rectangle,
+        );
+      }
+
       result = Container(
-        clipBehavior: decoration != null ? Clip.hardEdge : Clip.none,
+        clipBehavior: _decoration != null ? Clip.hardEdge : Clip.none,
         padding: padding,
         margin: margin,
         foregroundDecoration: foregroundDecoration,
-        decoration: decoration,
+        decoration: _decoration,
         child: result,
       );
     }

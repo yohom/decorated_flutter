@@ -75,8 +75,10 @@ extension FutureX<T> on Future<T> {
   }
 
   /// apply一个回调, 然后返回当前对象
-  Future<T> apply<R>(FutureOr<R> Function(T value) onValue,
-      {Function? onError}) async {
+  Future<T> apply<R>(
+    FutureOr<R> Function(T value) onValue, {
+    Function? onError,
+  }) async {
     await then(onValue, onError: onError);
     return this;
   }
@@ -99,6 +101,16 @@ extension FutureX<T> on Future<T> {
   /// 当前Future正常结束后执行pop
   Future<void> thenPopToRoot() {
     return then((_) => gNavigatorKey.currentState?.clearToRoot());
+  }
+
+  /// 当前Future正常结束后推入route
+  Future<void> thenPushNamed(String routeName, {Object? arguments}) {
+    return then(
+      (_) => gNavigatorKey.currentState?.pushNamed(
+        routeName,
+        arguments: arguments,
+      ),
+    );
   }
 }
 
