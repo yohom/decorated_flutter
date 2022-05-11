@@ -26,13 +26,13 @@ dependencies:
   # 日志打印 https://pub.flutter-io.cn/packages/logger
   logger: 1.1.0
   # 获取路径 https://pub.flutter-io.cn/packages/path_provider
-  path_provider: 2.0.9
+  path_provider: 2.0.10
   # android intent https://pub.flutter-io.cn/packages/android_intent_plus
   android_intent_plus: 3.1.1
   # svg https://pub.flutter-io.cn/packages/flutter_svg
   flutter_svg: 1.0.3
   # sliver增强 https://pub.flutter-io.cn/packages/sliver_tools
-  sliver_tools: 0.2.5
+  sliver_tools: 0.2.6
   # 持久化 https://pub.flutter-io.cn/packages/hive
   hive_flutter: 1.1.0
 
