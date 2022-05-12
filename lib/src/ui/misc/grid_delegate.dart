@@ -1,5 +1,6 @@
 import 'package:flutter/rendering.dart';
 
+@Deprecated('SliverGridDelegateWithFixedCrossAxisCount已有高度参数')
 class SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight
     extends SliverGridDelegate {
   /// Creates a delegate that makes grid layouts with a fixed number of tiles in
