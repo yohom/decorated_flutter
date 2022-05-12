@@ -110,7 +110,7 @@ class _LinkageViewState<T extends BaseItem> extends State<LinkageView> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance?.addPostFrameCallback(_onBuildCompleted);
+    WidgetsBinding.instance.addPostFrameCallback(_onBuildCompleted);
     return SizedBox(
       width: double.infinity,
       height: double.infinity,

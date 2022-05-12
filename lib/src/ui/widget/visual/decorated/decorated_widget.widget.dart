@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 
 /// [B]是指定的BLoC
 class DecoratedWidget<B extends BLoC> extends StatefulWidget {
-  DecoratedWidget({
+  const DecoratedWidget({
     Key? key,
     required this.widget,
     this.bloc,
@@ -59,7 +59,7 @@ class _DecoratedWidgetState<B extends BLoC> extends State<DecoratedWidget<B>> {
   void initState() {
     super.initState();
     if (widget.onLateinit != null && widget.bloc != null) {
-      WidgetsBinding.instance?.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) {
           widget.onLateinit!(widget.bloc!, context);
         }

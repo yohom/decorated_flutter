@@ -50,7 +50,7 @@ class _ChildWrapperState extends State<_ChildWrapper> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _tabController = context.tabController;
       if (mounted) {
         _tabController!.addListener(_handleCallback);

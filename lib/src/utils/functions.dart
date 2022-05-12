@@ -164,5 +164,5 @@ DateTime requireDate(
 
 /// 下一帧回调
 void nextFrame(VoidCallback cb) {
-  WidgetsBinding.instance?.addPostFrameCallback((_) => cb());
+  WidgetsBinding.instance.addPostFrameCallback((_) => cb());
 }
