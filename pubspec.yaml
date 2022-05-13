@@ -20,7 +20,7 @@ dependencies:
   # 图片加载增强 https://pub.flutter-io.cn/packages/cached_network_image
   cached_network_image: 3.2.0
   # toast https://pub.flutter-io.cn/packages/oktoast
-  oktoast: 3.1.5
+  oktoast: 3.2.0
   # 模态对话框增强 https://pub.flutter-io.cn/packages/modal_bottom_sheet
   modal_bottom_sheet: 2.0.1
   # 日志打印 https://pub.flutter-io.cn/packages/logger
