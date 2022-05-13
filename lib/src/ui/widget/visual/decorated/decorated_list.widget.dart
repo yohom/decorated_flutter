@@ -139,7 +139,6 @@ class DecoratedList extends StatelessWidget {
     if (children != null) {
       result = ListView(
         padding: padding,
-        children: children!,
         controller: controller,
         shrinkWrap: shrinkWrap,
         itemExtent: itemExtent,
@@ -148,6 +147,7 @@ class DecoratedList extends StatelessWidget {
         addAutomaticKeepAlives: addAutomaticKeepAlives,
         addRepaintBoundaries: addRepaintBoundaries,
         addSemanticIndexes: addSemanticIndexes,
+        children: children!,
       );
     } else if (itemBuilder != null) {
       if (separatorBuilder != null && itemCount != null) {

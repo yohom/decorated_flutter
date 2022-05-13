@@ -60,7 +60,7 @@ class Output<T, ARG> extends BaseIO<T> with OutputMixin<T, ARG> {
     bool sync = true,
     bool printLog = true,
     bool isBehavior = true,
-    required _FetchCallback<T, ARG?> fetch,
+    required FetchCallback<T, ARG?> fetch,
     T Function()? onReset,
     PersistConfig<T>? persistConfig,
   }) : super(
@@ -82,7 +82,7 @@ class Output<T, ARG> extends BaseIO<T> with OutputMixin<T, ARG> {
     bool sync = true,
     bool printLog = true,
     bool isBehavior = true,
-    required _FetchCallback<T, ARG?> fetch,
+    required FetchCallback<T, ARG?> fetch,
     T? Function()? onReset,
     PersistConfig<T?>? persistConfig,
   }) {
@@ -110,7 +110,7 @@ class IO<T> extends BaseIO<T> with InputMixin<T>, OutputMixin<T, dynamic> {
     bool isDistinct = false,
     bool Function(T, T)? isSame,
     bool printLog = true,
-    _FetchCallback<T, dynamic>? fetch,
+    FetchCallback<T, dynamic>? fetch,
     T Function()? onReset,
     PersistConfig<T>? persistConfig,
   }) : super(
@@ -139,7 +139,7 @@ class IO<T> extends BaseIO<T> with InputMixin<T>, OutputMixin<T, dynamic> {
     bool acceptEmpty = true,
     bool isDistinct = false,
     bool printLog = true,
-    _FetchCallback<T, dynamic>? fetch,
+    FetchCallback<T, dynamic>? fetch,
     T? Function()? onReset,
     PersistConfig<T?>? persistConfig,
   }) {
@@ -264,7 +264,7 @@ mixin OutputMixin<T, ARG> on BaseIO<T> {
   }
 
   /// 输出Stream
-  late _FetchCallback<T, ARG?> _fetch;
+  late FetchCallback<T, ARG?> _fetch;
 
   /// 使用内部的trigger获取数据
   Future<T> update([ARG? arg]) {

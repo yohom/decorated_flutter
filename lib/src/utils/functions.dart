@@ -65,10 +65,10 @@ Future<void> polling({
       } catch (e) {
         String message = '第$tryCount次轮询失败, 错误信息: $e';
         if (whenErrorTry != null) {
-          L.d(message + ' 开始执行错误重试');
+          L.d('$message 开始执行错误重试');
           await whenErrorTry();
         } else {
-          L.d(message + ' 未配置错误重试, 抛出异常');
+          L.d('$message 未配置错误重试, 抛出异常');
           rethrow;
         }
       }

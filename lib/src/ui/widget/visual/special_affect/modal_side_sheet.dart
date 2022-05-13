@@ -69,11 +69,11 @@ class BodyWithSideSheet extends StatelessWidget {
             ),
           ),
         _ShrinkableSize(
+            show: show,
             child: SizedBox(
                 width: sheetWidth,
                 height: MediaQuery.of(context).size.height,
-                child: sheetBody),
-            show: show),
+                child: sheetBody)),
       ],
     );
   }
@@ -115,8 +115,8 @@ class __ShrinkableSizeState extends State<_ShrinkableSize>
     widget.show ? controller.forward() : controller.reverse();
     return SizeTransition(
       sizeFactor: animation,
-      child: widget.child,
       axis: Axis.horizontal,
+      child: widget.child,
     );
   }
 }
@@ -242,9 +242,9 @@ Future<T?> showModalSideSheet<T extends Object?>({
     },
     transitionBuilder: (_, animation, __, child) {
       return SlideTransition(
-        child: child,
         position: Tween<Offset>(begin: const Offset(1, 0), end: Offset.zero)
             .animate(animation),
+        child: child,
       );
     },
   );

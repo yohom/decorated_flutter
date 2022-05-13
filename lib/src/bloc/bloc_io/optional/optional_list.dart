@@ -42,7 +42,7 @@ class OptionalListOutput<T, ARG> extends Output<List<T>?, ARG>
     bool isBehavior = true,
     bool printLog = true,
     int? forceCapacity,
-    required _FetchCallback<List<T>, ARG?> fetch,
+    required FetchCallback<List<T>, ARG?> fetch,
     List<T>? Function()? onReset,
     PersistConfig<List<T>?>? persistConfig,
   }) : super(
@@ -70,7 +70,7 @@ class OptionalListIO<T> extends IO<List<T>?> with OptionalListMixin {
     bool isDistinct = false,
     bool printLog = true,
     int? forceCapacity,
-    _FetchCallback<List<T>, dynamic>? fetch,
+    FetchCallback<List<T>, dynamic>? fetch,
     bool Function(List<T>?, List<T>?)? isSame,
     List<T>? Function()? onReset,
     PersistConfig<List<T>?>? persistConfig,

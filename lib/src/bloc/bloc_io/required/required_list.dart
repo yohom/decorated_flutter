@@ -65,7 +65,7 @@ class ListOutput<T, ARG> extends Output<List<T>, ARG> with ListMixin<T> {
     bool isBehavior = true,
     bool printLog = true,
     int? forceCapacity,
-    required _FetchCallback<List<T>, ARG?> fetch,
+    required FetchCallback<List<T>, ARG?> fetch,
     List<T> Function()? onReset,
     PersistConfig<List<T>>? persistConfig,
   }) : super(
@@ -88,7 +88,7 @@ class ListOutput<T, ARG> extends Output<List<T>, ARG> with ListMixin<T> {
     bool isBehavior = true,
     bool printLog = true,
     int? forceCapacity,
-    required _FetchCallback<List<T>, ARG?> fetch,
+    required FetchCallback<List<T>, ARG?> fetch,
     List<T> Function()? onReset,
     PersistConfig<List<T>?>? persistConfig,
   }) {
@@ -118,7 +118,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin<T> {
     bool Function(List<T>, List<T>)? isSame,
     bool printLog = true,
     int? forceCapacity,
-    _FetchCallback<List<T>, dynamic>? fetch,
+    FetchCallback<List<T>, dynamic>? fetch,
     List<T> Function()? onReset,
     PersistConfig<List<T>>? persistConfig,
   }) : super(
@@ -144,7 +144,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin<T> {
     bool isBehavior = true,
     bool printLog = true,
     int? forceCapacity,
-    required _FetchCallback<List<T>, dynamic> fetch,
+    required FetchCallback<List<T>, dynamic> fetch,
     List<T> Function()? onReset,
     PersistConfig<List<T>?>? persistConfig,
   }) {

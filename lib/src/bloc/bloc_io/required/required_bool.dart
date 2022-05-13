@@ -10,7 +10,7 @@ class BoolIO extends IO<bool> with BoolMixin {
     bool acceptEmpty = true,
     bool isDistinct = false,
     bool printLog = true,
-    _FetchCallback<bool, dynamic>? fetch,
+    FetchCallback<bool, dynamic>? fetch,
     bool Function()? onReset,
     PersistConfig<bool>? persistConfig,
   }) : super(
@@ -35,7 +35,7 @@ class BoolOutput<ARG> extends Output<bool, ARG> with BoolMixin {
     bool sync = true,
     bool isBehavior = true,
     bool printLog = true,
-    required _FetchCallback<bool, ARG?> fetch,
+    required FetchCallback<bool, ARG?> fetch,
     bool Function()? onReset,
     PersistConfig<bool>? persistConfig,
   }) : super(

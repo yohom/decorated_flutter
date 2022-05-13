@@ -105,9 +105,9 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
       result = BLoCProvider<B>(
         bloc: bloc!,
         init: init,
-        child: result,
         onDispose: onDisposed,
         autoDispose: autoDispose,
+        child: result,
       );
     }
 
@@ -146,7 +146,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
     }
 
     if (onWillPop != null) {
-      result = WillPopScope(child: result, onWillPop: onWillPop);
+      result = WillPopScope(onWillPop: onWillPop, child: result);
     }
 
     if (decorationBuilder != null) {
@@ -281,9 +281,9 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
       result = BLoCProvider<B>(
         bloc: bloc!,
         init: init,
-        child: builder(context),
         onDispose: onDisposed,
         autoDispose: autoDispose,
+        child: builder(context),
       );
     } else {
       result = builder(context);
@@ -324,7 +324,7 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
     }
 
     if (onWillPop != null) {
-      result = WillPopScope(child: result, onWillPop: onWillPop);
+      result = WillPopScope(onWillPop: onWillPop, child: result);
     }
 
     return Material(

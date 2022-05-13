@@ -14,7 +14,7 @@ class PageOutput<T, ARG> extends ListOutput<T, int> with PageMixin<T, ARG> {
     bool printLog = true,
     int pageSize = 0,
     int? forceCapacity,
-    required _PageFetchCallback<List<T>, ARG?> pageFetch,
+    required PageFetchCallback<List<T>, ARG?> pageFetch,
     List<T> Function()? onReset,
     PersistConfig<List<T>>? persistConfig,
   }) : super(
@@ -44,11 +44,11 @@ class PageOutput<T, ARG> extends ListOutput<T, int> with PageMixin<T, ARG> {
     bool receiveFullData = true,
     bool printLog = true,
     int? forceCapacity,
-    required _PageFetchCallback<List<T>, ARG?> pageFetch,
+    required PageFetchCallback<List<T>, ARG?> pageFetch,
     List<T>? Function()? onReset,
     PersistConfig<List<T>?>? persistConfig,
-    _MergeListCallback<T>? onMergeList,
-    _NoMoreDataCallback<T>? isNoMoreData,
+    MergeListCallback<T>? onMergeList,
+    NoMoreDataCallback<T>? isNoMoreData,
   }) {
     return OptionalPageOutput<T, ARG>(
       seedValue: seedValue,
@@ -87,7 +87,7 @@ class PageIO<T, ARG> extends ListIO<T> with PageMixin<T, ARG> {
     bool printLog = true,
     bool receiveFullData = true,
     int? forceCapacity,
-    _PageFetchCallback<List<T>, ARG?>? pageFetch,
+    PageFetchCallback<List<T>, ARG?>? pageFetch,
     List<T> Function()? onReset,
     PersistConfig<List<T>>? persistConfig,
   }) : super(
@@ -135,7 +135,7 @@ mixin PageMixin<T, ARG> on ListMixin<T> {
   /// 每页大小 用于判断是否已加载完全部数据
   int _pageSize = 0;
 
-  late _PageFetchCallback<List<T>, ARG?> _pageFetch;
+  late PageFetchCallback<List<T>, ARG?> _pageFetch;
 
   /// 请求下一页数据
   ///

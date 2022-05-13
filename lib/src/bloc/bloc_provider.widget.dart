@@ -39,7 +39,7 @@ class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return _BLoCProviderInherited(child: widget.child, bloc: widget.bloc);
+    return _BLoCProviderInherited(bloc: widget.bloc, child: widget.child);
   }
 
   @override
