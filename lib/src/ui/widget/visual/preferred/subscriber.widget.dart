@@ -113,7 +113,7 @@ class _SingleSubscriberState<T> extends State<SingleSubscriber<T>> {
           } else {
             if (widget.cacheable) _cache = snapshot.data;
 
-            result ??= widget.builder(snapshot.data!);
+            result ??= widget.builder(snapshot.data as T);
           }
         } else if (widget.showLoading) {
           result ??= widget.loadingPlaceholder ??
@@ -232,7 +232,7 @@ class Subscriber<T> extends StatelessWidget {
                 _defaultEmptyPlaceholder ??
                 const EmptyPlaceholder();
           } else {
-            result ??= builder(snapshot.data!);
+            result ??= builder(snapshot.data as T);
           }
         } else if (showLoading) {
           result ??= loadingPlaceholder ??

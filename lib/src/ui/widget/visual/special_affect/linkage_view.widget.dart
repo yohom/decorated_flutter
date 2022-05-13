@@ -110,13 +110,14 @@ class _LinkageViewState<T extends BaseItem> extends State<LinkageView> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance?.addPostFrameCallback(_onBuildCompleted);
+    WidgetsBinding.instance.addPostFrameCallback(_onBuildCompleted);
     return SizedBox(
       width: double.infinity,
       height: double.infinity,
       child: Row(
         children: <Widget>[
           Expanded(
+            flex: widget.flexLeft,
             child: ListView.builder(
               key: _containerKey,
               padding: EdgeInsets.zero,
@@ -127,9 +128,9 @@ class _LinkageViewState<T extends BaseItem> extends State<LinkageView> {
                 return _groupItem(context, index);
               },
             ),
-            flex: widget.flexLeft,
           ),
           Expanded(
+            flex: widget.flexRight,
             child: Stack(children: [
               ListView.builder(
                 padding: EdgeInsets.zero,
@@ -148,7 +149,6 @@ class _LinkageViewState<T extends BaseItem> extends State<LinkageView> {
                 ),
               )
             ]),
-            flex: widget.flexRight,
           ),
         ],
       ),
@@ -193,8 +193,8 @@ class _LinkageViewState<T extends BaseItem> extends State<LinkageView> {
         }
       },
       child: SizedBox(
-        child: widget.groupItemBuilder(context, index, item),
         height: widget.itemGroupHeight,
+        child: widget.groupItemBuilder(context, index, item),
       ),
     );
   }
@@ -203,13 +203,13 @@ class _LinkageViewState<T extends BaseItem> extends State<LinkageView> {
     T item = widget.items[index] as T;
     if (item.isHeader) {
       return SizedBox(
-        child: widget.itemBuilder(context, index, item),
         height: widget.itemHeadHeight,
+        child: widget.itemBuilder(context, index, item),
       );
     } else {
       return SizedBox(
-        child: widget.itemBuilder(context, index, item),
         height: widget.itemHeight,
+        child: widget.itemBuilder(context, index, item),
       );
     }
   }

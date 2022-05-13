@@ -17,7 +17,6 @@ class EdgeFade extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ShaderMask(
-      child: child,
       shaderCallback: (rect) {
         return LinearGradient(
           begin: begin,
@@ -27,6 +26,7 @@ class EdgeFade extends StatelessWidget {
         ).createShader(rect);
       },
       blendMode: BlendMode.dstIn,
+      child: child,
     );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
-import 'package:decorated_flutter/src/bloc/bloc.export.dart';
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 
@@ -21,7 +20,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
         duration: const Duration(seconds: 3),
         radius: 4,
         dismissOtherOnShow: true,
-        animationBuilder: const Miui10AnimBuilder(),
+        animationBuilder: const ToastAnimBuilder(),
         movingOnWindowChange: false,
         child: ListTileTheme(
           dense: true,

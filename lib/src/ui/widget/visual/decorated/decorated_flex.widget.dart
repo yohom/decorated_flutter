@@ -421,11 +421,11 @@ class DecoratedFlex extends StatelessWidget {
 
     if (safeArea != null) {
       result = SafeArea(
-        child: result,
         top: safeArea?.top ?? true,
         bottom: safeArea?.bottom ?? true,
         left: safeArea?.left ?? true,
         right: safeArea?.right ?? true,
+        child: result,
       );
     }
 
@@ -531,9 +531,9 @@ class DecoratedFlex extends StatelessWidget {
 
     if (scrollable == true) {
       result = SingleChildScrollView(
-        child: result,
         scrollDirection: direction,
         controller: scrollController,
+        child: result,
       );
     }
 
@@ -562,11 +562,11 @@ class DecoratedFlex extends StatelessWidget {
     }
 
     if (expanded == true) {
-      result = Expanded(child: result, flex: flex ?? 1);
+      result = Expanded(flex: flex ?? 1, child: result);
     }
 
     if (flexible == true) {
-      result = Flexible(child: result, flex: flex ?? 1);
+      result = Flexible(flex: flex ?? 1, child: result);
     }
 
     if (sliver == true) {

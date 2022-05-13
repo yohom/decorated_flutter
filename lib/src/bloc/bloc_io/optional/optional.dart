@@ -33,7 +33,7 @@ class OptionalOutput<T, ARG> extends Output<T?, ARG> {
     bool sync = true,
     bool printLog = true,
     bool isBehavior = true,
-    required _FetchCallback<T, ARG?> fetch,
+    required FetchCallback<T, ARG?> fetch,
     T? Function()? onReset,
     PersistConfig<T?>? persistConfig,
   }) : super(
@@ -60,7 +60,7 @@ class OptionalIO<T> extends IO<T?> {
     bool acceptEmpty = true,
     bool isDistinct = false,
     bool printLog = true,
-    _FetchCallback<T, dynamic>? fetch,
+    FetchCallback<T, dynamic>? fetch,
     T? Function()? onReset,
     PersistConfig<T?>? persistConfig,
   }) : super(

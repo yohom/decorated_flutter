@@ -14,11 +14,11 @@ part 'required/required_int.dart';
 part 'required/required_list.dart';
 part 'required/required_page.dart';
 
-typedef _FetchCallback<R, T> = Future<R> Function(T arg);
-typedef _PageFetchCallback<R, T> = Future<R> Function(int page, T arg);
-typedef _MergeListCallback<T> = List<T> Function(
+typedef FetchCallback<R, T> = Future<R> Function(T arg);
+typedef PageFetchCallback<R, T> = Future<R> Function(int page, T arg);
+typedef MergeListCallback<T> = List<T> Function(
     List<T> current, List<T> newList);
-typedef _NoMoreDataCallback<T> = bool Function(List<T> newList);
+typedef NoMoreDataCallback<T> = bool Function(List<T> newList);
 typedef SerializeCallback<T> = dynamic Function(T);
 typedef DeserializeCallback<T> = T Function(dynamic);
 

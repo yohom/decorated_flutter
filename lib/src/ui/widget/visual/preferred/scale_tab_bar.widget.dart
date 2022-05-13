@@ -507,7 +507,7 @@ class ScaleTabBar extends StatefulWidget implements PreferredSizeWidget {
     this.onTap,
     this.physics,
   })  : assert(indicator != null || (indicatorWeight > 0.0)),
-        assert(indicator != null || (indicatorPadding != null)),
+        assert(indicator != null),
         super(key: key);
 
   /// Typically a list of two or more [Tab] widgets.

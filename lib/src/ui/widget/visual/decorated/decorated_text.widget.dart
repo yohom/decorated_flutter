@@ -196,11 +196,11 @@ class DecoratedText extends StatelessWidget {
 
     if (safeArea != null) {
       result = SafeArea(
-        child: result,
         top: safeArea?.top ?? true,
         bottom: safeArea?.bottom ?? true,
         left: safeArea?.left ?? true,
         right: safeArea?.right ?? true,
+        child: result,
       );
     }
 

@@ -65,10 +65,10 @@ Future<void> polling({
       } catch (e) {
         String message = '第$tryCount次轮询失败, 错误信息: $e';
         if (whenErrorTry != null) {
-          L.d(message + ' 开始执行错误重试');
+          L.d('$message 开始执行错误重试');
           await whenErrorTry();
         } else {
-          L.d(message + ' 未配置错误重试, 抛出异常');
+          L.d('$message 未配置错误重试, 抛出异常');
           rethrow;
         }
       }
@@ -164,5 +164,5 @@ DateTime requireDate(
 
 /// 下一帧回调
 void nextFrame(VoidCallback cb) {
-  WidgetsBinding.instance?.addPostFrameCallback((_) => cb());
+  WidgetsBinding.instance.addPostFrameCallback((_) => cb());
 }

@@ -14,11 +14,11 @@ class OptionalPageOutput<T, ARG> extends OptionalListOutput<T, int>
     bool receiveFullData = true,
     bool printLog = true,
     int? forceCapacity,
-    required _PageFetchCallback<List<T>, ARG?> pageFetch,
+    required PageFetchCallback<List<T>, ARG?> pageFetch,
     List<T>? Function()? onReset,
     PersistConfig<List<T>?>? persistConfig,
-    _MergeListCallback<T>? onMergeList,
-    _NoMoreDataCallback<T>? isNoMoreData,
+    MergeListCallback<T>? onMergeList,
+    NoMoreDataCallback<T>? isNoMoreData,
   }) : super(
           seedValue: seedValue,
           semantics: semantics,
@@ -58,7 +58,7 @@ class OptionalPageIO<T, ARG> extends OptionalListIO<T>
     bool printLog = true,
     bool receiveFullData = true,
     int? forceCapacity,
-    _PageFetchCallback<List<T>, ARG?>? pageFetch,
+    PageFetchCallback<List<T>, ARG?>? pageFetch,
     List<T>? Function()? onReset,
     PersistConfig<List<T>?>? persistConfig,
   }) : super(
@@ -104,13 +104,13 @@ mixin OptionalPageMixin<T, ARG> on OptionalListMixin<T> {
   ///   2. 没有设置过[_pageSize], 那么判断当前页是否为空列表.
   bool _noMoreData = false;
 
-  late _PageFetchCallback<List<T>, ARG?> _pageFetch;
+  late PageFetchCallback<List<T>, ARG?> _pageFetch;
 
   /// 自定义的数据合并回调
-  _MergeListCallback<T>? _onMergeList;
+  MergeListCallback<T>? _onMergeList;
 
   /// 自定义的列表是否为空的回调
-  _NoMoreDataCallback<T>? _isNoMoreData;
+  NoMoreDataCallback<T>? _isNoMoreData;
 
   /// 当前页数
   int get currentPage => _currentPage;
