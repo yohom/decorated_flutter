@@ -74,7 +74,7 @@ extension BuildContextX on BuildContext {
   }
 
   Color get backgroundColor {
-    return Theme.of(this).backgroundColor;
+    return Theme.of(this).colorScheme.background;
   }
 
   NavigatorState get rootNavigator {
