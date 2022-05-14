@@ -1,7 +1,12 @@
 import 'dart:async';
 
 import 'package:decorated_flutter/src/utils/utils.export.dart';
+import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
+
+import '../ui/ui.export.dart';
+import '../ui/widget/visual/placeholder/loading.widget.dart';
+import 'future.x.dart';
 
 extension ListStreamX<T> on Stream<List<T>> {
   /// 在一个列表Stream中, 找出目标项, 并转换为该项的Stream
@@ -34,4 +39,73 @@ extension ListStreamX<T> on Stream<List<T>> {
   }
 }
 
-extension StreamSubscriptionX<T> on StreamSubscription<T> {}
+extension StringStream on Stream<String> {
+  static LoadingBuilder? loadingWidgetBuilder;
+  static Color? backgroundColor;
+  static bool loadingCancelable = false;
+  static String defaultLoadingText = '加载中...';
+
+  Future<void> loading({
+    bool? cancelable,
+    String? initText,
+    Color? backgroundColor,
+  }) async {
+    final context = gNavigatorKey.currentContext;
+    if (context == null) {
+      throw '请在MaterialApp/CupertinoApp中设置navigatorKey为gNavigatorKey';
+    }
+
+    final navigator = Navigator.of(context, rootNavigator: true);
+    final theme = Theme.of(context);
+
+    // 是被future pop的还是按返回键pop的
+    bool popByStream = true;
+
+    final subject = BehaviorSubject<String>();
+
+    // 显示loading
+    showGeneralDialog(
+      context: context,
+      pageBuilder: (context, _, __) {
+        return Theme(
+          data: theme,
+          child: WillPopScope(
+            onWillPop: () async => cancelable ?? loadingCancelable,
+            child: StreamBuilder<String>(
+              stream: subject.stream,
+              builder: (_, snapshot) {
+                return ModalLoading(snapshot.data ?? '加载中...');
+              },
+            ),
+          ),
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 150),
+      barrierDismissible: cancelable ?? loadingCancelable,
+      barrierLabel: 'Dismiss',
+      barrierColor:
+          backgroundColor ?? FutureX.backgroundColor ?? Colors.black54,
+    ).whenComplete(() {
+      // 1. 如果是返回键pop的, 那么设置成true, 这样future完成时就不会pop了
+      // 2. 如果是future完成导致的pop, 那么这一行是没用任何作用的
+      popByStream = false;
+    });
+
+    try {
+      await for (final item in this) {
+        subject.add(item);
+      }
+    } catch (error, stacktrace) {
+      subject.addError(error, stacktrace);
+    } finally {
+      // 结束关闭流
+      subject.close();
+    }
+
+    return subject.listen(doNothing1).asFuture().whenComplete(() {
+      if (popByStream && navigator.canPop()) {
+        navigator.pop();
+      }
+    });
+  }
+}
