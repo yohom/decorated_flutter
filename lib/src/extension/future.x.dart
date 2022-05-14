@@ -40,20 +40,18 @@ extension FutureX<T> on Future<T> {
         Animation<double> animation,
         Animation<double> secondaryAnimation,
       ) {
-        final Widget pageChild = Builder(
-          builder: (context) {
-            final text = loadingText ?? defaultLoadingText;
-            return WillPopScope(
-              onWillPop: () async => cancelable ?? loadingCancelable,
-              child: loadingWidgetBuilder?.call(context, text) ??
-                  ModalLoading(text),
-            );
-          },
-        );
-        return Builder(
-          builder: (context) {
-            return Theme(data: theme, child: pageChild);
-          },
+        return Theme(
+          data: theme,
+          child: Builder(
+            builder: (context) {
+              final text = loadingText ?? defaultLoadingText;
+              return WillPopScope(
+                onWillPop: () async => cancelable ?? loadingCancelable,
+                child: loadingWidgetBuilder?.call(context, text) ??
+                    ModalLoading(text),
+              );
+            },
+          ),
         );
       },
       transitionDuration: const Duration(milliseconds: 150),
