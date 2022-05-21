@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 
-typedef AlignStart = Start;
-
 @Deprecated('使用AlignStart代替')
-class Start extends StatelessWidget {
-  const Start({
+typedef Start = AlignStart;
+
+class AlignStart extends StatelessWidget {
+  const AlignStart({
     super.key,
     required this.child,
     this.widthFactor,
@@ -33,11 +33,11 @@ class Start extends StatelessWidget {
   }
 }
 
-typedef AlignLeft = Left;
-
 @Deprecated('使用AlignLeft代替')
-class Left extends StatelessWidget {
-  const Left({
+typedef Left = AlignLeft;
+
+class AlignLeft extends StatelessWidget {
+  const AlignLeft({
     super.key,
     required this.child,
     this.widthFactor,
@@ -66,11 +66,11 @@ class Left extends StatelessWidget {
   }
 }
 
-typedef AlignEnd = End;
-
 @Deprecated('使用AlignEnd代替')
-class End extends StatelessWidget {
-  const End({
+typedef End = AlignEnd;
+
+class AlignEnd extends StatelessWidget {
+  const AlignEnd({
     super.key,
     required this.child,
     this.widthFactor,
@@ -99,11 +99,11 @@ class End extends StatelessWidget {
   }
 }
 
-typedef AlignRight = Right;
-
 @Deprecated('使用AlignRight代替')
-class Right extends StatelessWidget {
-  const Right({
+typedef Right = AlignRight;
+
+class AlignRight extends StatelessWidget {
+  const AlignRight({
     super.key,
     required this.child,
     this.widthFactor,
@@ -132,11 +132,11 @@ class Right extends StatelessWidget {
   }
 }
 
-typedef AlignTop = Top;
-
 @Deprecated('使用AlignTop代替')
-class Top extends StatelessWidget {
-  const Top({
+typedef Top = AlignTop;
+
+class AlignTop extends StatelessWidget {
+  const AlignTop({
     super.key,
     required this.child,
     this.widthFactor,
@@ -167,11 +167,11 @@ class Top extends StatelessWidget {
   }
 }
 
-typedef AlignBottom = Bottom;
-
 @Deprecated('使用AlignBottom代替')
-class Bottom extends StatelessWidget {
-  const Bottom({
+typedef Bottom = AlignBottom;
+
+class AlignBottom extends StatelessWidget {
+  const AlignBottom({
     super.key,
     required this.child,
     this.widthFactor,
