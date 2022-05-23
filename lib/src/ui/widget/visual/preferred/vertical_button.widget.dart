@@ -11,6 +11,7 @@ class VerticalButton extends StatelessWidget {
     this.spacing = 8,
     this.width,
     this.mainAxisAlignment = MainAxisAlignment.start,
+    this.crossAxisAlignment = CrossAxisAlignment.center,
   }) : super(key: key);
 
   final Widget icon;
@@ -20,6 +21,7 @@ class VerticalButton extends StatelessWidget {
   final ContextCallback? onLongPressed;
   final double? width;
   final MainAxisAlignment mainAxisAlignment;
+  final CrossAxisAlignment crossAxisAlignment;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class VerticalButton extends StatelessWidget {
       onPressed: onPressed,
       onLongPressed: onLongPressed,
       itemSpacing: spacing,
+      crossAxisAlignment: crossAxisAlignment,
       mainAxisAlignment: mainAxisAlignment,
       children: [
         icon,
