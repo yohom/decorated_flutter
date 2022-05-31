@@ -1,13 +1,16 @@
 import 'package:flutter/cupertino.dart';
 
-class Start extends StatelessWidget {
-  const Start({
-    Key? key,
+@Deprecated('使用AlignStart代替')
+typedef Start = AlignStart;
+
+class AlignStart extends StatelessWidget {
+  const AlignStart({
+    super.key,
     required this.child,
     this.widthFactor,
     this.heightFactor,
     this.padding,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final double? widthFactor;
@@ -30,14 +33,17 @@ class Start extends StatelessWidget {
   }
 }
 
-class Left extends StatelessWidget {
-  const Left({
-    Key? key,
+@Deprecated('使用AlignLeft代替')
+typedef Left = AlignLeft;
+
+class AlignLeft extends StatelessWidget {
+  const AlignLeft({
+    super.key,
     required this.child,
     this.widthFactor,
     this.heightFactor,
     this.padding,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final double? widthFactor;
@@ -60,14 +66,17 @@ class Left extends StatelessWidget {
   }
 }
 
-class End extends StatelessWidget {
-  const End({
-    Key? key,
+@Deprecated('使用AlignEnd代替')
+typedef End = AlignEnd;
+
+class AlignEnd extends StatelessWidget {
+  const AlignEnd({
+    super.key,
     required this.child,
     this.widthFactor,
     this.heightFactor,
     this.padding,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final double? widthFactor;
@@ -90,14 +99,17 @@ class End extends StatelessWidget {
   }
 }
 
-class Right extends StatelessWidget {
-  const Right({
-    Key? key,
+@Deprecated('使用AlignRight代替')
+typedef Right = AlignRight;
+
+class AlignRight extends StatelessWidget {
+  const AlignRight({
+    super.key,
     required this.child,
     this.widthFactor,
     this.heightFactor,
     this.padding,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final double? widthFactor;
@@ -120,15 +132,18 @@ class Right extends StatelessWidget {
   }
 }
 
-class Top extends StatelessWidget {
-  const Top({
-    Key? key,
+@Deprecated('使用AlignTop代替')
+typedef Top = AlignTop;
+
+class AlignTop extends StatelessWidget {
+  const AlignTop({
+    super.key,
     required this.child,
     this.widthFactor,
     this.heightFactor,
     this.padding,
     this.margin,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final double? widthFactor;
@@ -152,14 +167,17 @@ class Top extends StatelessWidget {
   }
 }
 
-class Bottom extends StatelessWidget {
-  const Bottom({
-    Key? key,
+@Deprecated('使用AlignBottom代替')
+typedef Bottom = AlignBottom;
+
+class AlignBottom extends StatelessWidget {
+  const AlignBottom({
+    super.key,
     required this.child,
     this.widthFactor,
     this.heightFactor,
     this.padding,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final double? widthFactor;

@@ -488,11 +488,11 @@ class DecoratedFlex extends StatelessWidget {
       }
     }
 
-    if (onPressed != null && enableFeedback == true) {
+    if (enableFeedback == true) {
       result = CupertinoButton(
         padding: EdgeInsets.zero,
         minSize: 0,
-        onPressed: () => onPressed!(context),
+        onPressed: () => onPressed != null ? onPressed!(context) : doNothing,
         child: result,
       );
     } else if (onPressed != null ||
