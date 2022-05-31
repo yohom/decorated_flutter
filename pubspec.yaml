@@ -16,7 +16,7 @@ dependencies:
   # 网络请求 https://pub.flutter-io.cn/packages/dio
   dio: 4.0.6
   # rx https://pub.flutter-io.cn/packages/rxdart
-  rxdart: 0.27.3
+  rxdart: 0.27.4
   # 图片加载增强 https://pub.flutter-io.cn/packages/cached_network_image
   cached_network_image: 3.2.1
   # toast https://pub.flutter-io.cn/packages/oktoast
@@ -30,7 +30,7 @@ dependencies:
   # android intent https://pub.flutter-io.cn/packages/android_intent_plus
   android_intent_plus: 3.1.1
   # svg https://pub.flutter-io.cn/packages/flutter_svg
-  flutter_svg: 1.0.3
+  flutter_svg: 1.1.0
   # sliver增强 https://pub.flutter-io.cn/packages/sliver_tools
   sliver_tools: 0.2.6
   # 持久化 https://pub.flutter-io.cn/packages/hive
