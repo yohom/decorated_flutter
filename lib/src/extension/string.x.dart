@@ -63,6 +63,12 @@ extension StringX on String {
     return substring(index);
   }
 
+  String substringBetween(String left, {required String and}) {
+    final leftIndex = indexOf(left);
+    final rightIndex = lastIndexOf(and);
+    return substring(leftIndex + 1, rightIndex);
+  }
+
   String insert(int index, String divider) {
     return substring(0, index + 1) + divider + substring(index + 1);
   }
