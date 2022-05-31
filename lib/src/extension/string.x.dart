@@ -66,7 +66,11 @@ extension StringX on String {
   String substringBetween(String left, {required String and}) {
     final leftIndex = indexOf(left);
     final rightIndex = lastIndexOf(and);
-    return substring(leftIndex + 1, rightIndex);
+    try {
+      return substring(leftIndex + 1, rightIndex);
+    } catch (e) {
+      return '';
+    }
   }
 
   String insert(int index, String divider) {
