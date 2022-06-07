@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:decorated_flutter/src/extension/extension.export.dart';
@@ -7,7 +8,35 @@ import 'package:flutter_svg/svg.dart';
 
 typedef LoadingProgress = void Function(double progress, List<int> data);
 
+class CryptoOption {
+  /// 解密
+  final Future<Uint8List> Function(Uint8List encrypted) decrypt;
+
+  /// 是否作用在网络图片
+  final bool enableNetworkImage;
+
+  /// 是否作用在asset图片
+  final bool enableAssetImage;
+
+  /// 是否作用在内存图片
+  final bool enableMemoryImage;
+
+  CryptoOption({
+    required this.decrypt,
+    this.enableNetworkImage = true,
+    this.enableAssetImage = true,
+    this.enableMemoryImage = true,
+  });
+}
+
 class ImageView extends StatelessWidget {
+  /// 加解密选项
+  static CryptoOption? _cryptoOption;
+
+  static set cryptoOption(CryptoOption? value) {
+    _cryptoOption = value;
+  }
+
   /// 根据图片uri自动判断是使用本地加载还是远程加载
   ImageView(
     String imageUri, {
@@ -177,95 +206,13 @@ class ImageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = context.isDarkMode;
-    Color? _color = color;
-    if (autoDarkMode) {
-      _color = isDarkMode ? Colors.white : null;
-    }
     final _width = size ?? width;
     final _height = size ?? height;
-    final _cacheWidth = cacheSize ?? cacheWidth;
-    final _cacheHeight = cacheSize ?? cacheHeight;
 
-    Widget result;
-    if (imagePath != null) {
-      String _imagePath = imagePath!;
-      if (darkImagePath != null) {
-        _imagePath = isDarkMode ? darkImagePath! : imagePath!;
-      }
-      if (_imagePath.endsWith('.svg')) {
-        result = SvgPicture.asset(
-          _imagePath,
-          key: autoApplyKey ? Key(_imagePath) : null,
-          width: _width,
-          height: _height,
-          fit: fit ?? BoxFit.contain,
-          color: _color,
-          placeholderBuilder: (_) => placeholder,
-        );
-      } else if (_imagePath.startsWith('/')) {
-        result = Image.file(
-          File(_imagePath),
-          key: autoApplyKey ? Key(_imagePath) : null,
-          width: _width,
-          height: _height,
-          fit: fit,
-          color: _color,
-          gaplessPlayback: true,
-          colorBlendMode: colorBlendMode,
-          cacheWidth: _cacheWidth,
-          cacheHeight: _cacheHeight,
-        );
-      } else {
-        result = Image.asset(
-          _imagePath,
-          key: autoApplyKey ? Key(_imagePath) : null,
-          width: _width,
-          height: _height,
-          fit: fit,
-          color: _color,
-          gaplessPlayback: true,
-          colorBlendMode: colorBlendMode,
-          cacheWidth: _cacheWidth,
-          cacheHeight: _cacheHeight,
-        );
-      }
-    } else if (imageUrl != null) {
-      if (imageUrl!.endsWith('.svg')) {
-        result = SvgPicture.network(
-          imageUrl!,
-          key: autoApplyKey ? Key(imageUrl!) : null,
-          width: _width,
-          height: _height,
-          fit: fit ?? BoxFit.contain,
-          color: _color,
-          placeholderBuilder: (_) => placeholder,
-        );
-      } else {
-        result = CachedNetworkImage(
-          imageUrl: imageUrl!,
-          key: autoApplyKey ? Key(imageUrl!) : null,
-          width: _width,
-          height: _height,
-          fit: fit,
-          color: _color,
-          placeholder: (_, __) => placeholder,
-          errorWidget: (_, __, ___) => errorWidget,
-          memCacheWidth: _cacheWidth,
-          memCacheHeight: _cacheHeight,
-        );
-      }
-    } else {
-      // 如果图片地址为null的话, 那就不显示
-      result = const SizedBox.shrink();
-    }
+    Widget result = _image(context, _width, _height);
 
     if (size != null || width != null || height != null) {
-      result = SizedBox(
-        width: _width,
-        height: _height,
-        child: result,
-      );
+      result = SizedBox(width: _width, height: _height, child: result);
     }
 
     if (padding != null ||
@@ -294,6 +241,94 @@ class ImageView extends StatelessWidget {
 
     if (aspectRatio != null) {
       result = AspectRatio(aspectRatio: aspectRatio!, child: result);
+    }
+
+    return result;
+  }
+
+  Widget _image(BuildContext context, double? width, double? height) {
+    final isDarkMode = context.isDarkMode;
+    Color? _color = color;
+    if (autoDarkMode) {
+      _color = isDarkMode ? Colors.white : null;
+    }
+    final _cacheWidth = cacheSize ?? cacheWidth;
+    final _cacheHeight = cacheSize ?? cacheHeight;
+
+    Widget result;
+    // 本地图片
+    if (imagePath != null) {
+      String _imagePath = imagePath!;
+      if (darkImagePath != null) {
+        _imagePath = isDarkMode ? darkImagePath! : imagePath!;
+      }
+      if (_imagePath.endsWith('.svg')) {
+        result = SvgPicture.asset(
+          _imagePath,
+          key: autoApplyKey ? Key(_imagePath) : null,
+          width: width,
+          height: height,
+          fit: fit ?? BoxFit.contain,
+          color: _color,
+          placeholderBuilder: (_) => placeholder,
+        );
+      } else if (_imagePath.startsWith('/')) {
+        result = Image.file(
+          File(_imagePath),
+          key: autoApplyKey ? Key(_imagePath) : null,
+          width: width,
+          height: height,
+          fit: fit,
+          color: _color,
+          gaplessPlayback: true,
+          colorBlendMode: colorBlendMode,
+          cacheWidth: _cacheWidth,
+          cacheHeight: _cacheHeight,
+        );
+      } else {
+        result = Image.asset(
+          _imagePath,
+          key: autoApplyKey ? Key(_imagePath) : null,
+          width: width,
+          height: height,
+          fit: fit,
+          color: _color,
+          gaplessPlayback: true,
+          colorBlendMode: colorBlendMode,
+          cacheWidth: _cacheWidth,
+          cacheHeight: _cacheHeight,
+        );
+      }
+    }
+    // 网络图片
+    else if (imageUrl != null) {
+      if (imageUrl!.endsWith('.svg')) {
+        result = SvgPicture.network(
+          imageUrl!,
+          key: autoApplyKey ? Key(imageUrl!) : null,
+          width: width,
+          height: height,
+          fit: fit ?? BoxFit.contain,
+          color: _color,
+          placeholderBuilder: (_) => placeholder,
+        );
+      } else {
+        result = CachedNetworkImage(
+          imageUrl: imageUrl!,
+          key: autoApplyKey ? Key(imageUrl!) : null,
+          width: width,
+          height: height,
+          fit: fit,
+          color: _color,
+          placeholder: (_, __) => placeholder,
+          errorWidget: (_, __, ___) => errorWidget,
+          memCacheWidth: _cacheWidth,
+          memCacheHeight: _cacheHeight,
+        );
+      }
+    } else {
+      // 如果图片地址为null的话, 那就不显示
+      result = const SizedBox.shrink();
     }
 
     return result;
