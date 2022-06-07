@@ -19,6 +19,8 @@ dependencies:
   rxdart: 0.27.4
   # 图片加载增强 https://pub.flutter-io.cn/packages/cached_network_image
   cached_network_image: 3.2.1
+  # 缓存 https://pub.flutter-io.cn/packages/flutter_cache_manager
+  flutter_cache_manager: ^3.3.0
   # toast https://pub.flutter-io.cn/packages/oktoast
   oktoast: 3.2.0
   # 模态对话框增强 https://pub.flutter-io.cn/packages/modal_bottom_sheet

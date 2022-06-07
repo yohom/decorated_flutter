@@ -2,8 +2,10 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:decorated_flutter/src/annotation/annotation.export.dart';
 import 'package:decorated_flutter/src/extension/extension.export.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_svg/svg.dart';
 
 typedef LoadingProgress = void Function(double progress, List<int> data);
@@ -13,9 +15,11 @@ class CryptoOption {
   final Future<Uint8List> Function(Uint8List encrypted) decrypt;
 
   /// 是否作用在网络图片
+  @wip
   final bool enableNetworkImage;
 
   /// 是否作用在asset图片
+  @wip
   final bool enableAssetImage;
 
   /// 是否作用在内存图片
@@ -206,52 +210,13 @@ class ImageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _width = size ?? width;
-    final _height = size ?? height;
-
-    Widget result = _image(context, _width, _height);
-
-    if (size != null || width != null || height != null) {
-      result = SizedBox(width: _width, height: _height, child: result);
-    }
-
-    if (padding != null ||
-        margin != null ||
-        decoration != null ||
-        foregroundDecoration != null ||
-        borderRadius != null ||
-        shape != null) {
-      Decoration? _decoration = decoration;
-      if (_decoration == null && (borderRadius != null || shape != null)) {
-        _decoration = BoxDecoration(
-          borderRadius: borderRadius,
-          shape: shape ?? BoxShape.rectangle,
-        );
-      }
-
-      result = Container(
-        clipBehavior: _decoration != null ? Clip.hardEdge : Clip.none,
-        padding: padding,
-        margin: margin,
-        foregroundDecoration: foregroundDecoration,
-        decoration: _decoration,
-        child: result,
-      );
-    }
-
-    if (aspectRatio != null) {
-      result = AspectRatio(aspectRatio: aspectRatio!, child: result);
-    }
-
-    return result;
-  }
-
-  Widget _image(BuildContext context, double? width, double? height) {
     final isDarkMode = context.isDarkMode;
     Color? _color = color;
     if (autoDarkMode) {
       _color = isDarkMode ? Colors.white : null;
     }
+    final _width = size ?? width;
+    final _height = size ?? height;
     final _cacheWidth = cacheSize ?? cacheWidth;
     final _cacheHeight = cacheSize ?? cacheHeight;
 
@@ -313,25 +278,99 @@ class ImageView extends StatelessWidget {
           placeholderBuilder: (_) => placeholder,
         );
       } else {
-        result = CachedNetworkImage(
-          imageUrl: imageUrl!,
-          key: autoApplyKey ? Key(imageUrl!) : null,
-          width: width,
-          height: height,
-          fit: fit,
-          color: _color,
-          placeholder: (_, __) => placeholder,
-          errorWidget: (_, __, ___) => errorWidget,
-          memCacheWidth: _cacheWidth,
-          memCacheHeight: _cacheHeight,
-        );
+        if (ImageView._cryptoOption?.enableNetworkImage == true) {
+          result = _encryptedImage(context, imageUrl!);
+        } else {
+          result = CachedNetworkImage(
+            imageUrl: imageUrl!,
+            key: autoApplyKey ? Key(imageUrl!) : null,
+            width: width,
+            height: height,
+            fit: fit,
+            color: _color,
+            placeholder: (_, __) => placeholder,
+            errorWidget: (_, __, ___) => errorWidget,
+            memCacheWidth: _cacheWidth,
+            memCacheHeight: _cacheHeight,
+          );
+        }
       }
     } else {
       // 如果图片地址为null的话, 那就不显示
       result = const SizedBox.shrink();
     }
 
+    if (size != null || width != null || height != null) {
+      result = SizedBox(width: _width, height: _height, child: result);
+    }
+
+    if (padding != null ||
+        margin != null ||
+        decoration != null ||
+        foregroundDecoration != null ||
+        borderRadius != null ||
+        shape != null) {
+      Decoration? _decoration = decoration;
+      if (_decoration == null && (borderRadius != null || shape != null)) {
+        _decoration = BoxDecoration(
+          borderRadius: borderRadius,
+          shape: shape ?? BoxShape.rectangle,
+        );
+      }
+
+      result = Container(
+        clipBehavior: _decoration != null ? Clip.hardEdge : Clip.none,
+        padding: padding,
+        margin: margin,
+        foregroundDecoration: foregroundDecoration,
+        decoration: _decoration,
+        child: result,
+      );
+    }
+
+    if (aspectRatio != null) {
+      result = AspectRatio(aspectRatio: aspectRatio!, child: result);
+    }
+
     return result;
+  }
+
+  Widget _encryptedImage(BuildContext context, String imageUri) {
+    final isDarkMode = context.isDarkMode;
+    Color? _color = color;
+    if (autoDarkMode) {
+      _color = isDarkMode ? Colors.white : null;
+    }
+    final _width = size ?? width;
+    final _height = size ?? height;
+    final _cacheWidth = cacheSize ?? cacheWidth;
+    final _cacheHeight = cacheSize ?? cacheHeight;
+
+    return FutureBuilder<Uint8List>(
+      future: DefaultCacheManager()
+          .getSingleFile(imageUri)
+          .then((value) => value.readAsBytes())
+          .then(ImageView._cryptoOption!.decrypt),
+      builder: (_, snapshot) {
+        if (snapshot.hasData) {
+          return Image.memory(
+            snapshot.requireData,
+            key: autoApplyKey ? Key(imageUri) : null,
+            width: _width,
+            height: _height,
+            cacheWidth: _cacheWidth,
+            cacheHeight: _cacheHeight,
+            color: _color,
+            fit: fit,
+            gaplessPlayback: true,
+          );
+        } else if (snapshot.hasError) {
+          return errorWidget;
+        } else {
+          return placeholder;
+        }
+      },
+    );
   }
 }
 
