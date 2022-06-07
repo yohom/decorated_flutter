@@ -489,9 +489,8 @@ class DecoratedFlex extends StatelessWidget {
     }
 
     if (enableFeedback == true) {
-      result = CupertinoButton(
+      result = RawMaterialButton(
         padding: EdgeInsets.zero,
-        minSize: 0,
         onPressed: () => onPressed != null ? onPressed!(context) : doNothing,
         child: result,
       );
