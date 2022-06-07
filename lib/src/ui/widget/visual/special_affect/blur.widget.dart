@@ -44,6 +44,7 @@ class BackgroundBlur extends StatelessWidget {
     this.sigmaX = 2,
     this.sigmaY = 2,
     this.fit = StackFit.expand,
+    this.clipped = false,
   }) : super(key: key);
 
   final Widget? background;
@@ -52,6 +53,7 @@ class BackgroundBlur extends StatelessWidget {
   final double sigmaX;
   final double sigmaY;
   final StackFit fit;
+  final bool clipped;
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +72,11 @@ class BackgroundBlur extends StatelessWidget {
         children: <Widget>[background!, result],
       );
     }
+
+    if (clipped) {
+      result = ClipRect(child: result);
+    }
+
     return result;
   }
 }

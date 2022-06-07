@@ -1,13 +1,46 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:decorated_flutter/src/annotation/annotation.export.dart';
 import 'package:decorated_flutter/src/extension/extension.export.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_svg/svg.dart';
 
 typedef LoadingProgress = void Function(double progress, List<int> data);
 
+class CryptoOption {
+  /// 解密
+  final Future<Uint8List> Function(Uint8List encrypted) decrypt;
+
+  /// 是否作用在网络图片
+  @wip
+  final bool enableNetworkImage;
+
+  /// 是否作用在asset图片
+  @wip
+  final bool enableAssetImage;
+
+  /// 是否作用在内存图片
+  final bool enableMemoryImage;
+
+  CryptoOption({
+    required this.decrypt,
+    this.enableNetworkImage = true,
+    this.enableAssetImage = true,
+    this.enableMemoryImage = true,
+  });
+}
+
 class ImageView extends StatelessWidget {
+  /// 加解密选项
+  static CryptoOption? _cryptoOption;
+
+  static set cryptoOption(CryptoOption? value) {
+    _cryptoOption = value;
+  }
+
   /// 根据图片uri自动判断是使用本地加载还是远程加载
   ImageView(
     String imageUri, {
@@ -188,6 +221,7 @@ class ImageView extends StatelessWidget {
     final _cacheHeight = cacheSize ?? cacheHeight;
 
     Widget result;
+    // 本地图片
     if (imagePath != null) {
       String _imagePath = imagePath!;
       if (darkImagePath != null) {
@@ -197,8 +231,8 @@ class ImageView extends StatelessWidget {
         result = SvgPicture.asset(
           _imagePath,
           key: autoApplyKey ? Key(_imagePath) : null,
-          width: _width,
-          height: _height,
+          width: width,
+          height: height,
           fit: fit ?? BoxFit.contain,
           color: _color,
           placeholderBuilder: (_) => placeholder,
@@ -207,8 +241,8 @@ class ImageView extends StatelessWidget {
         result = Image.file(
           File(_imagePath),
           key: autoApplyKey ? Key(_imagePath) : null,
-          width: _width,
-          height: _height,
+          width: width,
+          height: height,
           fit: fit,
           color: _color,
           gaplessPlayback: true,
@@ -220,8 +254,8 @@ class ImageView extends StatelessWidget {
         result = Image.asset(
           _imagePath,
           key: autoApplyKey ? Key(_imagePath) : null,
-          width: _width,
-          height: _height,
+          width: width,
+          height: height,
           fit: fit,
           color: _color,
           gaplessPlayback: true,
@@ -230,30 +264,36 @@ class ImageView extends StatelessWidget {
           cacheHeight: _cacheHeight,
         );
       }
-    } else if (imageUrl != null) {
+    }
+    // 网络图片
+    else if (imageUrl != null) {
       if (imageUrl!.endsWith('.svg')) {
         result = SvgPicture.network(
           imageUrl!,
           key: autoApplyKey ? Key(imageUrl!) : null,
-          width: _width,
-          height: _height,
+          width: width,
+          height: height,
           fit: fit ?? BoxFit.contain,
           color: _color,
           placeholderBuilder: (_) => placeholder,
         );
       } else {
-        result = CachedNetworkImage(
-          imageUrl: imageUrl!,
-          key: autoApplyKey ? Key(imageUrl!) : null,
-          width: _width,
-          height: _height,
-          fit: fit,
-          color: _color,
-          placeholder: (_, __) => placeholder,
-          errorWidget: (_, __, ___) => errorWidget,
-          memCacheWidth: _cacheWidth,
-          memCacheHeight: _cacheHeight,
-        );
+        if (ImageView._cryptoOption?.enableNetworkImage == true) {
+          result = _encryptedImage(context, imageUrl!);
+        } else {
+          result = CachedNetworkImage(
+            imageUrl: imageUrl!,
+            key: autoApplyKey ? Key(imageUrl!) : null,
+            width: width,
+            height: height,
+            fit: fit,
+            color: _color,
+            placeholder: (_, __) => placeholder,
+            errorWidget: (_, __, ___) => errorWidget,
+            memCacheWidth: _cacheWidth,
+            memCacheHeight: _cacheHeight,
+          );
+        }
       }
     } else {
       // 如果图片地址为null的话, 那就不显示
@@ -261,11 +301,7 @@ class ImageView extends StatelessWidget {
     }
 
     if (size != null || width != null || height != null) {
-      result = SizedBox(
-        width: _width,
-        height: _height,
-        child: result,
-      );
+      result = SizedBox(width: _width, height: _height, child: result);
     }
 
     if (padding != null ||
@@ -297,6 +333,44 @@ class ImageView extends StatelessWidget {
     }
 
     return result;
+  }
+
+  Widget _encryptedImage(BuildContext context, String imageUri) {
+    final isDarkMode = context.isDarkMode;
+    Color? _color = color;
+    if (autoDarkMode) {
+      _color = isDarkMode ? Colors.white : null;
+    }
+    final _width = size ?? width;
+    final _height = size ?? height;
+    final _cacheWidth = cacheSize ?? cacheWidth;
+    final _cacheHeight = cacheSize ?? cacheHeight;
+
+    return FutureBuilder<Uint8List>(
+      future: DefaultCacheManager()
+          .getSingleFile(imageUri)
+          .then((value) => value.readAsBytes())
+          .then(ImageView._cryptoOption!.decrypt),
+      builder: (_, snapshot) {
+        if (snapshot.hasData) {
+          return Image.memory(
+            snapshot.requireData,
+            key: autoApplyKey ? Key(imageUri) : null,
+            width: _width,
+            height: _height,
+            cacheWidth: _cacheWidth,
+            cacheHeight: _cacheHeight,
+            color: _color,
+            fit: fit,
+            gaplessPlayback: true,
+          );
+        } else if (snapshot.hasError) {
+          return errorWidget;
+        } else {
+          return placeholder;
+        }
+      },
+    );
   }
 }
 
