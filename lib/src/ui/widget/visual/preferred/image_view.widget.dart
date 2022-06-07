@@ -4,6 +4,8 @@ import 'dart:typed_data';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:decorated_flutter/src/annotation/annotation.export.dart';
 import 'package:decorated_flutter/src/extension/extension.export.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,7 +17,6 @@ class CryptoOption {
   final Future<Uint8List> Function(Uint8List encrypted) decrypt;
 
   /// 是否作用在网络图片
-  @wip
   final bool enableNetworkImage;
 
   /// 是否作用在asset图片
@@ -23,6 +24,7 @@ class CryptoOption {
   final bool enableAssetImage;
 
   /// 是否作用在内存图片
+  @wip
   final bool enableMemoryImage;
 
   CryptoOption({
@@ -31,6 +33,11 @@ class CryptoOption {
     this.enableAssetImage = true,
     this.enableMemoryImage = true,
   });
+
+  @override
+  String toString() {
+    return 'CryptoOption{decrypt: $decrypt, enableNetworkImage: $enableNetworkImage, enableAssetImage: $enableAssetImage, enableMemoryImage: $enableMemoryImage}';
+  }
 }
 
 class ImageView extends StatelessWidget {
@@ -346,11 +353,20 @@ class ImageView extends StatelessWidget {
     final _cacheWidth = cacheSize ?? cacheWidth;
     final _cacheHeight = cacheSize ?? cacheHeight;
 
-    return FutureBuilder<Uint8List>(
-      future: DefaultCacheManager()
+    Future<Uint8List> imageFuture;
+    if (kIsWeb) {
+      // web端就先不缓存了
+      imageFuture = Dio()
+          .get(imageUri, options: Options(responseType: ResponseType.bytes))
+          .then((value) => value.data);
+    } else {
+      imageFuture = DefaultCacheManager()
           .getSingleFile(imageUri)
-          .then((value) => value.readAsBytes())
-          .then(ImageView._cryptoOption!.decrypt),
+          .then((value) => value.readAsBytes());
+    }
+
+    return FutureBuilder<Uint8List>(
+      future: imageFuture.then(ImageView._cryptoOption!.decrypt),
       builder: (_, snapshot) {
         if (snapshot.hasData) {
           return Image.memory(
