@@ -33,4 +33,10 @@ extension DurationX on Duration {
   double percentOf(Duration other) {
     return inMilliseconds / other.inMilliseconds;
   }
+
+  Duration clamp(Duration lower, Duration upper) {
+    final result =
+        inMilliseconds.clamp(lower.inMilliseconds, upper.inMilliseconds);
+    return Duration(milliseconds: result);
+  }
 }
