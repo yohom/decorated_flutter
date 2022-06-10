@@ -7,7 +7,7 @@ extension StateX on State {
     if (mounted) {
       if (nextFrame) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          setState(cb);
+          if (mounted) setState(cb);
         });
       } else {
         setState(cb);
