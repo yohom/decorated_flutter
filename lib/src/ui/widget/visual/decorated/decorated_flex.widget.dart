@@ -56,6 +56,7 @@ class DecoratedRow extends DecoratedFlex {
     SystemUiOverlayStyle? systemOverlayStyle,
     bool? ignorePointer,
     bool? enableFeedback,
+    bool? autofillGroup,
     List<Widget> children = const [],
   }) : super(
           key: key,
@@ -110,6 +111,7 @@ class DecoratedRow extends DecoratedFlex {
           systemOverlayStyle: systemOverlayStyle,
           ignorePointer: ignorePointer,
           enableFeedback: enableFeedback,
+          autofillGroup: autofillGroup,
           children: children,
         );
 }
@@ -167,6 +169,7 @@ class DecoratedColumn extends DecoratedFlex {
     SystemUiOverlayStyle? systemOverlayStyle,
     bool? ignorePointer,
     bool? enableFeedback,
+    bool? autofillGroup,
     List<Widget> children = const [],
   }) : super(
           key: key,
@@ -221,6 +224,7 @@ class DecoratedColumn extends DecoratedFlex {
           systemOverlayStyle: systemOverlayStyle,
           ignorePointer: ignorePointer,
           enableFeedback: enableFeedback,
+          autofillGroup: autofillGroup,
           children: children,
         );
 }
@@ -279,6 +283,7 @@ class DecoratedFlex extends StatelessWidget {
     this.systemOverlayStyle,
     this.ignorePointer,
     this.enableFeedback,
+    this.autofillGroup,
     this.children = const [],
   }) : super(key: key);
 
@@ -396,6 +401,8 @@ class DecoratedFlex extends StatelessWidget {
 
   final bool? enableFeedback;
 
+  final bool? autofillGroup;
+
   /// 子元素
   final List<Widget> children;
 
@@ -418,6 +425,10 @@ class DecoratedFlex extends StatelessWidget {
           ? _addItemDivider(_children, itemSpacing!, divider)
           : _children,
     );
+
+    if (autofillGroup == true) {
+      result = AutofillGroup(child: result);
+    }
 
     if (safeArea != null) {
       result = SafeArea(
