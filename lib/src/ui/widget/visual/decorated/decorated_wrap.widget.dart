@@ -49,7 +49,7 @@ class DecoratedWrap extends StatelessWidget {
           // 空白部分宽度, 比如一行为2个时, 空余宽度为 (2-1)*spacing;
           final spaceWidth = (crossAxisCount! - 1) * spacing;
           final availableWidth = constraints.maxWidth - spaceWidth;
-          final itemWidth = availableWidth / crossAxisCount!;
+          final itemWidth = (availableWidth / crossAxisCount!).floorToDouble();
           return Wrap(
             direction: direction,
             alignment: alignment,
