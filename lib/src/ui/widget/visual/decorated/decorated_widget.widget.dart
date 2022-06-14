@@ -16,9 +16,7 @@ class DecoratedWidget<B extends BLoC> extends StatefulWidget {
     this.tabControllerConfig,
     this.decorationBuilder,
     this.onDispose,
-  })  : // 要么同时设置泛型B和bloc参数, 要么就都不设置
-        assert((B != BLoC && bloc != null) || (B == BLoC && bloc == null)),
-        super(key: key);
+  }) : super(key: key);
 
   /// 直接传递的BLoC
   final B? bloc;
@@ -70,9 +68,11 @@ class _DecoratedWidgetState<B extends BLoC> extends State<DecoratedWidget<B>> {
   @override
   Widget build(BuildContext context) {
     Widget result;
-    if (widget.bloc != null) {
+
+    B? bloc = widget.bloc ?? get<B>();
+    if (bloc != null) {
       result = BLoCProvider<B>(
-        bloc: widget.bloc!,
+        bloc: bloc,
         init: widget.init,
         child: widget.widget,
       );

@@ -26,9 +26,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
     required String routeName,
     bool fullscreenDialog = false,
     bool maintainState = true,
-  })  : // 要么同时设置泛型B和bloc参数, 要么就都不设置
-        assert((B != BLoC && bloc != null) || (B == BLoC && bloc == null)),
-        super(
+  }) : super(
           fullscreenDialog: fullscreenDialog,
           maintainState: maintainState,
           builder: (context) => screen,
@@ -101,9 +99,10 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
       result = LocalNavigator(builder: (_) => tempResult);
     }
 
-    if (bloc != null) {
+    B? _bloc = bloc ?? get<B>();
+    if (_bloc != null) {
       result = BLoCProvider<B>(
-        bloc: bloc!,
+        bloc: _bloc,
         init: init,
         onDispose: onDisposed,
         autoDispose: autoDispose,
