@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:decorated_flutter/src/extension/extension.export.dart';
 import 'package:decorated_flutter/src/res/dimens.dart';
 import 'package:decorated_flutter/src/ui/ui.export.dart';
@@ -64,7 +65,8 @@ class __DatePickerDialogState extends State<_DatePickerDialog> {
   Widget build(BuildContext context) {
     final chinese = Platform.localeName.contains('zh');
     return DecoratedColumn(
-      height: 256,
+      height: 256 + context.padding.bottom,
+      safeArea: const SafeAreaConfig.bottom(),
       children: [
         DecoratedRow(
           padding: const EdgeInsets.symmetric(horizontal: 8),
