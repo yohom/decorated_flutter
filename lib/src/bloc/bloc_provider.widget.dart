@@ -12,6 +12,15 @@ class BLoCProvider<T extends BLoC> extends StatefulWidget {
     this.autoDispose = true,
   }) : super(key: key);
 
+  const BLoCProvider.borrowed({
+    Key? key,
+    required this.child,
+    required this.bloc,
+    this.init,
+    this.onDispose,
+    this.autoDispose = false,
+  }) : super(key: key);
+
   final T bloc;
   final ValueChanged<T>? init;
   final Widget child;

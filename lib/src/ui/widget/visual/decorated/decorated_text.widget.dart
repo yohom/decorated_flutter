@@ -122,6 +122,8 @@ class DecoratedText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _overflow =
+        maxLines == 1 ? (overflow ?? TextOverflow.ellipsis) : overflow;
     Widget result = _data != null
         ? Text(
             _data!,
@@ -129,7 +131,7 @@ class DecoratedText extends StatelessWidget {
             style: style ?? DefaultTextStyle.of(context).style,
             strutStyle: strutStyle,
             textAlign: textAlign,
-            overflow: overflow,
+            overflow: _overflow,
             softWrap: softWrap,
           )
         : StreamBuilder<String>(
@@ -142,7 +144,7 @@ class DecoratedText extends StatelessWidget {
                 style: style ?? DefaultTextStyle.of(context).style,
                 strutStyle: strutStyle,
                 textAlign: textAlign,
-                overflow: overflow,
+                overflow: _overflow,
                 softWrap: softWrap,
               );
             },
