@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 
 class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
-  const DecoratedApp({
+  DecoratedApp({
     Key? key,
-    required this.rootBLoC,
+    B? rootBLoC,
     required this.app,
-  }) : super(key: key);
+  })  : rootBLoC = rootBLoC ?? get(),
+        super(key: key);
 
   final B rootBLoC;
   final Widget app;
