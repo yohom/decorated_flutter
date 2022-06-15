@@ -2,11 +2,21 @@ import 'package:decorated_flutter/src/bloc/bloc.export.dart';
 import 'package:flutter/material.dart';
 
 extension BuildContextX on BuildContext {
+  @Deprecated('为了语义精准化, 使用find代替')
   T of<T extends BLoC>() {
     return BLoCProvider.of<T>(this)!;
   }
 
+  T find<T extends BLoC>() {
+    return BLoCProvider.of<T>(this)!;
+  }
+
   T? maybeOf<T extends BLoC>() {
+    return BLoCProvider.of<T>(this);
+  }
+
+  @Deprecated('为了语义精准化, 使用maybeFind代替')
+  T? maybeFind<T extends BLoC>() {
     return BLoCProvider.of<T>(this);
   }
 
