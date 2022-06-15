@@ -8,7 +8,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
   DecoratedRoute({
     Key? key,
     required this.screen,
-    this.bloc,
+    B? bloc,
     this.autoCloseKeyboard = true,
     this.init,
     this.onLateinit,
@@ -26,7 +26,8 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
     required String routeName,
     bool fullscreenDialog = false,
     bool maintainState = true,
-  }) : super(
+  })  : _bloc = bloc ?? get(), // 如果没有显式指定就从DI容器寻找
+        super(
           fullscreenDialog: fullscreenDialog,
           maintainState: maintainState,
           builder: (context) => screen,
@@ -34,7 +35,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
         );
 
   /// 直接传递的BLoC
-  final B? bloc;
+  final B? _bloc;
 
   /// child
   final Widget screen;
@@ -99,10 +100,9 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
       result = LocalNavigator(builder: (_) => tempResult);
     }
 
-    B? _bloc = bloc ?? get<B>();
     if (_bloc != null) {
       result = BLoCProvider<B>(
-        bloc: _bloc,
+        bloc: _bloc!,
         init: init,
         onDispose: onDisposed,
         autoDispose: autoDispose,
@@ -176,9 +176,9 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
       // 如果是懒加载, 那么动画结束时开始初始化
       if (status == AnimationStatus.completed &&
           onLateinit != null &&
-          bloc != null &&
+          _bloc != null &&
           !_inited) {
-        onLateinit!(bloc!, context);
+        onLateinit!(_bloc!, context);
         _inited = true;
       }
     });
