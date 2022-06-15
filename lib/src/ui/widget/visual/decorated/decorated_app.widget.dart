@@ -5,17 +5,15 @@ import 'package:oktoast/oktoast.dart';
 class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   const DecoratedApp({
     Key? key,
-    required this.rootBLoC,
     required this.app,
   }) : super(key: key);
 
-  final B rootBLoC;
   final Widget app;
 
   @override
   Widget build(BuildContext context) {
     return BLoCProvider<B>(
-      bloc: rootBLoC,
+      bloc: require(),
       child: OKToast(
         duration: const Duration(seconds: 3),
         radius: 4,
