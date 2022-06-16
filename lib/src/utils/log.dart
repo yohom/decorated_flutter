@@ -22,8 +22,8 @@ class _Logger {
   StreamSubscription? _logSubscription;
   final _logBuffer = StringBuffer();
 
-  /// 向外暴露日志文件路径
-  String? get logFilePath => _logFile?.path;
+  /// 向外暴露日志文件夹
+  Directory? get logDir => _logDir;
 
   void d(Object content) {
     if (!kReleaseMode) {
