@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
+import 'package:logger/src/outputs/file_output.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -14,44 +14,55 @@ typedef ForwardCallback = void Function(String);
 final _Logger L = _Logger();
 
 class _Logger {
-  final logger = Logger();
+  late final Logger _logger;
+  Directory? logDir;
 
-  Directory? _logDir;
-  File? _logFile;
-  PackageInfo? _packageInfo;
-  StreamSubscription? _logSubscription;
-  final _logBuffer = StringBuffer();
+  /// 初始化日志
+  Future<void> init() async {
+    if (kIsWeb) {
+      _logger = Logger(printer: PrettyPrinter(printTime: true));
+    } else {
+      final now = DateTime.now();
+      final tempPath = (await getTemporaryDirectory()).path;
+      final packageInfo = await PackageInfo.fromPlatform();
+      final appName = packageInfo.appName;
+      final appVersion = packageInfo.version;
+      // 日志目录
+      logDir ??= Directory('$tempPath/log/$appName/$appVersion');
+      // 如果没有日志文件就创建一个
+      final logFile = File('${logDir!.path}/${now.format('yyyy-MM-dd')}.txt');
+      if (!logFile.existsSync()) logFile.createSync(recursive: true);
 
-  /// 向外暴露日志文件夹
-  Directory? get logDir => _logDir;
+      _logger = Logger(
+        printer: PrettyPrinter(printTime: true),
+        filter: DevelopmentFilter(),
+        output: MultiOutput(
+          [ConsoleOutput(), if (!kIsWeb) FileOutput(file: logFile)],
+        ),
+      );
+    }
+  }
 
   void d(Object content) {
-    if (!kReleaseMode) {
-      logger.d(content);
-    }
+    _logger.d(content);
   }
 
   void w(Object content) {
-    if (!kReleaseMode) {
-      logger.w(content);
-    }
+    _logger.w(content);
   }
 
   void i(Object content, {LogPrinter? printer}) {
-    if (!kReleaseMode) {
-      logger.i(content);
-    }
+    _logger.i(content);
   }
 
   void e(Object content) {
-    if (!kReleaseMode) {
-      logger.e(content);
-    }
+    _logger.e(content);
   }
 
   /// 写日志到文件
   ///
   /// 清理[evict]时长前的文件.
+  @Deprecated('直接使用其他方法即可')
   void file(
     Object content, {
     Duration evict = const Duration(days: 7),
@@ -59,57 +70,11 @@ class _Logger {
     ForwardCallback? forward = _debugLog,
     String? tag,
   }) async {
-    _initFileLogIfNeeded();
-
-    final tempPath = (await getTemporaryDirectory()).path;
-    _packageInfo ??= await PackageInfo.fromPlatform();
-    final appName = _packageInfo!.appName;
-    final appVersion = _packageInfo!.version;
-    // 日志目录
-    _logDir ??= Directory('$tempPath/log/$appName/$appVersion');
-
-    final now = DateTime.now();
-    // 清理keep前的日志文件
-    if (_logDir!.existsSync() == true) {
-      _logDir!
-          .list()
-          .where((e) => e.statSync().changed.isBefore(now.subtract(evict)))
-          .listen((file) => file.deleteIfExists());
-    }
-
-    // 如果没有日志文件就创建一个
-    _logFile = File('${_logDir!.path}/${now.format('yyyy-MM-dd')}.txt');
-    if (!_logFile!.existsSync()) _logFile!.createSync(recursive: true);
-
-    // 写入日志缓存, 定时flush
-    final body = '[${tag ?? appName}] ${now.format('HH:mm:ss')}: $content';
-    _logBuffer.writeln(body);
-
-    // 如果已经配置forward就直接略过旧版的logConsole了
-    if (forward != null) {
-      forward(body);
-      return;
-    }
-    // 使用redirect代替logConsole
-    if (logConsole) L.d(content);
+    i(content);
   }
 
   void dispose() {
-    _logSubscription?.cancel();
-    _logSubscription = null;
-  }
-
-  /// 没有开启定时flush就开启一下, 因为有可能被dispose
-  void _initFileLogIfNeeded() {
-    _logSubscription ??=
-        Stream.periodic(const Duration(minutes: 1), passthrough)
-            .where((_) => _logBuffer.isNotEmpty)
-            .listen(_handleFlushLog);
-  }
-
-  void _handleFlushLog(_) {
-    _logFile?.writeAsString(_logBuffer.toString(), mode: FileMode.append);
-    _logBuffer.clear();
+    _logger.close();
   }
 }
 
