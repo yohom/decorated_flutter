@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:decorated_flutter/src/utils/utils.export.dart';
@@ -14,13 +15,13 @@ class _Logger {
 
   Directory? _logDir;
   File? _logFile;
-  final StringBuffer _logBuffer = StringBuffer();
+  late StreamSubscription _logSubscription;
+  final _logBuffer = StringBuffer();
 
   _Logger() {
-    Stream.periodic(const Duration(seconds: 5), passthrough).listen((event) {
-      _logFile?.writeAsStringSync(_logBuffer.toString(), mode: FileMode.append);
-      _logBuffer.clear();
-    });
+    _logSubscription = Stream.periodic(const Duration(seconds: 1), passthrough)
+        .where((_) => _logBuffer.isNotEmpty)
+        .listen(_handleFlushLog);
   }
 
   void d(Object content) {
@@ -56,12 +57,13 @@ class _Logger {
     bool logConsole = true,
     String tag = 'default',
   }) async {
-    _logDir ??= Directory('${(await getTemporaryDirectory()).path}/log');
+    final tempPath = (await getTemporaryDirectory()).path;
+    _logDir ??= Directory('$tempPath/decorated.log');
     final now = DateTime.now();
     // 清理keep前的日志文件
     if (_logDir!.existsSync() == true) {
-      _logDir
-          ?.list()
+      _logDir!
+          .list()
           .where((e) => e.statSync().changed.isBefore(now.subtract(evict)))
           .listen((file) => file.deleteIfExists());
     }
@@ -73,5 +75,14 @@ class _Logger {
     _logBuffer.writeln(logContent);
 
     if (logConsole) L.d(content);
+  }
+
+  void dispose() {
+    _logSubscription.cancel();
+  }
+
+  void _handleFlushLog(_) {
+    _logFile?.writeAsString(_logBuffer.toString(), mode: FileMode.append);
+    _logBuffer.clear();
   }
 }
