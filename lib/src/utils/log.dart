@@ -35,6 +35,7 @@ class _Logger {
 
       _logger = Logger(
         printer: PrettyPrinter(printTime: true),
+        filter: kDebugMode ? DevelopmentFilter() : InfoFilter(),
         output: MultiOutput(
           [ConsoleOutput(), if (!kIsWeb) FileOutput(file: logFile)],
         ),
@@ -74,6 +75,14 @@ class _Logger {
 
   void dispose() {
     _logger.close();
+  }
+}
+
+/// 显示优先级大于info的日志
+class InfoFilter extends LogFilter {
+  @override
+  bool shouldLog(LogEvent event) {
+    return event.level >= Level.info;
   }
 }
 
