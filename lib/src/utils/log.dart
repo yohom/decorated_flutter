@@ -18,8 +18,8 @@ class _Logger {
   Directory? logDir;
 
   /// 初始化日志
-  Future<void> init() async {
-    if (kIsWeb) {
+  Future<void> init({bool enableFileOutput = true}) async {
+    if (kIsWeb || !enableFileOutput) {
       _logger = Logger(printer: PrettyPrinter(printTime: true));
     } else {
       final now = DateTime.now();
@@ -35,7 +35,6 @@ class _Logger {
 
       _logger = Logger(
         printer: PrettyPrinter(printTime: true),
-        filter: DevelopmentFilter(),
         output: MultiOutput(
           [ConsoleOutput(), if (!kIsWeb) FileOutput(file: logFile)],
         ),
