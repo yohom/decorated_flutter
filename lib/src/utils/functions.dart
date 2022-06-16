@@ -108,6 +108,7 @@ void runDecoratedApp(
 }) async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  L.file('app开始运行!');
   if (statusBarColor != null) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle.dark.copyWith(statusBarColor: statusBarColor),
@@ -115,24 +116,34 @@ void runDecoratedApp(
   }
 
   if (beforeApp != null) {
+    L.file('开始处理app运行前置工作!');
     try {
       await initDecoratedBox();
       await beforeApp();
     } catch (e, s) {
-      L.w('运行app前置工作出现异常, 请检查是否有bug!. $e\n $s');
+      L.file('运行app前置工作出现异常, 请检查是否有bug!. $e\n $s', forward: L.w);
+    } finally {
+      L.file('结束处理app运行前置工作!');
     }
   }
 
   runZonedGuarded<void>(
     () => runApp(app),
-    (e, s) => onError?.call(e, s) ?? L.d('error: $e, stacktrace: $s'),
+    (e, s) {
+      if (onError != null) {
+        onError.call(e, s);
+      } else {
+        L.file('error: $e, stacktrace: $s', forward: L.e);
+      }
+    },
   );
 
   if (afterApp != null) {
+    L.file('开始处理app运行后置工作!');
     try {
       await afterApp();
     } catch (e, s) {
-      L.w('运行app后置工作出现异常, 请检查是否有bug!. $e\n $s');
+      L.file('运行app后置工作出现异常, 请检查是否有bug!. $e\n $s', forward: L.w);
     }
   }
 }
