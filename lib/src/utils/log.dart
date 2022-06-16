@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../extension/extension.export.dart';
@@ -15,6 +16,7 @@ class _Logger {
 
   Directory? _logDir;
   File? _logFile;
+  PackageInfo? _packageInfo;
   late StreamSubscription _logSubscription;
   final _logBuffer = StringBuffer();
 
@@ -55,10 +57,14 @@ class _Logger {
     Object content, {
     Duration evict = const Duration(days: 7),
     bool logConsole = true,
-    String tag = 'default',
+    String? tag,
   }) async {
     final tempPath = (await getTemporaryDirectory()).path;
-    _logDir ??= Directory('$tempPath/decorated.log');
+    _packageInfo ??= await PackageInfo.fromPlatform();
+    final appName = _packageInfo!.appName;
+    final appVersion = _packageInfo!.version;
+    _logDir ??= Directory('$tempPath/log/$appName/$appVersion');
+
     final now = DateTime.now();
     // 清理keep前的日志文件
     if (_logDir!.existsSync() == true) {
@@ -71,8 +77,8 @@ class _Logger {
     _logFile = File('${_logDir!.path}/${now.format('yyyy-MM-dd')}.txt');
     if (!_logFile!.existsSync()) _logFile!.createSync(recursive: true);
 
-    final logContent = '[$tag] ${now.format('HH:mm:ss')}: $content';
-    _logBuffer.writeln(logContent);
+    final body = '[${tag ?? appName}] ${now.format('HH:mm:ss')}: $content';
+    _logBuffer.writeln(body);
 
     if (logConsole) L.d(content);
   }
