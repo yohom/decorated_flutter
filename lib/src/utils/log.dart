@@ -82,9 +82,13 @@ class _Logger {
     final body = '[${tag ?? appName}] ${now.format('HH:mm:ss')}: $content';
     _logBuffer.writeln(body);
 
+    // 如果已经配置forward就直接略过旧版的logConsole了
+    if (forward != null) {
+      forward(body);
+      return;
+    }
     // 使用redirect代替logConsole
     if (logConsole) L.d(content);
-    if (forward != null) forward(body);
   }
 
   void dispose() {
