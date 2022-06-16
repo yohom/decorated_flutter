@@ -105,6 +105,7 @@ void runDecoratedApp(
   Future<void> Function()? afterApp,
   Future<void> Function(Object, StackTrace)? onError,
   Color? statusBarColor,
+  bool zoned = true,
 }) async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -127,16 +128,20 @@ void runDecoratedApp(
     }
   }
 
-  runZonedGuarded<void>(
-    () => runApp(app),
-    (e, s) {
-      if (onError != null) {
-        onError.call(e, s);
-      } else {
-        L.file('error: $e, stacktrace: $s', forward: L.e);
-      }
-    },
-  );
+  if (zoned) {
+    runZonedGuarded<void>(
+      () => runApp(app),
+      (e, s) {
+        if (onError != null) {
+          onError.call(e, s);
+        } else {
+          L.file('error: $e, stacktrace: $s', forward: L.e);
+        }
+      },
+    );
+  } else {
+    runApp(app);
+  }
 
   if (afterApp != null) {
     L.file('开始处理app运行后置工作!');
