@@ -3,6 +3,7 @@ library decorated_flutter;
 export 'package:dio/dio.dart';
 export 'package:intl/intl.dart';
 export 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+export 'package:package_info_plus/package_info_plus.dart';
 export 'package:path_provider/path_provider.dart';
 export 'package:rxdart/rxdart.dart';
 export 'package:sliver_tools/sliver_tools.dart';
