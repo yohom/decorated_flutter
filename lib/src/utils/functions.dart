@@ -81,32 +81,42 @@ Future<void> polling({
   L.d('轮询执行结束');
 }
 
+/// 求最大值
 T maxValue<T extends Comparable>(T value1, T value2) {
   return value1.compareTo(value2) >= 0 ? value1 : value2;
 }
 
+/// 求最小值
 T minValue<T extends Comparable>(T value1, T value2) {
   return value1.compareTo(value2) < 0 ? value1 : value2;
 }
 
+/// 打印当前时间
 DateTime logTime([String? tag]) {
   final now = DateTime.now();
   L.d('${tag != null ? '[$tag] ' : ''}当前时间戳: $now');
   return now;
 }
 
+/// 通用的toString
 String toString(Object object) {
   return object.toString();
 }
 
+/// 运行app
 void runDecoratedApp(
   Widget app, {
   Future<void> Function()? beforeApp,
   Future<void> Function()? afterApp,
   Future<void> Function(Object, StackTrace)? onError,
   Color? statusBarColor,
+  bool zoned = true,
+  bool enableFileOutput = true,
 }) async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // 初始化日志系统
+  await L.init(enableFileOutput: enableFileOutput);
 
   if (statusBarColor != null) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -123,10 +133,20 @@ void runDecoratedApp(
     }
   }
 
-  runZonedGuarded<void>(
-    () => runApp(app),
-    (e, s) => onError?.call(e, s) ?? L.d('error: $e, stacktrace: $s'),
-  );
+  if (zoned) {
+    runZonedGuarded<void>(
+      () => runApp(app),
+      (e, s) {
+        if (onError != null) {
+          onError.call(e, s);
+        } else {
+          L.e('error: $e, stacktrace: $s');
+        }
+      },
+    );
+  } else {
+    runApp(app);
+  }
 
   if (afterApp != null) {
     try {

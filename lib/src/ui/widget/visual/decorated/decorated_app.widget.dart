@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 
 class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
-  const DecoratedApp({
+  DecoratedApp({
     Key? key,
-    required this.rootBLoC,
+    B? rootBLoC,
     required this.app,
-  }) : super(key: key);
+  })  : rootBLoC = rootBLoC ?? get(),
+        super(key: key);
 
   final B rootBLoC;
   final Widget app;
@@ -16,6 +17,10 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   Widget build(BuildContext context) {
     return BLoCProvider<B>(
       bloc: rootBLoC,
+      onDispose: () {
+        // 释放log的定时写日志任务
+        L.dispose();
+      },
       child: OKToast(
         duration: const Duration(seconds: 3),
         radius: 4,

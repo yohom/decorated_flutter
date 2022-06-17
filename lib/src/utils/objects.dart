@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import 'log.dart';
+
 /// 当不关心对象是什么, 但是又必须存在一个对象的时候, 使用这个
 final anyObject = Object();
 
@@ -14,14 +16,16 @@ final kMobileRegex =
 final kEmailRegex = RegExp(
     r"""([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?)+""");
 
-final kMoneyRegex = RegExp(
-    r'(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)');
+final kMoneyRegex =
+    RegExp(r'(^[1-9](\d+)?(\.\d{1,2})?$)|(^(0)$)|(^\d\.\d(\d)?$)');
 
 // decorated专属存储
 late Box _box;
 Future<void> initDecoratedBox() async {
+  L.file('开始初始化decorated专属存储持久层');
   await Hive.initFlutter();
   _box = await Hive.openBox('decorated_flutter_box');
+  L.file('结束初始化decorated专属存储持久层');
 }
 
 Box get gDecoratedStorage => _box;

@@ -4,6 +4,7 @@ class DecoratedList extends StatelessWidget {
   const DecoratedList.box({
     Key? key,
     this.padding,
+    this.restorationId,
     this.shrinkWrap = false,
     this.itemBuilder,
     this.itemCount,
@@ -25,6 +26,7 @@ class DecoratedList extends StatelessWidget {
   const DecoratedList.boxSeparated({
     Key? key,
     this.padding,
+    this.restorationId,
     this.shrinkWrap = false,
     this.itemBuilder,
     required this.itemCount,
@@ -64,9 +66,11 @@ class DecoratedList extends StatelessWidget {
         scrollDirection = null,
         controller = null,
         separatorBuilder = null,
+        restorationId = null,
         super(key: key);
 
   final bool _sliver;
+  final String? restorationId;
   final EdgeInsets? padding;
   final bool shrinkWrap;
   final IndexedWidgetBuilder? itemBuilder;
@@ -139,6 +143,7 @@ class DecoratedList extends StatelessWidget {
     if (children != null) {
       result = ListView(
         padding: padding,
+        restorationId: restorationId,
         controller: controller,
         shrinkWrap: shrinkWrap,
         itemExtent: itemExtent,
@@ -153,6 +158,7 @@ class DecoratedList extends StatelessWidget {
       if (separatorBuilder != null && itemCount != null) {
         result = ListView.separated(
           padding: padding,
+          restorationId: restorationId,
           separatorBuilder: separatorBuilder!,
           itemBuilder: itemBuilder!,
           itemCount: itemCount!,
@@ -166,6 +172,7 @@ class DecoratedList extends StatelessWidget {
       } else {
         result = ListView.builder(
           padding: padding,
+          restorationId: restorationId,
           itemBuilder: itemBuilder!,
           itemCount: itemCount,
           shrinkWrap: shrinkWrap,
