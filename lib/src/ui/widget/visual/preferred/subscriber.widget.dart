@@ -9,6 +9,39 @@ typedef _ErrorPlaceholderBuilder = Widget Function(
   Object error,
 );
 
+class SliverConfig {
+  final bool error;
+  final bool empty;
+  final bool loading;
+  final bool data;
+
+  const SliverConfig({
+    this.error = true,
+    this.empty = true,
+    this.loading = true,
+    this.data = true,
+  });
+
+  const SliverConfig.placeholder()
+      : error = true,
+        empty = true,
+        loading = true,
+        data = false;
+
+  @override
+  String toString() {
+    return 'SliverConfig{error: $error, empty: $empty, loading: $loading, data: $data}';
+  }
+}
+
+enum SnapshotType {
+  error,
+  empty,
+  loading,
+  data,
+  unknown,
+}
+
 class SingleSubscriber<T> extends StatefulWidget {
   static Widget? _defaultEmptyPlaceholder;
   static _ErrorPlaceholderBuilder? _defaultErrorPlaceholder;
@@ -166,7 +199,7 @@ class Subscriber<T> extends StatelessWidget {
     this.errorPlaceholderBuilder,
     this.loadingPlaceholder,
     this.handleEmpty = true,
-    @Deprecated('自行在参数中处理sliver') this.sliver = false,
+    this.sliver,
     this.width,
     this.height,
     this.decoration,
@@ -199,8 +232,7 @@ class Subscriber<T> extends StatelessWidget {
   final bool handleEmpty;
 
   /// 是否使用Sliver
-  @Deprecated('自行在参数中处理sliver')
-  final bool sliver;
+  final SliverConfig? sliver;
 
   /// 宽高
   final double? width;
@@ -214,6 +246,7 @@ class Subscriber<T> extends StatelessWidget {
       initialData: initialData,
       stream: stream,
       builder: (ctx, snapshot) {
+        SnapshotType snapshotType;
         Widget? result;
         if (snapshot.hasError) {
           L.e('Subscriber出现错误: ${snapshot.error}, 调用栈:\n ${snapshot.stackTrace}');
@@ -224,6 +257,8 @@ class Subscriber<T> extends StatelessWidget {
                 _defaultErrorPlaceholder?.call(context, snapshot.error!) ??
                     const ErrorPlaceholder();
           }
+
+          snapshotType = SnapshotType.error;
         }
 
         if (snapshot.hasData) {
@@ -231,15 +266,23 @@ class Subscriber<T> extends StatelessWidget {
             result ??= emptyPlaceholder ??
                 _defaultEmptyPlaceholder ??
                 const EmptyPlaceholder();
+
+            snapshotType = SnapshotType.empty;
           } else {
             result ??= builder(snapshot.data as T);
+
+            snapshotType = SnapshotType.data;
           }
         } else if (showLoading) {
           result ??= loadingPlaceholder ??
               _defaultLoadingPlaceholder ??
               const LoadingWidget();
+
+          snapshotType = SnapshotType.loading;
         } else {
           result ??= SPACE_ZERO;
+
+          snapshotType = SnapshotType.unknown;
         }
 
         if (width != null || height != null || decoration != null) {
@@ -251,7 +294,26 @@ class Subscriber<T> extends StatelessWidget {
           );
         }
 
-        if (sliver) result = SliverToBoxAdapter(child: result);
+        if (sliver != null) {
+          switch (snapshotType) {
+            case SnapshotType.error:
+              if (sliver!.error) result = SliverToBoxAdapter(child: result);
+              break;
+            case SnapshotType.empty:
+              if (sliver!.empty) result = SliverToBoxAdapter(child: result);
+              break;
+            case SnapshotType.data:
+              if (sliver!.data) result = SliverToBoxAdapter(child: result);
+              break;
+            case SnapshotType.loading:
+              if (sliver!.loading) result = SliverToBoxAdapter(child: result);
+              break;
+            default:
+              result = SliverToBoxAdapter(child: result);
+              break;
+          }
+        }
+
         return result;
       },
     );
