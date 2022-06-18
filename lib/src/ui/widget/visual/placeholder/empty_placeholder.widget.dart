@@ -9,6 +9,7 @@ class EmptyPlaceholder extends StatelessWidget {
 
   final bool sliver;
   final Widget? child;
+
   @override
   Widget build(BuildContext context) {
     Widget result = child ?? const Center(child: Text('没有数据'));

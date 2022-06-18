@@ -90,9 +90,9 @@ extension FutureX<T> on Future<T> {
   }
 
   /// 当前Future正常结束后执行pop
-  Future<void> thenPop({String? until}) {
+  Future<void> thenPop<R>({String? until, R? withValue}) {
     return then((_) => until == null
-        ? gNavigatorKey.currentState?.pop()
+        ? gNavigatorKey.currentState?.pop<R>(withValue)
         : gNavigatorKey.currentState?.popUntil(ModalRoute.withName(until)));
   }
 
