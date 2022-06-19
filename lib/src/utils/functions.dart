@@ -116,7 +116,7 @@ void runDecoratedApp(
   Future<void> Function(Object, StackTrace)? onError,
   Color? statusBarColor,
   bool zoned = true,
-  bool enableFileOutput = true,
+  bool enableFileOutput = false,
 }) async {
   WidgetsFlutterBinding.ensureInitialized();
 
