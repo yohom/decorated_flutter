@@ -297,16 +297,16 @@ class Subscriber<T> extends StatelessWidget {
         if (sliver != null) {
           switch (snapshotType) {
             case SnapshotType.error:
-              if (sliver!.error) result = SliverToBoxAdapter(child: result);
+              if (sliver!.error) result = SliverFillRemaining(child: result);
               break;
             case SnapshotType.empty:
-              if (sliver!.empty) result = SliverToBoxAdapter(child: result);
+              if (sliver!.empty) result = SliverFillRemaining(child: result);
               break;
             case SnapshotType.data:
               if (sliver!.data) result = SliverToBoxAdapter(child: result);
               break;
             case SnapshotType.loading:
-              if (sliver!.loading) result = SliverToBoxAdapter(child: result);
+              if (sliver!.loading) result = SliverFillRemaining(child: result);
               break;
             default:
               result = SliverToBoxAdapter(child: result);
