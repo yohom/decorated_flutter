@@ -42,11 +42,19 @@ extension StringX on String {
   }
 
   int? get intValue {
-    return int.tryParse(this);
+    try {
+      return int.tryParse(this);
+    } catch (e) {
+      return null;
+    }
   }
 
   double? get doubleValue {
-    return double.tryParse(this);
+    try {
+      return double.tryParse(this);
+    } catch (e) {
+      return null;
+    }
   }
 
   String get packed {

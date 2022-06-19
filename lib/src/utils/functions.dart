@@ -27,6 +27,11 @@ void doNothing2(_, __) {}
 /// 透传
 T passthrough<T>(T data) => data;
 
+/// 执行一段回调
+T doFunc<T>(T Function() func) {
+  return func();
+}
+
 /// 关闭键盘
 ///
 /// 这个函数和通过FocusScope.unfocus()的区别是在关闭键盘的同时可以保持焦点
@@ -111,7 +116,7 @@ void runDecoratedApp(
   Future<void> Function(Object, StackTrace)? onError,
   Color? statusBarColor,
   bool zoned = true,
-  bool enableFileOutput = true,
+  bool enableFileOutput = false,
 }) async {
   WidgetsFlutterBinding.ensureInitialized();
 
