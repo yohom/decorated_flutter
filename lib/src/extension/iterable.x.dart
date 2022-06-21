@@ -136,6 +136,6 @@ extension ListX<T> on List<T> {
   }
 }
 
-extension SelectableListX on List<Selectable> {
-  Selectable? get selected => find((it) => it.isSelected);
+extension SelectableListX<T extends Selectable> on List<T> {
+  T? get selected => find((it) => it.isSelected);
 }
