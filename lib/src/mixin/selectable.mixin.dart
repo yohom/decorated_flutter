@@ -1,15 +1,17 @@
 mixin Selectable {
-  bool selected = false;
+  @Deprecated('语义精确化, 使用isSelected代替')
+  bool get selected => isSelected;
+  bool isSelected = false;
 
   void reset() {
-    selected = false;
+    isSelected = false;
   }
 
   /// 翻转选中的值
   ///
   /// 返回翻转后的值
   bool toggle() {
-    selected = !selected;
-    return selected;
+    isSelected = !isSelected;
+    return isSelected;
   }
 }

@@ -329,7 +329,7 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
     assert(latest is List<Selectable>);
     return forEach((T data) {
       if (data is Selectable) {
-        data.selected = (data == target);
+        data.isSelected = (data == target);
       }
     });
   }
@@ -350,7 +350,7 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
     for (var i = 0; i < latest!.length; i++) {
       final item = latest![i];
       if (item is Selectable) {
-        item.selected = index == i;
+        item.isSelected = index == i;
       }
     }
 
