@@ -1,6 +1,8 @@
 import 'package:decorated_flutter/src/bloc/bloc.export.dart';
 import 'package:flutter/material.dart';
 
+import '../utils/utils.export.dart';
+
 extension BuildContextX on BuildContext {
   @Deprecated('重命名为find')
   T of<T extends BLoC>() {
@@ -8,7 +10,10 @@ extension BuildContextX on BuildContext {
   }
 
   T find<T extends BLoC>() {
-    return BLoCProvider.of<T>(this)!;
+    final bloc = BLoCProvider.of<T>(this);
+
+    if (bloc == null) L.w('获取不到BLoC, 看看是不是搞错作用域了?');
+    return bloc!;
   }
 
   @Deprecated('重命名为maybeFind')
