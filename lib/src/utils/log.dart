@@ -18,7 +18,7 @@ class _Logger {
   Directory? logDir;
 
   /// 初始化日志
-  Future<void> init({bool enableFileOutput = true}) async {
+  Future<void> init({bool enableFileOutput = false}) async {
     if (kIsWeb || !enableFileOutput) {
       _logger = Logger(printer: PrettyPrinter(printTime: true));
     } else {
