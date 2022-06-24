@@ -55,6 +55,10 @@ class _Logger {
     _logger.e(content);
   }
 
+  void v(Object content) {
+    _logger.v(content);
+  }
+
   /// 写日志到文件
   ///
   /// 清理[evict]时长前的文件.
