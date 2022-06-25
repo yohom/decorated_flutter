@@ -43,6 +43,8 @@ class CryptoOption {
 class ImageView extends StatelessWidget {
   /// 加解密选项
   static CryptoOption? _cryptoOption;
+  static Widget? globalErrorWidget;
+  static Widget? globalPlaceholder;
 
   static set cryptoOption(CryptoOption? value) {
     _cryptoOption = value;
@@ -72,10 +74,10 @@ class ImageView extends StatelessWidget {
     this.borderRadius,
     this.shape,
     this.colorBlendMode,
+    this.errorWidget,
+    this.placeholder,
   })  : imagePath = imageUri.isUrl ? null : imageUri,
         imageUrl = imageUri.isUrl ? imageUri : null,
-        errorWidget = const SizedBox.shrink(),
-        placeholder = const SizedBox.shrink(),
         assert(
           (darkImagePath != null && autoDarkMode == false) ||
               darkImagePath == null,
@@ -106,9 +108,9 @@ class ImageView extends StatelessWidget {
     this.borderRadius,
     this.shape,
     this.colorBlendMode,
+    this.errorWidget,
+    this.placeholder,
   })  : imageUrl = null,
-        errorWidget = const SizedBox.shrink(),
-        placeholder = const SizedBox.shrink(),
         assert(
           (darkImagePath != null && autoDarkMode == false) ||
               darkImagePath == null,
@@ -127,8 +129,8 @@ class ImageView extends StatelessWidget {
     this.cacheSize,
     this.fit,
     this.color,
-    this.errorWidget = const SizedBox.shrink(),
-    this.placeholder = const SizedBox.shrink(),
+    this.errorWidget,
+    this.placeholder,
     this.padding,
     this.margin,
     this.darkImagePath,
@@ -170,10 +172,10 @@ class ImageView extends StatelessWidget {
   final Color? color;
 
   /// 备用的asset image路径
-  final Widget errorWidget;
+  final Widget? errorWidget;
 
   /// 占位图
-  final Widget placeholder;
+  final Widget? placeholder;
 
   /// 边距
   final EdgeInsets? padding, margin;
@@ -226,6 +228,8 @@ class ImageView extends StatelessWidget {
     final _height = size ?? height;
     final _cacheWidth = cacheSize ?? cacheWidth;
     final _cacheHeight = cacheSize ?? cacheHeight;
+    final _placeholder = placeholder ?? globalPlaceholder;
+    final _errorWidget = errorWidget ?? globalErrorWidget;
 
     Widget result;
     // 本地图片
@@ -242,7 +246,7 @@ class ImageView extends StatelessWidget {
           height: height,
           fit: fit ?? BoxFit.contain,
           color: _color,
-          placeholderBuilder: (_) => placeholder,
+          placeholderBuilder: _placeholder != null ? (_) => _placeholder : null,
         );
       } else if (_imagePath.startsWith('/')) {
         result = Image.file(
@@ -256,6 +260,8 @@ class ImageView extends StatelessWidget {
           colorBlendMode: colorBlendMode,
           cacheWidth: _cacheWidth,
           cacheHeight: _cacheHeight,
+          errorBuilder:
+              _errorWidget != null ? (_, __, ___) => _errorWidget : null,
         );
       } else {
         result = Image.asset(
@@ -269,6 +275,8 @@ class ImageView extends StatelessWidget {
           colorBlendMode: colorBlendMode,
           cacheWidth: _cacheWidth,
           cacheHeight: _cacheHeight,
+          errorBuilder:
+              _errorWidget != null ? (_, __, ___) => _errorWidget : null,
         );
       }
     }
@@ -282,7 +290,7 @@ class ImageView extends StatelessWidget {
           height: height,
           fit: fit ?? BoxFit.contain,
           color: _color,
-          placeholderBuilder: (_) => placeholder,
+          placeholderBuilder: _placeholder != null ? (_) => _placeholder : null,
         );
       } else {
         if (ImageView._cryptoOption?.enableNetworkImage == true) {
@@ -295,8 +303,9 @@ class ImageView extends StatelessWidget {
             height: height,
             fit: fit,
             color: _color,
-            placeholder: (_, __) => placeholder,
-            errorWidget: (_, __, ___) => errorWidget,
+            placeholder: _placeholder != null ? (_, __) => _placeholder : null,
+            errorWidget:
+                _errorWidget != null ? (_, __, ___) => _errorWidget : null,
             memCacheWidth: _cacheWidth,
             memCacheHeight: _cacheHeight,
           );
@@ -381,9 +390,9 @@ class ImageView extends StatelessWidget {
             gaplessPlayback: true,
           );
         } else if (snapshot.hasError) {
-          return errorWidget;
+          return errorWidget ?? globalErrorWidget ?? const SizedBox.shrink();
         } else {
-          return placeholder;
+          return placeholder ?? globalPlaceholder ?? const SizedBox.shrink();
         }
       },
     );
