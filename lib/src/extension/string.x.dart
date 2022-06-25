@@ -81,6 +81,22 @@ extension StringX on String {
     }
   }
 
+  String prefixWith(String str, {bool distinct = true}) {
+    if (distinct && startsWith(str)) {
+      return this;
+    } else {
+      return '$str$this';
+    }
+  }
+
+  String suffixWith(String str, {bool distinct = true}) {
+    if (distinct && startsWith(str)) {
+      return this;
+    } else {
+      return '${this}$str';
+    }
+  }
+
   String insert(int index, String divider) {
     return substring(0, index + 1) + divider + substring(index + 1);
   }
