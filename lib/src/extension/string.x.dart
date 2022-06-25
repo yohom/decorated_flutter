@@ -17,6 +17,10 @@ extension StringX on String {
     return !kMobileRegex.hasMatch(this);
   }
 
+  bool get isNumber {
+    return RegExp(r'^\d*$').hasMatch(this);
+  }
+
   bool get isEmail {
     return kEmailRegex.hasMatch(this);
   }
