@@ -180,9 +180,11 @@ DateTime requireDate(
   DateTime Function()? fallback,
 }) {
   try {
-    return DateTime.parse(dateString!);
+    // 先尝试直接解析, 再尝试用时间戳解析
+    return DateTime.tryParse(dateString!) ??
+        DateTime.fromMillisecondsSinceEpoch(dateString.intValue!);
   } catch (e) {
-    L.w('解析日期出错, 使用当前时间代替, 错误信息: $e');
+    L.w('解析日期出错($dateString), 使用当前时间代替, 错误信息: $e');
     return fallback?.call() ?? DateTime.now();
   }
 }
