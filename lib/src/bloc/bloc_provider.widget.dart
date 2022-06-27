@@ -18,8 +18,8 @@ class BLoCProvider<T extends BLoC> extends StatefulWidget {
     required this.bloc,
     this.init,
     this.onDispose,
-    this.autoDispose = false,
-  }) : super(key: key);
+  })  : autoDispose = false,
+        super(key: key);
 
   final T bloc;
   final ValueChanged<T>? init;
