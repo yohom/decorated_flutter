@@ -10,23 +10,25 @@ typedef _ErrorPlaceholderBuilder = Widget Function(
 );
 
 class SliverConfig {
-  final bool error;
-  final bool empty;
-  final bool loading;
-  final bool data;
-
   const SliverConfig({
     this.error = true,
     this.empty = true,
     this.loading = true,
     this.data = true,
+    this.padding,
   });
 
-  const SliverConfig.placeholder()
+  const SliverConfig.placeholder({this.padding})
       : error = true,
         empty = true,
         loading = true,
         data = false;
+
+  final bool error;
+  final bool empty;
+  final bool loading;
+  final bool data;
+  final EdgeInsets? padding;
 
   @override
   String toString() {
@@ -297,20 +299,24 @@ class Subscriber<T> extends StatelessWidget {
         if (sliver != null) {
           switch (snapshotType) {
             case SnapshotType.error:
-              if (sliver!.error) result = SliverFillRemaining(child: result);
+              if (sliver!.error) result = SliverToBoxAdapter(child: result);
               break;
             case SnapshotType.empty:
-              if (sliver!.empty) result = SliverFillRemaining(child: result);
+              if (sliver!.empty) result = SliverToBoxAdapter(child: result);
               break;
             case SnapshotType.data:
               if (sliver!.data) result = SliverToBoxAdapter(child: result);
               break;
             case SnapshotType.loading:
-              if (sliver!.loading) result = SliverFillRemaining(child: result);
+              if (sliver!.loading) result = SliverToBoxAdapter(child: result);
               break;
             default:
               result = SliverToBoxAdapter(child: result);
               break;
+          }
+
+          if (sliver!.padding != null) {
+            result = SliverPadding(padding: sliver!.padding!, sliver: result);
           }
         }
 
