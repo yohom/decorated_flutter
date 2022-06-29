@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  # 注解
+  meta: ^1.7.0
   # 国际化 https://pub.flutter-io.cn/packages/intl
   intl: ^0.17.0
   # 网络请求 https://pub.flutter-io.cn/packages/dio
