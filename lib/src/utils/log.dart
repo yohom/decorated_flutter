@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
-import 'package:logger/src/outputs/file_output.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -18,7 +17,7 @@ class _Logger {
   Directory? logDir;
 
   /// 初始化日志
-  Future<void> init({bool enableFileOutput = true}) async {
+  Future<void> init({bool enableFileOutput = false}) async {
     if (kIsWeb || !enableFileOutput) {
       _logger = Logger(printer: PrettyPrinter(printTime: true));
     } else {
@@ -36,9 +35,6 @@ class _Logger {
       _logger = Logger(
         printer: PrettyPrinter(printTime: true),
         filter: kDebugMode ? DevelopmentFilter() : InfoFilter(),
-        output: MultiOutput(
-          [ConsoleOutput(), if (!kIsWeb) FileOutput(file: logFile)],
-        ),
       );
     }
   }
@@ -57,6 +53,10 @@ class _Logger {
 
   void e(Object content) {
     _logger.e(content);
+  }
+
+  void v(Object content) {
+    _logger.v(content);
   }
 
   /// 写日志到文件

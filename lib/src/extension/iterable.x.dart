@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:decorated_flutter/src/mixin/mixin.export.dart';
 import 'package:decorated_flutter/src/utils/utils.export.dart';
 
 extension IterableX<T> on Iterable<T> {
@@ -133,4 +134,8 @@ extension ListX<T> on List<T> {
     insertAll(0, [for (int i = 0; i < width - length; i++) padding]);
     return this;
   }
+}
+
+extension SelectableListX<T extends Selectable> on List<T> {
+  T? get selected => find((it) => it.isSelected);
 }
