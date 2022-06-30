@@ -21,6 +21,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
     this.navigatorKey,
     this.navigatorObservers = const [],
     this.title = '',
+    this.listTileTheme,
   })  : rootBLoC = rootBLoC ?? get(),
         super(key: key);
 
@@ -37,11 +38,12 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   final GlobalKey<NavigatorState>? navigatorKey;
   final List<NavigatorObserver> navigatorObservers;
   final String title;
+  final ListTileThemeData? listTileTheme;
   final Widget app;
 
   @override
   Widget build(BuildContext context) {
-    return BLoCProvider<B>(
+    Widget result = BLoCProvider<B>(
       bloc: rootBLoC,
       onDispose: () {
         // 释放log的定时写日志任务
@@ -74,5 +76,14 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
         ),
       ),
     );
+
+    if (listTileTheme != null) {
+      result = ListTileTheme(
+        data: listTileTheme,
+        child: result,
+      );
+    }
+
+    return result;
   }
 }
