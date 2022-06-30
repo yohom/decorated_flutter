@@ -8,15 +8,17 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
     Key? key,
     B? rootBLoC,
     @Deprecated('已无作用, 直接使用DecoratedApp的参数即可') this.app = NIL,
-    this.preventTextScale = false,
+    @Deprecated('暂无作用') this.preventTextScale = false,
     this.onGenerateTitle,
     this.onGenerateRoute,
     this.theme,
     this.darkTheme,
     this.themeMode,
+    this.scrollBehavior,
     this.localizationsDelegates = const [],
     this.supportedLocales = const <Locale>[Locale('en', 'US')],
     this.locale,
+    this.navigatorKey,
     this.navigatorObservers = const [],
     this.title = '',
   })  : rootBLoC = rootBLoC ?? get(),
@@ -28,9 +30,11 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   final ThemeData? theme, darkTheme;
   final ThemeMode? themeMode;
   final RouteFactory? onGenerateRoute;
+  final ScrollBehavior? scrollBehavior;
   final Iterable<LocalizationsDelegate<dynamic>> localizationsDelegates;
   final Locale? locale;
   final Iterable<Locale> supportedLocales;
+  final GlobalKey<NavigatorState>? navigatorKey;
   final List<NavigatorObserver> navigatorObservers;
   final String title;
   final Widget app;
@@ -49,30 +53,24 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
         dismissOtherOnShow: true,
         animationBuilder: const ToastAnimBuilder(),
         movingOnWindowChange: false,
-        child: MediaQuery(
-          // 限制字体大小
-          data: MediaQueryData.fromWindow(WidgetsBinding.instance.window)
-              .copyWith(textScaleFactor: preventTextScale ? 1 : null),
-          child: MaterialApp(
-            title: title,
-            useInheritedMediaQuery: true,
-            onGenerateTitle: onGenerateTitle,
-            navigatorKey: gNavigatorKey,
-            theme: theme,
-            darkTheme: darkTheme,
-            themeMode: themeMode,
-            scrollBehavior: BouncingScrollBehavior(),
-            onGenerateRoute: onGenerateRoute,
-            localizationsDelegates: {
-              ...localizationsDelegates,
-              GlobalCupertinoLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate
-            },
-            locale: locale,
-            supportedLocales: supportedLocales,
-            navigatorObservers: navigatorObservers,
-          ),
+        child: MaterialApp(
+          title: title,
+          onGenerateTitle: onGenerateTitle,
+          navigatorKey: navigatorKey ?? gNavigatorKey,
+          theme: theme,
+          darkTheme: darkTheme,
+          themeMode: themeMode,
+          scrollBehavior: scrollBehavior,
+          onGenerateRoute: onGenerateRoute,
+          localizationsDelegates: {
+            ...localizationsDelegates,
+            GlobalCupertinoLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate
+          },
+          locale: locale,
+          supportedLocales: supportedLocales,
+          navigatorObservers: navigatorObservers,
         ),
       ),
     );
