@@ -29,6 +29,7 @@ class DecoratedText extends StatelessWidget {
     this.rightWidget,
     this.softWrap = true,
     this.material,
+    this.mainAxisSize = MainAxisSize.max,
     this.mainAxisAlignment,
     this.crossAxisAlignment,
     this.textBaseline,
@@ -68,6 +69,7 @@ class DecoratedText extends StatelessWidget {
     this.rightWidget,
     this.softWrap = true,
     this.material,
+    this.mainAxisSize = MainAxisSize.max,
     this.mainAxisAlignment,
     this.crossAxisAlignment,
     this.textBaseline,
@@ -111,6 +113,7 @@ class DecoratedText extends StatelessWidget {
   final Widget? rightWidget;
   final bool softWrap;
   final bool? material;
+  final MainAxisSize mainAxisSize;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
   final TextBaseline? textBaseline;
@@ -152,6 +155,7 @@ class DecoratedText extends StatelessWidget {
 
     if (rightWidget != null || leftWidget != null) {
       result = Row(
+        mainAxisSize: mainAxisSize,
         mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.center,
         crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.center,
         textBaseline: textBaseline,

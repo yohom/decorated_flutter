@@ -41,6 +41,10 @@ extension BuildContextX on BuildContext {
     return Form.of(this)!;
   }
 
+  ColorScheme get colorScheme {
+    return theme.colorScheme;
+  }
+
   double get height {
     return MediaQuery.of(this).size.height;
   }
