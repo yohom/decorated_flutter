@@ -47,6 +47,7 @@ class ImageView extends StatelessWidget {
   static CryptoOption? _cryptoOption;
   static Widget? globalErrorWidget;
   static Widget? globalPlaceholder;
+  static bool logEnable = false;
 
   static set cryptoOption(CryptoOption? value) {
     _cryptoOption = value;
@@ -251,7 +252,7 @@ class ImageView extends StatelessWidget {
           placeholderBuilder: _placeholder != null ? (_) => _placeholder : null,
         );
 
-        L.d('使用SvgPicture.asset: $_imagePath');
+        if (logEnable) L.d('使用SvgPicture.asset: $_imagePath');
       } else if (_imagePath.startsWith('/')) {
         result = Image.file(
           File(_imagePath),
@@ -267,7 +268,7 @@ class ImageView extends StatelessWidget {
           errorBuilder:
               _errorWidget != null ? (_, __, ___) => _errorWidget : null,
         );
-        L.d('使用Image.file: $_imagePath');
+        if (logEnable) L.d('使用Image.file: $_imagePath');
       } else {
         result = Image.asset(
           _imagePath,
@@ -283,7 +284,7 @@ class ImageView extends StatelessWidget {
           errorBuilder:
               _errorWidget != null ? (_, __, ___) => _errorWidget : null,
         );
-        L.d('使用Image.asset: $_imagePath');
+        if (logEnable) L.d('使用Image.asset: $_imagePath');
       }
     }
     // 网络图片
@@ -298,11 +299,11 @@ class ImageView extends StatelessWidget {
           color: _color,
           placeholderBuilder: _placeholder != null ? (_) => _placeholder : null,
         );
-        L.d('使用SvgPicture.network: $imageUrl');
+        if (logEnable) L.d('使用SvgPicture.network: $imageUrl');
       } else {
         if (ImageView._cryptoOption?.enableNetworkImage == true) {
           result = _encryptedImage(context, imageUrl!);
-          L.d('使用_encryptedImage: $imageUrl');
+          if (logEnable) L.d('使用_encryptedImage: $imageUrl');
         } else {
           result = CachedNetworkImage(
             imageUrl: imageUrl!,
@@ -317,7 +318,7 @@ class ImageView extends StatelessWidget {
             memCacheWidth: _cacheWidth,
             memCacheHeight: _cacheHeight,
           );
-          L.d('使用CachedNetworkImage: $imageUrl');
+          if (logEnable) L.d('使用CachedNetworkImage: $imageUrl');
         }
       }
     } else {
