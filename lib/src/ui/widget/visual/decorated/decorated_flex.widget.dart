@@ -1,5 +1,4 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -47,7 +46,8 @@ class DecoratedRow extends DecoratedFlex {
     Duration? animationDuration,
     Curve? animationCurve,
     ThemeData? theme,
-    Widget? topEnd,
+    @Deprecated('使用topRight代替') Widget? topEnd,
+    Widget? topRight,
     bool? center,
     bool sliver = false,
     VerticalDirection? verticalDirection,
@@ -102,7 +102,7 @@ class DecoratedRow extends DecoratedFlex {
           animationDuration: animationDuration,
           animationCurve: animationCurve,
           theme: theme,
-          topEnd: topEnd,
+          topRight: topRight ?? topEnd,
           center: center,
           sliver: sliver,
           verticalDirection: verticalDirection,
@@ -160,7 +160,8 @@ class DecoratedColumn extends DecoratedFlex {
     Duration? animationDuration,
     Curve? animationCurve,
     ThemeData? theme,
-    Widget? topEnd,
+    @Deprecated('使用topRight代替') Widget? topEnd,
+    Widget? topRight,
     bool? center,
     bool sliver = false,
     VerticalDirection? verticalDirection,
@@ -215,7 +216,7 @@ class DecoratedColumn extends DecoratedFlex {
           animationDuration: animationDuration,
           animationCurve: animationCurve,
           theme: theme,
-          topEnd: topEnd,
+          topRight: topRight ?? topEnd,
           center: center,
           sliver: sliver,
           verticalDirection: verticalDirection,
@@ -274,7 +275,7 @@ class DecoratedFlex extends StatelessWidget {
     this.animationDuration,
     this.animationCurve,
     this.theme,
-    this.topEnd,
+    this.topRight,
     this.center,
     this.sliver = false,
     this.verticalDirection,
@@ -380,7 +381,7 @@ class DecoratedFlex extends StatelessWidget {
   final ThemeData? theme;
 
   /// 右上角控件
-  final Widget? topEnd;
+  final Widget? topRight;
 
   /// 是否加center
   final bool? center;
@@ -440,10 +441,10 @@ class DecoratedFlex extends StatelessWidget {
       );
     }
 
-    if (topEnd != null) {
+    if (topRight != null) {
       result = Stack(children: <Widget>[
         result,
-        Positioned(top: 0, right: 0, child: topEnd!),
+        Positioned(top: 0, right: 0, child: topRight!),
       ]);
     }
 

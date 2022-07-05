@@ -1,4 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+extension NumX on num {
+  BorderRadius get radius {
+    return BorderRadius.circular(toDouble());
+  }
+}
 
 extension DoubleX on double {
   double asFixed(int fractionDigits) {
