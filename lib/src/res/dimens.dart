@@ -1,4 +1,6 @@
-// ignore_for_file: constant_identifier_names
+// ignore_for_file: constant_identifier_names, non_constant_identifier_names
+
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -17,6 +19,8 @@ const kSpace40 = 40.0;
 const kSpace48 = 48.0;
 const kSpace56 = 56.0;
 const kSpace64 = 64.0;
+
+final SPACE_STATUS_BAR = SizedBox(height: window.padding.top);
 
 const SPACE_ZERO = SizedBox.shrink();
 const SLIVER_SPACE_ZERO = SliverToBoxAdapter(child: SizedBox.shrink());
