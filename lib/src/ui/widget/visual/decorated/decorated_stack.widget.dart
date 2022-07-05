@@ -218,3 +218,102 @@ class DecoratedStack extends StatelessWidget {
     return result;
   }
 }
+
+class TopLeftPositioned extends StatelessWidget {
+  const TopLeftPositioned(this.child, {super.key});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(top: 0, left: 0, child: child);
+  }
+}
+
+class TopRightPositioned extends StatelessWidget {
+  const TopRightPositioned(this.child, {super.key});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(top: 0, right: 0, child: child);
+  }
+}
+
+class TopPositioned extends StatelessWidget {
+  const TopPositioned(this.child, {super.key});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(top: 0, left: 0, right: 0, child: child);
+  }
+}
+
+class LeftPositioned extends StatelessWidget {
+  const LeftPositioned(this.child, {super.key});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(top: 0, bottom: 0, left: 0, child: child);
+  }
+}
+
+class RightPositioned extends StatelessWidget {
+  const RightPositioned(this.child, {super.key});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(top: 0, bottom: 0, right: 0, child: child);
+  }
+}
+
+class BottomLeftPositioned extends StatelessWidget {
+  const BottomLeftPositioned(this.child, {super.key});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(bottom: 0, left: 0, child: child);
+  }
+}
+
+class BottomRightPositioned extends StatelessWidget {
+  const BottomRightPositioned(this.child, {super.key});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(bottom: 0, right: 0, child: child);
+  }
+}
+
+class BottomPositioned extends StatelessWidget {
+  const BottomPositioned(this.child, {super.key});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(bottom: 0, right: 0, left: 0, child: child);
+  }
+}
+
+class CenterPositioned extends StatelessWidget {
+  const CenterPositioned(this.child, {super.key});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(bottom: 0, right: 0, left: 0, top: 0, child: child);
+  }
+}
