@@ -57,6 +57,7 @@ class DecoratedRow extends DecoratedFlex {
     bool? ignorePointer,
     bool? enableFeedback,
     bool? autofillGroup,
+    double? aspectRatio,
     List<Widget> children = const [],
   }) : super(
           key: key,
@@ -112,6 +113,7 @@ class DecoratedRow extends DecoratedFlex {
           ignorePointer: ignorePointer,
           enableFeedback: enableFeedback,
           autofillGroup: autofillGroup,
+          aspectRatio: aspectRatio,
           children: children,
         );
 }
@@ -171,6 +173,7 @@ class DecoratedColumn extends DecoratedFlex {
     bool? ignorePointer,
     bool? enableFeedback,
     bool? autofillGroup,
+    double? aspectRatio,
     List<Widget> children = const [],
   }) : super(
           key: key,
@@ -226,6 +229,7 @@ class DecoratedColumn extends DecoratedFlex {
           ignorePointer: ignorePointer,
           enableFeedback: enableFeedback,
           autofillGroup: autofillGroup,
+          aspectRatio: aspectRatio,
           children: children,
         );
 }
@@ -285,6 +289,7 @@ class DecoratedFlex extends StatelessWidget {
     this.ignorePointer,
     this.enableFeedback,
     this.autofillGroup,
+    this.aspectRatio,
     this.children = const [],
   }) : super(key: key);
 
@@ -403,6 +408,8 @@ class DecoratedFlex extends StatelessWidget {
   final bool? enableFeedback;
 
   final bool? autofillGroup;
+
+  final double? aspectRatio;
 
   /// 子元素
   final List<Widget> children;
@@ -558,6 +565,10 @@ class DecoratedFlex extends StatelessWidget {
 
     if (center == true) {
       result = Center(child: result);
+    }
+
+    if (aspectRatio != null) {
+      result = AspectRatio(aspectRatio: aspectRatio!, child: result);
     }
 
     if (offset != null) {
