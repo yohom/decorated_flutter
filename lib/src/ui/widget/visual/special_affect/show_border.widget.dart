@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class ShowBorder extends StatelessWidget {
-  const ShowBorder(this.child, {super.key, this.color = Colors.black});
+  const ShowBorder({
+    super.key,
+    required this.child,
+    this.color = Colors.black,
+  });
 
   final Color color;
   final Widget child;
