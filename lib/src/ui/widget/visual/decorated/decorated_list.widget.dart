@@ -60,13 +60,13 @@ class DecoratedList extends StatelessWidget {
     this.addSemanticIndexes = true,
     this.itemExtent,
     this.prototypeItem,
-    this.expanded,
   })  : _sliver = true,
         shrinkWrap = false,
         scrollDirection = null,
         controller = null,
         separatorBuilder = null,
         restorationId = null,
+        expanded = null,
         super(key: key);
 
   final bool _sliver;
