@@ -110,6 +110,16 @@ extension FutureX<T> on Future<T> {
       ),
     );
   }
+
+  /// 当前Future正常结束后推入route
+  Future<void> thenReplaceNamed(String routeName, {Object? arguments}) {
+    return then(
+      (_) => gNavigatorKey.currentState?.pushReplacementNamed(
+        routeName,
+        arguments: arguments,
+      ),
+    );
+  }
 }
 
 extension StringFutureX on Future<String> {
