@@ -36,6 +36,23 @@ class SliverConfig {
   }
 }
 
+class AnimationConfig {
+  final Duration duration;
+  final Curve curve;
+  final Alignment alignment;
+
+  const AnimationConfig({
+    this.duration = const Duration(milliseconds: 500),
+    this.curve = Curves.decelerate,
+    this.alignment = Alignment.topLeft,
+  });
+
+  @override
+  String toString() {
+    return 'AnimationConfig{duration: $duration, curve: $curve, alignment: $alignment}';
+  }
+}
+
 enum SnapshotType {
   error,
   empty,
@@ -205,6 +222,7 @@ class Subscriber<T> extends StatelessWidget {
     this.width,
     this.height,
     this.decoration,
+    this.animationConfig,
   }) : super(key: key);
 
   /// 流
@@ -241,6 +259,8 @@ class Subscriber<T> extends StatelessWidget {
   final double? height;
 
   final Decoration? decoration;
+
+  final AnimationConfig? animationConfig;
 
   @override
   Widget build(BuildContext context) {
@@ -292,6 +312,15 @@ class Subscriber<T> extends StatelessWidget {
             width: width,
             height: height,
             decoration: decoration,
+            child: result,
+          );
+        }
+
+        if (animationConfig != null) {
+          result = AnimatedSize(
+            duration: animationConfig!.duration,
+            curve: animationConfig!.curve,
+            alignment: animationConfig!.alignment,
             child: result,
           );
         }
