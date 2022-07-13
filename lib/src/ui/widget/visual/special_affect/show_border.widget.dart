@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+@Deprecated('使用framework自带的GridPaper')
 class ShowBorder extends StatelessWidget {
   const ShowBorder({
     super.key,
