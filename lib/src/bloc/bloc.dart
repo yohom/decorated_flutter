@@ -115,7 +115,7 @@ abstract class GlobalBLoC extends BLoC {
   @override
   void reset() {
     for (var io in disposeBag) {
-      io.reset();
+      if (io is BaseIO) io.reset();
     }
   }
 
