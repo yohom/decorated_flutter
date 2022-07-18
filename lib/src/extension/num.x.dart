@@ -31,6 +31,11 @@ extension IntX on int {
     return DateFormat(format).format(dateTime);
   }
 
+  /// 时间戳转时间
+  DateTime toDateTime() {
+    return DateTime.fromMillisecondsSinceEpoch(this);
+  }
+
   Duration get milliseconds => Duration(milliseconds: this);
 
   Duration get seconds => Duration(seconds: this);

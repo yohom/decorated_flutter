@@ -9,6 +9,8 @@ class Circle extends StatelessWidget {
     this.padding = EdgeInsets.zero,
     this.margin = EdgeInsets.zero,
     this.border,
+    this.alignment,
+    this.decoration,
     this.child,
   }) : super(key: key);
 
@@ -17,6 +19,8 @@ class Circle extends StatelessWidget {
   final EdgeInsets padding;
   final EdgeInsets margin;
   final Border? border;
+  final Alignment? alignment;
+  final BoxDecoration? decoration;
   final Widget? child;
 
   @override
@@ -26,11 +30,9 @@ class Circle extends StatelessWidget {
       height: radius * 2,
       padding: padding,
       margin: margin,
-      decoration: BoxDecoration(
-        color: color,
-        shape: BoxShape.circle,
-        border: border,
-      ),
+      alignment: alignment,
+      decoration: decoration?.copyWith(shape: BoxShape.circle) ??
+          BoxDecoration(color: color, shape: BoxShape.circle, border: border),
       child: child,
     );
   }

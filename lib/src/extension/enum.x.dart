@@ -46,7 +46,7 @@ extension GenderX on Gender {
       case Gender.female:
         return '女';
       case Gender.unknown:
-        return '未知';
+        return '保密';
     }
   }
 }

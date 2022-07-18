@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:decorated_flutter/src/utils/objects.dart';
 
@@ -119,5 +120,13 @@ extension StringX on String {
   String decapitalize() {
     if (isEmpty) return this;
     return '${this[0].toLowerCase()}${substring(1)}';
+  }
+
+  Color toColor() {
+    if (startsWith('#')) {
+      return Color(int.parse(replaceAll('#', '0xff')));
+    } else {
+      return Color(int.parse(this));
+    }
   }
 }

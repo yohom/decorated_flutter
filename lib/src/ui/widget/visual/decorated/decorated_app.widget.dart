@@ -54,7 +54,6 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
         radius: 4,
         dismissOtherOnShow: true,
         animationBuilder: const ToastAnimBuilder(),
-        movingOnWindowChange: false,
         child: MaterialApp(
           title: title,
           onGenerateTitle: onGenerateTitle,
