@@ -169,10 +169,10 @@ abstract class BaseIO<T> {
   }
 
   /// 重新发送数据 用户修改数据后刷新的场景
-  void invalidate() {
+  void invalidate([T? newData]) {
     if (_subject.isClosed) return;
 
-    _subject.add(latest);
+    _subject.add(newData ?? latest);
   }
 
   /// 关闭流
