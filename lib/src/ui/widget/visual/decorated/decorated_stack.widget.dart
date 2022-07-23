@@ -106,6 +106,8 @@ class DecoratedStack extends StatelessWidget {
       clipBehavior: clipBehavior,
       children: <Widget>[
         if (childrenZIndex == ZIndex.bottom) ...children,
+        if (center != null)
+          Positioned(bottom: 0, right: 0, top: 0, left: 0, child: center!),
         if (topLeft != null) Positioned(top: 0, left: 0, child: topLeft!),
         if (topRight != null) Positioned(top: 0, right: 0, child: topRight!),
         if (bottomLeft != null)
@@ -118,8 +120,6 @@ class DecoratedStack extends StatelessWidget {
         if (left != null) Positioned(bottom: 0, top: 0, left: 0, child: left!),
         if (right != null)
           Positioned(bottom: 0, top: 0, right: 0, child: right!),
-        if (center != null)
-          Positioned(bottom: 0, right: 0, top: 0, left: 0, child: center!),
         if (childrenZIndex == ZIndex.top) ...children,
       ],
     );
