@@ -53,6 +53,17 @@ extension IterableX<T> on Iterable<T> {
   }
 
   List<T> whereNotEmpty() => where(isNotEmpty).cast<T>().toList();
+
+  /// 获取最后[count]个元素
+  Iterable<T> takeLast(int count) {
+    if (count < 0) {
+      throw ArgumentError('count must be greater than or equal to zero.');
+    }
+    if (count == 0) {
+      return const [];
+    }
+    return skip(length - count);
+  }
 }
 
 extension NullableIterableX<T> on Iterable<T?>? {
