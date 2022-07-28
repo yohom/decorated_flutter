@@ -4,7 +4,7 @@ extension DurationX on Duration {
         .replaceAll('HH', hourPart.toString().padLeft(2, '0'))
         .replaceAll('mm', minutePart.toString().padLeft(2, '0'))
         .replaceAll('ss', secondPart.toString().padLeft(2, '0'))
-        .replaceAll('ms', millisecondPart.toString())
+        .replaceAll('ms', (millisecondPart ~/ 10).toString().padLeft(2, '0'))
         .replaceAll('H', hourPart.toString())
         .replaceAll('m', minutePart.toString())
         .replaceAll('s', secondPart.toString());
