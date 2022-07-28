@@ -89,7 +89,7 @@ abstract class LocalBLoC extends BLoC {
         component.dispose();
       } else if (component is TextEditingController) {
         component.dispose();
-      } else if (component is ValueNotifier) {
+      } else if (component is ChangeNotifier) {
         component.dispose();
       } else if (component is PageController) {
         component.dispose();
