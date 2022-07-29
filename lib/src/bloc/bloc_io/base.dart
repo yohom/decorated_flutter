@@ -155,15 +155,12 @@ abstract class BaseIO<T> {
 
     _subject.add(_resetValue);
 
-    if (_persistConfig?.key != null) {
-      // 新版内建持久层
-      if (_persistConfig?.onSerialize != null && _resetValue != null) {
+    if (_persistConfig != null) {
+      if (_resetValue != null) {
         final serialized = _persistConfig!.onSerialize(_resetValue);
         assert(isJsonable(serialized), '序列化之后应是jsonable值!');
 
         gDecoratedStorage.put(_persistConfig!.key, serialized);
-
-        return;
       }
     }
   }
