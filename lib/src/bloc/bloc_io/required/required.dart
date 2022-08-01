@@ -268,12 +268,10 @@ mixin OutputMixin<T, ARG> on BaseIO<T> {
 
   /// 使用内部的trigger获取数据
   Future<T> update([ARG? arg]) {
-    return _fetch(arg)
-      ..then((data) {
-        if (!_subject.isClosed) _subject.add(data);
-      })
-      ..catchError((error) {
-        if (!_subject.isClosed) _subject.addError(error);
-      });
+    return _fetch(arg).apply((data) {
+      if (!_subject.isClosed) _subject.add(data);
+    }).catchError((error) {
+      if (!_subject.isClosed) _subject.addError(error);
+    });
   }
 }
