@@ -62,7 +62,7 @@ extension IterableX<T> on Iterable<T> {
     if (count == 0) {
       return const [];
     }
-    return skip(length - count);
+    return skip(max(0, length - count));
   }
 }
 
