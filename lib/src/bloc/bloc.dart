@@ -87,11 +87,7 @@ abstract class LocalBLoC extends BLoC {
     for (final component in disposeBag) {
       if (component is BaseIO) {
         component.dispose();
-      } else if (component is TextEditingController) {
-        component.dispose();
-      } else if (component is ValueNotifier) {
-        component.dispose();
-      } else if (component is PageController) {
+      } else if (component is ChangeNotifier) {
         component.dispose();
       } else {
         L.w('未支持自动dispose的类型 ${component.runtimeType}, 请检查代码是否有bug!');
@@ -115,7 +111,7 @@ abstract class GlobalBLoC extends BLoC {
   @override
   void reset() {
     for (var io in disposeBag) {
-      io.reset();
+      if (io is BaseIO) io.reset();
     }
   }
 

@@ -16,6 +16,12 @@ extension FutureX<T> on Future<T> {
   static bool loadingCancelable = false;
   static String defaultLoadingText = '加载中...';
 
+  /// 造型为[R]类型
+  Future<R> cast<R>() {
+    return then((data) => data as R);
+  }
+
+  /// 显示loading
   Future<T> loading({
     bool? cancelable,
     Duration timeLimit = const Duration(seconds: 60),

@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../utils/utils.export.dart';
+
 extension StateX on State {
   void setStateSafely(VoidCallback cb, {bool nextFrame = false}) {
     if (mounted) {
@@ -12,6 +14,8 @@ extension StateX on State {
       } else {
         setState(cb);
       }
+    } else {
+      L.w('State在销毁时后调用setState! 请检查逻辑是否正确');
     }
   }
 }

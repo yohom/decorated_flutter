@@ -463,6 +463,14 @@ class DecoratedFlex extends StatelessWidget {
       );
     }
 
+    if (scrollable == true) {
+      result = SingleChildScrollView(
+        scrollDirection: direction,
+        controller: scrollController,
+        child: result,
+      );
+    }
+
     if (padding != null ||
         margin != null ||
         width != null ||
@@ -545,14 +553,6 @@ class DecoratedFlex extends StatelessWidget {
 
     if (repaintBoundaryKey != null) {
       result = RepaintBoundary(key: repaintBoundaryKey, child: result);
-    }
-
-    if (scrollable == true) {
-      result = SingleChildScrollView(
-        scrollDirection: direction,
-        controller: scrollController,
-        child: result,
-      );
     }
 
     if (visible != null) {

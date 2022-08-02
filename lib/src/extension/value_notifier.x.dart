@@ -25,3 +25,9 @@ extension ValueNotifierIntX on ValueNotifier<int> {
     }
   }
 }
+
+extension ValueNotifierListX<T> on ValueNotifier<List<T>> {
+  void clear() {
+    value = <T>[];
+  }
+}
