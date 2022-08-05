@@ -9,20 +9,22 @@ extension ValueNotifierBoolX on ValueNotifier<bool> {
 }
 
 extension ValueNotifierIntX on ValueNotifier<int> {
-  void plus({int? max}) {
+  int plus({int? max}) {
     if (max != null) {
       value = min(max, value + 1);
     } else {
       value++;
     }
+    return value;
   }
 
-  void minus({int? min}) {
+  int minus({int? min}) {
     if (min != null) {
       value = max(min, value - 1);
     } else {
       value--;
     }
+    return value;
   }
 }
 
