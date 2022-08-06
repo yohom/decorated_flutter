@@ -28,8 +28,12 @@ extension ValueNotifierIntX on ValueNotifier<int> {
   }
 }
 
-extension ValueNotifierListX<T> on ValueNotifier<List<T>> {
+extension ValueNotifierListX<T> on ValueNotifier<Iterable<T>> {
   void clear() {
     value = <T>[];
   }
+
+  bool get isEmpty => value.isEmpty;
+
+  bool get isNotEmpty => value.isNotEmpty;
 }
