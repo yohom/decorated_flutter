@@ -13,7 +13,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
     this.init,
     this.onLateinit,
     this.animate = true,
-    this.withForm = true,
+    @Deprecated('使用TextEditingController即可') this.withForm = false,
     this.withLocalNavigator = false,
     this.tabControllerConfig,
     this.onDisposed,
@@ -23,6 +23,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
     this.autoDispose = true,
     this.decorationBuilder,
     this.backgroundBuilder,
+    this.primaryScrollControllerConfig,
     required String routeName,
     bool fullscreenDialog = false,
     bool maintainState = true,
@@ -57,10 +58,14 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
   final bool animate;
 
   /// 是否带有表单
+  @Deprecated('已不怎么使用, 直接在BLoC中使用TextEditingController即可')
   final bool withForm;
 
   /// 是否局部navigator
   final bool withLocalNavigator;
+
+  /// 是否使用[PrimaryScrollController]
+  final PrimaryScrollControllerConfig? primaryScrollControllerConfig;
 
   /// 如果需要TabBar, 则配置这个对象
   final TabControllerConfig? tabControllerConfig;
@@ -124,6 +129,14 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
       result = DefaultTabController(
         length: tabControllerConfig!.length,
         initialIndex: tabControllerConfig!.initialIndex,
+        child: result,
+      );
+    }
+
+    if (primaryScrollControllerConfig != null) {
+      result = PrimaryScrollController(
+        controller:
+            primaryScrollControllerConfig!.controller ?? ScrollController(),
         child: result,
       );
     }

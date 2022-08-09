@@ -95,6 +95,14 @@ extension DateTimeX on DateTime {
     return constellation;
   }
 
+  DateTime asMonth() {
+    return DateTime(year, month);
+  }
+
+  DateTime asYear() {
+    return DateTime(year);
+  }
+
   DateTime copyWith({
     int? year,
     int? month,

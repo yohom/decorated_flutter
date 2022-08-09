@@ -7,5 +7,6 @@ export 'functions.dart';
 export 'log.dart';
 export 'misc.dart';
 export 'objects.dart';
+export 'time.dart';
 export 'value.dart';
 export 'view.dart';

@@ -62,7 +62,7 @@ extension IterableX<T> on Iterable<T> {
     if (count == 0) {
       return const [];
     }
-    return skip(length - count);
+    return skip(max(0, length - count));
   }
 }
 
@@ -149,4 +149,11 @@ extension ListX<T> on List<T> {
 
 extension SelectableListX<T extends Selectable> on List<T> {
   T? get selected => find((it) => it.isSelected);
+
+  List<T> selectFirst() {
+    if (this.isNotEmpty) {
+      first.isSelected == true;
+    }
+    return this;
+  }
 }
