@@ -253,7 +253,8 @@ class ImageView extends StatelessWidget {
         );
 
         if (logEnable) L.d('使用SvgPicture.asset: $_imagePath');
-      } else if (_imagePath.startsWith('/')) {
+      } else if (_imagePath.startsWith('/') ||
+          _imagePath.startsWith('file://')) {
         result = Image.file(
           File(_imagePath),
           key: autoApplyKey ? Key(_imagePath) : null,
