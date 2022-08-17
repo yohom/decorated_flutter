@@ -85,7 +85,8 @@ extension ListX<T> on List<T> {
     replaceRange(index, index + 1, [element]);
   }
 
-  T? getOrNull(int index) {
+  T? getOrNull(int? index) {
+    if (index == null) return null;
     try {
       final result = this[index];
       return result;
