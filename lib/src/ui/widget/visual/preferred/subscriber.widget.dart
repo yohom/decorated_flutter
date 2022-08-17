@@ -221,6 +221,7 @@ class Subscriber<T> extends StatelessWidget {
     this.sliver,
     this.width,
     this.height,
+    this.aspectRatio,
     this.decoration,
     this.animationConfig,
   }) : super(key: key);
@@ -255,8 +256,7 @@ class Subscriber<T> extends StatelessWidget {
   final SliverConfig? sliver;
 
   /// 宽高
-  final double? width;
-  final double? height;
+  final double? width, height, aspectRatio;
 
   final Decoration? decoration;
 
@@ -314,6 +314,10 @@ class Subscriber<T> extends StatelessWidget {
             decoration: decoration,
             child: result,
           );
+        }
+
+        if (aspectRatio != null) {
+          result = AspectRatio(aspectRatio: aspectRatio!, child: result);
         }
 
         if (animationConfig != null) {
