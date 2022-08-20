@@ -48,7 +48,7 @@ extension StringX on String {
 
   int? get intValue {
     try {
-      return int.tryParse(this);
+      return num.parse(this).toInt();
     } catch (e) {
       return null;
     }
