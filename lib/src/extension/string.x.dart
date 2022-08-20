@@ -71,6 +71,12 @@ extension StringX on String {
     return substring(0, index);
   }
 
+  String substringLastOf(int digit) {
+    final position = length - digit;
+    if (position < 0) throw '要求的长度大于字符串本身的长度';
+    return substring(position);
+  }
+
   String substringAfterLast(String separator) {
     final index = lastIndexOf(separator);
     return substring(index);
