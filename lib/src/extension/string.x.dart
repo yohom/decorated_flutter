@@ -73,7 +73,7 @@ extension StringX on String {
 
   String substringLastOf(int digit) {
     final position = length - digit;
-    if (position < 0) throw '要求的长度大于字符串本身的长度';
+    if (position < 0) return this;
     return substring(position);
   }
 
