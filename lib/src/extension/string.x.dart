@@ -31,7 +31,7 @@ extension StringX on String {
   }
 
   bool get isNumber {
-    return RegExp(r'^\d*$').hasMatch(this);
+    return RegExp(r'^\d+$').hasMatch(this);
   }
 
   bool get isEmail {
