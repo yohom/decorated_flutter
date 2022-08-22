@@ -4,10 +4,22 @@ import 'dart:ui';
 import 'package:decorated_flutter/src/utils/objects.dart';
 
 extension StringX on String {
-  String plus(String addend) {
-    final additionNum = num.parse(addend);
+  String plus(
+    dynamic addend, {
+    num max = double.infinity,
+    num min = double.negativeInfinity,
+  }) {
+    final num additionNum;
+    if (addend is String) {
+      additionNum = num.parse(addend);
+    } else if (addend is num) {
+      additionNum = addend;
+    } else {
+      additionNum = 0;
+    }
     final thisNum = num.parse(this);
-    return '${additionNum + thisNum}';
+    final result = additionNum + thisNum;
+    return result.clamp(min, max).toString();
   }
 
   bool get isMobile {
