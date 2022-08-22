@@ -13,7 +13,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
     this.init,
     this.onLateinit,
     this.animate = true,
-    @Deprecated('使用TextEditingController即可') this.withForm = false,
+    this.withForm = false,
     this.withLocalNavigator = false,
     this.tabControllerConfig,
     this.onDisposed,
@@ -58,7 +58,6 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
   final bool animate;
 
   /// 是否带有表单
-  @Deprecated('已不怎么使用, 直接在BLoC中使用TextEditingController即可')
   final bool withForm;
 
   /// 是否局部navigator
