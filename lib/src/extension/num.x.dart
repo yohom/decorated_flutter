@@ -5,6 +5,14 @@ extension NumX on num {
   BorderRadius get radius {
     return BorderRadius.circular(toDouble());
   }
+
+  bool isBetween(num lower, num upper, {bool inclusive = true}) {
+    if (inclusive) {
+      return this >= lower && this <= upper;
+    } else {
+      return this > lower && this < upper;
+    }
+  }
 }
 
 extension DoubleX on double {
