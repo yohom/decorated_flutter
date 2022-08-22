@@ -74,9 +74,13 @@ extension NullableIterableX<T> on Iterable<T?>? {
   List<T> whereNotNull() => (this ?? []).where(notNull).cast<T>().toList();
 }
 
-extension NumIterableX on Iterable<num> {
+extension NumIterableX<T extends num> on Iterable<T> {
   num sum() {
-    return reduce((value, element) => value + element);
+    num result = 0;
+    for (var value in this) {
+      result += value;
+    }
+    return result;
   }
 }
 
