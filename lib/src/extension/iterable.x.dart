@@ -64,6 +64,10 @@ extension IterableX<T> on Iterable<T> {
     }
     return skip(max(0, length - count));
   }
+
+  List<R> mapToList<R>(R Function(T e) toElement, {bool growable = false}) {
+    return map(toElement).toList(growable: growable);
+  }
 }
 
 extension NullableIterableX<T> on Iterable<T?>? {
