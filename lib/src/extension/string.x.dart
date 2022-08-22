@@ -34,6 +34,10 @@ extension StringX on String {
     return RegExp(r'^\d+$').hasMatch(this);
   }
 
+  bool get isPositiveNumber {
+    return isNumber && (num.parse(this) > 0);
+  }
+
   bool get isEmail {
     return kEmailRegex.hasMatch(this);
   }
