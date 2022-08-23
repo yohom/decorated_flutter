@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../model/model.export.dart';
+
 extension NumX on num {
   BorderRadius get radius {
     return BorderRadius.circular(toDouble());
   }
 
-  bool isBetween(num lower, num upper, {bool inclusive = true}) {
+  bool isBetween(Range range, {bool inclusive = true}) {
     if (inclusive) {
-      return this >= lower && this <= upper;
+      return this >= range.lower && this <= range.upper;
     } else {
-      return this > lower && this < upper;
+      return this > range.lower && this < range.upper;
     }
   }
 }
