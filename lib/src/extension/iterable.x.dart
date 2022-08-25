@@ -64,15 +64,23 @@ extension IterableX<T> on Iterable<T> {
     }
     return skip(max(0, length - count));
   }
+
+  List<R> mapToList<R>(R Function(T e) toElement, {bool growable = false}) {
+    return map(toElement).toList(growable: growable);
+  }
 }
 
 extension NullableIterableX<T> on Iterable<T?>? {
   List<T> whereNotNull() => (this ?? []).where(notNull).cast<T>().toList();
 }
 
-extension NumIterableX on Iterable<num> {
+extension NumIterableX<T extends num> on Iterable<T> {
   num sum() {
-    return reduce((value, element) => value + element);
+    num result = 0;
+    for (var value in this) {
+      result += value;
+    }
+    return result;
   }
 }
 
@@ -85,7 +93,8 @@ extension ListX<T> on List<T> {
     replaceRange(index, index + 1, [element]);
   }
 
-  T? getOrNull(int index) {
+  T? getOrNull(int? index) {
+    if (index == null) return null;
     try {
       final result = this[index];
       return result;

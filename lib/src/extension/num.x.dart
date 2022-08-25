@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../model/model.export.dart';
+
 extension NumX on num {
   BorderRadius get radius {
     return BorderRadius.circular(toDouble());
+  }
+
+  bool isBetween(Range range, {bool inclusive = true}) {
+    if (inclusive) {
+      return this >= range.lower && this <= range.upper;
+    } else {
+      return this > range.lower && this < range.upper;
+    }
   }
 }
 
@@ -88,6 +98,36 @@ extension IntX on int {
         return '九';
       case 10:
         return '十';
+      default:
+        return '其他';
+    }
+  }
+
+  /// 转英文
+  String toEn() {
+    switch (this) {
+      case 0:
+        return 'Zero';
+      case 1:
+        return 'First';
+      case 2:
+        return 'Second';
+      case 3:
+        return 'Third';
+      case 4:
+        return 'Fourth';
+      case 5:
+        return 'Fifth';
+      case 6:
+        return 'Sixth';
+      case 7:
+        return 'Seventh';
+      case 8:
+        return 'Eighth';
+      case 9:
+        return 'Ninth';
+      case 10:
+        return 'Tenth';
       default:
         return '其他';
     }

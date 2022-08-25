@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
@@ -36,4 +37,12 @@ extension ValueNotifierListX<T> on ValueNotifier<Iterable<T>> {
   bool get isEmpty => value.isEmpty;
 
   bool get isNotEmpty => value.isNotEmpty;
+}
+
+extension ValueNotifierX<T> on ValueNotifier<T> {
+  Stream<T> get toStream {
+    final controller = StreamController<T>();
+    addListener(() => controller.add(value));
+    return controller.stream;
+  }
 }

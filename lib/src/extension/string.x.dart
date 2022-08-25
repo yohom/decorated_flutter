@@ -4,10 +4,22 @@ import 'dart:ui';
 import 'package:decorated_flutter/src/utils/objects.dart';
 
 extension StringX on String {
-  String plus(String addend) {
-    final additionNum = num.parse(addend);
+  String plus(
+    dynamic addend, {
+    num max = double.infinity,
+    num min = double.negativeInfinity,
+  }) {
+    final num additionNum;
+    if (addend is String) {
+      additionNum = num.parse(addend);
+    } else if (addend is num) {
+      additionNum = addend;
+    } else {
+      additionNum = 0;
+    }
     final thisNum = num.parse(this);
-    return '${additionNum + thisNum}';
+    final result = additionNum + thisNum;
+    return result.clamp(min, max).toString();
   }
 
   bool get isMobile {
@@ -19,7 +31,11 @@ extension StringX on String {
   }
 
   bool get isNumber {
-    return RegExp(r'^\d*$').hasMatch(this);
+    return RegExp(r'^\d+$').hasMatch(this);
+  }
+
+  bool get isPositiveNumber {
+    return isNumber && (num.parse(this) > 0);
   }
 
   bool get isEmail {
@@ -48,7 +64,7 @@ extension StringX on String {
 
   int? get intValue {
     try {
-      return int.tryParse(this);
+      return num.parse(this).toInt();
     } catch (e) {
       return null;
     }
@@ -69,6 +85,12 @@ extension StringX on String {
   String substringBeforeLast(String separator) {
     final index = lastIndexOf(separator);
     return substring(0, index);
+  }
+
+  String substringLastOf(int digit) {
+    final position = length - digit;
+    if (position < 0) return this;
+    return substring(position);
   }
 
   String substringAfterLast(String separator) {
