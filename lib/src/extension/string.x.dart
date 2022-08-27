@@ -23,11 +23,11 @@ extension StringX on String {
   }
 
   bool get isMobile {
-    return kMobileRegex.hasMatch(this);
+    return isNotEmpty && kMobileRegex.hasMatch(this);
   }
 
   bool get isNotMobile {
-    return !kMobileRegex.hasMatch(this);
+    return !isMobile;
   }
 
   bool get isNumber {
@@ -39,11 +39,11 @@ extension StringX on String {
   }
 
   bool get isEmail {
-    return kEmailRegex.hasMatch(this);
+    return isNotEmpty && kEmailRegex.hasMatch(this);
   }
 
   bool get isNotEmail {
-    return kEmailRegex.hasMatch(this);
+    return !isEmail;
   }
 
   bool get isMoney {

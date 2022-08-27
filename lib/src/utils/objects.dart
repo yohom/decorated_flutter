@@ -22,10 +22,10 @@ final kMoneyRegex =
 // decorated专属存储
 late Box _box;
 Future<void> initDecoratedBox() async {
-  L.file('开始初始化decorated专属存储持久层');
+  L.i('开始初始化decorated专属存储持久层');
   await Hive.initFlutter();
   _box = await Hive.openBox('decorated_flutter_box');
-  L.file('结束初始化decorated专属存储持久层');
+  L.i('结束初始化decorated专属存储持久层');
 }
 
 Box get gDecoratedStorage => _box;
