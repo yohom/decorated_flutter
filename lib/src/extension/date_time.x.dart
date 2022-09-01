@@ -48,6 +48,20 @@ extension DateTimeX on DateTime {
     return now.difference(this).inDays <= days;
   }
 
+  /// 前一个月
+  DateTime prevMonth() {
+    final month = this.month - 1;
+    final year = this.year;
+    return DateTime(month < 1 ? year - 1 : year, month < 1 ? 12 : month);
+  }
+
+  /// 下一个月
+  DateTime nextMonth() {
+    final month = this.month + 1;
+    final year = this.year;
+    return DateTime(month > 12 ? year + 1 : year, month > 12 ? 1 : month);
+  }
+
   /// 星座
   Constellation get constellation {
     int month = this.month;
