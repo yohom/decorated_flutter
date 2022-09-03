@@ -114,6 +114,10 @@ extension DateTimeX on DateTime {
     return constellation;
   }
 
+  DateTime asDay() {
+    return DateTime(year, month, day);
+  }
+
   DateTime asMonth() {
     return DateTime(year, month);
   }
