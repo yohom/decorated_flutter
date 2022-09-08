@@ -44,10 +44,19 @@ Future<void> showKeyboard() {
   return SystemChannels.textInput.invokeMethod('TextInput.show');
 }
 
+final r = Random();
+
 /// 生成指定长度的随机字符串
-String generateRandomString(int len) {
-  final r = Random();
+String randomString(int len) {
   return String.fromCharCodes(List.generate(len, (_) => r.nextInt(33) + 89));
+}
+
+@Deprecated('randomString代替')
+String generateRandomString(int len) => randomString(len);
+
+/// 生成指定长度的随机数字
+String randomNumber(int len) {
+  return List.generate(len, (_) => r.nextInt(10)).join();
 }
 
 /// 通用轮询逻辑

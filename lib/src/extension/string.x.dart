@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 
+import 'package:decorated_flutter/src/utils/log.dart';
 import 'package:decorated_flutter/src/utils/objects.dart';
 
 extension StringX on String {
@@ -23,11 +24,11 @@ extension StringX on String {
   }
 
   bool get isMobile {
-    return kMobileRegex.hasMatch(this);
+    return isNotEmpty && kMobileRegex.hasMatch(this);
   }
 
   bool get isNotMobile {
-    return !kMobileRegex.hasMatch(this);
+    return !isMobile;
   }
 
   bool get isNumber {
@@ -39,11 +40,11 @@ extension StringX on String {
   }
 
   bool get isEmail {
-    return kEmailRegex.hasMatch(this);
+    return isNotEmpty && kEmailRegex.hasMatch(this);
   }
 
   bool get isNotEmail {
-    return kEmailRegex.hasMatch(this);
+    return !isEmail;
   }
 
   bool get isMoney {
@@ -66,6 +67,7 @@ extension StringX on String {
     try {
       return num.parse(this).toInt();
     } catch (e) {
+      L.w('字符串解析int过程出错, 要检查一下是否业务逻辑是否有问题!');
       return null;
     }
   }
@@ -74,6 +76,7 @@ extension StringX on String {
     try {
       return double.tryParse(this);
     } catch (e) {
+      L.w('字符串解析double过程出错, 要检查一下是否业务逻辑是否有问题!');
       return null;
     }
   }
@@ -104,6 +107,7 @@ extension StringX on String {
     try {
       return substring(leftIndex + 1, rightIndex);
     } catch (e) {
+      L.w('substringBetween过程出错, 要检查一下是否业务逻辑是否有问题!');
       return '';
     }
   }
@@ -144,11 +148,15 @@ extension StringX on String {
     return '${this[0].toLowerCase()}${substring(1)}';
   }
 
-  Color toColor() {
-    if (startsWith('#')) {
-      return Color(int.parse(replaceAll('#', '0xff')));
-    } else {
-      return Color(int.parse(this));
+  Color? toColor() {
+    try {
+      if (startsWith('#')) {
+        return Color(int.parse(replaceAll('#', '0xff')));
+      } else {
+        return Color(int.parse(this));
+      }
+    } catch (e) {
+      return null;
     }
   }
 }

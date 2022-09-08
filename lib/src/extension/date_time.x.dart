@@ -37,10 +37,29 @@ extension DateTimeX on DateTime {
     return DateTime(year, month, day) == today;
   }
 
+  bool get isLastYear {
+    final now = DateTime.now();
+    return now.year - 1 == year;
+  }
+
   /// 是否最近[days]天内
   bool inLastDay(int days) {
     final now = DateTime.now();
     return now.difference(this).inDays <= days;
+  }
+
+  /// 前一个月
+  DateTime prevMonth() {
+    final month = this.month - 1;
+    final year = this.year;
+    return DateTime(month < 1 ? year - 1 : year, month < 1 ? 12 : month);
+  }
+
+  /// 下一个月
+  DateTime nextMonth() {
+    final month = this.month + 1;
+    final year = this.year;
+    return DateTime(month > 12 ? year + 1 : year, month > 12 ? 1 : month);
   }
 
   /// 星座
@@ -93,6 +112,10 @@ extension DateTimeX on DateTime {
     }
 
     return constellation;
+  }
+
+  DateTime asDay() {
+    return DateTime(year, month, day);
   }
 
   DateTime asMonth() {
