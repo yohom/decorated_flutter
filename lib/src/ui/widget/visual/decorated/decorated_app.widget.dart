@@ -1,7 +1,6 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:oktoast/oktoast.dart';
 
 class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   DecoratedApp({
@@ -22,6 +21,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
     this.navigatorObservers = const [],
     this.title = '',
     this.listTileTheme,
+    this.builder,
   })  : rootBLoC = rootBLoC ?? get(),
         super(key: key);
 
@@ -40,6 +40,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   final String title;
   final ListTileThemeData? listTileTheme;
   final Widget app;
+  final TransitionBuilder? builder;
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +57,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
         animationBuilder: const ToastAnimBuilder(),
         child: MaterialApp(
           title: title,
+          builder: builder,
           onGenerateTitle: onGenerateTitle,
           navigatorKey: navigatorKey ?? gNavigatorKey,
           theme: theme,
