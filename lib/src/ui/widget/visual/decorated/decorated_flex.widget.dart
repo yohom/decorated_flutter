@@ -43,6 +43,7 @@ class DecoratedRow extends DecoratedFlex {
     double? heightFactor,
     bool? scrollable,
     ScrollController? scrollController,
+    ScrollPhysics? scrollPhysics,
     Duration? animationDuration,
     Curve? animationCurve,
     ThemeData? theme,
@@ -100,6 +101,7 @@ class DecoratedRow extends DecoratedFlex {
           repaintBoundaryKey: repaintBoundaryKey,
           scrollable: scrollable,
           scrollController: scrollController,
+          scrollPhysics: scrollPhysics,
           animationDuration: animationDuration,
           animationCurve: animationCurve,
           theme: theme,
@@ -159,6 +161,7 @@ class DecoratedColumn extends DecoratedFlex {
     double? heightFactor,
     bool? scrollable,
     ScrollController? scrollController,
+    ScrollPhysics? scrollPhysics,
     Duration? animationDuration,
     Curve? animationCurve,
     ThemeData? theme,
@@ -216,6 +219,7 @@ class DecoratedColumn extends DecoratedFlex {
           repaintBoundaryKey: repaintBoundaryKey,
           scrollable: scrollable,
           scrollController: scrollController,
+          scrollPhysics: scrollPhysics,
           animationDuration: animationDuration,
           animationCurve: animationCurve,
           theme: theme,
@@ -271,6 +275,7 @@ class DecoratedFlex extends StatelessWidget {
     this.safeArea,
     this.scrollable,
     this.scrollController,
+    this.scrollPhysics,
     this.widthFactor,
     this.heightFactor,
     this.material = false,
@@ -366,9 +371,10 @@ class DecoratedFlex extends StatelessWidget {
   /// 作用在Transform.translate上的偏移量
   final Offset? offset;
 
-  /// 是否可滚动
+  /// 滚动相关
   final bool? scrollable;
   final ScrollController? scrollController;
+  final ScrollPhysics? scrollPhysics;
 
   /// 内部统一的TextStyle
   final TextStyle? textStyle;
@@ -551,6 +557,7 @@ class DecoratedFlex extends StatelessWidget {
       result = SingleChildScrollView(
         scrollDirection: direction,
         controller: scrollController,
+        physics: scrollPhysics,
         child: result,
       );
     }
