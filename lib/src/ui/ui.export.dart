@@ -26,6 +26,7 @@ export 'widget/visual/decorated/fractional_screen.widget.dart';
 export 'widget/visual/decorated/immersive_scaffold.widget.dart';
 export 'widget/visual/decorated/lazy_indexed_stack.widget.dart';
 export 'widget/visual/decorated/local_navigator.widget.dart';
+export 'widget/visual/decorated/reactive_switch.widget.dart';
 export 'widget/visual/decorated/test_shell.widget.dart';
 export 'widget/visual/decorated/value_listenable_switcher.widget.dart';
 export 'widget/visual/placeholder/empty_placeholder.widget.dart';
