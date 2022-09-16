@@ -9,7 +9,7 @@ class PageOutput<T, ARG> extends ListOutput<T, int> with PageMixin<T, ARG> {
     required String semantics,
     bool sync = true,
     bool isBehavior = true,
-    int? initPage = 0,
+    int? initPage,
     bool receiveFullData = true,
     bool printLog = true,
     int pageSize = 0,
@@ -77,12 +77,14 @@ class PageOutput<T, ARG> extends ListOutput<T, int> with PageMixin<T, ARG> {
 
 /// 分页业务单元
 class PageIO<T, ARG> extends ListIO<T> with PageMixin<T, ARG> {
+  static int? defaultInitialPage;
+
   PageIO({
     required List<T> seedValue,
     required String semantics,
     bool sync = true,
     bool isBehavior = true,
-    int initPage = 0,
+    int? initPage,
     int pageSize = 0,
     bool printLog = true,
     bool receiveFullData = true,
@@ -100,7 +102,7 @@ class PageIO<T, ARG> extends ListIO<T> with PageMixin<T, ARG> {
           persistConfig: persistConfig,
           printLog: printLog,
         ) {
-    _initPage = initPage;
+    _initPage = initPage ?? defaultInitialPage ?? 0;
     _currentPage = _initPage;
     _pageFetch = pageFetch ??
         (_, __) =>

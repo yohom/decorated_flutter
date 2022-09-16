@@ -49,12 +49,14 @@ class OptionalPageOutput<T, ARG> extends OptionalListOutput<T, int>
 /// 分页业务单元
 class OptionalPageIO<T, ARG> extends OptionalListIO<T>
     with OptionalPageMixin<T, ARG> {
+  static int? defaultInitialPage;
+
   OptionalPageIO({
     List<T>? seedValue,
     required String semantics,
     bool sync = true,
     bool isBehavior = true,
-    int initPage = 0,
+    int? initPage,
     bool printLog = true,
     bool receiveFullData = true,
     int? forceCapacity,
@@ -71,7 +73,7 @@ class OptionalPageIO<T, ARG> extends OptionalListIO<T>
           persistConfig: persistConfig,
           printLog: printLog,
         ) {
-    _initPage = initPage;
+    _initPage = initPage ?? defaultInitialPage ?? 0;
     _currentPage = _initPage;
     _pageFetch = pageFetch ??
         (_, __) => throw '[$semantics] 在未设置fetch回调时调用了update方法, 请检查逻辑是否正确!';
