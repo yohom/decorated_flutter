@@ -129,8 +129,8 @@ void runDecoratedApp(
 }) async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // 初始化日志系统
-  await L.init(enableFileOutput: enableFileOutput);
+  // // 初始化日志系统
+  // await L.init(enableFileOutput: enableFileOutput);
 
   if (statusBarColor != null) {
     SystemChrome.setSystemUIOverlayStyle(
