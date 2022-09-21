@@ -166,3 +166,9 @@ extension SelectableListX<T extends Selectable> on List<T> {
     return this;
   }
 }
+
+extension FutureIterableX<T> on Iterable<Future<T>> {
+  Future<List<T>> wait() {
+    return Future.wait(this);
+  }
+}
