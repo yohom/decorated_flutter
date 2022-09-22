@@ -22,4 +22,12 @@ extension ScrollControllerX on ScrollController {
       curve: curve,
     );
   }
+
+  void jumpToMin() {
+    return jumpTo(0);
+  }
+
+  void jumpToMax() {
+    return jumpTo(position.maxScrollExtent);
+  }
 }

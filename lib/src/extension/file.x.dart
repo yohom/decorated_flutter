@@ -22,6 +22,11 @@ extension FileX on File {
   void createIfNotExistsSync({bool recursive = false}) {
     if (!existsSync()) createSync(recursive: recursive);
   }
+
+  /// 在目标路径不存在的情况下再进行拷贝
+  Future<void> copyIfTargetNotExists(String target) async {
+    if (!await File(target).exists()) await copy(target);
+  }
 }
 
 extension DirectoryX on Directory {

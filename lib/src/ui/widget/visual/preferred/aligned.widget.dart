@@ -43,12 +43,16 @@ class AlignLeft extends StatelessWidget {
     this.widthFactor,
     this.heightFactor,
     this.padding,
+    this.margin,
+    this.width,
+    this.height,
+    this.decoration,
   });
 
   final Widget child;
-  final double? widthFactor;
-  final double? heightFactor;
-  final EdgeInsets? padding;
+  final double? widthFactor, heightFactor, width, height;
+  final EdgeInsets? padding, margin;
+  final BoxDecoration? decoration;
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +63,19 @@ class AlignLeft extends StatelessWidget {
       child: child,
     );
 
-    if (padding != null) {
-      result = Container(padding: padding, child: result);
+    if (padding != null ||
+        margin != null ||
+        width != null ||
+        height != null ||
+        decoration != null) {
+      result = Container(
+        width: width,
+        height: height,
+        padding: padding,
+        margin: margin,
+        decoration: decoration,
+        child: result,
+      );
     }
     return result;
   }
