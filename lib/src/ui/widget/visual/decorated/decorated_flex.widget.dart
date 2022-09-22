@@ -150,6 +150,7 @@ class DecoratedColumn extends DecoratedFlex {
     bool? visible,
     bool? expanded,
     bool? flexible,
+    bool? withForm,
     int? flex,
     bool forceItemSameExtent = false,
     double? elevation,
@@ -208,6 +209,7 @@ class DecoratedColumn extends DecoratedFlex {
           expanded: expanded,
           flexible: flexible,
           flex: flex,
+          withForm: withForm,
           forceItemSameExtent: forceItemSameExtent,
           safeArea: safeArea,
           divider: divider,
@@ -269,6 +271,7 @@ class DecoratedFlex extends StatelessWidget {
     this.visible,
     this.expanded,
     this.flexible,
+    this.withForm,
     this.flex,
     this.forceItemSameExtent = false,
     this.elevation,
@@ -417,6 +420,8 @@ class DecoratedFlex extends StatelessWidget {
 
   final double? aspectRatio;
 
+  final bool? withForm;
+
   /// 子元素
   final List<Widget> children;
 
@@ -560,6 +565,10 @@ class DecoratedFlex extends StatelessWidget {
         physics: scrollPhysics,
         child: result,
       );
+    }
+
+    if (withForm == true) {
+      result = Form(child: result);
     }
 
     if (visible != null) {
