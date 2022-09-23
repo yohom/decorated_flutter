@@ -32,6 +32,26 @@ extension IterableX<T> on Iterable<T> {
     return map;
   }
 
+  /// 按[count]数给列表分组
+  List<List<T>> buffer(int count) {
+    final result = <List<T>>[];
+
+    final totalRound = (length / count).ceil();
+    for (int i = 0; i < totalRound; i++) {
+      final round = <T>[];
+      for (int j = (i * count); j < ((i + 1) * count); j++) {
+        if (j < length) {
+          round.add(elementAt(j));
+        } else {
+          break;
+        }
+      }
+      result.add(round);
+    }
+
+    return result;
+  }
+
   /// 从第0个元素向后fallback, 直到符合[until]的条件
   ///
   /// 使用场景: 有时候数据源获取来的数据是空字符串(''), 要过滤这种情况非常繁琐, 这个时候就可以
@@ -106,26 +126,6 @@ extension ListX<T> on List<T> {
   /// 重复列表[factor]次
   List<T> operator *(int factor) {
     return [for (int i = 0; i < factor; i++) ...this];
-  }
-
-  /// 按[count]数给列表分组
-  List<List<T>> buffer(int count) {
-    final result = <List<T>>[];
-
-    final totalRound = (length / count).ceil();
-    for (int i = 0; i < totalRound; i++) {
-      final round = <T>[];
-      for (int j = (i * count); j < ((i + 1) * count); j++) {
-        if (j < length) {
-          round.add(this[j]);
-        } else {
-          break;
-        }
-      }
-      result.add(round);
-    }
-
-    return result;
   }
 
   /// 获取子列表, 如果获取失败就返回空列表
