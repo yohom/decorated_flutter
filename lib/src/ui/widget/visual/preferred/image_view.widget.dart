@@ -79,6 +79,7 @@ class ImageView extends StatelessWidget {
     this.colorBlendMode,
     this.errorWidget,
     this.placeholder,
+    this.scale,
   })  : imagePath = imageUri.isUrl ? null : imageUri,
         imageUrl = imageUri.isUrl ? imageUri : null,
         assert(
@@ -113,6 +114,7 @@ class ImageView extends StatelessWidget {
     this.colorBlendMode,
     this.errorWidget,
     this.placeholder,
+    this.scale,
   })  : imageUrl = null,
         assert(
           (darkImagePath != null && autoDarkMode == false) ||
@@ -146,6 +148,7 @@ class ImageView extends StatelessWidget {
     this.borderRadius,
     this.shape,
     this.colorBlendMode,
+    this.scale,
   })  : imagePath = null,
         assert(
           (darkImagePath != null && autoDarkMode == false) ||
@@ -220,6 +223,9 @@ class ImageView extends StatelessWidget {
   /// 颜色混合模式
   final BlendMode? colorBlendMode;
 
+  /// 缩放
+  final double? scale;
+
   @override
   Widget build(BuildContext context) {
     final isDarkMode = context.isDarkMode;
@@ -263,6 +269,7 @@ class ImageView extends StatelessWidget {
           fit: fit,
           color: _color,
           gaplessPlayback: true,
+          scale: scale ?? 1,
           colorBlendMode: colorBlendMode,
           cacheWidth: _cacheWidth,
           cacheHeight: _cacheHeight,
@@ -280,6 +287,7 @@ class ImageView extends StatelessWidget {
           color: _color,
           gaplessPlayback: true,
           colorBlendMode: colorBlendMode,
+          scale: scale ?? 1,
           cacheWidth: _cacheWidth,
           cacheHeight: _cacheHeight,
           errorBuilder:
