@@ -11,7 +11,7 @@ extension DurationX on Duration {
         .replaceAll('s', secondPart.toString());
   }
 
-  int get hourPart => inSeconds ~/ 3600;
+  int get hourPart => (inSeconds ~/ 3600) % 24;
 
   int get minutePart => inSeconds % 3600 ~/ 60;
 
