@@ -323,7 +323,7 @@ class ImageView extends StatelessWidget {
           color: _color,
           gaplessPlayback: true,
           colorBlendMode: colorBlendMode,
-          scale: scale ?? 1,
+          scale: scale,
           cacheWidth: _cacheWidth,
           cacheHeight: _cacheHeight,
           errorBuilder:
