@@ -14,6 +14,7 @@ class DecoratedText extends StatelessWidget {
     this.strutStyle = const StrutStyle(),
     this.safeArea,
     this.onPressed,
+    this.onLongPressed,
     this.maxLines,
     this.textAlign,
     this.overflow, // 默认TextOverflow.ellipsis时, 会只有一行文字+省略号
@@ -54,6 +55,7 @@ class DecoratedText extends StatelessWidget {
     this.strutStyle = const StrutStyle(),
     this.safeArea,
     this.onPressed,
+    this.onLongPressed,
     this.maxLines,
     this.textAlign,
     this.overflow, // 默认TextOverflow.ellipsis时, 会只有一行文字+省略号
@@ -98,6 +100,7 @@ class DecoratedText extends StatelessWidget {
   final String? _data;
   final SafeAreaConfig? safeArea;
   final ContextCallback? onPressed;
+  final ContextCallback? onLongPressed;
   final int? maxLines;
   final TextAlign? textAlign;
   final TextOverflow? overflow;
@@ -210,10 +213,12 @@ class DecoratedText extends StatelessWidget {
       );
     }
 
-    if (onPressed != null) {
+    if (onPressed != null || onLongPressed != null) {
       result = GestureDetector(
         behavior: behavior ?? HitTestBehavior.opaque,
-        onTap: () => onPressed!(context),
+        onTap: onPressed != null ? () => onPressed!(context) : null,
+        onLongPress:
+            onLongPressed != null ? () => onLongPressed!(context) : null,
         child: result,
       );
     }
