@@ -15,6 +15,7 @@ extension FutureX<T> on Future<T> {
   static Color? backgroundColor;
   static bool loadingCancelable = false;
   static String defaultLoadingText = '加载中...';
+  static Duration defaultTimeLimit = const Duration(seconds: 60);
 
   /// 造型为[R]类型
   Future<R> cast<R>() {
@@ -24,7 +25,7 @@ extension FutureX<T> on Future<T> {
   /// 显示loading
   Future<T> loading({
     bool? cancelable,
-    Duration timeLimit = const Duration(seconds: 60),
+    Duration? timeLimit,
     String? loadingText,
     Color? backgroundColor,
   }) {
@@ -71,7 +72,7 @@ extension FutureX<T> on Future<T> {
       popByFuture = false;
     });
 
-    return timeout(timeLimit).whenComplete(() {
+    return timeout(timeLimit ?? defaultTimeLimit).whenComplete(() {
       if (popByFuture && navigator.canPop()) {
         navigator.pop();
       }

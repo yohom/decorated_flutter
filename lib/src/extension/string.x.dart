@@ -121,7 +121,7 @@ extension StringX on String {
   }
 
   String suffixWith(String str, {bool distinct = true}) {
-    if (distinct && startsWith(str)) {
+    if (distinct && endsWith(str)) {
       return this;
     } else {
       return '${this}$str';

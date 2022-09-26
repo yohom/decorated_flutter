@@ -19,6 +19,8 @@ final kEmailRegex = RegExp(
 final kMoneyRegex =
     RegExp(r'(^[1-9](\d+)?(\.\d{1,2})?$)|(^(0)$)|(^\d\.\d(\d)?$)');
 
+final kIpV4Regex = RegExp(r'^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$');
+
 // decorated专属存储
 late Box _box;
 Future<void> initDecoratedBox() async {

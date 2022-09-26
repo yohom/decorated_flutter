@@ -79,6 +79,43 @@ class ImageView extends StatelessWidget {
     this.colorBlendMode,
     this.errorWidget,
     this.placeholder,
+    this.scale,
+  })  : imagePath = imageUri.isUrl ? null : imageUri,
+        imageUrl = imageUri.isUrl ? imageUri : null,
+        assert(
+          (darkImagePath != null && autoDarkMode == false) ||
+              darkImagePath == null,
+          '不能同时设置darkImagePath和autoDarkMode',
+        ),
+        super(key: key);
+
+  /// 跟默认构造器的区别是icon构造器默认是BoxFit.contain
+  ImageView.icon(
+    String imageUri, {
+    Key? key,
+    this.width,
+    this.height,
+    this.size,
+    this.cacheWidth,
+    this.cacheHeight,
+    this.cacheSize,
+    this.fit = BoxFit.contain,
+    this.color,
+    this.padding,
+    this.margin,
+    this.darkImagePath,
+    this.autoDarkMode = false,
+    this.autoApplyKey = true,
+    this.decoration,
+    this.foregroundDecoration,
+    this.clipBehavior = Clip.hardEdge,
+    this.aspectRatio,
+    this.borderRadius,
+    this.shape,
+    this.colorBlendMode,
+    this.errorWidget,
+    this.placeholder,
+    this.scale,
   })  : imagePath = imageUri.isUrl ? null : imageUri,
         imageUrl = imageUri.isUrl ? imageUri : null,
         assert(
@@ -113,6 +150,7 @@ class ImageView extends StatelessWidget {
     this.colorBlendMode,
     this.errorWidget,
     this.placeholder,
+    this.scale,
   })  : imageUrl = null,
         assert(
           (darkImagePath != null && autoDarkMode == false) ||
@@ -146,6 +184,7 @@ class ImageView extends StatelessWidget {
     this.borderRadius,
     this.shape,
     this.colorBlendMode,
+    this.scale,
   })  : imagePath = null,
         assert(
           (darkImagePath != null && autoDarkMode == false) ||
@@ -220,6 +259,9 @@ class ImageView extends StatelessWidget {
   /// 颜色混合模式
   final BlendMode? colorBlendMode;
 
+  /// 缩放
+  final double? scale;
+
   @override
   Widget build(BuildContext context) {
     final isDarkMode = context.isDarkMode;
@@ -263,6 +305,7 @@ class ImageView extends StatelessWidget {
           fit: fit,
           color: _color,
           gaplessPlayback: true,
+          scale: scale ?? 1,
           colorBlendMode: colorBlendMode,
           cacheWidth: _cacheWidth,
           cacheHeight: _cacheHeight,
@@ -280,6 +323,7 @@ class ImageView extends StatelessWidget {
           color: _color,
           gaplessPlayback: true,
           colorBlendMode: colorBlendMode,
+          scale: scale,
           cacheWidth: _cacheWidth,
           cacheHeight: _cacheHeight,
           errorBuilder:
