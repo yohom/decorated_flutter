@@ -45,12 +45,18 @@ abstract class BaseIO<T> {
     /// 是否持久化数据, 如果是持久化数据, 则数据变化时便会持久化, 且如果是BehaviorSubject
     /// 则下次构造时会发射上一次持久化的数据
     PersistConfig<T>? persistConfig,
+
+    /// 直接略过错误, 不发射内容
+    ///
+    /// 在轮询场景有用
+    bool skipError = false,
   })  : _semantics = semantics,
         _seedValue = seedValue,
         _printLog = printLog,
         latest = seedValue,
         _onReset = onReset,
         _persistConfig = persistConfig,
+        _skipError = skipError,
         _subject = isBehavior
             ? seedValue != null
                 ? BehaviorSubject<T>.seeded(seedValue, sync: sync)
@@ -115,8 +121,12 @@ abstract class BaseIO<T> {
   /// 持久化配置
   final PersistConfig<T>? _persistConfig;
 
+  /// 是否略过错误
+  final bool _skipError;
+
   void addError(Object error, [StackTrace? stackTrace]) {
     if (_subject.isClosed) return;
+    if (_skipError) return;
 
     _subject.addError(error, stackTrace);
   }
