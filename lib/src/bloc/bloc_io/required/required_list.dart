@@ -59,25 +59,17 @@ class ListInput<T> extends Input<List<T>> with ListMixin<T> {
 /// 内部数据类型是[List]的输出业务单元
 class ListOutput<T, ARG> extends Output<List<T>, ARG> with ListMixin<T> {
   ListOutput({
-    required List<T> seedValue,
-    required String semantics,
-    bool sync = true,
-    bool isBehavior = true,
-    bool printLog = true,
+    required super.seedValue,
+    required super.semantics,
+    super.sync = true,
+    super.isBehavior = true,
+    super.printLog = true,
     int? forceCapacity,
-    required FetchCallback<List<T>, ARG?> fetch,
-    List<T> Function()? onReset,
-    PersistConfig<List<T>>? persistConfig,
-  }) : super(
-          seedValue: seedValue,
-          semantics: semantics,
-          sync: sync,
-          isBehavior: isBehavior,
-          fetch: fetch,
-          printLog: printLog,
-          onReset: onReset,
-          persistConfig: persistConfig,
-        ) {
+    required super.fetch,
+    super.onReset,
+    super.persistConfig,
+    super.skipError,
+  }) {
     _forceCapacity = forceCapacity;
   }
 
@@ -91,6 +83,7 @@ class ListOutput<T, ARG> extends Output<List<T>, ARG> with ListMixin<T> {
     required FetchCallback<List<T>, ARG?> fetch,
     List<T> Function()? onReset,
     PersistConfig<List<T>?>? persistConfig,
+    bool skipError = false,
   }) {
     return OptionalListOutput<T, ARG>(
       semantics: semantics,

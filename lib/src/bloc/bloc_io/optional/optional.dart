@@ -28,24 +28,16 @@ class OptionalInput<T> extends Input<T?> {
 /// 只输出数据的业务单元
 class OptionalOutput<T, ARG> extends Output<T?, ARG> {
   OptionalOutput({
-    T? seedValue,
-    required String semantics,
-    bool sync = true,
-    bool printLog = true,
-    bool isBehavior = true,
-    required FetchCallback<T, ARG?> fetch,
-    T? Function()? onReset,
-    PersistConfig<T?>? persistConfig,
-  }) : super(
-          seedValue: seedValue,
-          semantics: semantics,
-          sync: sync,
-          fetch: fetch,
-          isBehavior: isBehavior,
-          onReset: onReset,
-          printLog: printLog,
-          persistConfig: persistConfig,
-        ) {
+    super.seedValue,
+    required super.semantics,
+    super.sync = true,
+    super.printLog = true,
+    super.isBehavior = true,
+    required super.fetch,
+    super.onReset,
+    super.persistConfig,
+    super.skipError,
+  }) {
     stream = _subject.stream;
   }
 }

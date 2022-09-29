@@ -55,23 +55,16 @@ class Input<T> extends BaseIO<T> with InputMixin<T> {
 /// 只输出数据的业务单元
 class Output<T, ARG> extends BaseIO<T> with OutputMixin<T, ARG> {
   Output({
-    required T seedValue,
-    required String semantics,
-    bool sync = true,
-    bool printLog = true,
-    bool isBehavior = true,
+    required super.seedValue,
+    required super.semantics,
+    super.sync = true,
+    super.printLog = true,
+    super.isBehavior = true,
     required FetchCallback<T, ARG?> fetch,
-    T Function()? onReset,
-    PersistConfig<T>? persistConfig,
-  }) : super(
-          seedValue: seedValue,
-          semantics: semantics,
-          sync: sync,
-          isBehavior: isBehavior,
-          onReset: onReset,
-          printLog: printLog,
-          persistConfig: persistConfig,
-        ) {
+    super.onReset,
+    super.persistConfig,
+    super.skipError,
+  }) {
     stream = _subject.stream;
     _fetch = fetch;
   }
@@ -85,6 +78,7 @@ class Output<T, ARG> extends BaseIO<T> with OutputMixin<T, ARG> {
     required FetchCallback<T, ARG?> fetch,
     T? Function()? onReset,
     PersistConfig<T?>? persistConfig,
+    bool skipError = false,
   }) {
     return OptionalOutput<T, ARG>(
       semantics: semantics,
@@ -95,6 +89,7 @@ class Output<T, ARG> extends BaseIO<T> with OutputMixin<T, ARG> {
       fetch: fetch,
       onReset: onReset,
       persistConfig: persistConfig,
+      skipError: skipError,
     );
   }
 }
@@ -267,11 +262,11 @@ mixin OutputMixin<T, ARG> on BaseIO<T> {
   late FetchCallback<T, ARG?> _fetch;
 
   /// 使用内部的trigger获取数据
-  Future<T> update([ARG? arg]) {
+  Future<T> update([ARG? arg]) async {
     return _fetch(arg).apply((data) {
       if (!_subject.isClosed) _subject.add(data);
     }).catchError((error) {
-      if (!_subject.isClosed) _subject.addError(error);
+      if (!_subject.isClosed && !_skipError) _subject.addError(error);
     });
   }
 }
