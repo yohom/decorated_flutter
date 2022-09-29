@@ -1,4 +1,5 @@
 import 'package:decorated_flutter/src/utils/enums.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 extension DateTimeX on DateTime {
@@ -146,5 +147,11 @@ extension DateTimeX on DateTime {
       millisecond ?? this.millisecond,
       microsecond ?? this.microsecond,
     );
+  }
+}
+
+extension DateTimeRangeX on DateTimeRange {
+  bool contains(DateTime time) {
+    return time.isAfter(start) && time.isBefore(end);
   }
 }
