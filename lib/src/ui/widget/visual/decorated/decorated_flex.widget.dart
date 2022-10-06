@@ -330,6 +330,10 @@ class DecoratedFlex extends StatelessWidget {
           : _children,
     );
 
+    if (repaintBoundaryKey != null) {
+      result = RepaintBoundary(key: repaintBoundaryKey, child: result);
+    }
+
     if (autofillGroup == true) {
       result = AutofillGroup(child: result);
     }
@@ -437,10 +441,6 @@ class DecoratedFlex extends StatelessWidget {
 
     if (textStyle != null) {
       result = DefaultTextStyle(style: textStyle!, child: result);
-    }
-
-    if (repaintBoundaryKey != null) {
-      result = RepaintBoundary(key: repaintBoundaryKey, child: result);
     }
 
     if (scrollable == true) {
