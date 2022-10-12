@@ -66,8 +66,8 @@ extension StringX on String {
   int? get intValue {
     try {
       return num.parse(this).toInt();
-    } catch (e) {
-      L.w('字符串解析int过程出错, 要检查一下是否业务逻辑是否有问题!');
+    } catch (e, s) {
+      L.w('字符串 $this 解析int过程出错, 要检查一下是否业务逻辑是否有问题! $s');
       return null;
     }
   }
@@ -76,8 +76,8 @@ extension StringX on String {
     try {
       // 某些地区的数字键盘, 小数点是逗号
       return double.tryParse(replaceAll(',', '.'));
-    } catch (e) {
-      L.w('字符串解析double过程出错, 要检查一下是否业务逻辑是否有问题!');
+    } catch (e, s) {
+      L.w('字符串 $this 解析double过程出错, 要检查一下是否业务逻辑是否有问题!, $s');
       return null;
     }
   }
