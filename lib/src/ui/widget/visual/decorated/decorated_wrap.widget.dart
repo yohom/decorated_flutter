@@ -20,6 +20,7 @@ class DecoratedWrap extends StatelessWidget {
     this.childAspectRatio,
     this.decoration,
     this.foregroundDecoration,
+    this.alignItemWidth = false,
     required this.children,
   }) : super(key: key);
 
@@ -40,6 +41,11 @@ class DecoratedWrap extends StatelessWidget {
   final double? childAspectRatio;
   final BoxDecoration? decoration;
   final BoxDecoration? foregroundDecoration;
+
+  /// 是否对item进行floor对齐
+  ///
+  /// 如果double计算时出现略微的溢出导致换行, 就设置这个为true, 默认false
+  final bool alignItemWidth;
   final List<Widget> children;
 
   @override
@@ -51,7 +57,10 @@ class DecoratedWrap extends StatelessWidget {
           // 空白部分宽度, 比如一行为2个时, 空余宽度为 (2-1)*spacing;
           final spaceWidth = (crossAxisCount! - 1) * spacing;
           final availableWidth = constraints.maxWidth - spaceWidth;
-          final itemWidth = (availableWidth / crossAxisCount!).floorToDouble();
+          var itemWidth = availableWidth / crossAxisCount!;
+          if (alignItemWidth) {
+            itemWidth = itemWidth.floorToDouble();
+          }
           return Wrap(
             direction: direction,
             alignment: alignment,
