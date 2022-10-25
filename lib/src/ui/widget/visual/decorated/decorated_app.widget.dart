@@ -46,10 +46,10 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget result = BLoCProvider<B>(
       bloc: rootBLoC,
-      onDispose: () {
-        // 释放log的定时写日志任务
-        L.dispose();
-      },
+      // onDispose: () {
+      //   // 释放log的定时写日志任务
+      //   L.dispose();
+      // },
       child: OKToast(
         duration: const Duration(seconds: 3),
         radius: 4,
