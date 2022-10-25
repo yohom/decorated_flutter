@@ -97,6 +97,11 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
     Animation<double> animation,
     Animation<double> secondaryAnimation,
   ) {
+    if (onLateinit != null && _bloc != null && !_inited) {
+      onLateinit!(_bloc!, context);
+      _inited = true;
+    }
+
     Widget result = builder(context);
 
     if (withLocalNavigator) {
