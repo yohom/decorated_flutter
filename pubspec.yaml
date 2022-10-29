@@ -18,7 +18,7 @@ dependencies:
   # 网络请求 https://pub.flutter-io.cn/packages/dio
   dio: ^4.0.6
   # kiwi https://pub.flutter-io.cn/packages/kiwi
-  kiwi: ^4.0.2
+  kiwi: ^4.0.3
   # rx https://pub.flutter-io.cn/packages/rxdart
   rxdart: ^0.27.5
   # 图片加载增强 https://pub.flutter-io.cn/packages/cached_network_image
@@ -34,9 +34,9 @@ dependencies:
   # 获取路径 https://pub.flutter-io.cn/packages/path_provider
   path_provider: ^2.0.11
   # android intent https://pub.flutter-io.cn/packages/android_intent_plus
-  android_intent_plus: ^3.1.1+1
+  android_intent_plus: ^3.1.5
   # svg https://pub.flutter-io.cn/packages/flutter_svg
-  flutter_svg: ^1.1.5
+  flutter_svg: ^1.1.6
   # sliver增强 https://pub.flutter-io.cn/packages/sliver_tools
   sliver_tools: ^0.2.8
   # 持久化 https://pub.flutter-io.cn/packages/hive
