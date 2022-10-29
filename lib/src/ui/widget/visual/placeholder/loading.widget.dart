@@ -83,7 +83,9 @@ class ModalLoading extends StatelessWidget {
           children: <Widget>[
             CircularProgressIndicator(
               backgroundColor: Colors.white,
-              valueColor: AlwaysStoppedAnimation(context.theme.primaryColor),
+              valueColor: AlwaysStoppedAnimation(
+                context.theme.colorScheme.primary,
+              ),
             ),
             // 有文本就加这个
             if (isNotEmpty(text))
