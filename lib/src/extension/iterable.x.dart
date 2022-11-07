@@ -32,6 +32,20 @@ extension IterableX<T> on Iterable<T> {
     return map;
   }
 
+  T? get firstOrNull => getOrNull(0);
+
+  T? get lastOrNull => getOrNull(length - 1);
+
+  T? getOrNull(int? index) {
+    if (index == null) return null;
+    try {
+      final result = this[index];
+      return result;
+    } catch (e) {
+      return null;
+    }
+  }
+
   /// 按[count]数给列表分组
   List<List<T>> buffer(int count) {
     final result = <List<T>>[];
@@ -105,22 +119,8 @@ extension NumIterableX<T extends num> on Iterable<T> {
 }
 
 extension ListX<T> on List<T> {
-  T? get firstOrNull => getOrNull(0);
-
-  T? get lastOrNull => getOrNull(length - 1);
-
   void replace(int index, T element) {
     replaceRange(index, index + 1, [element]);
-  }
-
-  T? getOrNull(int? index) {
-    if (index == null) return null;
-    try {
-      final result = this[index];
-      return result;
-    } catch (e) {
-      return null;
-    }
   }
 
   /// 重复列表[factor]次
