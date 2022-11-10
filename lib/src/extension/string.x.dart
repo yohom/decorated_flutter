@@ -160,4 +160,12 @@ extension StringX on String {
       return null;
     }
   }
+
+  /// 缩写化
+  ///
+  /// 取各个单词的首字母然后大写之
+  String get abbr {
+    final parts = split(' ');
+    return parts.map((e) => e[0].capitalize()).join();
+  }
 }
