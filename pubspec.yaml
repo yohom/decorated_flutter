@@ -20,7 +20,7 @@ dependencies:
   # kiwi https://pub.flutter-io.cn/packages/kiwi
   kiwi: ^4.0.3
   # rx https://pub.flutter-io.cn/packages/rxdart
-  rxdart: ^0.27.5
+  rxdart: ^0.27.6
   # 图片加载增强 https://pub.flutter-io.cn/packages/cached_network_image
   cached_network_image: ^3.2.2
   # toast https://pub.flutter-io.cn/packages/oktoast
