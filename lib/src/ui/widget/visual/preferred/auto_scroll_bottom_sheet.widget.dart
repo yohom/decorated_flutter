@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class AutoScrollBottomSheet extends StatefulWidget {
   const AutoScrollBottomSheet({
     Key? key,
-    this.duration = const Duration(milliseconds: 100),
+    this.duration = Duration.zero,
     this.curve = Curves.decelerate,
     required this.child,
   }) : super(key: key);
