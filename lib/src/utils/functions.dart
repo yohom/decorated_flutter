@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:crypto/crypto.dart';
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -30,6 +31,11 @@ T passthrough<T>(T data) => data;
 /// 执行一段回调
 T doFunc<T>(T Function() func) {
   return func();
+}
+
+/// 获取md5
+String md5Of(String input) {
+  return md5.convert(utf8.encode(input)).toString();
 }
 
 /// 关闭键盘

@@ -1,4 +1,4 @@
-extension MapX on Map {
+extension MapX<K, V> on Map<K, V> {
   Object? valueFor({required String keyPath}) {
     final keysSplit = keyPath.split('.');
     final thisKey = keysSplit.removeAt(0);

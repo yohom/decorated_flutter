@@ -315,7 +315,7 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
   }
 
   /// 对[target]进行单选操作, 如果[T]不为[Selectable]则什么都不做, 直接透传
-  List<T>? select(T target) {
+  List<T>? select(T target, {bool isRadio = true}) {
     if (_subject.isClosed) {
       L.w('IO在close状态下请求发送数据');
       return null;
@@ -329,7 +329,11 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
     assert(latest is List<Selectable>);
     return forEach((T data) {
       if (data is Selectable) {
-        data.isSelected = (data == target);
+        if (isRadio) {
+          data.isSelected = (data == target);
+        } else {
+          if (data == target) data.isSelected = true;
+        }
       }
     });
   }
