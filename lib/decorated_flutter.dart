@@ -9,6 +9,7 @@ export 'package:oktoast/oktoast.dart';
 export 'package:package_info_plus/package_info_plus.dart';
 export 'package:path_provider/path_provider.dart';
 export 'package:rxdart/rxdart.dart';
+export 'package:sliver_tools/sliver_tools.dart';
 
 export 'src/annotation/annotation.export.dart';
 export 'src/bloc/bloc.export.dart';
