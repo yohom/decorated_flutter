@@ -21,7 +21,7 @@ abstract class BLoC {
 
   /// 初始化
   @mustCallSuper
-  Future<void> init() async {}
+  FutureOr<void> init() async {}
 
   @mustCallSuper
   void dispose() {
@@ -39,7 +39,7 @@ abstract class RootBLoC extends BLoC {
   List<GlobalBLoC> get disposeBag => [];
 
   @override
-  Future<void> init() async {
+  FutureOr<void> init() async {
     await super.init();
     for (final item in disposeBag) {
       await item.init();
