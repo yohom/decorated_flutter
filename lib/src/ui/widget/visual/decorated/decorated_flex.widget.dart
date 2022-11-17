@@ -42,6 +42,7 @@ class DecoratedRow extends DecoratedFlex {
     super.widthFactor,
     super.heightFactor,
     super.scrollable,
+    super.primary,
     super.scrollController,
     super.scrollPhysics,
     super.animationDuration,
@@ -104,6 +105,7 @@ class DecoratedColumn extends DecoratedFlex {
     super.widthFactor,
     super.heightFactor,
     super.scrollable,
+    super.primary,
     super.scrollController,
     super.scrollPhysics,
     super.animationDuration,
@@ -162,6 +164,7 @@ class DecoratedFlex extends StatelessWidget {
     this.elevation,
     this.safeArea,
     this.scrollable,
+    this.primary,
     this.scrollController,
     this.scrollPhysics,
     this.widthFactor,
@@ -261,6 +264,7 @@ class DecoratedFlex extends StatelessWidget {
 
   /// 滚动相关
   final bool? scrollable;
+  final bool? primary;
   final ScrollController? scrollController;
   final ScrollPhysics? scrollPhysics;
 
@@ -448,6 +452,7 @@ class DecoratedFlex extends StatelessWidget {
         scrollDirection: direction,
         controller: scrollController,
         physics: scrollPhysics,
+        primary: primary,
         child: result,
       );
     }

@@ -22,6 +22,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
     this.title = '',
     this.listTileTheme,
     this.builder,
+    this.debugShowCheckedModeBanner = false,
   })  : rootBLoC = rootBLoC ?? get(),
         super(key: key);
 
@@ -41,6 +42,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   final ListTileThemeData? listTileTheme;
   final Widget app;
   final TransitionBuilder? builder;
+  final bool debugShowCheckedModeBanner;
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +67,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
           themeMode: themeMode,
           scrollBehavior: scrollBehavior,
           onGenerateRoute: onGenerateRoute,
+          debugShowCheckedModeBanner: debugShowCheckedModeBanner,
           localizationsDelegates: {
             ...localizationsDelegates,
             GlobalCupertinoLocalizations.delegate,
