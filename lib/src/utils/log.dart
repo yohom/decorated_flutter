@@ -19,7 +19,7 @@ class _Logger {
   /// 初始化日志
   Future<void> init({bool enableFileOutput = false}) async {
     if (kIsWeb || !enableFileOutput) {
-      _logger = Logger(printer: PrettyPrinter(printTime: true));
+      _logger = Logger(printer: PrettyPrinter(printTime: true, methodCount: 3));
     } else {
       final now = DateTime.now();
       final tempPath = (await getTemporaryDirectory()).path;
