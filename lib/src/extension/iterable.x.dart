@@ -46,6 +46,14 @@ extension IterableX<T> on Iterable<T> {
     }
   }
 
+  Iterable<T> whereOrEmpty(bool Function(T element) test) {
+    try {
+      return where(test);
+    } catch (e) {
+      return [];
+    }
+  }
+
   /// 按[count]数给列表分组
   List<List<T>> buffer(int count) {
     final result = <List<T>>[];
