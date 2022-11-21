@@ -94,6 +94,15 @@ extension IterableX<T> on Iterable<T> {
     return elementAt(Random().nextInt(length));
   }
 
+  /// 获取随机元素
+  T? get randomOneOrNull {
+    try {
+      return elementAt(Random().nextInt(length));
+    } catch (e) {
+      return null;
+    }
+  }
+
   List<T> whereNotEmpty() => where(isNotEmpty).cast<T>().toList();
 
   /// 获取最后[count]个元素
