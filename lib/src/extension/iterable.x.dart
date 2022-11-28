@@ -46,6 +46,14 @@ extension IterableX<T> on Iterable<T> {
     }
   }
 
+  Iterable<T> whereOrEmpty(bool Function(T element) test) {
+    try {
+      return where(test);
+    } catch (e) {
+      return [];
+    }
+  }
+
   /// 按[count]数给列表分组
   List<List<T>> buffer(int count) {
     final result = <List<T>>[];
@@ -84,6 +92,15 @@ extension IterableX<T> on Iterable<T> {
   /// 获取随机元素
   T get randomOne {
     return elementAt(Random().nextInt(length));
+  }
+
+  /// 获取随机元素
+  T? get randomOneOrNull {
+    try {
+      return elementAt(Random().nextInt(length));
+    } catch (e) {
+      return null;
+    }
   }
 
   List<T> whereNotEmpty() => where(isNotEmpty).cast<T>().toList();
