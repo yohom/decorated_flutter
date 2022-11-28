@@ -1,5 +1,6 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 enum ZIndex {
   top,
@@ -46,6 +47,7 @@ class DecoratedStack extends StatelessWidget {
     this.animationCurve,
     this.clipBehavior = Clip.none,
     this.visible,
+    this.systemUiOverlayStyle,
     this.children = const [],
   }) : super(key: key);
 
@@ -95,6 +97,7 @@ class DecoratedStack extends StatelessWidget {
 
   final Clip clipBehavior;
   final bool? visible;
+  final SystemUiOverlayStyle? systemUiOverlayStyle;
 
   final List<Widget> children;
 
@@ -206,6 +209,10 @@ class DecoratedStack extends StatelessWidget {
 
     if (visible != null) {
       result = Visibility(visible: visible!, child: result);
+    }
+
+    if (systemUiOverlayStyle != null) {
+      result = AnnotatedRegion(value: systemUiOverlayStyle!, child: result);
     }
 
     if (expanded) {
