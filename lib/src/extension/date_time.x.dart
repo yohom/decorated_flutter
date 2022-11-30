@@ -127,6 +127,10 @@ extension DateTimeX on DateTime {
     return DateTime(year);
   }
 
+  int dayOfYear() {
+    return difference(asYear()).inDays;
+  }
+
   DateTime copyWith({
     int? year,
     int? month,
