@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:crypto/crypto.dart';
@@ -36,6 +37,11 @@ T doFunc<T>(T Function() func) {
 /// 获取md5
 String md5Of(String input) {
   return md5.convert(utf8.encode(input)).toString();
+}
+
+/// 获取md5
+Future<String> md5OfFile(File file) async {
+  return md5.convert(await file.readAsBytes()).toString();
 }
 
 /// 关闭键盘
