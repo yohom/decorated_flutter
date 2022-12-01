@@ -9,7 +9,11 @@ extension FileSystemEntityX on FileSystemEntity {
     return name.split('.').first;
   }
 
-  void deleteIfExists({bool recursive = false}) {
+  Future<void> deleteIfExists({bool recursive = false}) async {
+    if (await exists()) await delete(recursive: recursive);
+  }
+
+  void deleteIfExistsSync({bool recursive = false}) {
     if (existsSync()) deleteSync(recursive: recursive);
   }
 }
