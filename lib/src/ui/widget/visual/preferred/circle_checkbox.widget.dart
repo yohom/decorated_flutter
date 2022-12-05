@@ -4,10 +4,12 @@
 
 import 'package:flutter/material.dart';
 
+typedef RoundedCheckbox = CircleCheckbox;
+
 /// 官方checkbox变体
 ///
 /// 特征为缩小了check, 且拐弯处为圆角
-class RoundedCheckbox extends StatefulWidget {
+class CircleCheckbox extends StatefulWidget {
   /// Creates a material design checkbox.
   ///
   /// The checkbox itself does not maintain any state. Instead, when the state of
@@ -24,7 +26,7 @@ class RoundedCheckbox extends StatefulWidget {
   ///   change. It can be set to null to disable the checkbox.
   ///
   /// The values of [tristate] and [autofocus] must not be null.
-  const RoundedCheckbox({
+  const CircleCheckbox({
     Key? key,
     required this.value,
     this.tristate = false,
@@ -271,10 +273,10 @@ class RoundedCheckbox extends StatefulWidget {
   static const double width = 18.0;
 
   @override
-  State<RoundedCheckbox> createState() => _RoundedCheckboxState();
+  State<CircleCheckbox> createState() => _CircleCheckboxState();
 }
 
-class _RoundedCheckboxState extends State<RoundedCheckbox>
+class _CircleCheckboxState extends State<CircleCheckbox>
     with TickerProviderStateMixin, ToggleableStateMixin {
   final _CheckboxPainter _painter = _CheckboxPainter();
   bool? _previousValue;
@@ -286,7 +288,7 @@ class _RoundedCheckboxState extends State<RoundedCheckbox>
   }
 
   @override
-  void didUpdateWidget(RoundedCheckbox oldWidget) {
+  void didUpdateWidget(CircleCheckbox oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.value != widget.value) {
       _previousValue = oldWidget.value;
@@ -461,7 +463,7 @@ class _RoundedCheckboxState extends State<RoundedCheckbox>
   }
 }
 
-const double _kEdgeSize = RoundedCheckbox.width;
+const double _kEdgeSize = CircleCheckbox.width;
 const double _kStrokeWidth = 2.0;
 
 class _CheckboxPainter extends ToggleablePainter {
