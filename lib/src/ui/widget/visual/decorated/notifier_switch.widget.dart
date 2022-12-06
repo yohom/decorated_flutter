@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 
-class ReactiveSwitch extends StatelessWidget {
-  const ReactiveSwitch(this._notifier, {super.key});
+typedef ReactiveSwitch = NotifierSwitch;
+
+class NotifierSwitch extends StatelessWidget {
+  const NotifierSwitch(this._notifier, {super.key});
 
   final ValueNotifier<bool> _notifier;
 
