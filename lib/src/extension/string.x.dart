@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:decorated_flutter/src/utils/log.dart';
@@ -95,6 +96,11 @@ extension StringX on String {
     final position = length - digit;
     if (position < 0) return this;
     return substring(position);
+  }
+
+  String substringFirstOf(int digit) {
+    final position = min(digit, length);
+    return substring(0, position);
   }
 
   String substringAfterLast(String separator) {
