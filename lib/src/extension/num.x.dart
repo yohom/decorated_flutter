@@ -15,6 +15,14 @@ extension NumX on num {
       return this > range.lower && this < range.upper;
     }
   }
+
+  bool gt(num other) {
+    return this > other;
+  }
+
+  bool lt(num other) {
+    return this < other;
+  }
 }
 
 extension DoubleX on double {
