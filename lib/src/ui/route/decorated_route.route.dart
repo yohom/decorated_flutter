@@ -9,7 +9,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
     Key? key,
     required this.screen,
     B? bloc,
-    this.autoCloseKeyboard = true,
+    this.autoCloseKeyboard,
     this.init,
     this.onLateinit,
     this.animate = true,
@@ -42,7 +42,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
   final Widget screen;
 
   /// 是否自动关闭输入法
-  final bool autoCloseKeyboard;
+  final CloseKeyboardConfig? autoCloseKeyboard;
 
   /// 初始化方法
   ///
@@ -120,8 +120,11 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
     }
 
     // 是否自动收起键盘
-    if (autoCloseKeyboard) {
-      result = AutoCloseKeyboard(child: result);
+    if (autoCloseKeyboard != null) {
+      result = AutoCloseKeyboard(
+        config: autoCloseKeyboard!,
+        child: result,
+      );
     }
 
     // 是否带有表单
