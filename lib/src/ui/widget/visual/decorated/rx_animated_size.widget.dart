@@ -25,7 +25,10 @@ class RxAnimatedSize extends StatelessWidget {
         return AnimatedSize(
           duration: duration,
           alignment: Alignment.topCenter,
-          child: snapshot.requireData ? child : NIL,
+          child: KeyedSubtree(
+            key: const Key('RxAnimatedSize'),
+            child: snapshot.requireData ? child : NIL,
+          ),
         );
       },
     );
