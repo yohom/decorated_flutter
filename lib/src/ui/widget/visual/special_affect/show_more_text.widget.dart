@@ -7,6 +7,7 @@ class ShowMoreText extends StatelessWidget {
     this.maxLines = 1,
     this.style,
     this.showMoreStyle,
+    this.textAlign,
     this.overflow = TextOverflow.ellipsis,
     this.popupMenuTheme = const PopupMenuThemeData(),
   }) : super(key: key);
@@ -15,6 +16,7 @@ class ShowMoreText extends StatelessWidget {
   final int maxLines;
   final TextStyle? style;
   final TextStyle? showMoreStyle;
+  final TextAlign? textAlign;
   final TextOverflow overflow;
   final PopupMenuThemeData popupMenuTheme;
 
@@ -28,6 +30,7 @@ class ShowMoreText extends StatelessWidget {
           style: style,
           maxLines: maxLines,
           overflow: overflow,
+          textAlign: textAlign,
         ),
         itemBuilder: (context) {
           return [
