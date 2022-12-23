@@ -40,6 +40,14 @@ extension DoubleX on double {
             ((this - selfRangeMin) / (selfRangeMax - selfRangeMin)) +
         normalizedRangeMin;
   }
+
+  double add(double other) {
+    return this + other;
+  }
+
+  double subtract(double other) {
+    return this - other;
+  }
 }
 
 extension IntX on int {
@@ -139,5 +147,13 @@ extension IntX on int {
       default:
         return '其他';
     }
+  }
+
+  int add(int other) {
+    return this + other;
+  }
+
+  int subtract(int other) {
+    return this - other;
   }
 }
