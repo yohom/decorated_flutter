@@ -21,6 +21,7 @@ class AutoCloseKeyboard extends StatelessWidget {
         } else {
           hideKeyboard();
         }
+        config.onKeyboardClosed?.call();
       },
       child: child,
     );
