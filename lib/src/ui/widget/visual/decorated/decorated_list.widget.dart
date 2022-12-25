@@ -9,6 +9,7 @@ class DecoratedList extends StatelessWidget {
     this.itemBuilder,
     this.itemCount,
     this.children,
+    this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
     this.scrollDirection,
     this.width,
     this.height,
@@ -32,6 +33,7 @@ class DecoratedList extends StatelessWidget {
     this.itemBuilder,
     required this.itemCount,
     this.children,
+    this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
     this.scrollDirection,
     this.width,
     this.height,
@@ -70,6 +72,7 @@ class DecoratedList extends StatelessWidget {
         separatorBuilder = null,
         restorationId = null,
         expanded = null,
+        keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
         super(key: key);
 
   final bool _sliver;
@@ -78,6 +81,7 @@ class DecoratedList extends StatelessWidget {
   final bool shrinkWrap;
   final IndexedWidgetBuilder? itemBuilder;
   final int? itemCount;
+  final ScrollViewKeyboardDismissBehavior keyboardDismissBehavior;
   final Axis? scrollDirection;
   final List<Widget>? children;
   final double? width, height;
@@ -151,6 +155,7 @@ class DecoratedList extends StatelessWidget {
     if (children != null) {
       result = ListView(
         padding: padding,
+        keyboardDismissBehavior: keyboardDismissBehavior,
         restorationId: restorationId,
         controller: controller,
         shrinkWrap: shrinkWrap,
