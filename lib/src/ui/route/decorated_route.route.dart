@@ -9,7 +9,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
     Key? key,
     required this.screen,
     B? bloc,
-    this.autoCloseKeyboard,
+    this.autoCloseKeyboard = const CloseKeyboardConfig(),
     this.init,
     this.onLateinit,
     this.animate = true,
