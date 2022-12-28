@@ -15,7 +15,8 @@ extension FutureX<T> on Future<T> {
   static Color? backgroundColor;
   static bool loadingCancelable = false;
   static String defaultLoadingText = '加载中...';
-  static Duration defaultTimeLimit = const Duration(seconds: 60);
+  // 默认无超时
+  static Duration defaultTimeLimit = const Duration(days: 1);
 
   /// 造型为[R]类型
   Future<R> cast<R>() {
