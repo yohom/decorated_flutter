@@ -30,8 +30,8 @@ dependencies:
   # 模态对话框增强 https://pub.flutter-io.cn/packages/modal_bottom_sheet
   # 替换品 sheet 参考 https://github.com/jamesblasco/modal_bottom_sheet/tree/main/sheet
   modal_bottom_sheet: ^2.1.2
-  # 日志打印 https://pub.flutter-io.cn/packages/logger
-  logger: ^1.1.0
+  # 日志打印 https://pub.flutter-io.cn/packages/flutter_mxlogger
+  flutter_mxlogger: ^1.2.0+1
   # 获取路径 https://pub.flutter-io.cn/packages/path_provider
   path_provider: ^2.0.11
   # 退出app

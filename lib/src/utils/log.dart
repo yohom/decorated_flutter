@@ -1,62 +1,61 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:logger/logger.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:path_provider/path_provider.dart';
-
-import '../extension/extension.export.dart';
-
-typedef ForwardCallback = void Function(String);
+import 'package:flutter_mxlogger/flutter_mxlogger.dart';
 
 final _Logger L = _Logger();
 
 class _Logger {
-  late final Logger _logger;
-  Directory? logDir;
+  late final MXLogger _logger;
 
   /// 初始化日志
-  Future<void> init({bool enableFileOutput = false}) async {
-    if (kIsWeb || !enableFileOutput) {
-      _logger = Logger(printer: PrettyPrinter(printTime: true, methodCount: 3));
-    } else {
-      final now = DateTime.now();
-      final tempPath = (await getTemporaryDirectory()).path;
-      final packageInfo = await PackageInfo.fromPlatform();
-      final appName = packageInfo.appName;
-      final appVersion = packageInfo.version;
-      // 日志目录
-      logDir ??= Directory('$tempPath/log/$appName/$appVersion');
-      // 如果没有日志文件就创建一个
-      final logFile = File('${logDir!.path}/${now.format('yyyy-MM-dd')}.txt');
-      if (!logFile.existsSync()) logFile.createSync(recursive: true);
-
-      _logger = Logger(
-        printer: PrettyPrinter(printTime: true),
-        filter: kDebugMode ? DevelopmentFilter() : InfoFilter(),
+  Future<void> init({@Deprecated('暂无使用') bool enableFileOutput = false}) async {
+    if (!kIsWeb) {
+      _logger = await MXLogger.initialize(
+        nameSpace: "me.yohom.decorated_flutter",
+        storagePolicy: "yyyy_MM_dd_HH",
       );
     }
   }
 
   void d(Object content) {
-    _logger.d(content);
+    if (kIsWeb) {
+      debugPrint(content.toString());
+    } else {
+      _logger.debug(content.toString());
+    }
   }
 
   void w(Object content) {
-    _logger.w(content);
+    if (kIsWeb) {
+      debugPrint(content.toString());
+    } else {
+      _logger.warn(content.toString());
+    }
   }
 
-  void i(Object content, {LogPrinter? printer}) {
-    _logger.i(content);
+  void i(Object content) {
+    if (kIsWeb) {
+      debugPrint(content.toString());
+    } else {
+      _logger.info(content.toString());
+    }
   }
 
   void e(Object content) {
-    _logger.e(content);
+    if (kIsWeb) {
+      debugPrint(content.toString());
+    } else {
+      _logger.error(content.toString());
+    }
   }
 
   void v(Object content) {
-    _logger.v(content);
+    if (kIsWeb) {
+      debugPrint(content.toString());
+    } else {
+      _logger.debug(content.toString());
+    }
   }
 
   /// 写日志到文件
@@ -67,26 +66,11 @@ class _Logger {
     Object content, {
     Duration evict = const Duration(days: 7),
     @Deprecated('使用forward代替') bool logConsole = true,
-    ForwardCallback? forward = _debugLog,
+    void Function(String)? forward,
     String? tag,
   }) async {
     i(content);
   }
 
-  void dispose() {
-    _logger.close();
-  }
-}
-
-/// 显示优先级大于info的日志
-class InfoFilter extends LogFilter {
-  @override
-  bool shouldLog(LogEvent event) {
-    return event.level >= Level.info;
-  }
-}
-
-// 由于对象的方法不能作为参数默认值(不是常量), 这里放一个顶层函数来变通处理一下
-void _debugLog(Object content) {
-  L.d(content);
+  void dispose() {}
 }
