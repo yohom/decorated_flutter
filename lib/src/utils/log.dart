@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_mxlogger/flutter_mxlogger.dart';
@@ -9,7 +10,7 @@ class _Logger {
   late final MXLogger _logger;
 
   /// 初始化日志
-  Future<void> init({@Deprecated('暂无使用') bool enableFileOutput = false}) async {
+  Future<void> init() async {
     if (!kIsWeb) {
       _logger = await MXLogger.initialize(
         nameSpace: "me.yohom.decorated_flutter",
@@ -17,6 +18,9 @@ class _Logger {
       );
     }
   }
+
+  /// 日志所在路径
+  Directory get logDir => Directory(_logger.diskcachePath);
 
   void d(Object content) {
     if (kIsWeb) {
