@@ -63,7 +63,6 @@ extension BuildContextX on BuildContext {
     return data.size.width * data.devicePixelRatio;
   }
 
-  @Deprecated('优先使用viewPadding')
   EdgeInsets get padding {
     return MediaQuery.of(this).padding;
   }
