@@ -14,8 +14,12 @@ class _Logger {
     if (!kIsWeb) {
       _logger = await MXLogger.initialize(
         nameSpace: "me.yohom.decorated_flutter",
-        storagePolicy: "yyyy_MM_dd_HH",
+        storagePolicy: "yyyy_MM_dd",
       );
+      _logger.setMaxDiskAge(60 * 60 * 24 * 7); // one week
+      _logger.setMaxDiskSize(1024 * 1024 * 10); // 10M
+      _logger.setFileLevel(1);
+      _logger.setConsoleEnable(!kReleaseMode);
     }
   }
 
