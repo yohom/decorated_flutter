@@ -137,12 +137,12 @@ void runDecoratedApp(
   Future<void> Function(Object, StackTrace)? onError,
   Color? statusBarColor,
   bool zoned = true,
-  bool enableFileOutput = false,
+  @Deprecated('暂无使用') bool enableFileOutput = false,
 }) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // 初始化日志系统
-  await L.init(enableFileOutput: enableFileOutput);
+  await L.init();
 
   if (statusBarColor != null) {
     SystemChrome.setSystemUIOverlayStyle(
