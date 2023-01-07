@@ -21,6 +21,7 @@ class DecoratedList extends StatelessWidget {
     this.controller,
     this.expanded,
     this.decoration,
+    this.physics,
   })  : _sliver = false,
         separatorBuilder = null,
         super(key: key);
@@ -44,6 +45,7 @@ class DecoratedList extends StatelessWidget {
     this.expanded,
     this.decoration,
     required this.separatorBuilder,
+    this.physics,
   })  : assert(itemCount != null),
         assert(separatorBuilder != null),
         _sliver = false,
@@ -72,6 +74,7 @@ class DecoratedList extends StatelessWidget {
         separatorBuilder = null,
         restorationId = null,
         expanded = null,
+        physics = null,
         keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
         super(key: key);
 
@@ -92,6 +95,7 @@ class DecoratedList extends StatelessWidget {
   final bool? expanded;
   final IndexedWidgetBuilder? separatorBuilder;
   final BoxDecoration? decoration;
+  final ScrollPhysics? physics;
 
   @override
   Widget build(BuildContext context) {
@@ -160,6 +164,7 @@ class DecoratedList extends StatelessWidget {
         controller: controller,
         shrinkWrap: shrinkWrap,
         itemExtent: itemExtent,
+        physics: physics,
         scrollDirection: scrollDirection ?? Axis.vertical,
         prototypeItem: prototypeItem,
         addAutomaticKeepAlives: addAutomaticKeepAlives,
@@ -176,6 +181,7 @@ class DecoratedList extends StatelessWidget {
           itemBuilder: itemBuilder!,
           itemCount: itemCount!,
           shrinkWrap: shrinkWrap,
+          physics: physics,
           controller: controller,
           scrollDirection: scrollDirection ?? Axis.vertical,
           addAutomaticKeepAlives: addAutomaticKeepAlives,
@@ -190,6 +196,7 @@ class DecoratedList extends StatelessWidget {
           itemCount: itemCount,
           shrinkWrap: shrinkWrap,
           controller: controller,
+          physics: physics,
           scrollDirection: scrollDirection ?? Axis.vertical,
           itemExtent: itemExtent,
           prototypeItem: prototypeItem,
