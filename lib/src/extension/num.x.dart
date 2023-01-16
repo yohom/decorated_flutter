@@ -25,6 +25,26 @@ extension NumX on num {
   }
 }
 
+extension OptionalNumX<T extends num> on T? {
+  T? operator +(T addition) {
+    final shadow = this;
+    if (shadow != null) {
+      return (shadow + addition) as T;
+    } else {
+      return null;
+    }
+  }
+
+  T? operator -(T addition) {
+    final shadow = this;
+    if (shadow != null) {
+      return (shadow - addition) as T;
+    } else {
+      return null;
+    }
+  }
+}
+
 extension DoubleX on double {
   double asFixed(int fractionDigits) {
     return double.parse(toStringAsFixed(fractionDigits));
