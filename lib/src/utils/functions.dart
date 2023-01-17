@@ -7,6 +7,7 @@ import 'package:crypto/crypto.dart';
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:uuid/uuid.dart';
 
 bool notEqual(prev, next) => prev != next;
 
@@ -261,4 +262,14 @@ String filesize(dynamic size, [int round = 2]) {
     num r = _size / divider / divider / divider / divider / divider;
     return '${r.toStringAsFixed(round)} PB';
   }
+}
+
+/// 写入一个临时文件
+Future<File?> getTmpFile(Uint8List? bytes) async {
+  if (bytes == null) return null;
+
+  final tmpDir = await getTemporaryDirectory();
+  final file = File('${tmpDir.path}/${const Uuid().v4()}');
+  await file.writeAsBytes(bytes);
+  return file;
 }
