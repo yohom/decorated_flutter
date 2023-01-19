@@ -41,8 +41,18 @@ String md5Of(String input) {
 }
 
 /// 获取md5
-Future<String> md5OfFile(File file) async {
-  return md5.convert(await file.readAsBytes()).toString();
+///
+/// 当文件大小超过[streamThreshold]时, 启用流式处理, 避免大文件干爆内存
+Future<String> md5OfFile(
+  File file, {
+  int streamThreshold = 10 * 1024 * 1024,
+}) async {
+  if (await file.length() > streamThreshold) {
+    final stream = file.openRead();
+    return md5.bind(stream).first.toString();
+  } else {
+    return md5.convert(await file.readAsBytes()).toString();
+  }
 }
 
 /// 关闭键盘
