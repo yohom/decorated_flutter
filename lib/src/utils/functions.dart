@@ -141,7 +141,7 @@ String toString(Object object) {
 }
 
 /// 运行app
-void runDecoratedApp(
+Future<void> runDecoratedApp(
   Widget app, {
   Future<void> Function()? beforeApp,
   Future<void> Function()? afterApp,
