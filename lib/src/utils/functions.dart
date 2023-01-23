@@ -148,7 +148,7 @@ void runDecoratedApp(
   Future<void> Function(Object, StackTrace)? onError,
   Color? statusBarColor,
   bool zoned = true,
-  @Deprecated('暂无使用') bool enableFileOutput = false,
+  bool isTest = false,
 }) async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -170,19 +170,22 @@ void runDecoratedApp(
     }
   }
 
-  if (zoned) {
-    runZonedGuarded<void>(
-      () => runApp(app),
-      (e, s) {
-        if (onError != null) {
-          onError.call(e, s);
-        } else {
-          L.e('error: $e, stacktrace: $s');
-        }
-      },
-    );
-  } else {
-    runApp(app);
+  // 非测试状态下, 运行app; 测试状态下, 需要由集成测试的tester来bump widget
+  if (!isTest) {
+    if (zoned) {
+      runZonedGuarded<void>(
+        () => runApp(app),
+        (e, s) {
+          if (onError != null) {
+            onError.call(e, s);
+          } else {
+            L.e('error: $e, stacktrace: $s');
+          }
+        },
+      );
+    } else {
+      runApp(app);
+    }
   }
 
   if (afterApp != null) {
