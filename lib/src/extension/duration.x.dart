@@ -41,3 +41,51 @@ extension DurationX on Duration {
     return Duration(milliseconds: result);
   }
 }
+
+extension OptionalDurationX on Duration? {
+  Duration? operator ~/(int divider) {
+    final shadow = this;
+    if (shadow == null) return null;
+
+    return Duration(milliseconds: shadow.inMilliseconds ~/ divider);
+  }
+
+  Duration? operator /(int divider) {
+    return this ~/ divider;
+  }
+
+  Duration? operator *(num multiplier) {
+    final shadow = this;
+    if (shadow == null) return null;
+
+    return Duration(milliseconds: (shadow.inMilliseconds * multiplier).toInt());
+  }
+
+  bool? operator <(Duration other) {
+    final shadow = this;
+    if (shadow == null) return null;
+
+    return shadow < other;
+  }
+
+  bool? operator >(Duration other) {
+    final shadow = this;
+    if (shadow == null) return null;
+
+    return shadow > other;
+  }
+
+  bool? operator <=(Duration other) {
+    final shadow = this;
+    if (shadow == null) return null;
+
+    return shadow <= other;
+  }
+
+  bool? operator >=(Duration other) {
+    final shadow = this;
+    if (shadow == null) return null;
+
+    return shadow >= other;
+  }
+}

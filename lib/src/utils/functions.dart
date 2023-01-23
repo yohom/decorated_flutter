@@ -7,6 +7,7 @@ import 'package:crypto/crypto.dart';
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:uuid/uuid.dart';
 
 bool notEqual(prev, next) => prev != next;
 
@@ -40,8 +41,18 @@ String md5Of(String input) {
 }
 
 /// 获取md5
-Future<String> md5OfFile(File file) async {
-  return md5.convert(await file.readAsBytes()).toString();
+///
+/// 当文件大小超过[streamThreshold]时, 启用流式处理, 避免大文件干爆内存
+Future<String> md5OfFile(
+  File file, {
+  int streamThreshold = 10 * 1024 * 1024,
+}) async {
+  if (await file.length() > streamThreshold) {
+    final stream = file.openRead();
+    return md5.bind(stream).first.toString();
+  } else {
+    return md5.convert(await file.readAsBytes()).toString();
+  }
 }
 
 /// 关闭键盘
@@ -137,7 +148,7 @@ void runDecoratedApp(
   Future<void> Function(Object, StackTrace)? onError,
   Color? statusBarColor,
   bool zoned = true,
-  @Deprecated('暂无使用') bool enableFileOutput = false,
+  bool isTest = false,
 }) async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -159,19 +170,22 @@ void runDecoratedApp(
     }
   }
 
-  if (zoned) {
-    runZonedGuarded<void>(
-      () => runApp(app),
-      (e, s) {
-        if (onError != null) {
-          onError.call(e, s);
-        } else {
-          L.e('error: $e, stacktrace: $s');
-        }
-      },
-    );
-  } else {
-    runApp(app);
+  // 非测试状态下, 运行app; 测试状态下, 需要由集成测试的tester来bump widget
+  if (!isTest) {
+    if (zoned) {
+      runZonedGuarded<void>(
+        () => runApp(app),
+        (e, s) {
+          if (onError != null) {
+            onError.call(e, s);
+          } else {
+            L.e('error: $e, stacktrace: $s');
+          }
+        },
+      );
+    } else {
+      runApp(app);
+    }
   }
 
   if (afterApp != null) {
@@ -261,4 +275,14 @@ String filesize(dynamic size, [int round = 2]) {
     num r = _size / divider / divider / divider / divider / divider;
     return '${r.toStringAsFixed(round)} PB';
   }
+}
+
+/// 写入一个临时文件
+Future<File?> getTmpFile(Uint8List? bytes) async {
+  if (bytes == null) return null;
+
+  final tmpDir = await getTemporaryDirectory();
+  final file = File('${tmpDir.path}/${const Uuid().v4()}');
+  await file.writeAsBytes(bytes);
+  return file;
 }
