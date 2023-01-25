@@ -26,11 +26,10 @@ class _RuntimeState extends State<Runtime> {
 
   @override
   Widget build(BuildContext context) {
-    final List<BaseIO> globalIOList =
+    final List<BaseIO> globalIOList = Runtime._globalBLoCList
         // ignore: invalid_use_of_protected_member
-        Runtime._globalBLoCList
-            .expand((bloc) => bloc.disposeBag.whereType<BaseIO>())
-            .toList();
+        .expand((bloc) => bloc.disposeBag.whereType<BaseIO>())
+        .toList();
     return SingleChildScrollView(
       physics: const ClampingScrollPhysics(),
       child: ExpansionPanelList(

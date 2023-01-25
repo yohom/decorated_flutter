@@ -38,7 +38,7 @@ extension BuildContextX on BuildContext {
   }
 
   FormState get form {
-    return Form.of(this)!;
+    return Form.of(this);
   }
 
   ColorScheme get colorScheme {
@@ -109,7 +109,7 @@ extension BuildContextX on BuildContext {
   }
 
   Future<void> scrollToTop({Duration? duration, Curve? curve}) async {
-    return PrimaryScrollController.of(this)?.animateTo(
+    return PrimaryScrollController.of(this).animateTo(
       0,
       duration: duration ?? const Duration(milliseconds: 300),
       curve: curve ?? Curves.ease,

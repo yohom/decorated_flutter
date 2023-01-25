@@ -39,12 +39,12 @@ class _TabStyle extends AnimatedWidget {
     // the same value of inherit. Force that to be inherit=true here.
     final TextStyle defaultStyle = (labelStyle ??
             tabBarTheme.labelStyle ??
-            themeData.primaryTextTheme.bodyText1!)
+            themeData.primaryTextTheme.bodyLarge!)
         .copyWith(inherit: true);
     final TextStyle defaultUnselectedStyle = (unselectedLabelStyle ??
             tabBarTheme.unselectedLabelStyle ??
             labelStyle ??
-            themeData.primaryTextTheme.bodyText1!)
+            themeData.primaryTextTheme.bodyLarge!)
         .copyWith(inherit: true);
 
     final TextStyle textStyle = selected
@@ -54,7 +54,7 @@ class _TabStyle extends AnimatedWidget {
 
     final Color selectedColor = labelColor ??
         tabBarTheme.labelColor ??
-        themeData.primaryTextTheme.bodyText1!.color!;
+        themeData.primaryTextTheme.bodyLarge!.color!;
     final Color unselectedColor = unselectedLabelColor ??
         tabBarTheme.unselectedLabelColor ??
         selectedColor.withAlpha(0xB2); // 70% alpha
@@ -761,7 +761,7 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
     // with a better long-term solution.
     // https://github.com/flutter/flutter/pull/68171#pullrequestreview-517753917
     if (widget.automaticIndicatorColorAdjustment &&
-        color.value == Material.of(context)?.color?.value) color = Colors.white;
+        color.value == Material.of(context).color?.value) color = Colors.white;
 
     return UnderlineTabIndicator(
       borderSide: BorderSide(
@@ -778,7 +778,7 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
 
   void _updateTabController() {
     final TabController? newController =
-        widget.controller ?? DefaultTabController.of(context);
+        widget.controller ?? DefaultTabController.maybeOf(context);
     assert(() {
       if (newController == null) {
         throw FlutterError(

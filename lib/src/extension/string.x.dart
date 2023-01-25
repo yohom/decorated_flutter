@@ -131,7 +131,7 @@ extension StringX on String {
     if (distinct && endsWith(str)) {
       return this;
     } else {
-      return '${this}$str';
+      return '$this$str';
     }
   }
 

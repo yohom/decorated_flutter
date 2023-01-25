@@ -1,11 +1,10 @@
-
-
 import 'package:flutter/material.dart';
 
 typedef RatingChangeCallback = void Function(double rating);
 
 class StarRating extends StatelessWidget {
-  const StarRating({Key? key,
+  const StarRating({
+    Key? key,
     this.starCount = 5,
     this.rating = .0,
     this.onRatingChanged,
@@ -24,11 +23,7 @@ class StarRating extends StatelessWidget {
   Widget buildStar(BuildContext context, int index) {
     Icon icon;
     if (index >= rating) {
-      icon = Icon(
-        Icons.star_border,
-        color: borderColor ?? Theme.of(context).buttonColor,
-        size: size ?? 25.0,
-      );
+      icon = Icon(Icons.star_border, color: borderColor, size: size ?? 25.0);
     } else if (index > rating - 1 && index < rating) {
       icon = Icon(
         Icons.star_half,
