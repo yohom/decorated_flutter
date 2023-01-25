@@ -3,7 +3,6 @@ export 'animation/show_up.transition.dart';
 export 'animation/toast.anim.dart';
 export 'dialog/date.dialog.dart';
 export 'dialog/popup_window.dialog.dart';
-export 'misc/emoji_text_span.dart';
 export 'misc/uri_builder.dart';
 export 'route/custom_material.route.dart';
 export 'route/decorated_route.route.dart';

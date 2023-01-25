@@ -1,9 +1,7 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:decorated_flutter/src/annotation/annotation.export.dart';
 import 'package:decorated_flutter/src/extension/extension.export.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -11,47 +9,10 @@ import '../../../../utils/utils.export.dart';
 
 typedef LoadingProgress = void Function(double progress, List<int> data);
 
-@Deprecated('暂时无用')
-class CryptoOption {
-  /// 解密
-  final Future<Uint8List> Function(Uint8List encrypted) decrypt;
-
-  /// 是否作用在网络图片
-  final bool enableNetworkImage;
-
-  /// 是否作用在asset图片
-  @wip
-  final bool enableAssetImage;
-
-  /// 是否作用在内存图片
-  @wip
-  final bool enableMemoryImage;
-
-  CryptoOption({
-    required this.decrypt,
-    this.enableNetworkImage = true,
-    this.enableAssetImage = true,
-    this.enableMemoryImage = true,
-  });
-
-  @override
-  String toString() {
-    return 'CryptoOption{decrypt: $decrypt, enableNetworkImage: $enableNetworkImage, enableAssetImage: $enableAssetImage, enableMemoryImage: $enableMemoryImage}';
-  }
-}
-
 class ImageView extends StatelessWidget {
-  /// 加解密选项
-  @Deprecated('暂时无用')
-  static CryptoOption? _cryptoOption;
   static Widget? globalErrorWidget;
   static Widget? globalPlaceholder;
   static bool logEnable = false;
-
-  @Deprecated('暂时无用')
-  static set cryptoOption(CryptoOption? value) {
-    _cryptoOption = value;
-  }
 
   /// 根据图片uri自动判断是使用本地加载还是远程加载
   ImageView(

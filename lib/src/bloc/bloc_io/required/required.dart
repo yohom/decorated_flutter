@@ -267,6 +267,8 @@ mixin OutputMixin<T, ARG> on BaseIO<T> {
       if (!_subject.isClosed) _subject.add(data);
     }).catchError((error) {
       if (!_subject.isClosed && !_skipError) _subject.addError(error);
+      // 这里不知道这样处理合不合适
+      return null as T;
     });
   }
 }

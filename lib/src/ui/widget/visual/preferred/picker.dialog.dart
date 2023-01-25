@@ -74,14 +74,14 @@ class _PickerDialogState<T> extends State<_PickerDialog<T>> {
             if (isNotEmpty(widget.title))
               Text(
                 widget.title!,
-                style: widget.titleStyle ?? context.textTheme.bodyText1,
+                style: widget.titleStyle ?? context.textTheme.bodyLarge,
               ),
             const Spacer(),
             TextButton(
               onPressed: () => context.rootNavigator.pop(_selected),
               child: Text(
                 '确定',
-                style: widget.confirmStyle ?? context.textTheme.bodyText1,
+                style: widget.confirmStyle ?? context.textTheme.bodyLarge,
               ),
             ),
           ],

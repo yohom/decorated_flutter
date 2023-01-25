@@ -72,7 +72,7 @@ class __DatePickerDialogState extends State<_DatePickerDialog> {
               onPressed: () => _handleCancel(context),
               child: Text(
                 widget.cancelText ?? (chinese ? '取消' : 'Cancel'),
-                style: context.textTheme.bodyText1!.copyWith(color: Colors.red),
+                style: context.textTheme.bodyLarge!.copyWith(color: Colors.red),
               ),
             ),
             if (widget.title != null) widget.title!,

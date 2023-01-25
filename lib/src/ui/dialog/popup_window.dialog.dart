@@ -80,8 +80,7 @@ void showWindow<T>({
 class _PopupWindowButtonState<T> extends State<PopupWindowButton> {
   void showPopupWindow() {
     final button = context.findRenderObject() as RenderBox;
-    final overlay =
-        Overlay.of(context)?.context.findRenderObject() as RenderBox;
+    final overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
     final RelativeRect position = RelativeRect.fromRect(
       Rect.fromPoints(
         button.localToGlobal(widget.offset, ancestor: overlay),

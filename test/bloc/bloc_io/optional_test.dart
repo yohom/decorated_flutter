@@ -18,9 +18,7 @@ void main() {
       expect(input.latest == null, true);
     });
 
-    test('isDistinct为true时, 不接受被判定为相等的值', () {
-      // TODO
-    });
+    test('isDistinct为true时, 不接受被判定为相等的值', () {});
 
     test('调用reset方法, latest应该是seedValue', () {
       final input = OptionalInput<String>(semantics: '测试', seedValue: 'seed');
@@ -40,8 +38,6 @@ void main() {
       expect(input.latest == 'reset', true);
     });
 
-    test('设置了persistentKey时, 应该调用内部持久层的write方法', () {
-      // TODO
-    });
+    test('设置了persistentKey时, 应该调用内部持久层的write方法', () {});
   });
 }
