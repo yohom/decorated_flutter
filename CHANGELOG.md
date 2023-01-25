@@ -1,3 +1,6 @@
+## 0.43.0
+- enhance: 适配flutter3.7
+
 ## 0.13.2
 - feat: 增加show_more_text
 
