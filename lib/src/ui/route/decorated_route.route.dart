@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 /// [B]是指定的BLoC, [T]是Route的返回类型
-class DecoratedRoute<B extends BLoC, T> extends MaterialWithModalsPageRoute<T> {
+class DecoratedRoute<B extends BLoC, T> extends MaterialPageRoute<T> {
   DecoratedRoute({
     Key? key,
     required this.screen,
