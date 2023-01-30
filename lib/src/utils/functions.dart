@@ -49,7 +49,7 @@ Future<String> md5OfFile(
 }) async {
   if (await file.length() > streamThreshold) {
     final stream = file.openRead();
-    return md5.bind(stream).first.toString();
+    return md5.bind(stream).first.then(toString);
   } else {
     return md5.convert(await file.readAsBytes()).toString();
   }
