@@ -1,3 +1,6 @@
+## 0.43.1
+- enhance: 区分html的logger和io的logger
+
 ## 0.43.0
 - enhance: 适配flutter3.7
 
