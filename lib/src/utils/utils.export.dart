@@ -4,7 +4,7 @@ export 'empty_util.dart';
 export 'enums.dart';
 export 'faker/faker.dart';
 export 'functions.dart';
-export 'log.dart';
+export 'logger/logger.dart';
 export 'misc.dart';
 export 'objects.dart';
 export 'time.dart';

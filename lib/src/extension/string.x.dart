@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:decorated_flutter/src/utils/log.dart';
+import 'package:decorated_flutter/src/utils/logger/logger.dart';
 import 'package:decorated_flutter/src/utils/objects.dart';
 
 extension StringX on String {
