@@ -36,8 +36,13 @@ T doFunc<T>(T Function() func) {
 }
 
 /// 获取md5
-String md5Of(String input) {
-  return md5.convert(utf8.encode(input)).toString();
+String md5Of(List<int> input) {
+  return md5.convert(input).toString();
+}
+
+/// 获取md5
+String md5OfString(String input) {
+  return md5Of(utf8.encode(input));
 }
 
 /// 获取md5
@@ -49,9 +54,9 @@ Future<String> md5OfFile(
 }) async {
   if (await file.length() > streamThreshold) {
     final stream = file.openRead();
-    return md5.bind(stream).first.toString();
+    return md5.bind(stream).first.then(toString);
   } else {
-    return md5.convert(await file.readAsBytes()).toString();
+    return md5Of(await file.readAsBytes());
   }
 }
 
