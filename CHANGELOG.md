@@ -1,3 +1,6 @@
+## 0.44.0
+- [break change] 调整md5Of的实现
+
 ## 0.43.1
 - enhance: 区分html的logger和io的logger
 
