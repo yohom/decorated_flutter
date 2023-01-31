@@ -6,6 +6,9 @@ class Logger {
     // do thing
   }
 
+  /// 日志所在路径
+  dynamic get logDir => 'invalid';
+
   void d(Object content) {
     if (!kReleaseMode) {
       debugPrint(content.toString());
