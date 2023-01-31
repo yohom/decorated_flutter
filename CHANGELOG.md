@@ -1,3 +1,6 @@
+## 0.44.0+1
+- html_logger补完
+
 ## 0.44.0
 - [break change] 调整md5Of的实现
 
