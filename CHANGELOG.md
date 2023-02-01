@@ -1,3 +1,6 @@
+## 0.44.0+2
+- handleError输出日志到文件
+
 ## 0.44.0+1
 - html_logger补完
 
