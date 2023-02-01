@@ -5,6 +5,7 @@ enum SpringButtonType {
   withOpacity,
 }
 
+@Deprecated('暂时无用')
 class SpringButton extends StatefulWidget {
   ///Use this value to determine the type of animation to be played.
   final SpringButtonType springButtonType;
