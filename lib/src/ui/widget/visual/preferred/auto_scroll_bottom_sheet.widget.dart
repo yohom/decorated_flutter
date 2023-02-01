@@ -6,12 +6,14 @@ class AutoScrollBottomSheet extends StatefulWidget {
     Key? key,
     this.duration = Duration.zero,
     this.curve = Curves.decelerate,
+    this.autoCloseKeyboard = const CloseKeyboardConfig(),
     required this.child,
   }) : super(key: key);
 
   final Widget child;
   final Duration duration;
   final Curve curve;
+  final CloseKeyboardConfig autoCloseKeyboard;
 
   @override
   State<AutoScrollBottomSheet> createState() => _AutoScrollBottomSheetState();
@@ -35,6 +37,7 @@ class _AutoScrollBottomSheetState extends State<AutoScrollBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return AutoCloseKeyboard(
+      config: widget.autoCloseKeyboard,
       child: AnimatedPadding(
         padding: _padding,
         duration: widget.duration,
