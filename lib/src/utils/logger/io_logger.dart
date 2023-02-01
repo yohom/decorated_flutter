@@ -22,43 +22,23 @@ class Logger {
   Directory get logDir => Directory(_logger.diskcachePath);
 
   void d(Object content) {
-    if (kIsWeb) {
-      debugPrint(content.toString());
-    } else {
-      _logger.debug(content.toString());
-    }
+    _logger.debug(content.toString());
   }
 
   void w(Object content) {
-    if (kIsWeb) {
-      debugPrint(content.toString());
-    } else {
-      _logger.warn(content.toString());
-    }
+    _logger.warn(content.toString());
   }
 
   void i(Object content) {
-    if (kIsWeb) {
-      debugPrint(content.toString());
-    } else {
-      _logger.info(content.toString());
-    }
+    _logger.info(content.toString());
   }
 
   void e(Object content) {
-    if (kIsWeb) {
-      debugPrint(content.toString());
-    } else {
-      _logger.error(content.toString());
-    }
+    _logger.error(content.toString());
   }
 
   void v(Object content) {
-    if (kIsWeb) {
-      debugPrint(content.toString());
-    } else {
-      _logger.debug(content.toString());
-    }
+    _logger.debug(content.toString());
   }
 
   void dispose() {}

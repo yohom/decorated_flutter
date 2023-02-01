@@ -13,7 +13,7 @@ const _kSocketException = 100001;
 ValueChanged<Object>? handleCustomError;
 
 dynamic handleError(Object error, [StackTrace? trace]) {
-  L.d('handleError: $error, trace: $trace');
+  L.e('handleError: $error, trace: $trace');
   final locale = gNavigatorKey.currentContext == null
       ? null
       : Localizations.localeOf(gNavigatorKey.currentContext!);
