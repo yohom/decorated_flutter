@@ -1,3 +1,6 @@
+## 0.44.0+4
+- 使用新的app_minimizer
+
 ## 0.44.0+3
 - 增加autoCloseKeyboard
 
