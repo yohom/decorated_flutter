@@ -44,6 +44,42 @@ extension OptionalNumX<T extends num> on T? {
     }
   }
 
+  T? operator *(T other) {
+    final shadow = this;
+    if (shadow != null) {
+      return (shadow * other) as T;
+    } else {
+      return null;
+    }
+  }
+
+  T? operator /(T other) {
+    final shadow = this;
+    if (shadow != null) {
+      return (shadow / other) as T;
+    } else {
+      return null;
+    }
+  }
+
+  T? operator ~/(T other) {
+    final shadow = this;
+    if (shadow != null) {
+      return (shadow ~/ other) as T;
+    } else {
+      return null;
+    }
+  }
+
+  T? operator %(T other) {
+    final shadow = this;
+    if (shadow != null) {
+      return (shadow % other) as T;
+    } else {
+      return null;
+    }
+  }
+
   bool? operator >(T other) {
     final shadow = this;
     if (shadow != null) {
