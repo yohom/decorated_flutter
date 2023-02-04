@@ -43,6 +43,42 @@ extension OptionalNumX<T extends num> on T? {
       return null;
     }
   }
+
+  bool? operator >(T addition) {
+    final shadow = this;
+    if (shadow != null) {
+      return shadow > addition;
+    } else {
+      return null;
+    }
+  }
+
+  bool? operator >=(T addition) {
+    final shadow = this;
+    if (shadow != null) {
+      return shadow >= addition;
+    } else {
+      return null;
+    }
+  }
+
+  bool? operator <(T addition) {
+    final shadow = this;
+    if (shadow != null) {
+      return shadow < addition;
+    } else {
+      return null;
+    }
+  }
+
+  bool? operator <=(T addition) {
+    final shadow = this;
+    if (shadow != null) {
+      return shadow <= addition;
+    } else {
+      return null;
+    }
+  }
 }
 
 extension DoubleX on double {
