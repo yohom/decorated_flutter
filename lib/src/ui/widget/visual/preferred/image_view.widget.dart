@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:decorated_flutter/src/extension/extension.export.dart';
+import 'package:decorated_flutter/src/ui/ui.export.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -270,8 +272,7 @@ class ImageView extends StatelessWidget {
           colorBlendMode: colorBlendMode,
           cacheWidth: _cacheWidth,
           cacheHeight: _cacheHeight,
-          errorBuilder:
-              _errorWidget != null ? (_, __, ___) => _errorWidget : null,
+          errorBuilder: _errorBuilder,
         );
         if (logEnable) L.d('使用Image.file: $_imagePath');
       } else {
@@ -287,8 +288,7 @@ class ImageView extends StatelessWidget {
           scale: scale,
           cacheWidth: _cacheWidth,
           cacheHeight: _cacheHeight,
-          errorBuilder:
-              _errorWidget != null ? (_, __, ___) => _errorWidget : null,
+          errorBuilder: _errorBuilder,
         );
         if (logEnable) L.d('使用Image.asset: $_imagePath');
       }
@@ -319,8 +319,7 @@ class ImageView extends StatelessWidget {
           fit: fit,
           color: _color,
           placeholder: _placeholder != null ? (_, __) => _placeholder : null,
-          errorWidget:
-              _errorWidget != null ? (_, __, ___) => _errorWidget : null,
+          errorWidget: _errorBuilder,
           memCacheWidth: _cacheWidth,
           memCacheHeight: _cacheHeight,
         );
@@ -413,6 +412,16 @@ class ImageView extends StatelessWidget {
   //     },
   //   );
   // }
+
+  Widget _errorBuilder(
+    BuildContext context,
+    dynamic error,
+    dynamic stackTrace,
+  ) {
+    final _errorWidget = errorWidget ?? globalErrorWidget;
+    L.e('显示ImageView发生错误: $error, stacktrace: $stackTrace');
+    return _errorWidget ?? (kReleaseMode ? NIL : ErrorWidget(error));
+  }
 }
 
 extension on String {

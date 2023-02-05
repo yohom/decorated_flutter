@@ -1,3 +1,6 @@
+## 0.44.1+1
+- 优化ImageView的错误处理
+
 ## 0.44.1
 - 优化OptionalNumX
 
