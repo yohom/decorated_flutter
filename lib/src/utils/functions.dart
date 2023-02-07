@@ -60,6 +60,11 @@ Future<String> md5OfFile(
   }
 }
 
+/// 获取md5
+Future<String> md5OfStream(Stream<Uint8List> stream) {
+  return md5.bind(stream).first.then(toString);
+}
+
 /// 关闭键盘
 ///
 /// 这个函数和通过FocusScope.unfocus()的区别是在关闭键盘的同时可以保持焦点
