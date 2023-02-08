@@ -89,7 +89,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialPageRoute<T> {
   final Widget Function(BuildContext)? backgroundBuilder;
 
   /// 是否已经初始化
-  bool _inited = false;
+  bool _isInitialized = false;
 
   @override
   Widget buildPage(
@@ -97,9 +97,9 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialPageRoute<T> {
     Animation<double> animation,
     Animation<double> secondaryAnimation,
   ) {
-    if (onLateinit != null && _bloc != null && !_inited) {
+    if (onLateinit != null && _bloc != null && !_isInitialized) {
       onLateinit!(_bloc!, context);
-      _inited = true;
+      _isInitialized = true;
     }
 
     Widget result = builder(context);
@@ -197,9 +197,9 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialPageRoute<T> {
       if (status == AnimationStatus.completed &&
           onLateinit != null &&
           _bloc != null &&
-          !_inited) {
+          !_isInitialized) {
         onLateinit!(_bloc!, context);
-        _inited = true;
+        _isInitialized = true;
       }
     });
 
