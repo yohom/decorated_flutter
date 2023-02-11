@@ -1,6 +1,6 @@
 name: decorated_flutter
 description: (自家用) Common encapsulation of Flutter includes the implementation of BLoC pattern and other widget combination.
-version: 0.44.1+2
+version: 0.44.2
 homepage: https://github.com/yohom/decorated_flutter
 
 environment:
@@ -14,6 +14,9 @@ dependencies:
     sdk: flutter
   # 注解
   meta: ^1.7.0
+  # 国际化 https://pub.flutter-io.cn/packages/intl
+  intl: ^0.17.0
+  # 网络请求 https://pub.flutter-io.cn/packages/dio
   dio: ^4.0.6
   # kiwi https://pub.flutter-io.cn/packages/kiwi
   kiwi: ^4.0.3
@@ -24,7 +27,7 @@ dependencies:
   # toast https://pub.flutter-io.cn/packages/oktoast
   oktoast: ^3.3.1
   # 日志打印 https://pub.flutter-io.cn/packages/flutter_mxlogger
-  flutter_mxlogger: ^1.2.3
+  flutter_mxlogger: ^1.2.4
   # 获取路径 https://pub.flutter-io.cn/packages/path_provider
   path_provider: ^2.0.11
   # 退出app https://pub.flutter-io.cn/packages/app_minimizer
