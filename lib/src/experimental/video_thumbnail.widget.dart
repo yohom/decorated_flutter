@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:dio/dio.dart';
+import 'package:diox/diox.dart';
 import 'package:flutter/material.dart';
 
 class ThumbnailImage extends StatelessWidget {
