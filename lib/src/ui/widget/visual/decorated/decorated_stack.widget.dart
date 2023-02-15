@@ -39,6 +39,7 @@ class DecoratedStack extends StatelessWidget {
     this.left,
     this.right,
     this.center,
+    this.fill,
     this.sliver = false,
     this.aspectRatio,
     this.childrenZIndex = ZIndex.bottom,
@@ -77,15 +78,16 @@ class DecoratedStack extends StatelessWidget {
 
   final bool expanded;
 
-  final Widget? topLeft;
-  final Widget? topRight;
-  final Widget? bottomLeft;
-  final Widget? bottomRight;
-  final Widget? top;
-  final Widget? bottom;
-  final Widget? left;
-  final Widget? right;
-  final Widget? center;
+  final Widget? topLeft,
+      topRight,
+      bottomLeft,
+      bottomRight,
+      top,
+      bottom,
+      left,
+      right,
+      center,
+      fill;
 
   final StackFit? stackFit;
   final AlignmentGeometry? alignment;
@@ -109,18 +111,36 @@ class DecoratedStack extends StatelessWidget {
       clipBehavior: clipBehavior,
       children: <Widget>[
         if (childrenZIndex == ZIndex.bottom) ...children,
+        // 填满
+        if (fill != null)
+          Positioned(bottom: 0, right: 0, top: 0, left: 0, child: fill!),
+        // 中间
         if (center != null)
-          Positioned(bottom: 0, right: 0, top: 0, left: 0, child: center!),
+          Positioned(
+            bottom: 0,
+            right: 0,
+            top: 0,
+            left: 0,
+            child: Center(child: center!),
+          ),
+        // 左上
         if (topLeft != null) Positioned(top: 0, left: 0, child: topLeft!),
+        // 右上
         if (topRight != null) Positioned(top: 0, right: 0, child: topRight!),
+        // 左下
         if (bottomLeft != null)
           Positioned(bottom: 0, left: 0, child: bottomLeft!),
+        // 右下
         if (bottomRight != null)
           Positioned(bottom: 0, right: 0, child: bottomRight!),
+        // 上
         if (top != null) Positioned(top: 0, left: 0, right: 0, child: top!),
+        // 下
         if (bottom != null)
           Positioned(bottom: 0, right: 0, left: 0, child: bottom!),
+        // 左
         if (left != null) Positioned(bottom: 0, top: 0, left: 0, child: left!),
+        // 右
         if (right != null)
           Positioned(bottom: 0, top: 0, right: 0, child: right!),
         if (childrenZIndex == ZIndex.top) ...children,
