@@ -1,3 +1,7 @@
+## 0.45.1
+- [行为变更] DecoratedStack增加fill, 用于与center区分
+- [样式] 调整showDateDialog取消按钮的样式
+
 ## 0.45.0
 - ~~由于dio倍废弃, 使用diox替换之.~~
 
