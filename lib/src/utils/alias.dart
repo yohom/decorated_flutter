@@ -4,5 +4,6 @@ import 'package:flutter/material.dart';
 typedef ContextCallback = void Function(BuildContext context);
 typedef ContextValueChanged<T> = void Function(BuildContext context, T value);
 typedef InitCallback<T extends BLoC> = void Function(T bloc);
-typedef LateInitCallback<T extends BLoC> = void Function(T bloc, BuildContext);
+typedef LateInitCallback<T extends BLoC> = void Function(
+    T bloc, BuildContext context);
 typedef SearchCallback<T> = bool Function(T, String keyword);
