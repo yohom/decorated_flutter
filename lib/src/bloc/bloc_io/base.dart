@@ -262,6 +262,21 @@ class Mapper<T, R> extends BaseIO<R> {
     return _subject.stream;
   }
 
+  /// 输出Future, [cancelSubscription]决定是否取消订阅
+  ///
+  /// 由于[stream.first]会自动结束流的订阅, 但是又想继续流的话, 就使用这个方法获取Future
+  Future<R> first([bool cancelSubscription = false]) async {
+    if (cancelSubscription) {
+      return stream.first;
+    } else {
+      final completer = Completer<R>();
+      final subscription = stream.listen(completer.complete);
+      final result = await completer.future;
+      subscription.cancel();
+      return result;
+    }
+  }
+
   void pull() {
     _subject.add(_mapper(_upstream.latest));
   }
