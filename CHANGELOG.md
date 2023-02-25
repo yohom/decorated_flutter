@@ -1,3 +1,7 @@
+## 0.45.1+1
+- [整理] LateInitCallback签名优化
+- [功能] Mapper增加first方法
+
 ## 0.45.1
 - [行为变更] DecoratedStack增加fill, 用于与center区分
 - [样式] 调整showDateDialog取消按钮的样式
