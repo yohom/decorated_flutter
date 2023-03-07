@@ -1,4 +1,7 @@
 ## 0.45.1+1
+- [整理] 提升依赖 flutter_mxlogger(1.2.4->1.2.4) kiwi(4.0.3->4.1.0) flutter_svg(2.0.0+1->2.0.2)
+
+## 0.45.1+1
 - [整理] LateInitCallback签名优化
 - [功能] Mapper增加first方法
 
