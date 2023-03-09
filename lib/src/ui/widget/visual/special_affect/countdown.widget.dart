@@ -13,7 +13,7 @@ class Countdown extends StatefulWidget {
 
   final int initialData;
   final Duration interval;
-  final Widget Function(BuildContext, int) builder;
+  final Widget Function(BuildContext context, int count) builder;
   final ContextCallback? onPressed;
   final VoidCallback? onZero;
 
