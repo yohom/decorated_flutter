@@ -19,16 +19,14 @@ extension DurationX on Duration {
 
   int get millisecondPart => inMilliseconds % 1000;
 
+  @Deprecated('使用SDK中自带的方法替换')
   Duration operator ~/(int divider) {
     return Duration(milliseconds: inMilliseconds ~/ divider);
   }
 
+  @Deprecated('使用SDK中自带的方法替换')
   Duration operator /(int divider) {
     return this ~/ divider;
-  }
-
-  Duration operator *(num multiplier) {
-    return Duration(milliseconds: (inMilliseconds * multiplier).toInt());
   }
 
   double percentOf(Duration other) {
