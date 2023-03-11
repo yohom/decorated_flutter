@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 Future<DateTime?> showDateDialog(
@@ -59,7 +60,7 @@ class __DatePickerDialogState extends State<_DatePickerDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final chinese = Platform.localeName.contains('zh');
+    final chinese = kIsWeb ? true : Platform.localeName.contains('zh');
     return DecoratedColumn(
       height: 256 + context.padding.bottom,
       safeArea: const SafeAreaConfig.bottom(),
