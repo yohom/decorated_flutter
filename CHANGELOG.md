@@ -1,4 +1,8 @@
-## 0.45.1+1
+## 0.45.1+3
+- [优化] showDateDialog增加minimumDate
+- [优化] 优化showDateDialog在web端的判断
+
+## 0.45.1+2
 - [整理] 提升依赖 flutter_mxlogger(1.2.4->1.2.4) kiwi(4.0.3->4.1.0) flutter_svg(2.0.0+1->2.0.2)
 
 ## 0.45.1+1
