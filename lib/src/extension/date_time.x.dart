@@ -13,7 +13,7 @@ extension DateTimeX on DateTime {
   }
 
   String format([String format = 'yyyy-MM-dd HH:mm:ss']) {
-    return DateFormat(format).format(this);
+    return DateFormat(format, 'zh').format(this);
   }
 
   bool isSameDay(DateTime other) {
