@@ -2,12 +2,14 @@ import 'dart:io';
 
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 Future<DateTime?> showDateDialog(
   BuildContext context, {
   DateTime? initialDateTime,
   DateTime? maximumDate,
+  DateTime? minimumDate,
   Widget? title,
   CupertinoDatePickerMode mode = CupertinoDatePickerMode.date,
   String? cancelText,
@@ -18,6 +20,7 @@ Future<DateTime?> showDateDialog(
     builder: (context) => _DatePickerDialog(
       initialDateTime: initialDateTime,
       maximumDate: maximumDate,
+      minimumDate: minimumDate,
       title: title,
       mode: mode,
       cancelText: cancelText,
@@ -31,6 +34,7 @@ class _DatePickerDialog extends StatefulWidget {
     Key? key,
     this.initialDateTime,
     this.maximumDate,
+    this.minimumDate,
     this.title,
     this.mode = CupertinoDatePickerMode.date,
     this.cancelText,
@@ -38,7 +42,7 @@ class _DatePickerDialog extends StatefulWidget {
   }) : super(key: key);
 
   final DateTime? initialDateTime;
-  final DateTime? maximumDate;
+  final DateTime? maximumDate, minimumDate;
   final Widget? title;
   final CupertinoDatePickerMode mode;
   final String? cancelText;
@@ -59,7 +63,7 @@ class __DatePickerDialogState extends State<_DatePickerDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final chinese = Platform.localeName.contains('zh');
+    final chinese = kIsWeb ? true : Platform.localeName.contains('zh');
     return DecoratedColumn(
       height: 256 + context.padding.bottom,
       safeArea: const SafeAreaConfig.bottom(),
@@ -87,6 +91,7 @@ class __DatePickerDialogState extends State<_DatePickerDialog> {
           child: CupertinoDatePicker(
             mode: widget.mode,
             maximumDate: widget.maximumDate,
+            minimumDate: widget.minimumDate,
             initialDateTime: _date,
             onDateTimeChanged: (date) {
               L.d('date: $date');
