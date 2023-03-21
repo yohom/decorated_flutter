@@ -1,3 +1,6 @@
+## 0.45.1+4
+- [优化] 优化requireDate的适用范围
+
 ## 0.45.1+3
 - [优化] showDateDialog增加minimumDate
 - [优化] 优化showDateDialog在web端的判断
