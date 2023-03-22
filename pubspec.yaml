@@ -17,7 +17,7 @@ dependencies:
   # 国际化 https://pub.flutter-io.cn/packages/intl
   intl: ^0.17.0
   # 网络请求 https://pub.flutter-io.cn/packages/dio
-  dio: ^4.0.6
+  dio: ">=4.0.6 <6.0.0"
   # kiwi https://pub.flutter-io.cn/packages/kiwi
   kiwi: ^4.1.0
   # rx https://pub.flutter-io.cn/packages/rxdart
