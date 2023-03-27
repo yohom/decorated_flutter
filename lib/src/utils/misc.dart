@@ -19,17 +19,17 @@ dynamic handleError(Object error, [StackTrace? trace]) {
       : Localizations.localeOf(gNavigatorKey.currentContext!);
   final isEnglish = locale?.languageCode == 'en';
   if (error is DioError) {
-    String message = error.message;
+    String? message = error.message;
     switch (error.type) {
       case DioErrorType.cancel:
         message = isEnglish ? error.message : '取消请求';
         break;
       case DioErrorType.sendTimeout:
-      case DioErrorType.connectTimeout:
+      case DioErrorType.connectionTimeout:
       case DioErrorType.receiveTimeout:
         message = isEnglish ? error.message : '网络连接超时，请稍后重试';
         break;
-      case DioErrorType.response:
+      case DioErrorType.badResponse:
         final statusCode = error.response?.statusCode;
         if (statusCode != null) {
           if (statusCode >= 400 && statusCode <= 417) {

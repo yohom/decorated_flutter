@@ -44,15 +44,22 @@ DateTime nextYear([DateTime? date]) {
 ///
 /// 如果解析出错, 就根据[fallback]逻辑构造一个代替时间
 DateTime requireDate(
-  String? dateString, {
+  dynamic raw, {
   DateTime Function()? fallback,
 }) {
   final now = DateTime.now();
-  if (dateString == null) return now;
+  if (raw == null) return now;
 
   DateTime date;
+
   try {
-    final timestamp = int.tryParse(dateString);
+    int? timestamp;
+    if (raw is int) {
+      timestamp = raw;
+    } else if (raw is String) {
+      timestamp = int.tryParse(raw);
+    }
+
     if (timestamp != null) {
       // 先尝试直接按毫秒解析时间戳
       date = DateTime.fromMillisecondsSinceEpoch(timestamp);
@@ -62,11 +69,11 @@ DateTime requireDate(
       }
       return date;
     } else {
-      date = DateTime.tryParse(dateString) ?? now;
+      date = DateTime.tryParse(raw) ?? now;
       return date;
     }
   } catch (e) {
-    L.w('解析日期出错($dateString), 使用当前时间代替, 错误信息: $e');
+    L.w('解析日期出错($raw), 使用当前时间代替, 错误信息: $e');
     return fallback?.call() ?? now;
   }
 }

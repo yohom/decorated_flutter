@@ -1,3 +1,10 @@
+## 0.46.0
+- [依赖][BREAK CHANGE] 提升Dio依赖到5.x
+- [优化] 扩大requireDate适用范围
+
+## 0.45.1+4
+- [优化] 优化requireDate的适用范围
+
 ## 0.45.1+3
 - [优化] showDateDialog增加minimumDate
 - [优化] 优化showDateDialog在web端的判断
