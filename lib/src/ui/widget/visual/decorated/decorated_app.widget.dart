@@ -20,9 +20,10 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
     this.navigatorKey,
     this.navigatorObservers = const [],
     this.title = '',
-    this.listTileTheme,
+    @Deprecated('暂无作用, 直接嵌套ListTileTheme即可') this.listTileTheme,
     this.builder,
     this.debugShowCheckedModeBanner = false,
+    this.onDispose,
   })  : rootBLoC = rootBLoC ?? get(),
         super(key: key);
 
@@ -43,15 +44,13 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   final Widget app;
   final TransitionBuilder? builder;
   final bool debugShowCheckedModeBanner;
+  final VoidCallback? onDispose;
 
   @override
   Widget build(BuildContext context) {
-    Widget result = BLoCProvider<B>(
+    return BLoCProvider<B>(
       bloc: rootBLoC,
-      // onDispose: () {
-      //   // 释放log的定时写日志任务
-      //   L.dispose();
-      // },
+      onDispose: onDispose,
       child: OKToast(
         duration: const Duration(seconds: 3),
         radius: 4,
@@ -80,14 +79,5 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
         ),
       ),
     );
-
-    if (listTileTheme != null) {
-      result = ListTileTheme(
-        data: listTileTheme,
-        child: result,
-      );
-    }
-
-    return result;
   }
 }

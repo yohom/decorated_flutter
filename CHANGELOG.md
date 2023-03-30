@@ -1,3 +1,7 @@
+## 0.46.1
+- [优化] DecoratedApp增加dispose回调
+- [优化] runDecoratedApp的回调前签名优化
+
 ## 0.46.0
 - [依赖][BREAK CHANGE] 提升Dio依赖到5.x
 - [优化] 扩大requireDate适用范围

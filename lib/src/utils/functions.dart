@@ -153,9 +153,9 @@ String toString(Object object) {
 /// 运行app
 Future<void> runDecoratedApp(
   Widget app, {
-  Future<void> Function()? beforeApp,
-  Future<void> Function()? afterApp,
-  Future<void> Function(Object, StackTrace)? onError,
+  FutureOr<void> Function()? beforeApp,
+  FutureOr<void> Function()? afterApp,
+  FutureOr<void> Function(Object, StackTrace)? onError,
   Color? statusBarColor,
   bool zoned = true,
   bool isTest = false,
