@@ -155,7 +155,6 @@ Future<void> runDecoratedApp(
   Widget app, {
   FutureOr<void> Function()? beforeApp,
   FutureOr<void> Function()? afterApp,
-  FutureOr<void> Function()? disposeApp,
   FutureOr<void> Function(Object, StackTrace)? onError,
   Color? statusBarColor,
   bool zoned = true,
