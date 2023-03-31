@@ -23,6 +23,14 @@ extension TextEditingControllerX on TextEditingController {
     }
   }
 
+  /// 设置文字
+  ///
+  /// 跟直接调用.text来设置文字的区别是会自动把光标移动到最后
+  void setText(String text) {
+    this.text = text;
+    selection = TextSelection.collapsed(offset: text.length);
+  }
+
   void backspace() {
     final beforeString = text.substring(0, selection.start);
     final afterString = text.substring(selection.end);

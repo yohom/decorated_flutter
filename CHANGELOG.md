@@ -1,3 +1,8 @@
+## 0.46.2
+- [优化] 增加setText扩展
+- [优化] 新的日志系统(兼顾控制台打印和文件系统日志)
+- [优化] 增加通用接口 ILogger
+
 ## 0.46.1
 - [优化] DecoratedApp增加dispose回调
 - [优化] runDecoratedApp的回调前签名优化
