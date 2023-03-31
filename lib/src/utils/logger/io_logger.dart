@@ -6,11 +6,12 @@ import 'package:flutter_mxlogger/flutter_mxlogger.dart';
 import 'package:talker/talker.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
 
-class Logger {
+class Logger implements ILogger {
   MXLogger? _logger;
   final _talker = Talker(settings: TalkerSettings(enabled: !kReleaseMode));
 
   /// 初始化日志
+  @override
   Future<void> init() async {
     // 文件日志
     if (Platform.isAndroid || Platform.isIOS) {
@@ -26,37 +27,42 @@ class Logger {
   }
 
   /// 日志所在路径
-  Directory get logDir {
-    return _logger == null
-        ? Directory('invalid')
-        : Directory(_logger!.diskcachePath);
+  @override
+  String get logDir {
+    return _logger == null ? 'invalid' : _logger!.diskcachePath;
   }
 
+  @override
   void d(Object content) {
     _logger?.debug(content.toString());
     _talker.debug(content);
   }
 
+  @override
   void w(Object content) {
     _logger?.warn(content.toString());
     _talker.warning(content);
   }
 
+  @override
   void i(Object content) {
     _logger?.info(content.toString());
     _talker.info(content);
   }
 
+  @override
   void e(Object content) {
     _logger?.error(content.toString());
     _talker.error(content);
   }
 
+  @override
   void v(Object content) {
     _logger?.debug(content.toString());
     _talker.verbose(content);
   }
 
+  @override
   Interceptor get dioLogger {
     return TalkerDioLogger(
       talker: _talker,
@@ -70,5 +76,6 @@ class Logger {
     );
   }
 
+  @override
   void dispose() {}
 }
