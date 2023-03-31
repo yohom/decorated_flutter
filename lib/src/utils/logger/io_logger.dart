@@ -1,13 +1,14 @@
 import 'dart:io';
 
 import 'package:decorated_flutter/decorated_flutter.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_mxlogger/flutter_mxlogger.dart';
 import 'package:talker/talker.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
 
 class Logger {
   MXLogger? _logger;
-  final _talker = Talker();
+  final _talker = Talker(settings: TalkerSettings(enabled: !kReleaseMode));
 
   /// 初始化日志
   Future<void> init() async {
@@ -58,6 +59,7 @@ class Logger {
 
   Interceptor get dioLogger {
     return TalkerDioLogger(
+      talker: _talker,
       settings: const TalkerDioLoggerSettings(
         printRequestHeaders: true,
         printResponseHeaders: true,
