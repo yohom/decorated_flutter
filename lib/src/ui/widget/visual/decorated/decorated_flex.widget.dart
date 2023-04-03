@@ -336,9 +336,18 @@ class DecoratedFlex extends StatelessWidget {
       _children = children.map<Widget>((it) => Expanded(child: it)).toList();
     }
 
+    // 如果有reverse, 则对start和end的场景做一下翻转
+    MainAxisAlignment _mainAxisAlignment = mainAxisAlignment;
+    if (reverse == true) {
+      if (_mainAxisAlignment == MainAxisAlignment.start) {
+        _mainAxisAlignment = MainAxisAlignment.end;
+      } else if (_mainAxisAlignment == MainAxisAlignment.end) {
+        _mainAxisAlignment = MainAxisAlignment.start;
+      }
+    }
     Widget result = Flex(
       direction: direction,
-      mainAxisAlignment: mainAxisAlignment,
+      mainAxisAlignment: _mainAxisAlignment,
       mainAxisSize: mainAxisSize,
       crossAxisAlignment: crossAxisAlignment,
       textBaseline: textBaseline,
