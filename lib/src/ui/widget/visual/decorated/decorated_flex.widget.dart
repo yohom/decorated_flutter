@@ -60,6 +60,7 @@ class DecoratedRow extends DecoratedFlex {
     super.enableFeedback,
     super.autofillGroup,
     super.aspectRatio,
+    super.reverse,
     super.children = const [],
   }) : super(direction: Axis.horizontal);
 }
@@ -123,6 +124,7 @@ class DecoratedColumn extends DecoratedFlex {
     super.enableFeedback,
     super.autofillGroup,
     super.aspectRatio,
+    super.reverse,
     super.children = const [],
   }) : super(direction: Axis.vertical);
 }
@@ -186,6 +188,7 @@ class DecoratedFlex extends StatelessWidget {
     this.enableFeedback,
     this.autofillGroup,
     this.aspectRatio,
+    this.reverse,
     this.children = const [],
   }) : super(key: key);
 
@@ -301,15 +304,22 @@ class DecoratedFlex extends StatelessWidget {
 
   final SystemUiOverlayStyle? systemOverlayStyle;
 
+  /// 是否忽略指针事件
   final bool? ignorePointer;
 
   final bool? enableFeedback;
 
+  /// 自动填充组
   final bool? autofillGroup;
 
+  /// 宽高比
   final double? aspectRatio;
 
+  /// 是否带有表单
   final bool? withForm;
+
+  /// 是否反向排列
+  final bool? reverse;
 
   /// 子元素
   final List<Widget> children;
@@ -317,6 +327,10 @@ class DecoratedFlex extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> _children = children;
+
+    if (reverse == true) {
+      _children = _children.reversed.toList();
+    }
 
     if (forceItemSameExtent == true) {
       _children = children.map<Widget>((it) => Expanded(child: it)).toList();
