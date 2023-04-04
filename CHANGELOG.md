@@ -1,3 +1,7 @@
+## 0.46.3
+- [优化] DecoratedFlex增加reverse参数
+- [优化] DecoratedList增加reverse参数
+
 ## 0.46.2
 - [优化] 增加setText扩展
 - [优化] 新的日志系统(兼顾控制台打印和文件系统日志)

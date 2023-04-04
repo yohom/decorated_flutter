@@ -22,6 +22,7 @@ class DecoratedList extends StatelessWidget {
     this.expanded,
     this.decoration,
     this.physics,
+    this.reverse = false,
   })  : _sliver = false,
         separatorBuilder = null,
         super(key: key);
@@ -46,6 +47,7 @@ class DecoratedList extends StatelessWidget {
     this.decoration,
     required this.separatorBuilder,
     this.physics,
+    this.reverse = false,
   })  : assert(itemCount != null),
         assert(separatorBuilder != null),
         _sliver = false,
@@ -75,6 +77,7 @@ class DecoratedList extends StatelessWidget {
         restorationId = null,
         expanded = null,
         physics = null,
+        reverse = false,
         keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
         super(key: key);
 
@@ -96,6 +99,7 @@ class DecoratedList extends StatelessWidget {
   final IndexedWidgetBuilder? separatorBuilder;
   final BoxDecoration? decoration;
   final ScrollPhysics? physics;
+  final bool reverse;
 
   @override
   Widget build(BuildContext context) {
@@ -165,6 +169,7 @@ class DecoratedList extends StatelessWidget {
         shrinkWrap: shrinkWrap,
         itemExtent: itemExtent,
         physics: physics,
+        reverse: reverse,
         scrollDirection: scrollDirection ?? Axis.vertical,
         prototypeItem: prototypeItem,
         addAutomaticKeepAlives: addAutomaticKeepAlives,
@@ -182,6 +187,7 @@ class DecoratedList extends StatelessWidget {
           itemCount: itemCount!,
           shrinkWrap: shrinkWrap,
           physics: physics,
+          reverse: reverse,
           controller: controller,
           scrollDirection: scrollDirection ?? Axis.vertical,
           addAutomaticKeepAlives: addAutomaticKeepAlives,
@@ -197,6 +203,7 @@ class DecoratedList extends StatelessWidget {
           shrinkWrap: shrinkWrap,
           controller: controller,
           physics: physics,
+          reverse: reverse,
           scrollDirection: scrollDirection ?? Axis.vertical,
           itemExtent: itemExtent,
           prototypeItem: prototypeItem,
