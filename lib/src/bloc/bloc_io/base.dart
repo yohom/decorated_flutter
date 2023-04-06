@@ -62,18 +62,18 @@ abstract class BaseIO<T> {
                 ? BehaviorSubject<T>.seeded(seedValue, sync: sync)
                 : BehaviorSubject<T>(sync: sync)
             : PublishSubject<T>(sync: sync) {
-    _subject.listen((data) {
-      latest = data;
-      if (_persistConfig != null && data != null) {
-        final serialized = _persistConfig!.onSerialize(data);
-        assert(isJsonable(serialized), '序列化之后应是jsonable值!');
+    // 处理内存数据
+    _subject.listen(_handleUpdateMemoryData);
+    // 处理持久层数据
+    if (_persistConfig != null) {
+      final debounceTime = _persistConfig!.debounceTime;
+      Stream<T> stream = _subject.stream;
+      if (debounceTime != null) {
+        stream = _subject.debounceTime(debounceTime);
+      }
+      stream.listen(_handleUpdatePersistData);
+    }
 
-        gDecoratedStorage.put(_persistConfig!.key, serialized);
-      }
-      if (_printLog) {
-        L.i('当前$semantics latest: $latest');
-      }
-    });
     // 如果是BehaviorSubject, 则检查是否有持久化下来的数据, 有则发射
     if (isBehavior) {
       if (_persistConfig != null) {
@@ -200,6 +200,25 @@ abstract class BaseIO<T> {
   @override
   String toString() {
     return 'Output{latest: $latest, seedValue: $_seedValue, semantics: $_semantics, subject: $_subject}';
+  }
+
+  /// 更新内存数据
+  void _handleUpdateMemoryData(T data) {
+    latest = data;
+    if (_printLog) {
+      L.i('当前$_semantics latest: $latest');
+    }
+  }
+
+  /// 更新持久层数据
+  void _handleUpdatePersistData(T data) {
+    final _shadow = _persistConfig;
+    if (_shadow != null && data != null) {
+      final serialized = _shadow.onSerialize(data);
+      assert(isJsonable(serialized), '序列化之后应是jsonable值!');
+
+      gDecoratedStorage.put(_shadow.key, serialized);
+    }
   }
 }
 
