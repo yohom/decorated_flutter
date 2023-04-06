@@ -19,8 +19,8 @@ typedef PageFetchCallback<R, T> = Future<R> Function(int page, T arg);
 typedef MergeListCallback<T> = List<T> Function(
     List<T> current, List<T> newList);
 typedef NoMoreDataCallback<T> = bool Function(List<T> newList);
-typedef SerializeCallback<T> = dynamic Function(T);
-typedef DeserializeCallback<T> = T Function(dynamic);
+typedef SerializeCallback<T> = dynamic Function(T data);
+typedef DeserializeCallback<T> = T Function(dynamic json);
 
 abstract class BaseIO<T> {
   BaseIO({
