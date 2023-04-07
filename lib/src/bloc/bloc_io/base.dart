@@ -215,7 +215,10 @@ abstract class BaseIO<T> {
     final _shadow = _persistConfig;
     if (_shadow != null && data != null) {
       final serialized = _shadow.onSerialize(data);
-      assert(isJsonable(serialized), '序列化之后应是jsonable值! 原始值: $data');
+      assert(
+        isJsonable(serialized),
+        '序列化之后应是jsonable值! 原始值: $data, 序列化后: $serialized',
+      );
 
       gDecoratedStorage.put(_shadow.key, serialized);
     }
