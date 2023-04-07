@@ -1,3 +1,8 @@
+## 0.46.4
+- [优化] PersistConfig增加debounceTime(可以用于在频繁写入的场景, 减少写入频率)
+- [优化] 优化回调签名, 增加变量名
+- [优化] 增加withFileLogger开关
+
 ## 0.46.3
 - [优化] DecoratedFlex增加reverse参数
 - [优化] DecoratedList增加reverse参数

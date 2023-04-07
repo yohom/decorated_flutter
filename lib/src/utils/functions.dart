@@ -159,11 +159,12 @@ Future<void> runDecoratedApp(
   Color? statusBarColor,
   bool zoned = true,
   bool isTest = false,
+  bool withFileLogger = true,
 }) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // 初始化日志系统
-  await L.init();
+  if (withFileLogger) await L.init();
 
   if (statusBarColor != null) {
     SystemChrome.setSystemUIOverlayStyle(
