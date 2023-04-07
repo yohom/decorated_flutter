@@ -164,7 +164,7 @@ Future<void> runDecoratedApp(
   WidgetsFlutterBinding.ensureInitialized();
 
   // 初始化日志系统
-  if (withFileLogger) await L.init();
+  await L.init(withFileLogger: withFileLogger);
 
   if (statusBarColor != null) {
     SystemChrome.setSystemUIOverlayStyle(

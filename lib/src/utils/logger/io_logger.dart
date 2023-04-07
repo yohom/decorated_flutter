@@ -12,17 +12,19 @@ class Logger implements ILogger {
 
   /// 初始化日志
   @override
-  Future<void> init() async {
+  Future<void> init({bool withFileLogger = true}) async {
     // 文件日志
-    if (Platform.isAndroid || Platform.isIOS) {
-      _logger = await MXLogger.initialize(
-        nameSpace: "me.yohom.decorated_flutter",
-        storagePolicy: MXStoragePolicyType.yyyy_MM_dd,
-      );
-      _logger!.setMaxDiskAge(60 * 60 * 24 * 7); // one week
-      _logger!.setMaxDiskSize(1024 * 1024 * 10); // 10M
-      _logger!.setFileLevel(1);
-      _logger!.setConsoleEnable(false); // 控制台打印一律使用talker
+    if (withFileLogger) {
+      if (Platform.isAndroid || Platform.isIOS) {
+        _logger = await MXLogger.initialize(
+          nameSpace: "me.yohom.decorated_flutter",
+          storagePolicy: MXStoragePolicyType.yyyy_MM_dd,
+        );
+        _logger!.setMaxDiskAge(60 * 60 * 24 * 7); // one week
+        _logger!.setMaxDiskSize(1024 * 1024 * 10); // 10M
+        _logger!.setFileLevel(1);
+        _logger!.setConsoleEnable(false); // 控制台打印一律使用talker
+      }
     }
   }
 
