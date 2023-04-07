@@ -47,6 +47,15 @@ class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
   }
 
   @override
+  void didUpdateWidget(covariant BLoCProvider<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.bloc != oldWidget.bloc) {
+      widget.init?.call(widget.bloc);
+      widget.bloc.init();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return _BLoCProviderInherited(bloc: widget.bloc, child: widget.child);
   }
@@ -72,5 +81,7 @@ class _BLoCProviderInherited<T> extends InheritedWidget {
   final T bloc;
 
   @override
-  bool updateShouldNotify(_BLoCProviderInherited oldWidget) => false;
+  bool updateShouldNotify(_BLoCProviderInherited oldWidget) {
+    return bloc != oldWidget.bloc;
+  }
 }
