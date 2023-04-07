@@ -6,7 +6,7 @@ final Logger L = Logger();
 
 abstract class ILogger {
   /// 初始化日志
-  Future<void> init();
+  Future<void> init({bool withFileLogger = true});
 
   /// 日志所在路径
   String get logDir;

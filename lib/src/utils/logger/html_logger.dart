@@ -9,8 +9,8 @@ class Logger implements ILogger {
 
   /// 初始化日志
   @override
-  Future<void> init() async {
-    // do thing
+  Future<void> init({bool withFileLogger = true}) async {
+    // do nothing
   }
 
   /// 日志所在路径
