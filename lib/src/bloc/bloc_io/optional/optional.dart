@@ -42,6 +42,21 @@ class OptionalOutput<T, ARG> extends Output<T?, ARG> {
   }
 }
 
+/// 转发上游流的业务单元
+class OptionalStreamOutput<T> extends StreamOutput<T?> {
+  OptionalStreamOutput(
+    super.source, {
+    super.seedValue,
+    required super.semantics,
+    super.sync = true,
+    super.printLog = true,
+    super.isBehavior = true,
+    super.onReset,
+    super.persistConfig,
+    super.skipError,
+  });
+}
+
 /// 既可以输入又可以输出的事件
 class OptionalIO<T> extends IO<T?> {
   OptionalIO({
