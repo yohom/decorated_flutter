@@ -99,6 +99,45 @@ class ListOutput<T, ARG> extends Output<List<T>, ARG> with ListMixin<T> {
   }
 }
 
+/// 内部数据类型是[List]的输出业务单元
+class ListStreamOutput<T> extends StreamOutput<List<T>> with ListMixin<T> {
+  ListStreamOutput(
+    super.source, {
+    required super.seedValue,
+    required super.semantics,
+    super.sync = true,
+    super.printLog = true,
+    super.isBehavior = true,
+    super.onReset,
+    super.persistConfig,
+    super.skipError,
+  });
+
+  // static OptionalStreamOutput<T> optional<T>(
+  //   final Stream<T> source, {
+  //   T? seedValue,
+  //   required String semantics,
+  //   bool sync = true,
+  //   bool printLog = true,
+  //   bool isBehavior = true,
+  //   T? Function()? onReset,
+  //   PersistConfig<T?>? persistConfig,
+  //   bool skipError = false,
+  // }) {
+  //   return OptionalStreamOutput<T>(
+  //     source,
+  //     semantics: semantics,
+  //     seedValue: seedValue,
+  //     sync: sync,
+  //     isBehavior: isBehavior,
+  //     printLog: printLog,
+  //     onReset: onReset,
+  //     persistConfig: persistConfig,
+  //     skipError: skipError,
+  //   );
+  // }
+}
+
 /// 内部数据类型是[List]的输入输出业务单元
 class ListIO<T> extends IO<List<T>> with ListMixin<T> {
   ListIO({

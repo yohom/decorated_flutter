@@ -67,7 +67,7 @@ class StreamOutput<T> extends BaseIO<T> with OutputMixin<T, void> {
   }) {
     _subject.addStream(source);
     stream = _subject.stream;
-    _fetch = (_) => Future.value();
+    _fetch = (_) => throw 'StreamOutput不应调用update方法!\n${StackTrace.current}';
   }
 
   static OptionalStreamOutput<T> optional<T>(
@@ -165,8 +165,9 @@ class IO<T> extends BaseIO<T> with InputMixin<T>, OutputMixin<T, dynamic> {
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
     if (isSame != null) _isSame = isSame;
-    _fetch =
-        fetch ?? (_) => throw '[$semantics]在未设置fetch回调时调用了update方法, 请检查逻辑是否正确!';
+    _fetch = fetch ??
+        (_) =>
+            throw '[$semantics]在未设置fetch回调时调用了update方法, 请检查逻辑是否正确!\n${StackTrace.current}';
   }
 
   static OptionalIO<T> optional<T>({
