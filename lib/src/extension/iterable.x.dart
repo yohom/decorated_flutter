@@ -174,8 +174,10 @@ extension ListX<T> on List<T> {
 }
 
 extension SelectableListX<T extends Selectable> on List<T> {
+  /// 获取被选中的元素
   T? get selected => find((it) => it.isSelected);
 
+  /// 选择第一个元素
   List<T> selectFirst() {
     if (this.isNotEmpty) {
       first.isSelected == true;
@@ -183,9 +185,19 @@ extension SelectableListX<T extends Selectable> on List<T> {
     return this;
   }
 
+  /// 选中指定元素
   void select(T target) {
     for (final item in this) {
       item.isSelected = (item == target);
+    }
+  }
+
+  /// 被选中的元素的索引
+  int get selectedIndex {
+    if (selected == null) {
+      return -1;
+    } else {
+      return indexOf(selected!);
     }
   }
 }

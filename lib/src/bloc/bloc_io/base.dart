@@ -215,7 +215,10 @@ abstract class BaseIO<T> {
     final _shadow = _persistConfig;
     if (_shadow != null && data != null) {
       final serialized = _shadow.onSerialize(data);
-      assert(isJsonable(serialized), '序列化之后应是jsonable值!');
+      assert(
+        isJsonable(serialized),
+        '序列化之后应是jsonable值! 原始值: $data, 序列化后: $serialized',
+      );
 
       gDecoratedStorage.put(_shadow.key, serialized);
     }
@@ -298,6 +301,48 @@ class Mapper<T, R> extends BaseIO<R> {
 
   void pull() {
     _subject.add(_mapper(_upstream.latest));
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
+}
+
+/// 对某个io进行变换
+class StreamMapper<T, R> extends BaseIO<R> {
+  StreamMapper({
+    required Stream<T> upstream,
+    required String semantics,
+    required R Function(T) mapper,
+    required R seedValue,
+  }) : super(
+          seedValue: seedValue,
+          semantics: semantics,
+        ) {
+    _subscription = upstream.map(mapper).listen(_subject.add);
+  }
+
+  late final StreamSubscription _subscription;
+
+  Stream<R> get stream {
+    return _subject.stream;
+  }
+
+  /// 输出Future, [cancelSubscription]决定是否取消订阅
+  ///
+  /// 由于[stream.first]会自动结束流的订阅, 但是又想继续流的话, 就使用这个方法获取Future
+  Future<R?> first([bool cancelSubscription = false]) async {
+    if (cancelSubscription) {
+      return stream.first;
+    } else {
+      final completer = Completer<R>();
+      final subscription = stream.listen(completer.complete);
+      final result = await completer.future;
+      subscription.cancel();
+      return result;
+    }
   }
 
   @override

@@ -52,6 +52,49 @@ class Input<T> extends BaseIO<T> with InputMixin<T> {
   }
 }
 
+/// 转发上游流的业务单元
+class StreamOutput<T> extends BaseIO<T> with OutputMixin<T, void> {
+  StreamOutput(
+    final Stream<T> source, {
+    required super.seedValue,
+    required super.semantics,
+    super.sync = true,
+    super.printLog = true,
+    super.isBehavior = true,
+    super.onReset,
+    super.persistConfig,
+    super.skipError,
+  }) {
+    _subject.addStream(source);
+    stream = _subject.stream;
+    _fetch = (_) => throw 'StreamOutput不应调用update方法!\n${StackTrace.current}';
+  }
+
+  static OptionalStreamOutput<T> optional<T>(
+    final Stream<T> source, {
+    T? seedValue,
+    required String semantics,
+    bool sync = true,
+    bool printLog = true,
+    bool isBehavior = true,
+    T? Function()? onReset,
+    PersistConfig<T?>? persistConfig,
+    bool skipError = false,
+  }) {
+    return OptionalStreamOutput<T>(
+      source,
+      semantics: semantics,
+      seedValue: seedValue,
+      sync: sync,
+      isBehavior: isBehavior,
+      printLog: printLog,
+      onReset: onReset,
+      persistConfig: persistConfig,
+      skipError: skipError,
+    );
+  }
+}
+
 /// 只输出数据的业务单元
 class Output<T, ARG> extends BaseIO<T> with OutputMixin<T, ARG> {
   Output({
@@ -122,8 +165,9 @@ class IO<T> extends BaseIO<T> with InputMixin<T>, OutputMixin<T, dynamic> {
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
     if (isSame != null) _isSame = isSame;
-    _fetch =
-        fetch ?? (_) => throw '[$semantics]在未设置fetch回调时调用了update方法, 请检查逻辑是否正确!';
+    _fetch = fetch ??
+        (_) =>
+            throw '[$semantics]在未设置fetch回调时调用了update方法, 请检查逻辑是否正确!\n${StackTrace.current}';
   }
 
   static OptionalIO<T> optional<T>({
