@@ -224,6 +224,8 @@ class Subscriber<T> extends StatelessWidget {
     this.aspectRatio,
     this.decoration,
     this.animationConfig,
+    this.padding,
+    this.margin,
   }) : super(key: key);
 
   /// 流
@@ -261,6 +263,8 @@ class Subscriber<T> extends StatelessWidget {
   final Decoration? decoration;
 
   final AnimationConfig? animationConfig;
+
+  final EdgeInsets? padding, margin;
 
   @override
   Widget build(BuildContext context) {
@@ -312,6 +316,8 @@ class Subscriber<T> extends StatelessWidget {
             width: width,
             height: height,
             decoration: decoration,
+            padding: padding,
+            margin: margin,
             child: result,
           );
         }
