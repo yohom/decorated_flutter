@@ -54,22 +54,6 @@ class Input<T> extends BaseIO<T> with InputMixin<T> {
 
 /// 转发上游流的业务单元
 class StreamOutput<T> extends BaseIO<T> with OutputMixin<T, void> {
-  StreamOutput(
-    final Stream<T> source, {
-    required super.seedValue,
-    required super.semantics,
-    super.sync = true,
-    super.printLog = true,
-    super.isBehavior = true,
-    super.onReset,
-    super.persistConfig,
-    super.skipError,
-  }) {
-    _subject.addStream(source);
-    stream = _subject.stream;
-    _fetch = (_) => throw 'StreamOutput不应调用update方法!\n${StackTrace.current}';
-  }
-
   static OptionalStreamOutput<T> optional<T>(
     final Stream<T> source, {
     T? seedValue,
@@ -92,6 +76,30 @@ class StreamOutput<T> extends BaseIO<T> with OutputMixin<T, void> {
       persistConfig: persistConfig,
       skipError: skipError,
     );
+  }
+
+  StreamOutput(
+    final Stream<T> source, {
+    required super.seedValue,
+    required super.semantics,
+    super.sync = true,
+    super.printLog = true,
+    super.isBehavior = true,
+    super.onReset,
+    super.persistConfig,
+    super.skipError,
+  }) {
+    _sourceSubscription = source.listen(_subject.add);
+    stream = _subject.stream;
+    _fetch = (_) => throw 'StreamOutput不应调用update方法!\n${StackTrace.current}';
+  }
+
+  late final StreamSubscription<T> _sourceSubscription;
+
+  @override
+  void dispose() {
+    _sourceSubscription.cancel();
+    super.dispose();
   }
 }
 
