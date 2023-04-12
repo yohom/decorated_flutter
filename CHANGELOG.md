@@ -1,3 +1,9 @@
+## 0.46.7
+- [优化] DecoratedText增加isSelectable
+- [优化] enhance: DecoratedFlex使用InkWell实现波纹
+- [优化] enhance: Subscriber增加padding, margin
+- [修复] fix: 修正StreamOutput的数据转发问题
+
 ## 0.46.5
 - [重构] 去除mxlogger
 
