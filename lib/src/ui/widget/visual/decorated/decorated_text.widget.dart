@@ -38,6 +38,7 @@ class DecoratedText extends StatelessWidget {
     this.textExpanded = false,
     this.textFlexible = false,
     this.widgetPadding,
+    this.isSelectable = false,
     this.alignment,
   })  : _stream = null,
         initialData = null,
@@ -79,6 +80,7 @@ class DecoratedText extends StatelessWidget {
     this.textExpanded = false,
     this.textFlexible = false,
     this.widgetPadding,
+    this.isSelectable = false,
     this.alignment,
   })  : _data = null,
         super(key: key);
@@ -125,35 +127,38 @@ class DecoratedText extends StatelessWidget {
   final bool textFlexible;
   final double? widgetPadding;
   final Alignment? alignment;
+  final bool isSelectable;
 
   @override
   Widget build(BuildContext context) {
-    final _overflow =
-        maxLines == 1 ? (overflow ?? TextOverflow.ellipsis) : overflow;
+    Widget _buildText(String data) {
+      return isSelectable
+          ? SelectableText(
+              data,
+              maxLines: maxLines,
+              style: style ?? DefaultTextStyle.of(context).style,
+              strutStyle: strutStyle,
+              textAlign: textAlign,
+            )
+          : Text(
+              data,
+              maxLines: maxLines,
+              style: style ?? DefaultTextStyle.of(context).style,
+              strutStyle: strutStyle,
+              textAlign: textAlign,
+              overflow: maxLines == 1
+                  ? (overflow ?? TextOverflow.ellipsis)
+                  : overflow,
+              softWrap: softWrap,
+            );
+    }
+
     Widget result = _data != null
-        ? Text(
-            _data!,
-            maxLines: maxLines,
-            style: style ?? DefaultTextStyle.of(context).style,
-            strutStyle: strutStyle,
-            textAlign: textAlign,
-            overflow: _overflow,
-            softWrap: softWrap,
-          )
+        ? _buildText(_data!)
         : StreamBuilder<String>(
             stream: _stream!,
             initialData: initialData,
-            builder: (context, snapshot) {
-              return Text(
-                snapshot.data ?? '',
-                maxLines: maxLines,
-                style: style ?? DefaultTextStyle.of(context).style,
-                strutStyle: strutStyle,
-                textAlign: textAlign,
-                overflow: _overflow,
-                softWrap: softWrap,
-              );
-            },
+            builder: (_, snapshot) => _buildText(snapshot.data ?? ''),
           );
 
     if (rightWidget != null || leftWidget != null) {
