@@ -437,7 +437,7 @@ class DecoratedFlex extends StatelessWidget {
     final borderRadius = () {
       final shadow = decoration;
       if (shadow is BoxDecoration) {
-        return shadow.borderRadius as BorderRadius;
+        return shadow.borderRadius as BorderRadius?;
       } else {
         return null;
       }
