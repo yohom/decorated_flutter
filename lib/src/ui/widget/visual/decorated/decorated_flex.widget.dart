@@ -382,14 +382,6 @@ class DecoratedFlex extends StatelessWidget {
       ]);
     }
 
-    if (material || elevation != null) {
-      result = Material(
-        elevation: elevation ?? 0,
-        color: color,
-        child: result,
-      );
-    }
-
     if (padding != null ||
         margin != null ||
         width != null ||
@@ -434,10 +426,28 @@ class DecoratedFlex extends StatelessWidget {
       }
     }
 
+    if (widthFactor != null || heightFactor != null) {
+      result = FractionallySizedBox(
+        widthFactor: widthFactor,
+        heightFactor: heightFactor,
+        child: result,
+      );
+    }
+
+    final borderRadius = () {
+      final shadow = decoration;
+      if (shadow is BoxDecoration) {
+        return shadow.borderRadius as BorderRadius;
+      } else {
+        return null;
+      }
+    }();
     if (enableFeedback == true) {
-      result = RawMaterialButton(
-        padding: EdgeInsets.zero,
-        onPressed: () => onPressed != null ? onPressed!(context) : doNothing,
+      result = InkWell(
+        borderRadius: borderRadius,
+        onTap: onPressed != null ? () => onPressed!(context) : null,
+        onLongPress:
+            onLongPressed == null ? null : () => onLongPressed!(context),
         child: result,
       );
     } else if (onPressed != null ||
@@ -458,10 +468,12 @@ class DecoratedFlex extends StatelessWidget {
       );
     }
 
-    if (widthFactor != null || heightFactor != null) {
-      result = FractionallySizedBox(
-        widthFactor: widthFactor,
-        heightFactor: heightFactor,
+    // material要放在InkWell的上方, 否则没有波纹
+    if (enableFeedback == true || material || elevation != null) {
+      result = Material(
+        borderRadius: borderRadius,
+        elevation: elevation ?? 0,
+        color: color,
         child: result,
       );
     }
