@@ -17,7 +17,11 @@ class AutoCloseKeyboard extends StatelessWidget {
       return GestureDetector(
         onTap: () {
           if (config.clearFocus) {
-            FocusScope.of(context).unfocus();
+            // 参考 https://github.com/flutter/flutter/issues/54277#issuecomment-867119458
+            final FocusScopeNode currentScope = FocusScope.of(context);
+            if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+              FocusManager.instance.primaryFocus?.unfocus();
+            }
           } else {
             hideKeyboard();
           }
