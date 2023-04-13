@@ -68,7 +68,6 @@ class DecoratedList extends StatelessWidget {
     this.addSemanticIndexes = true,
     this.itemExtent,
     this.prototypeItem,
-    this.decoration,
   })  : _sliver = true,
         shrinkWrap = false,
         scrollDirection = null,
@@ -78,6 +77,7 @@ class DecoratedList extends StatelessWidget {
         expanded = null,
         physics = null,
         reverse = false,
+        decoration = null,
         keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
         super(key: key);
 
