@@ -1,3 +1,11 @@
+## 0.46.8
+- [优化] 优化AutoCloseKeyboard的效果
+- [优化] DecoratedList.sliver不应该设置decorated
+- [优化] 提升依赖 dio: 5.1.0 -> 5.1.1 flutter_svg: 2.0.2 -> 2.0.5
+- [优化] 简化是否是手机号的判断, 只判断是否为11位
+- [功能] 增加ImageViewProvider
+- [功能] 增加DashedLine
+
 ## 0.46.7
 - [优化] DecoratedText增加isSelectable
 - [优化] enhance: DecoratedFlex使用InkWell实现波纹
