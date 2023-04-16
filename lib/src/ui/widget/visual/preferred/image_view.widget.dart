@@ -11,6 +11,41 @@ import '../../../../utils/utils.export.dart';
 
 typedef LoadingProgress = void Function(double progress, List<int> data);
 
+class ImageViewProvider extends ImageProvider {
+  ImageViewProvider(String uri)
+      : _delegate = uri.startsWith('http')
+            ? CachedNetworkImageProvider(uri)
+            : (uri.startsWith('/') || uri.startsWith('file://'))
+                ? FileImage(File(uri)) as ImageProvider
+                : AssetImage(uri);
+
+  final ImageProvider _delegate;
+
+  @override
+  Future<Object> obtainKey(ImageConfiguration configuration) {
+    return _delegate.obtainKey(configuration);
+  }
+
+  @override
+  @protected
+  ImageStream createStream(ImageConfiguration configuration) {
+    return _delegate.createStream(configuration);
+  }
+
+  @override
+  Future<ImageCacheStatus?> obtainCacheStatus({
+    required ImageConfiguration configuration,
+    ImageErrorListener? handleError,
+  }) {
+    return _delegate.obtainCacheStatus(configuration: configuration);
+  }
+
+  @override
+  ImageStreamCompleter loadBuffer(Object key, DecoderBufferCallback decode) {
+    return _delegate.loadBuffer(key, decode);
+  }
+}
+
 class ImageView extends StatelessWidget {
   static Widget? globalErrorWidget;
   static Widget? globalPlaceholder;
