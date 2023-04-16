@@ -24,13 +24,13 @@ extension StringX on String {
     return result.clamp(min, max).toString();
   }
 
-  bool get isMobile {
-    return isNotEmpty && kMobileRegex.hasMatch(this);
-  }
+  @Deprecated('使用isPhoneNumber代替, 仅仅是命名优化')
+  bool get isMobile => isPhoneNumber;
+  bool get isPhoneNumber => length == 11;
 
-  bool get isNotMobile {
-    return !isMobile;
-  }
+  @Deprecated('使用isNotPhoneNumber代替, 仅仅是命名优化')
+  bool get isNotMobile => !isPhoneNumber;
+  bool get isNotPhoneNumber => !isPhoneNumber;
 
   bool get isNumber {
     return RegExp(r'^\d+$').hasMatch(this);
