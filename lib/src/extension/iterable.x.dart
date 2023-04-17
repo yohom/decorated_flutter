@@ -36,6 +36,14 @@ extension IterableX<T> on Iterable<T> {
 
   T? get lastOrNull => getOrNull(length - 1);
 
+  T? lastWhereOrNull(bool Function(T element) test) {
+    try {
+      return lastWhere((element) => false);
+    } catch (_) {
+      return null;
+    }
+  }
+
   T? getOrNull(int? index) {
     if (index == null) return null;
     try {
