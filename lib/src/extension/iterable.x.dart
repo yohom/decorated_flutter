@@ -44,6 +44,14 @@ extension IterableX<T> on Iterable<T> {
     }
   }
 
+  T? firstWhereOrNull(bool Function(T element) test) {
+    try {
+      return firstWhere(test);
+    } catch (_) {
+      return null;
+    }
+  }
+
   T? getOrNull(int? index) {
     if (index == null) return null;
     try {
