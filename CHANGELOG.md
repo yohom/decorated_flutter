@@ -1,3 +1,6 @@
+## 0.46.9+1
+- [优化] release模式不打印网络日志
+
 ## 0.46.9
 - [优化] valueFor支持列表获取
 - [优化] 增加lastWhereOrNull, firstWhereOrNull
