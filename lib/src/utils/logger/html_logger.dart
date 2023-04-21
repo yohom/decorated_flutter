@@ -57,13 +57,15 @@ class Logger implements ILogger {
 
   @override
   Interceptor get dioLogger {
-    return LogInterceptor(
-      error: true,
-      request: true,
-      requestBody: true,
-      requestHeader: true,
-      responseBody: true,
-      responseHeader: true,
-    );
+    return kReleaseMode
+        ? const Interceptor()
+        : LogInterceptor(
+            error: true,
+            request: true,
+            requestBody: true,
+            requestHeader: true,
+            responseBody: true,
+            responseHeader: true,
+          );
   }
 }
