@@ -12,4 +12,15 @@ void main() {
       'd',
     );
   });
+  test('keyPath获取列表值', () {
+    expect(
+      {
+        'a': {
+          'b': {'c': 'd'},
+          'c': [1]
+        }
+      }.valueFor(keyPath: 'a.c.0'),
+      1,
+    );
+  });
 }

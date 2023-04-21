@@ -7,6 +7,7 @@ class AnimatedVisibility extends StatelessWidget {
     required this.visible,
     required this.duration,
     this.reverseDuration,
+    this.margin,
     this.alignment = Alignment.topCenter,
     this.clipBehavior = Clip.hardEdge,
     this.curve = Curves.ease,
@@ -19,11 +20,12 @@ class AnimatedVisibility extends StatelessWidget {
   final Alignment alignment;
   final Clip clipBehavior;
   final Curve curve;
+  final EdgeInsets? margin;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSize(
+    Widget result = AnimatedSize(
       duration: duration,
       reverseDuration: reverseDuration,
       alignment: alignment,
@@ -31,5 +33,11 @@ class AnimatedVisibility extends StatelessWidget {
       clipBehavior: clipBehavior,
       child: visible ? child : NIL,
     );
+
+    if (margin != null) {
+      result = Padding(padding: margin!, child: result);
+    }
+
+    return result;
   }
 }

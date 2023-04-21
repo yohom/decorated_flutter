@@ -12,9 +12,16 @@ import '../../../../utils/utils.export.dart';
 typedef LoadingProgress = void Function(double progress, List<int> data);
 
 class ImageViewProvider extends ImageProvider {
-  ImageViewProvider(String uri)
-      : _delegate = uri.startsWith('http')
-            ? CachedNetworkImageProvider(uri)
+  ImageViewProvider(
+    String uri, {
+    int? maxHeight,
+    int? maxWidth,
+  }) : _delegate = uri.startsWith('http')
+            ? CachedNetworkImageProvider(
+                uri,
+                maxHeight: maxHeight,
+                maxWidth: maxHeight,
+              )
             : (uri.startsWith('/') || uri.startsWith('file://'))
                 ? FileImage(File(uri)) as ImageProvider
                 : AssetImage(uri);

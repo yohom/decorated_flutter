@@ -47,6 +47,8 @@ dynamic handleError(Object error, [StackTrace? trace]) {
     toast(error);
   } else if (error is SocketException) {
     toast(isEnglish ? error.message : '网络不给力，请稍后重试 $_kSocketException');
+  } else if (error is HttpException) {
+    toast(isEnglish ? error.message : '网络不给力，请稍后重试 $_kSocketException');
   } else if (error is BizException) {
     toast(error.message);
   } else if (error is PlatformException) {
