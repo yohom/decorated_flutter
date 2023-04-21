@@ -63,16 +63,18 @@ class Logger implements ILogger {
 
   @override
   Interceptor get dioLogger {
-    return TalkerDioLogger(
-      talker: _talker,
-      settings: const TalkerDioLoggerSettings(
-        printRequestHeaders: true,
-        printResponseHeaders: true,
-        printResponseMessage: true,
-        printRequestData: true,
-        printResponseData: true,
-      ),
-    );
+    return kReleaseMode
+        ? const Interceptor()
+        : TalkerDioLogger(
+            talker: _talker,
+            settings: const TalkerDioLoggerSettings(
+              printRequestHeaders: true,
+              printResponseHeaders: true,
+              printResponseMessage: true,
+              printRequestData: true,
+              printResponseData: true,
+            ),
+          );
   }
 
   @override
