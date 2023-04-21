@@ -1,3 +1,10 @@
+## 0.46.9
+- [优化] valueFor支持列表获取
+- [优化] 增加lastWhereOrNull, firstWhereOrNull
+- [优化] 优化AnimatedVisibility
+- [优化] 增加对HttpException的处理
+- [功能] 增加maxHeight和maxWidth
+
 ## 0.46.8
 - [优化] 优化AutoCloseKeyboard的效果
 - [优化] DecoratedList.sliver不应该设置decorated
