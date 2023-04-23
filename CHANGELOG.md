@@ -1,3 +1,8 @@
+## 0.46.10
+- [优化] 增加onGenerateInitialRoutes
+- [优化] 增加onUnknownRoute
+- [优化] 增加pushRoute/replaceRoute/pushRemoveUntil
+
 ## 0.46.9+1
 - [优化] release模式不打印网络日志
 
