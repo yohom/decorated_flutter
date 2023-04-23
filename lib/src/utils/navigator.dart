@@ -10,7 +10,7 @@ const _kNoNav = '未找到Navigator, 请先使用gNavigator设置为MaterialApp�
 Future<T?> pushRoute<T>(
   String path, {
   Map<String, String?>? query,
-  Object? body,
+  Map<String, Object?>? body,
   BuildContext? context,
 }) {
   final navigator = gNavigatorKey.currentState ?? context?.navigator;
@@ -23,7 +23,7 @@ Future<T?> pushRoute<T>(
 Future<T?> replaceRoute<T extends Object?, TO extends Object?>(
   String path, {
   Map<String, String?>? query,
-  Object? body,
+  Map<String, Object?>? body,
   BuildContext? context,
 }) {
   final navigator = gNavigatorKey.currentState ?? context?.navigator;
@@ -38,7 +38,7 @@ Future<T?> pushRemoveUntil<T extends Object?, TO extends Object?>(
   String path,
   RoutePredicate predicate, {
   Map<String, String?>? query,
-  Object? body,
+  Map<String, Object?>? body,
   BuildContext? context,
 }) {
   final navigator = gNavigatorKey.currentState ?? context?.navigator;
