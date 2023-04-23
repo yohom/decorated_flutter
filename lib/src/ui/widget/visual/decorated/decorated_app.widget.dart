@@ -10,6 +10,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
     @Deprecated('暂无作用') this.preventTextScale = false,
     this.onGenerateTitle,
     this.onGenerateRoute,
+    this.onGenerateInitialRoutes,
     this.theme,
     this.darkTheme,
     this.themeMode,
@@ -33,6 +34,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   final ThemeData? theme, darkTheme;
   final ThemeMode? themeMode;
   final RouteFactory? onGenerateRoute;
+  final InitialRouteListFactory? onGenerateInitialRoutes;
   final ScrollBehavior? scrollBehavior;
   final Iterable<LocalizationsDelegate<dynamic>> localizationsDelegates;
   final Locale? locale;
@@ -66,6 +68,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
           themeMode: themeMode,
           scrollBehavior: scrollBehavior,
           onGenerateRoute: onGenerateRoute,
+          onGenerateInitialRoutes: onGenerateInitialRoutes,
           debugShowCheckedModeBanner: debugShowCheckedModeBanner,
           localizationsDelegates: {
             ...localizationsDelegates,
