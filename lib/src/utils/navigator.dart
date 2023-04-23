@@ -9,7 +9,7 @@ const _kNoNav = '未找到Navigator, 请先使用gNavigator设置为MaterialApp�
 /// [body]可以为任意对象, 但是不能在不同会话之间保持(比如web端的刷新)
 Future<T?> pushRoute<T>(
   String path, {
-  Map<String, String>? query,
+  Map<String, String?>? query,
   Object? body,
   BuildContext? context,
 }) {
@@ -22,7 +22,7 @@ Future<T?> pushRoute<T>(
 /// 替换一个路由
 Future<T?> replaceRoute<T extends Object?, TO extends Object?>(
   String path, {
-  Map<String, String>? query,
+  Map<String, String?>? query,
   Object? body,
   BuildContext? context,
 }) {
@@ -37,7 +37,7 @@ Future<T?> replaceRoute<T extends Object?, TO extends Object?>(
 Future<T?> pushRemoveUntil<T extends Object?, TO extends Object?>(
   String path,
   RoutePredicate predicate, {
-  Map<String, String>? query,
+  Map<String, String?>? query,
   Object? body,
   BuildContext? context,
 }) {
@@ -51,11 +51,14 @@ Future<T?> pushRemoveUntil<T extends Object?, TO extends Object?>(
   );
 }
 
-String _routeName(String path, Map<String, String>? query) {
+String _routeName(String path, Map<String, String?>? query) {
   final routeName = StringBuffer(path);
   if (query != null) {
     routeName.write('?');
-    routeName.write(query.entries.map((e) => '${e.key}=${e.value}').join('&'));
+    routeName.write(query.entries
+        .where((e) => e.value != null)
+        .map((e) => '${e.key}=${e.value}')
+        .join('&'));
   }
 
   return routeName.toString();
