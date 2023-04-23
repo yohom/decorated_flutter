@@ -11,6 +11,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
     this.onGenerateTitle,
     this.onGenerateRoute,
     this.onGenerateInitialRoutes,
+    this.onUnknownRoute,
     this.theme,
     this.darkTheme,
     this.themeMode,
@@ -35,6 +36,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   final ThemeMode? themeMode;
   final RouteFactory? onGenerateRoute;
   final InitialRouteListFactory? onGenerateInitialRoutes;
+  final RouteFactory? onUnknownRoute;
   final ScrollBehavior? scrollBehavior;
   final Iterable<LocalizationsDelegate<dynamic>> localizationsDelegates;
   final Locale? locale;
@@ -69,6 +71,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
           scrollBehavior: scrollBehavior,
           onGenerateRoute: onGenerateRoute,
           onGenerateInitialRoutes: onGenerateInitialRoutes,
+          onUnknownRoute: onUnknownRoute,
           debugShowCheckedModeBanner: debugShowCheckedModeBanner,
           localizationsDelegates: {
             ...localizationsDelegates,
