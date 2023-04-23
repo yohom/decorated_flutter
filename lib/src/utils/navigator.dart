@@ -3,6 +3,9 @@ import 'package:flutter/widgets.dart';
 
 const _kNoNav = '未找到Navigator, 请先使用gNavigator设置为MaterialApp的navigatorKey!';
 
+// 目前发现使用这些函数, 在web上还是不能实现query string的显示, 一旦加载query string就会消失
+// 所以暂时先不用这些函数
+
 /// push一个路由
 ///
 /// [query]是一个只有字符串键值对的Map, 直接拼接在路径后面, 这样可以在web环境下保持状态
@@ -67,5 +70,6 @@ String _routeName(String path, Map<String, String?>? query) {
         .join('&'));
   }
 
+  L.i('合成跳转路由: $routeName');
   return routeName.toString();
 }
