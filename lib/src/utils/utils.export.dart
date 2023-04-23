@@ -6,6 +6,7 @@ export 'faker/faker.dart';
 export 'functions.dart';
 export 'logger/logger.dart';
 export 'misc.dart';
+export 'navigator.dart';
 export 'objects.dart';
 export 'time.dart';
 export 'value.dart';

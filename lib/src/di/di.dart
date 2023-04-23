@@ -28,8 +28,8 @@ T? get<T>([String? name]) {
   try {
     final T result = _container.resolve(name);
     return result;
-  } catch (e) {
-    L.w('我警告你啊, 没找到你要的对象, 返回null了, 你看看你是不是代码逻辑有问题');
+  } catch (e, s) {
+    L.w('我警告你啊, 没找到你要的 $T($name) 对象, 返回null了, 你看看你是不是代码逻辑有问题\n$s');
     return null;
   }
 }
