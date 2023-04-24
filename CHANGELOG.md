@@ -1,3 +1,8 @@
+## 0.46.11
+- [优化] 优化capture方法
+- [优化] 调整RepaintBoundary的顺序
+- [优化] getTmpFile增加后缀
+
 ## 0.46.10
 - [优化] 增加onGenerateInitialRoutes
 - [优化] 增加onUnknownRoute
