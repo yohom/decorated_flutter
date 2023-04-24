@@ -289,11 +289,11 @@ String filesize(dynamic size, [int round = 2]) {
 }
 
 /// 写入一个临时文件
-Future<File?> getTmpFile(Uint8List? bytes) async {
+Future<File?> getTmpFile(Uint8List? bytes, {String ext = ''}) async {
   if (bytes == null) return null;
 
   final tmpDir = await getTemporaryDirectory();
-  final file = File('${tmpDir.path}/${const Uuid().v4()}');
+  final file = File('${tmpDir.path}/${const Uuid().v4()}$ext');
   await file.writeAsBytes(bytes);
   return file;
 }
