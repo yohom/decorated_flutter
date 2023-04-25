@@ -12,6 +12,7 @@ class AnimatedVisibility extends StatelessWidget {
     this.clipBehavior = Clip.hardEdge,
     this.curve = Curves.ease,
     required this.child,
+    this.placeholder = NIL,
   }) : visibleStream = null;
 
   const AnimatedVisibility.reactive(
@@ -25,6 +26,7 @@ class AnimatedVisibility extends StatelessWidget {
     this.clipBehavior = Clip.hardEdge,
     this.curve = Curves.ease,
     required this.child,
+    this.placeholder = NIL,
   }) : visible = initialData;
 
   final bool visible;
@@ -36,6 +38,7 @@ class AnimatedVisibility extends StatelessWidget {
   final Curve curve;
   final EdgeInsets? margin;
   final Widget child;
+  final Widget placeholder;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +55,7 @@ class AnimatedVisibility extends StatelessWidget {
             alignment: alignment,
             curve: curve,
             clipBehavior: clipBehavior,
-            child: snapshot.data == true ? child : NIL,
+            child: snapshot.data == true ? child : placeholder,
           );
         },
       );
@@ -63,7 +66,7 @@ class AnimatedVisibility extends StatelessWidget {
         alignment: alignment,
         curve: curve,
         clipBehavior: clipBehavior,
-        child: visible ? child : NIL,
+        child: visible ? child : placeholder,
       );
     }
 
