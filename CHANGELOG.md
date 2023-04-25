@@ -1,3 +1,7 @@
+## 0.46.12
+- [优化] 增加AnimatedVisibility.reactive
+- [优化] AnimatedVisibility增加placeholder
+
 ## 0.46.11
 - [优化] 优化capture方法
 - [优化] 调整RepaintBoundary的顺序
