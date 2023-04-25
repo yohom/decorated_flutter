@@ -15,3 +15,8 @@ mixin Selectable {
     return isSelected;
   }
 }
+
+/// 可持久化
+///
+/// 仅仅是标记
+typedef PersistSelectable = Selectable;
