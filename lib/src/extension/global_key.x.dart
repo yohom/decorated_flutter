@@ -1,6 +1,6 @@
-import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -9,10 +9,14 @@ extension GlobalKeyX on GlobalKey {
     final box = (currentContext?.findRenderObject() as RenderRepaintBoundary?);
     if (box == null) return null;
 
-    int attempts = 0;
-    while (box.debugNeedsPaint && attempts < 10) {
-      await Future.delayed(const Duration(milliseconds: 16));
-      attempts++;
+    if (kDebugMode) {
+      int attempts = 0;
+      while (box.debugNeedsPaint && attempts < 10) {
+        await Future.delayed(const Duration(milliseconds: 16));
+        attempts++;
+      }
+    } else {
+      await Future.delayed(const Duration(milliseconds: 32));
     }
 
     return box

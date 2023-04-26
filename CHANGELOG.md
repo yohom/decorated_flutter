@@ -1,3 +1,7 @@
+## 0.46.13
+- [优化] 增加PersistSelectable
+- [修复] profile和release模式不检查debugNeedsPaint
+
 ## 0.46.12
 - [优化] 增加AnimatedVisibility.reactive
 - [优化] AnimatedVisibility增加placeholder
