@@ -1,3 +1,8 @@
+## 0.46.14
+- [优化] 增加popUntilAny
+- [优化] toast增加backgroundColor
+- [优化] handleError默认toast红色背景
+
 ## 0.46.13
 - [优化] 增加PersistSelectable
 - [修复] profile和release模式不检查debugNeedsPaint

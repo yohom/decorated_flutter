@@ -42,22 +42,34 @@ dynamic handleError(Object error, [StackTrace? trace]) {
       default:
         message = isEnglish ? error.message : '网络不给力，请稍后重试 $_kDioOther';
     }
-    toast(message);
+    toast(message, backgroundColor: Colors.red);
   } else if (error is String) {
-    toast(error);
+    toast(error, backgroundColor: Colors.red);
   } else if (error is SocketException) {
-    toast(isEnglish ? error.message : '网络不给力，请稍后重试 $_kSocketException');
+    toast(
+      isEnglish ? error.message : '网络不给力，请稍后重试 $_kSocketException',
+      backgroundColor: Colors.red,
+    );
   } else if (error is HttpException) {
-    toast(isEnglish ? error.message : '网络不给力，请稍后重试 $_kSocketException');
+    toast(
+      isEnglish ? error.message : '网络不给力，请稍后重试 $_kSocketException',
+      backgroundColor: Colors.red,
+    );
   } else if (error is BizException) {
     toast(error.message);
   } else if (error is PlatformException) {
-    toast('${error.message ?? error.toString()} ${error.code}');
+    toast(
+      '${error.message ?? error.toString()} ${error.code}',
+      backgroundColor: Colors.red,
+    );
   } else {
     if (handleCustomError != null) {
       handleCustomError!(error);
     } else {
-      toast(isEnglish ? 'Unknown Error' : '遇到未知错误 $error');
+      toast(
+        isEnglish ? 'Unknown Error' : '遇到未知错误 $error',
+        backgroundColor: Colors.red,
+      );
     }
   }
   // catchError要求一个和Future一样类型的返回值, 但是这里无法提供一个通用的, 只能返回null了
