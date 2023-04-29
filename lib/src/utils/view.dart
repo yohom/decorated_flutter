@@ -12,6 +12,7 @@ void toast(
   bool dismissOtherToast = true,
   TextAlign textAlign = TextAlign.center,
   Duration? duration,
+  Color? backgroundColor,
   bool error = false,
 }) {
   if (isNotEmpty(message)) {
@@ -19,6 +20,7 @@ void toast(
       message!,
       position: position,
       radius: radius,
+      backgroundColor: backgroundColor,
       duration: duration,
       textPadding: padding,
       textStyle: textStyle,
