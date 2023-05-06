@@ -171,6 +171,8 @@ abstract class BaseIO<T> {
         assert(isJsonable(serialized), '序列化之后应是jsonable值!');
 
         gDecoratedStorage.put(_persistConfig!.key, serialized);
+      } else {
+        gDecoratedStorage.delete(_persistConfig!.key);
       }
     }
   }
