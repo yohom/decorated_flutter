@@ -4,6 +4,7 @@ import 'dart:math' as math;
 import 'package:decorated_flutter/src/misc/misc.export.dart';
 import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -18,6 +19,7 @@ dynamic handleError(Object error, [StackTrace? trace]) {
       ? null
       : Localizations.localeOf(gNavigatorKey.currentContext!);
   final isEnglish = locale?.languageCode == 'en';
+  const color = CupertinoColors.systemRed;
   if (error is DioError) {
     String? message = error.message;
     switch (error.type) {
@@ -42,25 +44,25 @@ dynamic handleError(Object error, [StackTrace? trace]) {
       default:
         message = isEnglish ? error.message : '网络不给力，请稍后重试 $_kDioOther';
     }
-    toast(message, backgroundColor: Colors.red);
+    toast(message, backgroundColor: color);
   } else if (error is String) {
-    toast(error, backgroundColor: Colors.red);
+    toast(error, backgroundColor: color);
   } else if (error is SocketException) {
     toast(
       isEnglish ? error.message : '网络不给力，请稍后重试 $_kSocketException',
-      backgroundColor: Colors.red,
+      backgroundColor: color,
     );
   } else if (error is HttpException) {
     toast(
       isEnglish ? error.message : '网络不给力，请稍后重试 $_kSocketException',
-      backgroundColor: Colors.red,
+      backgroundColor: color,
     );
   } else if (error is BizException) {
     toast(error.message);
   } else if (error is PlatformException) {
     toast(
       '${error.message ?? error.toString()} ${error.code}',
-      backgroundColor: Colors.red,
+      backgroundColor: color,
     );
   } else {
     if (handleCustomError != null) {
@@ -68,7 +70,7 @@ dynamic handleError(Object error, [StackTrace? trace]) {
     } else {
       toast(
         isEnglish ? 'Unknown Error' : '遇到未知错误 $error',
-        backgroundColor: Colors.red,
+        backgroundColor: color,
       );
     }
   }
