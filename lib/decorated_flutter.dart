@@ -11,6 +11,7 @@ export 'package:rxdart/rxdart.dart';
 
 export 'src/annotation/annotation.export.dart';
 export 'src/bloc/bloc.export.dart';
+export 'src/deprecated.dart';
 export 'src/di/di.dart';
 // export 'src/experimental/experimental.export.dart';
 export 'src/extension/extension.export.dart';
