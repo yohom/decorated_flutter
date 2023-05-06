@@ -5,7 +5,6 @@ export 'package:dio/dio.dart';
 export 'package:intl/intl.dart';
 export 'package:meta/meta.dart';
 export 'package:oktoast/oktoast.dart';
-export 'package:package_info_plus/package_info_plus.dart';
 export 'package:path_provider/path_provider.dart';
 export 'package:rxdart/rxdart.dart';
 
