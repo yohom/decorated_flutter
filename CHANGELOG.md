@@ -1,3 +1,6 @@
+## 0.46.14+3
+- [整理] 去除package_info
+
 ## 0.46.14+2
 - [整理] 集中管理deprecated
 - [优化] 增加DecoratedDialogRoute
