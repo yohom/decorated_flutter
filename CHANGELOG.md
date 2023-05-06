@@ -1,3 +1,6 @@
+## 0.46.14+1
+- [修复] _resetValue为null时, 删除对应key
+
 ## 0.46.14
 - [优化] 增加popUntilAny
 - [优化] toast增加backgroundColor
