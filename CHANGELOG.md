@@ -1,3 +1,8 @@
+## 0.46.14+2
+- [整理] 集中管理deprecated
+- [优化] 增加DecoratedDialogRoute
+- [优化] 错误toast背景色调整
+
 ## 0.46.14+1
 - [修复] _resetValue为null时, 删除对应key
 
