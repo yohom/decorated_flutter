@@ -23,6 +23,7 @@ class DecoratedRow extends DecoratedFlex {
     super.onPressed,
     super.onLongPressed,
     super.onDoubleTap,
+    super.onSecondaryTap,
     super.onVerticalDragStart,
     super.onVerticalDragEnd,
     super.onHorizontalDragEnd,
@@ -85,6 +86,7 @@ class DecoratedColumn extends DecoratedFlex {
     super.textBaseline,
     super.onPressed,
     super.onLongPressed,
+    super.onSecondaryTap,
     super.onDoubleTap,
     super.onVerticalDragStart,
     super.onVerticalDragEnd,
@@ -189,6 +191,7 @@ class DecoratedFlex extends StatelessWidget {
     this.autofillGroup,
     this.aspectRatio,
     this.reverse,
+    this.onSecondaryTap,
     this.children = const [],
   }) : super(key: key);
 
@@ -219,6 +222,7 @@ class DecoratedFlex extends StatelessWidget {
   final ContextCallback? onPressed;
   final ContextCallback? onLongPressed;
   final ContextCallback? onDoubleTap;
+  final ContextCallback? onSecondaryTap;
   final GestureDragStartCallback? onVerticalDragStart;
   final GestureDragEndCallback? onVerticalDragEnd;
   final GestureDragEndCallback? onHorizontalDragEnd;
@@ -439,6 +443,7 @@ class DecoratedFlex extends StatelessWidget {
       }
     }();
     if (enableFeedback == true) {
+      if (onSecondaryTap != null) L.w('enableFeedback模式下不支持onSecondaryTap!');
       result = InkWell(
         borderRadius: borderRadius,
         onTap: onPressed != null ? () => onPressed!(context) : null,
@@ -450,6 +455,7 @@ class DecoratedFlex extends StatelessWidget {
         onLongPressed != null ||
         onVerticalDragEnd != null ||
         onHorizontalDragEnd != null ||
+        onSecondaryTap != null ||
         onDoubleTap != null) {
       result = GestureDetector(
         behavior: behavior ?? HitTestBehavior.opaque,
@@ -459,6 +465,8 @@ class DecoratedFlex extends StatelessWidget {
         onVerticalDragEnd: onVerticalDragEnd,
         onVerticalDragStart: onVerticalDragStart,
         onHorizontalDragEnd: onHorizontalDragEnd,
+        onSecondaryTap:
+            onSecondaryTap == null ? null : () => onSecondaryTap!(context),
         onDoubleTap: onDoubleTap == null ? null : () => onDoubleTap!(context),
         child: result,
       );

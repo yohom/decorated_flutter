@@ -1,4 +1,5 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -13,7 +14,8 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialPageRoute<T> {
     this.onLateinit,
     this.animate = true,
     this.withForm = false,
-    this.withLocalNavigator = false,
+    @Deprecated('使用localNavigatorConfig代替') this.withLocalNavigator = false,
+    this.localNavigatorConfig,
     this.tabControllerConfig,
     this.onDisposed,
     this.onWillPop,
@@ -61,6 +63,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialPageRoute<T> {
 
   /// 是否局部navigator
   final bool withLocalNavigator;
+  final LocalNavigatorConfig? localNavigatorConfig;
 
   /// 是否使用[PrimaryScrollController]
   final PrimaryScrollControllerConfig? primaryScrollControllerConfig;
@@ -103,7 +106,19 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialPageRoute<T> {
 
     Widget result = builder(context);
 
-    if (withLocalNavigator) {
+    if (localNavigatorConfig != null) {
+      final tempResult = result;
+      result = Theme(
+        data: Theme.of(context)
+            .copyWith(platform: localNavigatorConfig!.targetPlatform),
+        child: CupertinoTabView(
+          builder: (context) {
+            return tempResult;
+          },
+          onGenerateRoute: localNavigatorConfig!.onGenerateRoute,
+        ),
+      );
+    } else if (withLocalNavigator) {
       final tempResult = result;
       result = LocalNavigator(builder: (_) => tempResult);
     }
@@ -230,7 +245,8 @@ class DecoratedDialogRoute<B extends BLoC, T> extends DialogRoute<T> {
     this.onLateinit,
     this.animate = true,
     this.withForm = false,
-    this.withLocalNavigator = false,
+    @Deprecated('使用localNavigatorConfig代替') this.withLocalNavigator = false,
+    this.localNavigatorConfig,
     this.tabControllerConfig,
     this.onDisposed,
     this.onWillPop,
@@ -280,7 +296,9 @@ class DecoratedDialogRoute<B extends BLoC, T> extends DialogRoute<T> {
   final bool withForm;
 
   /// 是否局部navigator
+  @Deprecated('使用localNavigatorConfig代替')
   final bool withLocalNavigator;
+  final LocalNavigatorConfig? localNavigatorConfig;
 
   /// 是否使用[PrimaryScrollController]
   final PrimaryScrollControllerConfig? primaryScrollControllerConfig;
@@ -323,7 +341,19 @@ class DecoratedDialogRoute<B extends BLoC, T> extends DialogRoute<T> {
 
     Widget result = super.buildPage(context, animation, secondaryAnimation);
 
-    if (withLocalNavigator) {
+    if (localNavigatorConfig != null) {
+      final tempResult = result;
+      result = Theme(
+        data: Theme.of(context)
+            .copyWith(platform: localNavigatorConfig!.targetPlatform),
+        child: CupertinoTabView(
+          builder: (context) {
+            return tempResult;
+          },
+          onGenerateRoute: localNavigatorConfig!.onGenerateRoute,
+        ),
+      );
+    } else if (withLocalNavigator) {
       final tempResult = result;
       result = LocalNavigator(builder: (_) => tempResult);
     }

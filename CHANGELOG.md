@@ -1,3 +1,7 @@
+## 0.46.14+4
+- [优化] 增加localNavigatorConfig
+- [优化] 增加onSecondaryTap
+
 ## 0.46.14+3
 - [整理] 去除package_info
 
