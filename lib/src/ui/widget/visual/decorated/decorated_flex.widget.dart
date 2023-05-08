@@ -450,6 +450,7 @@ class DecoratedFlex extends StatelessWidget {
       if (onSecondaryTap != null) L.w('enableFeedback模式下不支持onSecondaryTap!');
       result = InkWell(
         borderRadius: borderRadius,
+        splashFactory: NoSplash.splashFactory,
         onTap: onPressed != null ? () => onPressed!(context) : null,
         onLongPress:
             onLongPressed == null ? null : () => onLongPressed!(context),
