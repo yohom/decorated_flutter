@@ -1,3 +1,8 @@
+## 0.46.15
+- [优化] 增加onSecondaryTapDown
+- [优化] DecoratedFlex默认NoSplash.splashFactory
+- [优化] 适配Flutter3.10
+
 ## 0.46.14+4
 - [优化] 增加localNavigatorConfig
 - [优化] 增加onSecondaryTap
