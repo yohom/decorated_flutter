@@ -1,3 +1,6 @@
+## 0.46.15+1
+- [优化] 调整sdk范围
+
 ## 0.46.15
 - [优化] 增加onSecondaryTapDown
 - [优化] DecoratedFlex默认NoSplash.splashFactory
