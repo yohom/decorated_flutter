@@ -151,8 +151,8 @@ String toString(Object object) {
 }
 
 /// 运行app
-Future<void> runDecoratedApp(
-  Widget app, {
+Future<void> runDecoratedApp({
+  required FutureOr<void> Function() appRunner,
   FutureOr<void> Function()? beforeApp,
   FutureOr<void> Function()? afterApp,
   FutureOr<void> Function(Object, StackTrace)? onError,
@@ -185,7 +185,7 @@ Future<void> runDecoratedApp(
   if (!isTest) {
     if (zoned) {
       runZonedGuarded<void>(
-        () => runApp(app),
+        appRunner,
         (e, s) {
           if (onError != null) {
             onError.call(e, s);
@@ -195,7 +195,7 @@ Future<void> runDecoratedApp(
         },
       );
     } else {
-      runApp(app);
+      appRunner();
     }
   }
 
