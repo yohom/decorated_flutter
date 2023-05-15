@@ -1,3 +1,6 @@
+## 0.47.0
+- [优化] [break change] 调整runDecoratedApp为callback形式
+
 ## 0.46.15+1
 - [优化] 调整sdk范围
 
