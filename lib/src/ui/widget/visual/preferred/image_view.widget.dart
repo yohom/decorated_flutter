@@ -275,7 +275,6 @@ class ImageView extends StatelessWidget {
     final _cacheWidth = cacheSize ?? cacheWidth;
     final _cacheHeight = cacheSize ?? cacheHeight;
     final _placeholder = placeholder ?? globalPlaceholder;
-    final _errorWidget = errorWidget ?? globalErrorWidget;
 
     Widget result;
     // 本地图片
