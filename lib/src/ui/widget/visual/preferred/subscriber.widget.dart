@@ -223,6 +223,8 @@ class Subscriber<T> extends StatelessWidget {
     this.height,
     this.aspectRatio,
     this.decoration,
+    this.onErrorTapped,
+    this.onEmptyTapped,
     this.animationConfig,
     this.padding,
     this.margin,
@@ -260,6 +262,12 @@ class Subscriber<T> extends StatelessWidget {
   /// 宽高
   final double? width, height, aspectRatio;
 
+  /// 默认错误Widget被点击
+  final ValueChanged<dynamic>? onErrorTapped;
+
+  /// 默认空Widget被点击
+  final VoidCallback? onEmptyTapped;
+
   final Decoration? decoration;
 
   final AnimationConfig? animationConfig;
@@ -275,13 +283,20 @@ class Subscriber<T> extends StatelessWidget {
         SnapshotType snapshotType;
         Widget? result;
         if (snapshot.hasError) {
-          L.e('Subscriber出现错误: ${snapshot.error}, 调用栈:\n ${snapshot.stackTrace}');
+          final error = snapshot.error!;
+          L.e('Subscriber出现错误: $error, 调用栈:\n ${snapshot.stackTrace}');
           if (errorPlaceholderBuilder != null) {
-            result ??= errorPlaceholderBuilder!(context, snapshot.error!);
+            result ??= errorPlaceholderBuilder!(context, error);
           } else {
-            result ??=
-                _defaultErrorPlaceholder?.call(context, snapshot.error!) ??
-                    const ErrorPlaceholder();
+            result ??= (_defaultErrorPlaceholder?.call(context, error) ??
+                const ErrorPlaceholder());
+          }
+
+          if (onErrorTapped != null) {
+            result = GestureDetector(
+              onTap: () => onErrorTapped!(error),
+              child: result,
+            );
           }
 
           snapshotType = SnapshotType.error;
@@ -292,6 +307,10 @@ class Subscriber<T> extends StatelessWidget {
             result ??= emptyPlaceholder ??
                 _defaultEmptyPlaceholder ??
                 const EmptyPlaceholder();
+
+            if (onEmptyTapped != null) {
+              result = GestureDetector(onTap: onEmptyTapped, child: result);
+            }
 
             snapshotType = SnapshotType.empty;
           } else {
