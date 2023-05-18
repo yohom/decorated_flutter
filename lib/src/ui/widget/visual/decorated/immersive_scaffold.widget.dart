@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 /// 使用场景为比较长的滚动视图, 向上滚动一段距离后, 显示(渐显)一个header
 class ImmersiveScrollable extends StatefulWidget {
   const ImmersiveScrollable({
-    Key? key,
+    super.key,
     required this.header,
     required this.body,
     this.fadeExtent = 200,
-  }) : super(key: key);
+  });
 
   /// 头部
   ///

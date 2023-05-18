@@ -9,7 +9,7 @@ enum ZIndex {
 
 class DecoratedStack extends StatelessWidget {
   const DecoratedStack({
-    Key? key,
+    super.key,
     this.padding,
     this.margin,
     this.decoration,
@@ -50,7 +50,7 @@ class DecoratedStack extends StatelessWidget {
     this.visible,
     this.systemUiOverlayStyle,
     this.children = const [],
-  }) : super(key: key);
+  });
 
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;

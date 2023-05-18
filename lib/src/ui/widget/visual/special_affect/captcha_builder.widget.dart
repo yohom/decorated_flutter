@@ -28,7 +28,7 @@ class CaptchaBuilder extends StatefulWidget {
   }
 
   const CaptchaBuilder({
-    Key? key,
+    super.key,
     required this.stateIO,
     this.initValue = 60,
     this.initBuilder = _defaultInitBuilder,
@@ -37,7 +37,7 @@ class CaptchaBuilder extends StatefulWidget {
     required this.onFetchCaptcha,
     this.width,
     this.height,
-  }) : super(key: key);
+  });
 
   final IO<CaptchaState> stateIO;
   final int initValue;

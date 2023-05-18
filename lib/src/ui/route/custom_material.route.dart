@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 class CustomMaterialRoute<T> extends PageRoute<T> {
   CustomMaterialRoute({
     required this.builder,
-    RouteSettings? settings,
+    super.settings,
     this.maintainState = true,
     this.duration = const Duration(milliseconds: 300),
-    bool fullscreenDialog = false,
-  }) : super(settings: settings, fullscreenDialog: fullscreenDialog) {
+    super.fullscreenDialog,
+  }) {
     // ignore: prefer_asserts_in_initializer_lists , https://github.com/dart-lang/sdk/issues/31223
     assert(opaque);
   }

@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 /// 请求(或其他耗资源操作).
 class DebouncedTextFormField extends StatefulWidget {
   const DebouncedTextFormField({
-    Key? key,
+    super.key,
     this.onChanged,
     this.interval = const Duration(milliseconds: 500),
     this.controller,
@@ -32,8 +32,7 @@ class DebouncedTextFormField extends StatefulWidget {
     this.strutStyle,
   })  : assert(maxLines > 0),
         assert(maxLength == null || maxLength > 0),
-        keyboardType = maxLines == 1 ? keyboardType : TextInputType.multiline,
-        super(key: key);
+        keyboardType = maxLines == 1 ? keyboardType : TextInputType.multiline;
 
   /// change触发方法
   final ValueChanged<String>? onChanged;

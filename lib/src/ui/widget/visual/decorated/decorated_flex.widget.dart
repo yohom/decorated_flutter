@@ -135,7 +135,7 @@ class DecoratedColumn extends DecoratedFlex {
 
 class DecoratedFlex extends StatelessWidget {
   const DecoratedFlex({
-    Key? key,
+    super.key,
     this.padding,
     this.margin,
     this.color,
@@ -196,7 +196,7 @@ class DecoratedFlex extends StatelessWidget {
     this.aspectRatio,
     this.reverse,
     this.children = const [],
-  }) : super(key: key);
+  });
 
   //region Container
   final EdgeInsets? padding;

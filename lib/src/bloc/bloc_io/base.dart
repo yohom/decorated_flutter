@@ -229,11 +229,9 @@ abstract class BaseIO<T> {
 
 /// 没有数据, 只发射信号的IO
 class Signal extends IO<dynamic> {
-  Signal({required String semantics, bool isBehavior = false})
+  Signal({required super.semantics, super.isBehavior = false})
       : super(
           seedValue: null,
-          semantics: semantics,
-          isBehavior: isBehavior,
           fetch: (_) => throw '不能在 [$semantics] Signal中调用update方法',
         );
 
@@ -264,14 +262,13 @@ class Signal extends IO<dynamic> {
 class Mapper<T, R> extends BaseIO<R> {
   Mapper({
     required BaseIO<T> upstream,
-    required String semantics,
+    required super.semantics,
     required R Function(T) mapper,
     R? seedValue,
   })  : _upstream = upstream,
         _mapper = mapper,
         super(
           seedValue: seedValue ?? mapper(upstream._seedValue),
-          semantics: semantics,
         ) {
     _subscription = upstream._subject.map(mapper).listen(_subject.add);
   }
@@ -316,13 +313,10 @@ class Mapper<T, R> extends BaseIO<R> {
 class StreamMapper<T, R> extends BaseIO<R> {
   StreamMapper({
     required Stream<T> upstream,
-    required String semantics,
+    required super.semantics,
     required R Function(T) mapper,
-    required R seedValue,
-  }) : super(
-          seedValue: seedValue,
-          semantics: semantics,
-        ) {
+    required super.seedValue,
+  }) {
     _subscription = upstream.map(mapper).listen(_subject.add);
   }
 

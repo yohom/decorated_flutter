@@ -3,31 +3,20 @@ part of '../base.dart';
 /// 只接收int类型数据的IO
 class IntIO extends IO<int> with IntMixin {
   IntIO({
-    required int seedValue,
-    required String semantics,
-    bool sync = true,
-    bool isBehavior = true,
-    bool acceptEmpty = true,
-    bool isDistinct = false,
-    bool printLog = true,
+    required super.seedValue,
+    required super.semantics,
+    super.sync,
+    super.isBehavior,
+    super.acceptEmpty,
+    super.isDistinct,
+    super.printLog,
     int? min,
     int? max,
     int? remainder,
-    FetchCallback<int, dynamic>? fetch,
-    int Function()? onReset,
-    PersistConfig<int>? persistConfig,
-  }) : super(
-          seedValue: seedValue,
-          semantics: semantics,
-          sync: sync,
-          isBehavior: isBehavior,
-          acceptEmpty: acceptEmpty,
-          isDistinct: isDistinct,
-          fetch: fetch,
-          printLog: printLog,
-          onReset: onReset,
-          persistConfig: persistConfig,
-        ) {
+    super.fetch,
+    super.onReset,
+    super.persistConfig,
+  }) {
     _min = min;
     _max = max;
     _remainder = remainder;
@@ -37,29 +26,19 @@ class IntIO extends IO<int> with IntMixin {
 /// 只接收int类型数据的Input
 class IntInput extends Input<int> with IntMixin {
   IntInput({
-    required int seedValue,
-    required String semantics,
-    bool sync = true,
-    bool isBehavior = true,
-    bool acceptEmpty = true,
-    bool isDistinct = false,
+    required super.seedValue,
+    required super.semantics,
+    super.sync,
+    super.isBehavior,
+    super.acceptEmpty,
+    super.isDistinct,
     int? min,
     int? max,
     int? remainder,
-    bool printLog = true,
-    int Function()? onReset,
-    PersistConfig<int>? persistConfig,
-  }) : super(
-          seedValue: seedValue,
-          semantics: semantics,
-          sync: sync,
-          isBehavior: isBehavior,
-          acceptEmpty: acceptEmpty,
-          isDistinct: isDistinct,
-          printLog: printLog,
-          onReset: onReset,
-          persistConfig: persistConfig,
-        ) {
+    super.printLog,
+    super.onReset,
+    super.persistConfig,
+  }) {
     _min = min;
     _max = max;
     _remainder = remainder;

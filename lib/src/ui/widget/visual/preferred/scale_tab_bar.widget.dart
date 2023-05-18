@@ -12,7 +12,7 @@ const double _kTextAndIconTabHeight = 72.0;
 
 class _TabStyle extends AnimatedWidget {
   const _TabStyle({
-    Key? key,
+    super.key,
     required Animation<double> animation,
     required this.selected,
     required this.labelColor,
@@ -20,7 +20,7 @@ class _TabStyle extends AnimatedWidget {
     required this.labelStyle,
     required this.unselectedLabelStyle,
     required this.child,
-  }) : super(key: key, listenable: animation);
+  }) : super(listenable: animation);
 
   final TextStyle? labelStyle;
   final TextStyle? unselectedLabelStyle;
@@ -87,23 +87,15 @@ typedef _LayoutCallback = void Function(
 
 class _TabLabelBarRenderer extends RenderFlex {
   _TabLabelBarRenderer({
-    List<RenderBox>? children,
-    required Axis direction,
-    required MainAxisSize mainAxisSize,
-    required MainAxisAlignment mainAxisAlignment,
-    required CrossAxisAlignment crossAxisAlignment,
-    required TextDirection textDirection,
-    required VerticalDirection verticalDirection,
+    super.children,
+    required super.direction,
+    required super.mainAxisSize,
+    required super.mainAxisAlignment,
+    required super.crossAxisAlignment,
+    required TextDirection super.textDirection,
+    required super.verticalDirection,
     required this.onPerformLayout,
-  }) : super(
-          children: children,
-          direction: direction,
-          mainAxisSize: mainAxisSize,
-          mainAxisAlignment: mainAxisAlignment,
-          crossAxisAlignment: crossAxisAlignment,
-          textDirection: textDirection,
-          verticalDirection: verticalDirection,
-        );
+  });
 
   _LayoutCallback onPerformLayout;
 
@@ -142,12 +134,10 @@ class _TabLabelBarRenderer extends RenderFlex {
 class _TabLabelBar extends Flex {
   // ignore: prefer_const_constructors_in_immutables
   _TabLabelBar({
-    Key? key,
-    List<Widget> children = const <Widget>[],
+    super.key,
+    super.children,
     required this.onPerformLayout,
   }) : super(
-          key: key,
-          children: children,
           direction: Axis.horizontal,
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -379,15 +369,12 @@ class _DragAnimation extends Animation<double>
 // pixels value) after the TabBar viewport width and scroll limits are known.
 class _TabBarScrollPosition extends ScrollPositionWithSingleContext {
   _TabBarScrollPosition({
-    required ScrollPhysics physics,
-    required ScrollContext context,
-    required ScrollPosition? oldPosition,
+    required super.physics,
+    required super.context,
+    required super.oldPosition,
     required this.tabBar,
   }) : super(
-          physics: physics,
-          context: context,
           initialPixels: null,
-          oldPosition: oldPosition,
         );
 
   final _ScaleTabBarState tabBar;
@@ -485,7 +472,7 @@ class ScaleTabBar extends StatefulWidget implements PreferredSizeWidget {
   /// If [indicator] is not null or provided from [TabBarTheme],
   /// then [indicatorWeight], [indicatorPadding], and [indicatorColor] are ignored.
   const ScaleTabBar({
-    Key? key,
+    super.key,
     required this.tabs,
     this.controller,
     this.isScrollable = false,
@@ -508,8 +495,7 @@ class ScaleTabBar extends StatefulWidget implements PreferredSizeWidget {
     this.onTap,
     this.physics,
   })  : assert(indicator != null || (indicatorWeight > 0.0)),
-        assert(indicator != null),
-        super(key: key);
+        assert(indicator != null);
 
   /// Typically a list of two or more [Tab] widgets.
   ///

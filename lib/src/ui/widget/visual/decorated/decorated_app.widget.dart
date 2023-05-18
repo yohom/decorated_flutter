@@ -4,7 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   DecoratedApp({
-    Key? key,
+    super.key,
     B? rootBLoC,
     @Deprecated('已无作用, 直接使用DecoratedApp的参数即可') this.app = NIL,
     @Deprecated('暂无作用') this.preventTextScale = false,
@@ -26,8 +26,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
     this.builder,
     this.debugShowCheckedModeBanner = false,
     this.onDispose,
-  })  : rootBLoC = rootBLoC ?? get(),
-        super(key: key);
+  })  : rootBLoC = rootBLoC ?? get();
 
   final B rootBLoC;
   final bool preventTextScale;

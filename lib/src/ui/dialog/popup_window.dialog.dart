@@ -12,14 +12,14 @@ typedef AnimatedWidgetBuilder = Widget Function(
 /// 不是很好用 :(
 class PopupWindowButton<T> extends StatefulWidget {
   const PopupWindowButton({
-    Key? key,
+    super.key,
     required this.buttonBuilder,
     required this.windowBuilder,
     this.offset = Offset.zero,
     this.duration = _kWindowDuration,
     this.onWindowShow,
     this.onWindowDismiss,
-  }) : super(key: key);
+  });
 
   /// 显示按钮button
   /// the builder for child,
@@ -221,8 +221,7 @@ class _PopupWindowLayout extends SingleChildLayoutDelegate {
 }
 
 class _PopupWindowScope extends InheritedWidget {
-  const _PopupWindowScope({Key? key, this.state, required Widget child})
-      : super(key: key, child: child);
+  const _PopupWindowScope({super.key, this.state, required super.child});
 
   final _PopupWindowButtonState? state;
 

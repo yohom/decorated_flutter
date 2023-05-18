@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 class Repeat extends StatelessWidget {
   const Repeat({
-    Key? key,
+    super.key,
     required this.builder,
     required this.interval,
     this.backgroundColor = Colors.black,
-  }) : super(key: key);
+  });
 
   final WidgetBuilder builder;
   final Duration interval;

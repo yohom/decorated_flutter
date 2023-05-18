@@ -8,11 +8,11 @@ class Carousel extends StatefulWidget {
   final double viewportFraction;
 
   const Carousel.builder({
-    Key? key,
+    super.key,
     required this.itemCount,
     required this.itemBuilder,
     this.viewportFraction = 1.0,
-  }) : super(key: key);
+  });
 
   @override
   _CarouselState createState() => _CarouselState();

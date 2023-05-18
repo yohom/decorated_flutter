@@ -5,28 +5,19 @@ class PageOutput<T, ARG> extends ListOutput<T, int> with PageMixin<T, ARG> {
   static int? defaultInitialPage;
 
   PageOutput({
-    required List<T> seedValue,
-    required String semantics,
-    bool sync = true,
-    bool isBehavior = true,
+    required super.seedValue,
+    required super.semantics,
+    super.sync,
+    super.isBehavior,
     int? initPage,
     bool receiveFullData = true,
-    bool printLog = true,
+    super.printLog,
     int pageSize = 0,
     int? forceCapacity,
     required PageFetchCallback<List<T>, ARG?> pageFetch,
-    List<T> Function()? onReset,
-    PersistConfig<List<T>>? persistConfig,
-  }) : super(
-          seedValue: seedValue,
-          semantics: semantics,
-          sync: sync,
-          isBehavior: isBehavior,
-          fetch: (_) => Future.value([]),
-          onReset: onReset,
-          persistConfig: persistConfig,
-          printLog: printLog,
-        ) {
+    super.onReset,
+    super.persistConfig,
+  }) : super(fetch: (_) => Future.value([])) {
     _initPage = initPage ?? defaultInitialPage ?? 0;
     _currentPage = _initPage;
     _pageFetch = pageFetch;
@@ -80,27 +71,21 @@ class PageIO<T, ARG> extends ListIO<T> with PageMixin<T, ARG> {
   static int? defaultInitialPage;
 
   PageIO({
-    required List<T> seedValue,
+    required super.seedValue,
     required String semantics,
-    bool sync = true,
-    bool isBehavior = true,
+    super.sync,
+    super.isBehavior,
     int? initPage,
     int pageSize = 0,
-    bool printLog = true,
+    super.printLog,
     bool receiveFullData = true,
     int? forceCapacity,
     PageFetchCallback<List<T>, ARG?>? pageFetch,
-    List<T> Function()? onReset,
-    PersistConfig<List<T>>? persistConfig,
+    super.onReset,
+    super.persistConfig,
   }) : super(
-          seedValue: seedValue,
           semantics: semantics,
-          sync: sync,
-          isBehavior: isBehavior,
           fetch: (_) => Future.error('请使用pageFetch回调!'),
-          onReset: onReset,
-          persistConfig: persistConfig,
-          printLog: printLog,
         ) {
     _initPage = initPage ?? defaultInitialPage ?? 0;
     _currentPage = _initPage;

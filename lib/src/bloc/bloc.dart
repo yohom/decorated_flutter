@@ -33,7 +33,7 @@ abstract class BLoC {
 
 /// 顶层[BLoC], 这个[BLoC]只有子[BLoC], 没有[Event], 并且子[BLoC]都是[GlobalBLoC]
 abstract class RootBLoC extends BLoC {
-  const RootBLoC(String semantics) : super(semantics);
+  const RootBLoC(super.semantics);
 
   @protected
   List<GlobalBLoC> get disposeBag => [];
@@ -64,7 +64,7 @@ abstract class RootBLoC extends BLoC {
 
 /// 局部[BLoC], 局部[BLoC]通常包在Screen的外面, 作用范围就是这个Screen内部
 abstract class LocalBLoC extends BLoC {
-  LocalBLoC(String semantics) : super(semantics);
+  LocalBLoC(super.semantics);
 
   /// 目前在BLoC内使用非IO的情况越来越多, 这里开放成dynamic类型
   ///
@@ -100,7 +100,7 @@ abstract class LocalBLoC extends BLoC {
 
 /// 全局BLoC, 全局BLoC和局部BLoC目前没用什么功能上的区别, 只是做一下区分
 abstract class GlobalBLoC extends BLoC {
-  GlobalBLoC(String semantics) : super(semantics);
+  GlobalBLoC(super.semantics);
 
   @protected
   List<dynamic> get disposeBag => [];

@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 class PreferredTabController extends StatelessWidget {
   const PreferredTabController({
-    Key? key,
+    super.key,
     this.onTabChanged,
     this.notifier,
     required this.length,
     required this.child,
-  }) : super(key: key);
+  });
 
   final ValueChanged<int>? onTabChanged;
   final ValueNotifier<int>? notifier;
@@ -30,11 +30,11 @@ class PreferredTabController extends StatelessWidget {
 
 class _ChildWrapper extends StatefulWidget {
   const _ChildWrapper({
-    Key? key,
+    super.key,
     required this.notifier,
     required this.onTabChanged,
     required this.child,
-  }) : super(key: key);
+  });
 
   final ValueNotifier<int>? notifier;
   final ValueChanged<int>? onTabChanged;

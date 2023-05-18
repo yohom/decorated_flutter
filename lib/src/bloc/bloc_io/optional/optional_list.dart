@@ -3,29 +3,18 @@ part of '../base.dart';
 /// 内部数据类型是[List]的输入业务单元
 class OptionalListInput<T> extends Input<List<T>?> with OptionalListMixin<T> {
   OptionalListInput({
-    List<T>? seedValue,
-    required String semantics,
-    bool sync = true,
-    bool isBehavior = true,
-    bool acceptEmpty = true,
-    bool printLog = true,
-    bool isDistinct = false,
+    super.seedValue,
+    required super.semantics,
+    super.sync,
+    super.isBehavior,
+    super.acceptEmpty,
+    super.printLog,
+    super.isDistinct,
     int? forceCapacity,
-    List<T>? Function()? onReset,
+    super.onReset,
     bool Function(List<T>?, List<T>?)? isSame,
-    PersistConfig<List<T>?>? persistConfig,
-  }) : super(
-          seedValue: seedValue,
-          semantics: semantics,
-          sync: sync,
-          isBehavior: isBehavior,
-          acceptEmpty: acceptEmpty,
-          isDistinct: isDistinct,
-          printLog: printLog,
-          onReset: onReset,
-          isSame: isSame ?? listEquals,
-          persistConfig: persistConfig,
-        ) {
+    super.persistConfig,
+  }) : super(isSame: isSame ?? listEquals) {
     _forceCapacity = forceCapacity;
   }
 }
@@ -36,25 +25,16 @@ class OptionalListInput<T> extends Input<List<T>?> with OptionalListMixin<T> {
 class OptionalListOutput<T, ARG> extends Output<List<T>?, ARG>
     with OptionalListMixin<T> {
   OptionalListOutput({
-    List<T>? seedValue,
-    required String semantics,
-    bool sync = true,
-    bool isBehavior = true,
-    bool printLog = true,
+    super.seedValue,
+    required super.semantics,
+    super.sync,
+    super.isBehavior,
+    super.printLog,
     int? forceCapacity,
-    required FetchCallback<List<T>, ARG?> fetch,
-    List<T>? Function()? onReset,
-    PersistConfig<List<T>?>? persistConfig,
-  }) : super(
-          seedValue: seedValue,
-          semantics: semantics,
-          sync: sync,
-          isBehavior: isBehavior,
-          fetch: fetch,
-          printLog: printLog,
-          onReset: onReset,
-          persistConfig: persistConfig,
-        ) {
+    required FetchCallback<List<T>, ARG?> super.fetch,
+    super.onReset,
+    super.persistConfig,
+  }) {
     _forceCapacity = forceCapacity;
   }
 }
@@ -62,30 +42,20 @@ class OptionalListOutput<T, ARG> extends Output<List<T>?, ARG>
 /// 内部数据类型是[List]的输入输出业务单元
 class OptionalListIO<T> extends IO<List<T>?> with OptionalListMixin {
   OptionalListIO({
-    List<T>? seedValue,
-    required String semantics,
-    bool sync = true,
-    bool isBehavior = true,
-    bool acceptEmpty = true,
-    bool isDistinct = false,
-    bool printLog = true,
+    super.seedValue,
+    required super.semantics,
+    super.sync,
+    super.isBehavior,
+    super.acceptEmpty,
+    super.isDistinct,
+    super.printLog,
     int? forceCapacity,
-    FetchCallback<List<T>, dynamic>? fetch,
+    FetchCallback<List<T>, dynamic>? super.fetch,
     bool Function(List<T>?, List<T>?)? isSame,
-    List<T>? Function()? onReset,
-    PersistConfig<List<T>?>? persistConfig,
+    super.onReset,
+    super.persistConfig,
   }) : super(
-          seedValue: seedValue,
-          semantics: semantics,
-          sync: sync,
-          isBehavior: isBehavior,
-          acceptEmpty: acceptEmpty,
-          isDistinct: isDistinct,
-          fetch: fetch,
-          printLog: printLog,
-          onReset: onReset,
           isSame: isSame ?? listEquals,
-          persistConfig: persistConfig,
         ) {
     _forceCapacity = forceCapacity;
   }

@@ -38,7 +38,7 @@ class FadeSlideTransition extends StatefulWidget {
   final bool immediately;
 
   const FadeSlideTransition({
-    Key? key,
+    super.key,
     this.originOffset = const Offset(0.0, 30.0),
     this.delay = const Duration(milliseconds: 0),
     this.duration = const Duration(milliseconds: 700),
@@ -48,7 +48,7 @@ class FadeSlideTransition extends StatefulWidget {
     this.direction = SlideDirection.vertical,
     this.immediately = true,
     required this.builder,
-  }) : super(key: key);
+  });
 
   @override
   _FadeInSlideTransitionState createState() => _FadeInSlideTransitionState();

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class DecoratedWrap extends StatelessWidget {
   const DecoratedWrap({
-    Key? key,
+    super.key,
     this.direction = Axis.horizontal,
     this.alignment = WrapAlignment.start,
     this.runAlignment = WrapAlignment.start,
@@ -22,7 +22,7 @@ class DecoratedWrap extends StatelessWidget {
     this.foregroundDecoration,
     this.alignItemWidth = false,
     required this.children,
-  }) : super(key: key);
+  });
 
   final int? crossAxisCount;
   final Axis direction;

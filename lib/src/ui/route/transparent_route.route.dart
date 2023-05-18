@@ -3,8 +3,8 @@ import 'package:flutter/widgets.dart';
 class TransparentRoute extends PageRoute<void> {
   TransparentRoute({
     required this.builder,
-    RouteSettings? settings,
-  }) : super(settings: settings, fullscreenDialog: false);
+    super.settings,
+  }) : super(fullscreenDialog: false);
 
   final WidgetBuilder builder;
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class VerticalButton extends StatelessWidget {
   const VerticalButton({
-    Key? key,
+    super.key,
     required this.icon,
     required this.label,
     required this.onPressed,
@@ -12,7 +12,7 @@ class VerticalButton extends StatelessWidget {
     this.width,
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.crossAxisAlignment = CrossAxisAlignment.center,
-  }) : super(key: key);
+  });
 
   final Widget icon;
   final Widget label;

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 class AutoCloseKeyboard extends StatelessWidget {
   const AutoCloseKeyboard({
-    Key? key,
+    super.key,
     this.config = const CloseKeyboardConfig(),
     required this.child,
-  }) : super(key: key);
+  });
 
   final CloseKeyboardConfig config;
   final Widget child;

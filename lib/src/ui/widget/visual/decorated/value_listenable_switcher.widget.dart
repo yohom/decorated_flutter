@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class ValueListenableSwitcher<T> extends StatelessWidget {
   const ValueListenableSwitcher({
-    Key? key,
+    super.key,
     required this.valueListenable,
     required this.duration,
     required this.builder,
@@ -13,7 +13,7 @@ class ValueListenableSwitcher<T> extends StatelessWidget {
     this.height,
     this.margin,
     this.child,
-  }) : super(key: key);
+  });
 
   final ValueListenable<T> valueListenable;
   final Duration duration;

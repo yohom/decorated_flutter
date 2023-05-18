@@ -6,29 +6,20 @@ class OptionalPageOutput<T, ARG> extends OptionalListOutput<T, int>
   static int? defaultInitialPage;
 
   OptionalPageOutput({
-    List<T>? seedValue,
-    required String semantics,
-    bool sync = true,
-    bool isBehavior = true,
+    super.seedValue,
+    required super.semantics,
+    super.sync,
+    super.isBehavior,
     int? initPage,
     bool receiveFullData = true,
-    bool printLog = true,
+    super.printLog,
     int? forceCapacity,
     required PageFetchCallback<List<T>, ARG?> pageFetch,
-    List<T>? Function()? onReset,
-    PersistConfig<List<T>?>? persistConfig,
+    super.onReset,
+    super.persistConfig,
     MergeListCallback<T>? onMergeList,
     NoMoreDataCallback<T>? isNoMoreData,
-  }) : super(
-          seedValue: seedValue,
-          semantics: semantics,
-          sync: sync,
-          isBehavior: isBehavior,
-          fetch: (_) => Future.error('请使用pageFetch回调!'),
-          onReset: onReset,
-          persistConfig: persistConfig,
-          printLog: printLog,
-        ) {
+  }) : super(fetch: (_) => Future.error('请使用pageFetch回调!')) {
     _initPage = initPage ?? defaultInitialPage ?? 0;
     _currentPage = _initPage;
     _pageFetch = pageFetch;
@@ -52,27 +43,18 @@ class OptionalPageIO<T, ARG> extends OptionalListIO<T>
   static int? defaultInitialPage;
 
   OptionalPageIO({
-    List<T>? seedValue,
+    super.seedValue,
     required String semantics,
-    bool sync = true,
-    bool isBehavior = true,
+    super.sync,
+    super.isBehavior,
     int? initPage,
-    bool printLog = true,
+    super.printLog,
     bool receiveFullData = true,
     int? forceCapacity,
     PageFetchCallback<List<T>, ARG?>? pageFetch,
-    List<T>? Function()? onReset,
-    PersistConfig<List<T>?>? persistConfig,
-  }) : super(
-          seedValue: seedValue,
-          semantics: semantics,
-          sync: sync,
-          isBehavior: isBehavior,
-          fetch: (_) => Future.value([]),
-          onReset: onReset,
-          persistConfig: persistConfig,
-          printLog: printLog,
-        ) {
+    super.onReset,
+    super.persistConfig,
+  }) : super(semantics: semantics, fetch: (_) => Future.value([])) {
     _initPage = initPage ?? defaultInitialPage ?? 0;
     _currentPage = _initPage;
     _pageFetch = pageFetch ??

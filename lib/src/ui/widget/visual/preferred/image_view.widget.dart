@@ -61,7 +61,7 @@ class ImageView extends StatelessWidget {
   /// 根据图片uri自动判断是使用本地加载还是远程加载
   ImageView(
     String imageUri, {
-    Key? key,
+    super.key,
     this.width,
     this.height,
     this.size,
@@ -91,13 +91,12 @@ class ImageView extends StatelessWidget {
           (darkImagePath != null && autoDarkMode == false) ||
               darkImagePath == null,
           '不能同时设置darkImagePath和autoDarkMode',
-        ),
-        super(key: key);
+        );
 
   /// 跟默认构造器的区别是icon构造器默认是BoxFit.contain
   ImageView.icon(
     String imageUri, {
-    Key? key,
+    super.key,
     this.width,
     this.height,
     this.size,
@@ -127,12 +126,11 @@ class ImageView extends StatelessWidget {
           (darkImagePath != null && autoDarkMode == false) ||
               darkImagePath == null,
           '不能同时设置darkImagePath和autoDarkMode',
-        ),
-        super(key: key);
+        );
 
   const ImageView.local(
     this.imagePath, {
-    Key? key,
+    super.key,
     this.width,
     this.height,
     this.size,
@@ -161,12 +159,11 @@ class ImageView extends StatelessWidget {
           (darkImagePath != null && autoDarkMode == false) ||
               darkImagePath == null,
           '不能同时设置darkImagePath和autoDarkMode',
-        ),
-        super(key: key);
+        );
 
   const ImageView.remote(
     this.imageUrl, {
-    Key? key,
+    super.key,
     this.width,
     this.height,
     this.size,
@@ -195,8 +192,7 @@ class ImageView extends StatelessWidget {
           (darkImagePath != null && autoDarkMode == false) ||
               darkImagePath == null,
           '不能同时设置darkImagePath和autoDarkMode',
-        ),
-        super(key: key);
+        );
 
   /// 本地图片路径
   final String? imagePath;

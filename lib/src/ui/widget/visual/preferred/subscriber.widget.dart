@@ -77,7 +77,7 @@ class SingleSubscriber<T> extends StatefulWidget {
   }
 
   const SingleSubscriber({
-    Key? key,
+    super.key,
     required this.future,
     required this.builder,
     this.showLoading = true,
@@ -91,7 +91,7 @@ class SingleSubscriber<T> extends StatefulWidget {
     this.width,
     this.height,
     this.decoration,
-  }) : super(key: key);
+  });
 
   /// 流
   final Future<T> future;
@@ -209,7 +209,7 @@ class Subscriber<T> extends StatelessWidget {
   }
 
   const Subscriber({
-    Key? key,
+    super.key,
     required this.stream,
     required this.builder,
     this.showLoading = true,
@@ -228,7 +228,7 @@ class Subscriber<T> extends StatelessWidget {
     this.animationConfig,
     this.padding,
     this.margin,
-  }) : super(key: key);
+  });
 
   /// 流
   final Stream<T> stream;

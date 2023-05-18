@@ -10,11 +10,11 @@ import 'package:rxdart/rxdart.dart';
 /// 下方!
 class DoubleBackExitApp extends StatefulWidget {
   const DoubleBackExitApp({
-    Key? key,
+    super.key,
     this.onShowExitHint,
     this.duration = const Duration(seconds: 2),
     required this.child,
-  }) : super(key: key);
+  });
 
   /// child
   final Widget child;

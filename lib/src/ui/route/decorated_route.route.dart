@@ -26,12 +26,10 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialPageRoute<T> {
     this.backgroundBuilder,
     this.primaryScrollControllerConfig,
     required String routeName,
-    bool fullscreenDialog = false,
-    bool maintainState = true,
+    super.fullscreenDialog,
+    super.maintainState,
   })  : _bloc = bloc ?? get(), // 如果没有显式指定就从DI容器寻找
         super(
-          fullscreenDialog: fullscreenDialog,
-          maintainState: maintainState,
           builder: (context) => screen,
           settings: RouteSettings(name: routeName),
         );

@@ -27,13 +27,11 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
     this.systemUiOverlayStyle,
     this.autoDispose = true,
     required String routeName,
-    bool fullscreenDialog = false,
-    bool maintainState = true,
+    super.fullscreenDialog,
+    super.maintainState,
   })  : // 要么同时设置泛型B和bloc参数, 要么就都不设置
         assert((B != BLoC && bloc != null) || (B == BLoC && bloc == null)),
         super(
-          fullscreenDialog: fullscreenDialog,
-          maintainState: maintainState,
           builder: (context) => screen,
           settings: RouteSettings(name: routeName),
         );
@@ -294,7 +292,7 @@ class SpringButton extends StatefulWidget {
   const SpringButton(
     this.springButtonType,
     this.uiChild, {
-    Key? key,
+    super.key,
     this.useCache = true,
     this.alignment = Alignment.center,
     this.scaleCoefficient = 0.75,
@@ -334,8 +332,7 @@ class SpringButton extends StatefulWidget {
     this.onScaleStart,
     this.onScaleUpdate,
     this.onScaleEnd,
-  })  : assert(scaleCoefficient >= 0.0 && scaleCoefficient <= 1.0),
-        super(key: key);
+  })  : assert(scaleCoefficient >= 0.0 && scaleCoefficient <= 1.0);
 
   @override
   // ignore: no_logic_in_create_state

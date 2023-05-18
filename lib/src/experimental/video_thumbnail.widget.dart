@@ -181,7 +181,7 @@ class ThumbnailImage extends StatelessWidget {
 
   const ThumbnailImage({
     required this.videoUrl,
-    Key? key,
+    super.key,
     this.width,
     this.height,
     this.scale = 1.0,
@@ -201,7 +201,7 @@ class ThumbnailImage extends StatelessWidget {
     this.filterQuality = FilterQuality.low,
     this.cacheHeight,
     this.cacheWidth,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

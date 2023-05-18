@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 /// 模糊子widget
 class Blur extends StatelessWidget {
   const Blur({
-    Key? key,
+    super.key,
     this.applyInsets = false,
     this.sigmaX = 2,
     this.sigmaY = 2,
     this.constraints,
     required this.child,
-  }) : super(key: key);
+  });
 
   final bool applyInsets;
   final double sigmaX;
@@ -37,7 +37,7 @@ class Blur extends StatelessWidget {
 /// 背景模糊
 class BackgroundBlur extends StatelessWidget {
   const BackgroundBlur({
-    Key? key,
+    super.key,
     this.background,
     required this.child,
     this.alignment = AlignmentDirectional.center,
@@ -45,7 +45,7 @@ class BackgroundBlur extends StatelessWidget {
     this.sigmaY = 2,
     this.fit = StackFit.expand,
     this.clipped = false,
-  }) : super(key: key);
+  });
 
   final Widget? background;
   final Widget child;
@@ -83,7 +83,7 @@ class BackgroundBlur extends StatelessWidget {
 
 class BlurDialog extends StatelessWidget {
   const BlurDialog({
-    Key? key,
+    super.key,
     required this.child,
     this.sigmaX = 2,
     this.sigmaY = 2,
@@ -95,7 +95,7 @@ class BlurDialog extends StatelessWidget {
     this.insetPadding = const EdgeInsets.all(24),
     this.clipBehavior = Clip.none,
     this.shape,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final bool dismissible;

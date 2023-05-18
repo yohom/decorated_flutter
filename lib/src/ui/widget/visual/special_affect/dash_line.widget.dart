@@ -31,7 +31,7 @@ class DashedLine extends StatelessWidget {
 
   ///Create a dashed line with given parameters.
   const DashedLine({
-    Key? key,
+    super.key,
     required this.height,
     required this.width,
     required this.axis,
@@ -40,7 +40,7 @@ class DashedLine extends StatelessWidget {
     this.dashSpace = 3,
     this.strokeWidth = 1,
     this.dashColor = Colors.black,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

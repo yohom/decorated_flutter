@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class DecoratedList extends StatelessWidget {
   const DecoratedList.box({
-    Key? key,
+    super.key,
     this.padding,
     this.restorationId,
     this.shrinkWrap = false,
@@ -24,11 +24,10 @@ class DecoratedList extends StatelessWidget {
     this.physics,
     this.reverse = false,
   })  : _sliver = false,
-        separatorBuilder = null,
-        super(key: key);
+        separatorBuilder = null;
 
   const DecoratedList.boxSeparated({
-    Key? key,
+    super.key,
     this.padding,
     this.restorationId,
     this.shrinkWrap = false,
@@ -52,11 +51,10 @@ class DecoratedList extends StatelessWidget {
         assert(separatorBuilder != null),
         _sliver = false,
         itemExtent = null,
-        prototypeItem = null,
-        super(key: key);
+        prototypeItem = null;
 
   const DecoratedList.sliver({
-    Key? key,
+    super.key,
     this.padding,
     this.itemBuilder,
     this.itemCount,
@@ -78,8 +76,7 @@ class DecoratedList extends StatelessWidget {
         physics = null,
         reverse = false,
         decoration = null,
-        keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
-        super(key: key);
+        keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual;
 
   final bool _sliver;
   final String? restorationId;

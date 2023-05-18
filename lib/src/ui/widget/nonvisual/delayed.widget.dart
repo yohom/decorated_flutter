@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 
 class Delayed<T> extends StatelessWidget {
   const Delayed({
-    Key? key,
+    super.key,
     required this.child,
     required this.duration,
     this.showLoading = true,
     this.loadingWidget,
     this.backgroundColor = Colors.black,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final bool showLoading;

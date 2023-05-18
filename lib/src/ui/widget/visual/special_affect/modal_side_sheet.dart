@@ -25,12 +25,12 @@ const _kDefaultThickness = 2.0;
 /// See also : https://material.io/components/sheets-side#standard-side-sheet
 class BodyWithSideSheet extends StatelessWidget {
   const BodyWithSideSheet({
-    Key? key,
+    super.key,
     this.show = false,
     required this.body,
     this.sheetWidth = _kDefaultWidth,
     required this.sheetBody,
-  }) : super(key: key);
+  });
 
   /// App body referred as [Scaffold.body]
   final Widget body;
@@ -80,8 +80,7 @@ class BodyWithSideSheet extends StatelessWidget {
 }
 
 class _ShrinkableSize extends StatefulWidget {
-  const _ShrinkableSize({Key? key, required this.child, required this.show})
-      : super(key: key);
+  const _ShrinkableSize({super.key, required this.child, required this.show});
 
   /// The child of the [_ShrinkableSize] widget.
   final Widget child;

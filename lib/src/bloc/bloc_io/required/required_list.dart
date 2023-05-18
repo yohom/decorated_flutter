@@ -3,29 +3,18 @@ part of '../base.dart';
 /// 内部数据类型是[List]的输入业务单元
 class ListInput<T> extends Input<List<T>> with ListMixin<T> {
   ListInput({
-    required List<T> seedValue,
-    required String semantics,
-    bool sync = true,
-    bool isBehavior = true,
-    bool acceptEmpty = true,
-    bool printLog = true,
-    bool isDistinct = false,
-    bool Function(List<T>, List<T>)? isSame,
+    required super.seedValue,
+    required super.semantics,
+    super.sync,
+    super.isBehavior,
+    super.acceptEmpty,
+    super.printLog,
+    super.isDistinct,
+    super.isSame,
     int? forceCapacity,
-    List<T> Function()? onReset,
-    PersistConfig<List<T>>? persistConfig,
-  }) : super(
-          seedValue: seedValue,
-          semantics: semantics,
-          sync: sync,
-          isBehavior: isBehavior,
-          acceptEmpty: acceptEmpty,
-          isDistinct: isDistinct,
-          printLog: printLog,
-          onReset: onReset,
-          isSame: isSame,
-          persistConfig: persistConfig,
-        ) {
+    super.onReset,
+    super.persistConfig,
+  }) {
     _forceCapacity = forceCapacity;
   }
 
@@ -141,30 +130,20 @@ class ListStreamOutput<T> extends StreamOutput<List<T>> with ListMixin<T> {
 /// 内部数据类型是[List]的输入输出业务单元
 class ListIO<T> extends IO<List<T>> with ListMixin<T> {
   ListIO({
-    required List<T> seedValue,
-    required String semantics,
-    bool sync = true,
-    bool isBehavior = true,
-    bool acceptEmpty = true,
-    bool isDistinct = false,
+    required super.seedValue,
+    required super.semantics,
+    super.sync,
+    super.isBehavior,
+    super.acceptEmpty,
+    super.isDistinct,
     bool Function(List<T>, List<T>)? isSame,
-    bool printLog = true,
+    super.printLog,
     int? forceCapacity,
-    FetchCallback<List<T>, dynamic>? fetch,
-    List<T> Function()? onReset,
-    PersistConfig<List<T>>? persistConfig,
+    super.fetch,
+    super.onReset,
+    super.persistConfig,
   }) : super(
-          seedValue: seedValue,
-          semantics: semantics,
-          sync: sync,
-          isBehavior: isBehavior,
-          acceptEmpty: acceptEmpty,
-          isDistinct: isDistinct,
-          fetch: fetch,
-          printLog: printLog,
-          onReset: onReset,
           isSame: isSame ?? listEquals,
-          persistConfig: persistConfig,
         ) {
     _forceCapacity = forceCapacity;
   }

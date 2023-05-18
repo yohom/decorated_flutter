@@ -31,7 +31,7 @@ Future<DateTime?> showDateDialog(
 
 class _DatePickerDialog extends StatefulWidget {
   const _DatePickerDialog({
-    Key? key,
+    super.key,
     this.initialDateTime,
     this.maximumDate,
     this.minimumDate,
@@ -39,7 +39,7 @@ class _DatePickerDialog extends StatefulWidget {
     this.mode = CupertinoDatePickerMode.date,
     this.cancelText,
     this.confirmText,
-  }) : super(key: key);
+  });
 
   final DateTime? initialDateTime;
   final DateTime? maximumDate, minimumDate;

@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 /// 当按下时, 会缩放至0.9倍, 松开恢复到原状, 有些类似AppStore点击卡片时的动画
 class AnimatedScaleButton extends StatefulWidget {
   const AnimatedScaleButton({
-    Key? key,
+    super.key,
     required this.child,
     required this.onPressed,
     this.minScale = 0.9,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final ContextCallback onPressed;

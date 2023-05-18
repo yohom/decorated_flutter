@@ -6,26 +6,24 @@ import 'package:flutter/material.dart';
 
 class LoadingWidget extends StatelessWidget {
   const LoadingWidget({
-    Key? key,
+    super.key,
     this.height,
     this.width,
     this.margin,
     this.color,
     this.backgroundColor,
     this.material = false,
-  })  : sliver = false,
-        super(key: key);
+  })  : sliver = false;
 
   const LoadingWidget.sliver({
-    Key? key,
+    super.key,
     this.height,
     this.width,
     this.margin,
     this.color,
     this.backgroundColor,
     this.material = false,
-  })  : sliver = true,
-        super(key: key);
+  })  : sliver = true;
 
   final double? width;
   final double? height;
@@ -63,7 +61,7 @@ class LoadingWidget extends StatelessWidget {
 }
 
 class ModalLoading extends StatelessWidget {
-  const ModalLoading(this.text, {Key? key}) : super(key: key);
+  const ModalLoading(this.text, {super.key});
 
   final String text;
 

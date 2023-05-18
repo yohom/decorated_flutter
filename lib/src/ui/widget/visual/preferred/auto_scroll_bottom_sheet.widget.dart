@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 class AutoScrollBottomSheet extends StatefulWidget {
   const AutoScrollBottomSheet({
-    Key? key,
+    super.key,
     this.duration = Duration.zero,
     this.curve = Curves.decelerate,
     this.autoCloseKeyboard = const CloseKeyboardConfig(),
     required this.child,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final Duration duration;

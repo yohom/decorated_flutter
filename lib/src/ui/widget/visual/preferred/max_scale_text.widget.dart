@@ -7,10 +7,10 @@ class MaxScaleTextWidget extends StatelessWidget {
   final Widget child;
 
   const MaxScaleTextWidget({
-    Key? key,
+    super.key,
     this.max = 1.0,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
