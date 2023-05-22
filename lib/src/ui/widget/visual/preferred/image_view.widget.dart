@@ -57,6 +57,7 @@ class ImageView extends StatelessWidget {
   static Widget? globalErrorWidget;
   static Widget? globalPlaceholder;
   static bool logEnable = false;
+  static bool suppressError = false;
 
   /// 根据图片uri自动判断是使用本地加载还是远程加载
   ImageView(
@@ -456,7 +457,7 @@ class ImageView extends StatelessWidget {
     dynamic stackTrace,
   ) {
     final _errorWidget = errorWidget ?? globalErrorWidget;
-    L.e('显示ImageView发生错误: $error, stacktrace: $stackTrace');
+    if (!suppressError) L.e('显示ImageView发生错误: $error, stacktrace: $stackTrace');
     return _errorWidget ?? (kReleaseMode ? NIL : ErrorWidget(error));
   }
 }
