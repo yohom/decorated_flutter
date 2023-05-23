@@ -223,7 +223,7 @@ mixin InputMixin<T> on BaseIO<T> {
         _subject.add(data);
       } else {
         if (_printLog) {
-          L.w('[$_semantics]转发被拒绝! 原因: 需要唯一, 但是新数据与最新值相同');
+          L.w('[$_semantics]转发被拒绝! 原因: 需要唯一, 但是新数据 ($data) 与最新值 ($latest) 相同');
         }
       }
     } else {
