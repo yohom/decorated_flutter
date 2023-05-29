@@ -29,7 +29,7 @@ class CircleCheckbox extends StatefulWidget {
   ///
   /// The values of [tristate] and [autofocus] must not be null.
   const CircleCheckbox({
-    Key? key,
+    super.key,
     required this.value,
     this.tristate = false,
     required this.onChanged,
@@ -47,8 +47,7 @@ class CircleCheckbox extends StatefulWidget {
     this.autofocus = false,
     this.shape,
     this.side,
-  })  : assert(tristate || value != null),
-        super(key: key);
+  })  : assert(tristate || value != null);
 
   /// Whether this checkbox is checked.
   ///

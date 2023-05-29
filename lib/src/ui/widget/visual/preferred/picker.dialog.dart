@@ -29,13 +29,13 @@ Future<T?> showPickerDialog<T>(
 class _PickerDialog<T> extends StatefulWidget {
   const _PickerDialog(
     this._dataList, {
-    Key? key,
+    super.key,
     this.title,
     this.titleStyle,
     this.confirmStyle,
     required this.itemBuilder,
     required this.itemExtent,
-  }) : super(key: key);
+  });
 
   final List<T> _dataList;
   final String? title;

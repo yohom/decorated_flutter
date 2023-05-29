@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 class Toggleable extends StatelessWidget {
   const Toggleable({
-    Key? key,
+    super.key,
     required this.boolStream,
     required this.builder,
     required this.toggledBuilder,
     this.initialData = false,
-  }) : super(key: key);
+  });
 
   final Stream<bool> boolStream;
   final WidgetBuilder builder;

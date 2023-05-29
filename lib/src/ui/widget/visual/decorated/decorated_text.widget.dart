@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class DecoratedText extends StatelessWidget {
   const DecoratedText(
     this._data, {
-    Key? key,
+    super.key,
     this.padding,
     this.margin,
     this.decoration,
@@ -41,12 +41,11 @@ class DecoratedText extends StatelessWidget {
     this.isSelectable = false,
     this.alignment,
   })  : _stream = null,
-        initialData = null,
-        super(key: key);
+        initialData = null;
 
   const DecoratedText.reactive(
     this._stream, {
-    Key? key,
+    super.key,
     this.initialData,
     this.padding,
     this.margin,
@@ -82,8 +81,7 @@ class DecoratedText extends StatelessWidget {
     this.widgetPadding,
     this.isSelectable = false,
     this.alignment,
-  })  : _data = null,
-        super(key: key);
+  })  : _data = null;
 
   final Stream<String>? _stream;
   final String? initialData;

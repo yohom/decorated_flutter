@@ -4,22 +4,21 @@ import 'package:flutter/material.dart';
 
 class BLoCProvider<T extends BLoC> extends StatefulWidget {
   const BLoCProvider({
-    Key? key,
+    super.key,
     required this.child,
     required this.bloc,
     this.init,
     this.onDispose,
     this.autoDispose = true,
-  }) : super(key: key);
+  });
 
   const BLoCProvider.borrowed({
-    Key? key,
+    super.key,
     required this.child,
     required this.bloc,
     this.init,
     this.onDispose,
-  })  : autoDispose = false,
-        super(key: key);
+  })  : autoDispose = false;
 
   final T bloc;
   final ValueChanged<T>? init;
@@ -73,10 +72,10 @@ class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
 
 class _BLoCProviderInherited<T> extends InheritedWidget {
   const _BLoCProviderInherited({
-    Key? key,
-    required Widget child,
+    super.key,
+    required super.child,
     required this.bloc,
-  }) : super(key: key, child: child);
+  });
 
   final T bloc;
 

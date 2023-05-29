@@ -12,7 +12,7 @@ class GradientButton extends StatelessWidget {
   final BoxShadow boxShadow;
 
   const GradientButton({
-    Key? key,
+    super.key,
     required this.child,
     this.gradient,
     this.width = double.infinity,
@@ -24,7 +24,7 @@ class GradientButton extends StatelessWidget {
       offset: Offset(0.0, 0.0),
       blurRadius: 8,
     ),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

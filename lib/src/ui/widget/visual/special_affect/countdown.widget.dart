@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 
 class Countdown extends StatefulWidget {
   const Countdown({
-    Key? key,
+    super.key,
     required this.initialData,
     this.interval = const Duration(seconds: 1),
     required this.builder,
     this.onPressed,
     this.onZero,
-  }) : super(key: key);
+  });
 
   final int initialData;
   final Duration interval;

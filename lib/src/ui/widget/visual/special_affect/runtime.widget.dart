@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 /// 显示运行时信息的widget
 class Runtime extends StatefulWidget {
   const Runtime({
-    Key? key,
+    super.key,
     this.runtimeInfo = const <BaseIO>[],
-  }) : super(key: key);
+  });
 
   static void registerGlobalBLoCList(List<GlobalBLoC> blocs) {
     _globalBLoCList = blocs;
@@ -66,9 +66,9 @@ class _RuntimeState extends State<Runtime> {
 /// ExpansionList的Header
 class _Header extends StatelessWidget {
   const _Header({
-    Key? key,
+    super.key,
     required this.title,
-  }) : super(key: key);
+  });
 
   final String title;
 
@@ -83,9 +83,9 @@ class _Header extends StatelessWidget {
 /// ExpansionList的Body
 class _Body extends StatelessWidget {
   const _Body({
-    Key? key,
+    super.key,
     required this.ioList,
-  }) : super(key: key);
+  });
 
   final List<BaseIO> ioList;
 

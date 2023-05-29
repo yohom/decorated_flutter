@@ -3,25 +3,17 @@ part of '../base.dart';
 /// 只输入数据的业务单元
 class Input<T> extends BaseIO<T> with InputMixin<T> {
   Input({
-    required T seedValue,
-    required String semantics,
-    bool sync = true,
-    bool isBehavior = true,
-    bool printLog = true,
+    required super.seedValue,
+    required super.semantics,
+    super.sync,
+    super.isBehavior,
+    super.printLog,
     bool acceptEmpty = true,
     bool isDistinct = false,
-    T Function()? onReset,
+    super.onReset,
     bool Function(T, T)? isSame,
-    PersistConfig<T>? persistConfig,
-  }) : super(
-          seedValue: seedValue,
-          semantics: semantics,
-          sync: sync,
-          isBehavior: isBehavior,
-          onReset: onReset,
-          persistConfig: persistConfig,
-          printLog: printLog,
-        ) {
+    super.persistConfig,
+  }) {
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
     _isSame = isSame ?? (a, b) => a == b;
@@ -148,25 +140,19 @@ class Output<T, ARG> extends BaseIO<T> with OutputMixin<T, ARG> {
 /// 既可以输入又可以输出的事件
 class IO<T> extends BaseIO<T> with InputMixin<T>, OutputMixin<T, dynamic> {
   IO({
-    required T seedValue,
+    required super.seedValue,
     required String semantics,
-    bool sync = true,
-    bool isBehavior = true,
+    super.sync,
+    super.isBehavior,
     bool acceptEmpty = true,
     bool isDistinct = false,
     bool Function(T, T)? isSame,
-    bool printLog = true,
+    super.printLog,
     FetchCallback<T, dynamic>? fetch,
-    T Function()? onReset,
-    PersistConfig<T>? persistConfig,
+    super.onReset,
+    super.persistConfig,
   }) : super(
-          seedValue: seedValue,
           semantics: semantics,
-          sync: sync,
-          isBehavior: isBehavior,
-          onReset: onReset,
-          persistConfig: persistConfig,
-          printLog: printLog,
         ) {
     stream = _subject.stream;
 
@@ -237,7 +223,7 @@ mixin InputMixin<T> on BaseIO<T> {
         _subject.add(data);
       } else {
         if (_printLog) {
-          L.w('[$_semantics]转发被拒绝! 原因: 需要唯一, 但是新数据与最新值相同');
+          L.w('[$_semantics]转发被拒绝! 原因: 需要唯一, 但是新数据 ($data) 与最新值 ($latest) 相同');
         }
       }
     } else {

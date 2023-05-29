@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 /// [B]是指定的BLoC
 class DecoratedWidget<B extends BLoC> extends StatefulWidget {
   const DecoratedWidget({
-    Key? key,
+    super.key,
     required this.widget,
     this.bloc,
     this.autoCloseKeyboard = true,
@@ -16,7 +16,7 @@ class DecoratedWidget<B extends BLoC> extends StatefulWidget {
     this.tabControllerConfig,
     this.decorationBuilder,
     this.onDispose,
-  }) : super(key: key);
+  });
 
   /// 直接传递的BLoC
   final B? bloc;

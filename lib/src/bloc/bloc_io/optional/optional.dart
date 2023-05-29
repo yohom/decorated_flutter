@@ -3,26 +3,16 @@ part of '../base.dart';
 /// 只输入数据的业务单元
 class OptionalInput<T> extends Input<T?> {
   OptionalInput({
-    T? seedValue,
-    required String semantics,
-    bool sync = true,
-    bool isBehavior = true,
-    bool printLog = true,
-    bool acceptEmpty = true,
-    bool isDistinct = false,
-    T? Function()? onReset,
-    PersistConfig<T?>? persistConfig,
-  }) : super(
-          seedValue: seedValue,
-          semantics: semantics,
-          sync: sync,
-          isBehavior: isBehavior,
-          onReset: onReset,
-          acceptEmpty: acceptEmpty,
-          isDistinct: isDistinct,
-          persistConfig: persistConfig,
-          printLog: printLog,
-        );
+    super.seedValue,
+    required super.semantics,
+    super.sync,
+    super.isBehavior,
+    super.printLog,
+    super.acceptEmpty,
+    super.isDistinct,
+    super.onReset,
+    super.persistConfig,
+  });
 }
 
 /// 只输出数据的业务单元
@@ -60,27 +50,17 @@ class OptionalStreamOutput<T> extends StreamOutput<T?> {
 /// 既可以输入又可以输出的事件
 class OptionalIO<T> extends IO<T?> {
   OptionalIO({
-    T? seedValue,
+    super.seedValue,
     required String semantics,
-    bool sync = true,
-    bool isBehavior = true,
-    bool acceptEmpty = true,
-    bool isDistinct = false,
-    bool printLog = true,
+    super.sync,
+    super.isBehavior,
+    super.acceptEmpty,
+    super.isDistinct,
+    super.printLog,
     FetchCallback<T, dynamic>? fetch,
-    T? Function()? onReset,
-    PersistConfig<T?>? persistConfig,
-  }) : super(
-          seedValue: seedValue,
-          semantics: semantics,
-          sync: sync,
-          isBehavior: isBehavior,
-          onReset: onReset,
-          acceptEmpty: acceptEmpty,
-          isDistinct: isDistinct,
-          printLog: printLog,
-          persistConfig: persistConfig,
-        ) {
+    super.onReset,
+    super.persistConfig,
+  }) : super(semantics: semantics) {
     stream = _subject.stream;
 
     _fetch = fetch ??

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class RuntimeScaffold<T extends LocalBLoC> extends StatelessWidget {
   const RuntimeScaffold({
-    Key? key,
+    super.key,
     this.appBar,
     this.body,
     this.floatingActionButton,
@@ -17,7 +17,7 @@ class RuntimeScaffold<T extends LocalBLoC> extends StatelessWidget {
     this.backgroundColor,
     this.resizeToAvoidBottomPadding = true,
     this.primary = true,
-  }) : super(key: key);
+  });
 
   //region Scaffold
   final PreferredSizeWidget? appBar;

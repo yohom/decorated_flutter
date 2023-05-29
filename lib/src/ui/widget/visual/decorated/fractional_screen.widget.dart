@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class FractionalScreen extends StatelessWidget {
   const FractionalScreen({
-    Key? key,
+    super.key,
     this.widthFactor = 1.0,
     this.heightFactor = 1.0,
     this.direction = Axis.vertical,
@@ -16,7 +16,7 @@ class FractionalScreen extends StatelessWidget {
     this.padding = EdgeInsets.zero,
     this.safeArea,
     required this.children,
-  }) : super(key: key);
+  });
 
   /// 占屏幕宽度百分比
   final double widthFactor;

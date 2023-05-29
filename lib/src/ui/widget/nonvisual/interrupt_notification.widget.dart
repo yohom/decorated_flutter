@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class InterruptNotification extends StatelessWidget {
   const InterruptNotification({
-    Key? key,
+    super.key,
     this.interrupt = true,
     required this.child,
-  }) : super(key: key);
+  });
 
   final bool interrupt;
   final Widget child;

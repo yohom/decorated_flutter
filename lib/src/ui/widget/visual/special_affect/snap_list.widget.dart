@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class SnapList extends StatelessWidget {
   SnapList({
-    Key? key,
+    super.key,
     this.initialPage = 0,
     this.viewportFraction = 1.0,
     this.padding = EdgeInsets.zero,
@@ -15,8 +15,7 @@ class SnapList extends StatelessWidget {
           childCount: itemCount,
           addAutomaticKeepAlives: addAutomaticKeepAlive,
           addRepaintBoundaries: addRepaintBoundaries,
-        ),
-        super(key: key);
+        );
 
   final int initialPage;
   final double viewportFraction;

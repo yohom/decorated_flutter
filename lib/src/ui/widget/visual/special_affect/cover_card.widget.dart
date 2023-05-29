@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class CoverCard extends StatefulWidget {
   const CoverCard({
-    Key? key,
+    super.key,
     this.background,
     this.foreground,
     this.overlay = const SizedBox.shrink(),
@@ -13,8 +13,7 @@ class CoverCard extends StatefulWidget {
     required this.cover,
     required this.card,
     required this.coverHeight,
-  })  : assert(parallaxRate > 0.0),
-        super(key: key);
+  })  : assert(parallaxRate > 0.0);
 
   /// 背景
   final Widget? background;

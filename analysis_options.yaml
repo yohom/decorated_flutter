@@ -4,4 +4,4 @@ linter:
   rules:
     no_leading_underscores_for_local_identifiers: false
     library_private_types_in_public_api: false
-#    use_super_parameters: true # 先不使用, 尽量保持兼容性
+    use_super_parameters: true

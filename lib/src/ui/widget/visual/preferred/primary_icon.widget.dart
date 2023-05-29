@@ -9,11 +9,11 @@ class PrimaryIcon extends StatelessWidget {
 
   const PrimaryIcon(
     this.icon, {
-    Key? key,
+    super.key,
     required this.size,
     this.semanticLabel,
     this.textDirection,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

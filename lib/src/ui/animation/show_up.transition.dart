@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 class ShowUpTransition extends StatefulWidget {
   const ShowUpTransition({
-    Key? key,
+    super.key,
     this.delay = Duration.zero,
     this.duration = const Duration(milliseconds: 700),
     this.safeArea = false,
     required this.child,
-  }) : super(key: key);
+  });
 
   final Duration delay;
   final Duration duration;

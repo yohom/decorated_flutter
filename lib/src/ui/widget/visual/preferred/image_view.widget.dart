@@ -57,11 +57,12 @@ class ImageView extends StatelessWidget {
   static Widget? globalErrorWidget;
   static Widget? globalPlaceholder;
   static bool logEnable = false;
+  static bool suppressError = false;
 
   /// 根据图片uri自动判断是使用本地加载还是远程加载
   ImageView(
     String imageUri, {
-    Key? key,
+    super.key,
     this.width,
     this.height,
     this.size,
@@ -91,13 +92,12 @@ class ImageView extends StatelessWidget {
           (darkImagePath != null && autoDarkMode == false) ||
               darkImagePath == null,
           '不能同时设置darkImagePath和autoDarkMode',
-        ),
-        super(key: key);
+        );
 
   /// 跟默认构造器的区别是icon构造器默认是BoxFit.contain
   ImageView.icon(
     String imageUri, {
-    Key? key,
+    super.key,
     this.width,
     this.height,
     this.size,
@@ -127,12 +127,11 @@ class ImageView extends StatelessWidget {
           (darkImagePath != null && autoDarkMode == false) ||
               darkImagePath == null,
           '不能同时设置darkImagePath和autoDarkMode',
-        ),
-        super(key: key);
+        );
 
   const ImageView.local(
     this.imagePath, {
-    Key? key,
+    super.key,
     this.width,
     this.height,
     this.size,
@@ -161,12 +160,11 @@ class ImageView extends StatelessWidget {
           (darkImagePath != null && autoDarkMode == false) ||
               darkImagePath == null,
           '不能同时设置darkImagePath和autoDarkMode',
-        ),
-        super(key: key);
+        );
 
   const ImageView.remote(
     this.imageUrl, {
-    Key? key,
+    super.key,
     this.width,
     this.height,
     this.size,
@@ -195,8 +193,7 @@ class ImageView extends StatelessWidget {
           (darkImagePath != null && autoDarkMode == false) ||
               darkImagePath == null,
           '不能同时设置darkImagePath和autoDarkMode',
-        ),
-        super(key: key);
+        );
 
   /// 本地图片路径
   final String? imagePath;
@@ -279,7 +276,6 @@ class ImageView extends StatelessWidget {
     final _cacheWidth = cacheSize ?? cacheWidth;
     final _cacheHeight = cacheSize ?? cacheHeight;
     final _placeholder = placeholder ?? globalPlaceholder;
-    final _errorWidget = errorWidget ?? globalErrorWidget;
 
     Widget result;
     // 本地图片
@@ -461,7 +457,7 @@ class ImageView extends StatelessWidget {
     dynamic stackTrace,
   ) {
     final _errorWidget = errorWidget ?? globalErrorWidget;
-    L.e('显示ImageView发生错误: $error, stacktrace: $stackTrace');
+    if (!suppressError) L.e('显示ImageView发生错误: $error, stacktrace: $stackTrace');
     return _errorWidget ?? (kReleaseMode ? NIL : ErrorWidget(error));
   }
 }

@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 class VisibilityBuilder extends StatelessWidget {
   const VisibilityBuilder({
-    Key? key,
+    super.key,
     this.initialValue = true,
     required this.visibilityStream,
     required this.child,
-  }) : super(key: key);
+  });
 
   final bool initialValue;
   final Stream<bool> visibilityStream;

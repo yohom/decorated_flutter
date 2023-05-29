@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 class AnimatedInt extends ImplicitlyAnimatedWidget {
   const AnimatedInt(
     this.number, {
-    Key? key,
+    super.key,
     required this.builder,
-    Duration duration = const Duration(milliseconds: 2000),
-    Curve curve = Curves.decelerate,
-  }) : super(duration: duration, curve: curve, key: key);
+    super.duration = const Duration(milliseconds: 2000),
+    super.curve = Curves.decelerate,
+  });
 
   final int number;
   final Widget Function(int) builder;
@@ -38,11 +38,11 @@ class _AnimatedCountState extends AnimatedWidgetBaseState<AnimatedInt> {
 class AnimatedDouble extends ImplicitlyAnimatedWidget {
   const AnimatedDouble(
     this.number, {
-    Key? key,
+    super.key,
     required this.builder,
-    Duration duration = const Duration(milliseconds: 2000),
-    Curve curve = Curves.decelerate,
-  }) : super(duration: duration, curve: curve, key: key);
+    super.duration = const Duration(milliseconds: 2000),
+    super.curve = Curves.decelerate,
+  });
 
   final double number;
   final Widget Function(double) builder;
