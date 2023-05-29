@@ -1,3 +1,8 @@
+## 0.47.1
+- [优化] 优化日志
+- [优化] 增加suppressError
+- [优化] 增加onErrorTapped和onEmptyTapped
+
 ## 0.47.0
 - [优化] [break change] 调整runDecoratedApp为callback形式
 
