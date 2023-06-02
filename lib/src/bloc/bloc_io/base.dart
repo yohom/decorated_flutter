@@ -189,14 +189,14 @@ abstract class BaseIO<T> {
     if (_subject.isClosed) return;
 
     if (_printLog) {
-      L.i('$_semantics事件 disposed ');
+      L.i('[$_semantics]事件 disposed ');
     }
     _subject.close();
   }
 
   /// 运行时概要
   String runtimeSummary() {
-    return '$_semantics:\n\t\tseedValue: $_seedValue,\n\t\tlatest: $latest';
+    return '[$_semantics]:\n\t\tseedValue: $_seedValue,\n\t\tlatest: $latest';
   }
 
   @override
@@ -208,7 +208,7 @@ abstract class BaseIO<T> {
   void _handleUpdateMemoryData(T data) {
     latest = data;
     if (_printLog) {
-      L.i('当前$_semantics latest: $latest');
+      L.i('当前 [$_semantics] latest: $latest');
     }
   }
 
