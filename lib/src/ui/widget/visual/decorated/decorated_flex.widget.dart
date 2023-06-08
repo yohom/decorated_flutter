@@ -59,6 +59,7 @@ class DecoratedRow extends DecoratedFlex {
     super.iconColor,
     super.systemOverlayStyle,
     super.ignorePointer,
+    super.absorbPointer,
     super.enableFeedback,
     super.autofillGroup,
     super.aspectRatio,
@@ -125,6 +126,7 @@ class DecoratedColumn extends DecoratedFlex {
     super.iconColor,
     super.systemOverlayStyle,
     super.ignorePointer,
+    super.absorbPointer,
     super.enableFeedback,
     super.autofillGroup,
     super.aspectRatio,
@@ -191,6 +193,7 @@ class DecoratedFlex extends StatelessWidget {
     this.iconColor,
     this.systemOverlayStyle,
     this.ignorePointer,
+    this.absorbPointer,
     this.enableFeedback,
     this.autofillGroup,
     this.aspectRatio,
@@ -312,8 +315,11 @@ class DecoratedFlex extends StatelessWidget {
 
   final SystemUiOverlayStyle? systemOverlayStyle;
 
-  /// 是否忽略指针事件
+  /// 是否忽略指针事件(本身和子Widget都不响应事件)
   final bool? ignorePointer;
+
+  /// 是否吸收指针事件(本身响应事件, 但是阻止子Widget响应事件)
+  final bool? absorbPointer;
 
   final bool? enableFeedback;
 
@@ -537,6 +543,10 @@ class DecoratedFlex extends StatelessWidget {
 
     if (ignorePointer != null) {
       result = IgnorePointer(ignoring: ignorePointer!, child: result);
+    }
+
+    if (absorbPointer != null) {
+      result = AbsorbPointer(absorbing: absorbPointer!, child: result);
     }
 
     if (expanded == true) {
