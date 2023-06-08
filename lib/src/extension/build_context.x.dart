@@ -34,7 +34,11 @@ extension BuildContextX on BuildContext {
   }
 
   void clearFocus() {
-    FocusScope.of(this).unfocus();
+    // 参考 https://github.com/flutter/flutter/issues/54277#issuecomment-867119458
+    final FocusScopeNode currentScope = FocusScope.of(this);
+    if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+      FocusManager.instance.primaryFocus?.unfocus();
+    }
   }
 
   FormState get form {
