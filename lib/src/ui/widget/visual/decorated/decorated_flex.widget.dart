@@ -375,7 +375,7 @@ class DecoratedFlex extends StatelessWidget {
       result = AutofillGroup(child: result);
     }
 
-    if (safeArea != null) {
+    if (safeArea != null && safeArea!.inner) {
       result = SafeArea(
         top: safeArea?.top ?? true,
         bottom: safeArea?.bottom ?? true,
@@ -501,6 +501,16 @@ class DecoratedFlex extends StatelessWidget {
 
     if (repaintBoundaryKey != null) {
       result = RepaintBoundary(key: repaintBoundaryKey, child: result);
+    }
+
+    if (safeArea != null && !safeArea!.inner) {
+      result = SafeArea(
+        top: safeArea?.top ?? true,
+        bottom: safeArea?.bottom ?? true,
+        left: safeArea?.left ?? true,
+        right: safeArea?.right ?? true,
+        child: result,
+      );
     }
 
     if (scrollable == true) {
