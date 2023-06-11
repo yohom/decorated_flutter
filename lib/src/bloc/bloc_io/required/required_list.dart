@@ -404,7 +404,7 @@ mixin ListMixin<T> on BaseIO<List<T>> {
 
   /// 对[target]进行单选操作, 如果[T]不为[Selectable]则什么都不做, 直接透传
   /// 根据[isRadio]判断是否是单选, 默认单选
-  List<T>? select(T target, {bool isRadio = true}) {
+  List<T>? select(T? target, {bool isRadio = true}) {
     if (_subject.isClosed) {
       L.w('IO在close状态下请求发送数据');
       return null;
