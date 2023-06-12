@@ -1,4 +1,4 @@
-import 'package:decorated_flutter/decorated_flutter.dart';
+import 'bloc_io/base.dart';
 
 @Deprecated('使用PersistConfig处理自动持久化事宜')
 abstract class Persistence {
@@ -29,8 +29,5 @@ class PersistConfig<T> {
     required this.onDeserialize,
     required this.onSerialize,
     this.debounceTime,
-  }) : assert(
-          !gDecoratedStorage.containsKey(key),
-          '全局存储中已存在该key($key), 请检查是否代码有bug!',
-        );
+  });
 }
