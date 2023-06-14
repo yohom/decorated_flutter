@@ -1,6 +1,7 @@
 ## 0.47.3
 - [修正] setText修正
-- [优化] 增加PersistConfig的key检查
+- [优化] 增加countWhere
+- [优化] DecoratedStack适配SafeAreaConfig
 
 ## 0.47.2
 - [优化] safeArea区分作用于内部还是外部
