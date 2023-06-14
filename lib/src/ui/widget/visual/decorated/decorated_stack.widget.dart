@@ -151,7 +151,7 @@ class DecoratedStack extends StatelessWidget {
       result = AspectRatio(aspectRatio: aspectRatio!, child: result);
     }
 
-    if (safeArea != null) {
+    if (safeArea != null && safeArea!.inner) {
       result = SafeArea(
         top: safeArea?.top ?? true,
         bottom: safeArea?.bottom ?? true,
@@ -223,6 +223,16 @@ class DecoratedStack extends StatelessWidget {
             onLongPressed == null ? null : () => onLongPressed!(context),
         onVerticalDragEnd: onVerticalDragEnd,
         onHorizontalDragEnd: onHorizontalDragEnd,
+        child: result,
+      );
+    }
+
+    if (safeArea != null && !safeArea!.inner) {
+      result = SafeArea(
+        top: safeArea?.top ?? true,
+        bottom: safeArea?.bottom ?? true,
+        left: safeArea?.left ?? true,
+        right: safeArea?.right ?? true,
         child: result,
       );
     }
