@@ -1,12 +1,7 @@
 import 'dart:async';
 
-import 'package:decorated_flutter/src/utils/utils.export.dart';
+import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:rxdart/rxdart.dart';
-
-import '../ui/ui.export.dart';
-import '../ui/widget/visual/placeholder/loading.widget.dart';
-import 'future.x.dart';
 
 extension ListStreamX<T> on Stream<List<T>> {
   /// 在一个列表Stream中, 找出目标项, 并转换为该项的Stream
@@ -36,6 +31,13 @@ extension ListStreamX<T> on Stream<List<T>> {
         return source?.where((it) => by(it, keyword)).toList() ?? [];
       },
     );
+  }
+}
+
+extension SelectableListStreamX on Stream<List<Selectable>> {
+  /// 把[Selectable]的列表流转换为对应的选中数量流
+  Stream<int> selectedCount() {
+    return map((event) => event.whereOrEmpty((it) => it.isSelected).length);
   }
 }
 
