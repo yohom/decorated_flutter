@@ -102,7 +102,7 @@ extension IterableX<T> on Iterable<T> {
   ///
   /// 使用场景: 有时候数据源获取来的数据是空字符串(''), 要过滤这种情况非常繁琐, 这个时候就可以
   /// 使用此方法来简化操作
-  T? fallback({bool Function(T?) until = isNotEmpty}) {
+  T? fallback({bool Function(T) until = isNotEmpty}) {
     for (final item in this) {
       if (until(item)) return item;
     }
