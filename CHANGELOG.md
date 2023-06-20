@@ -5,6 +5,8 @@
 - [优化] 更新依赖
 - [优化] 优化isLoading的赋值
 - [优化] Stream<List<Selectable>>增加selectedCount
+- [优化] 调整fallback方法的签名(可能有break change)
+- [优化] 增加LifecycleBLoCMixin
 
 ## 0.47.2
 - [优化] safeArea区分作用于内部还是外部
