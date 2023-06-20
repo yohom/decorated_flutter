@@ -134,3 +134,48 @@ abstract class GlobalBLoC extends BLoC {
     super.dispose();
   }
 }
+
+mixin LifecycleBLoCMixin on BLoC, WidgetsBindingObserver {
+  @override
+  FutureOr<void> init() async {
+    await super.init();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.resumed:
+        onResumed();
+        break;
+      case AppLifecycleState.inactive:
+        onInactive();
+        break;
+      case AppLifecycleState.paused:
+        onPaused();
+        break;
+      case AppLifecycleState.detached:
+        onDetached();
+        break;
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @protected
+  void onResumed() {}
+
+  @protected
+  void onInactive() {}
+
+  @protected
+  void onPaused() {}
+
+  @protected
+  void onDetached() {}
+}
