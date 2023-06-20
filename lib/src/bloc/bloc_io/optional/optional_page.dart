@@ -106,59 +106,64 @@ mixin OptionalPageMixin<T, ARG> on OptionalListMixin<T> {
   ///
   /// 返回是否还有更多数据 true为还有更多数据 false为没有更多数据
   Future<bool> loadMore([ARG? args]) async {
-    _inLoading = true;
+    try {
+      _inLoading = true;
 
-    // 如果已经没有更多数据的话, 就不再请求
-    if (!_noMoreData) {
-      try {
-        final nextPageData = await _pageFetch(++_currentPage, args);
-        if (_receiveFullData) {
-          // 如果有自定义的合并逻辑, 则调用之, 否则直接合并列表
-          if (_onMergeList != null) {
-            _dataList = _onMergeList!(_dataList, nextPageData);
+      // 如果已经没有更多数据的话, 就不再请求
+      if (!_noMoreData) {
+        try {
+          final nextPageData = await _pageFetch(++_currentPage, args);
+          if (_receiveFullData) {
+            // 如果有自定义的合并逻辑, 则调用之, 否则直接合并列表
+            if (_onMergeList != null) {
+              _dataList = _onMergeList!(_dataList, nextPageData);
+            } else {
+              _dataList = [..._dataList, ...nextPageData];
+            }
           } else {
-            _dataList = [..._dataList, ...nextPageData];
+            _dataList = nextPageData;
           }
-        } else {
-          _dataList = nextPageData;
-        }
-        // 如果有提供判断是否列表为空的回调, 则调用之, 否则直接判断是否为空列表
-        if (_isNoMoreData != null) {
-          _noMoreData = _isNoMoreData!(nextPageData);
-        } else {
-          _noMoreData = nextPageData.isEmpty;
-        }
+          // 如果有提供判断是否列表为空的回调, 则调用之, 否则直接判断是否为空列表
+          if (_isNoMoreData != null) {
+            _noMoreData = _isNoMoreData!(nextPageData);
+          } else {
+            _noMoreData = nextPageData.isEmpty;
+          }
 
-        if (_subject.isClosed) return false;
-        _subject.add(_dataList);
-      } catch (e) {
-        if (_subject.isClosed) return false;
-        _subject.addError(e);
+          if (_subject.isClosed) return false;
+          _subject.add(_dataList);
+        } catch (e) {
+          if (_subject.isClosed) return false;
+          _subject.addError(e);
+        }
+      } else {
+        L.d('$_semantics 没有更多数据!');
       }
-    } else {
-      L.d('$_semantics 没有更多数据!');
-    }
 
-    _inLoading = false;
-    return !_noMoreData;
+      return !_noMoreData;
+    } finally {
+      _inLoading = false;
+    }
   }
 
   /// 请求指定页数的数据
   Future<void> loadPage(int page, [ARG? args]) async {
-    _inLoading = true;
-
     try {
-      _dataList = await _pageFetch(page, args);
-      _currentPage = page;
+      _inLoading = true;
 
-      if (_subject.isClosed) return;
-      _subject.add(_dataList);
-    } catch (e) {
-      if (_subject.isClosed) return;
-      _subject.addError(e);
+      try {
+        _dataList = await _pageFetch(page, args);
+        _currentPage = page;
+
+        if (_subject.isClosed) return;
+        _subject.add(_dataList);
+      } catch (e) {
+        if (_subject.isClosed) return;
+        _subject.addError(e);
+      }
+    } finally {
+      _inLoading = false;
     }
-
-    _inLoading = false;
   }
 
   /// 刷新列表

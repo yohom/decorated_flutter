@@ -3,6 +3,8 @@
 - [优化] 增加countWhere
 - [优化] DecoratedStack适配SafeAreaConfig
 - [优化] 更新依赖
+- [优化] 优化isLoading的赋值
+- [优化] Stream<List<Selectable>>增加selectedCount
 
 ## 0.47.2
 - [优化] safeArea区分作用于内部还是外部

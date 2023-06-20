@@ -1,8 +1,11 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 
-class VisibilityBuilder extends StatelessWidget {
-  const VisibilityBuilder({
+@Deprecated('使用RxVisibility代替')
+typedef VisibilityBuilder = RxVisibility;
+
+class RxVisibility extends StatelessWidget {
+  const RxVisibility({
     super.key,
     this.initialValue = true,
     required this.visibilityStream,
