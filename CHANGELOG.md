@@ -1,4 +1,4 @@
-## 0.47.3
+## 0.48.0
 - [修正] setText修正
 - [优化] 增加countWhere
 - [优化] DecoratedStack适配SafeAreaConfig
