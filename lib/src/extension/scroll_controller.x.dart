@@ -23,6 +23,19 @@ extension ScrollControllerX on ScrollController {
     );
   }
 
+  Future<void> animateBy(
+    double offset, {
+    Duration duration = const Duration(milliseconds: 100),
+    Curve curve = Curves.decelerate,
+  }) {
+    final target = position.pixels + offset;
+    return animateTo(
+      target,
+      duration: duration,
+      curve: curve,
+    );
+  }
+
   void jumpToMin() {
     return jumpTo(0);
   }
