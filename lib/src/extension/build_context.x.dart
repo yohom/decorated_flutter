@@ -50,33 +50,35 @@ extension BuildContextX on BuildContext {
   }
 
   double get height {
-    return MediaQuery.of(this).size.height;
+    return MediaQuery.sizeOf(this).height;
   }
 
   double get width {
-    return MediaQuery.of(this).size.width;
+    return MediaQuery.sizeOf(this).width;
   }
 
   double get physicalHeight {
-    final data = MediaQuery.of(this);
-    return data.size.height * data.devicePixelRatio;
+    final height = MediaQuery.sizeOf(this).height;
+    final devicePixelRatio = MediaQuery.devicePixelRatioOf(this);
+    return height * devicePixelRatio;
   }
 
   double get physicalWidth {
-    final data = MediaQuery.of(this);
-    return data.size.width * data.devicePixelRatio;
+    final width = MediaQuery.sizeOf(this).width;
+    final devicePixelRatio = MediaQuery.devicePixelRatioOf(this);
+    return width * devicePixelRatio;
   }
 
   EdgeInsets get padding {
-    return MediaQuery.of(this).padding;
+    return MediaQuery.paddingOf(this);
   }
 
   EdgeInsets get viewPadding {
-    return MediaQuery.of(this).viewPadding;
+    return MediaQuery.viewPaddingOf(this);
   }
 
   EdgeInsets get viewInsets {
-    return MediaQuery.of(this).viewInsets;
+    return MediaQuery.viewInsetsOf(this);
   }
 
   @Deprecated('跟BuildContext自身的size属性冲突')
@@ -85,11 +87,11 @@ extension BuildContextX on BuildContext {
   }
 
   bool get isPortrait {
-    return MediaQuery.of(this).orientation == Orientation.portrait;
+    return MediaQuery.orientationOf(this) == Orientation.portrait;
   }
 
   bool get isLandscape {
-    return MediaQuery.of(this).orientation == Orientation.landscape;
+    return MediaQuery.orientationOf(this) == Orientation.landscape;
   }
 
   TextTheme get textTheme {

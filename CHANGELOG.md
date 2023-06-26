@@ -1,3 +1,7 @@
+## 0.48.1
+- [优化] ScrollControllerX增加animateBy
+- [优化] 使用Flutter3.10提供的MediaQuery优化
+
 ## 0.48.0
 - [修正] setText修正
 - [优化] 增加countWhere
