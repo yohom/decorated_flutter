@@ -209,6 +209,10 @@ extension SelectableListX<T extends Selectable> on List<T> {
     return this;
   }
 
+  List<T> whereSelected() {
+    return whereOrEmpty((element) => element.isSelected).toList();
+  }
+
   /// 选中指定元素
   void select(T target) {
     for (final item in this) {
