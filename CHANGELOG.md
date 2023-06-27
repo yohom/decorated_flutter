@@ -1,6 +1,8 @@
 ## 0.48.1
-- [优化] ScrollControllerX增加animateBy
-- [优化] 使用Flutter3.10提供的MediaQuery优化
+- [优化] ScrollControllerX增加animateBy;
+- [优化] 使用Flutter3.10提供的MediaQuery优化;
+- [优化] `DecoratedFlex`增加`childrenFlex`参数, 方便控制子元素的flex;
+- [过时] `childrenFlex`可以覆盖`forceItemSameExtent`的功能, 标记`forceItemSameExtent`为过时;
 
 ## 0.48.0
 - [修正] setText修正

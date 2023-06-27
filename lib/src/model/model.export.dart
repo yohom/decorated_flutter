@@ -1,6 +1,7 @@
 export 'close_keyboard_config.dart';
 export 'empty.dart';
 export 'evicting_queue.dart';
+export 'flex_config.dart';
 export 'list_wrapper.dart';
 export 'local_navigator_config.dart';
 export 'primary_scroll_controller_config.dart';

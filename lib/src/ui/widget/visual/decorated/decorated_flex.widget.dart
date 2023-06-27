@@ -35,6 +35,7 @@ class DecoratedRow extends DecoratedFlex {
     super.expanded,
     super.flexible,
     super.flex,
+    @Deprecated('可以使用childrenFlex: FlexConfig.expanded()代替')
     super.forceItemSameExtent = false,
     super.elevation,
     super.material = false,
@@ -64,6 +65,7 @@ class DecoratedRow extends DecoratedFlex {
     super.autofillGroup,
     super.aspectRatio,
     super.reverse,
+    super.childrenFlex,
     super.children = const [],
   }) : super(direction: Axis.horizontal);
 }
@@ -102,6 +104,7 @@ class DecoratedColumn extends DecoratedFlex {
     super.flexible,
     super.withForm,
     super.flex,
+    @Deprecated('可以使用childrenFlex: FlexConfig.expanded()代替')
     super.forceItemSameExtent = false,
     super.elevation,
     super.material = false,
@@ -131,6 +134,7 @@ class DecoratedColumn extends DecoratedFlex {
     super.autofillGroup,
     super.aspectRatio,
     super.reverse,
+    super.childrenFlex,
     super.children = const [],
   }) : super(direction: Axis.vertical);
 }
@@ -170,6 +174,7 @@ class DecoratedFlex extends StatelessWidget {
     this.flexible,
     this.withForm,
     this.flex,
+    @Deprecated('可以使用childrenFlex: FlexConfig.expanded()代替')
     this.forceItemSameExtent = false,
     this.elevation,
     this.safeArea,
@@ -198,6 +203,7 @@ class DecoratedFlex extends StatelessWidget {
     this.autofillGroup,
     this.aspectRatio,
     this.reverse,
+    this.childrenFlex,
     this.children = const [],
   });
 
@@ -268,6 +274,7 @@ class DecoratedFlex extends StatelessWidget {
   final int? flex;
 
   /// 是否强制子控件等长
+  @Deprecated('可以使用childrenFlex: FlexConfig.expanded()代替')
   final bool? forceItemSameExtent;
 
   /// 是否安全区域
@@ -335,6 +342,9 @@ class DecoratedFlex extends StatelessWidget {
   /// 是否反向排列
   final bool? reverse;
 
+  /// 子元素的flex
+  final FlexConfig? childrenFlex;
+
   /// 子元素
   final List<Widget> children;
 
@@ -368,7 +378,21 @@ class DecoratedFlex extends StatelessWidget {
       verticalDirection: verticalDirection ?? VerticalDirection.down,
       children: itemSpacing != 0 || divider != null
           ? _addItemDivider(_children, itemSpacing!, divider)
-          : _children,
+          : childrenFlex != null
+              ? [
+                  for (int i = 0; i < _children.length; i++)
+                    if (childrenFlex!.expanded)
+                      Expanded(
+                        flex: childrenFlex!.flex.getOrNull(i) ?? 1,
+                        child: _children[i],
+                      )
+                    else if (childrenFlex!.expanded)
+                      Flexible(
+                        flex: childrenFlex!.flex.getOrNull(i) ?? 1,
+                        child: _children[i],
+                      )
+                ]
+              : _children,
     );
 
     if (autofillGroup == true) {
