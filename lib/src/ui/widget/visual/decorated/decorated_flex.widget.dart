@@ -35,6 +35,7 @@ class DecoratedRow extends DecoratedFlex {
     super.expanded,
     super.flexible,
     super.flex,
+    @Deprecated('可以使用childrenFlex: FlexConfig.expanded()代替')
     super.forceItemSameExtent = false,
     super.elevation,
     super.material = false,
@@ -103,6 +104,7 @@ class DecoratedColumn extends DecoratedFlex {
     super.flexible,
     super.withForm,
     super.flex,
+    @Deprecated('可以使用childrenFlex: FlexConfig.expanded()代替')
     super.forceItemSameExtent = false,
     super.elevation,
     super.material = false,
@@ -172,6 +174,7 @@ class DecoratedFlex extends StatelessWidget {
     this.flexible,
     this.withForm,
     this.flex,
+    @Deprecated('可以使用childrenFlex: FlexConfig.expanded()代替')
     this.forceItemSameExtent = false,
     this.elevation,
     this.safeArea,
@@ -271,6 +274,7 @@ class DecoratedFlex extends StatelessWidget {
   final int? flex;
 
   /// 是否强制子控件等长
+  @Deprecated('可以使用childrenFlex: FlexConfig.expanded()代替')
   final bool? forceItemSameExtent;
 
   /// 是否安全区域
