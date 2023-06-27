@@ -5,6 +5,7 @@ import 'dart:math';
 
 import 'package:crypto/crypto.dart';
 import 'package:decorated_flutter/src/extension/extension.export.dart';
+import 'package:decorated_flutter/src/mixin/mixin.export.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:uuid/uuid.dart';
@@ -302,4 +303,8 @@ Future<File?> getTmpFile(
   final file = File('${dir.path}/${const Uuid().v4()}${ext.prefixWith('.')}');
   await file.writeAsBytes(bytes);
   return file;
+}
+
+void resetSelectable(Selectable selectable) {
+  selectable.reset();
 }
