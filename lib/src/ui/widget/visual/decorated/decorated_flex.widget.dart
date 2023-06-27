@@ -64,7 +64,7 @@ class DecoratedRow extends DecoratedFlex {
     super.autofillGroup,
     super.aspectRatio,
     super.reverse,
-    super.flexList,
+    super.childrenFlex,
     super.children = const [],
   }) : super(direction: Axis.horizontal);
 }
@@ -132,7 +132,7 @@ class DecoratedColumn extends DecoratedFlex {
     super.autofillGroup,
     super.aspectRatio,
     super.reverse,
-    super.flexList,
+    super.childrenFlex,
     super.children = const [],
   }) : super(direction: Axis.vertical);
 }
@@ -200,7 +200,7 @@ class DecoratedFlex extends StatelessWidget {
     this.autofillGroup,
     this.aspectRatio,
     this.reverse,
-    this.flexList,
+    this.childrenFlex,
     this.children = const [],
   });
 
@@ -339,7 +339,7 @@ class DecoratedFlex extends StatelessWidget {
   final bool? reverse;
 
   /// 子元素的flex
-  final List<int>? flexList;
+  final FlexConfig? childrenFlex;
 
   /// 子元素
   final List<Widget> children;
@@ -374,13 +374,19 @@ class DecoratedFlex extends StatelessWidget {
       verticalDirection: verticalDirection ?? VerticalDirection.down,
       children: itemSpacing != 0 || divider != null
           ? _addItemDivider(_children, itemSpacing!, divider)
-          : flexList != null
+          : childrenFlex != null
               ? [
                   for (int i = 0; i < _children.length; i++)
-                    Flexible(
-                      flex: flexList!.getOrNull(i) ?? 1,
-                      child: _children[i],
-                    )
+                    if (childrenFlex!.expanded)
+                      Expanded(
+                        flex: childrenFlex!.flex.getOrNull(i) ?? 1,
+                        child: _children[i],
+                      )
+                    else if (childrenFlex!.expanded)
+                      Flexible(
+                        flex: childrenFlex!.flex.getOrNull(i) ?? 1,
+                        child: _children[i],
+                      )
                 ]
               : _children,
     );
