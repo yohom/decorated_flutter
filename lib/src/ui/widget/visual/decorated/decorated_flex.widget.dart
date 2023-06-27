@@ -64,6 +64,7 @@ class DecoratedRow extends DecoratedFlex {
     super.autofillGroup,
     super.aspectRatio,
     super.reverse,
+    super.flexList,
     super.children = const [],
   }) : super(direction: Axis.horizontal);
 }
@@ -131,6 +132,7 @@ class DecoratedColumn extends DecoratedFlex {
     super.autofillGroup,
     super.aspectRatio,
     super.reverse,
+    super.flexList,
     super.children = const [],
   }) : super(direction: Axis.vertical);
 }
@@ -198,6 +200,7 @@ class DecoratedFlex extends StatelessWidget {
     this.autofillGroup,
     this.aspectRatio,
     this.reverse,
+    this.flexList,
     this.children = const [],
   });
 
@@ -335,6 +338,9 @@ class DecoratedFlex extends StatelessWidget {
   /// 是否反向排列
   final bool? reverse;
 
+  /// 子元素的flex
+  final List<int>? flexList;
+
   /// 子元素
   final List<Widget> children;
 
@@ -368,7 +374,15 @@ class DecoratedFlex extends StatelessWidget {
       verticalDirection: verticalDirection ?? VerticalDirection.down,
       children: itemSpacing != 0 || divider != null
           ? _addItemDivider(_children, itemSpacing!, divider)
-          : _children,
+          : flexList != null
+              ? [
+                  for (int i = 0; i < _children.length; i++)
+                    Flexible(
+                      flex: flexList!.getOrNull(i) ?? 1,
+                      child: _children[i],
+                    )
+                ]
+              : _children,
     );
 
     if (autofillGroup == true) {
