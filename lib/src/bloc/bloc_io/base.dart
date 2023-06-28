@@ -124,6 +124,10 @@ abstract class BaseIO<T> {
   /// 是否略过错误
   final bool _skipError;
 
+  /// 是否已被销毁
+  bool _isDisposed = false;
+  bool get isDisposed => _isDisposed;
+
   void addError(Object error, [StackTrace? stackTrace]) {
     if (_subject.isClosed) return;
     if (_skipError) return;
@@ -192,6 +196,7 @@ abstract class BaseIO<T> {
       L.i('[$_semantics]事件 disposed ');
     }
     _subject.close();
+    _isDisposed = true;
   }
 
   /// 运行时概要
