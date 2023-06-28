@@ -41,6 +41,10 @@ class DecoratedRow extends DecoratedFlex {
     super.material = false,
     super.safeArea,
     super.textStyle,
+    super.textAlign,
+    super.softWrap,
+    super.maxLines,
+    super.overflow,
     super.repaintBoundaryKey,
     super.widthFactor,
     super.heightFactor,
@@ -110,6 +114,10 @@ class DecoratedColumn extends DecoratedFlex {
     super.material = false,
     super.safeArea,
     super.textStyle,
+    super.textAlign,
+    super.softWrap,
+    super.maxLines,
+    super.overflow,
     super.repaintBoundaryKey,
     super.widthFactor,
     super.heightFactor,
@@ -186,6 +194,10 @@ class DecoratedFlex extends StatelessWidget {
     this.heightFactor,
     this.material = false,
     this.textStyle,
+    this.textAlign,
+    this.softWrap,
+    this.maxLines,
+    this.overflow,
     this.repaintBoundaryKey,
     this.animationDuration,
     this.animationCurve,
@@ -291,6 +303,10 @@ class DecoratedFlex extends StatelessWidget {
 
   /// 内部统一的TextStyle
   final TextStyle? textStyle;
+  final TextAlign? textAlign;
+  final bool? softWrap;
+  final TextOverflow? overflow;
+  final int? maxLines;
 
   /// 是否需要[RepaintBoundary]
   final GlobalKey? repaintBoundaryKey;
@@ -519,8 +535,21 @@ class DecoratedFlex extends StatelessWidget {
       );
     }
 
-    if (textStyle != null) {
-      result = DefaultTextStyle(style: textStyle!, child: result);
+    if (textStyle != null ||
+        textAlign != null ||
+        softWrap != null ||
+        maxLines != null ||
+        overflow != null) {
+      final parent = DefaultTextStyle.of(context);
+      result = DefaultTextStyle(
+        key: key,
+        style: parent.style.merge(textStyle),
+        textAlign: textAlign ?? parent.textAlign,
+        softWrap: softWrap ?? parent.softWrap,
+        overflow: overflow ?? parent.overflow,
+        maxLines: maxLines ?? parent.maxLines,
+        child: result,
+      );
     }
 
     if (repaintBoundaryKey != null) {
