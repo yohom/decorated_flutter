@@ -2,6 +2,11 @@
 - [优化] ScrollControllerX增加animateBy;
 - [优化] 使用Flutter3.10提供的MediaQuery优化;
 - [优化] `DecoratedFlex`增加`childrenFlex`参数, 方便控制子元素的flex;
+- [优化] 增加`resetSelectable`函数, 方便过滤时直接传入;
+- [优化] `DecoratedFlex`增加`textAlign`, `softWrap`, `maxLines`, `overflow`, 直接控制子widget的文本样式;
+- [优化] `Countdown`的`onZero`只执行一次;
+- [优化] BLoC IO增加`isDisposed`, 方便检查是否已经被销毁;
+
 - [过时] `childrenFlex`可以覆盖`forceItemSameExtent`的功能, 标记`forceItemSameExtent`为过时;
 
 ## 0.48.0

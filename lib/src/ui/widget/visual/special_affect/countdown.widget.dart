@@ -23,10 +23,12 @@ class Countdown extends StatefulWidget {
 
 class _CountdownState extends State<Countdown> {
   late Stream<int> _countStream;
+  late bool isZeroed;
 
   @override
   void initState() {
     super.initState();
+    isZeroed = false;
     _countStream = Stream.periodic(
       widget.interval,
       (count) => widget.initialData - 1 - count,
@@ -39,7 +41,8 @@ class _CountdownState extends State<Countdown> {
       initialData: widget.initialData,
       stream: _countStream,
       builder: (context, snapshot) {
-        if (snapshot.requireData <= 0) {
+        if (snapshot.requireData <= 0 && !isZeroed) {
+          isZeroed = true;
           widget.onZero?.call();
         }
         return widget.builder(context, snapshot.data!);
