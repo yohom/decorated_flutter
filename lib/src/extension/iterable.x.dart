@@ -219,6 +219,17 @@ extension SelectableListX<T extends Selectable> on List<T> {
     return this;
   }
 
+  /// 选择第[index]个元素
+  List<T> selectAtIndex(int index) {
+    final target = getOrNull(index);
+    if (target == null) {
+      L.w('索引 $index 处没有元素!');
+    } else {
+      target.isSelected = true;
+    }
+    return this;
+  }
+
   List<T> whereSelected() {
     return whereOrEmpty((element) => element.isSelected).toList();
   }
