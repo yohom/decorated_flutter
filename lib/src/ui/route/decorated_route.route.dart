@@ -24,6 +24,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialPageRoute<T> {
     this.autoDispose = true,
     this.decorationBuilder,
     this.backgroundBuilder,
+    this.foregroundBuilder,
     this.primaryScrollControllerConfig,
     required String routeName,
     super.fullscreenDialog,
@@ -86,7 +87,10 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialPageRoute<T> {
   final BoxDecoration Function(BuildContext)? decorationBuilder;
 
   /// 背景
-  final Widget Function(BuildContext)? backgroundBuilder;
+  final WidgetBuilder? backgroundBuilder;
+
+  /// 前景
+  final WidgetBuilder? foregroundBuilder;
 
   /// 是否已经初始化
   bool _isInitialized = false;
@@ -187,8 +191,14 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialPageRoute<T> {
       );
     }
 
-    if (backgroundBuilder != null) {
-      result = Stack(children: [backgroundBuilder!.call(context), result]);
+    if (backgroundBuilder != null || foregroundBuilder != null) {
+      result = Stack(
+        children: [
+          if (backgroundBuilder != null) backgroundBuilder!(context),
+          result,
+          if (foregroundBuilder != null) foregroundBuilder!(context),
+        ],
+      );
     }
 
     return Material(

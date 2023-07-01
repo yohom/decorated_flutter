@@ -6,6 +6,9 @@
 - [优化] `DecoratedFlex`增加`textAlign`, `softWrap`, `maxLines`, `overflow`, 直接控制子widget的文本样式;
 - [优化] `Countdown`的`onZero`只执行一次;
 - [优化] BLoC IO增加`isDisposed`, 方便检查是否已经被销毁;
+- [优化] `List`增加`replaceEquals`;
+- [优化] `DecoratedRoute`增加`foregroundBuilder`;
+- [优化] `SelectableListX`增加`selectAtIndex`;
 
 - [过时] `childrenFlex`可以覆盖`forceItemSameExtent`的功能, 标记`forceItemSameExtent`为过时;
 

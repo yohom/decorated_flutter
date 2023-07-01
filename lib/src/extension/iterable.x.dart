@@ -164,6 +164,16 @@ extension ListX<T> on List<T> {
     replaceRange(index, index + 1, [element]);
   }
 
+  /// 替换等价的元素
+  ///
+  /// 使用场景: 覆写了equals的类, 可以直接覆盖与之等价的对象
+  void replaceEquals(T element) {
+    final index = indexOf(element);
+    if (index == -1) return L.w('未找到目标元素, 略过replaceEquals');
+
+    replace(indexOf(element), element);
+  }
+
   /// 重复列表[factor]次
   List<T> operator *(int factor) {
     return [for (int i = 0; i < factor; i++) ...this];
@@ -205,6 +215,17 @@ extension SelectableListX<T extends Selectable> on List<T> {
   List<T> selectFirst() {
     if (this.isNotEmpty) {
       first.isSelected == true;
+    }
+    return this;
+  }
+
+  /// 选择第[index]个元素
+  List<T> selectAtIndex(int index) {
+    final target = getOrNull(index);
+    if (target == null) {
+      L.w('索引 $index 处没有元素!');
+    } else {
+      target.isSelected = true;
     }
     return this;
   }
