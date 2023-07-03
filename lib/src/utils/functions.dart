@@ -308,3 +308,11 @@ Future<File?> getTmpFile(
 void resetSelectable(Selectable selectable) {
   selectable.reset();
 }
+
+T getFirst<T>(List<T> list) {
+  return list.first;
+}
+
+T? getFirstOrNull<T>(List<T> list) {
+  return list.firstOrNull;
+}
