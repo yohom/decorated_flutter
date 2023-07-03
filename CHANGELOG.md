@@ -9,6 +9,7 @@
 - [优化] `List`增加`replaceEquals`;
 - [优化] `DecoratedRoute`增加`foregroundBuilder`;
 - [优化] `SelectableListX`增加`selectAtIndex`;
+- [优化] 增加`getFirst`和`getFirstOrNull`函数;
 
 - [过时] `childrenFlex`可以覆盖`forceItemSameExtent`的功能, 标记`forceItemSameExtent`为过时;
 
