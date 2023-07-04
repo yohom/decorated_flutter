@@ -33,6 +33,7 @@ class OptionalListOutput<T, ARG> extends Output<List<T>?, ARG>
     int? forceCapacity,
     required FetchCallback<List<T>, ARG?> super.fetch,
     super.onReset,
+    super.skipError,
     super.persistConfig,
   }) {
     _forceCapacity = forceCapacity;

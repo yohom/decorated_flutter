@@ -16,6 +16,7 @@ class PageOutput<T, ARG> extends ListOutput<T, int> with PageMixin<T, ARG> {
     int? forceCapacity,
     required PageFetchCallback<List<T>, ARG?> pageFetch,
     super.onReset,
+    super.skipError,
     super.persistConfig,
   }) : super(fetch: (_) => Future.value([])) {
     _initPage = initPage ?? defaultInitialPage ?? 0;
@@ -38,6 +39,7 @@ class PageOutput<T, ARG> extends ListOutput<T, int> with PageMixin<T, ARG> {
     required PageFetchCallback<List<T>, ARG?> pageFetch,
     List<T>? Function()? onReset,
     PersistConfig<List<T>?>? persistConfig,
+    bool skipError = false,
     MergeListCallback<T>? onMergeList,
     NoMoreDataCallback<T>? isNoMoreData,
   }) {
@@ -54,6 +56,7 @@ class PageOutput<T, ARG> extends ListOutput<T, int> with PageMixin<T, ARG> {
       onReset: onReset,
       persistConfig: persistConfig,
       onMergeList: onMergeList,
+      skipError: true,
       isNoMoreData: isNoMoreData,
     );
   }

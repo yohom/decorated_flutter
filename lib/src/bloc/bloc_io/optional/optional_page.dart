@@ -17,6 +17,7 @@ class OptionalPageOutput<T, ARG> extends OptionalListOutput<T, int>
     required PageFetchCallback<List<T>, ARG?> pageFetch,
     super.onReset,
     super.persistConfig,
+    super.skipError,
     MergeListCallback<T>? onMergeList,
     NoMoreDataCallback<T>? isNoMoreData,
   }) : super(fetch: (_) => Future.error('请使用pageFetch回调!')) {
