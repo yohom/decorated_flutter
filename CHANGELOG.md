@@ -1,3 +1,6 @@
+## 0.48.2
+- [修复] 修正`StringX::substringAfterLast`逻辑;
+
 ## 0.48.1
 - [优化] ScrollControllerX增加animateBy;
 - [优化] 使用Flutter3.10提供的MediaQuery优化;
@@ -11,7 +14,7 @@
 - [优化] `SelectableListX`增加`selectAtIndex`;
 - [优化] 增加`getFirst`和`getFirstOrNull`函数;
 - [优化] 补充`skipError`参数;
-
+------------------------------------------------------------------------------------------
 - [过时] `childrenFlex`可以覆盖`forceItemSameExtent`的功能, 标记`forceItemSameExtent`为过时;
 
 ## 0.48.0

@@ -103,9 +103,9 @@ extension StringX on String {
     return substring(0, position);
   }
 
-  String substringAfterLast(String separator) {
+  String substringAfterLast(String separator, {bool includeSeparator = false}) {
     final index = lastIndexOf(separator);
-    return substring(index);
+    return substring(index + (includeSeparator ? 0 : 1));
   }
 
   String substringBetween(String left, {required String and}) {
