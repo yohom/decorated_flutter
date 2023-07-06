@@ -8,4 +8,14 @@ void main() {
       'MdUserDTO',
     );
   });
+  test('截取字符串', () {
+    expect(
+      '/test/to/path.zip'.substringAfterLast('.'),
+      'zip',
+    );
+    expect(
+      '/test/to/path.zip'.substringAfterLast('.', includeSeparator: true),
+      '.zip',
+    );
+  });
 }
