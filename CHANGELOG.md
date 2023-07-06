@@ -1,3 +1,6 @@
+## 0.48.2
+- [修复] 修正`StringX::substringAfterLast`逻辑;
+
 ## 0.48.1
 - [优化] ScrollControllerX增加animateBy;
 - [优化] 使用Flutter3.10提供的MediaQuery优化;
