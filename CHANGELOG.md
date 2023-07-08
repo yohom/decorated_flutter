@@ -1,5 +1,6 @@
 ## 0.48.2
 - [修复] 修正`StringX::substringAfterLast`逻辑;
+- [优化] 补完`DecoratedApp`的参数;
 
 ## 0.48.1
 - [优化] ScrollControllerX增加animateBy;
