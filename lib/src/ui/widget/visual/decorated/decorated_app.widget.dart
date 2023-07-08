@@ -26,7 +26,21 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
     this.builder,
     this.debugShowCheckedModeBanner = false,
     this.onDispose,
-  })  : rootBLoC = rootBLoC ?? get();
+    this.localeResolutionCallback,
+    this.localeListResolutionCallback,
+    this.actions,
+    this.checkerboardOffscreenLayers = false,
+    this.checkerboardRasterCacheImages = false,
+    this.color,
+    this.debugShowMaterialGrid = false,
+    this.themeAnimationCurve = Curves.linear,
+    this.themeAnimationDuration = kThemeAnimationDuration,
+    this.scaffoldMessengerKey,
+    this.shortcuts,
+    this.showPerformanceOverlay = false,
+    this.showSemanticsDebugger = false,
+    this.restorationScopeId,
+  }) : rootBLoC = rootBLoC ?? get();
 
   final B rootBLoC;
   final bool preventTextScale;
@@ -48,6 +62,30 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   final TransitionBuilder? builder;
   final bool debugShowCheckedModeBanner;
   final VoidCallback? onDispose;
+
+  /// {@macro flutter.widgets.LocaleResolutionCallback}
+  final LocaleResolutionCallback? localeResolutionCallback;
+
+  /// {@macro flutter.widgets.widgetsApp.localeListResolutionCallback}
+  final LocaleListResolutionCallback? localeListResolutionCallback;
+
+  /// {@macro flutter.widgets.widgetsApp.actions}
+  final Map<Type, Action<Intent>>? actions;
+
+  final bool checkerboardOffscreenLayers,
+      checkerboardRasterCacheImages,
+      debugShowMaterialGrid,
+      showPerformanceOverlay,
+      showSemanticsDebugger;
+  final String? restorationScopeId;
+
+  /// {@macro flutter.widgets.widgetsApp.color}
+  final Color? color;
+
+  final Curve themeAnimationCurve;
+  final Duration themeAnimationDuration;
+  final GlobalKey<ScaffoldMessengerState>? scaffoldMessengerKey;
+  final Map<ShortcutActivator, Intent>? shortcuts;
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +119,20 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
           locale: locale,
           supportedLocales: supportedLocales,
           navigatorObservers: navigatorObservers,
+          localeListResolutionCallback: localeListResolutionCallback,
+          localeResolutionCallback: localeResolutionCallback,
+          actions: actions,
+          checkerboardOffscreenLayers: checkerboardOffscreenLayers,
+          checkerboardRasterCacheImages: checkerboardRasterCacheImages,
+          color: color,
+          debugShowMaterialGrid: debugShowMaterialGrid,
+          themeAnimationCurve: themeAnimationCurve,
+          themeAnimationDuration: themeAnimationDuration,
+          scaffoldMessengerKey: scaffoldMessengerKey,
+          shortcuts: shortcuts,
+          showPerformanceOverlay: showPerformanceOverlay,
+          restorationScopeId: restorationScopeId,
+          showSemanticsDebugger: showSemanticsDebugger,
         ),
       ),
     );
