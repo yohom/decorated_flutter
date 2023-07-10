@@ -324,14 +324,14 @@ T? getFirstOrNull<T>(List<T> list) {
 Future<void> waitFor(
   FutureOr<bool> Function() fn, {
   Duration delayFactor = const Duration(milliseconds: 200),
-  double randomizationFactor = 0.25,
-  Duration maxDelay = const Duration(seconds: 30),
   int maxAttempts = 8,
-}) {
-  return RetryOptions(
-    delayFactor: delayFactor,
-    randomizationFactor: randomizationFactor,
-    maxDelay: maxDelay,
-    maxAttempts: maxAttempts,
-  ).retry(doNothing, retryIf: (_) async => !(await fn()));
+}) async {
+  for (int i = 0; i < maxAttempts; i++) {
+    L.i('第 $i 次获取登录状态');
+    if (await fn()) {
+      break;
+    } else {
+      await Future.delayed(delayFactor);
+    }
+  }
 }
