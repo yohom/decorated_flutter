@@ -1,21 +1,18 @@
+@Deprecated('统一使用io_logger')
+library html_logger;
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:talker/talker.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 
 import 'logger.dart';
 
-class Logger implements ILogger {
-  final _talker = Talker();
-
-  /// 初始化日志
-  @override
-  Future<void> init({bool withFileLogger = true}) async {
-    // do nothing
-  }
-
-  /// 日志所在路径
-  @override
-  String get logDir => 'invalid';
+class Logger extends ILogger {
+  final _talker = TalkerFlutter.init(
+    settings: TalkerSettings(
+      enabled: !kReleaseMode,
+    ),
+  );
 
   @override
   void d(Object content) {
@@ -51,9 +48,6 @@ class Logger implements ILogger {
       _talker.verbose(content);
     }
   }
-
-  @override
-  void dispose() {}
 
   @override
   Interceptor get dioLogger {
