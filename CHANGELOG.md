@@ -1,151 +1,152 @@
 ## 0.48.2
-- [修复] 修正`StringX::substringAfterLast`逻辑;
-- [优化] 补完`DecoratedApp`的参数;
+- [🐛] 修正`StringX::substringAfterLast`逻辑;
+- [🚀] 补完`DecoratedApp`的参数;
+- [🚀] 增加重试机制`retry`/`waitFor`;
 
 ## 0.48.1
-- [优化] ScrollControllerX增加animateBy;
-- [优化] 使用Flutter3.10提供的MediaQuery优化;
-- [优化] `DecoratedFlex`增加`childrenFlex`参数, 方便控制子元素的flex;
-- [优化] 增加`resetSelectable`函数, 方便过滤时直接传入;
-- [优化] `DecoratedFlex`增加`textAlign`, `softWrap`, `maxLines`, `overflow`, 直接控制子widget的文本样式;
-- [优化] `Countdown`的`onZero`只执行一次;
-- [优化] BLoC IO增加`isDisposed`, 方便检查是否已经被销毁;
-- [优化] `List`增加`replaceEquals`;
-- [优化] `DecoratedRoute`增加`foregroundBuilder`;
-- [优化] `SelectableListX`增加`selectAtIndex`;
-- [优化] 增加`getFirst`和`getFirstOrNull`函数;
-- [优化] 补充`skipError`参数;
+- [🚀] ScrollControllerX增加animateBy;
+- [🚀] 使用Flutter3.10提供的MediaQuery优化;
+- [🚀] `DecoratedFlex`增加`childrenFlex`参数, 方便控制子元素的flex;
+- [🚀] 增加`resetSelectable`函数, 方便过滤时直接传入;
+- [🚀] `DecoratedFlex`增加`textAlign`, `softWrap`, `maxLines`, `overflow`, 直接控制子widget的文本样式;
+- [🚀] `Countdown`的`onZero`只执行一次;
+- [🚀] BLoC IO增加`isDisposed`, 方便检查是否已经被销毁;
+- [🚀] `List`增加`replaceEquals`;
+- [🚀] `DecoratedRoute`增加`foregroundBuilder`;
+- [🚀] `SelectableListX`增加`selectAtIndex`;
+- [🚀] 增加`getFirst`和`getFirstOrNull`函数;
+- [🚀] 补充`skipError`参数;
 ------------------------------------------------------------------------------------------
-- [过时] `childrenFlex`可以覆盖`forceItemSameExtent`的功能, 标记`forceItemSameExtent`为过时;
+- [🔥] `childrenFlex`可以覆盖`forceItemSameExtent`的功能, 标记`forceItemSameExtent`为过时;
 
 ## 0.48.0
-- [修正] setText修正
-- [优化] 增加countWhere
-- [优化] DecoratedStack适配SafeAreaConfig
-- [优化] 更新依赖
-- [优化] 优化isLoading的赋值
-- [优化] Stream<List<Selectable>>增加selectedCount
-- [优化] 调整fallback方法的签名(可能有break change)
-- [优化] 增加LifecycleBLoCMixin
+- [🐛] setText修正
+- [🚀] 增加countWhere
+- [🚀] DecoratedStack适配SafeAreaConfig
+- [🚀] 更新依赖
+- [🚀] 优化isLoading的赋值
+- [🚀] Stream<List<Selectable>>增加selectedCount
+- [🚀] 调整fallback方法的签名(可能有break change)
+- [🚀] 增加LifecycleBLoCMixin
 
 ## 0.47.2
-- [优化] safeArea区分作用于内部还是外部
-- [优化] 优化setText的便捷性
-- [优化] select允许传入null
+- [🚀] safeArea区分作用于内部还是外部
+- [🚀] 优化setText的便捷性
+- [🚀] select允许传入null
 
 ## 0.47.1+1
-- [优化] 增加absorbPointer
-- [优化] 调整打印日志
+- [🚀] 增加absorbPointer
+- [🚀] 调整打印日志
 
 ## 0.47.1
-- [优化] 优化日志
-- [优化] 增加suppressError
-- [优化] 增加onErrorTapped和onEmptyTapped
+- [🚀] 优化日志
+- [🚀] 增加suppressError
+- [🚀] 增加onErrorTapped和onEmptyTapped
 
 ## 0.47.0
-- [优化] [break change] 调整runDecoratedApp为callback形式
+- [🚀] [break change] 调整runDecoratedApp为callback形式
 
 ## 0.46.15+1
-- [优化] 调整sdk范围
+- [🚀] 调整sdk范围
 
 ## 0.46.15
-- [优化] 增加onSecondaryTapDown
-- [优化] DecoratedFlex默认NoSplash.splashFactory
-- [优化] 适配Flutter3.10
+- [🚀] 增加onSecondaryTapDown
+- [🚀] DecoratedFlex默认NoSplash.splashFactory
+- [🚀] 适配Flutter3.10
 
 ## 0.46.14+4
-- [优化] 增加localNavigatorConfig
-- [优化] 增加onSecondaryTap
+- [🚀] 增加localNavigatorConfig
+- [🚀] 增加onSecondaryTap
 
 ## 0.46.14+3
 - [整理] 去除package_info
 
 ## 0.46.14+2
 - [整理] 集中管理deprecated
-- [优化] 增加DecoratedDialogRoute
-- [优化] 错误toast背景色调整
+- [🚀] 增加DecoratedDialogRoute
+- [🚀] 错误toast背景色调整
 
 ## 0.46.14+1
-- [修复] _resetValue为null时, 删除对应key
+- [🐛] _resetValue为null时, 删除对应key
 
 ## 0.46.14
-- [优化] 增加popUntilAny
-- [优化] toast增加backgroundColor
-- [优化] handleError默认toast红色背景
+- [🚀] 增加popUntilAny
+- [🚀] toast增加backgroundColor
+- [🚀] handleError默认toast红色背景
 
 ## 0.46.13
-- [优化] 增加PersistSelectable
-- [修复] profile和release模式不检查debugNeedsPaint
+- [🚀] 增加PersistSelectable
+- [🐛] profile和release模式不检查debugNeedsPaint
 
 ## 0.46.12
-- [优化] 增加AnimatedVisibility.reactive
-- [优化] AnimatedVisibility增加placeholder
+- [🚀] 增加AnimatedVisibility.reactive
+- [🚀] AnimatedVisibility增加placeholder
 
 ## 0.46.11
-- [优化] 优化capture方法
-- [优化] 调整RepaintBoundary的顺序
-- [优化] getTmpFile增加后缀
+- [🚀] 优化capture方法
+- [🚀] 调整RepaintBoundary的顺序
+- [🚀] getTmpFile增加后缀
 
 ## 0.46.10
-- [优化] 增加onGenerateInitialRoutes
-- [优化] 增加onUnknownRoute
-- [优化] 增加pushRoute/replaceRoute/pushRemoveUntil
+- [🚀] 增加onGenerateInitialRoutes
+- [🚀] 增加onUnknownRoute
+- [🚀] 增加pushRoute/replaceRoute/pushRemoveUntil
 
 ## 0.46.9+1
-- [优化] release模式不打印网络日志
+- [🚀] release模式不打印网络日志
 
 ## 0.46.9
-- [优化] valueFor支持列表获取
-- [优化] 增加lastWhereOrNull, firstWhereOrNull
-- [优化] 优化AnimatedVisibility
-- [优化] 增加对HttpException的处理
+- [🚀] valueFor支持列表获取
+- [🚀] 增加lastWhereOrNull, firstWhereOrNull
+- [🚀] 优化AnimatedVisibility
+- [🚀] 增加对HttpException的处理
 - [功能] 增加maxHeight和maxWidth
 
 ## 0.46.8
-- [优化] 优化AutoCloseKeyboard的效果
-- [优化] DecoratedList.sliver不应该设置decorated
-- [优化] 提升依赖 dio: 5.1.0 -> 5.1.1 flutter_svg: 2.0.2 -> 2.0.5
-- [优化] 简化是否是手机号的判断, 只判断是否为11位
+- [🚀] 优化AutoCloseKeyboard的效果
+- [🚀] DecoratedList.sliver不应该设置decorated
+- [🚀] 提升依赖 dio: 5.1.0 -> 5.1.1 flutter_svg: 2.0.2 -> 2.0.5
+- [🚀] 简化是否是手机号的判断, 只判断是否为11位
 - [功能] 增加ImageViewProvider
 - [功能] 增加DashedLine
 
 ## 0.46.7
-- [优化] DecoratedText增加isSelectable
-- [优化] enhance: DecoratedFlex使用InkWell实现波纹
-- [优化] enhance: Subscriber增加padding, margin
-- [修复] fix: 修正StreamOutput的数据转发问题
+- [🚀] DecoratedText增加isSelectable
+- [🚀] enhance: DecoratedFlex使用InkWell实现波纹
+- [🚀] enhance: Subscriber增加padding, margin
+- [🐛] fix: 修正StreamOutput的数据转发问题
 
 ## 0.46.5
 - [重构] 去除mxlogger
 
 ## 0.46.4
-- [优化] PersistConfig增加debounceTime(可以用于在频繁写入的场景, 减少写入频率)
-- [优化] 优化回调签名, 增加变量名
-- [优化] 增加withFileLogger开关
+- [🚀] PersistConfig增加debounceTime(可以用于在频繁写入的场景, 减少写入频率)
+- [🚀] 优化回调签名, 增加变量名
+- [🚀] 增加withFileLogger开关
 
 ## 0.46.3
-- [优化] DecoratedFlex增加reverse参数
-- [优化] DecoratedList增加reverse参数
+- [🚀] DecoratedFlex增加reverse参数
+- [🚀] DecoratedList增加reverse参数
 
 ## 0.46.2
-- [优化] 增加setText扩展
-- [优化] 新的日志系统(兼顾控制台打印和文件系统日志)
-- [优化] 增加通用接口 ILogger
+- [🚀] 增加setText扩展
+- [🚀] 新的日志系统(兼顾控制台打印和文件系统日志)
+- [🚀] 增加通用接口 ILogger
 
 ## 0.46.1
-- [优化] DecoratedApp增加dispose回调
-- [优化] runDecoratedApp的回调前签名优化
+- [🚀] DecoratedApp增加dispose回调
+- [🚀] runDecoratedApp的回调前签名优化
 
 ## 0.46.0
 - [依赖][BREAK CHANGE] 提升Dio依赖到5.x
-- [优化] 扩大requireDate适用范围
+- [🚀] 扩大requireDate适用范围
 
 ## 0.45.1+4
-- [优化] 优化requireDate的适用范围
+- [🚀] 优化requireDate的适用范围
 
 ## 0.45.1+3
-- [优化] showDateDialog增加minimumDate
-- [优化] 优化showDateDialog在web端的判断
+- [🚀] showDateDialog增加minimumDate
+- [🚀] 优化showDateDialog在web端的判断
 
 ## 0.45.1+2
 - [整理] 提升依赖 flutter_mxlogger(1.2.4->1.2.4) kiwi(4.0.3->4.1.0) flutter_svg(2.0.0+1->2.0.2)

@@ -12,6 +12,7 @@ import 'package:uuid/uuid.dart';
 
 import 'logger/logger.dart';
 import 'objects.dart';
+import 'retry.dart';
 
 bool notEqual(prev, next) => prev != next;
 
@@ -315,4 +316,22 @@ T getFirst<T>(List<T> list) {
 
 T? getFirstOrNull<T>(List<T> list) {
   return list.firstOrNull;
+}
+
+/// 等待某个操作符合要求
+///
+/// 使用[retry]的变体来简化实现
+Future<void> waitFor(
+  FutureOr<bool> Function() fn, {
+  Duration delayFactor = const Duration(milliseconds: 200),
+  int maxAttempts = 8,
+}) async {
+  for (int i = 0; i < maxAttempts; i++) {
+    L.i('第 $i 次获取登录状态');
+    if (await fn()) {
+      break;
+    } else {
+      await Future.delayed(delayFactor);
+    }
+  }
 }

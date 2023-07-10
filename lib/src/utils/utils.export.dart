@@ -8,6 +8,7 @@ export 'logger/logger.dart';
 export 'misc.dart';
 export 'navigator.dart';
 export 'objects.dart';
+export 'retry.dart';
 export 'time.dart';
 export 'value.dart';
 export 'view.dart';
