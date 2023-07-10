@@ -1,6 +1,7 @@
 ## 0.48.2
 - [🐛] 修正`StringX::substringAfterLast`逻辑;
 - [🚀] 补完`DecoratedApp`的参数;
+- [🚀] 增加重试机制`retry`/`waitFor`;
 
 ## 0.48.1
 - [🚀] ScrollControllerX增加animateBy;
