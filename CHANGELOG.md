@@ -2,6 +2,9 @@
 - [🐛] 修正`StringX::substringAfterLast`逻辑;
 - [🚀] 补完`DecoratedApp`的参数;
 - [🚀] 增加重试机制`retry`/`waitFor`;
+- [🚀] 补完`runDecoratedApp`参数;
+- [🚀] 增加日志的面板打开功能, `L.openPanel`;
+- [💄] 调整toast样式;
 
 ## 0.48.1
 - [🚀] ScrollControllerX增加animateBy;
