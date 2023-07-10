@@ -162,9 +162,16 @@ Future<void> runDecoratedApp({
   FutureOr<void> Function()? afterApp,
   FutureOr<void> Function(Object, StackTrace)? onError,
   Color? statusBarColor,
+  Color? systemNavigationBarColor,
+  Color? systemNavigationBarDividerColor,
+  Brightness? statusBarBrightness,
+  Brightness? statusBarIconBrightness,
+  Brightness? systemNavigationBarIconBrightness,
+  bool? systemNavigationBarContrastEnforced,
+  bool? systemStatusBarContrastEnforced,
   bool zoned = true,
   bool isTest = false,
-  bool withFileLogger = true,
+  @Deprecated('已无作用') bool withFileLogger = true,
 }) async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -173,7 +180,17 @@ Future<void> runDecoratedApp({
 
   if (statusBarColor != null) {
     SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle.dark.copyWith(statusBarColor: statusBarColor),
+      SystemUiOverlayStyle.dark.copyWith(
+        statusBarColor: statusBarColor,
+        statusBarBrightness: statusBarBrightness,
+        statusBarIconBrightness: statusBarIconBrightness,
+        systemNavigationBarColor: systemNavigationBarColor,
+        systemNavigationBarIconBrightness: systemNavigationBarIconBrightness,
+        systemNavigationBarDividerColor: systemNavigationBarDividerColor,
+        systemNavigationBarContrastEnforced:
+            systemNavigationBarContrastEnforced,
+        systemStatusBarContrastEnforced: systemStatusBarContrastEnforced,
+      ),
     );
   }
 
