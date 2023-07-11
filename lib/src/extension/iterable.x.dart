@@ -164,14 +164,28 @@ extension ListX<T> on List<T> {
     replaceRange(index, index + 1, [element]);
   }
 
+  @Deprecated('统一语义, 使用replaceItem代替')
+  void replaceEquals(T element) {
+    replaceItem(element);
+  }
+
   /// 替换等价的元素
   ///
   /// 使用场景: 覆写了equals的类, 可以直接覆盖与之等价的对象
-  void replaceEquals(T element) {
+  void replaceItem(T element) {
     final index = indexOf(element);
     if (index == -1) return L.w('未找到目标元素, 略过replaceEquals');
 
     replace(indexOf(element), element);
+  }
+
+  /// 替换等价的元素
+  ///
+  /// 使用场景: 覆写了equals的类, 可以直接覆盖与之等价的对象
+  void replaceItems(List<T> elements) {
+    for (final item in elements) {
+      replaceItem(item);
+    }
   }
 
   /// 重复列表[factor]次
