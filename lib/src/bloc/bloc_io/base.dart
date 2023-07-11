@@ -50,11 +50,6 @@ abstract class BaseIO<T> {
     ///
     /// 在轮询场景有用
     bool skipError = false,
-
-    /// 防抖时间间隔
-    ///
-    /// 在发射频率较高时, 可以做到节流效果, 防止过多的消耗
-    Duration? debounceDuration,
   })  : _semantics = semantics,
         _seedValue = seedValue,
         _printLog = printLog,
@@ -68,18 +63,13 @@ abstract class BaseIO<T> {
                 : BehaviorSubject<T>(sync: sync)
             : PublishSubject<T>(sync: sync) {
     // 处理内存数据
-    if (debounceDuration != null) {
-      _subject.debounceTime(debounceDuration).listen(_handleUpdateMemoryData);
-    } else {
-      _subject.listen(_handleUpdateMemoryData);
-    }
-
+    _subject.listen(_handleUpdateMemoryData);
     // 处理持久层数据
     if (_persistConfig != null) {
-      final _duration = _persistConfig!.debounceDuration;
+      final debounceTime = _persistConfig!.debounceTime;
       Stream<T> stream = _subject.stream;
-      if (_duration != null) {
-        stream = _subject.debounceTime(_duration);
+      if (debounceTime != null) {
+        stream = _subject.debounceTime(debounceTime);
       }
       stream.listen(_handleUpdatePersistData);
     }

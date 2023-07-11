@@ -58,7 +58,6 @@ class ListOutput<T, ARG> extends Output<List<T>, ARG> with ListMixin<T> {
     super.onReset,
     super.persistConfig,
     super.skipError,
-    super.debounceDuration,
   }) {
     _forceCapacity = forceCapacity;
   }

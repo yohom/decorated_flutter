@@ -19,16 +19,15 @@ class PersistConfig<T> {
   /// 序列化回调
   final SerializeCallback<T> onSerialize;
 
-  /// 防抖时间间隔
+  /// 防抖时间
   ///
   /// 可以用于在频繁写入的场景, 减少写入频率
-  final Duration? debounceDuration;
+  final Duration? debounceTime;
 
   PersistConfig({
     required this.key,
     required this.onDeserialize,
     required this.onSerialize,
-    @Deprecated('统一语义使用[debounceDuration]代替') Duration? debounceTime,
-    Duration? debounceDuration,
-  }) : debounceDuration = debounceDuration ?? debounceTime;
+    this.debounceTime,
+  });
 }

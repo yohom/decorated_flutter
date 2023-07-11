@@ -18,7 +18,6 @@ class PageOutput<T, ARG> extends ListOutput<T, int> with PageMixin<T, ARG> {
     super.onReset,
     super.skipError,
     super.persistConfig,
-    super.debounceDuration,
   }) : super(fetch: (_) => Future.value([])) {
     _initPage = initPage ?? defaultInitialPage ?? 0;
     _currentPage = _initPage;

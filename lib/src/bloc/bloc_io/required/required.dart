@@ -107,7 +107,6 @@ class Output<T, ARG> extends BaseIO<T> with OutputMixin<T, ARG> {
     super.onReset,
     super.persistConfig,
     super.skipError,
-    super.debounceDuration,
   }) {
     stream = _subject.stream;
     _fetch = fetch;

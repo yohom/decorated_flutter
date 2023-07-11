@@ -35,7 +35,6 @@ class OptionalListOutput<T, ARG> extends Output<List<T>?, ARG>
     super.onReset,
     super.skipError,
     super.persistConfig,
-    super.debounceDuration,
   }) {
     _forceCapacity = forceCapacity;
   }
