@@ -8,6 +8,15 @@ import 'package:flutter/services.dart';
 import 'bloc/bloc.export.dart';
 import 'model/model.export.dart';
 
+@Deprecated('使用PersistConfig处理自动持久化事宜')
+abstract class Persistence {
+  Future<void> writeValue(String key, dynamic value);
+
+  dynamic readValue(String key);
+
+  void removeKey(String key);
+}
+
 @Deprecated('暂无使用')
 class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
     extends CupertinoPageRoute<T> {
@@ -332,7 +341,7 @@ class SpringButton extends StatefulWidget {
     this.onScaleStart,
     this.onScaleUpdate,
     this.onScaleEnd,
-  })  : assert(scaleCoefficient >= 0.0 && scaleCoefficient <= 1.0);
+  }) : assert(scaleCoefficient >= 0.0 && scaleCoefficient <= 1.0);
 
   @override
   // ignore: no_logic_in_create_state
@@ -344,6 +353,7 @@ class SpringButton extends StatefulWidget {
       );
 }
 
+@Deprecated('暂时无用')
 class SpringButtonState extends State<SpringButton>
     with SingleTickerProviderStateMixin {
   final SpringButtonType springButtonType;

@@ -66,7 +66,7 @@ abstract class BaseIO<T> {
     _subject.listen(_handleUpdateMemoryData);
     // 处理持久层数据
     if (_persistConfig != null) {
-      final debounceTime = _persistConfig!.debounceTime;
+      final debounceTime = _persistConfig!.debounceDuration;
       Stream<T> stream = _subject.stream;
       if (debounceTime != null) {
         stream = _subject.debounceTime(debounceTime);

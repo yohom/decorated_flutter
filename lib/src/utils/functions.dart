@@ -357,3 +357,12 @@ Future<void> waitFor(
     }
   }
 }
+
+/// 对一个函数[decorated]做防抖处理
+void Function() debounce(Duration duration, void Function() decorated) {
+  Timer? timer;
+  return () {
+    timer?.cancel();
+    timer = Timer(duration, () => decorated());
+  };
+}
