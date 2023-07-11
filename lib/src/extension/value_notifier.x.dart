@@ -41,8 +41,21 @@ extension ValueNotifierListX<T> on ValueNotifier<Iterable<T>> {
 
 extension ValueNotifierX<T> on ValueNotifier<T> {
   Stream<T> get toStream {
-    final controller = StreamController<T>();
-    addListener(() => controller.add(value));
+    StreamController<T>? controller;
+    void __listener() {
+      if (controller?.hasListener == true) {
+        controller?.add(value);
+      }
+    }
+
+    controller = StreamController<T>(
+      onListen: () => addListener(__listener),
+      onCancel: () {
+        removeListener(__listener);
+        if (controller?.hasListener != true) controller?.close();
+      },
+    );
+
     return controller.stream;
   }
 }

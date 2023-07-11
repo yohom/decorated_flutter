@@ -1,46 +1,33 @@
-import 'package:decorated_flutter/decorated_flutter.dart';
+import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 
+// TODO 提供一个自定义程度更高的toast类似组件
 void toast(
   String? message, {
-  ToastPosition position = const ToastPosition(
-    align: Alignment.topCenter,
-    offset: 0,
-  ),
-  double radius = 32,
-  EdgeInsets padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-  TextStyle textStyle = const TextStyle(color: Colors.black),
+  ToastPosition position = ToastPosition.center,
+  double? radius,
+  EdgeInsets? padding,
+  TextStyle? textStyle,
   VoidCallback? onDismiss,
   bool dismissOtherToast = true,
   TextAlign textAlign = TextAlign.center,
   Duration? duration,
-  Color backgroundColor = Colors.white,
+  Color? backgroundColor,
   bool error = false,
 }) {
   if (isNotEmpty(message)) {
-    showToastWidget(
+    showToast(
+      message!,
       position: position,
-      dismissOtherToast: dismissOtherToast,
-      onDismiss: onDismiss,
+      radius: radius,
+      backgroundColor: backgroundColor,
       duration: duration,
-      DecoratedText(
-        message,
-        safeArea: const SafeAreaConfig(inner: false),
-        padding: padding,
-        textAlign: textAlign,
-        style: textStyle.copyWith(color: error ? Colors.white : null),
-        decoration: BoxDecoration(
-          color: error ? Colors.red : backgroundColor,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 4,
-              color: Colors.grey.shade100,
-              spreadRadius: 8,
-            ),
-          ],
-          borderRadius: BorderRadius.circular(radius),
-        ),
-      ),
+      textPadding: padding,
+      textStyle: textStyle,
+      onDismiss: onDismiss,
+      dismissOtherToast: dismissOtherToast,
+      textAlign: textAlign,
     );
   } else {
     L.w('toast传入null值, 略过');

@@ -173,59 +173,64 @@ Future<void> runDecoratedApp({
   bool isTest = false,
   @Deprecated('已无作用') bool withFileLogger = true,
 }) async {
-  WidgetsFlutterBinding.ensureInitialized();
+  // 运行app
+  Future<void> __runner() async {
+    WidgetsFlutterBinding.ensureInitialized();
 
-  // 初始化日志系统
-  await L.init(withFileLogger: withFileLogger);
+    // 初始化日志系统
+    await L.init(withFileLogger: withFileLogger);
 
-  if (statusBarColor != null) {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle.dark.copyWith(
-        statusBarColor: statusBarColor,
-        statusBarBrightness: statusBarBrightness,
-        statusBarIconBrightness: statusBarIconBrightness,
-        systemNavigationBarColor: systemNavigationBarColor,
-        systemNavigationBarIconBrightness: systemNavigationBarIconBrightness,
-        systemNavigationBarDividerColor: systemNavigationBarDividerColor,
-        systemNavigationBarContrastEnforced:
-            systemNavigationBarContrastEnforced,
-        systemStatusBarContrastEnforced: systemStatusBarContrastEnforced,
-      ),
-    );
+    if (statusBarColor != null) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle.dark.copyWith(
+          statusBarColor: statusBarColor,
+          statusBarBrightness: statusBarBrightness,
+          statusBarIconBrightness: statusBarIconBrightness,
+          systemNavigationBarColor: systemNavigationBarColor,
+          systemNavigationBarIconBrightness: systemNavigationBarIconBrightness,
+          systemNavigationBarDividerColor: systemNavigationBarDividerColor,
+          systemNavigationBarContrastEnforced:
+              systemNavigationBarContrastEnforced,
+          systemStatusBarContrastEnforced: systemStatusBarContrastEnforced,
+        ),
+      );
+    }
+
+    if (beforeApp != null) {
+      try {
+        await initDecoratedBox();
+        await beforeApp();
+      } catch (e, s) {
+        L.w('运行app前置工作出现异常, 请检查是否有bug!. $e\n $s');
+      }
+    }
+
+    await appRunner();
+
+    if (afterApp != null) {
+      try {
+        await afterApp();
+      } catch (e, s) {
+        L.w('运行app后置工作出现异常, 请检查是否有bug!. $e\n $s');
+      }
+    }
   }
 
-  if (beforeApp != null) {
-    try {
-      await initDecoratedBox();
-      await beforeApp();
-    } catch (e, s) {
-      L.w('运行app前置工作出现异常, 请检查是否有bug!. $e\n $s');
+  // 错误处理
+  void __handleError(Object e, StackTrace s) {
+    if (onError != null) {
+      onError.call(e, s);
+    } else {
+      L.e('error: $e, stacktrace: $s');
     }
   }
 
   // 非测试状态下, 运行app; 测试状态下, 需要由集成测试的tester来bump widget
   if (!isTest) {
     if (zoned) {
-      runZonedGuarded<void>(
-        appRunner,
-        (e, s) {
-          if (onError != null) {
-            onError.call(e, s);
-          } else {
-            L.e('error: $e, stacktrace: $s');
-          }
-        },
-      );
+      runZonedGuarded<void>(__runner, __handleError);
     } else {
-      appRunner();
-    }
-  }
-
-  if (afterApp != null) {
-    try {
-      await afterApp();
-    } catch (e, s) {
-      L.w('运行app后置工作出现异常, 请检查是否有bug!. $e\n $s');
+      __runner();
     }
   }
 }
@@ -351,4 +356,13 @@ Future<void> waitFor(
       await Future.delayed(delayFactor);
     }
   }
+}
+
+/// 对一个函数[decorated]做防抖处理
+void Function() debounce(Duration duration, void Function() decorated) {
+  Timer? timer;
+  return () {
+    timer?.cancel();
+    timer = Timer(duration, () => decorated());
+  };
 }
