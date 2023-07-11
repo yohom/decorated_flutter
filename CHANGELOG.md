@@ -4,7 +4,10 @@
 - [🚀] 增加重试机制`retry`/`waitFor`;
 - [🚀] 补完`runDecoratedApp`参数;
 - [🚀] 增加日志的面板打开功能, `L.openPanel`;
-- [💄] 调整toast样式;
+- [💄] ~~调整toast样式~~;
+- [🚀] 优化`runDecoratedApp`;
+- [🚀] `List<T>`增加`replaceItems`和`replaceItem`;
+- [🚀] 优化`ValueNotifier::toStream`的实现;
 
 ## 0.48.1
 - [🚀] ScrollControllerX增加animateBy;
