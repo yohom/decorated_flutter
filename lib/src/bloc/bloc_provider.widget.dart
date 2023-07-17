@@ -1,5 +1,4 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
-import 'package:decorated_flutter/src/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
 class BLoCProvider<T extends BLoC> extends StatefulWidget {
@@ -9,7 +8,8 @@ class BLoCProvider<T extends BLoC> extends StatefulWidget {
     required this.bloc,
     this.init,
     this.onDispose,
-    this.autoDispose = true,
+    @Deprecated('使用canDispose代替, 灵活性更好') this.autoDispose = true,
+    this.canDispose = returnTrue,
   });
 
   const BLoCProvider.borrowed({
@@ -18,13 +18,16 @@ class BLoCProvider<T extends BLoC> extends StatefulWidget {
     required this.bloc,
     this.init,
     this.onDispose,
-  })  : autoDispose = false;
+  })  : autoDispose = false,
+        canDispose = returnFalse;
 
   final T bloc;
   final ValueChanged<T>? init;
   final Widget child;
   final VoidCallback? onDispose;
+  @Deprecated('使用canDispose代替, 灵活性更好')
   final bool autoDispose;
+  final bool Function() canDispose;
 
   @override
   _BLoCProviderState<T> createState() => _BLoCProviderState<T>();
@@ -61,11 +64,11 @@ class _BLoCProviderState<T extends BLoC> extends State<BLoCProvider<T>> {
 
   @override
   void dispose() {
-    if (widget.autoDispose) {
+    if (widget.canDispose() && widget.autoDispose) {
       widget.bloc.dispose();
+      widget.onDispose?.call();
     }
 
-    widget.onDispose?.call();
     super.dispose();
   }
 }
