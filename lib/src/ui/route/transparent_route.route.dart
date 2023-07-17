@@ -24,16 +24,29 @@ class TransparentRoute extends PageRoute<void> {
   Duration get transitionDuration => const Duration(milliseconds: 350);
 
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
+  Widget buildPage(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+  ) {
     final result = builder(context);
+    return Semantics(
+      scopesRoute: true,
+      explicitChildNodes: true,
+      child: result,
+    );
+  }
+
+  @override
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
     return FadeTransition(
       opacity: Tween<double>(begin: 0, end: 1).animate(animation),
-      child: Semantics(
-        scopesRoute: true,
-        explicitChildNodes: true,
-        child: result,
-      ),
+      child: child,
     );
   }
 }
