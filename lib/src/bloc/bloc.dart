@@ -6,6 +6,7 @@ import 'package:rxdart/rxdart.dart';
 
 import 'bloc_io/base.dart';
 
+@immutable
 abstract class BLoC {
   /// BLoC代表的语义
   final String semantics;
