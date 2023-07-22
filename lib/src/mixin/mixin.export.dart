@@ -5,3 +5,4 @@ export 'dispose_bag.mixin.dart';
 export 'enable.mixin.dart';
 export 'extensible.mixin.dart';
 export 'selectable.mixin.dart';
+export 'ticker_provider.mixin.dart';

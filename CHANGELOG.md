@@ -8,6 +8,9 @@
 - [🚀] 优化`runDecoratedApp`;
 - [🚀] `List<T>`增加`replaceItems`和`replaceItem`;
 - [🚀] 优化`ValueNotifier::toStream`的实现;
+- [🚀] `BLoCProvider`增加`canDispose`, 代替`autoDispose`;
+- [🚀] 优化`TransparentRoute`;
+- [🚀] 提供一个简化实现的`SingleTickerProviderBLoCMixin`;
 
 ## 0.48.1
 - [🚀] ScrollControllerX增加animateBy;

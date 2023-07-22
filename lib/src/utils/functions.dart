@@ -26,6 +26,10 @@ bool isFalse(bool? data) => data == false;
 
 T? returnNull<T>() => null;
 
+bool returnFalse() => false;
+
+bool returnTrue() => true;
+
 void doNothing() {}
 
 void doNothing1(_) {}
