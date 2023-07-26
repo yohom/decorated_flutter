@@ -105,47 +105,54 @@ class DecoratedStack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget result = Stack(
-      alignment: alignment ?? AlignmentDirectional.topStart,
-      fit: stackFit ?? StackFit.loose,
-      clipBehavior: clipBehavior,
-      children: <Widget>[
-        if (childrenZIndex == ZIndex.bottom) ...children,
-        // 填满
-        if (fill != null)
-          Positioned(bottom: 0, right: 0, top: 0, left: 0, child: fill!),
-        // 中间
-        if (center != null)
-          Positioned(
-            bottom: 0,
-            right: 0,
-            top: 0,
-            left: 0,
-            child: Center(child: center!),
-          ),
-        // 左上
-        if (topLeft != null) Positioned(top: 0, left: 0, child: topLeft!),
-        // 右上
-        if (topRight != null) Positioned(top: 0, right: 0, child: topRight!),
-        // 左下
-        if (bottomLeft != null)
-          Positioned(bottom: 0, left: 0, child: bottomLeft!),
-        // 右下
-        if (bottomRight != null)
-          Positioned(bottom: 0, right: 0, child: bottomRight!),
-        // 上
-        if (top != null) Positioned(top: 0, left: 0, right: 0, child: top!),
-        // 下
-        if (bottom != null)
-          Positioned(bottom: 0, right: 0, left: 0, child: bottom!),
-        // 左
-        if (left != null) Positioned(bottom: 0, top: 0, left: 0, child: left!),
-        // 右
-        if (right != null)
-          Positioned(bottom: 0, top: 0, right: 0, child: right!),
-        if (childrenZIndex == ZIndex.top) ...children,
-      ],
-    );
+    Widget result = children.length > 1
+        ? Stack(
+            alignment: alignment ?? AlignmentDirectional.topStart,
+            fit: stackFit ?? StackFit.loose,
+            clipBehavior: clipBehavior,
+            children: <Widget>[
+              if (childrenZIndex == ZIndex.bottom) ...children,
+              // 填满
+              if (fill != null)
+                Positioned(bottom: 0, right: 0, top: 0, left: 0, child: fill!),
+              // 中间
+              if (center != null)
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  top: 0,
+                  left: 0,
+                  child: Center(child: center!),
+                ),
+              // 左上
+              if (topLeft != null) Positioned(top: 0, left: 0, child: topLeft!),
+              // 右上
+              if (topRight != null)
+                Positioned(top: 0, right: 0, child: topRight!),
+              // 左下
+              if (bottomLeft != null)
+                Positioned(bottom: 0, left: 0, child: bottomLeft!),
+              // 右下
+              if (bottomRight != null)
+                Positioned(bottom: 0, right: 0, child: bottomRight!),
+              // 上
+              if (top != null)
+                Positioned(top: 0, left: 0, right: 0, child: top!),
+              // 下
+              if (bottom != null)
+                Positioned(bottom: 0, right: 0, left: 0, child: bottom!),
+              // 左
+              if (left != null)
+                Positioned(bottom: 0, top: 0, left: 0, child: left!),
+              // 右
+              if (right != null)
+                Positioned(bottom: 0, top: 0, right: 0, child: right!),
+              if (childrenZIndex == ZIndex.top) ...children,
+            ],
+          )
+        : children.length == 1
+            ? children[0]
+            : NIL;
 
     if (aspectRatio != null) {
       result = AspectRatio(aspectRatio: aspectRatio!, child: result);
