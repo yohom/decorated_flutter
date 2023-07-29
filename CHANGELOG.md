@@ -11,6 +11,8 @@
 - [🚀] `BLoCProvider`增加`canDispose`, 代替`autoDispose`;
 - [🚀] 优化`TransparentRoute`;
 - [🚀] 提供一个简化实现的`SingleTickerProviderBLoCMixin`;
+- [🚀] 优化`DecoratedFlex`的`children`只有一个的时候的场景;
+- [🚀] 优化`DecoratedStack`的`children`只有一个的时候的场景;
 
 ## 0.48.1
 - [🚀] ScrollControllerX增加animateBy;
