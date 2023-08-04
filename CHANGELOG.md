@@ -1,3 +1,6 @@
+## 0.48.3
+- [🐛] 还原`DecoratedStack`对单child的优化(误);
+
 ## 0.48.2
 - [🐛] 修正`StringX::substringAfterLast`逻辑;
 - [🚀] 补完`DecoratedApp`的参数;
