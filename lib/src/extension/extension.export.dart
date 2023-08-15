@@ -5,6 +5,7 @@ export 'duration.x.dart';
 export 'edge_insets.x.dart';
 export 'enum.x.dart';
 export 'file.x.dart';
+export 'flutter_view.x.dart';
 export 'future.x.dart';
 export 'global_key.x.dart';
 export 'iterable.x.dart';
