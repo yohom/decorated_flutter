@@ -1,5 +1,7 @@
 ## 0.48.3
 - [🐛] 还原`DecoratedStack`对单child的优化(误);
+- [🐛] 还原DecoratedFlex的children只有一个的时候的场景(误);
+- [🚀] 增加`flutter_view.x.dart`, 一些对`FlutterView`的扩展;
 
 ## 0.48.2
 - [🐛] 修正`StringX::substringAfterLast`逻辑;
