@@ -385,35 +385,31 @@ class DecoratedFlex extends StatelessWidget {
         _mainAxisAlignment = MainAxisAlignment.start;
       }
     }
-    Widget result = children.length > 1
-        ? Flex(
-            direction: direction,
-            mainAxisAlignment: _mainAxisAlignment,
-            mainAxisSize: mainAxisSize,
-            crossAxisAlignment: crossAxisAlignment,
-            textBaseline: textBaseline,
-            verticalDirection: verticalDirection ?? VerticalDirection.down,
-            children: itemSpacing != 0 || divider != null
-                ? _addItemDivider(_children, itemSpacing!, divider)
-                : childrenFlex != null
-                    ? [
-                        for (int i = 0; i < _children.length; i++)
-                          if (childrenFlex!.expanded)
-                            Expanded(
-                              flex: childrenFlex!.flex.getOrNull(i) ?? 1,
-                              child: _children[i],
-                            )
-                          else if (childrenFlex!.expanded)
-                            Flexible(
-                              flex: childrenFlex!.flex.getOrNull(i) ?? 1,
-                              child: _children[i],
-                            )
-                      ]
-                    : _children,
-          )
-        : children.length == 1
-            ? children[0]
-            : NIL;
+    Widget result = Flex(
+      direction: direction,
+      mainAxisAlignment: _mainAxisAlignment,
+      mainAxisSize: mainAxisSize,
+      crossAxisAlignment: crossAxisAlignment,
+      textBaseline: textBaseline,
+      verticalDirection: verticalDirection ?? VerticalDirection.down,
+      children: itemSpacing != 0 || divider != null
+          ? _addItemDivider(_children, itemSpacing!, divider)
+          : childrenFlex != null
+              ? [
+                  for (int i = 0; i < _children.length; i++)
+                    if (childrenFlex!.expanded)
+                      Expanded(
+                        flex: childrenFlex!.flex.getOrNull(i) ?? 1,
+                        child: _children[i],
+                      )
+                    else if (childrenFlex!.expanded)
+                      Flexible(
+                        flex: childrenFlex!.flex.getOrNull(i) ?? 1,
+                        child: _children[i],
+                      )
+                ]
+              : _children,
+    );
 
     if (autofillGroup == true) {
       result = AutofillGroup(child: result);
