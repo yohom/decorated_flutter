@@ -153,7 +153,10 @@ class _SingleSubscriberState<T> extends State<SingleSubscriber<T>> {
           } else {
             result ??= SingleSubscriber._defaultErrorPlaceholder
                     ?.call(context, snapshot.error!) ??
-                const ErrorPlaceholder();
+                ErrorPlaceholder(
+                  error: snapshot.error,
+                  stackTrace: snapshot.stackTrace,
+                );
           }
         }
 
@@ -289,7 +292,10 @@ class Subscriber<T> extends StatelessWidget {
             result ??= errorPlaceholderBuilder!(context, error);
           } else {
             result ??= (_defaultErrorPlaceholder?.call(context, error) ??
-                const ErrorPlaceholder());
+                ErrorPlaceholder(
+                  error: snapshot.error,
+                  stackTrace: snapshot.stackTrace,
+                ));
           }
 
           if (onErrorTapped != null) {
