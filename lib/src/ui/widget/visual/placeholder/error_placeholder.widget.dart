@@ -28,7 +28,9 @@ class ErrorPlaceholder extends StatelessWidget {
                 context: context,
                 builder: (context) => AlertDialog(
                   title: Text(error?.toString() ?? '暂无错误信息'),
-                  content: Text(stackTrace?.toString() ?? '暂无错误信息'),
+                  content: SingleChildScrollView(
+                    child: Text(stackTrace?.toString() ?? '暂无错误信息'),
+                  ),
                 ),
               ),
               icon: const Icon(Icons.error_outline, color: Colors.red),
