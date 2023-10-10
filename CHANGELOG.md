@@ -2,6 +2,11 @@
 - [🐛] 还原`DecoratedStack`对单child的优化(误);
 - [🐛] 还原DecoratedFlex的children只有一个的时候的场景(误);
 - [🚀] 增加`flutter_view.x.dart`, 一些对`FlutterView`的扩展;
+- [🚀] `ErrorPlaceholder`增加显示错误详情的按钮;
+- [🚀] 增加`FutureCallback`;
+- [🚀] `first`方法在`dispose`之后不应该被发射数据;
+------------------------------------------------------------------------------------------
+- [⛔️] 标记`LifecycleBLoCMixin`过时, 不应该再使用;
 
 ## 0.48.2
 - [🐛] 修正`StringX::substringAfterLast`逻辑;
@@ -33,7 +38,7 @@
 - [🚀] 增加`getFirst`和`getFirstOrNull`函数;
 - [🚀] 补充`skipError`参数;
 ------------------------------------------------------------------------------------------
-- [🔥] `childrenFlex`可以覆盖`forceItemSameExtent`的功能, 标记`forceItemSameExtent`为过时;
+- [⛔️] `childrenFlex`可以覆盖`forceItemSameExtent`的功能, 标记`forceItemSameExtent`为过时;
 
 ## 0.48.0
 - [🐛] setText修正
