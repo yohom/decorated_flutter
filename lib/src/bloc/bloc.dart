@@ -158,6 +158,9 @@ mixin LifecycleBLoCMixin on BLoC, WidgetsBindingObserver {
       case AppLifecycleState.detached:
         onDetached();
         break;
+      case AppLifecycleState.hidden:
+        onDetached();
+        break;
     }
   }
 
@@ -178,4 +181,7 @@ mixin LifecycleBLoCMixin on BLoC, WidgetsBindingObserver {
 
   @protected
   void onDetached() {}
+
+  @protected
+  void onHidden() {}
 }
