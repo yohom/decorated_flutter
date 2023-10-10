@@ -120,11 +120,7 @@ abstract class GlobalBLoC extends BLoC {
     for (final component in disposeBag) {
       if (component is BaseIO) {
         component.dispose();
-      } else if (component is TextEditingController) {
-        component.dispose();
-      } else if (component is ValueNotifier) {
-        component.dispose();
-      } else if (component is PageController) {
+      } else if (component is ChangeNotifier) {
         component.dispose();
       } else {
         L.w('未支持自动dispose的类型 ${component.runtimeType}, 请检查代码是否有bug!');
