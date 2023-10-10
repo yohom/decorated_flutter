@@ -131,6 +131,7 @@ abstract class GlobalBLoC extends BLoC {
   }
 }
 
+@Deprecated('使用Flutter自带的AppLifecycleListener代替, 这里在init中添加监听会重复监听')
 mixin LifecycleBLoCMixin on BLoC, WidgetsBindingObserver {
   @override
   FutureOr<void> init() async {
