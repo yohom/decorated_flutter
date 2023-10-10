@@ -271,9 +271,15 @@ mixin OutputMixin<T, ARG> on BaseIO<T> {
       return stream.first;
     } else {
       final completer = Completer<T>();
-      final subscription = stream.listen(completer.complete);
-      final result = await completer.future;
-      subscription.cancel();
+      final subscription = stream.listen((data) {
+        if (_subject.isClosed) {
+          completer
+              .completeError(StateError('IO [$_semantics] 已被释放, 不能获取first值'));
+        } else {
+          completer.complete(data);
+        }
+      });
+      final result = await completer.future.whenComplete(subscription.cancel);
       return result;
     }
   }
