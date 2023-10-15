@@ -374,6 +374,24 @@ class DecoratedFlex extends StatelessWidget {
 
     if (forceItemSameExtent == true) {
       _children = children.map<Widget>((it) => Expanded(child: it)).toList();
+    } else if (childrenFlex != null) {
+      _children = [
+        for (int i = 0; i < _children.length; i++)
+          if (childrenFlex!.expanded)
+            Expanded(
+              flex: childrenFlex!.flex.getOrNull(i) ?? 1,
+              child: _children[i],
+            )
+          else
+            Flexible(
+              flex: childrenFlex!.flex.getOrNull(i) ?? 1,
+              child: _children[i],
+            )
+      ];
+    }
+
+    if (itemSpacing != 0 || divider != null) {
+      _children = _addItemDivider(_children, itemSpacing!, divider);
     }
 
     // 如果有reverse, 则对start和end的场景做一下翻转
@@ -392,23 +410,7 @@ class DecoratedFlex extends StatelessWidget {
       crossAxisAlignment: crossAxisAlignment,
       textBaseline: textBaseline,
       verticalDirection: verticalDirection ?? VerticalDirection.down,
-      children: itemSpacing != 0 || divider != null
-          ? _addItemDivider(_children, itemSpacing!, divider)
-          : childrenFlex != null
-              ? [
-                  for (int i = 0; i < _children.length; i++)
-                    if (childrenFlex!.expanded)
-                      Expanded(
-                        flex: childrenFlex!.flex.getOrNull(i) ?? 1,
-                        child: _children[i],
-                      )
-                    else if (childrenFlex!.expanded)
-                      Flexible(
-                        flex: childrenFlex!.flex.getOrNull(i) ?? 1,
-                        child: _children[i],
-                      )
-                ]
-              : _children,
+      children: _children,
     );
 
     if (autofillGroup == true) {
