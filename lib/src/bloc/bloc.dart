@@ -120,11 +120,7 @@ abstract class GlobalBLoC extends BLoC {
     for (final component in disposeBag) {
       if (component is BaseIO) {
         component.dispose();
-      } else if (component is TextEditingController) {
-        component.dispose();
-      } else if (component is ValueNotifier) {
-        component.dispose();
-      } else if (component is PageController) {
+      } else if (component is ChangeNotifier) {
         component.dispose();
       } else {
         L.w('未支持自动dispose的类型 ${component.runtimeType}, 请检查代码是否有bug!');
@@ -135,6 +131,7 @@ abstract class GlobalBLoC extends BLoC {
   }
 }
 
+@Deprecated('使用Flutter自带的AppLifecycleListener代替, 这里在init中添加监听会重复监听')
 mixin LifecycleBLoCMixin on BLoC, WidgetsBindingObserver {
   @override
   FutureOr<void> init() async {
@@ -158,6 +155,9 @@ mixin LifecycleBLoCMixin on BLoC, WidgetsBindingObserver {
       case AppLifecycleState.detached:
         onDetached();
         break;
+      case AppLifecycleState.hidden:
+        onDetached();
+        break;
     }
   }
 
@@ -178,4 +178,7 @@ mixin LifecycleBLoCMixin on BLoC, WidgetsBindingObserver {
 
   @protected
   void onDetached() {}
+
+  @protected
+  void onHidden() {}
 }

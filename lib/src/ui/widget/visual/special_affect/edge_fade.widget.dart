@@ -7,7 +7,7 @@ class EdgeFade extends StatelessWidget {
     this.begin = Alignment.centerLeft,
     this.end = Alignment.centerRight,
     required this.child,
-  });
+  }) : assert(stops.length == 2 || stops.length == 4);
 
   final List<double> stops;
   final AlignmentGeometry begin;
@@ -22,7 +22,11 @@ class EdgeFade extends StatelessWidget {
           begin: begin,
           end: end,
           stops: stops,
-          colors: const [Colors.black, Colors.transparent],
+          colors: [
+            if (stops.length == 4) ...[Colors.transparent, Colors.black],
+            Colors.black,
+            Colors.transparent,
+          ],
         ).createShader(rect);
       },
       blendMode: BlendMode.dstIn,

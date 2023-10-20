@@ -7,3 +7,4 @@ typedef InitCallback<T extends BLoC> = void Function(T bloc);
 typedef LateInitCallback<T extends BLoC> = void Function(
     T bloc, BuildContext context);
 typedef SearchCallback<T> = bool Function(T, String keyword);
+typedef FutureCallback = Future<void> Function();

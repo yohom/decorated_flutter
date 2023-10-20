@@ -22,6 +22,7 @@ class DecoratedList extends StatelessWidget {
     this.expanded,
     this.decoration,
     this.physics,
+    this.clipBehavior = Clip.none,
     this.reverse = false,
   })  : _sliver = false,
         separatorBuilder = null;
@@ -47,6 +48,7 @@ class DecoratedList extends StatelessWidget {
     required this.separatorBuilder,
     this.physics,
     this.reverse = false,
+    this.clipBehavior = Clip.none,
   })  : assert(itemCount != null),
         assert(separatorBuilder != null),
         _sliver = false,
@@ -76,6 +78,7 @@ class DecoratedList extends StatelessWidget {
         physics = null,
         reverse = false,
         decoration = null,
+        clipBehavior = Clip.none,
         keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual;
 
   final bool _sliver;
@@ -97,6 +100,7 @@ class DecoratedList extends StatelessWidget {
   final BoxDecoration? decoration;
   final ScrollPhysics? physics;
   final bool reverse;
+  final Clip clipBehavior;
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +111,11 @@ class DecoratedList extends StatelessWidget {
     }
 
     if (decoration != null) {
-      result = DecoratedBox(decoration: decoration!, child: result);
+      result = Container(
+        clipBehavior: clipBehavior,
+        decoration: decoration,
+        child: result,
+      );
     }
 
     if (expanded == true) {
