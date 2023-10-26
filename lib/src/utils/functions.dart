@@ -102,6 +102,7 @@ String randomNumber(int len) {
 }
 
 /// 通用轮询逻辑
+@Deprecated('使用retry代替')
 Future<void> polling({
   required Future<void> Function() task,
   required Duration interval,

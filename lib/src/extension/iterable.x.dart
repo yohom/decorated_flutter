@@ -204,6 +204,18 @@ extension ListX<T> on List<T> {
     }
   }
 
+  T nextOf(T element) {
+    final index = indexOf(element);
+    final nextIndex = min(length - 1, index + 1);
+    return this[nextIndex];
+  }
+
+  T previousOf(T element) {
+    final index = indexOf(element);
+    final nextIndex = max(0, index - 1);
+    return this[nextIndex];
+  }
+
   /// 右补齐
   List<T> padRight(int width, T padding) {
     if (length >= width) return this;
