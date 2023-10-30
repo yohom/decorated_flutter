@@ -96,6 +96,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
         duration: const Duration(seconds: 3),
         radius: 4,
         dismissOtherOnShow: true,
+        movingOnWindowChange: false,
         animationBuilder: const ToastAnimBuilder(),
         child: MaterialApp(
           title: title,
