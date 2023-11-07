@@ -164,7 +164,7 @@ abstract class BaseIO<T> {
     final _resetValue = _onReset != null ? _onReset!() : _seedValue;
 
     if (_printLog) {
-      L.i('[$_semantics]事件 重置为 $_resetValue');
+      L.d('[$_semantics]事件 重置为 $_resetValue');
     }
 
     _subject.add(_resetValue);
@@ -193,7 +193,7 @@ abstract class BaseIO<T> {
     if (_subject.isClosed) return;
 
     if (_printLog) {
-      L.i('[$_semantics]事件 disposed ');
+      L.d('[$_semantics]事件 disposed ');
     }
     _subject.close();
     _isDisposed = true;
@@ -213,7 +213,7 @@ abstract class BaseIO<T> {
   void _handleUpdateMemoryData(T data) {
     latest = data;
     if (_printLog) {
-      L.i('当前 [$_semantics] latest: $latest');
+      L.d('当前 [$_semantics] latest: $latest');
     }
   }
 

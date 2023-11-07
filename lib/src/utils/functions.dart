@@ -354,7 +354,7 @@ Future<void> waitFor(
   int maxAttempts = 8,
 }) async {
   for (int i = 0; i < maxAttempts; i++) {
-    L.i('第 $i 次获取登录状态');
+    L.d('第 $i 次获取登录状态');
     if (await fn()) {
       break;
     } else {

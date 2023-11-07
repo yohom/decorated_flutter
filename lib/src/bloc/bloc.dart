@@ -20,12 +20,15 @@ abstract class BLoC {
   void reset();
 
   /// 初始化
+  ///
+  /// deprecated: 因为这个init会跟随initState被执行, 在整个生命周期中有可能被执行多次, 已经不适合`初始化`这个语义
   @mustCallSuper
+  @Deprecated('使用构造器初始化代替')
   FutureOr<void> init() async {}
 
   @mustCallSuper
   void dispose() {
-    L.i('=============================================\n'
+    L.d('=============================================\n'
         '$semantics closed '
         '\n=============================================');
   }
