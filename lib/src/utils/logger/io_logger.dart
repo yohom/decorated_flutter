@@ -1,6 +1,7 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
@@ -39,7 +40,13 @@ class Logger extends ILogger {
   @override
   void openPanel() {
     gNavigatorKey.currentState?.push(
-        MaterialPageRoute(builder: (_) => TalkerScreen(talker: _talker)));
+      MaterialPageRoute(
+        builder: (_) => AnnotatedRegion(
+          value: SystemUiOverlayStyle.light,
+          child: TalkerScreen(talker: _talker),
+        ),
+      ),
+    );
   }
 
   @override
