@@ -13,7 +13,7 @@ class LoadingWidget extends StatelessWidget {
     this.color,
     this.backgroundColor,
     this.material = false,
-  })  : sliver = false;
+  }) : sliver = false;
 
   const LoadingWidget.sliver({
     super.key,
@@ -23,7 +23,7 @@ class LoadingWidget extends StatelessWidget {
     this.color,
     this.backgroundColor,
     this.material = false,
-  })  : sliver = true;
+  }) : sliver = true;
 
   final double? width;
   final double? height;
@@ -90,6 +90,7 @@ class ModalLoading extends StatelessWidget {
               DecoratedText(
                 text,
                 margin: const EdgeInsets.only(top: 10),
+                textAlign: TextAlign.center,
                 style: const TextStyle(color: Colors.white),
               ),
           ],
