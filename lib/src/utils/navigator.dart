@@ -70,6 +70,6 @@ String _routeName(String path, Map<String, String?>? query) {
         .join('&'));
   }
 
-  L.i('合成跳转路由: $routeName');
+  L.d('合成跳转路由: $routeName');
   return routeName.toString();
 }

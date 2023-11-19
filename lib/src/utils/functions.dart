@@ -102,6 +102,7 @@ String randomNumber(int len) {
 }
 
 /// 通用轮询逻辑
+@Deprecated('使用retry代替')
 Future<void> polling({
   required Future<void> Function() task,
   required Duration interval,
@@ -353,7 +354,7 @@ Future<void> waitFor(
   int maxAttempts = 8,
 }) async {
   for (int i = 0; i < maxAttempts; i++) {
-    L.i('第 $i 次获取登录状态');
+    L.d('第 $i 次获取登录状态');
     if (await fn()) {
       break;
     } else {

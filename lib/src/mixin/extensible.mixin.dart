@@ -1,11 +1,11 @@
 mixin Extensible {
-  Map<String, dynamic> extension = {};
+  Map<dynamic, dynamic> extension = {};
 
-  void put(String key, dynamic value) {
+  void put(dynamic key, dynamic value) {
     extension[key] = value;
   }
 
-  dynamic get(String key) {
+  dynamic get(dynamic key) {
     return extension[key];
   }
 }

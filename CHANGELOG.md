@@ -8,6 +8,10 @@
 - [🚀] `EdgeFade`支持双边渐变;
 - [🚀] 优化`DecoratedFlex`子控件的添加方式;
 - [🚀] 优化反序列化时的报错日志;
+- [🚀] `Extensible`允许任何类型的key;
+- [🚀] 增加`nextOf`, `previousOf`, `nextOfIndex`, `previousOfIndex`;
+- [🚀] 调整默认的`toast`行为;
+- [🚀] 增加`image_provider.x.dart`;
 ------------------------------------------------------------------------------------------
 - [⛔️] 标记`LifecycleBLoCMixin`过时, 不应该再使用;
 
