@@ -121,7 +121,7 @@ class RetryOptions {
   Future<T> retry<T>(
     FutureOr<T> Function() fn, {
     FutureOr<bool> Function(Object)? retryIf,
-    FutureOr<void> Function(Object)? onRetry,
+    FutureOr<bool> Function(Object)? onRetry,
   }) async {
     var attempt = 0;
     // ignore: literal_only_boolean_expressions
@@ -135,7 +135,10 @@ class RetryOptions {
           rethrow;
         }
         if (onRetry != null) {
-          await onRetry(e);
+          // 如果onRetry反馈已不需要再尝试就结束流程
+          if (!await onRetry(e)) {
+            rethrow;
+          }
         }
       }
 
@@ -178,7 +181,7 @@ Future<T> retry<T>(
   Duration maxDelay = const Duration(seconds: 30),
   int maxAttempts = 8,
   FutureOr<bool> Function(Object)? retryIf,
-  FutureOr<void> Function(Object)? onRetry,
+  FutureOr<bool> Function(Object)? onRetry,
 }) =>
     RetryOptions(
       delayFactor: delayFactor,
