@@ -17,7 +17,7 @@ dependencies:
   # 国际化 https://pub.flutter-io.cn/packages/intl
   intl: any
   # 网络请求 https://pub.flutter-io.cn/packages/dio 5.2.0修改了CancelToken的行为, (至少)Stream类型的响应无法取消
-  dio: ">=5.0.0 <5.2.0"
+  dio: "^5.0.0"
   # kiwi https://pub.flutter-io.cn/packages/kiwi
   kiwi: ^4.1.0
   # rx https://pub.flutter-io.cn/packages/rxdart
@@ -27,9 +27,9 @@ dependencies:
   # toast https://pub.flutter-io.cn/packages/oktoast
   oktoast: ^3.3.1
   # 日志打印 https://pub.flutter-io.cn/packages/talker
-  talker: any # 控制台日志
-  talker_flutter: ^3.1.6 # 针对Flutter的扩展, 直接使用
-  talker_dio_logger: ^2.0.0 # dio日志
+  talker: ^3.1.6 # 控制台日志
+  talker_flutter: ^3.5.6 # 针对Flutter的扩展, 直接使用
+  talker_dio_logger: ^2.3.3 # dio日志
   # 退出app https://pub.flutter-io.cn/packages/app_minimizer
   app_minimizer: ^1.0.0+2
   # svg https://pub.flutter-io.cn/packages/flutter_svg
