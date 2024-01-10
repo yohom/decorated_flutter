@@ -1,3 +1,8 @@
+## 0.48.4
+- [🚀] `retry`允许捕获任何类型的异常;
+- [🚀] `onRetry`增加返回bool类型, 允许指定是否需要继续重试;
+- [🚀] `ModalLoading`的颜色调整;
+
 ## 0.48.3
 - [🐛] 还原`DecoratedStack`对单child的优化(误);
 - [🐛] 还原DecoratedFlex的children只有一个的时候的场景(误);
