@@ -9,6 +9,7 @@ class DecoratedWidget<B extends BLoC> extends StatefulWidget {
     required this.widget,
     this.bloc,
     this.autoCloseKeyboard = true,
+    this.canDispose = returnTrue,
     this.init,
     this.onLateinit,
     this.withForm = false,
@@ -26,6 +27,9 @@ class DecoratedWidget<B extends BLoC> extends StatefulWidget {
 
   /// 是否自动关闭输入法
   final bool autoCloseKeyboard;
+
+  /// 是否自动释放BLoC
+  final bool Function() canDispose;
 
   /// 初始化方法
   final InitCallback<B>? init;
@@ -74,6 +78,7 @@ class _DecoratedWidgetState<B extends BLoC> extends State<DecoratedWidget<B>> {
       result = BLoCProvider<B>(
         bloc: bloc,
         init: widget.init,
+        canDispose: widget.canDispose,
         child: widget.widget,
       );
     } else {
