@@ -1,3 +1,7 @@
+## 0.48.5
+- [🚀] 增加`SizeX`的一些了扩展方法;
+- [🚀] `DecoratedWidget`增加`canDispose`;
+
 ## 0.48.4
 - [🚀] `retry`允许捕获任何类型的异常;
 - [🚀] `onRetry`增加返回bool类型, 允许指定是否需要继续重试;
