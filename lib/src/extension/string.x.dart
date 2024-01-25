@@ -174,4 +174,46 @@ extension StringX on String {
     final parts = split(' ');
     return parts.map((e) => e[0].capitalize()).join();
   }
+
+  bool operator >(String other) {
+    return compareTo(other) > 0;
+  }
+
+  bool operator >=(String other) {
+    return compareTo(other) >= 0;
+  }
+
+  bool operator <(String other) {
+    return compareTo(other) < 0;
+  }
+
+  bool operator <=(String other) {
+    return compareTo(other) <= 0;
+  }
+
+  /// 根据codeUnit对两个字符串进行比大小
+  int compareTo(String other) {
+    int thisLen = length;
+    int otherLen = other.length;
+    int len = (thisLen < otherLen) ? thisLen : otherLen;
+
+    for (int i = 0; i < len; i++) {
+      int thisCode = codeUnitAt(i);
+      int otherCode = other.codeUnitAt(i);
+
+      if (thisCode < otherCode) {
+        return -1;
+      } else if (thisCode > otherCode) {
+        return 1;
+      }
+    }
+
+    if (thisLen < otherLen) {
+      return -1;
+    } else if (thisLen > otherLen) {
+      return 1;
+    }
+
+    return 0;
+  }
 }
