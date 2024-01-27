@@ -58,6 +58,7 @@ class ImageView extends StatelessWidget {
   static Widget? globalPlaceholder;
   static bool logEnable = false;
   static bool suppressError = false;
+  static Map<String, String> headers = {};
 
   /// 根据图片uri自动判断是使用本地加载还是远程加载
   ImageView(
@@ -340,6 +341,7 @@ class ImageView extends StatelessWidget {
           width: width,
           height: height,
           fit: fit ?? BoxFit.contain,
+          headers: headers,
           color: _color,
           placeholderBuilder: _placeholder != null ? (_) => _placeholder : null,
         );
@@ -356,6 +358,7 @@ class ImageView extends StatelessWidget {
           height: height,
           fit: fit,
           color: _color,
+          httpHeaders: headers,
           placeholder: _placeholder != null ? (_, __) => _placeholder : null,
           errorWidget: _errorBuilder,
           memCacheWidth: _cacheWidth,
