@@ -21,6 +21,10 @@ mixin Cacheable {
     _cache.remove(key);
   }
 
+  void clearCache() {
+    _cache.clear();
+  }
+
   T byLazy<T>(String key, T Function() provider) {
     final cached = _cache[key] as T?;
     if (cached != null) return cached;
