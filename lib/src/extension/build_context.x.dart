@@ -49,6 +49,10 @@ extension BuildContextX on BuildContext {
     return theme.colorScheme;
   }
 
+  Color get dividerColor {
+    return theme.dividerTheme.color ?? theme.dividerColor;
+  }
+
   double get height {
     return MediaQuery.sizeOf(this).height;
   }
