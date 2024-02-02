@@ -6,6 +6,8 @@
 - [🚀] `cacheable`增加`clearCache`接口;
 - [🚀] 提升`uuid`依赖;
 - [🚀] 增加`dividerColor`扩展;
+- [🚀] `DecoratedWrap`增加`width`和`height`;
+- [🚀] `Iterable<num>`增加`avg`扩展;
 
 ## 0.48.4
 - [🚀] `retry`允许捕获任何类型的异常;
