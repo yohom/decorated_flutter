@@ -157,6 +157,11 @@ extension NumIterableX<T extends num> on Iterable<T> {
     }
     return result;
   }
+
+  num avg() {
+    if (this.isEmpty) return 0;
+    return sum() / length;
+  }
 }
 
 extension ListX<T> on List<T> {

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class DecoratedWrap extends StatelessWidget {
   const DecoratedWrap({
     super.key,
+    this.width,
+    this.height,
     this.direction = Axis.horizontal,
     this.alignment = WrapAlignment.start,
     this.runAlignment = WrapAlignment.start,
@@ -24,6 +26,7 @@ class DecoratedWrap extends StatelessWidget {
     required this.children,
   });
 
+  final double? width, height;
   final int? crossAxisCount;
   final Axis direction;
   final WrapAlignment alignment;
@@ -99,11 +102,15 @@ class DecoratedWrap extends StatelessWidget {
       );
     }
 
-    if (padding != null ||
+    if (width != null ||
+        height != null ||
+        padding != null ||
         margin != null ||
         decoration != null ||
         foregroundDecoration != null) {
       result = Container(
+        width: width,
+        height: height,
         padding: padding,
         margin: margin,
         decoration: decoration,
