@@ -2,11 +2,14 @@ import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// 兼容旧版命名
+typedef AnimatedScaleButton = SpringContainer;
+
 /// 带有缩放动画的按钮
 ///
 /// 当按下时, 会缩放至0.9倍, 松开恢复到原状, 有些类似AppStore点击卡片时的动画
-class AnimatedScaleButton extends StatefulWidget {
-  const AnimatedScaleButton({
+class SpringContainer extends StatefulWidget {
+  const SpringContainer({
     super.key,
     required this.child,
     required this.onPressed,
@@ -18,10 +21,10 @@ class AnimatedScaleButton extends StatefulWidget {
   final double minScale;
 
   @override
-  _AnimatedScaleButtonState createState() => _AnimatedScaleButtonState();
+  _SpringContainerState createState() => _SpringContainerState();
 }
 
-class _AnimatedScaleButtonState extends State<AnimatedScaleButton> {
+class _SpringContainerState extends State<SpringContainer> {
   late bool _pressed;
 
   @override

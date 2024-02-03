@@ -8,6 +8,7 @@
 - [🚀] 增加`dividerColor`扩展;
 - [🚀] `DecoratedWrap`增加`width`和`height`;
 - [🚀] `Iterable<num>`增加`avg`扩展;
+- [🚀] `AnimatedScaleButton`改名为`SpringContainer`;
 
 ## 0.48.4
 - [🚀] `retry`允许捕获任何类型的异常;
