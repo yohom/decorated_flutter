@@ -9,6 +9,7 @@
 - [🚀] `DecoratedWrap`增加`width`和`height`;
 - [🚀] `Iterable<num>`增加`avg`扩展;
 - [🚀] `AnimatedScaleButton`改名为`SpringContainer`;
+- [🚀] `ImageProvider`支持`NetworkImage`;
 
 ## 0.48.4
 - [🚀] `retry`允许捕获任何类型的异常;
