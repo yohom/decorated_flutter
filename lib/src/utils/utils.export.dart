@@ -9,6 +9,7 @@ export 'misc.dart';
 export 'navigator.dart';
 export 'objects.dart';
 export 'retry.dart';
+export 'route_launcher.dart';
 export 'time.dart';
 export 'value.dart';
 export 'view.dart';
