@@ -53,8 +53,8 @@ extension FutureX<T> on Future<T> {
           child: Builder(
             builder: (context) {
               final text = loadingText ?? defaultLoadingText;
-              return WillPopScope(
-                onWillPop: () async => cancelable ?? loadingCancelable,
+              return PopScope(
+                canPop: cancelable ?? loadingCancelable,
                 child: loadingWidgetBuilder?.call(context, text) ??
                     ModalLoading(text),
               );
