@@ -10,6 +10,7 @@
 - [🚀] `Iterable<num>`增加`avg`扩展;
 - [🚀] `AnimatedScaleButton`改名为`SpringContainer`;
 - [🚀] `ImageProvider`支持`NetworkImage`;
+- [✨] 增加全局路由启动器`RouteLauncher`, 用以解决使用gNavigator全局启动时无法进行拦截的问题;
 
 ## 0.48.4
 - [🚀] `retry`允许捕获任何类型的异常;
