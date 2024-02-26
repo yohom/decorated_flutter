@@ -27,9 +27,9 @@ dependencies:
   # toast https://pub.flutter-io.cn/packages/oktoast
   oktoast: ^3.3.1
   # 日志打印 https://pub.flutter-io.cn/packages/talker
-  talker: ^3.1.6 # 控制台日志
-  talker_flutter: ^3.5.6 # 针对Flutter的扩展, 直接使用
-  talker_dio_logger: ^2.3.3 # dio日志
+  talker: ^4.0.2 # 控制台日志
+  talker_flutter: ^4.0.2 # 针对Flutter的扩展, 直接使用
+  talker_dio_logger: ^4.0.2 # dio日志
   # 退出app https://pub.flutter-io.cn/packages/app_minimizer
   app_minimizer: ^1.0.0+2
   # svg https://pub.flutter-io.cn/packages/flutter_svg
