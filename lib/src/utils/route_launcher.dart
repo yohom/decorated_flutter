@@ -1,3 +1,5 @@
+import 'package:decorated_flutter/src/utils/utils.export.dart';
+
 /// 全局路由启动器
 class RouteLauncher {
   RouteLauncher._();
@@ -9,6 +11,10 @@ class RouteLauncher {
   }
 
   static Function? of(String path) {
-    return _launchMap[path];
+    final result = _launchMap[path];
+    if (result == null) {
+      L.w('未找到路径: $path 的启动器!');
+    }
+    return result;
   }
 }
