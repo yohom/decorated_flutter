@@ -41,7 +41,7 @@ class _CountdownState extends State<Countdown> {
       initialData: widget.initialData,
       stream: _countStream,
       builder: (context, snapshot) {
-        if (snapshot.requireData <= 0 && !isZeroed) {
+        if (snapshot.requireData <= 0 && !isZeroed && mounted) {
           isZeroed = true;
           widget.onZero?.call();
         }
