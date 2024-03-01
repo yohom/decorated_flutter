@@ -46,37 +46,40 @@ class _SpringContainerState extends State<SpringContainer> {
         );
       },
       tween: Tween(begin: 1, end: _pressed ? widget.minScale : 1),
-      child: GestureDetector(
-        onTapDown: (_) {
-          setState(() {
-            _pressed = true;
-          });
-        },
-        onLongPress: () {
-          setState(() {
-            _pressed = true;
-          });
-        },
-        onLongPressEnd: (_) {
-          setState(() {
-            _pressed = false;
-          });
-          widget.onPressed(context);
-        },
-        onTapUp: (_) {
-          setState(() {
-            _pressed = false;
-          });
-        },
-        onTapCancel: () {
-          setState(() {
-            _pressed = false;
-          });
-        },
-        onTap: () {
-          widget.onPressed(context);
-        },
-        child: widget.child,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTapDown: (_) {
+            setState(() {
+              _pressed = true;
+            });
+          },
+          onLongPress: () {
+            setState(() {
+              _pressed = true;
+            });
+          },
+          onLongPressEnd: (_) {
+            setState(() {
+              _pressed = false;
+            });
+            widget.onPressed(context);
+          },
+          onTapUp: (_) {
+            setState(() {
+              _pressed = false;
+            });
+          },
+          onTapCancel: () {
+            setState(() {
+              _pressed = false;
+            });
+          },
+          onTap: () {
+            widget.onPressed(context);
+          },
+          child: widget.child,
+        ),
       ),
     );
   }
