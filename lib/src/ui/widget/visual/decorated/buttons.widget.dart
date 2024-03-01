@@ -1,4 +1,4 @@
-import 'package:decorated_flutter/src/utils/utils.export.dart';
+import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -35,8 +35,9 @@ class _SpringContainerState extends State<SpringContainer> {
 
   @override
   Widget build(BuildContext context) {
+    const duration = Duration(milliseconds: 100);
     return TweenAnimationBuilder<double>(
-      duration: const Duration(milliseconds: 100),
+      duration: duration,
       curve: Curves.easeOut,
       builder: (BuildContext context, value, Widget? child) {
         return Transform.scale(
@@ -49,11 +50,6 @@ class _SpringContainerState extends State<SpringContainer> {
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: GestureDetector(
-          onTapDown: (_) {
-            setState(() {
-              _pressed = true;
-            });
-          },
           onLongPress: () {
             setState(() {
               _pressed = true;
@@ -65,18 +61,26 @@ class _SpringContainerState extends State<SpringContainer> {
             });
             widget.onPressed(context);
           },
-          onTapUp: (_) {
+          onTapDown: (_) {
             setState(() {
-              _pressed = false;
+              _pressed = true;
             });
+          },
+          onTapUp: (_) {
+            if (_pressed == true) {
+              Future.delayed(duration, () {
+                setStateSafely(() {
+                  _pressed = false;
+                });
+              });
+            }
+
+            widget.onPressed(context);
           },
           onTapCancel: () {
             setState(() {
               _pressed = false;
             });
-          },
-          onTap: () {
-            widget.onPressed(context);
           },
           child: widget.child,
         ),
