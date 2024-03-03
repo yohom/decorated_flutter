@@ -80,7 +80,10 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
   }
 
   /// 搜索关键字
-  Stream<List<T>> search(IO<String> keyword, {required SearchCallback<T> by}) {
+  Stream<List<T>> search(
+    IO<String> keyword, {
+    required SearchKeywordCallback<T> by,
+  }) {
     return whereNotNull().search(keyword.stream, by: by);
   }
 

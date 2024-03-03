@@ -4,7 +4,6 @@ import 'dart:math' as math;
 import 'package:decorated_flutter/src/misc/misc.export.dart';
 import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -19,19 +18,18 @@ dynamic handleError(Object error, [StackTrace? trace]) {
       ? null
       : Localizations.localeOf(gNavigatorKey.currentContext!);
   final isEnglish = locale?.languageCode == 'en';
-  const color = CupertinoColors.systemRed;
-  if (error is DioError) {
+  if (error is DioException) {
     String? message = error.message;
     switch (error.type) {
-      case DioErrorType.cancel:
+      case DioExceptionType.cancel:
         message = isEnglish ? error.message : '取消请求';
         break;
-      case DioErrorType.sendTimeout:
-      case DioErrorType.connectionTimeout:
-      case DioErrorType.receiveTimeout:
+      case DioExceptionType.sendTimeout:
+      case DioExceptionType.connectionTimeout:
+      case DioExceptionType.receiveTimeout:
         message = isEnglish ? error.message : '网络连接超时，请稍后重试';
         break;
-      case DioErrorType.badResponse:
+      case DioExceptionType.badResponse:
         final statusCode = error.response?.statusCode;
         if (statusCode != null) {
           if (statusCode >= 400 && statusCode <= 417) {
@@ -44,34 +42,28 @@ dynamic handleError(Object error, [StackTrace? trace]) {
       default:
         message = isEnglish ? error.message : '网络不给力，请稍后重试 $_kDioOther';
     }
-    toast(message, backgroundColor: color);
+    toast(message, error: true);
   } else if (error is String) {
-    toast(error, backgroundColor: color);
+    toast(error, error: true);
   } else if (error is SocketException) {
     toast(
       isEnglish ? error.message : '网络不给力，请稍后重试 $_kSocketException',
-      backgroundColor: color,
+      error: true,
     );
   } else if (error is HttpException) {
     toast(
       isEnglish ? error.message : '网络不给力，请稍后重试 $_kSocketException',
-      backgroundColor: color,
+      error: true,
     );
   } else if (error is BizException) {
     toast(error.message);
   } else if (error is PlatformException) {
-    toast(
-      '${error.message ?? error.toString()} ${error.code}',
-      backgroundColor: color,
-    );
+    toast('${error.message ?? error.toString()} ${error.code}', error: true);
   } else {
     if (handleCustomError != null) {
       handleCustomError!(error);
     } else {
-      toast(
-        isEnglish ? 'Unknown Error' : '遇到未知错误 $error',
-        backgroundColor: color,
-      );
+      toast(isEnglish ? 'Unknown Error' : '遇到未知错误 $error', error: true);
     }
   }
   // catchError要求一个和Future一样类型的返回值, 但是这里无法提供一个通用的, 只能返回null了

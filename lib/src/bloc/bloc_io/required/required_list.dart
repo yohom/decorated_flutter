@@ -179,7 +179,10 @@ mixin ListMixin<T> on BaseIO<List<T>> {
   int? _forceCapacity;
 
   /// 搜索关键字
-  Stream<List<T>> search(IO<String> keyword, {required SearchCallback<T> by}) {
+  Stream<List<T>> search(
+    IO<String> keyword, {
+    required SearchKeywordCallback<T> by,
+  }) {
     return _subject.stream.search(keyword.stream, by: by);
   }
 
