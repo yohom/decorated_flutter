@@ -22,7 +22,7 @@ extension ListStreamX<T> on Stream<List<T>> {
   /// 根据搜索关键字[keyword]流来过滤原始流[this]
   Stream<List<T>> search(
     Stream<String> keyword, {
-    required SearchCallback<T> by,
+    required SearchKeywordCallback<T> by,
   }) {
     return Rx.combineLatest2<List<T>?, String, List<T>>(
       this,
