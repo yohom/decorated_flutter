@@ -1,6 +1,5 @@
 export 'animation/fade_slide.transition.dart';
 export 'animation/show_up.transition.dart';
-export 'animation/toast.anim.dart';
 export 'dialog/date.dialog.dart';
 export 'dialog/popup_window.dialog.dart';
 export 'misc/uri_builder.dart';
