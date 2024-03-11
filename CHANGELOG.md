@@ -1,5 +1,6 @@
 ## 0.49.0
 - [🚀] [break change] 更换`toast`实现, `ToastPosition`参数去除;
+- [🚀] `IterableX`增加`tripled`, `doubledWithPrev`, `doubledWithNext`;
 
 ## 0.48.5
 - [🚀] 增加`SizeX`的一些了扩展方法;
