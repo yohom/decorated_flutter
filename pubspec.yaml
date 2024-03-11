@@ -1,10 +1,10 @@
 name: decorated_flutter
 description: (自家用) Common encapsulation of Flutter includes the implementation of BLoC pattern and other widget combination.
-version: 0.49.0-dev.1
+version: 0.49.0-dev.2
 homepage: https://github.com/yohom/decorated_flutter
 
 environment:
-  sdk: ">=2.17.0 <4.0.0"
+  sdk: ">=3.0.0 <4.0.0"
   flutter: ">=3.10.0"
 
 dependencies:

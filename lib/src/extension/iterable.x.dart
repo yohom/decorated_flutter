@@ -18,7 +18,9 @@ extension IterableX<T> on Iterable<T> {
     return length - 1;
   }
 
-  T? operator [](int index) => length > index ? elementAt(index) : null;
+  T? operator [](int index) {
+    return (index > 0 && index < length) ? elementAt(index) : null;
+  }
 
   Iterable<T> operator +(T other) => followedBy([other]);
 
@@ -32,8 +34,10 @@ extension IterableX<T> on Iterable<T> {
     return map;
   }
 
+  @Deprecated('sdk中已经自带同名扩展属性')
   T? get firstOrNull => getOrNull(0);
 
+  @Deprecated('sdk中已经自带同名扩展属性')
   T? get lastOrNull => getOrNull(length - 1);
 
   int countWhere(bool Function(T element) test) {
@@ -76,6 +80,20 @@ extension IterableX<T> on Iterable<T> {
     } catch (e) {
       return [];
     }
+  }
+
+  Iterable<(T?, T, T?)> get tripled {
+    return [
+      for (int i = 0; i < length; i++) (this[i - 1], elementAt(i), this[i + 1])
+    ];
+  }
+
+  Iterable<(T?, T)> get doubledWithPrev {
+    return [for (int i = 0; i < length; i++) (this[i - 1], elementAt(i))];
+  }
+
+  Iterable<(T, T?)> get doubledWithNext {
+    return [for (int i = 0; i < length; i++) (elementAt(i), this[i + 1])];
   }
 
   /// 按[count]数给列表分组
