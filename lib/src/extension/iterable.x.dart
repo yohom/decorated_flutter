@@ -19,7 +19,7 @@ extension IterableX<T> on Iterable<T> {
   }
 
   T? operator [](int index) {
-    return (index > 0 && index < length) ? elementAt(index) : null;
+    return (index >= 0 && index < length) ? elementAt(index) : null;
   }
 
   Iterable<T> operator +(T other) => followedBy([other]);
