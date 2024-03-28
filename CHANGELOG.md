@@ -1,6 +1,9 @@
 ## 0.49.0
 - [🚀] [break change] 更换`toast`实现, `ToastPosition`参数去除;
 - [🚀] `IterableX`增加`tripled`, `doubledWithPrev`, `doubledWithNext`;
+- [🚀] 使用`shared_preference`代替`hive`, 增强通用性;
+- [🚀] 删除一些过时的扩展(sdk中有代替同名扩展);
+- [🚀] 增加`jsonList`扩展;
 
 ## 0.48.5
 - [🚀] 增加`SizeX`的一些了扩展方法;
