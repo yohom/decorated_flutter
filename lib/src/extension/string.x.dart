@@ -60,6 +60,10 @@ extension StringX on String {
     return jsonDecode(this);
   }
 
+  List<dynamic> get jsonList {
+    return jsonDecode(this);
+  }
+
   Uri? get uri {
     return Uri.tryParse(this);
   }

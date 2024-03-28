@@ -34,12 +34,6 @@ extension IterableX<T> on Iterable<T> {
     return map;
   }
 
-  @Deprecated('sdk中已经自带同名扩展属性')
-  T? get firstOrNull => getOrNull(0);
-
-  @Deprecated('sdk中已经自带同名扩展属性')
-  T? get lastOrNull => getOrNull(length - 1);
-
   int countWhere(bool Function(T element) test) {
     try {
       return where(test).length;
