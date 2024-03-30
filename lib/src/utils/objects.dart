@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+// import 'package:hive_flutter/hive_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'logger/logger.dart';
 
@@ -19,15 +20,11 @@ final kMoneyRegex =
 final kIpV4Regex = RegExp(r'^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$');
 
 // decorated专属存储
-late Box _box;
+late SharedPreferences _box;
 Future<void> initDecoratedBox() async {
   L.d('开始初始化decorated专属存储持久层');
-  try {
-    await Hive.initFlutter();
-  } finally {
-    _box = await Hive.openBox('decorated_flutter_box');
-  }
+  _box = await SharedPreferences.getInstance();
   L.d('结束初始化decorated专属存储持久层');
 }
 
-Box get gDecoratedStorage => _box;
+SharedPreferences get gDecoratedStorage => _box;
