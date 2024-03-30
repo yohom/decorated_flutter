@@ -56,7 +56,7 @@ class OptionalPageIO<T, ARG> extends OptionalListIO<T>
     super.onReset,
     super.persistConfig,
   }) : super(semantics: semantics, fetch: (_) => Future.value([])) {
-    _initPage = initPage ?? defaultInitialPage ?? 0;
+    _initPage = initPage ?? defaultInitialPage ?? 1;
     _currentPage = _initPage;
     _pageFetch = pageFetch ??
         (_, __) => throw '[$semantics] 在未设置fetch回调时调用了update方法, 请检查逻辑是否正确!';
