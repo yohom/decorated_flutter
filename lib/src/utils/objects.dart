@@ -22,8 +22,11 @@ final kIpV4Regex = RegExp(r'^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$');
 late Box _box;
 Future<void> initDecoratedBox() async {
   L.d('开始初始化decorated专属存储持久层');
-  await Hive.initFlutter();
-  _box = await Hive.openBox('decorated_flutter_box');
+  try {
+    await Hive.initFlutter();
+  } finally {
+    _box = await Hive.openBox('decorated_flutter_box');
+  }
   L.d('结束初始化decorated专属存储持久层');
 }
 
