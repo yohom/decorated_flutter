@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:math' as math;
 
 import 'package:decorated_flutter/decorated_flutter.dart';
@@ -79,18 +78,18 @@ abstract class BaseIO<T> {
     if (isBehavior) {
       if (_persistConfig != null) {
         try {
-          final deserialized = gDecoratedStorage.getString(_persistConfig!.key);
+          final deserialized = gDecoratedStorage.get(_persistConfig!.key);
           // 只发射非空值
           if (deserialized == null) {
             L.w('读取到 [$_semantics] null缓存值, 直接略过');
             return;
           }
 
-          final value = _persistConfig!.onDeserialize(jsonDecode(deserialized));
+          final value = _persistConfig!.onDeserialize(deserialized);
           if (value != null) _subject.add(value);
         } catch (e, s) {
           L.w('读取持久层数据发生异常 $e, 删除key: [${_persistConfig!.key}]\n调用栈: $s');
-          gDecoratedStorage.remove(_persistConfig!.key);
+          gDecoratedStorage.delete(_persistConfig!.key);
         }
       }
     }
@@ -175,9 +174,9 @@ abstract class BaseIO<T> {
         final serialized = _persistConfig!.onSerialize(_resetValue);
         assert(isJsonable(serialized), '序列化之后应是jsonable值!');
 
-        gDecoratedStorage.setInt(_persistConfig!.key, serialized);
+        gDecoratedStorage.put(_persistConfig!.key, serialized);
       } else {
-        gDecoratedStorage.remove(_persistConfig!.key);
+        gDecoratedStorage.delete(_persistConfig!.key);
       }
     }
   }
@@ -228,7 +227,7 @@ abstract class BaseIO<T> {
         '序列化之后应是jsonable值! 原始值: $data, 序列化后: $serialized',
       );
 
-      gDecoratedStorage.setString(_shadow.key, jsonEncode(serialized));
+      gDecoratedStorage.put(_shadow.key, serialized);
     }
   }
 }
