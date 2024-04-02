@@ -61,7 +61,16 @@ extension StringX on String {
   }
 
   List<dynamic> get jsonList {
-    return jsonDecode(this);
+    try {
+      final json = jsonDecode(this);
+      if (json is List) {
+        return json;
+      } else {
+        return [];
+      }
+    } catch (_) {
+      return [];
+    }
   }
 
   Uri? get uri {
