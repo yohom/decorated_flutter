@@ -1,4 +1,16 @@
+import 'package:decorated_flutter/decorated_flutter.dart';
+
 extension DurationX on Duration {
+  static Duration parse(String raw) {
+    assert(raw.contains(':'), '字符串时间必须含有冒号(:)!');
+    final parts = raw.split(':').map((e) => e.intValue ?? 0).toList();
+    return Duration(
+      hours: parts.getOrNull(0) ?? 0,
+      minutes: parts.getOrNull(1) ?? 0,
+      seconds: parts.getOrNull(2) ?? 0,
+    );
+  }
+
   String format([String format = 'HH:mm']) {
     return format
         .replaceAll('d', inDays.toString())
