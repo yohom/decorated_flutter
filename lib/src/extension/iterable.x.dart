@@ -82,11 +82,23 @@ extension IterableX<T> on Iterable<T> {
     ];
   }
 
+  @Deprecated('命名统一, 使用pairedWithPrev代替')
   Iterable<(T?, T)> get doubledWithPrev {
     return [for (int i = 0; i < length; i++) (this[i - 1], elementAt(i))];
   }
 
+  @Deprecated('命名统一, 使用pairedWithNext代替')
   Iterable<(T, T?)> get doubledWithNext {
+    return [for (int i = 0; i < length; i++) (elementAt(i), this[i + 1])];
+  }
+
+  /// 每个元素与其前一个元素组成一对
+  Iterable<(T?, T)> get pairedWithPrev {
+    return [for (int i = 0; i < length; i++) (this[i - 1], elementAt(i))];
+  }
+
+  /// 每个元素与其后一个元素组成一对
+  Iterable<(T, T?)> get pairedWithNext {
     return [for (int i = 0; i < length; i++) (elementAt(i), this[i + 1])];
   }
 
