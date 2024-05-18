@@ -12,15 +12,44 @@ extension DurationX on Duration {
   }
 
   String format([String format = 'HH:mm']) {
-    return format
-        .replaceAll('d', inDays.toString())
-        .replaceAll('HH', hourPart.toString().padLeft(2, '0'))
-        .replaceAll('mm', minutePart.toString().padLeft(2, '0'))
-        .replaceAll('ss', secondPart.toString().padLeft(2, '0'))
-        .replaceAll('ms', (millisecondPart ~/ 10).toString().padLeft(2, '0'))
-        .replaceAll('H', hourPart.toString())
-        .replaceAll('m', minutePart.toString())
-        .replaceAll('s', secondPart.toString());
+    String raw;
+    if (format.contains('d')) {
+      raw = format
+          .replaceAll('d', inDays.toString())
+          .replaceAll('HH', hourPart.toString().padLeft(2, '0'))
+          .replaceAll('mm', minutePart.toString().padLeft(2, '0'))
+          .replaceAll('ss', secondPart.toString().padLeft(2, '0'))
+          .replaceAll('ms', (millisecondPart ~/ 10).toString().padLeft(2, '0'))
+          .replaceAll('H', hourPart.toString())
+          .replaceAll('m', minutePart.toString())
+          .replaceAll('s', secondPart.toString());
+    } else if (format.contains('HH')) {
+      raw = format
+          .replaceAll('HH', inHours.toString().padLeft(2, '0'))
+          .replaceAll('mm', minutePart.toString().padLeft(2, '0'))
+          .replaceAll('ss', secondPart.toString().padLeft(2, '0'))
+          .replaceAll('ms', (millisecondPart ~/ 10).toString().padLeft(2, '0'))
+          .replaceAll('H', hourPart.toString())
+          .replaceAll('m', minutePart.toString())
+          .replaceAll('s', secondPart.toString());
+    } else if (format.contains('mm')) {
+      raw = format
+          .replaceAll('mm', inMinutes.toString().padLeft(2, '0'))
+          .replaceAll('ss', secondPart.toString().padLeft(2, '0'))
+          .replaceAll('ms', (millisecondPart ~/ 10).toString().padLeft(2, '0'))
+          .replaceAll('H', hourPart.toString())
+          .replaceAll('m', minutePart.toString())
+          .replaceAll('s', secondPart.toString());
+    } else {
+      raw = format
+          .replaceAll('ss', inSeconds.toString().padLeft(2, '0'))
+          .replaceAll('ms', (millisecondPart ~/ 10).toString().padLeft(2, '0'))
+          .replaceAll('H', hourPart.toString())
+          .replaceAll('m', minutePart.toString())
+          .replaceAll('s', secondPart.toString());
+    }
+
+    return raw;
   }
 
   int get hourPart => (inSeconds ~/ 3600) % 24;
