@@ -278,6 +278,20 @@ mixin ListMixin<T> on BaseIO<List<T>> {
     return element;
   }
 
+  /// 替换指定元素, 并发射
+  T? replaceItem(T element) {
+    if (_subject.isClosed) {
+      L.w('IO在close状态下请求发送数据');
+      return null;
+    }
+
+    // 需要拷贝一份, 防止影响原始数据, 比如说改变了_seedValue的内容
+    final copied = List.of(latest);
+
+    _subject.add(copied..replaceItem(element));
+    return element;
+  }
+
   /// 替换最后一个的元素, 并发射
   T? replaceLast(T element) {
     if (_subject.isClosed) {

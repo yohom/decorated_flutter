@@ -1,11 +1,7 @@
 import 'dart:async';
 
-import 'package:decorated_flutter/src/ui/ui.export.dart';
-import 'package:decorated_flutter/src/utils/objects.dart';
-import 'package:decorated_flutter/src/utils/utils.export.dart';
+import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
-
-import 'navigator.x.dart';
 
 typedef LoadingBuilder = Widget Function(
     BuildContext context, String loadingText);
@@ -53,10 +49,15 @@ extension FutureX<T> on Future<T> {
           child: Builder(
             builder: (context) {
               final text = loadingText ?? defaultLoadingText;
+              final isCancelable = cancelable ?? loadingCancelable;
+              final loadingWidget = loadingWidgetBuilder?.call(context, text) ??
+                  ModalLoading(text);
               return PopScope(
-                canPop: cancelable ?? loadingCancelable,
-                child: loadingWidgetBuilder?.call(context, text) ??
-                    ModalLoading(text),
+                canPop: isCancelable,
+                child: GestureDetector(
+                  onTap: isCancelable ? context.navigator.pop : null,
+                  child: loadingWidget,
+                ),
               );
             },
           ),
