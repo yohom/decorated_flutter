@@ -47,7 +47,7 @@ class CircleCheckbox extends StatefulWidget {
     this.autofocus = false,
     this.shape,
     this.side,
-  })  : assert(tristate || value != null);
+  }) : assert(tristate || value != null);
 
   /// Whether this checkbox is checked.
   ///
@@ -331,7 +331,7 @@ class _CircleCheckboxState extends State<CircleCheckbox>
         return themeData.disabledColor;
       }
       if (states.contains(MaterialState.selected)) {
-        return themeData.toggleableActiveColor;
+        return themeData.colorScheme.secondary;
       }
       return themeData.unselectedWidgetColor;
     });
