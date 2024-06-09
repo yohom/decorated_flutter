@@ -2,6 +2,7 @@
 - [🚀] `DurationX`增加`parse`方法;
 - [🚀] `ListMixin`增加`replaceItem`;
 - [🐛] `loading`的`cancelable`修正;
+- [🐛] 适配Flutter 3.22;
 
 ## 0.49.0
 - [🚀] [break change] 更换`toast`实现, `ToastPosition`参数去除;
