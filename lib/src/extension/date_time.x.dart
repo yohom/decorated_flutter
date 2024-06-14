@@ -30,6 +30,16 @@ extension DateTimeX on DateTime {
     return now.month - 1 == month;
   }
 
+  bool get isNextYear {
+    final now = DateTime.now();
+    return now.year + 1 == year;
+  }
+
+  bool get isPrevYear {
+    final now = DateTime.now();
+    return now.year - 1 == year;
+  }
+
   bool get isToday {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);

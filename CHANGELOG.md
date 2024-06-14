@@ -1,7 +1,7 @@
 ## 0.49.1
 - [🚀] `DurationX`增加`parse`方法;
 - [🚀] `ListMixin`增加`replaceItem`;
-- [🚀] `DateTimeX`增加`isPrevMonth`和`isNextMonth`;
+- [🚀] `DateTimeX`增加`isPrevMonth`, `isNextMonth`, `isNextYear`, `isPrevYear`;
 - [🐛] `loading`的`cancelable`修正;
 - [🚀] 适配Flutter 3.22;
 
