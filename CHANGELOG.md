@@ -1,8 +1,9 @@
 ## 0.49.1
 - [🚀] `DurationX`增加`parse`方法;
 - [🚀] `ListMixin`增加`replaceItem`;
+- [🚀] `DateTimeX`增加`isPrevMonth`和`isNextMonth`;
 - [🐛] `loading`的`cancelable`修正;
-- [🐛] 适配Flutter 3.22;
+- [🚀] 适配Flutter 3.22;
 
 ## 0.49.0
 - [🚀] [break change] 更换`toast`实现, `ToastPosition`参数去除;
