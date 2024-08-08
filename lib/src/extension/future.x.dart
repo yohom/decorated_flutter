@@ -99,10 +99,17 @@ extension FutureX<T> on Future<T> {
   }
 
   /// 当前Future正常结束后执行pop
-  Future<void> thenPop<R>({String? until, R? withValue}) {
-    return then((_) => until == null
-        ? gNavigatorKey.currentState?.pop<R>(withValue)
-        : gNavigatorKey.currentState?.popUntil(ModalRoute.withName(until)));
+  Future<void> thenPop<R>({
+    String? until,
+    R? withValue,
+    BuildContext? context,
+  }) {
+    return then((_) {
+      final navigator = context?.navigator ?? gNavigatorKey.currentState;
+      until == null
+          ? navigator?.pop<R>(withValue)
+          : navigator?.popUntil(ModalRoute.withName(until));
+    });
   }
 
   /// 当前Future正常结束后执行pop
