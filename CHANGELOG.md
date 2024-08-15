@@ -3,6 +3,7 @@
 - [🚀] `ListMixin`增加`replaceItem`;
 - [🚀] `DateTimeX`增加`isPrevMonth`, `isNextMonth`, `isNextYear`, `isPrevYear`;
 - [🐛] `loading`的`cancelable`修正;
+- [🐛] `decorated_flex`增加`cursor`参数;
 - [🚀] 适配Flutter 3.22;
 
 ## 0.49.0
