@@ -70,6 +70,7 @@ class DecoratedRow extends DecoratedFlex {
     super.aspectRatio,
     super.reverse,
     super.childrenFlex,
+    super.cursor,
     super.children = const [],
   }) : super(direction: Axis.horizontal);
 }
@@ -143,6 +144,7 @@ class DecoratedColumn extends DecoratedFlex {
     super.aspectRatio,
     super.reverse,
     super.childrenFlex,
+    super.cursor,
     super.children = const [],
   }) : super(direction: Axis.vertical);
 }
@@ -216,6 +218,7 @@ class DecoratedFlex extends StatelessWidget {
     this.aspectRatio,
     this.reverse,
     this.childrenFlex,
+    this.cursor,
     this.children = const [],
   });
 
@@ -360,6 +363,9 @@ class DecoratedFlex extends StatelessWidget {
 
   /// 子元素的flex
   final FlexConfig? childrenFlex;
+
+  /// 悬浮时光标样式
+  final SystemMouseCursor? cursor;
 
   /// 子元素
   final List<Widget> children;
@@ -604,6 +610,10 @@ class DecoratedFlex extends StatelessWidget {
 
     if (iconColor != null) {
       result = IconTheme(data: IconThemeData(color: iconColor), child: result);
+    }
+
+    if (cursor case MouseCursor cursor) {
+      result = MouseRegion(cursor: cursor, child: result);
     }
 
     if (ignorePointer != null) {
