@@ -1,6 +1,5 @@
 library decorated_flutter;
 
-export 'package:app_minimizer/app_minimizer.dart';
 export 'package:dio/dio.dart';
 export 'package:intl/intl.dart';
 export 'package:meta/meta.dart';
