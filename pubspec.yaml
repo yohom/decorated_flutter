@@ -30,8 +30,6 @@ dependencies:
   talker: ^4.0.2 # 控制台日志
   talker_flutter: ^4.0.2 # 针对Flutter的扩展, 直接使用
   talker_dio_logger: ^4.0.2 # dio日志
-  # 退出app https://pub.flutter-io.cn/packages/app_minimizer
-  app_minimizer: ^1.0.0+2
   # svg https://pub.flutter-io.cn/packages/flutter_svg
   flutter_svg: ^2.0.5
   # 持久化 https://pub.flutter-io.cn/packages/hive

@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:io';
 
-import 'package:app_minimizer/app_minimizer.dart';
 import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
@@ -13,6 +11,7 @@ class DoubleBackExitApp extends StatefulWidget {
     super.key,
     this.onShowExitHint,
     this.duration = const Duration(seconds: 2),
+    required this.onExit,
     required this.child,
   });
 
@@ -24,6 +23,9 @@ class DoubleBackExitApp extends StatefulWidget {
 
   /// 显示退出提示
   final VoidCallback? onShowExitHint;
+
+  /// 显示退出提示
+  final VoidCallback onExit;
 
   @override
   _DoubleBackExitAppState createState() => _DoubleBackExitAppState();
@@ -39,9 +41,7 @@ class _DoubleBackExitAppState extends State<DoubleBackExitApp> {
     _closeAppSubject.timeInterval().listen((interval) {
       L.d('回退间隔: $interval');
       if (interval.interval < widget.duration) {
-        if (Platform.isAndroid) {
-          FlutterAppMinimizer.minimize();
-        }
+        widget.onExit();
       } else {
         if (widget.onShowExitHint != null) {
           widget.onShowExitHint!();
