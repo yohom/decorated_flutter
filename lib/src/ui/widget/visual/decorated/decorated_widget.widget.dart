@@ -73,7 +73,7 @@ class _DecoratedWidgetState<B extends BLoC> extends State<DecoratedWidget<B>> {
   Widget build(BuildContext context) {
     Widget result;
 
-    B? bloc = widget.bloc ?? get<B>();
+    B? bloc = widget.bloc;
     if (bloc != null) {
       result = BLoCProvider<B>(
         bloc: bloc,

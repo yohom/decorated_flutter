@@ -18,8 +18,6 @@ dependencies:
   intl: any
   # 网络请求 https://pub.flutter-io.cn/packages/dio 5.2.0修改了CancelToken的行为, (至少)Stream类型的响应无法取消
   dio: "^5.0.0"
-  # kiwi https://pub.flutter-io.cn/packages/kiwi
-  kiwi: ^4.1.0
   # rx https://pub.flutter-io.cn/packages/rxdart
   rxdart: ^0.27.7
   # 图片加载增强 https://pub.flutter-io.cn/packages/cached_network_image
