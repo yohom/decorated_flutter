@@ -619,7 +619,16 @@ class DecoratedFlex extends StatelessWidget {
     }
 
     if (dividerThemeData case DividerThemeData data) {
-      result = DividerTheme(data: data, child: result);
+      result = DividerTheme(
+        data: Theme.of(context).dividerTheme.copyWith(
+              color: data.color,
+              space: data.space,
+              thickness: data.thickness,
+              indent: data.indent,
+              endIndent: data.endIndent,
+            ),
+        child: result,
+      );
     }
 
     if (cursor case MouseCursor cursor) {

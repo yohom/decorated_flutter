@@ -1,3 +1,5 @@
+## 0.49.2
+
 ## 0.49.1
 - [🚀] `DurationX`增加`parse`方法;
 - [🚀] `ListMixin`增加`replaceItem`;
