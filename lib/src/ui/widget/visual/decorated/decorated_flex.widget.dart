@@ -71,6 +71,7 @@ class DecoratedRow extends DecoratedFlex {
     super.reverse,
     super.childrenFlex,
     super.cursor,
+    super.dividerThemeData,
     super.children = const [],
   }) : super(direction: Axis.horizontal);
 }
@@ -145,6 +146,7 @@ class DecoratedColumn extends DecoratedFlex {
     super.reverse,
     super.childrenFlex,
     super.cursor,
+    super.dividerThemeData,
     super.children = const [],
   }) : super(direction: Axis.vertical);
 }
@@ -219,6 +221,7 @@ class DecoratedFlex extends StatelessWidget {
     this.reverse,
     this.childrenFlex,
     this.cursor,
+    this.dividerThemeData,
     this.children = const [],
   });
 
@@ -366,6 +369,9 @@ class DecoratedFlex extends StatelessWidget {
 
   /// 悬浮时光标样式
   final SystemMouseCursor? cursor;
+
+  /// 分割线样式
+  final DividerThemeData? dividerThemeData;
 
   /// 子元素
   final List<Widget> children;
@@ -610,6 +616,10 @@ class DecoratedFlex extends StatelessWidget {
 
     if (iconColor != null) {
       result = IconTheme(data: IconThemeData(color: iconColor), child: result);
+    }
+
+    if (dividerThemeData case DividerThemeData data) {
+      result = DividerTheme(data: data, child: result);
     }
 
     if (cursor case MouseCursor cursor) {
