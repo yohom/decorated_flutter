@@ -5,6 +5,7 @@
 - [🐛] `loading`的`cancelable`修正;
 - [🚀] `decorated_flex`增加`cursor`参数;
 - [🚀] 去除`app_minimizer`插件的依赖, 需要的时候单独引用;
+- [🚀] `DecoratedFlex`增加`dividerThemeData`;
 
 ## 0.49.0
 - [🚀] [break change] 更换`toast`实现, `ToastPosition`参数去除;

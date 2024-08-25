@@ -29,7 +29,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialPageRoute<T> {
     required String routeName,
     super.fullscreenDialog,
     super.maintainState,
-  })  : _bloc = bloc ?? get(), // 如果没有显式指定就从DI容器寻找
+  })  : _bloc = bloc,
         super(
           builder: (context) => screen,
           settings: RouteSettings(name: routeName),
@@ -271,7 +271,7 @@ class DecoratedDialogRoute<B extends BLoC, T> extends DialogRoute<T> {
     super.themes,
     super.useSafeArea,
     required String routeName,
-  })  : _bloc = bloc ?? get(), // 如果没有显式指定就从DI容器寻找
+  })  : _bloc = bloc,
         super(
           context: gNavigatorKey.currentContext!,
           builder: (context) => dialog,
