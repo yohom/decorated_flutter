@@ -25,9 +25,9 @@ dependencies:
   # toast https://pub.flutter-io.cn/packages/oktoast
   cherry_toast: ^1.9.1
   # 日志打印 https://pub.flutter-io.cn/packages/talker
-  talker: ^4.0.2 # 控制台日志
-  talker_flutter: ^4.0.2 # 针对Flutter的扩展, 直接使用
-  talker_dio_logger: ^4.0.2 # dio日志
+  talker: ^4.4.1 # 控制台日志
+  talker_flutter: ^4.4.1 # 针对Flutter的扩展, 直接使用
+  talker_dio_logger: ^4.4.1 # dio日志
   # svg https://pub.flutter-io.cn/packages/flutter_svg
   flutter_svg: ^2.0.5
   # 持久化 https://pub.flutter-io.cn/packages/hive
