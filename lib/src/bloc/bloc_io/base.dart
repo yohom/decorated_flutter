@@ -14,8 +14,8 @@ part 'required/required_int.dart';
 part 'required/required_list.dart';
 part 'required/required_page.dart';
 
-typedef FetchCallback<R, T> = Future<R> Function(T arg);
-typedef PageFetchCallback<R, T> = Future<R> Function(int page, T arg);
+typedef OnUpdateCallback<R, T> = Future<R> Function(T arg);
+typedef OnUpdatePageCallback<R, T> = Future<R> Function(int page, T arg);
 typedef MergeListCallback<T> = List<T> Function(
     List<T> current, List<T> newList);
 typedef NoMoreDataCallback<T> = bool Function(List<T> newList);
@@ -237,7 +237,7 @@ class Signal extends IO<dynamic> {
   Signal({required super.semantics, super.isBehavior = false})
       : super(
           seedValue: null,
-          fetch: (_) => throw '不能在 [$semantics] Signal中调用update方法',
+          onUpdate: (_) => throw '不能在 [$semantics] Signal中调用update方法',
         );
 
   /// 是否有粘性信号可以处理

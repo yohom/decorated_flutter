@@ -23,7 +23,7 @@ class OptionalOutput<T, ARG> extends Output<T?, ARG> {
     super.sync = true,
     super.printLog = true,
     super.isBehavior = true,
-    required super.fetch,
+    required super.onUpdate,
     super.onReset,
     super.persistConfig,
     super.skipError,
@@ -57,13 +57,13 @@ class OptionalIO<T> extends IO<T?> {
     super.acceptEmpty,
     super.isDistinct,
     super.printLog,
-    FetchCallback<T, dynamic>? fetch,
+    OnUpdateCallback<T, dynamic>? fetch,
     super.onReset,
     super.persistConfig,
   }) : super(semantics: semantics) {
     stream = _subject.stream;
 
-    _fetch = fetch ??
+    _onUpdate = fetch ??
         (_) => throw '[$semantics] 在未设置fetch回调时调用了update方法, 请检查业务逻辑是否正确!';
   }
 }

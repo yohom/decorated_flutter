@@ -10,7 +10,7 @@ class BoolIO extends IO<bool> with BoolMixin {
     super.acceptEmpty,
     super.isDistinct,
     super.printLog,
-    super.fetch,
+    super.onUpdate,
     super.onReset,
     super.persistConfig,
   });
@@ -24,7 +24,7 @@ class BoolOutput<ARG> extends Output<bool, ARG> with BoolMixin {
     super.sync,
     super.isBehavior,
     super.printLog,
-    required super.fetch,
+    required super.onUpdate,
     super.onReset,
     super.persistConfig,
   });

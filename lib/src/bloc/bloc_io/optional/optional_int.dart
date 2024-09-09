@@ -13,7 +13,7 @@ class OptionalIntIO extends IO<int?> with OptionalIntMixin {
     int? min,
     int? max,
     int? remainder,
-    FetchCallback<int, dynamic>? super.fetch,
+    OnUpdateCallback<int, dynamic>? super.onUpdate,
     super.onReset,
     super.persistConfig,
   }) {

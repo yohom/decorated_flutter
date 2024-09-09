@@ -13,7 +13,7 @@ class IntIO extends IO<int> with IntMixin {
     int? min,
     int? max,
     int? remainder,
-    super.fetch,
+    super.onUpdate,
     super.onReset,
     super.persistConfig,
   }) {
