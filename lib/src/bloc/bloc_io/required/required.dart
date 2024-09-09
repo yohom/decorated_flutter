@@ -83,7 +83,7 @@ class StreamOutput<T> extends BaseIO<T> with OutputMixin<T, void> {
   }) {
     _sourceSubscription = source.listen(_subject.add);
     stream = _subject.stream;
-    _fetch = (_) => throw 'StreamOutput不应调用update方法!\n${StackTrace.current}';
+    _onUpdate = (_) => throw 'StreamOutput不应调用update方法!\n${StackTrace.current}';
   }
 
   late final StreamSubscription<T> _sourceSubscription;
@@ -103,13 +103,13 @@ class Output<T, ARG> extends BaseIO<T> with OutputMixin<T, ARG> {
     super.sync = true,
     super.printLog = true,
     super.isBehavior = true,
-    required FetchCallback<T, ARG?> fetch,
+    required OnUpdateCallback<T, ARG?> onUpdate,
     super.onReset,
     super.persistConfig,
     super.skipError,
   }) {
     stream = _subject.stream;
-    _fetch = fetch;
+    _onUpdate = onUpdate;
   }
 
   static OptionalOutput<T, ARG> optional<T, ARG>({
@@ -118,7 +118,7 @@ class Output<T, ARG> extends BaseIO<T> with OutputMixin<T, ARG> {
     bool sync = true,
     bool printLog = true,
     bool isBehavior = true,
-    required FetchCallback<T, ARG?> fetch,
+    required OnUpdateCallback<T, ARG?> onUpdate,
     T? Function()? onReset,
     PersistConfig<T?>? persistConfig,
     bool skipError = false,
@@ -129,7 +129,7 @@ class Output<T, ARG> extends BaseIO<T> with OutputMixin<T, ARG> {
       sync: sync,
       isBehavior: isBehavior,
       printLog: printLog,
-      fetch: fetch,
+      onUpdate: onUpdate,
       onReset: onReset,
       persistConfig: persistConfig,
       skipError: skipError,
@@ -148,7 +148,7 @@ class IO<T> extends BaseIO<T> with InputMixin<T>, OutputMixin<T, dynamic> {
     bool isDistinct = false,
     bool Function(T, T)? isSame,
     super.printLog,
-    FetchCallback<T, dynamic>? fetch,
+    OnUpdateCallback<T, dynamic>? onUpdate,
     super.onReset,
     super.persistConfig,
   }) : super(
@@ -159,9 +159,9 @@ class IO<T> extends BaseIO<T> with InputMixin<T>, OutputMixin<T, dynamic> {
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
     if (isSame != null) _isSame = isSame;
-    _fetch = fetch ??
+    _onUpdate = onUpdate ??
         (_) =>
-            throw '[$semantics]在未设置fetch回调时调用了update方法, 请检查逻辑是否正确!\n${StackTrace.current}';
+            throw '[$semantics]在未设置onUpdate回调时调用了update方法, 请检查逻辑是否正确!\n${StackTrace.current}';
   }
 
   static OptionalIO<T> optional<T>({
@@ -172,7 +172,7 @@ class IO<T> extends BaseIO<T> with InputMixin<T>, OutputMixin<T, dynamic> {
     bool acceptEmpty = true,
     bool isDistinct = false,
     bool printLog = true,
-    FetchCallback<T, dynamic>? fetch,
+    OnUpdateCallback<T, dynamic>? fetch,
     T? Function()? onReset,
     PersistConfig<T?>? persistConfig,
   }) {
@@ -303,11 +303,11 @@ mixin OutputMixin<T, ARG> on BaseIO<T> {
   }
 
   /// 输出Stream
-  late FetchCallback<T, ARG?> _fetch;
+  late OnUpdateCallback<T, ARG?> _onUpdate;
 
   /// 使用内部的trigger获取数据
   Future<T> update([ARG? arg]) async {
-    return _fetch(arg).apply((data) {
+    return _onUpdate(arg).apply((data) {
       if (!_subject.isClosed) _subject.add(data);
     }).catchError((error) {
       if (!_subject.isClosed && !_skipError) _subject.addError(error);

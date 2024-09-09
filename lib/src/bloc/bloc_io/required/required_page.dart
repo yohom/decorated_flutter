@@ -14,14 +14,14 @@ class PageOutput<T, ARG> extends ListOutput<T, int> with PageMixin<T, ARG> {
     super.printLog,
     int pageSize = 0,
     int? forceCapacity,
-    required PageFetchCallback<List<T>, ARG?> pageFetch,
+    required OnUpdatePageCallback<List<T>, ARG?> pageFetch,
     super.onReset,
     super.skipError,
     super.persistConfig,
-  }) : super(fetch: (_) => Future.value([])) {
+  }) : super(onUpdate: (_) => Future.value([])) {
     _initPage = initPage ?? defaultInitialPage ?? 1;
     _currentPage = _initPage;
-    _pageFetch = pageFetch;
+    _onUpdatePage = pageFetch;
     _receiveFullData = receiveFullData;
     _pageSize = pageSize;
     _forceCapacity = forceCapacity;
@@ -36,7 +36,7 @@ class PageOutput<T, ARG> extends ListOutput<T, int> with PageMixin<T, ARG> {
     bool receiveFullData = true,
     bool printLog = true,
     int? forceCapacity,
-    required PageFetchCallback<List<T>, ARG?> pageFetch,
+    required OnUpdatePageCallback<List<T>, ARG?> pageFetch,
     List<T>? Function()? onReset,
     PersistConfig<List<T>?>? persistConfig,
     bool skipError = false,
@@ -52,7 +52,7 @@ class PageOutput<T, ARG> extends ListOutput<T, int> with PageMixin<T, ARG> {
       receiveFullData: receiveFullData,
       printLog: printLog,
       forceCapacity: forceCapacity,
-      pageFetch: pageFetch,
+      onUpdatePage: pageFetch,
       onReset: onReset,
       persistConfig: persistConfig,
       onMergeList: onMergeList,
@@ -83,18 +83,18 @@ class PageIO<T, ARG> extends ListIO<T> with PageMixin<T, ARG> {
     super.printLog,
     bool receiveFullData = true,
     int? forceCapacity,
-    PageFetchCallback<List<T>, ARG?>? pageFetch,
+    OnUpdatePageCallback<List<T>, ARG?>? onUpdatePage,
     super.onReset,
     super.persistConfig,
   }) : super(
           semantics: semantics,
-          fetch: (_) => Future.error('请使用pageFetch回调!'),
+          onUpdate: (_) => Future.error('请使用onUpdatePage回调!'),
         ) {
     _initPage = initPage ?? defaultInitialPage ?? 0;
     _currentPage = _initPage;
-    _pageFetch = pageFetch ??
+    _onUpdatePage = onUpdatePage ??
         (_, __) =>
-            throw '[$semantics] 在未设置pageFetch回调时调用了refresh/loadMore方法, 请检查业务逻辑是否正确!';
+            throw '[$semantics] 在未设置onUpdatePage回调时调用了refresh/loadMore方法, 请检查业务逻辑是否正确!';
     _receiveFullData = receiveFullData;
     _pageSize = pageSize;
     _forceCapacity = forceCapacity;
@@ -125,7 +125,7 @@ mixin PageMixin<T, ARG> on ListMixin<T> {
   /// 每页大小 用于判断是否已加载完全部数据
   int _pageSize = 0;
 
-  late PageFetchCallback<List<T>, ARG?> _pageFetch;
+  late OnUpdatePageCallback<List<T>, ARG?> _onUpdatePage;
 
   /// 请求下一页数据
   ///
@@ -134,7 +134,7 @@ mixin PageMixin<T, ARG> on ListMixin<T> {
     // 如果已经没有更多数据的话, 就不再请求
     if (!_noMoreData) {
       try {
-        final nextPageData = await _pageFetch(++_currentPage, args);
+        final nextPageData = await _onUpdatePage(++_currentPage, args);
         if (_receiveFullData) {
           _dataList = [..._dataList, ...nextPageData];
         } else {
@@ -163,7 +163,7 @@ mixin PageMixin<T, ARG> on ListMixin<T> {
     _currentPage = _initPage;
     _noMoreData = false;
     try {
-      _dataList = await _pageFetch(_currentPage, args);
+      _dataList = await _onUpdatePage(_currentPage, args);
 
       if (_subject.isClosed) return null;
       _subject.add(_dataList);
