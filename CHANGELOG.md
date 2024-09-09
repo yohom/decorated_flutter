@@ -1,4 +1,5 @@
-## 0.49.2
+## 0.50.0
+- [🚀] [break change] `fetch`重命名为`onUpdate`, `pageFetch`重命名为`onUpdatePage`, 功能一样;
 
 ## 0.49.1
 - [🚀] `DurationX`增加`parse`方法;
