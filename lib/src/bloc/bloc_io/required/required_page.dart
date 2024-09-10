@@ -14,14 +14,14 @@ class PageOutput<T, ARG> extends ListOutput<T, int> with PageMixin<T, ARG> {
     super.printLog,
     int pageSize = 0,
     int? forceCapacity,
-    required OnUpdatePageCallback<List<T>, ARG?> pageFetch,
+    required OnUpdatePageCallback<List<T>, ARG?> onUpdatePage,
     super.onReset,
     super.skipError,
     super.persistConfig,
   }) : super(onUpdate: (_) => Future.value([])) {
     _initPage = initPage ?? defaultInitialPage ?? 1;
     _currentPage = _initPage;
-    _onUpdatePage = pageFetch;
+    _onUpdatePage = onUpdatePage;
     _receiveFullData = receiveFullData;
     _pageSize = pageSize;
     _forceCapacity = forceCapacity;
@@ -36,7 +36,7 @@ class PageOutput<T, ARG> extends ListOutput<T, int> with PageMixin<T, ARG> {
     bool receiveFullData = true,
     bool printLog = true,
     int? forceCapacity,
-    required OnUpdatePageCallback<List<T>, ARG?> pageFetch,
+    required OnUpdatePageCallback<List<T>, ARG?> onUpdatePage,
     List<T>? Function()? onReset,
     PersistConfig<List<T>?>? persistConfig,
     bool skipError = false,
@@ -52,7 +52,7 @@ class PageOutput<T, ARG> extends ListOutput<T, int> with PageMixin<T, ARG> {
       receiveFullData: receiveFullData,
       printLog: printLog,
       forceCapacity: forceCapacity,
-      onUpdatePage: pageFetch,
+      onUpdatePage: onUpdatePage,
       onReset: onReset,
       persistConfig: persistConfig,
       onMergeList: onMergeList,
