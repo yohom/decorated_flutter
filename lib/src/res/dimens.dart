@@ -151,6 +151,20 @@ const SLIVER_SPACE_24_VERTICAL = SliverToBoxAdapter(
   child: SizedBox(width: 0, height: 24),
 );
 
+const SPACE_20 = SizedBox(width: 20, height: 20);
+const SPACE_20_HORIZONTAL = SizedBox(width: 20, height: 0);
+const SPACE_20_VERTICAL = SizedBox(width: 0, height: 20);
+
+const SLIVER_SPACE_20 = SliverToBoxAdapter(
+  child: SizedBox(width: 20, height: 20),
+);
+const SLIVER_SPACE_20_HORIZONTAL = SliverToBoxAdapter(
+  child: SizedBox(width: 20, height: 0),
+);
+const SLIVER_SPACE_20_VERTICAL = SliverToBoxAdapter(
+  child: SizedBox(width: 0, height: 20),
+);
+
 const SPACE_32 = SizedBox(width: 32, height: 32);
 const SPACE_32_HORIZONTAL = SizedBox(width: 32, height: 0);
 const SPACE_32_VERTICAL = SizedBox(width: 0, height: 32);
