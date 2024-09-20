@@ -1,6 +1,7 @@
 ## 0.50.0
 - [🚀] [break change] `fetch`重命名为`onUpdate`, `pageFetch`重命名为`onUpdatePage`, 功能一样;
 - [🚀] 增加`SPACE_10`系列;
+- [🚀] `ImageView`图片地址是null时, 显示一个指定大小的`SizedBox`;
 
 ## 0.49.1
 - [🚀] `DurationX`增加`parse`方法;
