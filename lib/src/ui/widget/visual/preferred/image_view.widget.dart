@@ -369,7 +369,7 @@ class ImageView extends StatelessWidget {
       }
     } else {
       // 如果图片地址为null的话, 那就不显示
-      result = const SizedBox.shrink();
+      result = SizedBox(width: _width, height: _height);
     }
 
     if (size != null || width != null || height != null) {
