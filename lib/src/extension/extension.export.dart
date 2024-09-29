@@ -19,6 +19,7 @@ export 'offset.x.dart';
 export 'page_controller.x.dart';
 export 'route_settings.x.dart';
 export 'scroll_controller.x.dart';
+export 'shared_preferences.x.dart';
 export 'size.x.dart';
 export 'state.x.dart';
 export 'stream.x.dart';
