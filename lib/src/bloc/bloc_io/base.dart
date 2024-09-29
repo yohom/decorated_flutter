@@ -78,7 +78,7 @@ abstract class BaseIO<T> {
     if (isBehavior) {
       if (_persistConfig != null) {
         try {
-          final deserialized = gDecoratedStorage.get(_persistConfig!.key);
+          final deserialized = gDecoratedStorage.getValue(_persistConfig!.key);
           // 只发射非空值
           if (deserialized == null) {
             L.w('读取到 [$_semantics] null缓存值, 直接略过');
@@ -174,7 +174,7 @@ abstract class BaseIO<T> {
         final serialized = _persistConfig!.onSerialize(_resetValue);
         assert(isJsonable(serialized), '序列化之后应是jsonable值!');
 
-        gDecoratedStorage.setString(_persistConfig!.key, serialized);
+        gDecoratedStorage.put(_persistConfig!.key, serialized);
       } else {
         gDecoratedStorage.remove(_persistConfig!.key);
       }
@@ -227,7 +227,7 @@ abstract class BaseIO<T> {
         '序列化之后应是jsonable值! 原始值: $data, 序列化后: $serialized',
       );
 
-      gDecoratedStorage.setString(_shadow.key, serialized);
+      gDecoratedStorage.put(_shadow.key, serialized);
     }
   }
 }
