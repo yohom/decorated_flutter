@@ -30,8 +30,9 @@ dependencies:
   talker_dio_logger: ^4.0.2 # dio日志
   # svg https://pub.flutter-io.cn/packages/flutter_svg
   flutter_svg: ^2.0.5
-  # 持久化 https://pub.flutter-io.cn/packages/shared_preferences
-  shared_preferences: ^2.3.2
+  # 持久化 https://pub.flutter-io.cn/packages/hive
+  hive_flutter: ^1.1.0
+  hive: ^2.2.3
   # 间接依赖
   crypto: ^3.0.0
   uuid: ^4.0.0

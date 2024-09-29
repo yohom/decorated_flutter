@@ -89,7 +89,7 @@ abstract class BaseIO<T> {
           if (value != null) _subject.add(value);
         } catch (e, s) {
           L.w('读取持久层数据发生异常 $e, 删除key: [${_persistConfig!.key}]\n调用栈: $s');
-          gDecoratedStorage.remove(_persistConfig!.key);
+          gDecoratedStorage.delete(_persistConfig!.key);
         }
       }
     }
@@ -176,7 +176,7 @@ abstract class BaseIO<T> {
 
         gDecoratedStorage.put(_persistConfig!.key, serialized);
       } else {
-        gDecoratedStorage.remove(_persistConfig!.key);
+        gDecoratedStorage.delete(_persistConfig!.key);
       }
     }
   }
