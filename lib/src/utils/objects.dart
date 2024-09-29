@@ -36,7 +36,7 @@ Future<void> initDecoratedBox() async {
   }
   // 迁移完成后清空遗留数据
   await _legacyBox.clear();
-  L.i('遗留数据迁移完成');
+  L.i('遗留数据迁移完成, 已迁移key: ${_box.getKeys()}');
 
   L.d('结束初始化decorated专属存储持久层');
 }
