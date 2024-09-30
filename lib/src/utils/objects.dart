@@ -26,17 +26,23 @@ late SharedPreferences _box;
 late Box _legacyBox;
 Future<void> initDecoratedBox() async {
   L.d('开始初始化decorated专属存储持久层');
-  await Hive.initFlutter();
-  _legacyBox = await Hive.openBox('decorated_flutter_box');
   _box = await SharedPreferences.getInstance();
 
-  // 迁移遗留数据
-  for (final item in _legacyBox.keys) {
-    await _box.setString(item, jsonEncode(_legacyBox.get(item)));
+  try {
+    // 小程序端会报错, 这里try catch一下
+    await Hive.initFlutter();
+    _legacyBox = await Hive.openBox('decorated_flutter_box');
+
+    // 迁移遗留数据
+    for (final item in _legacyBox.keys) {
+      await _box.setString(item, jsonEncode(_legacyBox.get(item)));
+    }
+    // 迁移完成后清空遗留数据
+    await _legacyBox.clear();
+    L.i('遗留数据迁移完成, 已迁移key: ${_box.getKeys()}');
+  } catch (e) {
+    L.e('初始化遗留存储时出现异常, 跳过其流程: $e');
   }
-  // 迁移完成后清空遗留数据
-  await _legacyBox.clear();
-  L.i('遗留数据迁移完成, 已迁移key: ${_box.getKeys()}');
 
   L.d('结束初始化decorated专属存储持久层');
 }
