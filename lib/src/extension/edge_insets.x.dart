@@ -6,13 +6,12 @@ extension EdgeInsetsX on EdgeInsets {
     BuildContext context, {
     SafeAreaConfig config = const SafeAreaConfig(),
   }) {
-    final mediaQueryData = MediaQuery.of(context);
+    final paddingData = MediaQuery.paddingOf(context);
     return copyWith(
-      left: left + (config.left == true ? mediaQueryData.padding.left : 0),
-      top: top + (config.top == true ? mediaQueryData.padding.top : 0),
-      right: right + (config.right == true ? mediaQueryData.padding.right : 0),
-      bottom:
-          bottom + (config.bottom == true ? mediaQueryData.padding.bottom : 0),
+      left: left + (config.left == true ? paddingData.left : 0),
+      top: top + (config.top == true ? paddingData.top : 0),
+      right: right + (config.right == true ? paddingData.right : 0),
+      bottom: bottom + (config.bottom == true ? paddingData.bottom : 0),
     );
   }
 }
