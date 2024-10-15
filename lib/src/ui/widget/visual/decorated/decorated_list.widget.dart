@@ -1,20 +1,8 @@
 import 'package:flutter/material.dart';
 
-final class TopDividerConfig {
-  TopDividerConfig({
-    this.show = true,
-    this.color = Colors.black12,
-    this.thickness = 1,
-    this.duration = const Duration(milliseconds: 320),
-  });
+import 'scrollable_top_divider.widget.dart';
 
-  final bool show;
-  final Color color;
-  final double thickness;
-  final Duration duration;
-}
-
-class DecoratedList extends StatefulWidget {
+class DecoratedList extends StatelessWidget {
   const DecoratedList.box({
     super.key,
     this.padding,
@@ -123,64 +111,30 @@ class DecoratedList extends StatefulWidget {
   final TopDividerConfig? topDivider;
 
   @override
-  State<DecoratedList> createState() => _DecoratedListState();
-}
-
-class _DecoratedListState extends State<DecoratedList> {
-  bool _showTopDivider = false;
-
-  @override
   Widget build(BuildContext context) {
-    Widget result = widget._sliver ? _sliverList() : _boxList();
+    Widget result = _sliver ? _sliverList() : _boxList();
 
-    if (widget.width != null || widget.height != null) {
+    if (width != null || height != null) {
       result = SizedBox(
-        width: widget.width,
-        height: widget.height,
+        width: width,
+        height: height,
         child: result,
       );
     }
 
-    if (widget.decoration != null) {
+    if (decoration != null) {
       result = Container(
-        clipBehavior: widget.clipBehavior,
-        decoration: widget.decoration,
+        clipBehavior: clipBehavior,
+        decoration: decoration,
         child: result,
       );
     }
 
-    if (widget.topDivider case TopDividerConfig config) {
-      result = NotificationListener<ScrollUpdateNotification>(
-        onNotification: (notification) {
-          if (notification.metrics.pixels > 0 && !_showTopDivider) {
-            setState(() {
-              _showTopDivider = true;
-            });
-          } else if (notification.metrics.pixels <= 0) {
-            setState(() {
-              _showTopDivider = false;
-            });
-          }
-          return false;
-        },
-        child: AnimatedContainer(
-          duration: config.duration,
-          decoration: BoxDecoration(
-            border: Border(
-              top: BorderSide(
-                color: _showTopDivider
-                    ? config.color
-                    : config.color.withOpacity(0),
-                width: config.thickness,
-              ),
-            ),
-          ),
-          child: result,
-        ),
-      );
+    if (topDivider case TopDividerConfig config) {
+      result = ScrollableTopDivider(config: config, child: result);
     }
 
-    if (widget.expanded == true) {
+    if (expanded == true) {
       result = Expanded(child: result);
     }
 
@@ -190,37 +144,36 @@ class _DecoratedListState extends State<DecoratedList> {
   Widget _sliverList() {
     SliverChildDelegate delegate;
 
-    if (widget.children != null) {
+    if (children != null) {
       delegate = SliverChildListDelegate(
-        widget.children!,
-        addAutomaticKeepAlives: widget.addAutomaticKeepAlives,
-        addRepaintBoundaries: widget.addRepaintBoundaries,
-        addSemanticIndexes: widget.addSemanticIndexes,
+        children!,
+        addAutomaticKeepAlives: addAutomaticKeepAlives,
+        addRepaintBoundaries: addRepaintBoundaries,
+        addSemanticIndexes: addSemanticIndexes,
       );
-    } else if (widget.itemBuilder != null) {
+    } else if (itemBuilder != null) {
       delegate = SliverChildBuilderDelegate(
-        widget.itemBuilder!,
-        childCount: widget.itemCount,
-        addAutomaticKeepAlives: widget.addAutomaticKeepAlives,
-        addRepaintBoundaries: widget.addRepaintBoundaries,
-        addSemanticIndexes: widget.addSemanticIndexes,
+        itemBuilder!,
+        childCount: itemCount,
+        addAutomaticKeepAlives: addAutomaticKeepAlives,
+        addRepaintBoundaries: addRepaintBoundaries,
+        addSemanticIndexes: addSemanticIndexes,
       );
     } else {
       throw '必须传入children或itemBuilder';
     }
 
-    Widget result = widget.prototypeItem != null
+    Widget result = prototypeItem != null
         ? SliverPrototypeExtentList(
             delegate: delegate,
-            prototypeItem: widget.prototypeItem!,
+            prototypeItem: prototypeItem!,
           )
-        : widget.itemExtent != null
-            ? SliverFixedExtentList(
-                delegate: delegate, itemExtent: widget.itemExtent!)
+        : itemExtent != null
+            ? SliverFixedExtentList(delegate: delegate, itemExtent: itemExtent!)
             : SliverList(delegate: delegate);
 
-    if (widget.padding != null) {
-      result = SliverPadding(padding: widget.padding!, sliver: result);
+    if (padding != null) {
+      result = SliverPadding(padding: padding!, sliver: result);
     }
 
     return result;
@@ -228,58 +181,58 @@ class _DecoratedListState extends State<DecoratedList> {
 
   Widget _boxList() {
     Widget result;
-    if (widget.children != null) {
+    if (children != null) {
       result = ListView(
-        padding: widget.padding,
-        keyboardDismissBehavior: widget.keyboardDismissBehavior,
-        restorationId: widget.restorationId,
-        controller: widget.controller,
-        shrinkWrap: widget.shrinkWrap,
-        itemExtent: widget.itemExtent,
-        physics: widget.physics,
-        reverse: widget.reverse,
-        scrollDirection: widget.scrollDirection ?? Axis.vertical,
-        prototypeItem: widget.prototypeItem,
-        addAutomaticKeepAlives: widget.addAutomaticKeepAlives,
-        addRepaintBoundaries: widget.addRepaintBoundaries,
-        addSemanticIndexes: widget.addSemanticIndexes,
-        children: widget.children!,
+        padding: padding,
+        keyboardDismissBehavior: keyboardDismissBehavior,
+        restorationId: restorationId,
+        controller: controller,
+        shrinkWrap: shrinkWrap,
+        itemExtent: itemExtent,
+        physics: physics,
+        reverse: reverse,
+        scrollDirection: scrollDirection ?? Axis.vertical,
+        prototypeItem: prototypeItem,
+        addAutomaticKeepAlives: addAutomaticKeepAlives,
+        addRepaintBoundaries: addRepaintBoundaries,
+        addSemanticIndexes: addSemanticIndexes,
+        children: children!,
       );
-    } else if (widget.itemBuilder != null) {
-      if (widget.separatorBuilder != null && widget.itemCount != null) {
+    } else if (itemBuilder != null) {
+      if (separatorBuilder != null && itemCount != null) {
         result = ListView.separated(
-          padding: widget.padding,
-          restorationId: widget.restorationId,
-          separatorBuilder: widget.separatorBuilder!,
-          keyboardDismissBehavior: widget.keyboardDismissBehavior,
-          itemBuilder: widget.itemBuilder!,
-          itemCount: widget.itemCount!,
-          shrinkWrap: widget.shrinkWrap,
-          physics: widget.physics,
-          reverse: widget.reverse,
-          controller: widget.controller,
-          scrollDirection: widget.scrollDirection ?? Axis.vertical,
-          addAutomaticKeepAlives: widget.addAutomaticKeepAlives,
-          addRepaintBoundaries: widget.addRepaintBoundaries,
-          addSemanticIndexes: widget.addSemanticIndexes,
+          padding: padding,
+          restorationId: restorationId,
+          separatorBuilder: separatorBuilder!,
+          keyboardDismissBehavior: keyboardDismissBehavior,
+          itemBuilder: itemBuilder!,
+          itemCount: itemCount!,
+          shrinkWrap: shrinkWrap,
+          physics: physics,
+          reverse: reverse,
+          controller: controller,
+          scrollDirection: scrollDirection ?? Axis.vertical,
+          addAutomaticKeepAlives: addAutomaticKeepAlives,
+          addRepaintBoundaries: addRepaintBoundaries,
+          addSemanticIndexes: addSemanticIndexes,
         );
       } else {
         result = ListView.builder(
-          padding: widget.padding,
-          restorationId: widget.restorationId,
-          itemBuilder: widget.itemBuilder!,
-          itemCount: widget.itemCount,
-          shrinkWrap: widget.shrinkWrap,
-          controller: widget.controller,
-          physics: widget.physics,
-          keyboardDismissBehavior: widget.keyboardDismissBehavior,
-          reverse: widget.reverse,
-          scrollDirection: widget.scrollDirection ?? Axis.vertical,
-          itemExtent: widget.itemExtent,
-          prototypeItem: widget.prototypeItem,
-          addAutomaticKeepAlives: widget.addAutomaticKeepAlives,
-          addRepaintBoundaries: widget.addRepaintBoundaries,
-          addSemanticIndexes: widget.addSemanticIndexes,
+          padding: padding,
+          restorationId: restorationId,
+          itemBuilder: itemBuilder!,
+          itemCount: itemCount,
+          shrinkWrap: shrinkWrap,
+          controller: controller,
+          physics: physics,
+          keyboardDismissBehavior: keyboardDismissBehavior,
+          reverse: reverse,
+          scrollDirection: scrollDirection ?? Axis.vertical,
+          itemExtent: itemExtent,
+          prototypeItem: prototypeItem,
+          addAutomaticKeepAlives: addAutomaticKeepAlives,
+          addRepaintBoundaries: addRepaintBoundaries,
+          addSemanticIndexes: addSemanticIndexes,
         );
       }
     } else {
