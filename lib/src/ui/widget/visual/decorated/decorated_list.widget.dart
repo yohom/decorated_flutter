@@ -168,7 +168,9 @@ class _DecoratedListState extends State<DecoratedList> {
           decoration: BoxDecoration(
             border: Border(
               top: BorderSide(
-                color: _showTopDivider ? config.color : Colors.transparent,
+                color: _showTopDivider
+                    ? config.color
+                    : config.color.withOpacity(0),
                 width: config.thickness,
               ),
             ),
