@@ -1,6 +1,20 @@
 import 'package:flutter/material.dart';
 
-class DecoratedList extends StatelessWidget {
+final class TopDividerConfig {
+  TopDividerConfig({
+    this.show = true,
+    this.color = Colors.black12,
+    this.thickness = 1,
+    this.duration = const Duration(milliseconds: 320),
+  });
+
+  final bool show;
+  final Color color;
+  final double thickness;
+  final Duration duration;
+}
+
+class DecoratedList extends StatefulWidget {
   const DecoratedList.box({
     super.key,
     this.padding,
@@ -9,7 +23,7 @@ class DecoratedList extends StatelessWidget {
     this.itemBuilder,
     this.itemCount,
     this.children,
-    this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
+    this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.onDrag,
     this.scrollDirection,
     this.width,
     this.height,
@@ -24,6 +38,7 @@ class DecoratedList extends StatelessWidget {
     this.physics,
     this.clipBehavior = Clip.none,
     this.reverse = false,
+    this.topDivider,
   })  : _sliver = false,
         separatorBuilder = null;
 
@@ -35,7 +50,7 @@ class DecoratedList extends StatelessWidget {
     this.itemBuilder,
     required this.itemCount,
     this.children,
-    this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
+    this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.onDrag,
     this.scrollDirection,
     this.width,
     this.height,
@@ -49,6 +64,7 @@ class DecoratedList extends StatelessWidget {
     this.physics,
     this.reverse = false,
     this.clipBehavior = Clip.none,
+    this.topDivider,
   })  : assert(itemCount != null),
         assert(separatorBuilder != null),
         _sliver = false,
@@ -79,7 +95,8 @@ class DecoratedList extends StatelessWidget {
         reverse = false,
         decoration = null,
         clipBehavior = Clip.none,
-        keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual;
+        keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.onDrag,
+        topDivider = null;
 
   final bool _sliver;
   final String? restorationId;
@@ -102,23 +119,66 @@ class DecoratedList extends StatelessWidget {
   final bool reverse;
   final Clip clipBehavior;
 
+  /// 滚动时是否显示顶部的分割线
+  final TopDividerConfig? topDivider;
+
+  @override
+  State<DecoratedList> createState() => _DecoratedListState();
+}
+
+class _DecoratedListState extends State<DecoratedList> {
+  bool _showTopDivider = false;
+
   @override
   Widget build(BuildContext context) {
-    Widget result = _sliver ? _sliverList() : _boxList();
+    Widget result = widget._sliver ? _sliverList() : _boxList();
 
-    if (width != null || height != null) {
-      result = SizedBox(width: width, height: height, child: result);
-    }
-
-    if (decoration != null) {
-      result = Container(
-        clipBehavior: clipBehavior,
-        decoration: decoration,
+    if (widget.width != null || widget.height != null) {
+      result = SizedBox(
+        width: widget.width,
+        height: widget.height,
         child: result,
       );
     }
 
-    if (expanded == true) {
+    if (widget.decoration != null) {
+      result = Container(
+        clipBehavior: widget.clipBehavior,
+        decoration: widget.decoration,
+        child: result,
+      );
+    }
+
+    if (widget.topDivider case TopDividerConfig config) {
+      result = NotificationListener<ScrollUpdateNotification>(
+        onNotification: (notification) {
+          if (notification.metrics.pixels > 0 && !_showTopDivider) {
+            setState(() {
+              _showTopDivider = true;
+            });
+          } else if (notification.metrics.pixels <= 0) {
+            setState(() {
+              _showTopDivider = false;
+            });
+          }
+          return false;
+        },
+        child: AnimatedContainer(
+          duration: config.duration,
+          decoration: BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: _showTopDivider ? config.color : Colors.transparent,
+                width: config.thickness,
+              ),
+            ),
+          ),
+          child: result,
+        ),
+      );
+    }
+
+    if (widget.expanded == true) {
       result = Expanded(child: result);
     }
 
@@ -128,36 +188,37 @@ class DecoratedList extends StatelessWidget {
   Widget _sliverList() {
     SliverChildDelegate delegate;
 
-    if (children != null) {
+    if (widget.children != null) {
       delegate = SliverChildListDelegate(
-        children!,
-        addAutomaticKeepAlives: addAutomaticKeepAlives,
-        addRepaintBoundaries: addRepaintBoundaries,
-        addSemanticIndexes: addSemanticIndexes,
+        widget.children!,
+        addAutomaticKeepAlives: widget.addAutomaticKeepAlives,
+        addRepaintBoundaries: widget.addRepaintBoundaries,
+        addSemanticIndexes: widget.addSemanticIndexes,
       );
-    } else if (itemBuilder != null) {
+    } else if (widget.itemBuilder != null) {
       delegate = SliverChildBuilderDelegate(
-        itemBuilder!,
-        childCount: itemCount,
-        addAutomaticKeepAlives: addAutomaticKeepAlives,
-        addRepaintBoundaries: addRepaintBoundaries,
-        addSemanticIndexes: addSemanticIndexes,
+        widget.itemBuilder!,
+        childCount: widget.itemCount,
+        addAutomaticKeepAlives: widget.addAutomaticKeepAlives,
+        addRepaintBoundaries: widget.addRepaintBoundaries,
+        addSemanticIndexes: widget.addSemanticIndexes,
       );
     } else {
       throw '必须传入children或itemBuilder';
     }
 
-    Widget result = prototypeItem != null
+    Widget result = widget.prototypeItem != null
         ? SliverPrototypeExtentList(
             delegate: delegate,
-            prototypeItem: prototypeItem!,
+            prototypeItem: widget.prototypeItem!,
           )
-        : itemExtent != null
-            ? SliverFixedExtentList(delegate: delegate, itemExtent: itemExtent!)
+        : widget.itemExtent != null
+            ? SliverFixedExtentList(
+                delegate: delegate, itemExtent: widget.itemExtent!)
             : SliverList(delegate: delegate);
 
-    if (padding != null) {
-      result = SliverPadding(padding: padding!, sliver: result);
+    if (widget.padding != null) {
+      result = SliverPadding(padding: widget.padding!, sliver: result);
     }
 
     return result;
@@ -165,56 +226,58 @@ class DecoratedList extends StatelessWidget {
 
   Widget _boxList() {
     Widget result;
-    if (children != null) {
+    if (widget.children != null) {
       result = ListView(
-        padding: padding,
-        keyboardDismissBehavior: keyboardDismissBehavior,
-        restorationId: restorationId,
-        controller: controller,
-        shrinkWrap: shrinkWrap,
-        itemExtent: itemExtent,
-        physics: physics,
-        reverse: reverse,
-        scrollDirection: scrollDirection ?? Axis.vertical,
-        prototypeItem: prototypeItem,
-        addAutomaticKeepAlives: addAutomaticKeepAlives,
-        addRepaintBoundaries: addRepaintBoundaries,
-        addSemanticIndexes: addSemanticIndexes,
-        children: children!,
+        padding: widget.padding,
+        keyboardDismissBehavior: widget.keyboardDismissBehavior,
+        restorationId: widget.restorationId,
+        controller: widget.controller,
+        shrinkWrap: widget.shrinkWrap,
+        itemExtent: widget.itemExtent,
+        physics: widget.physics,
+        reverse: widget.reverse,
+        scrollDirection: widget.scrollDirection ?? Axis.vertical,
+        prototypeItem: widget.prototypeItem,
+        addAutomaticKeepAlives: widget.addAutomaticKeepAlives,
+        addRepaintBoundaries: widget.addRepaintBoundaries,
+        addSemanticIndexes: widget.addSemanticIndexes,
+        children: widget.children!,
       );
-    } else if (itemBuilder != null) {
-      if (separatorBuilder != null && itemCount != null) {
+    } else if (widget.itemBuilder != null) {
+      if (widget.separatorBuilder != null && widget.itemCount != null) {
         result = ListView.separated(
-          padding: padding,
-          restorationId: restorationId,
-          separatorBuilder: separatorBuilder!,
-          itemBuilder: itemBuilder!,
-          itemCount: itemCount!,
-          shrinkWrap: shrinkWrap,
-          physics: physics,
-          reverse: reverse,
-          controller: controller,
-          scrollDirection: scrollDirection ?? Axis.vertical,
-          addAutomaticKeepAlives: addAutomaticKeepAlives,
-          addRepaintBoundaries: addRepaintBoundaries,
-          addSemanticIndexes: addSemanticIndexes,
+          padding: widget.padding,
+          restorationId: widget.restorationId,
+          separatorBuilder: widget.separatorBuilder!,
+          keyboardDismissBehavior: widget.keyboardDismissBehavior,
+          itemBuilder: widget.itemBuilder!,
+          itemCount: widget.itemCount!,
+          shrinkWrap: widget.shrinkWrap,
+          physics: widget.physics,
+          reverse: widget.reverse,
+          controller: widget.controller,
+          scrollDirection: widget.scrollDirection ?? Axis.vertical,
+          addAutomaticKeepAlives: widget.addAutomaticKeepAlives,
+          addRepaintBoundaries: widget.addRepaintBoundaries,
+          addSemanticIndexes: widget.addSemanticIndexes,
         );
       } else {
         result = ListView.builder(
-          padding: padding,
-          restorationId: restorationId,
-          itemBuilder: itemBuilder!,
-          itemCount: itemCount,
-          shrinkWrap: shrinkWrap,
-          controller: controller,
-          physics: physics,
-          reverse: reverse,
-          scrollDirection: scrollDirection ?? Axis.vertical,
-          itemExtent: itemExtent,
-          prototypeItem: prototypeItem,
-          addAutomaticKeepAlives: addAutomaticKeepAlives,
-          addRepaintBoundaries: addRepaintBoundaries,
-          addSemanticIndexes: addSemanticIndexes,
+          padding: widget.padding,
+          restorationId: widget.restorationId,
+          itemBuilder: widget.itemBuilder!,
+          itemCount: widget.itemCount,
+          shrinkWrap: widget.shrinkWrap,
+          controller: widget.controller,
+          physics: widget.physics,
+          keyboardDismissBehavior: widget.keyboardDismissBehavior,
+          reverse: widget.reverse,
+          scrollDirection: widget.scrollDirection ?? Axis.vertical,
+          itemExtent: widget.itemExtent,
+          prototypeItem: widget.prototypeItem,
+          addAutomaticKeepAlives: widget.addAutomaticKeepAlives,
+          addRepaintBoundaries: widget.addRepaintBoundaries,
+          addSemanticIndexes: widget.addSemanticIndexes,
         );
       }
     } else {
