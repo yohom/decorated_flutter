@@ -26,6 +26,7 @@ export 'widget/visual/decorated/lazy_indexed_stack.widget.dart';
 export 'widget/visual/decorated/local_navigator.widget.dart';
 export 'widget/visual/decorated/notifier_switch.widget.dart';
 export 'widget/visual/decorated/rx_animated_size.widget.dart';
+export 'widget/visual/decorated/scrollable_top_divider.widget.dart';
 export 'widget/visual/decorated/value_listenable_switcher.widget.dart';
 export 'widget/visual/placeholder/empty_placeholder.widget.dart';
 export 'widget/visual/placeholder/error_placeholder.widget.dart';
