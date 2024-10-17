@@ -1,16 +1,17 @@
+import 'package:decorated_flutter/src/extension/extension.export.dart';
 import 'package:flutter/material.dart';
 
 final class TopDividerConfig {
   const TopDividerConfig({
     this.show = true,
-    this.color = Colors.black12,
+    this.color,
     this.thickness = 1,
     this.duration = const Duration(milliseconds: 320),
     this.curve = Curves.decelerate,
   });
 
   final bool show;
-  final Color color;
+  final Color? color;
   final double thickness;
   final Duration duration;
   final Curve curve;
@@ -35,6 +36,7 @@ class _ScrollableTopDividerState extends State<ScrollableTopDivider> {
 
   @override
   Widget build(BuildContext context) {
+    final color = widget.config.color ?? context.dividerColor;
     return NotificationListener<ScrollUpdateNotification>(
       onNotification: (notification) {
         if (notification.metrics.pixels > 0 && !_showTopDivider) {
@@ -54,9 +56,7 @@ class _ScrollableTopDividerState extends State<ScrollableTopDivider> {
         decoration: BoxDecoration(
           border: Border(
             top: BorderSide(
-              color: _showTopDivider
-                  ? widget.config.color
-                  : widget.config.color.withOpacity(0),
+              color: _showTopDivider ? color : color.withOpacity(0),
               width: widget.config.thickness,
             ),
           ),
