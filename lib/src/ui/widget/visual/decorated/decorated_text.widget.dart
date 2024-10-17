@@ -81,7 +81,7 @@ class DecoratedText extends StatelessWidget {
     this.widgetPadding,
     this.isSelectable = false,
     this.alignment,
-  })  : _data = null;
+  }) : _data = null;
 
   final Stream<String>? _stream;
   final String? initialData;
