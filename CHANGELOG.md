@@ -5,6 +5,7 @@
 - [🚀] 使用`shared_preferences`替换`hive`, 理由: 前者是系统内置, 更通用, 后者已长久不更新(已经加入自动迁移逻辑, 不会影响外部app);
 - [🚀] 确保在所有端能正常初始化;
 - [🚀] `DecoratedList`的`keyboardDismissBehavior`默认使用onDrag; 增加`topDivider`参数, 滚动时增加一个顶部分割线;
+- [🚀] 优化默认的字体表现;
 
 ## 0.49.1
 - [🚀] `DurationX`增加`parse`方法;
