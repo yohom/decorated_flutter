@@ -6,6 +6,7 @@
 - [🚀] 确保在所有端能正常初始化;
 - [🚀] `DecoratedList`的`keyboardDismissBehavior`默认使用onDrag; 增加`topDivider`参数, 滚动时增加一个顶部分割线;
 - [🚀] 优化默认的字体表现;
+- [🚀] 增加`Locale`扩展;
 
 ## 0.49.1
 - [🚀] `DurationX`增加`parse`方法;
