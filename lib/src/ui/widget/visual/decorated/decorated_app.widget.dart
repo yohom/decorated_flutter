@@ -43,6 +43,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
     this.showPerformanceOverlay = false,
     this.showSemanticsDebugger = false,
     this.restorationScopeId,
+    this.home,
   });
 
   final B? rootBLoC;
@@ -89,6 +90,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   final Duration themeAnimationDuration;
   final GlobalKey<ScaffoldMessengerState>? scaffoldMessengerKey;
   final Map<ShortcutActivator, Intent>? shortcuts;
+  final Widget? home;
 
   @override
   Widget build(BuildContext context) {
@@ -130,6 +132,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
       showPerformanceOverlay: showPerformanceOverlay,
       restorationScopeId: restorationScopeId,
       showSemanticsDebugger: showSemanticsDebugger,
+      home: home,
     );
     return rootBLoC != null
         ? BLoCProvider<B>(bloc: rootBLoC!, onDispose: onDispose, child: child)
