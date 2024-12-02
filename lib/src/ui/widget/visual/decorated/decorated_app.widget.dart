@@ -1,12 +1,14 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:decorated_flutter/src/utils/chinese_font.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+@optionalTypeArgs
 class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   const DecoratedApp({
     super.key,
-    required B rootBLoC,
+    this.rootBLoC,
     @Deprecated('已无作用, 直接使用DecoratedApp的参数即可') this.app = NIL,
     @Deprecated('暂无作用') this.preventTextScale = false,
     this.onGenerateTitle,
@@ -41,9 +43,10 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
     this.showPerformanceOverlay = false,
     this.showSemanticsDebugger = false,
     this.restorationScopeId,
-  }) : rootBLoC = rootBLoC;
+    this.home,
+  });
 
-  final B rootBLoC;
+  final B? rootBLoC;
   final bool preventTextScale;
   final GenerateAppTitle? onGenerateTitle;
   final ThemeData? theme, darkTheme;
@@ -87,49 +90,52 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   final Duration themeAnimationDuration;
   final GlobalKey<ScaffoldMessengerState>? scaffoldMessengerKey;
   final Map<ShortcutActivator, Intent>? shortcuts;
+  final Widget? home;
 
   @override
   Widget build(BuildContext context) {
-    return BLoCProvider<B>(
-      bloc: rootBLoC,
-      onDispose: onDispose,
-      child: MaterialApp(
-        title: title,
-        builder: builder,
-        onGenerateTitle: onGenerateTitle,
-        navigatorKey: navigatorKey ?? gNavigatorKey,
-        theme: theme?.useSystemChineseFont(Brightness.light),
-        darkTheme: darkTheme?.useSystemChineseFont(Brightness.dark),
-        themeMode: themeMode,
-        scrollBehavior: scrollBehavior,
-        onGenerateRoute: onGenerateRoute,
-        onGenerateInitialRoutes: onGenerateInitialRoutes,
-        onUnknownRoute: onUnknownRoute,
-        debugShowCheckedModeBanner: debugShowCheckedModeBanner,
-        localizationsDelegates: {
-          ...localizationsDelegates,
-          GlobalCupertinoLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate
-        },
-        locale: locale,
-        supportedLocales: supportedLocales,
-        navigatorObservers: navigatorObservers,
-        localeListResolutionCallback: localeListResolutionCallback,
-        localeResolutionCallback: localeResolutionCallback,
-        actions: actions,
-        checkerboardOffscreenLayers: checkerboardOffscreenLayers,
-        checkerboardRasterCacheImages: checkerboardRasterCacheImages,
-        color: color,
-        debugShowMaterialGrid: debugShowMaterialGrid,
-        themeAnimationCurve: themeAnimationCurve,
-        themeAnimationDuration: themeAnimationDuration,
-        scaffoldMessengerKey: scaffoldMessengerKey,
-        shortcuts: shortcuts,
-        showPerformanceOverlay: showPerformanceOverlay,
-        restorationScopeId: restorationScopeId,
-        showSemanticsDebugger: showSemanticsDebugger,
-      ),
+    final child = MaterialApp(
+      title: title,
+      builder: builder,
+      onGenerateTitle: onGenerateTitle,
+      navigatorKey: navigatorKey ?? gNavigatorKey,
+      theme: theme?.let((self) =>
+          kIsWeb ? self : self.useSystemChineseFont(Brightness.light)),
+      darkTheme: darkTheme?.let(
+          (self) => kIsWeb ? self : self.useSystemChineseFont(Brightness.dark)),
+      themeMode: themeMode,
+      scrollBehavior: scrollBehavior,
+      onGenerateRoute: onGenerateRoute,
+      onGenerateInitialRoutes: onGenerateInitialRoutes,
+      onUnknownRoute: onUnknownRoute,
+      debugShowCheckedModeBanner: debugShowCheckedModeBanner,
+      localizationsDelegates: {
+        ...localizationsDelegates,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      },
+      locale: locale,
+      supportedLocales: supportedLocales,
+      navigatorObservers: navigatorObservers,
+      localeListResolutionCallback: localeListResolutionCallback,
+      localeResolutionCallback: localeResolutionCallback,
+      actions: actions,
+      checkerboardOffscreenLayers: checkerboardOffscreenLayers,
+      checkerboardRasterCacheImages: checkerboardRasterCacheImages,
+      color: color,
+      debugShowMaterialGrid: debugShowMaterialGrid,
+      themeAnimationCurve: themeAnimationCurve,
+      themeAnimationDuration: themeAnimationDuration,
+      scaffoldMessengerKey: scaffoldMessengerKey,
+      shortcuts: shortcuts,
+      showPerformanceOverlay: showPerformanceOverlay,
+      restorationScopeId: restorationScopeId,
+      showSemanticsDebugger: showSemanticsDebugger,
+      home: home,
     );
+    return rootBLoC != null
+        ? BLoCProvider<B>(bloc: rootBLoC!, onDispose: onDispose, child: child)
+        : child;
   }
 }
