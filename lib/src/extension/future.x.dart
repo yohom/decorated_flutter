@@ -4,7 +4,12 @@ import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 
 typedef LoadingBuilder = Widget Function(
-    BuildContext context, String loadingText);
+  BuildContext context,
+  String loadingText,
+);
+
+/// 全局的是否在loading中的stream
+final _loadingStreamController = StreamController<bool>.broadcast();
 
 extension FutureX<T> on Future<T> {
   static LoadingBuilder? loadingWidgetBuilder;
@@ -13,6 +18,10 @@ extension FutureX<T> on Future<T> {
   static String defaultLoadingText = '加载中...';
   // 默认无超时
   static Duration defaultTimeLimit = const Duration(days: 1);
+
+  Stream<bool> get inLoading {
+    return _loadingStreamController.stream;
+  }
 
   /// 造型为[R]类型
   Future<R> cast<R>() {
@@ -30,6 +39,8 @@ extension FutureX<T> on Future<T> {
     if (context == null) {
       throw '请在MaterialApp/CupertinoApp中设置navigatorKey为gNavigatorKey';
     }
+
+    _loadingStreamController.add(true);
 
     final navigator = Navigator.of(context, rootNavigator: true);
 
@@ -78,6 +89,8 @@ extension FutureX<T> on Future<T> {
       if (popByFuture && navigator.canPop()) {
         navigator.pop();
       }
+
+      _loadingStreamController.add(false);
     });
   }
 
