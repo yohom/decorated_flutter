@@ -4,6 +4,7 @@ export 'empty_util.dart';
 export 'enums.dart';
 export 'faker/faker.dart';
 export 'functions.dart';
+export 'interceptor.dart';
 export 'logger/logger.dart';
 export 'misc.dart';
 export 'navigator.dart';
