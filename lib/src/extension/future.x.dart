@@ -34,6 +34,7 @@ extension FutureX<T> on Future<T> {
     Duration? timeLimit,
     String? loadingText,
     Color? backgroundColor,
+    bool modal = true,
   }) {
     final context = gNavigatorKey.currentContext;
     if (context == null) {
@@ -47,43 +48,47 @@ extension FutureX<T> on Future<T> {
     // 是被future pop的还是按返回键pop的
     bool popByFuture = true;
 
-    final ThemeData theme = Theme.of(context);
-    showGeneralDialog(
-      context: context,
-      pageBuilder: (
-        BuildContext buildContext,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-      ) {
-        return Theme(
-          data: theme,
-          child: Builder(
-            builder: (context) {
-              final text = loadingText ?? defaultLoadingText;
-              final isCancelable = cancelable ?? loadingCancelable;
-              final loadingWidget = loadingWidgetBuilder?.call(context, text) ??
-                  ModalLoading(text);
-              return PopScope(
-                canPop: isCancelable,
-                child: GestureDetector(
-                  onTap: isCancelable ? context.navigator.pop : null,
-                  child: loadingWidget,
-                ),
-              );
-            },
-          ),
-        );
-      },
-      transitionDuration: const Duration(milliseconds: 150),
-      barrierDismissible: cancelable ?? loadingCancelable,
-      barrierLabel: 'Dismiss',
-      barrierColor:
-          backgroundColor ?? FutureX.backgroundColor ?? Colors.black54,
-    ).whenComplete(() {
-      // 1. 如果是返回键pop的, 那么设置成true, 这样future完成时就不会pop了
-      // 2. 如果是future完成导致的pop, 那么这一行是没用任何作用的
-      popByFuture = false;
-    });
+    // 模态显示loading
+    if (modal) {
+      final ThemeData theme = Theme.of(context);
+      showGeneralDialog(
+        context: context,
+        pageBuilder: (
+          BuildContext buildContext,
+          Animation<double> animation,
+          Animation<double> secondaryAnimation,
+        ) {
+          return Theme(
+            data: theme,
+            child: Builder(
+              builder: (context) {
+                final text = loadingText ?? defaultLoadingText;
+                final isCancelable = cancelable ?? loadingCancelable;
+                final loadingWidget =
+                    loadingWidgetBuilder?.call(context, text) ??
+                        ModalLoading(text);
+                return PopScope(
+                  canPop: isCancelable,
+                  child: GestureDetector(
+                    onTap: isCancelable ? context.navigator.pop : null,
+                    child: loadingWidget,
+                  ),
+                );
+              },
+            ),
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 150),
+        barrierDismissible: cancelable ?? loadingCancelable,
+        barrierLabel: 'Dismiss',
+        barrierColor:
+            backgroundColor ?? FutureX.backgroundColor ?? Colors.black54,
+      ).whenComplete(() {
+        // 1. 如果是返回键pop的, 那么设置成true, 这样future完成时就不会pop了
+        // 2. 如果是future完成导致的pop, 那么这一行是没用任何作用的
+        popByFuture = false;
+      });
+    }
 
     return timeout(timeLimit ?? defaultTimeLimit).whenComplete(() {
       if (popByFuture && navigator.canPop()) {
