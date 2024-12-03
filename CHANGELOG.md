@@ -1,6 +1,7 @@
 ## 0.50.1
 - [🚀] `decorated_app`增加`home`参数;
 - [🚀] `decorated_app`的`rootBLoC`可空, 这样在非BLoC架构下也可以使用;
+- [🚀] 增加`DebounceInterceptor`, 用于请求的防抖;
 
 ## 0.50.0
 - [🚀] [break change] `fetch`重命名为`onUpdate`, `pageFetch`重命名为`onUpdatePage`, 功能一样;
