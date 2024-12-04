@@ -20,6 +20,7 @@ class DecoratedText extends StatelessWidget {
     this.overflow, // 默认TextOverflow.ellipsis时, 会只有一行文字+省略号
     this.constraints,
     this.expanded = false,
+    this.flexible = false,
     this.visible,
     this.width,
     this.height,
@@ -61,6 +62,7 @@ class DecoratedText extends StatelessWidget {
     this.overflow, // 默认TextOverflow.ellipsis时, 会只有一行文字+省略号
     this.constraints,
     this.expanded = false,
+    this.flexible = false,
     this.visible,
     this.width,
     this.height,
@@ -105,7 +107,7 @@ class DecoratedText extends StatelessWidget {
   final TextAlign? textAlign;
   final TextOverflow? overflow;
   final BoxConstraints? constraints;
-  final bool expanded;
+  final bool expanded, flexible;
   final double? width;
   final double? height;
   final bool? visible;
@@ -234,8 +236,12 @@ class DecoratedText extends StatelessWidget {
       result = Material(color: Colors.transparent, child: result);
     }
 
-    if (expanded == true) {
+    if (expanded) {
       result = Expanded(child: result);
+    }
+
+    if (flexible) {
+      result = Flexible(child: result);
     }
 
     if (sliver == true) {
