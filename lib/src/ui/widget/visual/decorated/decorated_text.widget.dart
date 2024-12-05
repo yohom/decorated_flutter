@@ -41,6 +41,7 @@ class DecoratedText extends StatelessWidget {
     this.widgetPadding,
     this.isSelectable = false,
     this.alignment,
+    this.paragraphPadding,
   })  : _stream = null,
         initialData = null;
 
@@ -83,6 +84,7 @@ class DecoratedText extends StatelessWidget {
     this.widgetPadding,
     this.isSelectable = false,
     this.alignment,
+    this.paragraphPadding,
   }) : _data = null;
 
   final Stream<String>? _stream;
@@ -128,22 +130,42 @@ class DecoratedText extends StatelessWidget {
   final double? widgetPadding;
   final Alignment? alignment;
   final bool isSelectable;
+  final double? paragraphPadding;
 
   @override
   Widget build(BuildContext context) {
+    final textStyle = style ?? DefaultTextStyle.of(context).style;
+
     Widget _buildText(String data) {
+      TextSpan textSpan = TextSpan(text: data);
+      // 处理段落间距
+      if (paragraphPadding != null && paragraphPadding! > 0) {
+        textSpan = TextSpan(
+          children: [
+            for (final item in data.split('\n')) ...[
+              TextSpan(text: item),
+              TextSpan(
+                text: '\n\n',
+                style: TextStyle(
+                  height: paragraphPadding! / (textStyle.fontSize ?? 14),
+                ),
+              ),
+            ],
+          ]..removeLast(),
+        );
+      }
       return isSelectable
-          ? SelectableText(
-              data,
+          ? SelectableText.rich(
+              textSpan,
               maxLines: maxLines,
-              style: style ?? DefaultTextStyle.of(context).style,
+              style: textStyle,
               strutStyle: strutStyle,
               textAlign: textAlign,
             )
-          : Text(
-              data,
+          : Text.rich(
+              textSpan,
               maxLines: maxLines,
-              style: style ?? DefaultTextStyle.of(context).style,
+              style: textStyle,
               strutStyle: strutStyle,
               textAlign: textAlign,
               overflow: maxLines == 1
