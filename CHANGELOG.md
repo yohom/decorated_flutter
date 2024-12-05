@@ -3,6 +3,7 @@
 - [🚀] `decorated_app`的`rootBLoC`可空, 这样在非BLoC架构下也可以使用;
 - [🚀] 增加`DebounceInterceptor`, 用于请求的防抖;
 - [🚀] `DecoratedText`增加`flexible`参数;
+- [🚀] `DecoratedText`增加`paragraphPadding`参数;
 
 ## 0.50.0
 - [🚀] [break change] `fetch`重命名为`onUpdate`, `pageFetch`重命名为`onUpdatePage`, 功能一样;
