@@ -33,6 +33,7 @@ class DoubleBackExitApp extends StatefulWidget {
 
 class _DoubleBackExitAppState extends State<DoubleBackExitApp> {
   final _closeAppSubject = PublishSubject();
+  bool _canPop = false;
 
   @override
   void initState() {
@@ -56,10 +57,18 @@ class _DoubleBackExitAppState extends State<DoubleBackExitApp> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
+        if (_canPop) return Future.value(true);
+
         _closeAppSubject.add(Object());
         return Future.value(false);
       },
-      child: widget.child,
+      child: NotificationListener<NavigationNotification>(
+        onNotification: (notification) {
+          _canPop = notification.canHandlePop;
+          return false;
+        },
+        child: widget.child,
+      ),
     );
   }
 
