@@ -4,6 +4,7 @@
 - [🚀] 增加`DebounceInterceptor`, 用于请求的防抖;
 - [🚀] `DecoratedText`增加`flexible`参数;
 - [🚀] `DecoratedText`增加`paragraphPadding`参数;
+- [🚀] `Selectdable`列表增加`selectWhere`扩展;
 
 ## 0.50.0
 - [🚀] [break change] `fetch`重命名为`onUpdate`, `pageFetch`重命名为`onUpdatePage`, 功能一样;
