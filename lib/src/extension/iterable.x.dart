@@ -306,6 +306,13 @@ extension SelectableListX<T extends Selectable> on List<T> {
     }
   }
 
+  /// 选中指定条件的元素
+  void selectWhere(bool Function(T item) test) {
+    for (final item in this) {
+      item.isSelected = test(item);
+    }
+  }
+
   /// 被选中的元素的索引
   int get selectedIndex {
     if (selected == null) {
