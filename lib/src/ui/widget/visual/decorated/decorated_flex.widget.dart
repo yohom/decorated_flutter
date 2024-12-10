@@ -72,6 +72,7 @@ class DecoratedRow extends DecoratedFlex {
     super.childrenFlex,
     super.cursor,
     super.dividerThemeData,
+    super.topDividerConfig,
     super.children = const [],
   }) : super(direction: Axis.horizontal);
 }
@@ -147,6 +148,7 @@ class DecoratedColumn extends DecoratedFlex {
     super.childrenFlex,
     super.cursor,
     super.dividerThemeData,
+    super.topDividerConfig,
     super.children = const [],
   }) : super(direction: Axis.vertical);
 }
@@ -222,6 +224,7 @@ class DecoratedFlex extends StatelessWidget {
     this.childrenFlex,
     this.cursor,
     this.dividerThemeData,
+    this.topDividerConfig,
     this.children = const [],
   });
 
@@ -372,6 +375,9 @@ class DecoratedFlex extends StatelessWidget {
 
   /// 分割线样式
   final DividerThemeData? dividerThemeData;
+
+  /// 顶部分隔线
+  final TopDividerConfig? topDividerConfig;
 
   /// 子元素
   final List<Widget> children;
@@ -588,6 +594,13 @@ class DecoratedFlex extends StatelessWidget {
         primary: primary,
         child: result,
       );
+
+      if (topDividerConfig != null) {
+        result = ScrollableTopDivider(
+          config: topDividerConfig!,
+          child: result,
+        );
+      }
     }
 
     if (withForm == true) {
