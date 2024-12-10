@@ -6,7 +6,7 @@
 - [🚀] `DecoratedText`增加`paragraphPadding`参数;
 - [🚀] `Selectdable`列表增加`selectWhere`扩展;
 - [🚀] `DoubleBackExitApp`增强, 兼容内部有局部`Navigator`的情况;
-- [🚀] `DecoratedFlex`增加`topDividerConfig`参数;
+- [🚀] `DecoratedFlex`增加`topDividerConfig`, `scrollPadding`, `keyboardDismissBehavior`参数;
 
 ## 0.50.0
 - [🚀] [break change] `fetch`重命名为`onUpdate`, `pageFetch`重命名为`onUpdatePage`, 功能一样;
