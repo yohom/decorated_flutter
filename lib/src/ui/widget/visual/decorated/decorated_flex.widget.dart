@@ -52,6 +52,8 @@ class DecoratedRow extends DecoratedFlex {
     super.primary,
     super.scrollController,
     super.scrollPhysics,
+    super.scrollPadding,
+    super.keyboardDismissBehavior,
     super.animationDuration,
     super.animationCurve,
     super.theme,
@@ -125,6 +127,8 @@ class DecoratedColumn extends DecoratedFlex {
     super.widthFactor,
     super.heightFactor,
     super.scrollable,
+    super.scrollPadding,
+    super.keyboardDismissBehavior,
     super.primary,
     super.scrollController,
     super.scrollPhysics,
@@ -196,6 +200,8 @@ class DecoratedFlex extends StatelessWidget {
     this.primary,
     this.scrollController,
     this.scrollPhysics,
+    this.scrollPadding,
+    this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.onDrag,
     this.widthFactor,
     this.heightFactor,
     this.material = false,
@@ -309,6 +315,8 @@ class DecoratedFlex extends StatelessWidget {
   final bool? primary;
   final ScrollController? scrollController;
   final ScrollPhysics? scrollPhysics;
+  final EdgeInsets? scrollPadding;
+  final ScrollViewKeyboardDismissBehavior keyboardDismissBehavior;
 
   /// 内部统一的TextStyle
   final TextStyle? textStyle;
@@ -592,6 +600,8 @@ class DecoratedFlex extends StatelessWidget {
         controller: scrollController,
         physics: scrollPhysics,
         primary: primary,
+        padding: scrollPadding,
+        keyboardDismissBehavior: keyboardDismissBehavior,
         child: result,
       );
 
