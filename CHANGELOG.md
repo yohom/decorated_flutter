@@ -1,3 +1,6 @@
+## 0.50.2
+- [🚀] `SelectableListX`增加`reset`扩展;
+
 ## 0.50.1
 - [🚀] `decorated_app`增加`home`参数;
 - [🚀] `decorated_app`的`rootBLoC`可空, 这样在非BLoC架构下也可以使用;

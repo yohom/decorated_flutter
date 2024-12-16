@@ -299,6 +299,13 @@ extension SelectableListX<T extends Selectable> on List<T> {
     return whereOrEmpty((element) => element.isSelected).toList();
   }
 
+  /// 整个列表重置
+  void reset() {
+    for (final item in this) {
+      item.reset();
+    }
+  }
+
   /// 选中指定元素
   void select(T target) {
     for (final item in this) {
