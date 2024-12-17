@@ -1,5 +1,6 @@
 ## 0.50.2
 - [🚀] `SelectableListX`增加`reset`扩展;
+- [🚀] `Expandable`内置化;
 
 ## 0.50.1
 - [🚀] `decorated_app`增加`home`参数;
