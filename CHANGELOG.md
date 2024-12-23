@@ -1,5 +1,6 @@
 ## 0.50.2
 - [🚀] `SelectableListX`增加`reset`扩展;
+- [🚀] 增加通用`Capturer`组件, 用于对Widget截图;
 
 ## 0.50.1
 - [🚀] `decorated_app`增加`home`参数;

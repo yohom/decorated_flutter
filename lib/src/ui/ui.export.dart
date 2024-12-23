@@ -7,6 +7,7 @@ export 'route/custom_material.route.dart';
 export 'route/decorated_route.route.dart';
 export 'route/transparent_route.route.dart';
 export 'widget/nonvisual/auto_close_keyboard.widget.dart';
+export 'widget/nonvisual/capturer.widget.dart';
 export 'widget/nonvisual/delayed.widget.dart';
 export 'widget/nonvisual/double_back_exit_app.widget.dart';
 export 'widget/nonvisual/interrupt_notification.widget.dart';
