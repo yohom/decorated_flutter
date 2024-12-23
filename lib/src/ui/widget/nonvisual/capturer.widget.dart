@@ -14,7 +14,7 @@ class Capturer extends StatefulWidget {
 
   Capturer({required this.child}) : super(key: _captureKey);
 
-  final Widget child;
+  final Widget? child;
 
   @override
   State<Capturer> createState() => _CapturerState();
@@ -31,7 +31,7 @@ class _CapturerState extends State<Capturer> {
           if (_captureLayer.isNotEmpty)
             for (final item in _captureLayer)
               RepaintBoundary(key: item.$1, child: item.$2),
-          widget.child,
+          if (widget.child case Widget child) child,
         ],
       ),
     );

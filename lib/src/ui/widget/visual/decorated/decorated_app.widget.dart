@@ -44,6 +44,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
     this.showSemanticsDebugger = false,
     this.restorationScopeId,
     this.home,
+    this.withCapturer = false,
   });
 
   final B? rootBLoC;
@@ -92,11 +93,18 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   final Map<ShortcutActivator, Intent>? shortcuts;
   final Widget? home;
 
+  /// 是否内建截图组件Capturer
+  final bool withCapturer;
+
   @override
   Widget build(BuildContext context) {
     final child = MaterialApp(
       title: title,
-      builder: builder,
+      builder: withCapturer
+          ? (context, child) {
+              return Capturer(child: builder?.call(context, child));
+            }
+          : builder,
       onGenerateTitle: onGenerateTitle,
       navigatorKey: navigatorKey ?? gNavigatorKey,
       theme: theme?.let((self) =>
