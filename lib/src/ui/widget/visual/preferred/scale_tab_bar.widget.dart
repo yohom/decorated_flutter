@@ -1,4 +1,6 @@
 /// 处理tabbar汉字缩放抖动 代码参考 https://github.com/flutter/flutter/issues/24505#issuecomment-601624396
+library;
+
 import 'dart:math' as math;
 import 'dart:ui' show lerpDouble;
 
@@ -32,7 +34,7 @@ class _TabStyle extends AnimatedWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
-    final TabBarTheme tabBarTheme = TabBarTheme.of(context);
+    final tabBarTheme = TabBarTheme.of(context);
     final Animation<double> animation = listenable as Animation<double>;
 
     // To enable TextStyle.lerp(style1, style2, value), both styles must have
@@ -628,10 +630,10 @@ class ScaleTabBar extends StatefulWidget implements PreferredSizeWidget {
 
   /// Defines the ink response focus, hover, and splash colors.
   ///
-  /// If non-null, it is resolved against one of [MaterialState.focused],
-  /// [MaterialState.hovered], and [MaterialState.pressed].
+  /// If non-null, it is resolved against one of [WidgetState.focused],
+  /// [WidgetState.hovered], and [WidgetState.pressed].
   ///
-  /// [MaterialState.pressed] triggers a ripple (an ink splash), per
+  /// [WidgetState.pressed] triggers a ripple (an ink splash), per
   /// the current Material Design spec. The [overlayColor] doesn't map
   /// a state to [InkResponse.highlightColor] because a separate highlight
   /// is not used by the current design guidelines. See
@@ -640,7 +642,7 @@ class ScaleTabBar extends StatefulWidget implements PreferredSizeWidget {
   /// If the overlay color is null or resolves to null, then the default values
   /// for [InkResponse.focusColor], [InkResponse.hoverColor], [InkResponse.splashColor]
   /// will be used instead.
-  final MaterialStateProperty<Color?>? overlayColor;
+  final WidgetStateProperty<Color?>? overlayColor;
 
   /// {@macro flutter.widgets.scrollable.dragStartBehavior}
   final DragStartBehavior dragStartBehavior;
@@ -729,7 +731,7 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
 
   Decoration get _indicator {
     if (widget.indicator != null) return widget.indicator!;
-    final TabBarTheme tabBarTheme = TabBarTheme.of(context);
+    final tabBarTheme = TabBarTheme.of(context);
     if (tabBarTheme.indicator != null) return tabBarTheme.indicator!;
 
     Color color = widget.indicatorColor ?? Theme.of(context).indicatorColor;
@@ -979,7 +981,7 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
       );
     }
 
-    final TabBarTheme tabBarTheme = TabBarTheme.of(context);
+    final tabBarTheme = TabBarTheme.of(context);
 
     final List<Widget> wrappedTabs =
         List<Widget>.generate(widget.tabs.length, (int index) {
