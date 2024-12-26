@@ -8,6 +8,7 @@ class LazyIndexedStack extends StatefulWidget {
     this.sizing = StackFit.loose,
     required this.index,
     this.reuse = true,
+    this.clipBehavior = Clip.hardEdge,
     required this.itemBuilder,
     required this.itemCount,
   });
@@ -18,6 +19,7 @@ class LazyIndexedStack extends StatefulWidget {
   final int index;
   final bool reuse;
   final int itemCount;
+  final Clip clipBehavior;
   final IndexedWidgetBuilder itemBuilder;
 
   @override
@@ -51,6 +53,7 @@ class _LazyIndexedStackState extends State<LazyIndexedStack> {
       alignment: widget.alignment,
       textDirection: widget.textDirection,
       sizing: widget.sizing,
+      clipBehavior: widget.clipBehavior,
       children: _children,
     );
   }
