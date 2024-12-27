@@ -3,6 +3,9 @@
 - [🚀] 增加通用`Capturer`组件, 用于对Widget截图;
 - [🚀] `DecoratedApp`增加内建`Capturer`的选项;
 - [🚀] 适配Flutter 3.27;
+- [🚀] `LazyIndexedStack`增加`clipBehavior`;
+- [🚀] `DecoratedApp`参数补齐;
+- [🚀] `ScrollableTopDivider`只处理y轴方向的滚动;
 
 ## 0.50.1
 - [🚀] `decorated_app`增加`home`参数;
