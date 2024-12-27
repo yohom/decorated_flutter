@@ -39,6 +39,9 @@ class _ScrollableTopDividerState extends State<ScrollableTopDivider> {
     final color = widget.config.color ?? context.dividerColor;
     return NotificationListener<ScrollUpdateNotification>(
       onNotification: (notification) {
+        // 只处理y轴方向
+        if (notification.metrics.axis == Axis.horizontal) return false;
+
         if (notification.metrics.pixels > 0 && !_showTopDivider) {
           setState(() {
             _showTopDivider = true;

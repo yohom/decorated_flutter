@@ -17,6 +17,8 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
     this.onUnknownRoute,
     this.theme,
     this.darkTheme,
+    this.highContrastDarkTheme,
+    this.highContrastTheme,
     this.themeMode,
     this.scrollBehavior,
     this.localizationsDelegates = const [],
@@ -38,19 +40,23 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
     this.debugShowMaterialGrid = false,
     this.themeAnimationCurve = Curves.linear,
     this.themeAnimationDuration = kThemeAnimationDuration,
+    this.themeAnimationStyle,
     this.scaffoldMessengerKey,
     this.shortcuts,
     this.showPerformanceOverlay = false,
     this.showSemanticsDebugger = false,
+    this.initialRoute,
     this.restorationScopeId,
     this.home,
     this.withCapturer = false,
+    this.onNavigationNotification,
+    this.routes = const {},
   });
 
   final B? rootBLoC;
   final bool preventTextScale;
   final GenerateAppTitle? onGenerateTitle;
-  final ThemeData? theme, darkTheme;
+  final ThemeData? theme, darkTheme, highContrastDarkTheme, highContrastTheme;
   final ThemeMode? themeMode;
   final RouteFactory? onGenerateRoute;
   final InitialRouteListFactory? onGenerateInitialRoutes;
@@ -66,6 +72,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   final Widget app;
   final TransitionBuilder? builder;
   final bool debugShowCheckedModeBanner;
+  final String? initialRoute;
   final VoidCallback? onDispose;
 
   /// {@macro flutter.widgets.LocaleResolutionCallback}
@@ -89,6 +96,10 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
 
   final Curve themeAnimationCurve;
   final Duration themeAnimationDuration;
+  final AnimationStyle? themeAnimationStyle;
+  final NotificationListenerCallback<NavigationNotification>?
+      onNavigationNotification;
+  final Map<String, WidgetBuilder> routes;
   final GlobalKey<ScaffoldMessengerState>? scaffoldMessengerKey;
   final Map<ShortcutActivator, Intent>? shortcuts;
   final Widget? home;
@@ -135,11 +146,17 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
       debugShowMaterialGrid: debugShowMaterialGrid,
       themeAnimationCurve: themeAnimationCurve,
       themeAnimationDuration: themeAnimationDuration,
+      themeAnimationStyle: themeAnimationStyle,
       scaffoldMessengerKey: scaffoldMessengerKey,
       shortcuts: shortcuts,
       showPerformanceOverlay: showPerformanceOverlay,
       restorationScopeId: restorationScopeId,
       showSemanticsDebugger: showSemanticsDebugger,
+      highContrastDarkTheme: highContrastDarkTheme,
+      highContrastTheme: highContrastTheme,
+      initialRoute: initialRoute,
+      onNavigationNotification: onNavigationNotification,
+      routes: routes,
       home: home,
     );
     return rootBLoC != null
