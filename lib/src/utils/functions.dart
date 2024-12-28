@@ -371,3 +371,23 @@ void Function() debounce(Duration duration, void Function() decorated) {
     timer = Timer(duration, () => decorated());
   };
 }
+
+AnimationController createAnimation(
+  TickerProvider vsync, {
+  required ValueChanged<double> callback,
+  required Duration duration,
+  Curve curve = Curves.ease,
+  double lowerBound = 0,
+  double upperBound = 1,
+}) {
+  final controller = AnimationController(vsync: vsync, duration: duration);
+  final curvedAnimation = CurvedAnimation(parent: controller, curve: curve);
+
+  curvedAnimation.addListener(
+    () => callback(
+      lowerBound + (curvedAnimation.value) * (upperBound - lowerBound),
+    ),
+  );
+
+  return controller;
+}
