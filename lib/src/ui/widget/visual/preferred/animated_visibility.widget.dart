@@ -49,24 +49,31 @@ class AnimatedVisibility extends StatelessWidget {
         initialData: visible,
         stream: visibleStream,
         builder: (context, snapshot) {
-          return AnimatedSize(
+          return AnimatedCrossFade(
             duration: duration,
             reverseDuration: reverseDuration,
             alignment: alignment,
-            curve: curve,
-            clipBehavior: clipBehavior,
-            child: snapshot.data == true ? child : placeholder,
+            firstCurve: curve,
+            secondCurve: curve,
+            crossFadeState: snapshot.data == true
+                ? CrossFadeState.showFirst
+                : CrossFadeState.showSecond,
+            firstChild: child,
+            secondChild: placeholder,
           );
         },
       );
     } else {
-      result = AnimatedSize(
+      result = AnimatedCrossFade(
         duration: duration,
         reverseDuration: reverseDuration,
         alignment: alignment,
-        curve: curve,
-        clipBehavior: clipBehavior,
-        child: visible ? child : placeholder,
+        firstCurve: curve,
+        secondCurve: curve,
+        crossFadeState:
+            visible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+        firstChild: child,
+        secondChild: placeholder,
       );
     }
 
