@@ -201,7 +201,7 @@ class DecoratedFlex extends StatelessWidget {
     this.scrollController,
     this.scrollPhysics,
     this.scrollPadding,
-    this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.onDrag,
+    this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
     this.widthFactor,
     this.heightFactor,
     this.material = false,
