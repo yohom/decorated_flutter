@@ -6,6 +6,7 @@
 - [🚀] `LazyIndexedStack`增加`clipBehavior`;
 - [🚀] `DecoratedApp`参数补齐;
 - [🚀] `ScrollableTopDivider`只处理y轴方向的滚动;
+- [🚀] 增加`gNavigator`的shortcut;
 
 ## 0.50.1
 - [🚀] `decorated_app`增加`home`参数;
