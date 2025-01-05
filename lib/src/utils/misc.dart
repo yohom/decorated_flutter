@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:math' as math;
 
@@ -57,6 +58,8 @@ dynamic handleError(Object error, [StackTrace? trace]) {
     );
   } else if (error is BizException) {
     toast(error.message);
+  } else if (error is TimeoutException) {
+    toast('操作超时');
   } else if (error is PlatformException) {
     toast('${error.message ?? error.toString()} ${error.code}', error: true);
   } else {
