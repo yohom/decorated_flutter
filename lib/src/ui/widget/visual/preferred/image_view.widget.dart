@@ -347,25 +347,38 @@ class ImageView extends StatelessWidget {
         );
         if (logEnable) L.d('使用SvgPicture.network: $imageUrl');
       } else {
-        // if (ImageView._cryptoOption?.enableNetworkImage == true) {
-        // result = _encryptedImage(context, imageUrl!);
-        // if (logEnable) L.d('使用_encryptedImage: $imageUrl');
-        // } else {
-        result = CachedNetworkImage(
-          imageUrl: imageUrl!,
-          key: autoApplyKey ? Key(imageUrl!) : null,
-          width: width,
-          height: height,
-          fit: fit,
-          color: _color,
-          httpHeaders: headers,
-          placeholder: _placeholder != null ? (_, __) => _placeholder : null,
-          errorWidget: _errorBuilder,
-          memCacheWidth: _cacheWidth,
-          memCacheHeight: _cacheHeight,
-        );
+        result = kIsWeb
+            ? Image.network(
+                imageUrl!,
+                key: autoApplyKey ? Key(imageUrl!) : null,
+                width: width,
+                height: height,
+                fit: fit,
+                color: _color,
+                errorBuilder: _errorBuilder,
+                gaplessPlayback: true,
+                scale: scale ?? 1,
+                headers: headers,
+                cacheHeight: _cacheWidth,
+                cacheWidth: _cacheHeight,
+                colorBlendMode: colorBlendMode,
+                loadingBuilder: (_, child, loadingProgress) => _placeholder!,
+              )
+            : CachedNetworkImage(
+                imageUrl: imageUrl!,
+                key: autoApplyKey ? Key(imageUrl!) : null,
+                width: width,
+                height: height,
+                fit: fit,
+                color: _color,
+                httpHeaders: headers,
+                placeholder:
+                    _placeholder != null ? (_, __) => _placeholder : null,
+                errorWidget: _errorBuilder,
+                memCacheWidth: _cacheWidth,
+                memCacheHeight: _cacheHeight,
+              );
         if (logEnable) L.d('使用CachedNetworkImage: $imageUrl');
-        // }
       }
     } else {
       // 如果图片地址为null的话, 那就不显示
