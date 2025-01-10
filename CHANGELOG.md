@@ -1,4 +1,8 @@
 ## 0.50.2
+- [🚀] `ImageView`在处理web文件路径时, 做兼容处理;
+- [🚀] `ImageView`增加`alignment`参数;
+
+## 0.50.2
 - [🚀] `SelectableListX`增加`reset`扩展;
 - [🚀] 增加通用`Capturer`组件, 用于对Widget截图;
 - [🚀] `DecoratedApp`增加内建`Capturer`的选项;
