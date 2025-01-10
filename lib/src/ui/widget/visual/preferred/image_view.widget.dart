@@ -307,21 +307,37 @@ class ImageView extends StatelessWidget {
         if (logEnable) L.d('使用SvgPicture.asset: $_imagePath');
       } else if (_imagePath.startsWith('/') ||
           _imagePath.startsWith('file://')) {
-        result = Image.file(
-          File(_imagePath),
-          key: autoApplyKey ? Key(_imagePath) : null,
-          width: width,
-          height: height,
-          fit: fit,
-          color: _color,
-          gaplessPlayback: true,
-          scale: scale ?? 1,
-          colorBlendMode: colorBlendMode,
-          cacheWidth: _cacheWidth,
-          cacheHeight: _cacheHeight,
-          errorBuilder: _errorBuilder,
+        result = kIsWeb // web端的文件路径使用network加载
+            ? Image.network(
+                _imagePath,
+                key: autoApplyKey ? Key(_imagePath) : null,
+                width: width,
+                height: height,
+                fit: fit,
+                color: _color,
+                gaplessPlayback: true,
+                scale: scale ?? 1,
+                colorBlendMode: colorBlendMode,
+                cacheWidth: _cacheWidth,
+                cacheHeight: _cacheHeight,
+                errorBuilder: _errorBuilder,
                 alignment: alignment,
-        );
+              )
+            : Image.file(
+                File(_imagePath),
+                key: autoApplyKey ? Key(_imagePath) : null,
+                width: width,
+                height: height,
+                fit: fit,
+                color: _color,
+                gaplessPlayback: true,
+                scale: scale ?? 1,
+                colorBlendMode: colorBlendMode,
+                cacheWidth: _cacheWidth,
+                cacheHeight: _cacheHeight,
+                errorBuilder: _errorBuilder,
+                alignment: alignment,
+              );
         if (logEnable) L.d('使用Image.file: $_imagePath');
       } else {
         result = Image.asset(
