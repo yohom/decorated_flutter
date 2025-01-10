@@ -87,6 +87,7 @@ class ImageView extends StatelessWidget {
     this.errorWidget,
     this.placeholder,
     this.scale,
+    this.alignment = Alignment.center,
   })  : imagePath = imageUri.isUrl ? null : imageUri,
         imageUrl = imageUri.isUrl ? imageUri : null,
         assert(
@@ -122,6 +123,7 @@ class ImageView extends StatelessWidget {
     this.errorWidget,
     this.placeholder,
     this.scale,
+    this.alignment = Alignment.center,
   })  : imagePath = imageUri.isUrl ? null : imageUri,
         imageUrl = imageUri.isUrl ? imageUri : null,
         assert(
@@ -156,6 +158,7 @@ class ImageView extends StatelessWidget {
     this.errorWidget,
     this.placeholder,
     this.scale,
+    this.alignment = Alignment.center,
   })  : imageUrl = null,
         assert(
           (darkImagePath != null && autoDarkMode == false) ||
@@ -189,6 +192,7 @@ class ImageView extends StatelessWidget {
     this.shape,
     this.colorBlendMode,
     this.scale,
+    this.alignment = Alignment.center,
   })  : imagePath = null,
         assert(
           (darkImagePath != null && autoDarkMode == false) ||
@@ -265,6 +269,9 @@ class ImageView extends StatelessWidget {
   /// 缩放
   final double? scale;
 
+  /// 对齐
+  final Alignment alignment;
+
   @override
   Widget build(BuildContext context) {
     final isDarkMode = context.isDarkMode;
@@ -291,6 +298,7 @@ class ImageView extends StatelessWidget {
           key: autoApplyKey ? Key(_imagePath) : null,
           width: width,
           height: height,
+          alignment: alignment,
           fit: fit ?? BoxFit.contain,
           color: _color,
           placeholderBuilder: _placeholder != null ? (_) => _placeholder : null,
@@ -312,6 +320,7 @@ class ImageView extends StatelessWidget {
           cacheWidth: _cacheWidth,
           cacheHeight: _cacheHeight,
           errorBuilder: _errorBuilder,
+                alignment: alignment,
         );
         if (logEnable) L.d('使用Image.file: $_imagePath');
       } else {
@@ -328,6 +337,7 @@ class ImageView extends StatelessWidget {
           cacheWidth: _cacheWidth,
           cacheHeight: _cacheHeight,
           errorBuilder: _errorBuilder,
+          alignment: alignment,
         );
         if (logEnable) L.d('使用Image.asset: $_imagePath');
       }
@@ -344,6 +354,7 @@ class ImageView extends StatelessWidget {
           headers: headers,
           color: _color,
           placeholderBuilder: _placeholder != null ? (_) => _placeholder : null,
+          alignment: alignment,
         );
         if (logEnable) L.d('使用SvgPicture.network: $imageUrl');
       } else {
@@ -362,6 +373,7 @@ class ImageView extends StatelessWidget {
                 cacheHeight: _cacheWidth,
                 cacheWidth: _cacheHeight,
                 colorBlendMode: colorBlendMode,
+                alignment: alignment,
                 loadingBuilder: placeholder != null
                     ? (_, child, loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -382,6 +394,7 @@ class ImageView extends StatelessWidget {
                 errorWidget: _errorBuilder,
                 memCacheWidth: _cacheWidth,
                 memCacheHeight: _cacheHeight,
+                alignment: alignment,
               );
         if (logEnable) L.d('使用CachedNetworkImage: $imageUrl');
       }
