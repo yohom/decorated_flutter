@@ -195,6 +195,10 @@ extension ListX<T> on List<T> {
     removeRange(index, length);
   }
 
+  void removeBefore(int index) {
+    removeRange(0, index);
+  }
+
   void replace(int index, T element) {
     replaceRange(index, index + 1, [element]);
   }
