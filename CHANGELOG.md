@@ -1,6 +1,8 @@
-## 0.50.2
+## 0.50.3
 - [🚀] `ImageView`在处理web文件路径时, 做兼容处理;
 - [🚀] `ImageView`增加`alignment`参数;
+- [🚀] `ScrollableX`增加`scrollPercent`和`offsetToMax`;
+- [🚀] `IterableX`增加`removeAfter`和`removeBefore`;
 
 ## 0.50.2
 - [🚀] `SelectableListX`增加`reset`扩展;
