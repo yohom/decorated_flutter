@@ -191,6 +191,14 @@ extension NumIterableX<T extends num> on Iterable<T> {
 extension ListX<T> on List<T> {
   List<T> get copied => List.of(this);
 
+  void removeAfter(int index) {
+    removeRange(index, length);
+  }
+
+  void removeBefore(int index) {
+    removeRange(0, index);
+  }
+
   void replace(int index, T element) {
     replaceRange(index, index + 1, [element]);
   }

@@ -41,6 +41,12 @@ extension BuildContextX on BuildContext {
     }
   }
 
+  /// BuildContext对应的全局坐标
+  Offset get globalCoordinate {
+    final renderBox = findRenderObject() as RenderBox;
+    return renderBox.localToGlobal(Offset.zero);
+  }
+
   FormState get form {
     return Form.of(this);
   }
@@ -103,7 +109,7 @@ extension BuildContextX on BuildContext {
   }
 
   Color get backgroundColor {
-    return Theme.of(this).colorScheme.background;
+    return Theme.of(this).colorScheme.surface;
   }
 
   NavigatorState get rootNavigator {

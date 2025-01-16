@@ -36,6 +36,28 @@ extension ScrollControllerX on ScrollController {
     );
   }
 
+  /// 滚动百分比
+  double get scrollPercent {
+    if (!hasClients) return 0;
+
+    final max = positions.first.maxScrollExtent;
+    if (max == 0) return 0;
+
+    final current = positions.first.pixels;
+    return current / max;
+  }
+
+  /// 距离最大值的偏移量
+  double get offsetToMax {
+    if (!hasClients) return 0;
+
+    final max = positions.first.maxScrollExtent;
+    if (max == 0) return 0;
+
+    final current = positions.first.pixels;
+    return max - current;
+  }
+
   void jumpToMin() {
     return jumpTo(0);
   }

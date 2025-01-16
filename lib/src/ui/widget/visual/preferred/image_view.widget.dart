@@ -87,6 +87,7 @@ class ImageView extends StatelessWidget {
     this.errorWidget,
     this.placeholder,
     this.scale,
+    this.alignment = Alignment.center,
   })  : imagePath = imageUri.isUrl ? null : imageUri,
         imageUrl = imageUri.isUrl ? imageUri : null,
         assert(
@@ -122,6 +123,7 @@ class ImageView extends StatelessWidget {
     this.errorWidget,
     this.placeholder,
     this.scale,
+    this.alignment = Alignment.center,
   })  : imagePath = imageUri.isUrl ? null : imageUri,
         imageUrl = imageUri.isUrl ? imageUri : null,
         assert(
@@ -156,6 +158,7 @@ class ImageView extends StatelessWidget {
     this.errorWidget,
     this.placeholder,
     this.scale,
+    this.alignment = Alignment.center,
   })  : imageUrl = null,
         assert(
           (darkImagePath != null && autoDarkMode == false) ||
@@ -189,6 +192,7 @@ class ImageView extends StatelessWidget {
     this.shape,
     this.colorBlendMode,
     this.scale,
+    this.alignment = Alignment.center,
   })  : imagePath = null,
         assert(
           (darkImagePath != null && autoDarkMode == false) ||
@@ -265,6 +269,9 @@ class ImageView extends StatelessWidget {
   /// 缩放
   final double? scale;
 
+  /// 对齐
+  final Alignment alignment;
+
   @override
   Widget build(BuildContext context) {
     final isDarkMode = context.isDarkMode;
@@ -291,6 +298,7 @@ class ImageView extends StatelessWidget {
           key: autoApplyKey ? Key(_imagePath) : null,
           width: width,
           height: height,
+          alignment: alignment,
           fit: fit ?? BoxFit.contain,
           color: _color,
           placeholderBuilder: _placeholder != null ? (_) => _placeholder : null,
@@ -299,20 +307,37 @@ class ImageView extends StatelessWidget {
         if (logEnable) L.d('使用SvgPicture.asset: $_imagePath');
       } else if (_imagePath.startsWith('/') ||
           _imagePath.startsWith('file://')) {
-        result = Image.file(
-          File(_imagePath),
-          key: autoApplyKey ? Key(_imagePath) : null,
-          width: width,
-          height: height,
-          fit: fit,
-          color: _color,
-          gaplessPlayback: true,
-          scale: scale ?? 1,
-          colorBlendMode: colorBlendMode,
-          cacheWidth: _cacheWidth,
-          cacheHeight: _cacheHeight,
-          errorBuilder: _errorBuilder,
-        );
+        result = kIsWeb // web端的文件路径使用network加载
+            ? Image.network(
+                _imagePath,
+                key: autoApplyKey ? Key(_imagePath) : null,
+                width: width,
+                height: height,
+                fit: fit,
+                color: _color,
+                gaplessPlayback: true,
+                scale: scale ?? 1,
+                colorBlendMode: colorBlendMode,
+                cacheWidth: _cacheWidth,
+                cacheHeight: _cacheHeight,
+                errorBuilder: _errorBuilder,
+                alignment: alignment,
+              )
+            : Image.file(
+                File(_imagePath),
+                key: autoApplyKey ? Key(_imagePath) : null,
+                width: width,
+                height: height,
+                fit: fit,
+                color: _color,
+                gaplessPlayback: true,
+                scale: scale ?? 1,
+                colorBlendMode: colorBlendMode,
+                cacheWidth: _cacheWidth,
+                cacheHeight: _cacheHeight,
+                errorBuilder: _errorBuilder,
+                alignment: alignment,
+              );
         if (logEnable) L.d('使用Image.file: $_imagePath');
       } else {
         result = Image.asset(
@@ -328,6 +353,7 @@ class ImageView extends StatelessWidget {
           cacheWidth: _cacheWidth,
           cacheHeight: _cacheHeight,
           errorBuilder: _errorBuilder,
+          alignment: alignment,
         );
         if (logEnable) L.d('使用Image.asset: $_imagePath');
       }
@@ -344,28 +370,49 @@ class ImageView extends StatelessWidget {
           headers: headers,
           color: _color,
           placeholderBuilder: _placeholder != null ? (_) => _placeholder : null,
+          alignment: alignment,
         );
         if (logEnable) L.d('使用SvgPicture.network: $imageUrl');
       } else {
-        // if (ImageView._cryptoOption?.enableNetworkImage == true) {
-        // result = _encryptedImage(context, imageUrl!);
-        // if (logEnable) L.d('使用_encryptedImage: $imageUrl');
-        // } else {
-        result = CachedNetworkImage(
-          imageUrl: imageUrl!,
-          key: autoApplyKey ? Key(imageUrl!) : null,
-          width: width,
-          height: height,
-          fit: fit,
-          color: _color,
-          httpHeaders: headers,
-          placeholder: _placeholder != null ? (_, __) => _placeholder : null,
-          errorWidget: _errorBuilder,
-          memCacheWidth: _cacheWidth,
-          memCacheHeight: _cacheHeight,
-        );
+        result = kIsWeb
+            ? Image.network(
+                imageUrl!,
+                key: autoApplyKey ? Key(imageUrl!) : null,
+                width: width,
+                height: height,
+                fit: fit,
+                color: _color,
+                errorBuilder: _errorBuilder,
+                gaplessPlayback: true,
+                scale: scale ?? 1,
+                headers: headers,
+                cacheHeight: _cacheWidth,
+                cacheWidth: _cacheHeight,
+                colorBlendMode: colorBlendMode,
+                alignment: alignment,
+                loadingBuilder: placeholder != null
+                    ? (_, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return placeholder!;
+                      }
+                    : null,
+              )
+            : CachedNetworkImage(
+                imageUrl: imageUrl!,
+                key: autoApplyKey ? Key(imageUrl!) : null,
+                width: width,
+                height: height,
+                fit: fit,
+                color: _color,
+                httpHeaders: headers,
+                placeholder:
+                    _placeholder != null ? (_, __) => _placeholder : null,
+                errorWidget: _errorBuilder,
+                memCacheWidth: _cacheWidth,
+                memCacheHeight: _cacheHeight,
+                alignment: alignment,
+              );
         if (logEnable) L.d('使用CachedNetworkImage: $imageUrl');
-        // }
       }
     } else {
       // 如果图片地址为null的话, 那就不显示
