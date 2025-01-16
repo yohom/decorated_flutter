@@ -23,6 +23,11 @@ extension ScrollControllerX on ScrollController {
     );
   }
 
+  bool isInScrollRange(double offset) {
+    return offset >= positions.first.minScrollExtent &&
+        offset <= positions.first.maxScrollExtent;
+  }
+
   Future<void> animateBy(
     double offset, {
     Duration duration = const Duration(milliseconds: 100),
