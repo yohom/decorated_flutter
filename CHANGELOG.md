@@ -2,6 +2,7 @@
 - [🚀] `ImageView`在处理web文件路径时, 做兼容处理;
 - [🚀] `ImageView`增加`alignment`参数;
 - [🚀] `ScrollableX`增加`scrollPercent`, `offsetToMax`, `isInScrollRange`扩展;
+- [🚀] `ScrollableX`增加`offsetToStartEdge`, `offsetToEndEdge`扩展;
 - [🚀] `IterableX`增加`removeAfter`和`removeBefore`;
 
 ## 0.50.2
