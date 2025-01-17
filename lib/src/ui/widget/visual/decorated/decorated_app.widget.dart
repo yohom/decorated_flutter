@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:decorated_flutter/src/utils/chinese_font.dart';
 import 'package:flutter/foundation.dart';
@@ -118,10 +120,12 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
           : builder,
       onGenerateTitle: onGenerateTitle,
       navigatorKey: navigatorKey ?? gNavigatorKey,
-      theme: theme?.let((self) =>
-          kIsWeb ? self : self.useSystemChineseFont(Brightness.light)),
-      darkTheme: darkTheme?.let(
-          (self) => kIsWeb ? self : self.useSystemChineseFont(Brightness.dark)),
+      theme: theme?.let((self) => (kIsWeb || Platform.isAndroid)
+          ? self
+          : self.useSystemChineseFont(Brightness.light)),
+      darkTheme: darkTheme?.let((self) => (kIsWeb || Platform.isAndroid)
+          ? self
+          : self.useSystemChineseFont(Brightness.dark)),
       themeMode: themeMode,
       scrollBehavior: scrollBehavior,
       onGenerateRoute: onGenerateRoute,
