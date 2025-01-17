@@ -23,6 +23,56 @@ extension ScrollControllerX on ScrollController {
     );
   }
 
+  /// 计算目标[context]距离视口最小值的偏移量
+  Offset? offsetToStartEdge(BuildContext context) {
+    final renderObject = context.findRenderObject();
+    if (renderObject is! RenderBox) return null;
+
+    final globalOffset = renderObject.localToGlobal(Offset.zero);
+
+    final scrollableBox = position.context.storageContext.findRenderObject();
+    if (scrollableBox is! RenderBox) return null;
+
+    final scrollableOffset = scrollableBox.localToGlobal(Offset.zero);
+
+    // 计算最小偏移量：最近边缘的偏移量
+    return Offset(
+      globalOffset.dx - scrollableOffset.dx,
+      globalOffset.dy - scrollableOffset.dy,
+    );
+  }
+
+  /// 计算目标[context]距离视口最大值的偏移量
+  Offset? offsetToEndEdge(BuildContext context) {
+    final renderObject = context.findRenderObject();
+    if (renderObject is! RenderBox) return null;
+
+    final globalOffset = renderObject.localToGlobal(Offset.zero);
+    final size = renderObject.size;
+
+    final scrollableBox = position.context.storageContext.findRenderObject();
+    if (scrollableBox is! RenderBox) return null;
+
+    final scrollableOffset = scrollableBox.localToGlobal(Offset.zero);
+
+    // 计算最大偏移量：最远边缘的偏移量
+    final targetMaxOffsetX = globalOffset.dx + size.width;
+    final targetMaxOffsetY = globalOffset.dx + size.width;
+    final scrollableMaxOffsetX = scrollableOffset.dx + scrollableBox.size.width;
+    final scrollableMaxOffsetY =
+        scrollableOffset.dy + scrollableBox.size.height;
+
+    return Offset(
+      scrollableMaxOffsetX - targetMaxOffsetX,
+      scrollableMaxOffsetY - targetMaxOffsetY,
+    );
+  }
+
+  bool isInScrollRange(double offset) {
+    return offset >= positions.first.minScrollExtent &&
+        offset <= positions.first.maxScrollExtent;
+  }
+
   Future<void> animateBy(
     double offset, {
     Duration duration = const Duration(milliseconds: 100),
