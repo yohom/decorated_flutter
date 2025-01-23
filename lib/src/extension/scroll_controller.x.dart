@@ -23,6 +23,32 @@ extension ScrollControllerX on ScrollController {
     );
   }
 
+  Future<void> animateToNoOverscroll(
+    double offset, {
+    Duration duration = const Duration(milliseconds: 100),
+    Curve curve = Curves.decelerate,
+  }) {
+    return animateTo(
+      offset.clamp(position.minScrollExtent, position.maxScrollExtent),
+      duration: duration,
+      curve: curve,
+    );
+  }
+
+  /// 没有overscroll效果的滚动
+  Future<void> animateByNoOverscroll(
+    double offset, {
+    Duration duration = const Duration(milliseconds: 100),
+    Curve curve = Curves.decelerate,
+  }) {
+    final targetOffset = position.pixels + offset;
+    return animateTo(
+      targetOffset.clamp(position.minScrollExtent, position.maxScrollExtent),
+      duration: duration,
+      curve: curve,
+    );
+  }
+
   /// 计算目标[context]距离视口最小值的偏移量
   Offset? offsetToStartEdge(BuildContext context) {
     final renderObject = context.findRenderObject();
