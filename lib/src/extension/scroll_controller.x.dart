@@ -35,6 +35,11 @@ extension ScrollControllerX on ScrollController {
     );
   }
 
+  /// 停止滚动
+  void stopScrolling() {
+    jumpTo(position.pixels);
+  }
+
   /// 没有overscroll效果的滚动
   Future<void> animateByNoOverscroll(
     double offset, {
