@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:decorated_flutter/decorated_flutter.dart';
+import 'package:flutter/widgets.dart';
 
 /// 可初始化组件的通用逻辑
 ///

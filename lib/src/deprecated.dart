@@ -1,3 +1,5 @@
+// ignore_for_file: no_wildcard_variable_uses
+
 import 'package:decorated_flutter/src/extension/extension.export.dart';
 import 'package:decorated_flutter/src/ui/ui.export.dart';
 import 'package:decorated_flutter/src/utils/utils.export.dart';

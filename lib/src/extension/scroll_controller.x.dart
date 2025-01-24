@@ -5,8 +5,9 @@ extension ScrollControllerX on ScrollController {
     Duration duration = const Duration(milliseconds: 100),
     Curve curve = Curves.decelerate,
   }) {
+    if (!hasClients) return Future.value();
     return animateTo(
-      position.maxScrollExtent,
+      positions.first.maxScrollExtent,
       duration: duration,
       curve: curve,
     );
@@ -16,8 +17,45 @@ extension ScrollControllerX on ScrollController {
     Duration duration = const Duration(milliseconds: 100),
     Curve curve = Curves.decelerate,
   }) {
+    if (!hasClients) return Future.value();
     return animateTo(
-      position.minScrollExtent,
+      positions.first.minScrollExtent,
+      duration: duration,
+      curve: curve,
+    );
+  }
+
+  Future<void> animateToNoOverscroll(
+    double offset, {
+    Duration duration = const Duration(milliseconds: 100),
+    Curve curve = Curves.decelerate,
+  }) {
+    if (!hasClients) return Future.value();
+    final position = positions.first;
+    return animateTo(
+      offset.clamp(position.minScrollExtent, position.maxScrollExtent),
+      duration: duration,
+      curve: curve,
+    );
+  }
+
+  /// 停止滚动
+  void stopScrolling() {
+    if (hasClients) jumpTo(positions.first.pixels);
+  }
+
+  /// 没有overscroll效果的滚动
+  Future<void> animateByNoOverscroll(
+    double offset, {
+    Duration duration = const Duration(milliseconds: 100),
+    Curve curve = Curves.decelerate,
+  }) {
+    if (!hasClients) return Future.value();
+
+    final position = positions.first;
+    final targetOffset = position.pixels + offset;
+    return animateTo(
+      targetOffset.clamp(position.minScrollExtent, position.maxScrollExtent),
       duration: duration,
       curve: curve,
     );
@@ -25,6 +63,10 @@ extension ScrollControllerX on ScrollController {
 
   /// 计算目标[context]距离视口最小值的偏移量
   Offset? offsetToStartEdge(BuildContext context) {
+    if (!hasClients) return null;
+
+    final position = positions.first;
+
     final renderObject = context.findRenderObject();
     if (renderObject is! RenderBox) return null;
 

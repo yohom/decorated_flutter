@@ -42,7 +42,11 @@ extension BuildContextX on BuildContext {
   }
 
   /// BuildContext对应的全局坐标
-  Offset get globalCoordinate {
+  @Deprecated('使用globalPosition代替')
+  Offset get globalCoordinate => globalPosition;
+
+  /// BuildContext对应的全局坐标
+  Offset get globalPosition {
     final renderBox = findRenderObject() as RenderBox;
     return renderBox.localToGlobal(Offset.zero);
   }

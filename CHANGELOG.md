@@ -3,6 +3,7 @@
 - [🚀] `ImageView`增加`alignment`参数;
 - [🚀] `ScrollableX`增加`scrollPercent`, `offsetToMax`, `isInScrollRange`扩展;
 - [🚀] `ScrollableX`增加`offsetToStartEdge`, `offsetToEndEdge`扩展;
+- [🚀] `ScrollableX`增加`animateToNoOverscroll`和`animateByNoOverscroll`扩展;
 - [🚀] `IterableX`增加`removeAfter`和`removeBefore`;
 
 ## 0.50.2

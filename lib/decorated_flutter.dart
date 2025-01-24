@@ -1,8 +1,8 @@
 library decorated_flutter;
 
 export 'package:dio/dio.dart';
-export 'package:intl/intl.dart';
-export 'package:meta/meta.dart';
+// export 'package:intl/intl.dart';
+// export 'package:meta/meta.dart';
 export 'package:rxdart/rxdart.dart';
 
 export 'src/annotation/annotation.export.dart';
