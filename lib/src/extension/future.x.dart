@@ -19,7 +19,7 @@ extension FutureX<T> on Future<T> {
   // 默认无超时
   static Duration defaultTimeLimit = const Duration(days: 1);
 
-  Stream<bool> get inLoading {
+  static Stream<bool> get inLoading {
     return _loadingStreamController.stream;
   }
 
