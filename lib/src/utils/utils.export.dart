@@ -1,4 +1,5 @@
 export 'alias.dart';
+export 'circular_buffer.dart';
 export 'codec.dart';
 export 'empty_util.dart';
 export 'enums.dart';
