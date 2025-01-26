@@ -22,6 +22,7 @@ extension GlobalKeyX on GlobalKey {
     return box
         .toImage(pixelRatio: window.devicePixelRatio)
         .then((image) => image.toByteData(format: ImageByteFormat.png))
-        .then((byteData) => byteData!.buffer.asUint8List());
+        .then((byteData) => byteData?.buffer.asUint8List())
+        .catchError((_) => null);
   }
 }
