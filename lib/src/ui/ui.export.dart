@@ -6,6 +6,7 @@ export 'misc/uri_builder.dart';
 export 'route/custom_material.route.dart';
 export 'route/decorated_route.route.dart';
 export 'route/transparent_route.route.dart';
+export 'sliver/sliver.export.dart';
 export 'widget/nonvisual/auto_close_keyboard.widget.dart';
 export 'widget/nonvisual/capturer.widget.dart';
 export 'widget/nonvisual/delayed.widget.dart';
