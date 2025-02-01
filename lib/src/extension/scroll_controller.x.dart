@@ -151,6 +151,7 @@ extension ScrollControllerX on ScrollController {
   }
 
   void jumpToMin() {
+    if (!hasClients) return;
     return jumpTo(0);
   }
 
