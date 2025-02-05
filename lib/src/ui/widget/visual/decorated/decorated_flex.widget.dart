@@ -434,7 +434,10 @@ class DecoratedFlex extends StatelessWidget {
       mainAxisAlignment: _mainAxisAlignment,
       mainAxisSize: mainAxisSize,
       crossAxisAlignment: crossAxisAlignment,
-      textBaseline: textBaseline,
+      textBaseline: (textBaseline == null &&
+              crossAxisAlignment == CrossAxisAlignment.baseline)
+          ? TextBaseline.alphabetic
+          : textBaseline,
       verticalDirection: verticalDirection ?? VerticalDirection.down,
       children: _children,
     );
