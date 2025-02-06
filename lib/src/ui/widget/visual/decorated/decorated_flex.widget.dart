@@ -566,6 +566,14 @@ class DecoratedFlex extends StatelessWidget {
       );
     }
 
+    // 有设置事件时, 自动转换成click
+    if (cursor != null || result is GestureDetector || result is MouseRegion) {
+      result = MouseRegion(
+        cursor: cursor ?? SystemMouseCursors.click,
+        child: result,
+      );
+    }
+
     // material要放在InkWell的上方, 否则没有波纹
     if (enableFeedback == true || material || elevation != null) {
       result = Material(
@@ -665,10 +673,6 @@ class DecoratedFlex extends StatelessWidget {
             ),
         child: result,
       );
-    }
-
-    if (cursor case MouseCursor cursor) {
-      result = MouseRegion(cursor: cursor, child: result);
     }
 
     if (ignorePointer != null) {
