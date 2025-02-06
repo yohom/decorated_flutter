@@ -170,7 +170,9 @@ extension IterableX<T> on Iterable<T> {
 }
 
 extension NullableIterableX<T> on Iterable<T?>? {
-  List<T> whereNotNull() => (this ?? []).where(notNull).cast<T>().toList();
+  List<T> whereNotNull() {
+    return (this ?? []).whereOrEmpty(notNull).cast<T>().toList();
+  }
 }
 
 extension NumIterableX<T extends num> on Iterable<T> {
