@@ -210,20 +210,24 @@ class DecoratedStack extends StatelessWidget {
         onLongPressed != null ||
         onVerticalDragEnd != null ||
         onHorizontalDragEnd != null) {
-      result = GestureDetector(
-        behavior: behavior,
-        onDoubleTapDown: onDoubleTapDown == null
-            ? null
-            : (details) => onDoubleTapDown!(context, details),
-        onDoubleTap: onDoubleTap == null ? null : () => onDoubleTap!(context),
-        onTapDown:
-            onTapDown == null ? null : (detail) => onTapDown!(context, detail),
-        onTap: onPressed == null ? null : () => onPressed!(context),
-        onLongPress:
-            onLongPressed == null ? null : () => onLongPressed!(context),
-        onVerticalDragEnd: onVerticalDragEnd,
-        onHorizontalDragEnd: onHorizontalDragEnd,
-        child: result,
+      result = MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          behavior: behavior,
+          onDoubleTapDown: onDoubleTapDown == null
+              ? null
+              : (details) => onDoubleTapDown!(context, details),
+          onDoubleTap: onDoubleTap == null ? null : () => onDoubleTap!(context),
+          onTapDown: onTapDown == null
+              ? null
+              : (detail) => onTapDown!(context, detail),
+          onTap: onPressed == null ? null : () => onPressed!(context),
+          onLongPress:
+              onLongPressed == null ? null : () => onLongPressed!(context),
+          onVerticalDragEnd: onVerticalDragEnd,
+          onHorizontalDragEnd: onHorizontalDragEnd,
+          child: result,
+        ),
       );
     }
 
