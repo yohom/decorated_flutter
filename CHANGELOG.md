@@ -6,6 +6,7 @@
 - [🚀] `ScrollableX`增加`animateToNoOverscroll`和`animateByNoOverscroll`扩展;
 - [🚀] `IterableX`增加`removeAfter`和`removeBefore`;
 - [🚀] 增加`CircularBuffer`;
+- [🚀] 可点击组件增加`onHover`, `onEnter`, `onExit`;
 
 ## 0.50.2
 - [🚀] `SelectableListX`增加`reset`扩展;
