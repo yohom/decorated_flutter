@@ -28,6 +28,9 @@ class DecoratedRow extends DecoratedFlex {
     super.onVerticalDragStart,
     super.onVerticalDragEnd,
     super.onHorizontalDragEnd,
+    super.onHover,
+    super.onEnter,
+    super.onExit,
     super.behavior,
     super.itemSpacing = 0,
     super.divider,
@@ -105,6 +108,9 @@ class DecoratedColumn extends DecoratedFlex {
     super.onVerticalDragStart,
     super.onVerticalDragEnd,
     super.onHorizontalDragEnd,
+    super.onHover,
+    super.onEnter,
+    super.onExit,
     super.behavior,
     super.itemSpacing = 0,
     super.divider,
@@ -184,6 +190,9 @@ class DecoratedFlex extends StatelessWidget {
     this.onVerticalDragStart,
     this.onVerticalDragEnd,
     this.onHorizontalDragEnd,
+    this.onHover,
+    this.onEnter,
+    this.onExit,
     this.behavior,
     this.itemSpacing = 0,
     this.divider,
@@ -234,7 +243,7 @@ class DecoratedFlex extends StatelessWidget {
     this.children = const [],
   });
 
-  //region Container
+  /// Container
   final EdgeInsets? padding;
   final EdgeInsets? margin;
   final Color? color;
@@ -245,9 +254,7 @@ class DecoratedFlex extends StatelessWidget {
   final double? width;
   final double? height;
 
-  //endregion
-
-  //region Flex
+  /// Flex
   final Axis direction;
   final AlignmentGeometry? alignment;
   final MainAxisAlignment mainAxisAlignment;
@@ -257,30 +264,24 @@ class DecoratedFlex extends StatelessWidget {
 
   //endregion
 
-  //region GestureDetector
-  final ContextCallback? onPressed;
-  final ContextCallback? onLongPressed;
-  final ContextCallback? onDoubleTap;
-  final ContextCallback? onSecondaryTap;
+  /// GestureDetector
+  final ContextCallback? onPressed, onLongPressed, onDoubleTap, onSecondaryTap;
   final GestureTapDownCallback? onSecondaryTapDown;
   final GestureDragStartCallback? onVerticalDragStart;
   final GestureDragEndCallback? onVerticalDragEnd;
   final GestureDragEndCallback? onHorizontalDragEnd;
   final HitTestBehavior? behavior;
 
-  //endregion
+  /// MouseRegion
+  final ContextCallback? onHover, onEnter, onExit;
 
-  //region Material
+  /// Material
   final bool material;
   final double? elevation;
 
-  //endregion
-
-  //region FractionallySizedBox
+  /// FractionallySizedBox
   final double? widthFactor;
   final double? heightFactor;
-
-  //endregion
 
   /// 元素间距
   final double? itemSpacing;
@@ -552,6 +553,15 @@ class DecoratedFlex extends StatelessWidget {
             onSecondaryTap == null ? null : () => onSecondaryTap!(context),
         onSecondaryTapDown: onSecondaryTapDown,
         onDoubleTap: onDoubleTap == null ? null : () => onDoubleTap!(context),
+        child: result,
+      );
+    }
+
+    if (onHover != null || onEnter != null || onExit != null) {
+      result = MouseRegion(
+        onHover: onHover != null ? (_) => onHover!(context) : null,
+        onEnter: onEnter != null ? (_) => onEnter!(context) : null,
+        onExit: onExit != null ? (_) => onExit!(context) : null,
         child: result,
       );
     }
