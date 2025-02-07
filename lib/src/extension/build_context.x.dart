@@ -128,6 +128,10 @@ extension BuildContextX on BuildContext {
     return DefaultTabController.of(this);
   }
 
+  ModalRoute? get route {
+    return ModalRoute.of(this);
+  }
+
   Future<void> scrollToTop({Duration? duration, Curve? curve}) async {
     return PrimaryScrollController.of(this).animateTo(
       0,
