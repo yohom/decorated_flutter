@@ -9,8 +9,6 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   const DecoratedApp({
     super.key,
     this.rootBLoC,
-    @Deprecated('已无作用, 直接使用DecoratedApp的参数即可') this.app = NIL,
-    @Deprecated('暂无作用') this.preventTextScale = false,
     this.onGenerateTitle,
     this.onGenerateRoute,
     this.onGenerateInitialRoutes,
@@ -27,7 +25,6 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
     this.navigatorKey,
     this.navigatorObservers = const [],
     this.title = '',
-    @Deprecated('暂无作用, 直接嵌套ListTileTheme即可') this.listTileTheme,
     this.builder,
     this.debugShowCheckedModeBanner = false,
     this.onDispose,
@@ -51,10 +48,65 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
     this.withCapturer = false,
     this.onNavigationNotification,
     this.routes = const {},
-  });
+  })  : _isRouter = false,
+        routeInformationProvider = null,
+        routeInformationParser = null,
+        routerDelegate = null,
+        routerConfig = null,
+        backButtonDispatcher = null;
+
+  const DecoratedApp.router({
+    super.key,
+    this.rootBLoC,
+    this.onGenerateTitle,
+    this.theme,
+    this.darkTheme,
+    this.highContrastDarkTheme,
+    this.highContrastTheme,
+    this.themeMode,
+    this.scrollBehavior,
+    this.localizationsDelegates = const [],
+    this.supportedLocales = const <Locale>[Locale('en', 'US')],
+    this.locale,
+    this.title = '',
+    this.builder,
+    this.debugShowCheckedModeBanner = false,
+    this.onDispose,
+    this.localeResolutionCallback,
+    this.localeListResolutionCallback,
+    this.actions,
+    this.checkerboardOffscreenLayers = false,
+    this.checkerboardRasterCacheImages = false,
+    this.color,
+    this.debugShowMaterialGrid = false,
+    this.themeAnimationCurve = Curves.linear,
+    this.themeAnimationDuration = kThemeAnimationDuration,
+    this.themeAnimationStyle,
+    this.scaffoldMessengerKey,
+    this.shortcuts,
+    this.showPerformanceOverlay = false,
+    this.showSemanticsDebugger = false,
+    this.restorationScopeId,
+    this.withCapturer = false,
+    this.onNavigationNotification,
+    // ------------------ navigator2专有 ------------------//
+    this.routeInformationProvider,
+    this.routeInformationParser,
+    this.routerDelegate,
+    this.routerConfig,
+    this.backButtonDispatcher,
+    // ------------------ navigator2专有 ------------------//
+  })  : _isRouter = true,
+        navigatorObservers = const [],
+        navigatorKey = null,
+        onGenerateRoute = null,
+        home = null,
+        onGenerateInitialRoutes = null,
+        onUnknownRoute = null,
+        routes = const {},
+        initialRoute = null;
 
   final B? rootBLoC;
-  final bool preventTextScale;
   final GenerateAppTitle? onGenerateTitle;
   final ThemeData? theme, darkTheme, highContrastDarkTheme, highContrastTheme;
   final ThemeMode? themeMode;
@@ -68,8 +120,6 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   final GlobalKey<NavigatorState>? navigatorKey;
   final List<NavigatorObserver> navigatorObservers;
   final String title;
-  final ListTileThemeData? listTileTheme;
-  final Widget app;
   final TransitionBuilder? builder;
   final bool debugShowCheckedModeBanner;
   final String? initialRoute;
@@ -104,61 +154,127 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   final Map<ShortcutActivator, Intent>? shortcuts;
   final Widget? home;
 
+  // ------------------ router专有 ------------------ //
+  final RouteInformationProvider? routeInformationProvider;
+
+  /// {@macro flutter.widgets.widgetsApp.routeInformationParser}
+  final RouteInformationParser<Object>? routeInformationParser;
+
+  /// {@macro flutter.widgets.widgetsApp.routerDelegate}
+  final RouterDelegate<Object>? routerDelegate;
+
+  /// {@macro flutter.widgets.widgetsApp.routerConfig}
+  final RouterConfig<Object>? routerConfig;
+
+  /// {@macro flutter.widgets.widgetsApp.backButtonDispatcher}
+  final BackButtonDispatcher? backButtonDispatcher;
+  // ------------------ router专有 ------------------ //
+
   /// 是否内建截图组件Capturer
   final bool withCapturer;
 
+  /// 是否使用router
+  final bool _isRouter;
+
   @override
   Widget build(BuildContext context) {
-    final child = MaterialApp(
-      title: title,
-      builder: withCapturer
-          ? (context, child) {
-              return Capturer(child: builder?.call(context, child));
-            }
-          : builder,
-      onGenerateTitle: onGenerateTitle,
-      navigatorKey: navigatorKey ?? gNavigatorKey,
-      theme: theme?.let((self) =>
-          kIsWeb ? self : self.useSystemChineseFont(Brightness.light)),
-      darkTheme: darkTheme?.let(
-          (self) => kIsWeb ? self : self.useSystemChineseFont(Brightness.dark)),
-      themeMode: themeMode,
-      scrollBehavior: scrollBehavior,
-      onGenerateRoute: onGenerateRoute,
-      onGenerateInitialRoutes: onGenerateInitialRoutes,
-      onUnknownRoute: onUnknownRoute,
-      debugShowCheckedModeBanner: debugShowCheckedModeBanner,
-      localizationsDelegates: {
-        ...localizationsDelegates,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate
-      },
-      locale: locale,
-      supportedLocales: supportedLocales,
-      navigatorObservers: navigatorObservers,
-      localeListResolutionCallback: localeListResolutionCallback,
-      localeResolutionCallback: localeResolutionCallback,
-      actions: actions,
-      checkerboardOffscreenLayers: checkerboardOffscreenLayers,
-      checkerboardRasterCacheImages: checkerboardRasterCacheImages,
-      color: color,
-      debugShowMaterialGrid: debugShowMaterialGrid,
-      themeAnimationCurve: themeAnimationCurve,
-      themeAnimationDuration: themeAnimationDuration,
-      themeAnimationStyle: themeAnimationStyle,
-      scaffoldMessengerKey: scaffoldMessengerKey,
-      shortcuts: shortcuts,
-      showPerformanceOverlay: showPerformanceOverlay,
-      restorationScopeId: restorationScopeId,
-      showSemanticsDebugger: showSemanticsDebugger,
-      highContrastDarkTheme: highContrastDarkTheme,
-      highContrastTheme: highContrastTheme,
-      initialRoute: initialRoute,
-      onNavigationNotification: onNavigationNotification,
-      routes: routes,
-      home: home,
-    );
+    final child = _isRouter
+        ? MaterialApp.router(
+            title: title,
+            builder: withCapturer
+                ? (context, child) {
+                    return Capturer(child: builder?.call(context, child));
+                  }
+                : builder,
+            onGenerateTitle: onGenerateTitle,
+            theme: theme?.let((self) =>
+                kIsWeb ? self : self.useSystemChineseFont(Brightness.light)),
+            darkTheme: darkTheme?.let((self) =>
+                kIsWeb ? self : self.useSystemChineseFont(Brightness.dark)),
+            themeMode: themeMode,
+            scrollBehavior: scrollBehavior,
+            debugShowCheckedModeBanner: debugShowCheckedModeBanner,
+            localizationsDelegates: {
+              ...localizationsDelegates,
+              GlobalCupertinoLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate
+            },
+            locale: locale,
+            supportedLocales: supportedLocales,
+            localeListResolutionCallback: localeListResolutionCallback,
+            localeResolutionCallback: localeResolutionCallback,
+            actions: actions,
+            checkerboardOffscreenLayers: checkerboardOffscreenLayers,
+            checkerboardRasterCacheImages: checkerboardRasterCacheImages,
+            color: color,
+            debugShowMaterialGrid: debugShowMaterialGrid,
+            themeAnimationCurve: themeAnimationCurve,
+            themeAnimationDuration: themeAnimationDuration,
+            themeAnimationStyle: themeAnimationStyle,
+            scaffoldMessengerKey: scaffoldMessengerKey,
+            shortcuts: shortcuts,
+            showPerformanceOverlay: showPerformanceOverlay,
+            restorationScopeId: restorationScopeId,
+            showSemanticsDebugger: showSemanticsDebugger,
+            highContrastDarkTheme: highContrastDarkTheme,
+            highContrastTheme: highContrastTheme,
+            onNavigationNotification: onNavigationNotification,
+            routeInformationProvider: routeInformationProvider,
+            routeInformationParser: routeInformationParser,
+            routerDelegate: routerDelegate,
+            routerConfig: routerConfig,
+          )
+        : MaterialApp(
+            title: title,
+            builder: withCapturer
+                ? (context, child) {
+                    return Capturer(child: builder?.call(context, child));
+                  }
+                : builder,
+            onGenerateTitle: onGenerateTitle,
+            navigatorKey: navigatorKey ?? gNavigatorKey,
+            theme: theme?.let((self) =>
+                kIsWeb ? self : self.useSystemChineseFont(Brightness.light)),
+            darkTheme: darkTheme?.let((self) =>
+                kIsWeb ? self : self.useSystemChineseFont(Brightness.dark)),
+            themeMode: themeMode,
+            scrollBehavior: scrollBehavior,
+            onGenerateRoute: onGenerateRoute,
+            onGenerateInitialRoutes: onGenerateInitialRoutes,
+            onUnknownRoute: onUnknownRoute,
+            debugShowCheckedModeBanner: debugShowCheckedModeBanner,
+            localizationsDelegates: {
+              ...localizationsDelegates,
+              GlobalCupertinoLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate
+            },
+            locale: locale,
+            supportedLocales: supportedLocales,
+            navigatorObservers: navigatorObservers,
+            localeListResolutionCallback: localeListResolutionCallback,
+            localeResolutionCallback: localeResolutionCallback,
+            actions: actions,
+            checkerboardOffscreenLayers: checkerboardOffscreenLayers,
+            checkerboardRasterCacheImages: checkerboardRasterCacheImages,
+            color: color,
+            debugShowMaterialGrid: debugShowMaterialGrid,
+            themeAnimationCurve: themeAnimationCurve,
+            themeAnimationDuration: themeAnimationDuration,
+            themeAnimationStyle: themeAnimationStyle,
+            scaffoldMessengerKey: scaffoldMessengerKey,
+            shortcuts: shortcuts,
+            showPerformanceOverlay: showPerformanceOverlay,
+            restorationScopeId: restorationScopeId,
+            showSemanticsDebugger: showSemanticsDebugger,
+            highContrastDarkTheme: highContrastDarkTheme,
+            highContrastTheme: highContrastTheme,
+            initialRoute: initialRoute,
+            onNavigationNotification: onNavigationNotification,
+            routes: routes,
+            home: home,
+          );
     return rootBLoC != null
         ? BLoCProvider<B>(bloc: rootBLoC!, onDispose: onDispose, child: child)
         : child;
