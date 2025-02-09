@@ -1,4 +1,5 @@
 export 'alias.dart';
+export 'chinese_font.dart';
 export 'circular_buffer.dart';
 export 'codec.dart';
 export 'empty_util.dart';
