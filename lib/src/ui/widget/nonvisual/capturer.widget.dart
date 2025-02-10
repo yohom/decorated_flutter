@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:decorated_flutter/src/extension/extension.export.dart';
-import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:flutter/material.dart';
 
 class Capturer extends StatefulWidget {
@@ -66,7 +65,6 @@ class _CapturerState extends State<Capturer> {
           .wait()
           .then((value) => value.whereNotNull())
           .then(completer.complete);
-      setState(doNothing);
     });
 
     return completer.future;
