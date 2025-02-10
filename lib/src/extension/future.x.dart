@@ -19,6 +19,12 @@ extension FutureX<T> on Future<T> {
   // 默认无超时
   static Duration defaultTimeLimit = const Duration(days: 1);
 
+  /// loading的entry
+  ///
+  /// 开放访问可以让外部系统自行决定loading的层级
+  static OverlayEntry? _loadingEntry;
+  static OverlayEntry? get loadingEntry => _loadingEntry;
+
   static Stream<bool> get inLoading {
     return _loadingStreamController.stream;
   }
@@ -43,58 +49,56 @@ extension FutureX<T> on Future<T> {
 
     _loadingStreamController.add(true);
 
-    final navigator = Navigator.of(context, rootNavigator: true);
+    final overlay = Overlay.of(context, rootOverlay: true);
+    final theme = Theme.of(context);
+    final controller = AnimationController(
+      duration: const Duration(milliseconds: 128),
+      vsync: Navigator.of(context),
+    );
+    final opacityAnimation =
+        Tween<double>(begin: 0.0, end: 1.0).animate(controller);
 
-    // 是被future pop的还是按返回键pop的
-    bool popByFuture = true;
+    void __pop() {
+      controller.reverse().then((_) {
+        _loadingEntry?.remove();
+        _loadingEntry = null;
+      });
+    }
 
-    // 模态显示loading
     if (modal) {
-      final ThemeData theme = Theme.of(context);
-      showGeneralDialog(
-        context: context,
-        pageBuilder: (
-          BuildContext buildContext,
-          Animation<double> animation,
-          Animation<double> secondaryAnimation,
-        ) {
+      final text = loadingText ?? defaultLoadingText;
+      final isCancelable = cancelable ?? loadingCancelable;
+      final loadingWidget =
+          loadingWidgetBuilder?.call(context, text) ?? ModalLoading(text);
+      _loadingEntry = OverlayEntry(
+        builder: (context) {
           return Theme(
             data: theme,
-            child: Builder(
-              builder: (context) {
-                final text = loadingText ?? defaultLoadingText;
-                final isCancelable = cancelable ?? loadingCancelable;
-                final loadingWidget =
-                    loadingWidgetBuilder?.call(context, text) ??
-                        ModalLoading(text);
-                return PopScope(
-                  canPop: isCancelable,
-                  child: GestureDetector(
-                    onTap: isCancelable ? context.navigator.pop : null,
-                    child: loadingWidget,
-                  ),
+            child: AnimatedBuilder(
+              animation: opacityAnimation,
+              child: PopScope(
+                canPop: isCancelable,
+                child: GestureDetector(
+                  onTap: isCancelable ? __pop : null,
+                  child: loadingWidget,
+                ),
+              ),
+              builder: (context, child) {
+                return Opacity(
+                  opacity: opacityAnimation.value,
+                  child: child,
                 );
               },
             ),
           );
         },
-        transitionDuration: const Duration(milliseconds: 150),
-        barrierDismissible: cancelable ?? loadingCancelable,
-        barrierLabel: 'Dismiss',
-        barrierColor:
-            backgroundColor ?? FutureX.backgroundColor ?? Colors.black54,
-      ).whenComplete(() {
-        // 1. 如果是返回键pop的, 那么设置成true, 这样future完成时就不会pop了
-        // 2. 如果是future完成导致的pop, 那么这一行是没用任何作用的
-        popByFuture = false;
-      });
+      );
+      overlay.insert(_loadingEntry!);
+      controller.forward();
     }
 
     return timeout(timeLimit ?? defaultTimeLimit).whenComplete(() {
-      if (popByFuture && navigator.canPop()) {
-        navigator.pop();
-      }
-
+      __pop();
       _loadingStreamController.add(false);
     });
   }

@@ -68,7 +68,7 @@ class ModalLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.black12,
+      color: Colors.black54,
       child: Center(
         child: DecoratedColumn(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -80,7 +80,7 @@ class ModalLoading extends StatelessWidget {
           ),
           children: <Widget>[
             CircularProgressIndicator(
-              backgroundColor: context.theme.colorScheme.background,
+              backgroundColor: context.theme.colorScheme.surface,
               valueColor: AlwaysStoppedAnimation(
                 context.theme.colorScheme.primary,
               ),
