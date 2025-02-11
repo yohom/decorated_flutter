@@ -114,7 +114,14 @@ extension TextThemeUseSystemChineseFont on TextTheme {
 extension ThemeDataUseSystemChineseFont on ThemeData {
   /// Add fontFamilyFallback & fontVariation to original theme data
   ThemeData useSystemChineseFont(Brightness brightness) {
-    return copyWith(textTheme: textTheme.useSystemChineseFont(brightness));
+    return copyWith(
+      textTheme: textTheme.useSystemChineseFont(brightness),
+      tabBarTheme: tabBarTheme.copyWith(
+        labelStyle: tabBarTheme.labelStyle?.useSystemChineseFont(),
+        unselectedLabelStyle:
+            tabBarTheme.unselectedLabelStyle?.useSystemChineseFont(),
+      ),
+    );
   }
 }
 

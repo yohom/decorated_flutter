@@ -1,4 +1,4 @@
-library decorated_flutter;
+library;
 
 export 'package:dio/dio.dart';
 // export 'package:intl/intl.dart';

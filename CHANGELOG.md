@@ -7,6 +7,8 @@
 - [🚀] `IterableX`增加`removeAfter`和`removeBefore`;
 - [🚀] 增加`CircularBuffer`;
 - [🚀] 可点击组件增加`onHover`, `onEnter`, `onExit`;
+- [🚀] `FutureX.loading`实现改为overlay;
+- [🚀] 增加Navigator2的DecoratedApp支持;
 
 ## 0.50.2
 - [🚀] `SelectableListX`增加`reset`扩展;

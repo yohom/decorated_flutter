@@ -14,6 +14,7 @@ export 'iterable.x.dart';
 export 'locale.x.dart';
 export 'map.x.dart';
 export 'material_state_property.x.dart';
+export 'modal_route.x.dart';
 export 'navigator.x.dart';
 export 'num.x.dart';
 export 'object.x.dart';
