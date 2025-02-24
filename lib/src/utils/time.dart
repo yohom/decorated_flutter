@@ -73,7 +73,7 @@ DateTime requireDate(
       return date;
     }
   } catch (e) {
-    L.w('解析日期出错($raw), 使用当前时间代替, 错误信息: $e');
+    L.w('[DECORATED_FLUTTER] 解析日期出错($raw), 使用当前时间代替, 错误信息: $e');
     return fallback?.call() ?? now;
   }
 }

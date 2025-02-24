@@ -94,7 +94,7 @@ class __DatePickerDialogState extends State<_DatePickerDialog> {
             minimumDate: widget.minimumDate,
             initialDateTime: _date,
             onDateTimeChanged: (date) {
-              L.d('date: $date');
+              L.d('[DECORATED_FLUTTER] date: $date');
               _date = date;
             },
           ),

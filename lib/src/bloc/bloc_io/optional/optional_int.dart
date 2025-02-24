@@ -53,7 +53,7 @@ mixin OptionalIntMixin on BaseIO<int?> {
   /// 加一个值 并发射
   int? plus([int value = 1]) {
     if (_subject.isClosed) {
-      L.w('IO在close状态下请求发送数据');
+      L.w('[DECORATED_FLUTTER] IO在close状态下请求发送数据');
       return null;
     }
 
@@ -77,7 +77,7 @@ mixin OptionalIntMixin on BaseIO<int?> {
   /// 减一个值 并发射
   int? minus([int value = 1]) {
     if (_subject.isClosed) {
-      L.w('IO在close状态下请求发送数据');
+      L.w('[DECORATED_FLUTTER] IO在close状态下请求发送数据');
       return null;
     }
 

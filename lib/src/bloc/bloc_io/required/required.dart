@@ -203,13 +203,13 @@ mixin InputMixin<T> on BaseIO<T> {
   /// 发射数据
   T? add(T data) {
     if (_subject.isClosed) {
-      L.w('[$_semantics]IO在close状态下请求发送数据');
+      L.w('[DECORATED_FLUTTER] [$_semantics]IO在close状态下请求发送数据');
       return null;
     }
 
     if (isEmpty(data) && !_acceptEmpty) {
       if (_printLog) {
-        L.w('[$_semantics]转发被拒绝! 原因: 需要非Empty值, 但是接收到Empty值');
+        L.w('[DECORATED_FLUTTER] [$_semantics]转发被拒绝! 原因: 需要非Empty值, 但是接收到Empty值');
       }
       return data;
     }
@@ -219,15 +219,15 @@ mixin InputMixin<T> on BaseIO<T> {
       // 如果是不一样的数据, 才发射新的通知,防止TabBar的addListener那种
       // 不停地发送通知(但是值又是一样)的情况
       if (!_isSame(data, latest)) {
-        if (_printLog) L.d('IO转发出[$_semantics]数据: $data');
+        if (_printLog) L.d('[DECORATED_FLUTTER] IO转发出[$_semantics]数据: $data');
         _subject.add(data);
       } else {
         if (_printLog) {
-          L.w('[$_semantics]转发被拒绝! 原因: 需要唯一, 但是新数据 ($data) 与最新值 ($latest) 相同');
+          L.w('[DECORATED_FLUTTER] [$_semantics]转发被拒绝! 原因: 需要唯一, 但是新数据 ($data) 与最新值 ($latest) 相同');
         }
       }
     } else {
-      if (_printLog) L.d('IO转发出[$_semantics]数据: $data');
+      if (_printLog) L.d('[DECORATED_FLUTTER] IO转发出[$_semantics]数据: $data');
       _subject.add(data);
     }
 
@@ -236,7 +236,7 @@ mixin InputMixin<T> on BaseIO<T> {
 
   T? addIfAbsent(T data) {
     if (_subject.isClosed) {
-      L.w('[$_semantics]IO在close状态下请求发送数据');
+      L.w('[DECORATED_FLUTTER] [$_semantics]IO在close状态下请求发送数据');
       return null;
     }
 

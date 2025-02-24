@@ -28,9 +28,9 @@ abstract class BLoC {
 
   @mustCallSuper
   void dispose() {
-    L.d('=============================================\n'
-        '$semantics closed '
-        '\n=============================================');
+    L.d('[DECORATED_FLUTTER] =============================================\n'
+        '[DECORATED_FLUTTER] $semantics closed '
+        '[DECORATED_FLUTTER] \n=============================================');
   }
 }
 
@@ -93,7 +93,7 @@ abstract class LocalBLoC extends BLoC {
       } else if (component is ChangeNotifier) {
         component.dispose();
       } else {
-        L.w('未支持自动dispose的类型 ${component.runtimeType}, 请检查代码是否有bug!');
+        L.w('[DECORATED_FLUTTER] 未支持自动dispose的类型 ${component.runtimeType}, 请检查代码是否有bug!');
       }
     }
     if (!compositeSubscription.isDisposed) compositeSubscription.dispose();
@@ -126,7 +126,7 @@ abstract class GlobalBLoC extends BLoC {
       } else if (component is ChangeNotifier) {
         component.dispose();
       } else {
-        L.w('未支持自动dispose的类型 ${component.runtimeType}, 请检查代码是否有bug!');
+        L.w('[DECORATED_FLUTTER] 未支持自动dispose的类型 ${component.runtimeType}, 请检查代码是否有bug!');
       }
     }
     if (!compositeSubscription.isDisposed) compositeSubscription.dispose();

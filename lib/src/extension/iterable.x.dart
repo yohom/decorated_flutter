@@ -215,7 +215,7 @@ extension ListX<T> on List<T> {
   /// 使用场景: 覆写了equals的类, 可以直接覆盖与之等价的对象
   void replaceItem(T element) {
     final index = indexOf(element);
-    if (index == -1) return L.w('未找到目标元素, 略过replaceEquals');
+    if (index == -1) return L.w('[DECORATED_FLUTTER] 未找到目标元素, 略过replaceEquals');
 
     replace(indexOf(element), element);
   }
@@ -300,7 +300,7 @@ extension SelectableListX<T extends Selectable> on List<T> {
   List<T> selectAtIndex(int index) {
     final target = getOrNull(index);
     if (target == null) {
-      L.w('索引 $index 处没有元素!');
+      L.w('[DECORATED_FLUTTER] 索引 $index 处没有元素!');
     } else {
       target.isSelected = true;
     }

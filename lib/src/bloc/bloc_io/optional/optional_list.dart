@@ -70,7 +70,7 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
   /// 按条件过滤, 并发射过滤后的数据
   List<T>? filterItem(bool Function(T element) test) {
     if (_subject.isClosed) {
-      L.w('IO在close状态下请求发送数据');
+      L.w('[DECORATED_FLUTTER] IO在close状态下请求发送数据');
       return null;
     }
 
@@ -100,7 +100,7 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
   /// 追加, 并发射
   T? append(T element, {bool fromHead = false}) {
     if (_subject.isClosed) {
-      L.w('IO在close状态下请求发送数据');
+      L.w('[DECORATED_FLUTTER] IO在close状态下请求发送数据');
       return null;
     }
 
@@ -128,12 +128,12 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
   /// 追加一个list, 并发射
   List<T>? appendAll(List<T> elements, {bool fromHead = false}) {
     if (_subject.isClosed) {
-      L.w('IO在close状态下请求发送数据');
+      L.w('[DECORATED_FLUTTER] IO在close状态下请求发送数据');
       return null;
     }
 
     if (elements.isEmpty && latest != null) {
-      L.d('append空列表, 略过');
+      L.d('[DECORATED_FLUTTER] append空列表, 略过');
       return latest;
     }
 
@@ -166,7 +166,7 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
   /// 替换指定index的元素, 并发射
   T? replace(int index, T element) {
     if (_subject.isClosed) {
-      L.w('IO在close状态下请求发送数据');
+      L.w('[DECORATED_FLUTTER] IO在close状态下请求发送数据');
       return null;
     }
 
@@ -177,7 +177,7 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
   /// 替换最后一个的元素, 并发射
   T? replaceLast(T element) {
     if (_subject.isClosed) {
-      L.w('IO在close状态下请求发送数据');
+      L.w('[DECORATED_FLUTTER] IO在close状态下请求发送数据');
       return null;
     }
 
@@ -195,7 +195,7 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
   /// 替换第一个的元素, 并发射
   T? replaceFirst(T element) {
     if (_subject.isClosed) {
-      L.w('IO在close状态下请求发送数据');
+      L.w('[DECORATED_FLUTTER] IO在close状态下请求发送数据');
       return null;
     }
 
@@ -208,7 +208,7 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
   /// 删除最后一个的元素, 并发射
   T? removeLast() {
     if (_subject.isClosed) {
-      L.w('IO在close状态下请求发送数据');
+      L.w('[DECORATED_FLUTTER] IO在close状态下请求发送数据');
       return null;
     }
 
@@ -222,7 +222,7 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
   /// 删除一个的元素, 并发射
   T? remove(T element) {
     if (_subject.isClosed) {
-      L.w('IO在close状态下请求发送数据');
+      L.w('[DECORATED_FLUTTER] IO在close状态下请求发送数据');
       return null;
     }
 
@@ -233,7 +233,7 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
   /// 删除一组的元素, 并发射
   Iterable<T>? removeBatch(Iterable<T> elements) {
     if (_subject.isClosed) {
-      L.w('IO在close状态下请求发送数据');
+      L.w('[DECORATED_FLUTTER] IO在close状态下请求发送数据');
       return null;
     }
 
@@ -251,7 +251,7 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
   /// 删除第一个的元素, 并发射
   T? removeFirst() {
     if (_subject.isClosed) {
-      L.w('IO在close状态下请求发送数据');
+      L.w('[DECORATED_FLUTTER] IO在close状态下请求发送数据');
       return null;
     }
 
@@ -265,7 +265,7 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
   /// 删除指定索引的元素, 并发射
   T? removeAt(int index) {
     if (_subject.isClosed) {
-      L.w('IO在close状态下请求发送数据');
+      L.w('[DECORATED_FLUTTER] IO在close状态下请求发送数据');
       return null;
     }
 
@@ -279,7 +279,7 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
   /// 对元素逐个执行操作后, 重新发射
   List<T>? forEach(ValueChanged<T> action) {
     if (_subject.isClosed) {
-      L.w('IO在close状态下请求发送数据');
+      L.w('[DECORATED_FLUTTER] IO在close状态下请求发送数据');
       return null;
     }
 
@@ -291,12 +291,12 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
   /// 对[target]进行单选操作, 如果[T]不为[Selectable]则什么都不做, 直接透传
   List<T>? select(T? target, {bool isRadio = true}) {
     if (_subject.isClosed) {
-      L.w('IO在close状态下请求发送数据');
+      L.w('[DECORATED_FLUTTER] IO在close状态下请求发送数据');
       return null;
     }
 
     if (isEmpty(latest)) {
-      L.w('当前IO数据为null, 略过选择操作');
+      L.w('[DECORATED_FLUTTER] 当前IO数据为null, 略过选择操作');
       return null;
     }
 
@@ -315,12 +315,12 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
   /// 对[index]处进行单选操作, 如果[T]不为[Selectable]则什么都不做, 直接透传
   List<T>? selectIndex(int index) {
     if (_subject.isClosed) {
-      L.w('IO在close状态下请求发送数据');
+      L.w('[DECORATED_FLUTTER] IO在close状态下请求发送数据');
       return null;
     }
 
     if (isEmpty(latest)) {
-      L.w('当前IO数据为null, 略过选择操作');
+      L.w('[DECORATED_FLUTTER] 当前IO数据为null, 略过选择操作');
       return null;
     }
 

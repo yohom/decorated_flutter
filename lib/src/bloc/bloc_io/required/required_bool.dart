@@ -34,7 +34,7 @@ mixin BoolMixin on BaseIO<bool> {
   /// 切换true/false 并发射
   bool? toggle() {
     if (_subject.isClosed) {
-      L.w('IO在close状态下请求发送数据');
+      L.w('[DECORATED_FLUTTER] IO在close状态下请求发送数据');
       return null;
     }
 

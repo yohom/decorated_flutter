@@ -139,7 +139,7 @@ mixin OptionalPageMixin<T, ARG> on OptionalListMixin<T> {
           _subject.addError(e);
         }
       } else {
-        L.d('$_semantics 没有更多数据!');
+        L.d('[DECORATED_FLUTTER] $_semantics 没有更多数据!');
       }
 
       return !_noMoreData;

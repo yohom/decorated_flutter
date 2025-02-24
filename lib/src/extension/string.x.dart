@@ -81,7 +81,7 @@ extension StringX on String {
     try {
       return num.parse(this).toInt();
     } catch (e, s) {
-      L.w('字符串 $this 解析int过程出错, 要检查一下是否业务逻辑是否有问题! $s');
+      L.w('[DECORATED_FLUTTER] 字符串 $this 解析int过程出错, 要检查一下是否业务逻辑是否有问题! $s');
       return null;
     }
   }
@@ -91,7 +91,7 @@ extension StringX on String {
       // 某些地区的数字键盘, 小数点是逗号
       return double.tryParse(replaceAll(',', '.'));
     } catch (e, s) {
-      L.w('字符串 $this 解析double过程出错, 要检查一下是否业务逻辑是否有问题!, $s');
+      L.w('[DECORATED_FLUTTER] 字符串 $this 解析double过程出错, 要检查一下是否业务逻辑是否有问题!, $s');
       return null;
     }
   }
@@ -127,7 +127,7 @@ extension StringX on String {
     try {
       return substring(leftIndex + 1, rightIndex);
     } catch (e) {
-      L.w('substringBetween过程出错, 要检查一下是否业务逻辑是否有问题!');
+      L.w('[DECORATED_FLUTTER] substringBetween过程出错, 要检查一下是否业务逻辑是否有问题!');
       return '';
     }
   }

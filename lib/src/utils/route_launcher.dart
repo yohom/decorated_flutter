@@ -13,7 +13,7 @@ class RouteLauncher {
   static Function? of(String path) {
     final result = _launchMap[path];
     if (result == null) {
-      L.w('未找到路径: $path 的启动器!');
+      L.w('[DECORATED_FLUTTER] 未找到路径: $path 的启动器!');
     }
     return result;
   }

@@ -26,7 +26,7 @@ final kIpV4Regex = RegExp(r'^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$');
 late SharedPreferences _box;
 late Box _legacyBox;
 Future<void> initDecoratedBox() async {
-  L.d('开始初始化decorated专属存储持久层');
+  L.d('[DECORATED_FLUTTER] 开始初始化decorated专属存储持久层');
   _box = await SharedPreferences.getInstance();
 
   try {
@@ -40,12 +40,12 @@ Future<void> initDecoratedBox() async {
     }
     // 迁移完成后清空遗留数据
     await _legacyBox.clear();
-    L.i('遗留数据迁移完成, 已迁移key: ${_box.getKeys()}');
+    L.i('[DECORATED_FLUTTER] 遗留数据迁移完成, 已迁移key: ${_box.getKeys()}');
   } catch (e) {
-    L.e('初始化遗留存储时出现异常, 跳过其流程: $e');
+    L.e('[DECORATED_FLUTTER] 初始化遗留存储时出现异常, 跳过其流程: $e');
   }
 
-  L.d('结束初始化decorated专属存储持久层');
+  L.d('[DECORATED_FLUTTER] 结束初始化decorated专属存储持久层');
 }
 
 SharedPreferences get gDecoratedStorage => _box;

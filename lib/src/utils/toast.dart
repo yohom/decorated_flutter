@@ -44,6 +44,6 @@ void toast(
       ).show(gNavigatorKey.currentContext!);
     }
   } else {
-    L.w('toast传入null值, 略过');
+    L.w('[DECORATED_FLUTTER] toast传入null值, 略过');
   }
 }

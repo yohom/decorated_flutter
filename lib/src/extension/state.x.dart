@@ -15,7 +15,7 @@ extension StateX on State {
         setState(cb);
       }
     } else {
-      L.w('State在销毁时后调用setState! 请检查逻辑是否正确');
+      L.w('[DECORATED_FLUTTER] State在销毁时后调用setState! 请检查逻辑是否正确');
     }
   }
 }
