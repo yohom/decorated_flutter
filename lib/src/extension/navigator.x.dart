@@ -2,8 +2,8 @@ import 'package:decorated_flutter/src/extension/route_settings.x.dart';
 import 'package:flutter/widgets.dart';
 
 extension NavigatorX on NavigatorState {
-  Future<void> clearToRoot() async {
-    await pushNamedAndRemoveUntil('/', (route) => false);
+  void clearToRoot() {
+    popUntil((route) => route.isFirst);
   }
 
   void popUntilNamed(String routeName) {

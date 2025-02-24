@@ -40,7 +40,7 @@ class _TabStyle extends AnimatedWidget {
 
   WidgetStateColor _resolveWithLabelColor(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
-    final TabBarTheme tabBarTheme = TabBarTheme.of(context);
+    final tabBarTheme = TabBarTheme.of(context);
     final Animation<double> animation = listenable as Animation<double>;
 
     // labelStyle.color (and tabBarTheme.labelStyle.color) is not considered
@@ -80,7 +80,7 @@ class _TabStyle extends AnimatedWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TabBarTheme tabBarTheme = TabBarTheme.of(context);
+    final tabBarTheme = TabBarTheme.of(context);
     final Animation<double> animation = listenable as Animation<double>;
 
     final Set<WidgetState> states = isSelected
@@ -1182,7 +1182,7 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
 
   Decoration _getIndicator(TabBarIndicatorSize indicatorSize) {
     final ThemeData theme = Theme.of(context);
-    final TabBarTheme tabBarTheme = TabBarTheme.of(context);
+    final tabBarTheme = TabBarTheme.of(context);
 
     if (widget.indicator != null) {
       return widget.indicator!;
@@ -1286,7 +1286,7 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
 
   void _initIndicatorPainter() {
     final ThemeData theme = Theme.of(context);
-    final TabBarTheme tabBarTheme = TabBarTheme.of(context);
+    final tabBarTheme = TabBarTheme.of(context);
     final TabBarIndicatorSize indicatorSize = widget.indicatorSize ??
         tabBarTheme.indicatorSize ??
         _defaults.indicatorSize!;
@@ -1534,7 +1534,7 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
     assert(debugCheckHasMaterialLocalizations(context));
     assert(_debugScheduleCheckHasValidTabsCount());
     final ThemeData theme = Theme.of(context);
-    final TabBarTheme tabBarTheme = TabBarTheme.of(context);
+    final tabBarTheme = TabBarTheme.of(context);
     final TabAlignment effectiveTabAlignment = widget.tabAlignment ??
         tabBarTheme.tabAlignment ??
         _defaults.tabAlignment!;
