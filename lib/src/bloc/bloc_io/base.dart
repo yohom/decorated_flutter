@@ -81,14 +81,14 @@ abstract class BaseIO<T> {
           final deserialized = gDecoratedStorage.getValue(_persistConfig!.key);
           // 只发射非空值
           if (deserialized == null) {
-            L.w('读取到 [$_semantics] null缓存值, 直接略过');
+            L.w('[DECORATED_FLUTTER] 读取到 [$_semantics] null缓存值, 直接略过');
             return;
           }
 
           final value = _persistConfig!.onDeserialize(deserialized);
           if (value != null) _subject.add(value);
         } catch (e, s) {
-          L.w('读取持久层数据发生异常 $e, 删除key: [${_persistConfig!.key}]\n调用栈: $s');
+          L.w('[DECORATED_FLUTTER] 读取持久层数据发生异常 $e, 删除key: [${_persistConfig!.key}]\n调用栈: $s');
           gDecoratedStorage.remove(_persistConfig!.key);
         }
       }
@@ -164,7 +164,7 @@ abstract class BaseIO<T> {
     final _resetValue = _onReset != null ? _onReset!() : _seedValue;
 
     if (_printLog) {
-      L.d('[$_semantics]事件 重置为 $_resetValue');
+      L.d('[DECORATED_FLUTTER] [$_semantics]事件 重置为 $_resetValue');
     }
 
     _subject.add(_resetValue);
@@ -193,7 +193,7 @@ abstract class BaseIO<T> {
     if (_subject.isClosed) return;
 
     if (_printLog) {
-      L.d('[$_semantics]事件 disposed ');
+      L.d('[DECORATED_FLUTTER] [$_semantics]事件 disposed ');
     }
     _subject.close();
     _isDisposed = true;
@@ -213,7 +213,7 @@ abstract class BaseIO<T> {
   void _handleUpdateMemoryData(T data) {
     latest = data;
     if (_printLog) {
-      L.d('当前 [$_semantics] latest: $latest');
+      L.d('[DECORATED_FLUTTER] 当前 [$_semantics] latest: $latest');
     }
   }
 

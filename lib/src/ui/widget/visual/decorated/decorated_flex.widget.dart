@@ -525,7 +525,8 @@ class DecoratedFlex extends StatelessWidget {
       }
     }();
     if (enableFeedback == true) {
-      if (onSecondaryTap != null) L.w('enableFeedback模式下不支持onSecondaryTap!');
+      if (onSecondaryTap != null)
+        L.w('[DECORATED_FLUTTER] enableFeedback模式下不支持onSecondaryTap!');
       result = InkWell(
         borderRadius: borderRadius,
         splashFactory: NoSplash.splashFactory,

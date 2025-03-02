@@ -33,7 +33,7 @@ BaseIO({
           : PublishSubject<T>(sync: sync) {
     _subject.listen((data) {
       latest = data;
-      L.d('当前${semantics ??= data.runtimeType.toString()} latest: $latest'
+      L.d('[DECORATED_FLUTTER] 当前${semantics ??= data.runtimeType.toString()} latest: $latest'
           '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
     });
   }

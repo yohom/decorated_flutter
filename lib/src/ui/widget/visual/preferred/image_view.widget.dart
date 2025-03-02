@@ -304,7 +304,8 @@ class ImageView extends StatelessWidget {
           placeholderBuilder: _placeholder != null ? (_) => _placeholder : null,
         );
 
-        if (logEnable) L.d('使用SvgPicture.asset: $_imagePath');
+        if (logEnable)
+          L.d('[DECORATED_FLUTTER] 使用SvgPicture.asset: $_imagePath');
       } else if (_imagePath.startsWith('/') ||
           _imagePath.startsWith('file://')) {
         result = kIsWeb // web端的文件路径使用network加载
@@ -338,7 +339,7 @@ class ImageView extends StatelessWidget {
                 errorBuilder: _errorBuilder,
                 alignment: alignment,
               );
-        if (logEnable) L.d('使用Image.file: $_imagePath');
+        if (logEnable) L.d('[DECORATED_FLUTTER] 使用Image.file: $_imagePath');
       } else {
         result = Image.asset(
           _imagePath,
@@ -355,7 +356,7 @@ class ImageView extends StatelessWidget {
           errorBuilder: _errorBuilder,
           alignment: alignment,
         );
-        if (logEnable) L.d('使用Image.asset: $_imagePath');
+        if (logEnable) L.d('[DECORATED_FLUTTER] 使用Image.asset: $_imagePath');
       }
     }
     // 网络图片
@@ -372,7 +373,8 @@ class ImageView extends StatelessWidget {
           placeholderBuilder: _placeholder != null ? (_) => _placeholder : null,
           alignment: alignment,
         );
-        if (logEnable) L.d('使用SvgPicture.network: $imageUrl');
+        if (logEnable)
+          L.d('[DECORATED_FLUTTER] 使用SvgPicture.network: $imageUrl');
       } else {
         result = kIsWeb
             ? Image.network(
@@ -412,7 +414,8 @@ class ImageView extends StatelessWidget {
                 memCacheHeight: _cacheHeight,
                 alignment: alignment,
               );
-        if (logEnable) L.d('使用CachedNetworkImage: $imageUrl');
+        if (logEnable)
+          L.d('[DECORATED_FLUTTER] 使用CachedNetworkImage: $imageUrl');
       }
     } else {
       // 如果图片地址为null的话, 那就不显示
@@ -507,7 +510,8 @@ class ImageView extends StatelessWidget {
     dynamic stackTrace,
   ) {
     final _errorWidget = errorWidget ?? globalErrorWidget;
-    if (!suppressError) L.e('显示ImageView发生错误: $error, stacktrace: $stackTrace');
+    if (!suppressError)
+      L.e('[DECORATED_FLUTTER] 显示ImageView发生错误: $error, stacktrace: $stackTrace');
     return _errorWidget ?? (kReleaseMode ? NIL : ErrorWidget(error));
   }
 }

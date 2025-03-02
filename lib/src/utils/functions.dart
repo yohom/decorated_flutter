@@ -113,29 +113,29 @@ Future<void> polling({
   while (true) {
     if (tryCount < maxTryCount) {
       tryCount++;
-      L.d('执行第$tryCount次轮询');
+      L.d('[DECORATED_FLUTTER] 执行第$tryCount次轮询');
       try {
         await task();
-        L.d('第$tryCount次轮询执行成功');
+        L.d('[DECORATED_FLUTTER] 第$tryCount次轮询执行成功');
         // 成功就马上break
         break;
       } catch (e) {
         String message = '第$tryCount次轮询失败, 错误信息: $e';
         if (whenErrorTry != null) {
-          L.d('$message 开始执行错误重试');
+          L.d('[DECORATED_FLUTTER] $message 开始执行错误重试');
           await whenErrorTry();
         } else {
-          L.d('$message 未配置错误重试, 抛出异常');
+          L.d('[DECORATED_FLUTTER] $message 未配置错误重试, 抛出异常');
           rethrow;
         }
       }
       await Future.delayed(interval);
     } else {
-      L.d('超出轮询尝试次数');
+      L.d('[DECORATED_FLUTTER] 超出轮询尝试次数');
       throw '超出轮询尝试次数';
     }
   }
-  L.d('轮询执行结束');
+  L.d('[DECORATED_FLUTTER] 轮询执行结束');
 }
 
 /// 求最大值
@@ -151,7 +151,7 @@ T minValue<T extends Comparable>(T value1, T value2) {
 /// 打印当前时间
 DateTime logTime([String? tag]) {
   final now = DateTime.now();
-  L.d('${tag != null ? '[$tag] ' : ''}当前时间戳: $now');
+  L.d('[DECORATED_FLUTTER] ${tag != null ? '[$tag] ' : ''}当前时间戳: $now');
   return now;
 }
 
@@ -206,7 +206,7 @@ Future<void> runDecoratedApp({
         await initDecoratedBox();
         await beforeApp();
       } catch (e, s) {
-        L.w('运行app前置工作出现异常, 请检查是否有bug!. $e\n $s');
+        L.w('[DECORATED_FLUTTER] 运行app前置工作出现异常, 请检查是否有bug!. $e\n $s');
       }
     }
 
@@ -216,7 +216,7 @@ Future<void> runDecoratedApp({
       try {
         await afterApp();
       } catch (e, s) {
-        L.w('运行app后置工作出现异常, 请检查是否有bug!. $e\n $s');
+        L.w('[DECORATED_FLUTTER] 运行app后置工作出现异常, 请检查是否有bug!. $e\n $s');
       }
     }
   }
@@ -226,7 +226,7 @@ Future<void> runDecoratedApp({
     if (onError != null) {
       onError.call(e, s);
     } else {
-      L.e('error: $e, stacktrace: $s');
+      L.e('[DECORATED_FLUTTER] error: $e, stacktrace: $s');
     }
   }
 
@@ -354,7 +354,7 @@ Future<void> waitFor(
   int maxAttempts = 8,
 }) async {
   for (int i = 0; i < maxAttempts; i++) {
-    L.d('第 $i 次获取登录状态');
+    L.d('[DECORATED_FLUTTER] 第 $i 次获取登录状态');
     if (await fn()) {
       break;
     } else {

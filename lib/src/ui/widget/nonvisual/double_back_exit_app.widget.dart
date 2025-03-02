@@ -40,7 +40,7 @@ class _DoubleBackExitAppState extends State<DoubleBackExitApp> {
     super.initState();
 
     _closeAppSubject.timeInterval().listen((interval) {
-      L.d('回退间隔: $interval');
+      L.d('[DECORATED_FLUTTER] 回退间隔: $interval');
       if (interval.interval < widget.duration) {
         widget.onExit();
       } else {

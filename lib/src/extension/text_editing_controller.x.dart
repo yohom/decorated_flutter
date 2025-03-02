@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 extension TextEditingControllerX on TextEditingController {
   void append(String appending, {bool distinct = false}) {
     if (distinct && text.endsWith(appending)) {
-      L.d('要求不重复添加, 直接返回');
+      L.d('[DECORATED_FLUTTER] 要求不重复添加, 直接返回');
       return;
     }
 

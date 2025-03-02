@@ -12,7 +12,7 @@ extension BuildContextX on BuildContext {
   T find<T extends BLoC>() {
     final bloc = BLoCProvider.of<T>(this);
 
-    if (bloc == null) L.w('获取不到BLoC, 看看是不是搞错作用域了?');
+    if (bloc == null) L.w('[DECORATED_FLUTTER] 获取不到BLoC, 看看是不是搞错作用域了?');
     return bloc!;
   }
 

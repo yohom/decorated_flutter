@@ -165,12 +165,12 @@ extension IntX on int {
   Duration get days => Duration(days: this);
 
   /// 左补齐
-  String padLeft(int width, [String padding = '']) {
+  String padLeft(int width, [String padding = '0']) {
     return toString().padLeft(width, padding);
   }
 
   /// 右补齐
-  String padRight(int width, [String padding = '']) {
+  String padRight(int width, [String padding = '0']) {
     return toString().padRight(width, padding);
   }
 
