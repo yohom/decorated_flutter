@@ -9,6 +9,7 @@
 - [🚀] 可点击组件增加`onHover`, `onEnter`, `onExit`;
 - [🚀] `FutureX.loading`实现改为overlay;
 - [🚀] 增加Navigator2的DecoratedApp支持;
+- [🚀] 增加`WidgetValueBuilder`的签名;
 
 ## 0.50.2
 - [🚀] `SelectableListX`增加`reset`扩展;
