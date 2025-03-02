@@ -291,7 +291,7 @@ extension SelectableListX<T extends Selectable> on List<T> {
   /// 选择第一个元素
   List<T> selectFirst() {
     if (this.isNotEmpty) {
-      first.isSelected == true;
+      first.isSelected = true;
     }
     return this;
   }
