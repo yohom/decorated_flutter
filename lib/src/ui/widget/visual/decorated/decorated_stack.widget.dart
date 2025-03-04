@@ -46,7 +46,7 @@ class DecoratedStack extends StatelessWidget {
     this.transform,
     this.animationDuration,
     this.animationCurve,
-    this.clipBehavior,
+    this.clipBehavior = Clip.none,
     this.visible,
     this.systemUiOverlayStyle,
     this.children = const [],
@@ -97,7 +97,7 @@ class DecoratedStack extends StatelessWidget {
 
   final double? aspectRatio;
 
-  final Clip? clipBehavior;
+  final Clip clipBehavior;
   final bool? visible;
   final SystemUiOverlayStyle? systemUiOverlayStyle;
 
@@ -108,7 +108,7 @@ class DecoratedStack extends StatelessWidget {
     Widget result = Stack(
       alignment: alignment ?? AlignmentDirectional.topStart,
       fit: stackFit ?? StackFit.loose,
-      clipBehavior: clipBehavior ?? Clip.none,
+      clipBehavior: clipBehavior,
       children: <Widget>[
         if (childrenZIndex == ZIndex.bottom) ...children,
         // 填满
@@ -194,12 +194,9 @@ class DecoratedStack extends StatelessWidget {
           margin: margin,
           width: width,
           height: height,
-          decoration: switch (clipBehavior) {
-            null => decoration,
-            _ => BoxDecoration(),
-          },
+          decoration: decoration,
           constraints: constraints,
-          clipBehavior: clipBehavior ?? Clip.none,
+          clipBehavior: clipBehavior,
           transform: transform,
           child: result,
         );
