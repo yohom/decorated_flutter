@@ -8,4 +8,5 @@ typedef LateInitCallback<T extends BLoC> = void Function(
     T bloc, BuildContext context);
 typedef SearchKeywordCallback<T> = bool Function(T, String keyword);
 typedef FutureCallback = Future<void> Function();
+typedef FutureValueChanged<T> = Future<void> Function(T value);
 typedef WidgetValueBuilder<T> = Widget Function(BuildContext context, T value);
