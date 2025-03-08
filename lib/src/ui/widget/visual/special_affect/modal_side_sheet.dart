@@ -80,7 +80,7 @@ class BodyWithSideSheet extends StatelessWidget {
 }
 
 class _ShrinkableSize extends StatefulWidget {
-  const _ShrinkableSize({super.key, required this.child, required this.show});
+  const _ShrinkableSize({required this.child, required this.show});
 
   /// The child of the [_ShrinkableSize] widget.
   final Widget child;

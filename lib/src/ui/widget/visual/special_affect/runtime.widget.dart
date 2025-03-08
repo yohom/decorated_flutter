@@ -66,7 +66,6 @@ class _RuntimeState extends State<Runtime> {
 /// ExpansionList的Header
 class _Header extends StatelessWidget {
   const _Header({
-    super.key,
     required this.title,
   });
 
@@ -83,7 +82,6 @@ class _Header extends StatelessWidget {
 /// ExpansionList的Body
 class _Body extends StatelessWidget {
   const _Body({
-    super.key,
     required this.ioList,
   });
 
