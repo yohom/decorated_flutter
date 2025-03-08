@@ -11,6 +11,7 @@ export 'logger/logger.dart';
 export 'misc.dart';
 export 'navigator.dart';
 export 'objects.dart';
+export 'recase.dart';
 export 'retry.dart';
 export 'route_launcher.dart';
 export 'time.dart';
