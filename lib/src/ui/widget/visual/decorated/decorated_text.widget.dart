@@ -42,6 +42,9 @@ class DecoratedText extends StatelessWidget {
     this.isSelectable = false,
     this.alignment,
     this.paragraphPadding,
+    this.scrollable = false,
+    this.scrollDirection,
+    this.scrollPadding,
   })  : _stream = null,
         initialData = null;
 
@@ -85,6 +88,9 @@ class DecoratedText extends StatelessWidget {
     this.isSelectable = false,
     this.alignment,
     this.paragraphPadding,
+    this.scrollable = false,
+    this.scrollDirection,
+    this.scrollPadding,
   }) : _data = null;
 
   final Stream<String>? _stream;
@@ -131,6 +137,9 @@ class DecoratedText extends StatelessWidget {
   final Alignment? alignment;
   final bool isSelectable;
   final double? paragraphPadding;
+  final bool scrollable;
+  final Axis? scrollDirection;
+  final EdgeInsets? scrollPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -182,6 +191,14 @@ class DecoratedText extends StatelessWidget {
             initialData: initialData,
             builder: (_, snapshot) => _buildText(snapshot.data ?? ''),
           );
+
+    if (scrollable) {
+      result = SingleChildScrollView(
+        padding: scrollPadding,
+        scrollDirection: scrollDirection ?? Axis.vertical,
+        child: result,
+      );
+    }
 
     if (rightWidget != null || leftWidget != null) {
       result = Row(
