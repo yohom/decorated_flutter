@@ -62,6 +62,7 @@ export 'widget/visual/special_affect/dash_line.widget.dart';
 export 'widget/visual/special_affect/dot_indicator.widget.dart';
 export 'widget/visual/special_affect/edge_fade.widget.dart';
 export 'widget/visual/special_affect/gradient_button.widget.dart';
+export 'widget/visual/special_affect/keyboard_height_builder.widget.dart';
 export 'widget/visual/special_affect/modal_side_sheet.dart';
 export 'widget/visual/special_affect/runtime.widget.dart';
 export 'widget/visual/special_affect/show_more_text.widget.dart';

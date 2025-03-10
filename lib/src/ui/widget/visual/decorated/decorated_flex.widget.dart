@@ -77,6 +77,7 @@ class DecoratedRow extends DecoratedFlex {
     super.childrenFlex,
     super.cursor,
     super.dividerThemeData,
+    super.clipOverflow,
     super.topDividerConfig,
     super.children = const [],
   }) : super(direction: Axis.horizontal);
@@ -157,6 +158,7 @@ class DecoratedColumn extends DecoratedFlex {
     super.reverse,
     super.childrenFlex,
     super.cursor,
+    super.clipOverflow,
     super.dividerThemeData,
     super.topDividerConfig,
     super.children = const [],
@@ -240,6 +242,7 @@ class DecoratedFlex extends StatelessWidget {
     this.cursor,
     this.dividerThemeData,
     this.topDividerConfig,
+    this.clipOverflow,
     this.children = const [],
   });
 
@@ -388,6 +391,9 @@ class DecoratedFlex extends StatelessWidget {
   /// 顶部分隔线
   final TopDividerConfig? topDividerConfig;
 
+  /// 是否剪裁掉溢出部分
+  final bool? clipOverflow;
+
   /// 子元素
   final List<Widget> children;
 
@@ -442,6 +448,10 @@ class DecoratedFlex extends StatelessWidget {
       verticalDirection: verticalDirection ?? VerticalDirection.down,
       children: _children,
     );
+
+    if (clipOverflow == true) {
+      result = ClipRect(child: result);
+    }
 
     if (autofillGroup == true) {
       result = AutofillGroup(child: result);
@@ -525,8 +535,9 @@ class DecoratedFlex extends StatelessWidget {
       }
     }();
     if (enableFeedback == true) {
-      if (onSecondaryTap != null)
+      if (onSecondaryTap != null) {
         L.w('[DECORATED_FLUTTER] enableFeedback模式下不支持onSecondaryTap!');
+      }
       result = InkWell(
         borderRadius: borderRadius,
         splashFactory: NoSplash.splashFactory,
