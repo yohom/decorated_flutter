@@ -258,15 +258,11 @@ class DecoratedText extends StatelessWidget {
     }
 
     if (onPressed != null || onLongPressed != null) {
-      result = MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: GestureDetector(
-          behavior: behavior ?? HitTestBehavior.opaque,
-          onTap: onPressed != null ? () => onPressed!(context) : null,
-          onLongPress:
-              onLongPressed != null ? () => onLongPressed!(context) : null,
-          child: result,
-        ),
+      result = InkWell(
+        onTap: onPressed != null ? () => onPressed!(context) : null,
+        onLongPress:
+            onLongPressed != null ? () => onLongPressed!(context) : null,
+        child: result,
       );
     }
 
