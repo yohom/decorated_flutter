@@ -35,10 +35,10 @@ class _SpringContainerState extends State<SpringContainer> {
 
   @override
   Widget build(BuildContext context) {
-    const duration = Duration(milliseconds: 100);
+    const duration = Duration(milliseconds: 200);
     return TweenAnimationBuilder<double>(
       duration: duration,
-      curve: Curves.easeOut,
+      curve: Curves.decelerate,
       builder: (BuildContext context, value, Widget? child) {
         return Transform.scale(
           scale: value,
@@ -78,6 +78,11 @@ class _SpringContainerState extends State<SpringContainer> {
             widget.onPressed(context);
           },
           onTapCancel: () {
+            setState(() {
+              _pressed = false;
+            });
+          },
+          onLongPressMoveUpdate: (details) {
             setState(() {
               _pressed = false;
             });
