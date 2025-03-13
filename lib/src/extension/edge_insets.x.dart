@@ -4,11 +4,9 @@ import 'package:flutter/cupertino.dart';
 extension EdgeInsetsX on EdgeInsets {
   EdgeInsets withSafeArea(
     BuildContext context, {
-    SafeAreaConfig? config,
+    SafeAreaConfig config = const SafeAreaConfig(),
   }) {
-    if (config == null) return this;
-
-    final paddingData = MediaQuery.viewPaddingOf(context);
+    final paddingData = MediaQuery.paddingOf(context);
     return copyWith(
       left: left + (config.left == true ? paddingData.left : 0),
       top: top + (config.top == true ? paddingData.top : 0),
