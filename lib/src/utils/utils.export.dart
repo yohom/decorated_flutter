@@ -2,6 +2,7 @@ export 'alias.dart';
 export 'chinese_font.dart';
 export 'circular_buffer.dart';
 export 'codec.dart';
+export 'coord_convert.dart';
 export 'empty_util.dart';
 export 'enums.dart';
 export 'faker/faker.dart';
