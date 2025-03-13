@@ -457,6 +457,16 @@ class DecoratedFlex extends StatelessWidget {
       result = AutofillGroup(child: result);
     }
 
+    if (safeArea != null && safeArea!.inner) {
+      result = SafeArea(
+        top: safeArea?.top ?? true,
+        bottom: safeArea?.bottom ?? true,
+        left: safeArea?.left ?? true,
+        right: safeArea?.right ?? true,
+        child: result,
+      );
+    }
+
     if (topRight != null) {
       result = Stack(children: <Widget>[
         result,
@@ -478,16 +488,8 @@ class DecoratedFlex extends StatelessWidget {
         result = AnimatedContainer(
           duration: animationDuration!,
           curve: animationCurve ?? Curves.linear,
-          padding: switch (safeArea) {
-            SafeAreaConfig(inner: true) =>
-              padding?.withSafeArea(context, config: safeArea),
-            _ => padding,
-          },
-          margin: switch (safeArea) {
-            SafeAreaConfig(inner: false) =>
-              margin?.withSafeArea(context, config: safeArea),
-            _ => margin,
-          },
+          padding: padding,
+          margin: margin,
           width: width,
           height: height,
           color: color,
@@ -500,16 +502,8 @@ class DecoratedFlex extends StatelessWidget {
         );
       } else {
         result = Container(
-          padding: switch (safeArea) {
-            SafeAreaConfig(inner: true) => (padding ?? EdgeInsets.zero)
-                .withSafeArea(context, config: safeArea),
-            _ => padding,
-          },
-          margin: switch (safeArea) {
-            SafeAreaConfig(inner: false) => (margin ?? EdgeInsets.zero)
-                .withSafeArea(context, config: safeArea),
-            _ => margin,
-          },
+          padding: padding,
+          margin: margin,
           width: width,
           height: height,
           color: color,
@@ -621,6 +615,16 @@ class DecoratedFlex extends StatelessWidget {
 
     if (repaintBoundaryKey != null) {
       result = RepaintBoundary(key: repaintBoundaryKey, child: result);
+    }
+
+    if (safeArea != null && !safeArea!.inner) {
+      result = SafeArea(
+        top: safeArea?.top ?? true,
+        bottom: safeArea?.bottom ?? true,
+        left: safeArea?.left ?? true,
+        right: safeArea?.right ?? true,
+        child: result,
+      );
     }
 
     if (scrollable == true) {

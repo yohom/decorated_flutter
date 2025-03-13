@@ -52,8 +52,8 @@ class DecoratedStack extends StatelessWidget {
     this.children = const [],
   });
 
-  final EdgeInsets? padding;
-  final EdgeInsets? margin;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
   final BoxDecoration? decoration;
   final BoxDecoration? foregroundDecoration;
   final BoxConstraints? constraints;
@@ -151,6 +151,16 @@ class DecoratedStack extends StatelessWidget {
       result = AspectRatio(aspectRatio: aspectRatio!, child: result);
     }
 
+    if (safeArea != null && safeArea!.inner) {
+      result = SafeArea(
+        top: safeArea?.top ?? true,
+        bottom: safeArea?.bottom ?? true,
+        left: safeArea?.left ?? true,
+        right: safeArea?.right ?? true,
+        child: result,
+      );
+    }
+
     if (textStyle != null) {
       result = DefaultTextStyle(style: textStyle!, child: result);
     }
@@ -168,16 +178,8 @@ class DecoratedStack extends StatelessWidget {
           duration: animationDuration!,
           foregroundDecoration: foregroundDecoration,
           curve: animationCurve ?? Curves.linear,
-          padding: switch (safeArea) {
-            SafeAreaConfig(inner: true) => (padding ?? EdgeInsets.zero)
-                .withSafeArea(context, config: safeArea),
-            _ => padding,
-          },
-          margin: switch (safeArea) {
-            SafeAreaConfig(inner: false) => (margin ?? EdgeInsets.zero)
-                .withSafeArea(context, config: safeArea),
-            _ => margin,
-          },
+          padding: padding,
+          margin: margin,
           width: width,
           height: height,
           decoration: decoration,
@@ -187,17 +189,9 @@ class DecoratedStack extends StatelessWidget {
         );
       } else {
         result = Container(
-          padding: switch (safeArea) {
-            SafeAreaConfig(inner: true) => (padding ?? EdgeInsets.zero)
-                .withSafeArea(context, config: safeArea),
-            _ => padding,
-          },
-          margin: switch (safeArea) {
-            SafeAreaConfig(inner: false) => (margin ?? EdgeInsets.zero)
-                .withSafeArea(context, config: safeArea),
-            _ => margin,
-          },
+          padding: padding,
           foregroundDecoration: foregroundDecoration,
+          margin: margin,
           width: width,
           height: height,
           decoration: decoration,
@@ -234,6 +228,16 @@ class DecoratedStack extends StatelessWidget {
           onHorizontalDragEnd: onHorizontalDragEnd,
           child: result,
         ),
+      );
+    }
+
+    if (safeArea != null && !safeArea!.inner) {
+      result = SafeArea(
+        top: safeArea?.top ?? true,
+        bottom: safeArea?.bottom ?? true,
+        left: safeArea?.left ?? true,
+        right: safeArea?.right ?? true,
+        child: result,
       );
     }
 

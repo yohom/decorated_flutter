@@ -1,4 +1,3 @@
-import 'package:decorated_flutter/src/extension/extension.export.dart';
 import 'package:decorated_flutter/src/model/model.export.dart';
 import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:flutter/material.dart';
@@ -98,10 +97,10 @@ class DecoratedText extends StatelessWidget {
   final String? initialData;
 
   /// 内边距
-  final EdgeInsets? padding;
+  final EdgeInsetsGeometry? padding;
 
   /// 外边距
-  final EdgeInsets? margin;
+  final EdgeInsetsGeometry? margin;
 
   /// 作用于Container的decoration
   final BoxDecoration? decoration;
@@ -237,21 +236,23 @@ class DecoratedText extends StatelessWidget {
       result = Container(
         width: width,
         height: height,
-        padding: switch (safeArea) {
-          SafeAreaConfig(inner: true) => (padding ?? EdgeInsets.zero)
-              .withSafeArea(context, config: safeArea),
-          _ => padding,
-        },
-        margin: switch (safeArea) {
-          SafeAreaConfig(inner: false) =>
-            (margin ?? EdgeInsets.zero).withSafeArea(context, config: safeArea),
-          _ => margin,
-        },
+        margin: margin,
+        padding: padding,
         decoration: decoration,
         foregroundDecoration: foregroundDecoration,
         constraints: constraints,
         transform: transform,
         alignment: alignment ?? (center == true ? Alignment.center : null),
+        child: result,
+      );
+    }
+
+    if (safeArea != null) {
+      result = SafeArea(
+        top: safeArea?.top ?? true,
+        bottom: safeArea?.bottom ?? true,
+        left: safeArea?.left ?? true,
+        right: safeArea?.right ?? true,
         child: result,
       );
     }
