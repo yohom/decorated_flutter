@@ -49,7 +49,9 @@ extension FutureX<T> on Future<T> {
 
     _loadingStreamController.add(true);
 
-    final overlay = Overlay.of(context, rootOverlay: true);
+    final overlay =
+        Overlay.maybeOf(context, rootOverlay: true) ?? gNavigator.overlay;
+    L.w('[DECORATED_FLUTTER] 无法获取到有效的Overlay! 请检查Widget树结构!');
     final theme = Theme.of(context);
     final controller = AnimationController(
       duration: const Duration(milliseconds: 128),
@@ -93,7 +95,7 @@ extension FutureX<T> on Future<T> {
           );
         },
       );
-      overlay.insert(_loadingEntry!);
+      overlay?.insert(_loadingEntry!);
       controller.forward();
     }
 
