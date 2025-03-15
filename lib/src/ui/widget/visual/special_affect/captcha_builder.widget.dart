@@ -79,7 +79,6 @@ class _CaptchaBuilderState extends State<CaptchaBuilder> {
               child: widget.retryBuilder(context),
             );
           case CaptchaState.init:
-          default:
             return GestureDetector(
               onTap: () => widget
                   .onFetchCaptcha(context)

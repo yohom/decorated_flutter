@@ -1,7 +1,6 @@
 export 'animation/fade_slide.transition.dart';
 export 'animation/show_up.transition.dart';
 export 'dialog/date.dialog.dart';
-export 'dialog/popup_window.dialog.dart';
 export 'misc/uri_builder.dart';
 export 'route/custom_material.route.dart';
 export 'route/decorated_route.route.dart';
@@ -62,6 +61,7 @@ export 'widget/visual/special_affect/dash_line.widget.dart';
 export 'widget/visual/special_affect/dot_indicator.widget.dart';
 export 'widget/visual/special_affect/edge_fade.widget.dart';
 export 'widget/visual/special_affect/gradient_button.widget.dart';
+export 'widget/visual/special_affect/keyboard_height_builder.widget.dart';
 export 'widget/visual/special_affect/modal_side_sheet.dart';
 export 'widget/visual/special_affect/runtime.widget.dart';
 export 'widget/visual/special_affect/show_more_text.widget.dart';
