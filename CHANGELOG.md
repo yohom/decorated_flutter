@@ -1,3 +1,10 @@
+## 0.50.4
+- [🚀] 增加`CoordConvert`, 用于坐标系转换;
+- [🚀] `SpringContainer`点击效果优化;
+- [🚀] `DecoratedFlex`增加`clipOverflow`参数;
+- [🚀] 增加`recase`;
+- [🚀] `DecoratedText`增加`scrollable`参数;
+
 ## 0.50.3
 - [🚀] `ImageView`在处理web文件路径时, 做兼容处理;
 - [🚀] `ImageView`增加`alignment`参数;
