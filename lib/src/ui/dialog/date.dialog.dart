@@ -31,7 +31,6 @@ Future<DateTime?> showDateDialog(
 
 class _DatePickerDialog extends StatefulWidget {
   const _DatePickerDialog({
-    super.key,
     this.initialDateTime,
     this.maximumDate,
     this.minimumDate,

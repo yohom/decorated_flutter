@@ -30,7 +30,6 @@ class PreferredTabController extends StatelessWidget {
 
 class _ChildWrapper extends StatefulWidget {
   const _ChildWrapper({
-    super.key,
     required this.notifier,
     required this.onTabChanged,
     required this.child,

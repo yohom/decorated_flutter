@@ -1,3 +1,6 @@
+analyzer:
+  errors:
+    deprecated_member_use: ignore
 include: package:flutter_lints/flutter.yaml
 
 linter:
