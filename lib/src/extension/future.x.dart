@@ -51,7 +51,9 @@ extension FutureX<T> on Future<T> {
 
     final overlay =
         Overlay.maybeOf(context, rootOverlay: true) ?? gNavigator.overlay;
-    L.w('[DECORATED_FLUTTER] 无法获取到有效的Overlay! 请检查Widget树结构!');
+    if (overlay == null) {
+      L.w('[DECORATED_FLUTTER] 无法获取到有效的Overlay! 请检查Widget树结构!');
+    }
     final theme = Theme.of(context);
     final controller = AnimationController(
       duration: const Duration(milliseconds: 128),
