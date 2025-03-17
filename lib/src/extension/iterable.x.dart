@@ -257,6 +257,26 @@ extension ListX<T> on List<T> {
     return this[nextIndex];
   }
 
+  T? nextOfOrNull(T element) {
+    final index = indexOf(element);
+    try {
+      return this[index];
+    } catch (e) {
+      L.w('[DECORATED_FLUTTER] 获取后一个元素时出现异常, 返回null');
+      return null;
+    }
+  }
+
+  T? previousOfOrNull(T element) {
+    final index = indexOf(element);
+    try {
+      return this[index - 1];
+    } catch (e) {
+      L.w('[DECORATED_FLUTTER] 获取前一个元素时出现异常, 返回null');
+      return null;
+    }
+  }
+
   T nextOfIndex(int index) {
     final nextIndex = min(length - 1, index + 1);
     return this[nextIndex];
