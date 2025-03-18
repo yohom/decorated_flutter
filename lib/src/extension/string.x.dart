@@ -168,6 +168,11 @@ extension StringX on String {
     return '${this[0].toLowerCase()}${substring(1)}';
   }
 
+  /// 行数
+  int get lineCount {
+    return split('\n').length;
+  }
+
   Color? toColor() {
     try {
       if (startsWith('#')) {
