@@ -4,6 +4,7 @@
 - [🚀] `DecoratedFlex`增加`clipOverflow`参数;
 - [🚀] 增加`recase`;
 - [🚀] `DecoratedText`增加`scrollable`参数;
+- [🚀] 增加`previousOfOrNull`和n`extOfOrNull`扩展;
 
 ## 0.50.3
 - [🚀] `ImageView`在处理web文件路径时, 做兼容处理;
