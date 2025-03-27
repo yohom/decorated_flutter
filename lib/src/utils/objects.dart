@@ -12,7 +12,7 @@ final dynamic anyObject = Object();
 const anyString = '';
 
 final gNavigatorKey = GlobalKey<NavigatorState>();
-final gNavigator = gNavigatorKey.currentState!;
+NavigatorState get gNavigator => gNavigatorKey.currentState!;
 
 final kEmailRegex = RegExp(
     r"""([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?)+""");

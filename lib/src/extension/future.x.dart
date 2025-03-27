@@ -51,7 +51,9 @@ extension FutureX<T> on Future<T> {
 
     final overlay =
         Overlay.maybeOf(context, rootOverlay: true) ?? gNavigator.overlay;
-    L.w('[DECORATED_FLUTTER] 无法获取到有效的Overlay! 请检查Widget树结构!');
+    if (overlay == null) {
+      L.w('[DECORATED_FLUTTER] 无法获取到有效的Overlay! 请检查Widget树结构!');
+    }
     final theme = Theme.of(context);
     final controller = AnimationController(
       duration: const Duration(milliseconds: 128),
@@ -61,42 +63,54 @@ extension FutureX<T> on Future<T> {
         Tween<double>(begin: 0.0, end: 1.0).animate(controller);
 
     void __pop() {
-      controller.reverse().then((_) {
+      controller.reverse().whenComplete(() {
         _loadingEntry?.remove();
         _loadingEntry = null;
       });
     }
 
     if (modal) {
+      if (_loadingEntry?.mounted == true) {
+        L.i('[DECORATED_FLUTTER] 当前已在Loading中, 跳过此次Loading请求');
+        return this;
+      }
+
       final text = loadingText ?? defaultLoadingText;
       final isCancelable = cancelable ?? loadingCancelable;
       final loadingWidget =
           loadingWidgetBuilder?.call(context, text) ?? ModalLoading(text);
-      _loadingEntry = OverlayEntry(
+      _loadingEntry ??= OverlayEntry(
         builder: (context) {
           return Theme(
             data: theme,
-            child: AnimatedBuilder(
-              animation: opacityAnimation,
-              child: PopScope(
-                canPop: isCancelable,
-                child: GestureDetector(
-                  onTap: isCancelable ? __pop : null,
-                  child: loadingWidget,
+            child: RepaintBoundary(
+              child: AnimatedBuilder(
+                animation: opacityAnimation,
+                child: PopScope(
+                  canPop: isCancelable,
+                  child: GestureDetector(
+                    onTap: isCancelable ? __pop : null,
+                    child: loadingWidget,
+                  ),
                 ),
+                builder: (context, child) {
+                  return Opacity(
+                    opacity: opacityAnimation.value,
+                    child: child,
+                  );
+                },
               ),
-              builder: (context, child) {
-                return Opacity(
-                  opacity: opacityAnimation.value,
-                  child: child,
-                );
-              },
             ),
           );
         },
       );
-      overlay?.insert(_loadingEntry!);
-      controller.forward();
+
+      try {
+        overlay?.insert(_loadingEntry!);
+        controller.forward();
+      } catch (e) {
+        L.w('[DECORATED_FLUTTER] Loading时出现异常, 跳过此次Loading请求');
+      }
     }
 
     return timeout(timeLimit ?? defaultTimeLimit).whenComplete(() {
