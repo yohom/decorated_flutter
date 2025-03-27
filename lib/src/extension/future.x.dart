@@ -83,21 +83,23 @@ extension FutureX<T> on Future<T> {
         builder: (context) {
           return Theme(
             data: theme,
-            child: AnimatedBuilder(
-              animation: opacityAnimation,
-              child: PopScope(
-                canPop: isCancelable,
-                child: GestureDetector(
-                  onTap: isCancelable ? __pop : null,
-                  child: loadingWidget,
+            child: RepaintBoundary(
+              child: AnimatedBuilder(
+                animation: opacityAnimation,
+                child: PopScope(
+                  canPop: isCancelable,
+                  child: GestureDetector(
+                    onTap: isCancelable ? __pop : null,
+                    child: loadingWidget,
+                  ),
                 ),
+                builder: (context, child) {
+                  return Opacity(
+                    opacity: opacityAnimation.value,
+                    child: child,
+                  );
+                },
               ),
-              builder: (context, child) {
-                return Opacity(
-                  opacity: opacityAnimation.value,
-                  child: child,
-                );
-              },
             ),
           );
         },

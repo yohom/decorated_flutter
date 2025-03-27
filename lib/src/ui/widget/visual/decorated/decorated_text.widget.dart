@@ -258,7 +258,8 @@ class DecoratedText extends StatelessWidget {
     }
 
     if (onPressed != null || onLongPressed != null) {
-      result = InkWell(
+      result = GestureDetector(
+        behavior: behavior ?? HitTestBehavior.opaque,
         onTap: onPressed != null ? () => onPressed!(context) : null,
         onLongPress:
             onLongPressed != null ? () => onLongPressed!(context) : null,
