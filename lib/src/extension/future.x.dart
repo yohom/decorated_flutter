@@ -108,8 +108,8 @@ extension FutureX<T> on Future<T> {
       try {
         overlay?.insert(_loadingEntry!);
         controller.forward();
-      } catch (e) {
-        L.w('[DECORATED_FLUTTER] Loading时出现异常, 跳过此次Loading请求');
+      } catch (e, s) {
+        L.w('[DECORATED_FLUTTER] Loading时出现异常, 跳过此次Loading请求, 错误信息: $e, 堆栈信息: $s');
       }
     }
 
