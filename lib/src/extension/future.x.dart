@@ -70,7 +70,7 @@ extension FutureX<T> on Future<T> {
     }
 
     if (modal) {
-      if (_loadingEntry?.mounted == true) {
+      if (_loadingEntry != null) {
         L.i('[DECORATED_FLUTTER] 当前已在Loading中, 跳过此次Loading请求');
         return this;
       }
