@@ -120,16 +120,20 @@ abstract class GlobalBLoC extends BLoC {
 
   @override
   void dispose() {
-    for (final component in disposeBag) {
-      if (component is BaseIO) {
-        component.dispose();
-      } else if (component is ChangeNotifier) {
-        component.dispose();
-      } else {
-        L.w('[DECORATED_FLUTTER] 未支持自动dispose的类型 ${component.runtimeType}, 请检查代码是否有bug!');
+    try {
+      for (final component in disposeBag) {
+        if (component is BaseIO) {
+          component.dispose();
+        } else if (component is ChangeNotifier) {
+          component.dispose();
+        } else {
+          L.w('[DECORATED_FLUTTER] 未支持自动dispose的类型 ${component.runtimeType}, 请检查代码是否有bug!');
+        }
       }
+      if (!compositeSubscription.isDisposed) compositeSubscription.dispose();
+    } catch (e, s) {
+      L.w('dispose过程出现异常: $e, $s');
     }
-    if (!compositeSubscription.isDisposed) compositeSubscription.dispose();
     super.dispose();
   }
 }
