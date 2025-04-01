@@ -205,6 +205,13 @@ extension ListX<T> on List<T> {
     replaceRange(index, index + 1, [element]);
   }
 
+  void replaceWhere(bool Function(T element) test, T element) {
+    final index = indexWhere(test);
+    if (index == -1) return L.w('[DECORATED_FLUTTER] 未找到目标元素, 略过replaceWhere');
+
+    replace(index, element);
+  }
+
   @Deprecated('统一语义, 使用replaceItem代替')
   void replaceEquals(T element) {
     replaceItem(element);
