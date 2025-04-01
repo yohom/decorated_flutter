@@ -205,11 +205,26 @@ extension ListX<T> on List<T> {
     replaceRange(index, index + 1, [element]);
   }
 
-  void replaceWhere(bool Function(T element) test, T element) {
+  void replaceWhere(
+    bool Function(T element) test,
+    T element, {
+    bool appendIfAbsent = false,
+  }) {
     final index = indexWhere(test);
-    if (index == -1) return L.w('[DECORATED_FLUTTER] 未找到目标元素, 略过replaceWhere');
+    if (index == -1) {
+      if (appendIfAbsent) {
+        add(element);
+        return L.w('[DECORATED_FLUTTER] 未找到目标元素, 指定添加到末尾');
+      } else {
+        return L.w('[DECORATED_FLUTTER] 未找到目标元素, 略过replaceWhere');
+      }
+    }
 
     replace(index, element);
+  }
+
+  bool containsWhere(bool Function(T element) test) {
+    return indexWhere(test) != -1;
   }
 
   @Deprecated('统一语义, 使用replaceItem代替')
