@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:decorated_flutter/src/extension/extension.export.dart';
+import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 
 class Capturer extends StatefulWidget {
@@ -29,7 +29,7 @@ class Capturer extends StatefulWidget {
 }
 
 class _CapturerState extends State<Capturer> {
-  List<(GlobalKey, Widget)> _captureLayer = [];
+  Map<GlobalKey, Widget> _captureLayer = {};
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +37,8 @@ class _CapturerState extends State<Capturer> {
       child: Stack(
         children: [
           if (_captureLayer.isNotEmpty)
-            for (final item in _captureLayer)
-              RepaintBoundary(key: item.$1, child: item.$2),
+            for (final item in _captureLayer.entries)
+              RepaintBoundary(key: item.key, child: item.value),
           if (widget.child case Widget child) child,
         ],
       ),
@@ -50,23 +50,21 @@ class _CapturerState extends State<Capturer> {
     List<Widget> widgetList, {
     Duration? delay,
   }) async {
+    await waitFor(message: '截图', () => _captureLayer.isEmpty);
+
     // 先在界面上绘制出要截图的内容
     setState(() {
-      _captureLayer = [
-        for (final item in widgetList) (GlobalKey(), item),
-      ];
+      _captureLayer = {
+        for (final item in widgetList) GlobalKey(): item,
+      };
     });
 
-    final completer = Completer<List<Uint8List>>();
-    // 延迟进行截图
-    Future.delayed(delay ?? const Duration(milliseconds: 64), () {
-      _captureLayer
-          .map((it) => it.$1.capture())
-          .wait()
-          .then((value) => value.whereNotNull())
-          .then(completer.complete);
-    });
-
-    return completer.future;
+    await Future.delayed(delay ?? const Duration(milliseconds: 64));
+    return _captureLayer.keys
+        .map((it) => it.capture())
+        .wait()
+        .then((value) => value.whereNotNull())
+        // 完成后清空内容, 给下次截图使用
+        .whenComplete(() => _captureLayer.clear());
   }
 }

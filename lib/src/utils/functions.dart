@@ -352,9 +352,10 @@ Future<void> waitFor(
   FutureOr<bool> Function() fn, {
   Duration delayFactor = const Duration(milliseconds: 200),
   int maxAttempts = 8,
+  String message = '等待',
 }) async {
   for (int i = 0; i < maxAttempts; i++) {
-    L.d('[DECORATED_FLUTTER] 第 $i 次获取登录状态');
+    L.d('[DECORATED_FLUTTER] 第 $i 次获取 $message 状态');
     if (await fn()) {
       break;
     } else {
