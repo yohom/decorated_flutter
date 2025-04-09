@@ -7,6 +7,7 @@ class BackGestureDetector extends StatelessWidget {
     required this.child,
     this.onBack,
     this.velocityThreshold = 500,
+    this.behavior = HitTestBehavior.opaque,
   });
 
   /// 是否开启
@@ -17,6 +18,8 @@ class BackGestureDetector extends StatelessWidget {
 
   /// 触发返回的速度阈值 单位 pixelsPerSecond.dx
   final int velocityThreshold;
+
+  final HitTestBehavior behavior;
   final Widget child;
 
   @override
@@ -31,6 +34,7 @@ class BackGestureDetector extends StatelessWidget {
             bottom: 0,
             width: 64,
             child: GestureDetector(
+              behavior: behavior,
               onPanEnd: (details) {
                 if (details.velocity.pixelsPerSecond.dx > velocityThreshold) {
                   if (onBack != null) {
