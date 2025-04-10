@@ -45,6 +45,7 @@ class DecoratedText extends StatelessWidget {
     this.scrollable = false,
     this.scrollDirection,
     this.scrollPadding,
+    this.cursor,
   })  : _stream = null,
         initialData = null;
 
@@ -91,6 +92,7 @@ class DecoratedText extends StatelessWidget {
     this.scrollable = false,
     this.scrollDirection,
     this.scrollPadding,
+    this.cursor,
   }) : _data = null;
 
   final Stream<String>? _stream;
@@ -140,6 +142,7 @@ class DecoratedText extends StatelessWidget {
   final bool scrollable;
   final Axis? scrollDirection;
   final EdgeInsets? scrollPadding;
+  final MouseCursor? cursor;
 
   @override
   Widget build(BuildContext context) {
@@ -258,12 +261,15 @@ class DecoratedText extends StatelessWidget {
     }
 
     if (onPressed != null || onLongPressed != null) {
-      result = GestureDetector(
-        behavior: behavior ?? HitTestBehavior.opaque,
-        onTap: onPressed != null ? () => onPressed!(context) : null,
-        onLongPress:
-            onLongPressed != null ? () => onLongPressed!(context) : null,
-        child: result,
+      result = MouseRegion(
+        cursor: cursor ?? SystemMouseCursors.click,
+        child: GestureDetector(
+          behavior: behavior ?? HitTestBehavior.opaque,
+          onTap: onPressed != null ? () => onPressed!(context) : null,
+          onLongPress:
+              onLongPressed != null ? () => onLongPressed!(context) : null,
+          child: result,
+        ),
       );
     }
 
