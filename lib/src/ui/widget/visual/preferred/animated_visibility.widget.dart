@@ -1,4 +1,3 @@
-import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 
 class AnimatedVisibility extends StatelessWidget {
@@ -12,7 +11,7 @@ class AnimatedVisibility extends StatelessWidget {
     this.clipBehavior = Clip.hardEdge,
     this.curve = Curves.ease,
     required this.child,
-    this.placeholder = NIL,
+    this.placeholder = const SizedBox(width: double.infinity, height: 0),
   }) : visibleStream = null;
 
   const AnimatedVisibility.reactive(
@@ -26,7 +25,7 @@ class AnimatedVisibility extends StatelessWidget {
     this.clipBehavior = Clip.hardEdge,
     this.curve = Curves.ease,
     required this.child,
-    this.placeholder = NIL,
+    this.placeholder = const SizedBox(width: double.infinity, height: 0),
   }) : visible = initialData;
 
   final bool visible;
