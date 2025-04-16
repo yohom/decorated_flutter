@@ -1,3 +1,6 @@
+## 0.50.5
+- [🚀] `BackGestureDetector`增加`width`参数;
+
 ## 0.50.4
 - [🚀] 增加`CoordConvert`, 用于坐标系转换;
 - [🚀] `SpringContainer`点击效果优化;
