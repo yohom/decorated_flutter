@@ -28,9 +28,9 @@ abstract class BLoC {
 
   @mustCallSuper
   void dispose() {
-    L.d('[DECORATED_FLUTTER] =============================================\n'
+    L.d('=============================================\n'
         '[DECORATED_FLUTTER] $semantics closed '
-        '[DECORATED_FLUTTER] \n=============================================');
+        '\n=============================================');
   }
 }
 
@@ -132,7 +132,7 @@ abstract class GlobalBLoC extends BLoC {
       }
       if (!compositeSubscription.isDisposed) compositeSubscription.dispose();
     } catch (e, s) {
-      L.w('dispose过程出现异常: $e, $s');
+      L.w('[DECORATED_FLUTTER] dispose过程出现异常: $e, $s');
     }
     super.dispose();
   }

@@ -6,6 +6,7 @@ class BackGestureDetector extends StatelessWidget {
     this.enabled = true,
     required this.child,
     this.onBack,
+    this.width = 24,
     this.velocityThreshold = 500,
     this.behavior = HitTestBehavior.opaque,
   });
@@ -20,6 +21,7 @@ class BackGestureDetector extends StatelessWidget {
   final int velocityThreshold;
 
   final HitTestBehavior behavior;
+  final double width;
   final Widget child;
 
   @override
@@ -32,7 +34,7 @@ class BackGestureDetector extends StatelessWidget {
             left: 0,
             top: 0,
             bottom: 0,
-            width: 64,
+            width: width,
             child: GestureDetector(
               behavior: behavior,
               onPanEnd: (details) {

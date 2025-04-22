@@ -69,9 +69,7 @@ dynamic handleError(Object error, [StackTrace? trace]) {
       toast(isEnglish ? 'Unknown Error' : '遇到未知错误 $error', error: true);
     }
   }
-  // catchError要求一个和Future一样类型的返回值, 但是这里无法提供一个通用的, 只能返回null了
-  // 参考 http://5.9.10.113/66396293/the-return-type-void-isnt-assignable-to-futureordirectory-as-required-by
-  return null;
+  throw error;
 }
 
 Color highContrast(Color input) {
