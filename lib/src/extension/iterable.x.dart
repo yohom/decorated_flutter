@@ -361,7 +361,7 @@ extension SelectableListX<T extends Selectable> on List<T> {
   }
 
   /// 选中指定元素
-  void select(T target) {
+  void select(T? target) {
     for (final item in this) {
       item.isSelected = (item == target);
     }
