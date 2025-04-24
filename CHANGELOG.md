@@ -1,5 +1,6 @@
 ## 0.50.5
 - [🚀] `BackGestureDetector`增加`width`参数;
+- [🚀] 日志增加所在类名和方法名;
 
 ## 0.50.4
 - [🚀] 增加`CoordConvert`, 用于坐标系转换;
