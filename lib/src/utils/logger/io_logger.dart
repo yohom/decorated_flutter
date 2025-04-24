@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
+final _kDivider = '\n${'-' * 64}\n';
+
 class Logger extends ILogger {
   final _talker = TalkerFlutter.init(
     settings: TalkerSettings(
@@ -12,29 +14,37 @@ class Logger extends ILogger {
     ),
   );
 
+  String get _context {
+    final stackTrace = StackTrace.current;
+    final callerFrame = stackTrace.toString().split('\n')[2];
+    final classMethodName =
+        callerFrame.substring(8).substringBeforeLast('(').trim();
+    return '[$classMethodName]';
+  }
+
   @override
   void d(Object content) {
-    _talker.debug(content);
+    _talker.debug('$_context$_kDivider$content');
   }
 
   @override
   void w(Object content) {
-    _talker.warning(content);
+    _talker.warning('$_context$_kDivider$content');
   }
 
   @override
   void i(Object content) {
-    _talker.info(content);
+    _talker.info('$_context$_kDivider$content');
   }
 
   @override
   void e(Object content) {
-    _talker.error(content);
+    _talker.error('$_context$_kDivider$content');
   }
 
   @override
   void v(Object content) {
-    _talker.verbose(content);
+    _talker.verbose('$_context$_kDivider$content');
   }
 
   @override
