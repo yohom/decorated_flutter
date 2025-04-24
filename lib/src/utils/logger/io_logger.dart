@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
-final _kDivider = '\n${'-' * 64}\n';
+final _kDivider = '\n${'-' * 100}\n';
 
 class Logger extends ILogger {
   final _talker = TalkerFlutter.init(
