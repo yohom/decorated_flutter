@@ -27,26 +27,31 @@ class Logger extends ILogger {
 
   @override
   void d(Object content) {
+    if (kReleaseMode) return;
     _talker.debug('$_context$_kDivider$content');
   }
 
   @override
   void w(Object content) {
+    if (kReleaseMode) return;
     _talker.warning('$_context$_kDivider$content');
   }
 
   @override
   void i(Object content) {
+    if (kReleaseMode) return;
     _talker.info('$_context$_kDivider$content');
   }
 
   @override
   void e(Object content) {
+    if (kReleaseMode) return;
     _talker.error('$_context$_kDivider$content');
   }
 
   @override
   void v(Object content) {
+    if (kReleaseMode) return;
     _talker.verbose('$_context$_kDivider$content');
   }
 
