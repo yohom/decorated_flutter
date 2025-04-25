@@ -15,11 +15,14 @@ class Logger extends ILogger {
   );
 
   String get _context {
-    final stackTrace = StackTrace.current;
-    final callerFrame = stackTrace.toString().split('\n')[2];
-    final classMethodName =
-        callerFrame.substring(8).substringBeforeLast('(').trim();
-    return '[$classMethodName]';
+    try {
+      final stackTrace = StackTrace.current;
+      final callerFrame = stackTrace.toString().split('\n')[2];
+      final classMethodName = callerFrame.substring(8).trim();
+      return '[$classMethodName]';
+    } catch (_) {
+      return '[unknown]';
+    }
   }
 
   @override
