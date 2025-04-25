@@ -18,8 +18,7 @@ class Logger extends ILogger {
     try {
       final stackTrace = StackTrace.current;
       final callerFrame = stackTrace.toString().split('\n')[2];
-      final classMethodName =
-          callerFrame.substring(8).substringBeforeLast('(').trim();
+      final classMethodName = callerFrame.substring(8).trim();
       return '[$classMethodName]';
     } catch (_) {
       return '[unknown]';
