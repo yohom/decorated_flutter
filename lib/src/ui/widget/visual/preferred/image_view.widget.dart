@@ -252,7 +252,7 @@ class ImageView extends StatelessWidget {
   final BoxDecoration? foregroundDecoration;
 
   /// 剪裁行为
-  final Clip? clipBehavior;
+  final Clip clipBehavior;
 
   /// 如果不为空, 则使用AspectRatio包裹
   final double? aspectRatio;
@@ -304,8 +304,9 @@ class ImageView extends StatelessWidget {
           placeholderBuilder: _placeholder != null ? (_) => _placeholder : null,
         );
 
-        if (logEnable)
+        if (logEnable) {
           L.d('[DECORATED_FLUTTER] 使用SvgPicture.asset: $_imagePath');
+        }
       } else if (_imagePath.startsWith('/') ||
           _imagePath.startsWith('file://')) {
         result = kIsWeb // web端的文件路径使用network加载
@@ -373,8 +374,9 @@ class ImageView extends StatelessWidget {
           placeholderBuilder: _placeholder != null ? (_) => _placeholder : null,
           alignment: alignment,
         );
-        if (logEnable)
+        if (logEnable) {
           L.d('[DECORATED_FLUTTER] 使用SvgPicture.network: $imageUrl');
+        }
       } else {
         result = kIsWeb
             ? Image.network(
@@ -414,8 +416,9 @@ class ImageView extends StatelessWidget {
                 memCacheHeight: _cacheHeight,
                 alignment: alignment,
               );
-        if (logEnable)
+        if (logEnable) {
           L.d('[DECORATED_FLUTTER] 使用CachedNetworkImage: $imageUrl');
+        }
       }
     } else {
       // 如果图片地址为null的话, 那就不显示
@@ -441,7 +444,7 @@ class ImageView extends StatelessWidget {
       }
 
       result = Container(
-        clipBehavior: _decoration != null ? Clip.hardEdge : Clip.none,
+        clipBehavior: _decoration != null ? clipBehavior : Clip.none,
         padding: padding,
         margin: margin,
         foregroundDecoration: foregroundDecoration,
@@ -510,8 +513,9 @@ class ImageView extends StatelessWidget {
     dynamic stackTrace,
   ) {
     final _errorWidget = errorWidget ?? globalErrorWidget;
-    if (!suppressError)
+    if (!suppressError) {
       L.e('[DECORATED_FLUTTER] 显示ImageView发生错误: $error, stacktrace: $stackTrace');
+    }
     return _errorWidget ?? (kReleaseMode ? NIL : ErrorWidget(error));
   }
 }
