@@ -2,6 +2,7 @@
 - [🚀] [break change] 移除`hive`;
 - [🚀] `BackGestureDetector`增加`width`参数;
 - [🚀] 日志增加所在类名和方法名;
+- [🚀] `ListX`增加removeType扩展;
 
 ## 0.50.4
 - [🚀] 增加`CoordConvert`, 用于坐标系转换;
