@@ -10,7 +10,7 @@ class Capturer extends StatefulWidget {
     Duration? delay,
   }) {
     if (_captureKey.currentState case _CapturerState state) {
-      return state.capture(widgetList, delay: delay);
+      return retry(() => state.capture(widgetList, delay: delay));
     } else {
       return Future.error(
         '未找到Capturer实例, 是否已经在DecoratedApp设置withCapturer为true? 或者在全局嵌套Capturer?',
