@@ -87,6 +87,8 @@ class ImageView extends StatelessWidget {
     this.errorWidget,
     this.placeholder,
     this.scale,
+    this.rotation,
+    this.rotationAlignment = Alignment.center,
     this.alignment = Alignment.center,
   })  : imagePath = imageUri.isUrl ? null : imageUri,
         imageUrl = imageUri.isUrl ? imageUri : null,
@@ -123,6 +125,8 @@ class ImageView extends StatelessWidget {
     this.errorWidget,
     this.placeholder,
     this.scale,
+    this.rotation,
+    this.rotationAlignment = Alignment.center,
     this.alignment = Alignment.center,
   })  : imagePath = imageUri.isUrl ? null : imageUri,
         imageUrl = imageUri.isUrl ? imageUri : null,
@@ -158,6 +162,8 @@ class ImageView extends StatelessWidget {
     this.errorWidget,
     this.placeholder,
     this.scale,
+    this.rotation,
+    this.rotationAlignment = Alignment.center,
     this.alignment = Alignment.center,
   })  : imageUrl = null,
         assert(
@@ -192,6 +198,8 @@ class ImageView extends StatelessWidget {
     this.shape,
     this.colorBlendMode,
     this.scale,
+    this.rotation,
+    this.rotationAlignment = Alignment.center,
     this.alignment = Alignment.center,
   })  : imagePath = null,
         assert(
@@ -271,6 +279,10 @@ class ImageView extends StatelessWidget {
 
   /// 对齐
   final Alignment alignment;
+
+  /// 翻转*弧度*
+  final double? rotation;
+  final Alignment? rotationAlignment;
 
   @override
   Widget build(BuildContext context) {
@@ -434,6 +446,7 @@ class ImageView extends StatelessWidget {
         decoration != null ||
         foregroundDecoration != null ||
         borderRadius != null ||
+        rotation != null ||
         shape != null) {
       Decoration? _decoration = decoration;
       if (_decoration == null && (borderRadius != null || shape != null)) {
@@ -447,6 +460,9 @@ class ImageView extends StatelessWidget {
         clipBehavior: _decoration != null ? clipBehavior : Clip.none,
         padding: padding,
         margin: margin,
+        transformAlignment: rotationAlignment,
+        transform:
+            rotation != null ? (Matrix4.identity()..rotateZ(rotation!)) : null,
         foregroundDecoration: foregroundDecoration,
         decoration: _decoration,
         child: result,
