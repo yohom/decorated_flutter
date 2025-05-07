@@ -25,6 +25,14 @@ extension BuildContextX on BuildContext {
     return BLoCProvider.of<T>(this);
   }
 
+  dynamic getPageStorage(String key) {
+    return PageStorage.of(this).readState(this, identifier: key);
+  }
+
+  dynamic setPageStorage(String key, dynamic value) {
+    return PageStorage.of(this).writeState(this, value, identifier: key);
+  }
+
   ThemeData get theme {
     return Theme.of(this);
   }
