@@ -54,6 +54,7 @@ class AnimatedVisibility extends StatelessWidget {
             alignment: alignment,
             firstCurve: curve,
             secondCurve: curve,
+            sizeCurve: curve,
             crossFadeState: snapshot.data == true
                 ? CrossFadeState.showFirst
                 : CrossFadeState.showSecond,
@@ -69,6 +70,7 @@ class AnimatedVisibility extends StatelessWidget {
         alignment: alignment,
         firstCurve: curve,
         secondCurve: curve,
+        sizeCurve: curve,
         crossFadeState:
             visible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
         firstChild: child,
