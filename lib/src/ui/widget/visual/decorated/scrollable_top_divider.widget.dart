@@ -36,6 +36,8 @@ class _ScrollableTopDividerState extends State<ScrollableTopDivider> {
 
   @override
   Widget build(BuildContext context) {
+    if (!widget.config.show) return widget.child;
+
     final color = widget.config.color ?? context.dividerColor;
     return NotificationListener<ScrollUpdateNotification>(
       onNotification: (notification) {
