@@ -421,6 +421,7 @@ class ImageView extends StatelessWidget {
                 fit: fit,
                 color: _color,
                 httpHeaders: headers,
+                errorListener: (e) => L.e('加载图片时出现错误: $e'),
                 placeholder:
                     _placeholder != null ? (_, __) => _placeholder : null,
                 errorWidget: _errorBuilder,
