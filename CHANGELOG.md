@@ -5,6 +5,8 @@
 - [🚀] `ListX`增加removeType扩展;
 - [🚀] `ImageView`增加`rotation`参数;
 - [🚀] `BuildContext`增加`getPageStorage`和`setPageStorage`扩展;
+- [🚀] `BackGestureDetector`默认使用`HitTestBehavior.translucent`;
+- [🚀] `DecoratedList`增加`margin`参数;
 
 ## 0.50.4
 - [🚀] 增加`CoordConvert`, 用于坐标系转换;

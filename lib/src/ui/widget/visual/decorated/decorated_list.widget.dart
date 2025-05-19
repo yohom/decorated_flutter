@@ -27,6 +27,7 @@ class DecoratedList extends StatelessWidget {
     this.clipBehavior = Clip.none,
     this.reverse = false,
     this.topDivider,
+    this.margin,
   })  : _sliver = false,
         separatorBuilder = null;
 
@@ -37,7 +38,6 @@ class DecoratedList extends StatelessWidget {
     this.shrinkWrap = false,
     this.itemBuilder,
     required this.itemCount,
-    this.children,
     this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.onDrag,
     this.scrollDirection,
     this.width,
@@ -53,11 +53,13 @@ class DecoratedList extends StatelessWidget {
     this.reverse = false,
     this.clipBehavior = Clip.none,
     this.topDivider,
+    this.margin,
   })  : assert(itemCount != null),
         assert(separatorBuilder != null),
         _sliver = false,
         itemExtent = null,
-        prototypeItem = null;
+        prototypeItem = null,
+        children = null;
 
   const DecoratedList.sliver({
     super.key,
@@ -84,11 +86,12 @@ class DecoratedList extends StatelessWidget {
         decoration = null,
         clipBehavior = Clip.none,
         keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.onDrag,
-        topDivider = null;
+        topDivider = null,
+        margin = null;
 
   final bool _sliver;
   final String? restorationId;
-  final EdgeInsets? padding;
+  final EdgeInsets? padding, margin;
   final bool shrinkWrap;
   final IndexedWidgetBuilder? itemBuilder;
   final int? itemCount;
@@ -122,10 +125,11 @@ class DecoratedList extends StatelessWidget {
       );
     }
 
-    if (decoration != null) {
+    if (decoration != null || margin != null) {
       result = Container(
         clipBehavior: clipBehavior,
         decoration: decoration,
+        margin: margin,
         child: result,
       );
     }
