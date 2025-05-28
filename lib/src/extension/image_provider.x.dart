@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
@@ -12,6 +13,12 @@ extension AssetImageX on ImageProvider {
       return (await NetworkAssetBundle(Uri.parse(_this.url)).load(_this.url))
           .buffer
           .asUint8List();
+    } else if (_this is CachedNetworkImageProvider) {
+      return (await NetworkAssetBundle(Uri.parse(_this.url)).load(_this.url))
+          .buffer
+          .asUint8List();
+    } else if (_this is MemoryImage) {
+      return _this.bytes;
     } else {
       throw '暂未支持的Image类型';
     }
