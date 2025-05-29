@@ -526,6 +526,13 @@ class DecoratedFlex extends StatelessWidget {
       );
     }
 
+    if (systemOverlayStyle case SystemUiOverlayStyle _style) {
+      result = AnnotatedRegion<SystemUiOverlayStyle>(
+        value: _style,
+        child: result,
+      );
+    }
+
     final borderRadius = () {
       final shadow = decoration;
       if (shadow is BoxDecoration) {
