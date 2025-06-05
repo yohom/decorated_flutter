@@ -1,4 +1,7 @@
 ## 0.51.0
+- [🚀] 增加`IterableFutureX`;
+
+## 0.51.0
 - [🚀] [break change] 移除`hive`;
 - [🚀] `BackGestureDetector`增加`width`参数;
 - [🚀] 日志增加所在类名和方法名;
