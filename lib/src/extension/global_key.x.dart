@@ -10,7 +10,7 @@ extension GlobalKeyX on GlobalKey {
     try {
       final box =
           (currentContext?.findRenderObject() as RenderRepaintBoundary?);
-      if (box == null) return null;
+      if (box == null) throw '未找到目标RenderObject';
 
       if (kDebugMode) {
         int attempts = 0;
@@ -27,7 +27,7 @@ extension GlobalKeyX on GlobalKey {
       final imageData = byteData?.buffer.asUint8List();
 
       return imageData;
-    } on Exception catch (e) {
+    } catch (e) {
       L.e('[DECORATED_FLUTTER] 尝试截图失败: $e');
       return null;
     }

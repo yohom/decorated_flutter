@@ -181,3 +181,13 @@ extension StringFutureX on Future<String> {
     return (await this) + text;
   }
 }
+
+extension IterableFutureX<T> on Future<Iterable<T>> {
+  Future<T?> get thenFirstOrNull {
+    return then((value) => value.firstOrNull);
+  }
+
+  Future<T> get thenFirst {
+    return then((value) => value.first);
+  }
+}
