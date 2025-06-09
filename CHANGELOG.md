@@ -1,5 +1,6 @@
 ## 0.51.0
 - [🚀] 增加`IterableFutureX`;
+- [🚀] `runDecoratedApp`增加`systemUiMode`参数;
 
 ## 0.51.0
 - [🚀] [break change] 移除`hive`;
