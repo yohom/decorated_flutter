@@ -190,7 +190,14 @@ Future<void> runDecoratedApp({
       await SystemChrome.setEnabledSystemUIMode(systemUiMode);
     }
 
-    if (statusBarColor != null) {
+    if (statusBarColor != null ||
+        statusBarBrightness != null ||
+        statusBarIconBrightness != null ||
+        systemNavigationBarColor != null ||
+        systemNavigationBarIconBrightness != null ||
+        systemNavigationBarDividerColor != null ||
+        systemNavigationBarContrastEnforced != null ||
+        systemStatusBarContrastEnforced != null) {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle.dark.copyWith(
           statusBarColor: statusBarColor,
