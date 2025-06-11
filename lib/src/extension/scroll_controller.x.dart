@@ -1,3 +1,4 @@
+import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:flutter/cupertino.dart';
 
 extension ScrollControllerX on ScrollController {
@@ -92,8 +93,12 @@ extension ScrollControllerX on ScrollController {
     final globalOffset = renderObject.localToGlobal(Offset.zero);
     final size = renderObject.size;
 
-    final scrollableBox = position.context.storageContext.findRenderObject();
-    if (scrollableBox is! RenderBox) return null;
+    final scrollableBox =
+        positions.firstOrNull?.context.storageContext.findRenderObject();
+    if (scrollableBox is! RenderBox) {
+      L.w('获取不到scrollableBox');
+      return null;
+    }
 
     final scrollableOffset = scrollableBox.localToGlobal(Offset.zero);
 
