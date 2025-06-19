@@ -263,9 +263,12 @@ class Signal extends IO<dynamic> {
   }
 }
 
+@Deprecated('使用Computed代替')
+typedef Mapper = Computed;
+
 /// 对某个io进行变换
-class Mapper<T, R> extends BaseIO<R> {
-  Mapper({
+class Computed<T, R> extends BaseIO<R> {
+  Computed({
     required BaseIO<T> upstream,
     required super.semantics,
     required R Function(T) mapper,
