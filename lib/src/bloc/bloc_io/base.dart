@@ -270,6 +270,7 @@ class Mapper<T, R> extends BaseIO<R> {
     required super.semantics,
     required R Function(T) mapper,
     R? seedValue,
+    super.persistConfig,
   })  : _upstream = upstream,
         _mapper = mapper,
         super(
