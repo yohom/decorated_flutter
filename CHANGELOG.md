@@ -1,9 +1,10 @@
-## 0.51.0
+## 0.51.1
 - [🚀] 增加`IterableFutureX`;
 - [🚀] `runDecoratedApp`增加`systemUiMode`参数;
 - [🚀] `Mapper`增加`persistConfig`;
 - [🚀] `Mapper` -> `Computed`;
 - [🚀] `Capture.capture`增加缓存机制;
+- [🚀] `Capture.capture`增加指定的`pixelRatio`参数;
 
 ## 0.51.0
 - [🚀] [break change] 移除`hive`;
