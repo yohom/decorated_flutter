@@ -166,6 +166,7 @@ Future<void> runDecoratedApp({
   FutureOr<void> Function()? beforeApp,
   FutureOr<void> Function()? afterApp,
   FutureOr<void> Function(Object, StackTrace)? onError,
+  SystemUiMode? systemUiMode,
   Color? statusBarColor,
   Color? systemNavigationBarColor,
   Color? systemNavigationBarDividerColor,
@@ -183,9 +184,20 @@ Future<void> runDecoratedApp({
     WidgetsFlutterBinding.ensureInitialized();
 
     // 初始化日志系统
-    await L.init(withFileLogger: withFileLogger);
+    await L.init();
 
-    if (statusBarColor != null) {
+    if (systemUiMode != null) {
+      await SystemChrome.setEnabledSystemUIMode(systemUiMode);
+    }
+
+    if (statusBarColor != null ||
+        statusBarBrightness != null ||
+        statusBarIconBrightness != null ||
+        systemNavigationBarColor != null ||
+        systemNavigationBarIconBrightness != null ||
+        systemNavigationBarDividerColor != null ||
+        systemNavigationBarContrastEnforced != null ||
+        systemStatusBarContrastEnforced != null) {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle.dark.copyWith(
           statusBarColor: statusBarColor,
