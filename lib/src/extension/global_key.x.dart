@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 extension GlobalKeyX on GlobalKey {
-  Future<Uint8List?> capture() async {
+  Future<Uint8List?> capture({double? pixelRatio}) async {
     try {
       final box =
           (currentContext?.findRenderObject() as RenderRepaintBoundary?);
@@ -22,7 +22,8 @@ extension GlobalKeyX on GlobalKey {
         await Future.delayed(const Duration(milliseconds: 32));
       }
 
-      final image = await box.toImage(pixelRatio: window.devicePixelRatio);
+      final image =
+          await box.toImage(pixelRatio: pixelRatio ?? window.devicePixelRatio);
       final byteData = await image.toByteData(format: ImageByteFormat.png);
       final imageData = byteData?.buffer.asUint8List();
 

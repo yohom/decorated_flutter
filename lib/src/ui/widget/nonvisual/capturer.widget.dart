@@ -13,9 +13,14 @@ class Capturer extends StatefulWidget {
   static Future<List<Uint8List>> capture(
     List<Widget> widgetList, {
     Duration? delay,
+    double? pixelRatio,
   }) {
     if (_captureKey.currentState case _CapturerState state) {
-      return retry(() => state.capture(widgetList, delay: delay));
+      return retry(() => state.capture(
+            widgetList,
+            delay: delay,
+            pixelRatio: pixelRatio,
+          ));
     } else {
       return Future.error(
         '未找到Capturer实例, 是否已经在DecoratedApp设置withCapturer为true? 或者在全局嵌套Capturer?',
@@ -54,6 +59,7 @@ class _CapturerState extends State<Capturer> {
   Future<List<Uint8List>> capture(
     List<Widget> widgetList, {
     Duration? delay,
+    double? pixelRatio,
   }) async {
     // 先挑出缓存放到结果列表, 没有缓存的位置为null
     final result = [for (final item in widgetList) _gCache[item.key]];
@@ -85,7 +91,7 @@ class _CapturerState extends State<Capturer> {
 
     // 执行截图
     final snapshots = await _captureLayer.keys
-        .map((it) => it.capture())
+        .map((it) => it.capture(pixelRatio: pixelRatio))
         .wait()
         .then((value) => value.nonNulls.toList())
         // 完成后清空内容, 给下次截图使用
