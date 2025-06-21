@@ -190,4 +190,12 @@ extension IterableFutureX<T> on Future<Iterable<T>> {
   Future<T> get thenFirst {
     return then((value) => value.first);
   }
+
+  Future<List<T>> thenTake(int count) {
+    return then((value) => value.take((count)).toList());
+  }
+
+  Future<List<T>> thenSkip(int count) {
+    return then((value) => value.skip((count)).toList());
+  }
 }
