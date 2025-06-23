@@ -5,6 +5,8 @@
 - [🚀] `Mapper` -> `Computed`;
 - [🚀] `Capture.capture`增加缓存机制;
 - [🚀] `Capture.capture`增加指定的`pixelRatio`参数;
+- [🚀] `IterableFutureX`增加`thenTake`和`thenSkip`扩展;
+- [🚀] 集成`auto_size_text`;
 
 ## 0.51.0
 - [🚀] [break change] 移除`hive`;
