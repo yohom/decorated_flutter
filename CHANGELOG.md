@@ -8,6 +8,7 @@
 - [🚀] `IterableFutureX`增加`thenTake`和`thenSkip`扩展;
 - [🚀] 集成`auto_size_text`;
 - [🚀] 增加`no_transition_page_builder`;
+- [🚀] 替换toast实现;
 
 ## 0.51.0
 - [🚀] [break change] 移除`hive`;

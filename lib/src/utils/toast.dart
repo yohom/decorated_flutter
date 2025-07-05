@@ -1,7 +1,6 @@
-import 'package:cherry_toast/cherry_toast.dart';
-import 'package:cherry_toast/resources/arrays.dart';
 import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:flutter/material.dart';
+import 'package:toastification/toastification.dart';
 
 void toast(
   String? message, {
@@ -16,33 +15,23 @@ void toast(
   bool error = false,
 }) {
   if (isNotEmpty(message)) {
-    const type = AnimationType.fromTop;
-    const animationDuration = Duration(milliseconds: 512);
-    if (error) {
-      CherryToast.error(
-        title: Text(message!, style: textStyle),
-        animationType: type,
-        toastDuration: duration,
-        animationDuration: animationDuration,
-        onToastClosed: onDismiss,
-        backgroundColor: backgroundColor,
-        borderRadius: radius,
-        enableIconAnimation: false,
-        displayCloseButton: true,
-      ).show(gNavigatorKey.currentContext!);
-    } else {
-      CherryToast.info(
-        title: Text(message!, style: textStyle),
-        animationType: type,
-        toastDuration: duration,
-        animationDuration: animationDuration,
-        onToastClosed: onDismiss,
-        backgroundColor: backgroundColor,
-        borderRadius: radius,
-        enableIconAnimation: false,
-        displayCloseButton: true,
-      ).show(gNavigatorKey.currentContext!);
-    }
+    toastification.show(
+      overlayState: gNavigator.overlay,
+      title: Text(message!, style: textStyle),
+      autoCloseDuration: duration,
+      callbacks: ToastificationCallbacks(
+        onDismissed: (_) => onDismiss?.call(),
+      ),
+      type: error ? ToastificationType.error : ToastificationType.info,
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      style: error ? ToastificationStyle.flat : ToastificationStyle.simple,
+      animationBuilder: (_, animation, alignment, child) {
+        return FadeTransition(opacity: animation, child: child);
+      },
+      closeButtonShowType: CloseButtonShowType.none,
+      backgroundColor: backgroundColor,
+      borderRadius: BorderRadius.circular(radius),
+    );
   } else {
     L.w('[DECORATED_FLUTTER] toast传入null值, 略过');
   }
