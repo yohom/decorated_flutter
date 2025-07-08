@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 final _gCache = <Key, Uint8List>{};
 
 class Capturer extends StatefulWidget {
+  static bool enableCache = true;
+
   /// 进行截图
   ///
   /// 注意! 如果Widget传了key参数, 那么可以对其进行缓存~
@@ -61,8 +63,11 @@ class _CapturerState extends State<Capturer> {
     Duration? delay,
     double? pixelRatio,
   }) async {
+    // 增加一个开关判断是否打开缓存, 不使用缓存时, 方便调试
+    final cache = Capturer.enableCache ? _gCache : <Key, Uint8List>{};
+
     // 先挑出缓存放到结果列表, 没有缓存的位置为null
-    final result = [for (final item in widgetList) _gCache[item.key]];
+    final result = [for (final item in widgetList) cache[item.key]];
     L.i('当前截图缓存情况: ${[
       for (final (index, item) in result.indexed)
         if (item == null) 'null' else '截图$index'
@@ -70,7 +75,7 @@ class _CapturerState extends State<Capturer> {
 
     // 待截图的widget
     final pendingWidgets =
-        widgetList.whereOrEmpty((it) => _gCache[it.key] == null);
+        widgetList.whereOrEmpty((it) => cache[it.key] == null);
 
     // 已经没有待截图列表了, 直接返回结果
     if (pendingWidgets.isEmpty) {
@@ -104,7 +109,7 @@ class _CapturerState extends State<Capturer> {
         result[index] = snapshot;
 
         // 加入缓存
-        if (widgetList[index].key case Key key) _gCache[key] = snapshot;
+        if (widgetList[index].key case Key key) cache[key] = snapshot;
       }
     }
 
