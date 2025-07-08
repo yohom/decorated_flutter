@@ -197,6 +197,16 @@ extension ListX<T> on List<T> {
     removeWhere((element) => element is R);
   }
 
+  T? tryRemoveLast() {
+    if (this.isEmpty) return null;
+    return removeLast();
+  }
+
+  T? tryRemoveAt(int index) {
+    if (this.isEmpty) return null;
+    return removeAt(index);
+  }
+
   void removeAfter(int index) {
     removeRange(index, length);
   }
