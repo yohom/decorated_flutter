@@ -9,6 +9,7 @@
 - [🚀] 集成`auto_size_text`;
 - [🚀] 增加`no_transition_page_builder`;
 - [🚀] 替换toast实现;
+- [🚀] 增加`ListX.tryRemoveLast`和`ListX.tryRemoveAt`扩展;
 
 ## 0.51.0
 - [🚀] [break change] 移除`hive`;
