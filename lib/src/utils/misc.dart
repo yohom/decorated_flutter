@@ -57,7 +57,7 @@ dynamic handleError(Object error, [StackTrace? trace]) {
       error: true,
     );
   } else if (error is BizException) {
-    toast(error.message);
+    toast(error.message, error: true);
   } else if (error is TimeoutException) {
     toast('操作超时');
   } else if (error is PlatformException) {
