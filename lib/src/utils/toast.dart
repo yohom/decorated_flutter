@@ -13,12 +13,14 @@ void toast(
   Duration duration = const Duration(seconds: 3),
   Color backgroundColor = Colors.white,
   bool error = false,
+  Alignment alignment = Alignment.center,
 }) {
   if (isNotEmpty(message)) {
     toastification.show(
       overlayState: gNavigator.overlay,
       title: Text(message!, style: textStyle),
       autoCloseDuration: duration,
+      alignment: alignment,
       callbacks: ToastificationCallbacks(
         onDismissed: (_) => onDismiss?.call(),
       ),
