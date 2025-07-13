@@ -10,7 +10,7 @@ void toast(
   VoidCallback? onDismiss,
   @Deprecated('已无作用') bool dismissOtherToast = true,
   @Deprecated('已无作用') TextAlign textAlign = TextAlign.center,
-  Duration duration = const Duration(seconds: 2),
+  Duration duration = const Duration(seconds: 3),
   Color backgroundColor = Colors.white,
   bool error = false,
 }) {
