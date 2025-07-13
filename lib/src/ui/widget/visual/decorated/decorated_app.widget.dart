@@ -47,6 +47,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
     this.withCapturer = false,
     this.onNavigationNotification,
     this.routes = const {},
+    this.autoCloseKeyboard = const CloseKeyboardConfig(),
   })  : _isRouter = false,
         routeInformationProvider = null,
         routeInformationParser = null,
@@ -95,6 +96,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
     this.routerConfig,
     this.backButtonDispatcher,
     // ------------------ navigator2专有 ------------------//
+    this.autoCloseKeyboard = const CloseKeyboardConfig(),
   })  : _isRouter = true,
         navigatorObservers = const [],
         navigatorKey = null,
@@ -172,19 +174,34 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   /// 是否内建截图组件Capturer
   final bool withCapturer;
 
+  /// 是否自动关闭输入法
+  final CloseKeyboardConfig? autoCloseKeyboard;
+
   /// 是否使用router
   final bool _isRouter;
 
   @override
   Widget build(BuildContext context) {
+    Widget __builder(BuildContext context, Widget? child) {
+      Widget result = builder != null ? builder!.call(context, child) : child!;
+
+      if (withCapturer) {
+        result = Capturer(child: result);
+      }
+
+      if (autoCloseKeyboard != null) {
+        result = AutoCloseKeyboard(
+          config: autoCloseKeyboard!,
+          child: result,
+        );
+      }
+      return result;
+    }
+
     final child = _isRouter
         ? MaterialApp.router(
             title: title,
-            builder: withCapturer
-                ? (context, child) {
-                    return Capturer(child: builder?.call(context, child));
-                  }
-                : builder,
+            builder: __builder,
             onGenerateTitle: onGenerateTitle,
             theme: theme?.let((self) =>
                 kIsWeb ? self : self.useSystemChineseFont(Brightness.light)),
@@ -226,11 +243,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
           )
         : MaterialApp(
             title: title,
-            builder: withCapturer
-                ? (context, child) {
-                    return Capturer(child: builder?.call(context, child));
-                  }
-                : builder,
+            builder: __builder,
             onGenerateTitle: onGenerateTitle,
             navigatorKey: navigatorKey ?? gNavigatorKey,
             theme: theme?.let((self) =>

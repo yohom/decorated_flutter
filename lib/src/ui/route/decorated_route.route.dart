@@ -9,6 +9,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialPageRoute<T> {
     Key? key,
     required this.screen,
     B? bloc,
+    @Deprecated('已无作用, 在app.builder中使用即可, 不需要每个route设置')
     this.autoCloseKeyboard = const CloseKeyboardConfig(),
     this.init,
     this.onLateinit,
@@ -131,14 +132,6 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialPageRoute<T> {
         init: init,
         onDispose: onDisposed,
         autoDispose: autoDispose,
-        child: result,
-      );
-    }
-
-    // 是否自动收起键盘
-    if (autoCloseKeyboard != null) {
-      result = AutoCloseKeyboard(
-        config: autoCloseKeyboard!,
         child: result,
       );
     }

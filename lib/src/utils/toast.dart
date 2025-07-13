@@ -10,15 +10,17 @@ void toast(
   VoidCallback? onDismiss,
   @Deprecated('已无作用') bool dismissOtherToast = true,
   @Deprecated('已无作用') TextAlign textAlign = TextAlign.center,
-  Duration duration = const Duration(seconds: 2),
+  Duration duration = const Duration(seconds: 3),
   Color backgroundColor = Colors.white,
   bool error = false,
+  Alignment alignment = Alignment.center,
 }) {
   if (isNotEmpty(message)) {
     toastification.show(
       overlayState: gNavigator.overlay,
       title: Text(message!, style: textStyle),
       autoCloseDuration: duration,
+      alignment: alignment,
       callbacks: ToastificationCallbacks(
         onDismissed: (_) => onDismiss?.call(),
       ),
