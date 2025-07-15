@@ -3,6 +3,7 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -90,6 +91,8 @@ class SystemChineseFont {
 extension TextStyleUseSystemChineseFont on TextStyle {
   /// Add fontFamilyFallback & fontVariation to original font style
   TextStyle useSystemChineseFont() {
+    if (kIsWeb) return this;
+
     return copyWith(
       fontFamilyFallback: [
         ...?fontFamilyFallback,
@@ -107,6 +110,8 @@ extension TextStyleUseSystemChineseFont on TextStyle {
 extension TextThemeUseSystemChineseFont on TextTheme {
   /// Add fontFamilyFallback & fontVariation to original text theme
   TextTheme useSystemChineseFont(Brightness brightness) {
+    if (kIsWeb) return this;
+
     return SystemChineseFont.textTheme(brightness).merge(this);
   }
 }
@@ -114,6 +119,8 @@ extension TextThemeUseSystemChineseFont on TextTheme {
 extension ThemeDataUseSystemChineseFont on ThemeData {
   /// Add fontFamilyFallback & fontVariation to original theme data
   ThemeData useSystemChineseFont(Brightness brightness) {
+    if (kIsWeb) return this;
+
     return copyWith(
       textTheme: textTheme.useSystemChineseFont(brightness),
       tabBarTheme: tabBarTheme.copyWith(
