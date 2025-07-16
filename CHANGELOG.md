@@ -1,3 +1,6 @@
+## 0.51.2
+- [🚀] `FutureX`增加`thenIf`和`thenIfNot`扩展;
+
 ## 0.51.1
 - [🚀] 增加`IterableFutureX`;
 - [🚀] `runDecoratedApp`增加`systemUiMode`参数;

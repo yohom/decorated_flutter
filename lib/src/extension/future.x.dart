@@ -128,6 +128,22 @@ extension FutureX<T> on Future<T> {
     return this;
   }
 
+  /// 根据[condition]判断是否要执行[action]
+  Future<T> thenIf(bool condition, VoidCallback action) {
+    if (condition) {
+      action();
+    }
+    return this;
+  }
+
+  /// 根据[condition]判断是否要执行[action]
+  Future<T> thenIfNot(bool condition, VoidCallback action) {
+    if (!condition) {
+      action();
+    }
+    return this;
+  }
+
   /// 延迟一段时间
   Future<T> delay(Duration duration) async {
     return then((value) async {
