@@ -1,5 +1,6 @@
 ## 0.51.2
 - [🚀] `FutureX`增加`thenIf`和`thenIfNot`扩展;
+- [🚀] `SafeAreaConfig`增加`minimum`参数;
 
 ## 0.51.1
 - [🚀] 增加`IterableFutureX`;
