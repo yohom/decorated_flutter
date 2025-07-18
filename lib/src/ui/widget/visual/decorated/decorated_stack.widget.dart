@@ -157,6 +157,7 @@ class DecoratedStack extends StatelessWidget {
         bottom: safeArea?.bottom ?? true,
         left: safeArea?.left ?? true,
         right: safeArea?.right ?? true,
+        minimum: safeArea?.minimum ?? EdgeInsets.zero,
         child: result,
       );
     }
@@ -237,6 +238,7 @@ class DecoratedStack extends StatelessWidget {
         bottom: safeArea?.bottom ?? true,
         left: safeArea?.left ?? true,
         right: safeArea?.right ?? true,
+        minimum: safeArea?.minimum ?? EdgeInsets.zero,
         child: result,
       );
     }
