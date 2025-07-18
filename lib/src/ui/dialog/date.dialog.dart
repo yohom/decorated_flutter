@@ -65,7 +65,7 @@ class __DatePickerDialogState extends State<_DatePickerDialog> {
     final chinese = kIsWeb ? true : Platform.localeName.contains('zh');
     return DecoratedColumn(
       height: 256 + context.padding.bottom,
-      safeArea: const SafeAreaConfig.bottom(),
+      safeArea: SafeAreaConfig.bottom(),
       children: [
         DecoratedRow(
           padding: const EdgeInsets.symmetric(horizontal: 8),
