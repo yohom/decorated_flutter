@@ -258,6 +258,7 @@ class DecoratedText extends StatelessWidget {
         bottom: safeArea?.bottom ?? true,
         left: safeArea?.left ?? true,
         right: safeArea?.right ?? true,
+        minimum: safeArea?.minimum ?? EdgeInsets.zero,
         child: result,
       );
     }

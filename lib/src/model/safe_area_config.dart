@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class SafeAreaConfig {
   final bool top;
   final bool bottom;
@@ -6,6 +8,7 @@ class SafeAreaConfig {
 
   /// 作用于内部
   final bool inner;
+  final EdgeInsets minimum;
 
   const SafeAreaConfig({
     this.top = true,
@@ -13,34 +16,39 @@ class SafeAreaConfig {
     this.left = true,
     this.right = true,
     this.inner = true,
+    this.minimum = EdgeInsets.zero,
   });
 
-  const SafeAreaConfig.top({this.inner = true})
+  SafeAreaConfig.top({this.inner = true, double minTop = 0})
       : top = true,
         bottom = false,
         left = false,
-        right = false;
+        right = false,
+        minimum = EdgeInsets.only(top: minTop);
 
-  const SafeAreaConfig.bottom({this.inner = true})
+  SafeAreaConfig.bottom({this.inner = true, double minBottom = 0})
       : top = false,
         bottom = true,
         left = false,
-        right = false;
+        right = false,
+        minimum = EdgeInsets.only(bottom: minBottom);
 
-  const SafeAreaConfig.left({this.inner = true})
+  SafeAreaConfig.left({this.inner = true, double minLeft = 0})
       : top = false,
         bottom = false,
         left = true,
-        right = false;
+        right = false,
+        minimum = EdgeInsets.only(left: minLeft);
 
-  const SafeAreaConfig.right({this.inner = true})
+  SafeAreaConfig.right({this.inner = true, double minRight = 0})
       : top = false,
         bottom = false,
         left = false,
-        right = true;
+        right = true,
+        minimum = EdgeInsets.only(right: minRight);
 
   @override
   String toString() {
-    return 'SafeAreaConfig{top: $top, bottom: $bottom, left: $left, right: $right, inner: $inner}';
+    return 'SafeAreaConfig{top: $top, bottom: $bottom, left: $left, right: $right, inner: $inner, minimum: $minimum}';
   }
 }
