@@ -26,7 +26,7 @@ void toast(
       ),
       type: error ? ToastificationType.error : ToastificationType.info,
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      style: error ? ToastificationStyle.flat : ToastificationStyle.simple,
+      style: ToastificationStyle.flatColored,
       animationBuilder: (_, animation, alignment, child) {
         return FadeTransition(opacity: animation, child: child);
       },
