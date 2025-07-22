@@ -2,6 +2,9 @@
 - [🚀] `FutureX`增加`thenIf`和`thenIfNot`扩展;
 - [🚀] `SafeAreaConfig`增加`minimum`参数;
 - [🚀] 增加`combine2`, `combine3`, `combine4`;
+- [🚀] `FutureX.loading`增加`tag`参数, 用来区分不同的`loading`会话;
+- [🚀] 扩展`Range`的适用范围;
+- [🚀] `toast`增加是否显示icon的参数;
 
 ## 0.51.1
 - [🚀] 增加`IterableFutureX`;
