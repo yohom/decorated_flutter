@@ -9,7 +9,7 @@ typedef LoadingBuilder = Widget Function(
 );
 
 /// 全局的是否在loading中的stream
-final _loadingStreamController = StreamController<bool>.broadcast();
+final _loadingStreamController = StreamController<String?>.broadcast();
 
 extension FutureX<T> on Future<T> {
   static LoadingBuilder? loadingWidgetBuilder;
@@ -26,6 +26,10 @@ extension FutureX<T> on Future<T> {
   static OverlayEntry? get loadingEntry => _loadingEntry;
 
   static Stream<bool> get inLoading {
+    return _loadingStreamController.stream.map((tag) => tag != null);
+  }
+
+  static Stream<String?> get inLoadingTag {
     return _loadingStreamController.stream;
   }
 
@@ -35,19 +39,22 @@ extension FutureX<T> on Future<T> {
   }
 
   /// 显示loading
+  ///
+  /// [tag]可以用来区分是谁在loading
   Future<T> loading({
     bool? cancelable,
     Duration? timeLimit,
     String? loadingText,
     Color? backgroundColor,
     bool modal = true,
+    String tag = '__default__',
   }) {
     final context = gNavigatorKey.currentContext;
     if (context == null) {
       throw '请在MaterialApp/CupertinoApp中设置navigatorKey为gNavigatorKey';
     }
 
-    _loadingStreamController.add(true);
+    _loadingStreamController.add(tag);
 
     final overlay =
         Overlay.maybeOf(context, rootOverlay: true) ?? gNavigator.overlay;
@@ -115,7 +122,7 @@ extension FutureX<T> on Future<T> {
 
     return timeout(timeLimit ?? defaultTimeLimit).whenComplete(() {
       __pop();
-      _loadingStreamController.add(false);
+      _loadingStreamController.add(null);
     });
   }
 
