@@ -9,7 +9,7 @@ typedef LoadingBuilder = Widget Function(
 );
 
 /// 全局的是否在loading中的stream
-final _loadingStreamController = StreamController<String?>.broadcast();
+final _loadingStreamController = StreamController<Object?>.broadcast();
 
 extension FutureX<T> on Future<T> {
   static LoadingBuilder? loadingWidgetBuilder;
@@ -29,7 +29,7 @@ extension FutureX<T> on Future<T> {
     return _loadingStreamController.stream.map((tag) => tag != null);
   }
 
-  static Stream<String?> get inLoadingTag {
+  static Stream<Object?> get inLoadingTag {
     return _loadingStreamController.stream;
   }
 
@@ -47,7 +47,7 @@ extension FutureX<T> on Future<T> {
     String? loadingText,
     Color? backgroundColor,
     bool modal = true,
-    String tag = '__default__',
+    Object tag = '__default__',
   }) {
     final context = gNavigatorKey.currentContext;
     if (context == null) {
