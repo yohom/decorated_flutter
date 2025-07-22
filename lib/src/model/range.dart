@@ -1,21 +1,21 @@
-class Range<T extends num> {
+class Range<T extends Comparable<T>> {
   final T lower;
   final T upper;
 
   const Range(this.lower, this.upper);
 
   bool contains(
-    num number, {
+    T number, {
     bool lowerInclusive = true,
     bool upperInclusive = false,
   }) {
-    if (lowerInclusive && (number < lower)) {
+    if (lowerInclusive && (number.compareTo(lower) < 0)) {
       return false;
-    } else if (!lowerInclusive && (number <= lower)) {
+    } else if (!lowerInclusive && (number.compareTo(lower) <= 0)) {
       return false;
-    } else if (upperInclusive && (number > upper)) {
+    } else if (upperInclusive && (number.compareTo(upper) > 0)) {
       return false;
-    } else if (!upperInclusive && (number >= upper)) {
+    } else if (!upperInclusive && (number.compareTo(upper) >= 0)) {
       return false;
     } else {
       return true;

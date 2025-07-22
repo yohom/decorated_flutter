@@ -4,15 +4,10 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:crypto/crypto.dart';
-import 'package:decorated_flutter/src/extension/extension.export.dart';
-import 'package:decorated_flutter/src/mixin/mixin.export.dart';
+import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:uuid/uuid.dart';
-
-import 'logger/logger.dart';
-import 'objects.dart';
-import 'retry.dart';
 
 bool notEqual(prev, next) => prev != next;
 
@@ -403,4 +398,36 @@ AnimationController createAnimation(
   );
 
   return controller;
+}
+
+Stream<(T1, T2)> combine2<T1, T2>(Stream<T1> streamA, Stream<T2> streamB) {
+  return Rx.combineLatest2(streamA, streamB, (a, b) => (a, b));
+}
+
+Stream<(T1, T2, T3)> combine3<T1, T2, T3>(
+  Stream<T1> streamA,
+  Stream<T2> streamB,
+  Stream<T3> streamC,
+) {
+  return Rx.combineLatest3(
+    streamA,
+    streamB,
+    streamC,
+    (a, b, c) => (a, b, c),
+  );
+}
+
+Stream<(T1, T2, T3, T4)> combine4<T1, T2, T3, T4>(
+  Stream<T1> streamA,
+  Stream<T2> streamB,
+  Stream<T3> streamC,
+  Stream<T4> streamD,
+) {
+  return Rx.combineLatest4(
+    streamA,
+    streamB,
+    streamC,
+    streamD,
+    (a, b, c, d) => (a, b, c, d),
+  );
 }

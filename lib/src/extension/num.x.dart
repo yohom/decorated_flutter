@@ -8,7 +8,7 @@ extension NumX on num {
     return BorderRadius.circular(toDouble());
   }
 
-  bool isBetween(Range range, {bool inclusive = true}) {
+  bool isBetween(Range<num> range, {bool inclusive = true}) {
     if (inclusive) {
       return this >= range.lower && this <= range.upper;
     } else {

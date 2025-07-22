@@ -14,6 +14,7 @@ void toast(
   Color backgroundColor = Colors.white,
   bool error = false,
   Alignment alignment = Alignment.center,
+  bool showIcon = true,
 }) {
   if (isNotEmpty(message)) {
     toastification.show(
@@ -26,10 +27,11 @@ void toast(
       ),
       type: error ? ToastificationType.error : ToastificationType.info,
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      style: error ? ToastificationStyle.flat : ToastificationStyle.simple,
+      style: ToastificationStyle.flatColored,
       animationBuilder: (_, animation, alignment, child) {
         return FadeTransition(opacity: animation, child: child);
       },
+      showIcon: showIcon,
       closeButtonShowType: CloseButtonShowType.none,
       backgroundColor: backgroundColor,
       borderRadius: BorderRadius.circular(radius),

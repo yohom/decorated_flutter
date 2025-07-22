@@ -42,14 +42,6 @@ extension IterableX<T> on Iterable<T> {
     }
   }
 
-  T? lastWhereOrNull(bool Function(T element) test) {
-    try {
-      return lastWhere(test);
-    } catch (_) {
-      return null;
-    }
-  }
-
   T? firstWhereOrNull(bool Function(T element) test) {
     try {
       return firstWhere(test);
