@@ -5,6 +5,7 @@
 - [🚀] `FutureX.loading`增加`tag`参数, 用来区分不同的`loading`会话;
 - [🚀] 扩展`Range`的适用范围;
 - [🚀] `toast`增加是否显示icon的参数;
+- [🚀] `DecoratedList`的`clipBehavior`参数默认值改为`hardEdge`;
 
 ## 0.51.1
 - [🚀] 增加`IterableFutureX`;
