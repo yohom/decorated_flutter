@@ -6,6 +6,9 @@
 - [🚀] 扩展`Range`的适用范围;
 - [🚀] `toast`增加是否显示icon的参数;
 - [🚀] `DecoratedList`的`clipBehavior`参数默认值改为`hardEdge`;
+- [🚀] 增加`DateTimeRange`扩展;
+- [🚀] 增加`DecoratedScrollable`, 更加通用, 且默认效果兼容`ScrollableTopDivider`;
+- [🚀] 增加`NoClipSizeTransition`, 补充`SizeTransition`默认剪裁的情况;
 
 ## 0.51.1
 - [🚀] 增加`IterableFutureX`;

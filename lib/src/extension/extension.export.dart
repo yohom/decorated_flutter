@@ -2,6 +2,7 @@ export 'bool.x.dart';
 export 'build_context.x.dart';
 export 'color.x.dart';
 export 'date_time.x.dart';
+export 'date_time_range.x.dart';
 export 'duration.x.dart';
 export 'edge_insets.x.dart';
 export 'enum.x.dart';

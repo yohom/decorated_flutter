@@ -1,6 +1,7 @@
 import 'package:decorated_flutter/src/extension/extension.export.dart';
 import 'package:flutter/material.dart';
 
+@Deprecated('可以使用更通用的DecoratedScrollable代替, 默认效果兼容ScrollableTopDivider')
 final class TopDividerConfig {
   const TopDividerConfig({
     this.show = true,
@@ -17,6 +18,7 @@ final class TopDividerConfig {
   final Curve curve;
 }
 
+@Deprecated('可以使用更通用的DecoratedScrollable代替, 默认效果兼容ScrollableTopDivider')
 class ScrollableTopDivider extends StatefulWidget {
   const ScrollableTopDivider({
     super.key,

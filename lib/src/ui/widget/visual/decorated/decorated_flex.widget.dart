@@ -78,7 +78,8 @@ class DecoratedRow extends DecoratedFlex {
     super.cursor,
     super.dividerThemeData,
     super.clipOverflow,
-    super.topDividerConfig,
+    @Deprecated('使用decoratedScrollableConfig代替, 已无作用') super.topDividerConfig,
+    super.decoratedScrollableConfig,
     super.children = const [],
   }) : super(direction: Axis.horizontal);
 }
@@ -160,7 +161,8 @@ class DecoratedColumn extends DecoratedFlex {
     super.cursor,
     super.clipOverflow,
     super.dividerThemeData,
-    super.topDividerConfig,
+    @Deprecated('使用decoratedScrollableConfig代替, 已无作用') super.topDividerConfig,
+    super.decoratedScrollableConfig,
     super.children = const [],
   }) : super(direction: Axis.vertical);
 }
@@ -241,7 +243,8 @@ class DecoratedFlex extends StatelessWidget {
     this.childrenFlex,
     this.cursor,
     this.dividerThemeData,
-    this.topDividerConfig,
+    @Deprecated('使用decoratedScrollableConfig代替, 已无作用') this.topDividerConfig,
+    this.decoratedScrollableConfig,
     this.clipOverflow,
     this.children = const [],
   });
@@ -389,7 +392,11 @@ class DecoratedFlex extends StatelessWidget {
   final DividerThemeData? dividerThemeData;
 
   /// 顶部分隔线
+  @Deprecated('使用decoratedScrollableConfig代替, 已无作用')
   final TopDividerConfig? topDividerConfig;
+
+  /// 滚动decoration
+  final DecoratedScrollableConfig? decoratedScrollableConfig;
 
   /// 是否剪裁掉溢出部分
   final bool? clipOverflow;
@@ -647,9 +654,9 @@ class DecoratedFlex extends StatelessWidget {
         child: result,
       );
 
-      if (topDividerConfig != null) {
-        result = ScrollableTopDivider(
-          config: topDividerConfig!,
+      if (decoratedScrollableConfig != null) {
+        result = DecoratedScrollable(
+          config: decoratedScrollableConfig!,
           child: result,
         );
       }
