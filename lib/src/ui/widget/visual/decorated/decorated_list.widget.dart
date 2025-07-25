@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'decorated_scrollable.widget.dart';
 import 'scrollable_top_divider.widget.dart';
 
 class DecoratedList extends StatelessWidget {
@@ -26,7 +27,8 @@ class DecoratedList extends StatelessWidget {
     this.physics,
     this.clipBehavior = Clip.hardEdge,
     this.reverse = false,
-    this.topDivider,
+    @Deprecated('使用decoratedScrollableConfig代替, 已无作用') this.topDivider,
+    this.decoratedScrollableConfig,
     this.margin,
   })  : _sliver = false,
         separatorBuilder = null;
@@ -52,7 +54,8 @@ class DecoratedList extends StatelessWidget {
     this.physics,
     this.reverse = false,
     this.clipBehavior = Clip.hardEdge,
-    this.topDivider,
+    @Deprecated('使用decoratedScrollableConfig代替, 已无作用') this.topDivider,
+    this.decoratedScrollableConfig,
     this.margin,
   })  : assert(itemCount != null),
         assert(separatorBuilder != null),
@@ -87,6 +90,7 @@ class DecoratedList extends StatelessWidget {
         clipBehavior = Clip.none,
         keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.onDrag,
         topDivider = null,
+        decoratedScrollableConfig = null,
         margin = null;
 
   final bool _sliver;
@@ -111,7 +115,11 @@ class DecoratedList extends StatelessWidget {
   final Clip clipBehavior;
 
   /// 滚动时是否显示顶部的分割线
+  @Deprecated('使用decoratedScrollableConfig代替, 已无作用')
   final TopDividerConfig? topDivider;
+
+  /// 滚动decoration
+  final DecoratedScrollableConfig? decoratedScrollableConfig;
 
   @override
   Widget build(BuildContext context) {
@@ -134,8 +142,11 @@ class DecoratedList extends StatelessWidget {
       );
     }
 
-    if (topDivider case TopDividerConfig config) {
-      result = ScrollableTopDivider(config: config, child: result);
+    if (decoratedScrollableConfig != null) {
+      result = DecoratedScrollable(
+        config: decoratedScrollableConfig!,
+        child: result,
+      );
     }
 
     if (expanded == true) {
