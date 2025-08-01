@@ -9,6 +9,7 @@
 - [🚀] 增加`DateTimeRange`扩展;
 - [🚀] 增加`DecoratedScrollable`, 更加通用, 且默认效果兼容`ScrollableTopDivider`;
 - [🚀] 增加`NoClipSizeTransition`, 补充`SizeTransition`默认剪裁的情况;
+- [🚀] `DecoratedStack`增加`repaintBoundaryKey`;
 
 ## 0.51.1
 - [🚀] 增加`IterableFutureX`;

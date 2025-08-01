@@ -49,6 +49,7 @@ class DecoratedStack extends StatelessWidget {
     this.clipBehavior = Clip.none,
     this.visible,
     this.systemUiOverlayStyle,
+    this.repaintBoundaryKey,
     this.children = const [],
   });
 
@@ -100,6 +101,7 @@ class DecoratedStack extends StatelessWidget {
   final Clip clipBehavior;
   final bool? visible;
   final SystemUiOverlayStyle? systemUiOverlayStyle;
+  final GlobalKey? repaintBoundaryKey;
 
   final List<Widget> children;
 
@@ -249,6 +251,10 @@ class DecoratedStack extends StatelessWidget {
 
     if (systemUiOverlayStyle != null) {
       result = AnnotatedRegion(value: systemUiOverlayStyle!, child: result);
+    }
+
+    if (repaintBoundaryKey != null) {
+      result = RepaintBoundary(key: repaintBoundaryKey, child: result);
     }
 
     if (expanded) {
