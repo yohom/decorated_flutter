@@ -21,6 +21,7 @@ export 'num.x.dart';
 export 'object.x.dart';
 export 'offset.x.dart';
 export 'page_controller.x.dart';
+export 'rect.x.dart';
 export 'route_settings.x.dart';
 export 'scroll_controller.x.dart';
 export 'shared_preferences.x.dart';
