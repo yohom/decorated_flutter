@@ -1,5 +1,6 @@
 ## 0.51.3
 - [🚀] 增加`Rect.scale`扩展;
+- [🚀] 增加`SliverStack`;
 
 ## 0.51.2
 - [🚀] `FutureX`增加`thenIf`和`thenIfNot`扩展;
