@@ -152,6 +152,7 @@ class DecoratedText extends StatelessWidget {
 
     Widget _buildText(String data) {
       TextSpan textSpan = TextSpan(text: data);
+      int? _maxLines = maxLines;
       // 处理段落间距
       if (paragraphPadding != null && paragraphPadding! > 0) {
         textSpan = TextSpan(
@@ -167,18 +168,21 @@ class DecoratedText extends StatelessWidget {
             ],
           ]..removeLast(),
         );
+
+        // 由于处理段间距时, 增加了换行符, 这里要加上对应数量的maxLines
+        _maxLines = _maxLines != null ? _maxLines + (_maxLines - 1) : null;
       }
       return isSelectable
           ? SelectableText.rich(
               textSpan,
-              maxLines: maxLines,
+              maxLines: _maxLines,
               style: textStyle,
               strutStyle: strutStyle,
               textAlign: textAlign,
             )
           : Text.rich(
               textSpan,
-              maxLines: maxLines,
+              maxLines: _maxLines,
               style: textStyle,
               strutStyle: strutStyle,
               textAlign: textAlign,
