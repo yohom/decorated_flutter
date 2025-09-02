@@ -25,6 +25,8 @@ class DashedLine extends StatelessWidget {
   ///The color of a dash. Defaults to black.
   final Color dashColor;
 
+  final StrokeCap strokeCap;
+
   ///For Horizontal dash line declare width > 0 and height can be 0.
 
   ///For Vertical dash line declare height > 0 and width can be 0.
@@ -39,6 +41,7 @@ class DashedLine extends StatelessWidget {
     this.dashWidth = 5,
     this.dashSpace = 3,
     this.strokeWidth = 1,
+    this.strokeCap = StrokeCap.round,
     this.dashColor = Colors.black,
   });
 
@@ -53,6 +56,7 @@ class DashedLine extends StatelessWidget {
         dashSpace: dashSpace,
         dashColor: dashColor,
         strokeWidth: strokeWidth,
+        strokeCap: strokeCap,
       ),
     );
   }
@@ -62,6 +66,7 @@ class DashedLinePainter extends CustomPainter {
   final Axis axis;
   final double dashHeight, dashWidth, dashSpace, strokeWidth;
   final Color dashColor;
+  final StrokeCap strokeCap;
 
   const DashedLinePainter({
     required this.axis,
@@ -70,6 +75,7 @@ class DashedLinePainter extends CustomPainter {
     required this.dashSpace,
     required this.strokeWidth,
     required this.dashColor,
+    required this.strokeCap,
   });
 
   @override
@@ -78,7 +84,8 @@ class DashedLinePainter extends CustomPainter {
       double startY = 0;
       final paint = Paint()
         ..color = dashColor
-        ..strokeWidth = strokeWidth;
+        ..strokeWidth = strokeWidth
+        ..strokeCap = strokeCap;
       while (startY < size.height) {
         canvas.drawLine(
             Offset(0, startY), Offset(0, startY + dashHeight), paint);
@@ -88,7 +95,8 @@ class DashedLinePainter extends CustomPainter {
       double startX = 0;
       final paint = Paint()
         ..color = dashColor
-        ..strokeWidth = strokeWidth;
+        ..strokeWidth = strokeWidth
+        ..strokeCap = strokeCap;
       while (startX < size.width) {
         canvas.drawLine(
             Offset(startX, 0), Offset(startX + dashWidth, 0), paint);
