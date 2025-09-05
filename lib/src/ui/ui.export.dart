@@ -12,7 +12,6 @@ export 'widget/nonvisual/capturer.widget.dart';
 export 'widget/nonvisual/delayed.widget.dart';
 export 'widget/nonvisual/double_back_exit_app.widget.dart';
 export 'widget/nonvisual/interrupt_notification.widget.dart';
-export 'widget/nonvisual/navigation_builder.widget.dart';
 export 'widget/nonvisual/nil.widget.dart';
 export 'widget/nonvisual/repeat.widget.dart';
 export 'widget/visual/decorated/buttons.widget.dart';
