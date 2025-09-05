@@ -4,6 +4,7 @@
 - [🚀] `DashedLine`增加`strokeCap`参数;
 - [🚀] `SpringContainer`增加防抖(`debounceDuration`)参数;
 - [🚀] 增加`computeTextLineCount`计算文本需要的行数;
+- [🚀] 增加`NavigationBuilder`监听路由事件变化, 并以此构建Widget;
 
 ## 0.51.2
 - [🚀] `FutureX`增加`thenIf`和`thenIfNot`扩展;
