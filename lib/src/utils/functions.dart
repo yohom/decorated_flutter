@@ -431,3 +431,17 @@ Stream<(T1, T2, T3, T4)> combine4<T1, T2, T3, T4>(
     (a, b, c, d) => (a, b, c, d),
   );
 }
+
+/// 计算文本的行数
+final _countCache = <(String text, TextStyle style, double maxWidth), int>{};
+int computeLineCount(String text, TextStyle style, double maxWidth) {
+  final key = (text, style, maxWidth);
+  if (_countCache.containsKey(key)) return _countCache[key]!;
+
+  final textPainter = TextPainter(
+    text: TextSpan(text: text, style: style),
+    textDirection: TextDirection.ltr,
+  );
+  textPainter.layout(minWidth: 0, maxWidth: maxWidth);
+  return textPainter.computeLineMetrics().length;
+}
