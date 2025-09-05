@@ -14,11 +14,13 @@ class SpringContainer extends StatefulWidget {
     required this.child,
     required this.onPressed,
     this.minScale = 0.9,
+    this.debounceDuration = const Duration(milliseconds: 800),
   });
 
   final Widget child;
   final ContextCallback onPressed;
   final double minScale;
+  final Duration debounceDuration;
 
   @override
   _SpringContainerState createState() => _SpringContainerState();
@@ -26,11 +28,13 @@ class SpringContainer extends StatefulWidget {
 
 class _SpringContainerState extends State<SpringContainer> {
   late bool _pressed;
+  late bool _isProcessing;
 
   @override
   void initState() {
     super.initState();
     _pressed = false;
+    _isProcessing = false;
   }
 
   @override
@@ -59,7 +63,7 @@ class _SpringContainerState extends State<SpringContainer> {
             setState(() {
               _pressed = false;
             });
-            widget.onPressed(context);
+            _handlePress(context);
           },
           onTapDown: (_) {
             setState(() {
@@ -75,7 +79,7 @@ class _SpringContainerState extends State<SpringContainer> {
               });
             }
 
-            widget.onPressed(context);
+            _handlePress(context);
           },
           onTapCancel: () {
             setState(() {
@@ -91,6 +95,18 @@ class _SpringContainerState extends State<SpringContainer> {
         ),
       ),
     );
+  }
+
+  void _handlePress(BuildContext context) {
+    if (_isProcessing) return;
+
+    _isProcessing = true;
+    widget.onPressed(context);
+    Future.delayed(widget.debounceDuration, () {
+      if (mounted) {
+        setState(() => _isProcessing = false);
+      }
+    });
   }
 }
 
