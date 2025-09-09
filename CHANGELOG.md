@@ -4,6 +4,7 @@
 - [🚀] `DashedLine`增加`strokeCap`参数;
 - [🚀] `SpringContainer`增加防抖(`debounceDuration`)参数;
 - [🚀] 增加`computeTextLineCount`计算文本需要的行数;
+- [🚀] 禁用`DecoratedApp`的`autoCloseKeyboard`参数, 会影响其余地方的手势识别;
 
 ## 0.51.2
 - [🚀] `FutureX`增加`thenIf`和`thenIfNot`扩展;
