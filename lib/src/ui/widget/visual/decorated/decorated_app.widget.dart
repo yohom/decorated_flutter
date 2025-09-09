@@ -47,6 +47,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
     this.withCapturer = false,
     this.onNavigationNotification,
     this.routes = const {},
+    @Deprecated('禁止再使用, 会出现潜在的手势冲突(比如和地图缩放手势冲突), 只在需要的地方使用')
     this.autoCloseKeyboard = const CloseKeyboardConfig(),
   })  : _isRouter = false,
         routeInformationProvider = null,
@@ -175,6 +176,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   final bool withCapturer;
 
   /// 是否自动关闭输入法
+  @Deprecated('禁止再使用, 会出现潜在的手势冲突(比如和地图缩放手势冲突), 只在需要的地方使用')
   final CloseKeyboardConfig? autoCloseKeyboard;
 
   /// 是否使用router
