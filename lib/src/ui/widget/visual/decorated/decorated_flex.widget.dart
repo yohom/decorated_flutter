@@ -650,6 +650,7 @@ class DecoratedFlex extends StatelessWidget {
         physics: scrollPhysics,
         primary: primary,
         padding: scrollPadding,
+        clipBehavior: clipBehavior,
         keyboardDismissBehavior: keyboardDismissBehavior,
         child: result,
       );
