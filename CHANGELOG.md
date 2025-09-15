@@ -8,6 +8,7 @@
 - [🚀] 增加`AnimatedEdgeFade`;
 - [🚀] 增加`AnimatedShaderMask`;
 - [🚀] `DecoratedScrollableConfig`增加`customBuilder`, 供自定义样式;
+- [🚀] `DecoratedFlex`增加`scrollableClipBehavior`, 区分于`clipBehavior`;
 
 ## 0.51.2
 - [🚀] `FutureX`增加`thenIf`和`thenIfNot`扩展;
