@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'animated_shader_mask.widget.dart';
+
 class EdgeFade extends StatelessWidget {
   const EdgeFade({
     super.key,
@@ -29,6 +31,39 @@ class EdgeFade extends StatelessWidget {
           ],
         ).createShader(rect);
       },
+      blendMode: BlendMode.dstIn,
+      child: child,
+    );
+  }
+}
+
+class AnimatedEdgeFade extends StatelessWidget {
+  const AnimatedEdgeFade({
+    super.key,
+    this.stops = const [0.9, 1.0],
+    this.begin = Alignment.centerLeft,
+    this.end = Alignment.centerRight,
+    required this.child,
+  }) : assert(stops.length == 2 || stops.length == 4);
+
+  final List<double> stops;
+  final AlignmentGeometry begin;
+  final AlignmentGeometry end;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedShaderMask(
+      gradient: LinearGradient(
+        begin: begin,
+        end: end,
+        stops: stops,
+        colors: [
+          if (stops.length == 4) ...[Colors.transparent, Colors.black],
+          Colors.black,
+          Colors.transparent,
+        ],
+      ),
       blendMode: BlendMode.dstIn,
       child: child,
     );

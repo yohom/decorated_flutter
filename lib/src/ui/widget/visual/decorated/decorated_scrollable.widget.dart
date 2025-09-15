@@ -7,12 +7,14 @@ final class DecoratedScrollableConfig {
     this.decoration,
     this.duration = const Duration(milliseconds: 320),
     this.curve = Curves.decelerate,
+    this.customBuilder,
   });
 
   final bool show;
   final BoxDecoration? decoration;
   final Duration duration;
   final Curve curve;
+  final Widget Function(bool show, Widget child)? customBuilder;
 }
 
 /// 内部Scrollable滚动时, 动画显示[BoxDecoration]
@@ -64,12 +66,13 @@ class _DecoratedScrollableState extends State<DecoratedScrollable> {
         }
         return false;
       },
-      child: AnimatedContainer(
-        duration: widget.config.duration,
-        curve: widget.config.curve,
-        foregroundDecoration: decoration,
-        child: widget.child,
-      ),
+      child: widget.config.customBuilder?.call(_showDecoration, widget.child) ??
+          AnimatedContainer(
+            duration: widget.config.duration,
+            curve: widget.config.curve,
+            foregroundDecoration: decoration,
+            child: widget.child,
+          ),
     );
   }
 }

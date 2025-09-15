@@ -5,6 +5,9 @@
 - [🚀] `SpringContainer`增加防抖(`debounceDuration`)参数;
 - [🚀] 增加`computeTextLineCount`计算文本需要的行数;
 - [🚀] 优化`AutoCloseKeyboard`的内部实现, 使其不与其他部分的手势冲突;
+- [🚀] 增加`AnimatedEdgeFade`;
+- [🚀] 增加`AnimatedShaderMask`;
+- [🚀] `DecoratedScrollableConfig`增加`customBuilder`, 供自定义样式;
 
 ## 0.51.2
 - [🚀] `FutureX`增加`thenIf`和`thenIfNot`扩展;
