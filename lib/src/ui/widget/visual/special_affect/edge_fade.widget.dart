@@ -43,12 +43,14 @@ class AnimatedEdgeFade extends StatelessWidget {
     this.stops = const [0.9, 1.0],
     this.begin = Alignment.centerLeft,
     this.end = Alignment.centerRight,
+    this.enabled = true,
     required this.child,
   }) : assert(stops.length == 2 || stops.length == 4);
 
   final List<double> stops;
   final AlignmentGeometry begin;
   final AlignmentGeometry end;
+  final bool enabled;
   final Widget child;
 
   @override
@@ -58,11 +60,13 @@ class AnimatedEdgeFade extends StatelessWidget {
         begin: begin,
         end: end,
         stops: stops,
-        colors: [
-          if (stops.length == 4) ...[Colors.transparent, Colors.black],
-          Colors.black,
-          Colors.transparent,
-        ],
+        colors: enabled
+            ? [
+                if (stops.length == 4) ...[Colors.transparent, Colors.black],
+                Colors.black,
+                Colors.transparent,
+              ]
+            : List.filled(stops.length, Colors.black),
       ),
       blendMode: BlendMode.dstIn,
       child: child,
