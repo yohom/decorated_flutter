@@ -66,6 +66,7 @@ class DecoratedRow extends DecoratedFlex {
     super.sliver = false,
     super.verticalDirection,
     super.clipBehavior = Clip.none,
+    super.scrollableClipBehavior = Clip.hardEdge,
     super.iconColor,
     super.systemOverlayStyle,
     super.ignorePointer,
@@ -149,6 +150,7 @@ class DecoratedColumn extends DecoratedFlex {
     super.sliver = false,
     super.verticalDirection,
     super.clipBehavior = Clip.none,
+    super.scrollableClipBehavior = Clip.hardEdge,
     super.iconColor,
     super.systemOverlayStyle,
     super.ignorePointer,
@@ -232,6 +234,7 @@ class DecoratedFlex extends StatelessWidget {
     this.sliver = false,
     this.verticalDirection,
     this.clipBehavior = Clip.none,
+    this.scrollableClipBehavior = Clip.hardEdge,
     this.iconColor,
     this.systemOverlayStyle,
     this.ignorePointer,
@@ -356,7 +359,7 @@ class DecoratedFlex extends StatelessWidget {
   /// 垂直方向
   final VerticalDirection? verticalDirection;
 
-  final Clip clipBehavior;
+  final Clip clipBehavior, scrollableClipBehavior;
 
   final Color? iconColor;
 
@@ -650,7 +653,7 @@ class DecoratedFlex extends StatelessWidget {
         physics: scrollPhysics,
         primary: primary,
         padding: scrollPadding,
-        clipBehavior: clipBehavior,
+        clipBehavior: scrollableClipBehavior,
         keyboardDismissBehavior: keyboardDismissBehavior,
         child: result,
       );
