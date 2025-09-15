@@ -55,6 +55,7 @@ export 'widget/visual/preferred/visibility_builder.widget.dart';
 export 'widget/visual/preferred/want_keep_alive.widget.dart';
 export 'widget/visual/sliver/sliver_stack.widget.dart';
 export 'widget/visual/special_affect/animated_number.widget.dart';
+export 'widget/visual/special_affect/animated_shader_mask.widget.dart';
 export 'widget/visual/special_affect/auto_size_text.dart';
 export 'widget/visual/special_affect/back_gesture_detector.widget.dart';
 export 'widget/visual/special_affect/blur.widget.dart';
