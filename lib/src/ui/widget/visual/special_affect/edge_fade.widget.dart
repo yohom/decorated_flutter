@@ -11,6 +11,22 @@ class EdgeFade extends StatelessWidget {
     required this.child,
   }) : assert(stops.length == 2 || stops.length == 4);
 
+  const EdgeFade.vertical({
+    super.key,
+    this.stops = const [0.9, 1.0],
+    required this.child,
+  })  : begin = Alignment.topCenter,
+        end = Alignment.bottomCenter,
+        assert(stops.length == 2 || stops.length == 4);
+
+  const EdgeFade.horizontal({
+    super.key,
+    this.stops = const [0.9, 1.0],
+    required this.child,
+  })  : begin = Alignment.centerLeft,
+        end = Alignment.centerRight,
+        assert(stops.length == 2 || stops.length == 4);
+
   final List<double> stops;
   final AlignmentGeometry begin;
   final AlignmentGeometry end;
