@@ -128,6 +128,7 @@ extension StringX on String {
   }) {
     final leftIndex = indexOf(left);
     final rightIndex = minimum ? indexOf(and, leftIndex + 1) : lastIndexOf(and);
+    if (leftIndex == -1 || rightIndex == -1) return '';
     try {
       return substring(leftIndex + 1, rightIndex);
     } catch (e) {
