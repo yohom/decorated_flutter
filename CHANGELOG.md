@@ -9,6 +9,7 @@
 - [🚀] 增加`AnimatedShaderMask`;
 - [🚀] `DecoratedScrollableConfig`增加`customBuilder`, 供自定义样式;
 - [🚀] `DecoratedFlex`增加`scrollableClipBehavior`, 区分于`clipBehavior`;
+- [🚀] `substringBetween`增加是否最小截取的参数;
 
 ## 0.51.2
 - [🚀] `FutureX`增加`thenIf`和`thenIfNot`扩展;
