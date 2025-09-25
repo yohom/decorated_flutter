@@ -42,14 +42,6 @@ extension IterableX<T> on Iterable<T> {
     }
   }
 
-  T? firstWhereOrNull(bool Function(T element) test) {
-    try {
-      return firstWhere(test);
-    } catch (_) {
-      return null;
-    }
-  }
-
   T? getOrNull(int? index) {
     if (index == null) return null;
     try {
@@ -125,6 +117,7 @@ extension IterableX<T> on Iterable<T> {
     return null;
   }
 
+  @Deprecated('使用collection中的mapIndexed代替')
   Iterable<R> mapIndex<R>(R Function(int index, T e) cb) {
     return [for (var i = 0; i < length; i++) cb(i, elementAt(i))];
   }

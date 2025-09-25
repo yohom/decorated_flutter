@@ -7,6 +7,18 @@ void main() {
       '#/definitions/WebResponse«MdUserDTO»'.substringBetween('«', and: '»'),
       'MdUserDTO',
     );
+    expect(
+      '#/definitions/WebResponse«MdUserDTO» »'.substringBetween('«', and: '»'),
+      'MdUserDTO» ',
+    );
+    expect(
+      '#/definitions/WebResponse«MdUserDTO» »'.substringBetween(
+        '«',
+        and: '»',
+        minimum: true,
+      ),
+      'MdUserDTO',
+    );
   });
   test('string比大小', () {
     expect(r'$MT301' > r'$MT302', false);

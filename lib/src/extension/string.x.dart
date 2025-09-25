@@ -121,9 +121,14 @@ extension StringX on String {
     return substring(index + (includeSeparator ? 0 : 1));
   }
 
-  String substringBetween(String left, {required String and}) {
+  String substringBetween(
+    String left, {
+    required String and,
+    bool minimum = false,
+  }) {
     final leftIndex = indexOf(left);
-    final rightIndex = lastIndexOf(and);
+    final rightIndex = minimum ? indexOf(and, leftIndex + 1) : lastIndexOf(and);
+    if (leftIndex == -1 || rightIndex == -1) return '';
     try {
       return substring(leftIndex + 1, rightIndex);
     } catch (e) {
