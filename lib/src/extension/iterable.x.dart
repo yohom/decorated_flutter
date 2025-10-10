@@ -178,6 +178,10 @@ extension NumIterableX<T extends num> on Iterable<T> {
 extension ListX<T> on List<T> {
   List<T> get copied => List.of(this);
 
+  void removeLastOf(T item) {
+    removeAt(lastIndexOf(item));
+  }
+
   void removeType<R>() {
     removeWhere((element) => element is R);
   }
