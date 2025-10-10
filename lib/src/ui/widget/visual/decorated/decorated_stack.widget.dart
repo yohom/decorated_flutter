@@ -44,6 +44,7 @@ class DecoratedStack extends StatelessWidget {
     this.aspectRatio,
     this.childrenZIndex = ZIndex.bottom,
     this.transform,
+    this.transformAlignment,
     this.animationDuration,
     this.animationCurve,
     this.clipBehavior = Clip.none,
@@ -61,6 +62,7 @@ class DecoratedStack extends StatelessWidget {
   final double? width;
   final double? height;
   final Matrix4? transform;
+  final Alignment? transformAlignment;
   final Duration? animationDuration;
   final Curve? animationCurve;
 
@@ -188,6 +190,7 @@ class DecoratedStack extends StatelessWidget {
           decoration: decoration,
           constraints: constraints,
           transform: transform,
+          transformAlignment: transformAlignment,
           child: result,
         );
       } else {
@@ -201,6 +204,7 @@ class DecoratedStack extends StatelessWidget {
           constraints: constraints,
           clipBehavior: clipBehavior,
           transform: transform,
+          transformAlignment: transformAlignment,
           child: result,
         );
       }

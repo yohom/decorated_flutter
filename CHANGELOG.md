@@ -1,3 +1,6 @@
+## 0.51.4
+- [🚀] `DecoratedStack`补充`transformAlignment`参数;
+
 ## 0.51.3
 - [🚀] 增加`Rect.scale`扩展;
 - [🚀] 增加`SliverStack`;
