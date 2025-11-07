@@ -2,6 +2,7 @@
 - [🚀] `DecoratedStack`补充`transformAlignment`参数;
 - [🚀] `ListX`增加`removeLastOf`扩展;
 - [🚀] `EdgeFade`增加`enabled`参数;
+- [🚀] 增加`ValuePredicate<T>`;
 
 ## 0.51.3
 - [🚀] 增加`Rect.scale`扩展;
