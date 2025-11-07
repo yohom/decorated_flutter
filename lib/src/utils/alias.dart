@@ -10,3 +10,4 @@ typedef SearchKeywordCallback<T> = bool Function(T, String keyword);
 typedef FutureCallback = Future<void> Function();
 typedef FutureValueChanged<T> = Future<void> Function(T value);
 typedef WidgetValueBuilder<T> = Widget Function(BuildContext context, T value);
+typedef ValuePredicate<T> = bool Function(T value);

@@ -8,11 +8,13 @@ class EdgeFade extends StatelessWidget {
     this.stops = const [0.9, 1.0],
     this.begin = Alignment.centerLeft,
     this.end = Alignment.centerRight,
+    this.enabled = true,
     required this.child,
   }) : assert(stops.length == 2 || stops.length == 4);
 
   const EdgeFade.vertical({
     super.key,
+    this.enabled = true,
     this.stops = const [0.9, 1.0],
     required this.child,
   })  : begin = Alignment.topCenter,
@@ -21,12 +23,14 @@ class EdgeFade extends StatelessWidget {
 
   const EdgeFade.horizontal({
     super.key,
+    this.enabled = true,
     this.stops = const [0.9, 1.0],
     required this.child,
   })  : begin = Alignment.centerLeft,
         end = Alignment.centerRight,
         assert(stops.length == 2 || stops.length == 4);
 
+  final bool enabled;
   final List<double> stops;
   final AlignmentGeometry begin;
   final AlignmentGeometry end;
@@ -34,6 +38,8 @@ class EdgeFade extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (!enabled) return child;
+
     return ShaderMask(
       shaderCallback: (rect) {
         return LinearGradient(
