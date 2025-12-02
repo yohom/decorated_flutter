@@ -8,7 +8,6 @@ final class DecoratedScrollableConfig {
     this.duration = const Duration(milliseconds: 320),
     this.curve = Curves.decelerate,
     this.customBuilder,
-    this.allowBubbling = true,
   });
 
   final bool show;
@@ -16,9 +15,6 @@ final class DecoratedScrollableConfig {
   final Duration duration;
   final Curve curve;
   final Widget Function(bool show, Widget child)? customBuilder;
-
-  /// 是否允许滚动事件冒泡, 默认为`false`
-  final bool allowBubbling;
 }
 
 /// 内部Scrollable滚动时, 动画显示[BoxDecoration]
@@ -68,7 +64,7 @@ class _DecoratedScrollableState extends State<DecoratedScrollable> {
             _showDecoration = false;
           });
         }
-        return widget.config.allowBubbling;
+        return false;
       },
       child: widget.config.customBuilder?.call(_showDecoration, widget.child) ??
           AnimatedContainer(

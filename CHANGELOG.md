@@ -3,7 +3,6 @@
 - [🚀] `ListX`增加`removeLastOf`扩展;
 - [🚀] `EdgeFade`增加`enabled`参数;
 - [🚀] 增加`ValuePredicate<T>`;
-- [🚀] `DecoratedScrollable`增加是否允许滚动事件冒泡的参数;
 
 ## 0.51.3
 - [🚀] 增加`Rect.scale`扩展;
