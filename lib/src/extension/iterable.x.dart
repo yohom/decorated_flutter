@@ -391,6 +391,11 @@ extension SelectableListX<T extends Selectable> on List<T> {
       return indexOf(selected!);
     }
   }
+
+  /// 被选中的元素的索引列表
+  List<int> get selectedIndexes {
+    return whereOrEmpty((it) => it.isSelected).map(indexOf).toList();
+  }
 }
 
 extension FutureIterableX<T> on Iterable<Future<T>> {
