@@ -4,6 +4,7 @@
 - [🚀] `EdgeFade`增加`enabled`参数;
 - [🚀] 增加`ValuePredicate<T>`;
 - [🚀] `SelectableListX`增加`isAnySelected`和`isEverySelected`扩展;
+- [🚀] `SelectableListX`增加`selectedIndexes`扩展;
 
 ## 0.51.3
 - [🚀] 增加`Rect.scale`扩展;
