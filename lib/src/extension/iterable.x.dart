@@ -349,11 +349,8 @@ extension SelectableListX<T extends Selectable> on List<T> {
 
   /// 选择第[index]个元素
   List<T> selectAtIndex(int index) {
-    final target = getOrNull(index);
-    if (target == null) {
-      L.w('[DECORATED_FLUTTER] 索引 $index 处没有元素!');
-    } else {
-      target.isSelected = true;
+    for (int i = 0; i < length; i++) {
+      this[i].isSelected = i == index;
     }
     return this;
   }
