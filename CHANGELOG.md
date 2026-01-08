@@ -5,6 +5,7 @@
 - [🚀] 增加`ValuePredicate<T>`;
 - [🚀] `SelectableListX`增加`isAnySelected`和`isEverySelected`扩展;
 - [🚀] `SelectableListX`增加`selectedIndexes`扩展;
+- [🚀] `DateTimeRangeX`增加`asDay`扩展;
 
 ## 0.51.3
 - [🚀] 增加`Rect.scale`扩展;
