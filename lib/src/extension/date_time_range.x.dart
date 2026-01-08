@@ -16,6 +16,13 @@ extension DateTimeRangeX on DateTimeRange {
     }
   }
 
+  DateTimeRange asDay() {
+    return DateTimeRange(
+      start: start.copyWith(hour: 0, minute: 0, second: 0),
+      end: end.copyWith(hour: 0, minute: 0, second: 0),
+    );
+  }
+
   String format({String format = 'yyyy-MM-dd HH:mm:ss', String divider = '~'}) {
     return '${start.format(format)}$divider${end.format(format)}';
   }
