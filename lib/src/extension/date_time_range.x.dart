@@ -18,8 +18,8 @@ extension DateTimeRangeX on DateTimeRange {
 
   DateTimeRange asDay() {
     return DateTimeRange(
-      start: start.copyWith(hour: 0, minute: 0, second: 0),
-      end: end.copyWith(hour: 0, minute: 0, second: 0),
+      start: DateTime(start.year, start.month, start.day),
+      end: DateTime(end.year, end.month, end.day),
     );
   }
 
