@@ -15,7 +15,9 @@ extension DateTimeX on DateTime {
     return DateFormat(format, 'zh').format(this);
   }
 
-  bool isSameDay(DateTime other) {
+  bool isSameDay(DateTime? other) {
+    if (other == null) return false;
+
     return year == other.year && month == other.month && day == other.day;
   }
 
