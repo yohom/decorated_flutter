@@ -1,3 +1,6 @@
+## 0.51.5
+- [🚀] `DateTimeX`的`isSameDay`扩展参数优化;
+
 ## 0.51.4
 - [🚀] `DecoratedStack`补充`transformAlignment`参数;
 - [🚀] `ListX`增加`removeLastOf`扩展;
