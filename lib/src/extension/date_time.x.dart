@@ -1,4 +1,5 @@
 import 'package:decorated_flutter/src/utils/enums.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 extension DateTimeX on DateTime {
@@ -146,6 +147,14 @@ extension DateTimeX on DateTime {
 
   DateTime asYear() {
     return DateTime(year);
+  }
+
+  /// 单天转换成日期范围
+  DateTimeRange asDateRange() {
+    return DateTimeRange(
+      start: asDay(),
+      end: asDay().add(const Duration(days: 1)),
+    );
   }
 
   int dayOfYear() {
