@@ -27,7 +27,18 @@ extension DateTimeRangeX on DateTimeRange {
     return '${start.format(format)}$divider${end.format(format)}';
   }
 
-  bool contains(DateTime time) {
-    return time.isAfter(start) && time.isBefore(end);
+  bool contains(
+    DateTime time, {
+    bool includeStart = true,
+    bool includeEnd = false,
+  }) {
+    final startMillis = start.millisecondsSinceEpoch;
+    final endMillis = end.millisecondsSinceEpoch;
+    final timeMillis = time.millisecondsSinceEpoch;
+
+    return (includeStart
+            ? timeMillis >= startMillis
+            : timeMillis > startMillis) &&
+        (includeEnd ? timeMillis <= endMillis : timeMillis < endMillis);
   }
 }
