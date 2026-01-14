@@ -1,5 +1,6 @@
 ## 0.51.5
 - [🚀] `DateTimeX`的`isSameDay`扩展参数优化;
+- [🚀] `DateTimeX`增加`asDateRange`扩展;
 - [🚀] `DateTimeRangeX`的`contains`扩展方法, 增加`includeStart`和`includeEnd`;
 
 ## 0.51.4
