@@ -2,6 +2,7 @@
 - [🚀] `DateTimeX`的`isSameDay`扩展参数优化;
 - [🚀] `DateTimeX`增加`asDateRange`扩展;
 - [🚀] `DateTimeRangeX`的`contains`扩展方法, 增加`includeStart`和`includeEnd`;
+- [🚀] 增加`PREFERRED_NIL`;
 
 ## 0.51.4
 - [🚀] `DecoratedStack`补充`transformAlignment`参数;
