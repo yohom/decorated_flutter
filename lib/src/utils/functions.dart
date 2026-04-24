@@ -432,8 +432,10 @@ Stream<(T1, T2, T3, T4)> combine4<T1, T2, T3, T4>(
   );
 }
 
+typedef TextMetricsKey = (String text, TextStyle style, double maxWidth);
+
 /// 计算文本的行数
-final _countCache = <(String text, TextStyle style, double maxWidth), int>{};
+final _countCache = <TextMetricsKey, int>{};
 int computeLineCount(String text, TextStyle style, double maxWidth) {
   final key = (text, style, maxWidth);
   if (_countCache.containsKey(key)) return _countCache[key]!;
@@ -441,7 +443,19 @@ int computeLineCount(String text, TextStyle style, double maxWidth) {
   final textPainter = TextPainter(
     text: TextSpan(text: text, style: style),
     textDirection: TextDirection.ltr,
-  );
-  textPainter.layout(minWidth: 0, maxWidth: maxWidth);
-  return textPainter.computeLineMetrics().length;
+  )..layout(minWidth: 0, maxWidth: maxWidth);
+  return _countCache[key] = textPainter.computeLineMetrics().length;
+}
+
+/// 计算文本的高度
+final _heightCache = <TextMetricsKey, double>{};
+double computeTextHeight(String text, TextStyle style, double maxWidth) {
+  final key = (text, style, maxWidth);
+  if (_heightCache.containsKey(key)) return _heightCache[key]!;
+
+  final textPainter = TextPainter(
+    text: TextSpan(text: text, style: style),
+    textDirection: TextDirection.ltr,
+  )..layout(minWidth: 0, maxWidth: maxWidth);
+  return _heightCache[key] = textPainter.height;
 }
