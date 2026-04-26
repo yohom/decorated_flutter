@@ -27,16 +27,27 @@ extension DateTimeRangeX on DateTimeRange {
     return '${start.format(format)}$divider${end.format(format)}';
   }
 
-  DateTimeRange clamp({DateTime? lowerLimit, DateTime? upperLimit}) {
+  DateTimeRange clamp({
+    DateTime? startLowerLimit,
+    DateTime? startUpperLimit,
+    DateTime? endLowerLimit,
+    DateTime? endUpperLimit,
+  }) {
     var newStart = start;
     var newEnd = end;
 
-    if (lowerLimit != null && newStart.isBefore(lowerLimit)) {
-      newStart = lowerLimit;
+    if (startLowerLimit != null && newStart.isBefore(startLowerLimit)) {
+      newStart = startLowerLimit;
+    }
+    if (startUpperLimit != null && newStart.isAfter(startUpperLimit)) {
+      newStart = startUpperLimit;
     }
 
-    if (upperLimit != null && newEnd.isAfter(upperLimit)) {
-      newEnd = upperLimit;
+    if (endLowerLimit != null && newEnd.isBefore(endLowerLimit)) {
+      newEnd = endLowerLimit;
+    }
+    if (endUpperLimit != null && newEnd.isAfter(endUpperLimit)) {
+      newEnd = endUpperLimit;
     }
 
     return DateTimeRange(start: newStart, end: newEnd);
