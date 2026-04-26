@@ -27,6 +27,21 @@ extension DateTimeRangeX on DateTimeRange {
     return '${start.format(format)}$divider${end.format(format)}';
   }
 
+  DateTimeRange clamp({DateTime? lowerLimit, DateTime? upperLimit}) {
+    var newStart = start;
+    var newEnd = end;
+
+    if (lowerLimit != null && newStart.isBefore(lowerLimit)) {
+      newStart = lowerLimit;
+    }
+
+    if (upperLimit != null && newEnd.isAfter(upperLimit)) {
+      newEnd = upperLimit;
+    }
+
+    return DateTimeRange(start: newStart, end: newEnd);
+  }
+
   bool contains(
     DateTime time, {
     bool includeStart = true,

@@ -5,6 +5,7 @@
 - [🚀] 增加`PREFERRED_NIL`;
 - [🚀] 增加`NumberRange`类, 处理数字范围场景;
 - [🚀] 增加`computeTextHeight`计算文本高度;
+- [🚀] 增加`DateTimeRangeX`的`clamp`方法扩展方法;
 
 ## 0.51.4
 - [🚀] `DecoratedStack`补充`transformAlignment`参数;
