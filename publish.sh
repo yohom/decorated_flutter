@@ -82,7 +82,7 @@ git add pubspec.yaml
 git commit -m "chore: bump version."
 
 echo "4. 发布到 pub.dev..."
-pub_publish_no_build_v
+pub_publish_no_build
 
 echo "5. 结束 git flow 发布分支..."
 git flow release finish "$NEW_VERSION"
