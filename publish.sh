@@ -89,12 +89,7 @@ git commit -m "chore: bump version."
 
 # 4. 发布到 pub.dev
 echo "Publishing to pub.dev..."
-if command -v pub_publish_no_build &> /dev/null; then
-    pub_publish_no_build
-else
-    echo "Warning: pub_publish_no_build not found, trying dart pub publish..."
-    dart pub publish
-fi
+pub_publish_no_build_v
 
 # 5. 结束 git flow 发布分支
 git flow release finish "$NEW_VERSION"
