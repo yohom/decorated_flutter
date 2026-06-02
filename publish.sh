@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 source ~/.zshrc
 
 set -e
