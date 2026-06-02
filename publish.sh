@@ -67,24 +67,25 @@ bump_version() {
 
 CURRENT_VERSION=$(get_current_version)
 NEW_VERSION=$(bump_version "$CURRENT_VERSION" "$RELEASE_TYPE")
+RELEASE_MESSAGE="Release $NEW_VERSION"
 
 echo "当前版本: $CURRENT_VERSION"
 echo "新版本:     $NEW_VERSION"
 
 echo "1. 使用 git flow 创建发布分支..."
-git flow release start "$NEW_VERSION"
+yes y | git flow release start "$NEW_VERSION"
 
 echo "2. 更新 pubspec.yaml 中的版本号..."
 sed -i '' "s/version: $CURRENT_VERSION/version: $NEW_VERSION/" pubspec.yaml
 
 echo "3. 提交 git 更改..."
 git add pubspec.yaml
-git commit -m "chore: bump version."
+yes y | git commit -m "chore: bump version."
 
 echo "4. 发布到 pub.dev..."
-pub_publish_no_build
+yes y | pub_publish_no_build
 
 echo "5. 结束 git flow 发布分支..."
-git flow release finish "$NEW_VERSION"
+GIT_MERGE_AUTOEDIT=no yes y | git flow release finish -m "$RELEASE_MESSAGE" "$NEW_VERSION"
 
 echo "发布 $NEW_VERSION 完成！"
