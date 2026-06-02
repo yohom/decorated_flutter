@@ -83,7 +83,10 @@ git add pubspec.yaml
 yes y | git commit -m "chore: bump version."
 
 echo "4. 发布到 pub.dev..."
-yes y | pub_publish_no_build
+# 绕过 pub_publish_no_build alias，stdin 才能正确传递给 flutter 命令
+set_proxy
+yes y | flutter packages pub publish --server=https://pub.dartlang.org
+unset_proxy
 
 echo "5. 结束 git flow 发布分支..."
 GIT_MERGE_AUTOEDIT=no yes y | git flow release finish -m "$RELEASE_MESSAGE" "$NEW_VERSION"
