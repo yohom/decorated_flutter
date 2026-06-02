@@ -89,7 +89,7 @@ git commit -m "chore: bump version."
 
 # 4. 发布到 pub.dev
 echo "Publishing to pub.dev..."
-pub_publish_no_build_v
+set_proxy; flutter packages pub publish --server=https://pub.dartlang.org -v; unset_proxy
 
 # 5. 结束 git flow 发布分支
 git flow release finish "$NEW_VERSION"
