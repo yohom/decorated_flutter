@@ -20,6 +20,18 @@ enum Gender {
   male,
   female,
   unknown,
+  ;
+
+  String get name {
+    switch (this) {
+      case Gender.male:
+        return '男';
+      case Gender.female:
+        return '女';
+      case Gender.unknown:
+        return '保密';
+    }
+  }
 }
 
 enum Constellation {
@@ -36,4 +48,23 @@ enum Constellation {
   scorpio, // Scorpio 天蝎座（10月24日～11月22日）
   sagittarius, // Sagittarius 射手座（11月23日～12月21日）
   unknown, // 未知
+  ;
+
+  String get name {
+    return const [
+      '摩羯座',
+      '水瓶座',
+      '双鱼座',
+      '白羊座',
+      '金牛座',
+      '双子座',
+      '巨蟹座',
+      '狮子座',
+      '处女座',
+      '天秤座',
+      '天蝎座',
+      '射手座',
+      '未知',
+    ][index];
+  }
 }
