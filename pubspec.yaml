@@ -38,3 +38,7 @@ dev_dependencies:
     sdk: flutter
   mockito: any
   flutter_lints: any
+
+flutter:
+  assets:
+    - assets/city_picker/china_regions.json
