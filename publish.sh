@@ -50,7 +50,11 @@ bump_version() {
                 fi
                 ;;
             patch)
-                echo "$major.$minor.$((patch + 1))"
+                if [ -z "$dev_num" ]; then
+                    echo "$major.$minor.$((patch + 1))"
+                else
+                    echo "$major.$minor.$patch"
+                fi
                 ;;
             minor)
                 echo "$major.$((minor + 1)).0"
