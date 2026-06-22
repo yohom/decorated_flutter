@@ -51,4 +51,28 @@ unset_proxy
 echo "5. 结束 git flow 发布分支..."
 GIT_MERGE_AUTOEDIT=no yes y | git flow release finish -m "$RELEASE_MESSAGE" "$NEW_VERSION"
 
+echo "6. 推送代码到远程..."
+export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7890
+MAX_RETRIES=5
+
+push_with_retry() {
+    local branch=$1
+    local retry_count=0
+    while [ $retry_count -lt $MAX_RETRIES ]; do
+        if git push github $branch; then
+            echo "$branch 分支推送成功！"
+            return 0
+        else
+            retry_count=$((retry_count + 1))
+            echo "推送 $branch 失败，正在重试 ($retry_count/$MAX_RETRIES)..."
+            sleep 2
+        fi
+    done
+    echo "错误: 推送 $branch 失败，已达到最大重试次数"
+    return 1
+}
+
+push_with_retry master || exit 1
+push_with_retry develop || exit 1
+
 echo "发布 $NEW_VERSION 完成！"
