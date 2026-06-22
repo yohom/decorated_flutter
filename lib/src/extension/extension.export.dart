@@ -1,4 +1,5 @@
 export 'bool.x.dart';
+export 'completer.x.dart';
 export 'build_context.x.dart';
 export 'color.x.dart';
 export 'date_time.x.dart';

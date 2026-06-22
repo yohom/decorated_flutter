@@ -1,3 +1,6 @@
+## 0.52.1
+- [🚀] 增加`CompleterX`扩展, 用于安全调用`complete`方法;
+
 ## 0.51.5
 - [🚀] `DateTimeX`的`isSameDay`扩展参数优化;
 - [🚀] `DateTimeX`增加`asDateRange`扩展;
