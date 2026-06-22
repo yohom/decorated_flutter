@@ -58,6 +58,9 @@ class __DatePickerDialogState extends State<_DatePickerDialog> {
   void initState() {
     super.initState();
     _date = widget.initialDateTime ?? DateTime.now();
+    if (widget.maximumDate != null && _date.isAfter(widget.maximumDate!)) {
+      _date = widget.maximumDate!;
+    }
   }
 
   @override
