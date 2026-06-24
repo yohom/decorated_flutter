@@ -90,6 +90,7 @@ class ImageView extends StatelessWidget {
     this.rotation,
     this.rotationAlignment = Alignment.center,
     this.alignment = Alignment.center,
+    this.fadeIn = true,
   })  : imagePath = imageUri.isUrl ? null : imageUri,
         imageUrl = imageUri.isUrl ? imageUri : null,
         assert(
@@ -128,6 +129,7 @@ class ImageView extends StatelessWidget {
     this.rotation,
     this.rotationAlignment = Alignment.center,
     this.alignment = Alignment.center,
+    this.fadeIn = true,
   })  : imagePath = imageUri.isUrl ? null : imageUri,
         imageUrl = imageUri.isUrl ? imageUri : null,
         assert(
@@ -165,6 +167,7 @@ class ImageView extends StatelessWidget {
     this.rotation,
     this.rotationAlignment = Alignment.center,
     this.alignment = Alignment.center,
+    this.fadeIn = true,
   })  : imageUrl = null,
         assert(
           (darkImagePath != null && autoDarkMode == false) ||
@@ -201,6 +204,7 @@ class ImageView extends StatelessWidget {
     this.rotation,
     this.rotationAlignment = Alignment.center,
     this.alignment = Alignment.center,
+    this.fadeIn = true,
   })  : imagePath = null,
         assert(
           (darkImagePath != null && autoDarkMode == false) ||
@@ -283,6 +287,9 @@ class ImageView extends StatelessWidget {
   /// 翻转*弧度*
   final double? rotation;
   final Alignment? rotationAlignment;
+
+  /// 是否在图片加载完成后渐入
+  final bool fadeIn;
 
   @override
   Widget build(BuildContext context) {
@@ -428,6 +435,10 @@ class ImageView extends StatelessWidget {
                 memCacheWidth: _cacheWidth,
                 memCacheHeight: _cacheHeight,
                 alignment: alignment,
+                fadeInDuration:
+                    fadeIn ? const Duration(milliseconds: 500) : Duration.zero,
+                fadeOutDuration:
+                    fadeIn ? const Duration(milliseconds: 1000) : Duration.zero,
               );
         if (logEnable) {
           L.d('[DECORATED_FLUTTER] 使用CachedNetworkImage: $imageUrl');
@@ -476,53 +487,6 @@ class ImageView extends StatelessWidget {
 
     return result;
   }
-
-  // Widget _encryptedImage(BuildContext context, String imageUri) {
-  //   final isDarkMode = context.isDarkMode;
-  //   Color? _color = color;
-  //   if (autoDarkMode) {
-  //     _color = isDarkMode ? Colors.white : null;
-  //   }
-  //   final _width = size ?? width;
-  //   final _height = size ?? height;
-  //   final _cacheWidth = cacheSize ?? cacheWidth;
-  //   final _cacheHeight = cacheSize ?? cacheHeight;
-  //
-  //   Future<Uint8List> imageFuture;
-  //   if (kIsWeb) {
-  //     // web端就先不缓存了
-  //     imageFuture = Dio()
-  //         .get(imageUri, options: Options(responseType: ResponseType.bytes))
-  //         .then((value) => value.data);
-  //   } else {
-  //     imageFuture = DefaultCacheManager()
-  //         .getSingleFile(imageUri)
-  //         .then((value) => value.readAsBytes());
-  //   }
-  //
-  //   return FutureBuilder<Uint8List>(
-  //     future: imageFuture.then(ImageView._cryptoOption!.decrypt),
-  //     builder: (_, snapshot) {
-  //       if (snapshot.hasData) {
-  //         return Image.memory(
-  //           snapshot.requireData,
-  //           key: autoApplyKey ? Key(imageUri) : null,
-  //           width: _width,
-  //           height: _height,
-  //           cacheWidth: _cacheWidth,
-  //           cacheHeight: _cacheHeight,
-  //           color: _color,
-  //           fit: fit,
-  //           gaplessPlayback: true,
-  //         );
-  //       } else if (snapshot.hasError) {
-  //         return errorWidget ?? globalErrorWidget ?? const SizedBox.shrink();
-  //       } else {
-  //         return placeholder ?? globalPlaceholder ?? const SizedBox.shrink();
-  //       }
-  //     },
-  //   );
-  // }
 
   Widget _errorBuilder(
     BuildContext context,
