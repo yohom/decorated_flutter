@@ -26,21 +26,40 @@ get_current_version() {
     grep '^version: ' pubspec.yaml | sed 's/version: //'
 }
 
-CURRENT_VERSION=$(get_current_version)
 RELEASE_MESSAGE="Release $NEW_VERSION"
+RELEASE_PREFIX=$(git config --get gitflow.prefix.release || echo "release/")
+RELEASE_BRANCH="${RELEASE_PREFIX}${NEW_VERSION}"
 
-echo "当前版本: $CURRENT_VERSION"
 echo "新版本:     $NEW_VERSION"
 
-echo "1. 使用 git flow 创建发布分支..."
-yes y | git flow release start "$NEW_VERSION"
+echo "1. 准备 git flow 发布分支..."
+CURRENT_BRANCH=$(git branch --show-current)
+if [[ "$CURRENT_BRANCH" == "$RELEASE_BRANCH" ]]; then
+    echo "已在发布分支 $RELEASE_BRANCH，跳过创建。"
+elif git show-ref --verify --quiet "refs/heads/$RELEASE_BRANCH"; then
+    echo "发布分支 $RELEASE_BRANCH 已存在，切换到该分支继续。"
+    git switch "$RELEASE_BRANCH"
+else
+    yes y | git flow release start "$NEW_VERSION"
+fi
+
+CURRENT_VERSION=$(get_current_version)
+echo "当前版本: $CURRENT_VERSION"
 
 echo "2. 更新 pubspec.yaml 中的版本号..."
-sed -i '' "s/version: $CURRENT_VERSION/version: $NEW_VERSION/" pubspec.yaml
+if [[ "$CURRENT_VERSION" == "$NEW_VERSION" ]]; then
+    echo "pubspec.yaml 已是目标版本，跳过更新。"
+else
+    sed -i '' "s/^version: .*/version: $NEW_VERSION/" pubspec.yaml
+fi
 
 echo "3. 提交 git 更改..."
-git add pubspec.yaml
-yes y | git commit -m "chore: bump version."
+if git diff --quiet -- pubspec.yaml; then
+    echo "pubspec.yaml 没有版本变更，跳过提交。"
+else
+    git add pubspec.yaml
+    yes y | git commit -m "chore: bump version."
+fi
 
 echo "4. 发布到 pub.dev..."
 # 绕过 pub_publish_no_build alias，stdin 才能正确传递给 flutter 命令
