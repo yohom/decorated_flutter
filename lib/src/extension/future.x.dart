@@ -54,39 +54,62 @@ extension FutureX<T> on Future<T> {
       throw '请在MaterialApp/CupertinoApp中设置navigatorKey为gNavigatorKey';
     }
 
+    if (modal && _loadingEntry != null) {
+      L.i('[DECORATED_FLUTTER] 当前已在Loading中, 跳过此次Loading请求');
+      return this;
+    }
+
     _loadingStreamController.add(tag);
 
-    final overlay =
-        Overlay.maybeOf(context, rootOverlay: true) ?? gNavigator.overlay;
-    if (overlay == null) {
-      L.w('[DECORATED_FLUTTER] 无法获取到有效的Overlay! 请检查Widget树结构!');
-    }
-    final theme = Theme.of(context);
-    final controller = AnimationController(
-      duration: const Duration(milliseconds: 128),
-      vsync: Navigator.of(context),
-    );
-    final opacityAnimation =
-        Tween<double>(begin: 0.0, end: 1.0).animate(controller);
+    AnimationController? controller;
+    OverlayEntry? entry;
+    bool removed = false;
 
-    void __pop() {
-      controller.reverse().whenComplete(() {
-        _loadingEntry?.remove();
+    Future<void> __removeLoading() async {
+      if (removed) return;
+      removed = true;
+
+      final currentController = controller;
+      final currentEntry = entry;
+      try {
+        if (currentController != null &&
+            currentController.status != AnimationStatus.dismissed) {
+          await currentController.reverse();
+        }
+      } catch (e, s) {
+        L.w('[DECORATED_FLUTTER] Loading关闭动画出现异常: $e, 堆栈信息: $s');
+      }
+
+      if (currentEntry?.mounted == true) {
+        currentEntry!.remove();
+      }
+      if (identical(_loadingEntry, currentEntry)) {
         _loadingEntry = null;
-      });
+      }
+      currentController?.dispose();
+      controller = null;
     }
 
     if (modal) {
-      if (_loadingEntry != null) {
-        L.i('[DECORATED_FLUTTER] 当前已在Loading中, 跳过此次Loading请求');
-        return this;
+      final overlay =
+          Overlay.maybeOf(context, rootOverlay: true) ?? gNavigator.overlay;
+      if (overlay == null) {
+        L.w('[DECORATED_FLUTTER] 无法获取到有效的Overlay! 请检查Widget树结构!');
       }
 
+      final theme = Theme.of(context);
+      final loadingController = AnimationController(
+        duration: const Duration(milliseconds: 128),
+        vsync: Navigator.of(context),
+      );
+      controller = loadingController;
+      final opacityAnimation =
+          Tween<double>(begin: 0.0, end: 1.0).animate(loadingController);
       final text = loadingText ?? defaultLoadingText;
       final isCancelable = cancelable ?? loadingCancelable;
       final loadingWidget =
           loadingWidgetBuilder?.call(context, text) ?? ModalLoading(text);
-      _loadingEntry ??= OverlayEntry(
+      final loadingEntry = OverlayEntry(
         builder: (context) {
           return Theme(
             data: theme,
@@ -96,7 +119,7 @@ extension FutureX<T> on Future<T> {
                 child: PopScope(
                   canPop: isCancelable,
                   child: GestureDetector(
-                    onTap: isCancelable ? __pop : null,
+                    onTap: isCancelable ? __removeLoading : null,
                     child: loadingWidget,
                   ),
                 ),
@@ -111,17 +134,20 @@ extension FutureX<T> on Future<T> {
           );
         },
       );
+      entry = loadingEntry;
+      _loadingEntry = loadingEntry;
 
       try {
-        overlay?.insert(_loadingEntry!);
-        controller.forward();
+        overlay?.insert(loadingEntry);
+        loadingController.forward();
       } catch (e, s) {
         L.w('[DECORATED_FLUTTER] Loading时出现异常, 跳过此次Loading请求, 错误信息: $e, 堆栈信息: $s');
+        unawaited(__removeLoading());
       }
     }
 
-    return timeout(timeLimit ?? defaultTimeLimit).whenComplete(() {
-      __pop();
+    return timeout(timeLimit ?? defaultTimeLimit).whenComplete(() async {
+      await __removeLoading();
       _loadingStreamController.add(null);
     });
   }
