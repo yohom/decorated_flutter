@@ -26,21 +26,40 @@ get_current_version() {
     grep '^version: ' pubspec.yaml | sed 's/version: //'
 }
 
-CURRENT_VERSION=$(get_current_version)
 RELEASE_MESSAGE="Release $NEW_VERSION"
+RELEASE_PREFIX=$(git config --get gitflow.prefix.release || echo "release/")
+RELEASE_BRANCH="${RELEASE_PREFIX}${NEW_VERSION}"
 
-echo "当前版本: $CURRENT_VERSION"
 echo "新版本:     $NEW_VERSION"
 
-echo "1. 使用 git flow 创建发布分支..."
-yes y | git flow release start "$NEW_VERSION"
+echo "1. 准备 git flow 发布分支..."
+CURRENT_BRANCH=$(git branch --show-current)
+if [[ "$CURRENT_BRANCH" == "$RELEASE_BRANCH" ]]; then
+    echo "已在发布分支 $RELEASE_BRANCH，跳过创建。"
+elif git show-ref --verify --quiet "refs/heads/$RELEASE_BRANCH"; then
+    echo "发布分支 $RELEASE_BRANCH 已存在，切换到该分支继续。"
+    git switch "$RELEASE_BRANCH"
+else
+    yes y | git flow release start "$NEW_VERSION"
+fi
+
+CURRENT_VERSION=$(get_current_version)
+echo "当前版本: $CURRENT_VERSION"
 
 echo "2. 更新 pubspec.yaml 中的版本号..."
-sed -i '' "s/version: $CURRENT_VERSION/version: $NEW_VERSION/" pubspec.yaml
+if [[ "$CURRENT_VERSION" == "$NEW_VERSION" ]]; then
+    echo "pubspec.yaml 已是目标版本，跳过更新。"
+else
+    sed -i '' "s/^version: .*/version: $NEW_VERSION/" pubspec.yaml
+fi
 
 echo "3. 提交 git 更改..."
-git add pubspec.yaml
-yes y | git commit -m "chore: bump version."
+if git diff --quiet -- pubspec.yaml; then
+    echo "pubspec.yaml 没有版本变更，跳过提交。"
+else
+    git add pubspec.yaml
+    yes y | git commit -m "chore: bump version."
+fi
 
 echo "4. 发布到 pub.dev..."
 # 绕过 pub_publish_no_build alias，stdin 才能正确传递给 flutter 命令
@@ -50,5 +69,29 @@ unset_proxy
 
 echo "5. 结束 git flow 发布分支..."
 GIT_MERGE_AUTOEDIT=no yes y | git flow release finish -m "$RELEASE_MESSAGE" "$NEW_VERSION"
+
+echo "6. 推送代码到远程..."
+export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7890
+MAX_RETRIES=5
+
+push_with_retry() {
+    local branch=$1
+    local retry_count=0
+    while [ $retry_count -lt $MAX_RETRIES ]; do
+        if git push github $branch; then
+            echo "$branch 分支推送成功！"
+            return 0
+        else
+            retry_count=$((retry_count + 1))
+            echo "推送 $branch 失败，正在重试 ($retry_count/$MAX_RETRIES)..."
+            sleep 2
+        fi
+    done
+    echo "错误: 推送 $branch 失败，已达到最大重试次数"
+    return 1
+}
+
+push_with_retry master || exit 1
+push_with_retry develop || exit 1
 
 echo "发布 $NEW_VERSION 完成！"
