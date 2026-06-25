@@ -1,6 +1,8 @@
 ## 0.52.1
+- [🚀] `AutoCloseKeyboard`支持局部配置覆盖外层配置, 包括局部禁用时屏蔽外层自动收起键盘逻辑;
 - [🚀] 增加`CompleterX`扩展, 用于安全调用`complete`方法;
 - [🚀] `ImageView`增加是否渐入的参数;
+- [🚀] 增加键盘高度监听器, 提供全局变量`KeyboardHeightObserver.height`获取键盘高度;
 
 ## 0.51.5
 - [🚀] `DateTimeX`的`isSameDay`扩展参数优化;

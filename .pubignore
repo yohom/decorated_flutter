@@ -1,0 +1,17 @@
+.DS_Store
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.idea/
+.packages
+.pub/
+.vscode/
+
+build/
+coverage/
+doc/api/
+
+*.iml
+*.log
+pubspec.lock
+publish.sh

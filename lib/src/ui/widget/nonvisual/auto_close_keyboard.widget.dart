@@ -22,27 +22,25 @@ class _AutoCloseKeyboardState extends State<AutoCloseKeyboard> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.config.enabled) {
-      return Actions(
-        actions: <Type, Action<Intent>>{
-          EditableTextTapOutsideIntent:
-              CallbackAction<EditableTextTapOutsideIntent>(
-            onInvoke: _handlePointerDown,
-          ),
-          EditableTextTapUpOutsideIntent:
-              CallbackAction<EditableTextTapUpOutsideIntent>(
-            onInvoke: _handlePointerUp,
-          ),
-        },
-        child: widget.child,
-      );
-    } else {
-      return widget.child;
-    }
+    return Actions(
+      actions: <Type, Action<Intent>>{
+        EditableTextTapOutsideIntent:
+            CallbackAction<EditableTextTapOutsideIntent>(
+          onInvoke: _handlePointerDown,
+        ),
+        EditableTextTapUpOutsideIntent:
+            CallbackAction<EditableTextTapUpOutsideIntent>(
+          onInvoke: _handlePointerUp,
+        ),
+      },
+      child: widget.child,
+    );
   }
 
   void _handlePointerUp(EditableTextTapUpOutsideIntent intent) {
-    if (_latestPointerDownEvent == null) {
+    if (!widget.config.enabled ||
+        !widget.config.clearFocus ||
+        _latestPointerDownEvent == null) {
       return;
     }
 
@@ -59,6 +57,10 @@ class _AutoCloseKeyboardState extends State<AutoCloseKeyboard> {
   }
 
   void _handlePointerDown(EditableTextTapOutsideIntent intent) {
+    if (!widget.config.enabled) {
+      return;
+    }
+
     // Store the latest pointer down event to calculate the distance between
     // the pointer down and pointer up events later.
     _latestPointerDownEvent = intent.pointerDownEvent;
