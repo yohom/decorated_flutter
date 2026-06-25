@@ -1,3 +1,4 @@
+import 'package:decorated_flutter/src/mixin/mixin.export.dart';
 import 'package:flutter/widgets.dart';
 
 /// Builds (and rebuilds) a [builder] with the current height of the software keyboard.
@@ -18,37 +19,9 @@ class KeyboardHeightBuilder extends StatefulWidget {
 }
 
 class _KeyboardHeightBuilderState extends State<KeyboardHeightBuilder>
-    with WidgetsBindingObserver {
-  double _keyboardHeight = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangeMetrics() {
-    final keyboardHeight = EdgeInsets.fromViewPadding(
-            View.of(context).viewInsets, View.of(context).devicePixelRatio)
-        .bottom;
-    if (keyboardHeight == _keyboardHeight) {
-      return;
-    }
-
-    setState(() {
-      _keyboardHeight = keyboardHeight;
-    });
-  }
-
+    with WidgetsBindingObserver, KeyboardHeightMixin<KeyboardHeightBuilder> {
   @override
   Widget build(BuildContext context) {
-    return widget.builder(context, _keyboardHeight);
+    return widget.builder(context, keyboardHeight);
   }
 }
