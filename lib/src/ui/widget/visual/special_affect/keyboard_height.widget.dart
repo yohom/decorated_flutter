@@ -7,8 +7,8 @@ const _kKeyboardHeightStorageKey = 'decorated_flutter.keyboardHeight';
 const _kKeyboardHeightPersistDelay = Duration(milliseconds: 150);
 
 class KeyboardHeightObserver extends StatefulWidget {
-  static double get height {
-    return gDecoratedStorage.getDouble(_kKeyboardHeightStorageKey) ?? 0;
+  static double? get height {
+    return gDecoratedStorage.getDouble(_kKeyboardHeightStorageKey);
   }
 
   const KeyboardHeightObserver({
@@ -65,7 +65,7 @@ class _KeyboardHeightObserverState extends State<KeyboardHeightObserver>
   }
 
   void _schedulePersist(double keyboardHeight) {
-    if (keyboardHeight <= 0) {
+    if (keyboardHeight <= 100) {
       _persistTimer?.cancel();
       return;
     }
