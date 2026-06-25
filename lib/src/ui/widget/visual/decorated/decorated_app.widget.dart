@@ -45,6 +45,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
     this.restorationScopeId,
     this.home,
     this.withCapturer = false,
+    this.withKeyboardHeightObserver = false,
     this.onNavigationNotification,
     this.routes = const {},
     this.autoCloseKeyboard = const CloseKeyboardConfig(),
@@ -88,6 +89,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
     this.showSemanticsDebugger = false,
     this.restorationScopeId,
     this.withCapturer = false,
+    this.withKeyboardHeightObserver = false,
     this.onNavigationNotification,
     // ------------------ navigator2专有 ------------------//
     this.routeInformationProvider,
@@ -174,6 +176,9 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   /// 是否内建截图组件Capturer
   final bool withCapturer;
 
+  /// 是否内建键盘高度监听器
+  final bool withKeyboardHeightObserver;
+
   /// 是否自动关闭输入法
   final CloseKeyboardConfig? autoCloseKeyboard;
 
@@ -184,6 +189,10 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget __builder(BuildContext context, Widget? child) {
       Widget result = builder != null ? builder!.call(context, child) : child!;
+
+      if (withKeyboardHeightObserver) {
+        result = KeyboardHeightObserver(child: result);
+      }
 
       if (withCapturer) {
         result = Capturer(child: result);
