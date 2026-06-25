@@ -155,6 +155,10 @@ bool toggle();
     2. override方法；
     3. 事件处理(私有)方法；
 - StatefulWidget不做限制；
+- 测试文件禁止直接 `import 'package:decorated_flutter/decorated_flutter.dart';`，只按需导入待测试的类、扩展或方法，以及 `flutter_test`；
+  这样可以避免 `isTrue` 之类的符号和测试框架命名冲突，也能让测试依赖更清晰；
+- 更新 `CHANGELOG.md` 前先查看 `pubspec.yaml` 当前版本；如果版本是 `x.y.z-dev.n`，则把更新内容写到 `x.y.z` 段落下，不新增 `next`；
+- `CHANGELOG.md` 面向使用者，只记录用户可感知的功能、修复、行为变化，不记录测试规范、仓库约定等内部流程调整；
 
 ## 名称
 - 在遵循规范的前提下，不要怕名字太长或者太啰嗦，清晰精确的名称好于莫名其妙的省略；

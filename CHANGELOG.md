@@ -1,4 +1,5 @@
 ## 0.52.1
+- [🚀] `AutoCloseKeyboard`支持局部配置覆盖外层配置, 包括局部禁用时屏蔽外层自动收起键盘逻辑;
 - [🚀] 增加`CompleterX`扩展, 用于安全调用`complete`方法;
 - [🚀] `ImageView`增加是否渐入的参数;
 
