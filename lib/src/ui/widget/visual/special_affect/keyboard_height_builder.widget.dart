@@ -1,4 +1,12 @@
+import 'dart:async';
+
+import 'package:decorated_flutter/src/utils/logger/logger.dart';
+import 'package:decorated_flutter/src/utils/objects.dart';
 import 'package:flutter/widgets.dart';
+
+const _kKeyboardHeightStorageKey = 'decorated_flutter.keyboardHeight';
+const _kKeyboardHeightStableDelay = Duration(milliseconds: 150);
+const _kKeyboardHeightZeroThreshold = 1.0;
 
 /// Builds (and rebuilds) a [builder] with the current height of the software keyboard.
 ///
@@ -11,7 +19,7 @@ class KeyboardHeightBuilder extends StatefulWidget {
     required this.builder,
   });
 
-  final Widget Function(BuildContext, double keyboardHeight) builder;
+  final Widget Function(double realtimeHeight, double stableHeight) builder;
 
   @override
   State<KeyboardHeightBuilder> createState() => _KeyboardHeightBuilderState();
@@ -19,36 +27,105 @@ class KeyboardHeightBuilder extends StatefulWidget {
 
 class _KeyboardHeightBuilderState extends State<KeyboardHeightBuilder>
     with WidgetsBindingObserver {
-  double _keyboardHeight = 0;
+  Timer? _stableKeyboardHeightTimer;
+  double _pendingKeyboardHeight = 0;
+  late double _keyboardHeight = _cachedKeyboardHeight;
+  late double _stableKeyboardHeight = _cachedKeyboardHeight;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) {
+        return;
+      }
+      _handleKeyboardHeightChange(_readKeyboardHeight());
+    });
+  }
+
+  @override
+  void didChangeMetrics() {
+    _handleKeyboardHeightChange(_readKeyboardHeight());
   }
 
   @override
   void dispose() {
+    _stableKeyboardHeightTimer?.cancel();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
   @override
-  void didChangeMetrics() {
-    final keyboardHeight = EdgeInsets.fromViewPadding(
-            View.of(context).viewInsets, View.of(context).devicePixelRatio)
-        .bottom;
-    if (keyboardHeight == _keyboardHeight) {
+  Widget build(BuildContext context) {
+    return widget.builder(_keyboardHeight, _stableKeyboardHeight);
+  }
+
+  double _readKeyboardHeight() {
+    final rawKeyboardHeight = EdgeInsets.fromViewPadding(
+      View.of(context).viewInsets,
+      View.of(context).devicePixelRatio,
+    ).bottom;
+    if (rawKeyboardHeight < _kKeyboardHeightZeroThreshold) {
+      return 0;
+    }
+    return rawKeyboardHeight;
+  }
+
+  void _handleKeyboardHeightChange(double nextKeyboardHeight) {
+    _scheduleStableKeyboardHeight(nextKeyboardHeight);
+
+    if (nextKeyboardHeight == _keyboardHeight) {
       return;
     }
 
+    // L.i('[DECORATED_FLUTTER] 键盘高度发生变化: $nextKeyboardHeight');
+
     setState(() {
-      _keyboardHeight = keyboardHeight;
+      _keyboardHeight = nextKeyboardHeight;
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return widget.builder(context, _keyboardHeight);
+  void _scheduleStableKeyboardHeight(double nextKeyboardHeight) {
+    if (nextKeyboardHeight <= 0) {
+      _stableKeyboardHeightTimer?.cancel();
+      return;
+    }
+
+    _pendingKeyboardHeight = nextKeyboardHeight;
+    _stableKeyboardHeightTimer?.cancel();
+    _stableKeyboardHeightTimer = Timer(
+      _kKeyboardHeightStableDelay,
+      _updateStableKeyboardHeight,
+    );
+  }
+
+  void _updateStableKeyboardHeight() {
+    if (!mounted) {
+      return;
+    }
+
+    final nextStableKeyboardHeight = _pendingKeyboardHeight;
+    if (nextStableKeyboardHeight == _stableKeyboardHeight) {
+      return;
+    }
+
+    if (nextStableKeyboardHeight > 0 &&
+        nextStableKeyboardHeight != _cachedKeyboardHeight) {
+      L.i('[DECORATED_FLUTTER] 缓存键盘高度: $nextStableKeyboardHeight');
+      gDecoratedStorage.setDouble(
+        _kKeyboardHeightStorageKey,
+        nextStableKeyboardHeight,
+      );
+    }
+
+    L.i('[DECORATED_FLUTTER] 稳定键盘高度发生变化: $nextStableKeyboardHeight');
+    setState(() {
+      _stableKeyboardHeight = nextStableKeyboardHeight;
+    });
+  }
+
+  double get _cachedKeyboardHeight {
+    return gDecoratedStorage.getDouble(_kKeyboardHeightStorageKey) ?? 0;
   }
 }
