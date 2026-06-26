@@ -3,6 +3,7 @@
 - [🚀] 增加`CompleterX`扩展, 用于安全调用`complete`方法;
 - [🚀] `ImageView`增加是否渐入的参数;
 - [🚀] 增加键盘高度监听器, 提供全局变量`KeyboardHeightObserver.height`获取键盘高度;
+- [🚀] 增加`MultiListenableBuilder`类, 用于监听多个`Listenable`, 并根据`Listenable`的状态更新`builder`;
 
 ## 0.51.5
 - [🚀] `DateTimeX`的`isSameDay`扩展参数优化;
