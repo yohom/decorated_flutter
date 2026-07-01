@@ -21,6 +21,18 @@ mixin Selectable {
   }
 }
 
+/// 字符串可选
+///
+/// 用于显示字符串, 并且可以被选中
+final class StringSelectable with Selectable {
+  final String value;
+
+  StringSelectable(this.value);
+
+  @override
+  String get description => value;
+}
+
 /// 可持久化
 ///
 /// 仅仅是标记

@@ -6,6 +6,7 @@
 - [🚀] 增加`MultiListenableBuilder`类, 用于监听多个`Listenable`, 并根据`Listenable`的状态更新`builder`;
 - [🚀] `AutoScrollBottomSheet`增加`backgroundColor`参数, 用于自定义背景颜色;
 - [🚀] `Selectable`增加`description`字段, 用于显示文本;
+- [🚀] 增加`StringSelectable`类, 用于显示文本;
 
 ## 0.51.5
 - [🚀] `DateTimeX`的`isSameDay`扩展参数优化;
