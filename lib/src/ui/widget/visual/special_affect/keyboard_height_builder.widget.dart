@@ -5,7 +5,7 @@ import 'package:decorated_flutter/src/utils/objects.dart';
 import 'package:flutter/widgets.dart';
 
 const _kKeyboardHeightStorageKey = 'decorated_flutter.keyboardHeight';
-const _kKeyboardHeightStableDelay = Duration(milliseconds: 150);
+const _kKeyboardHeightStableDelay = Duration(milliseconds: 250);
 const _kKeyboardHeightZeroThreshold = 100.0;
 
 /// Builds (and rebuilds) a [builder] with the current height of the software keyboard.
