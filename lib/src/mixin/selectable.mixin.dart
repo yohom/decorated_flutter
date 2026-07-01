@@ -3,6 +3,11 @@ mixin Selectable {
   bool get selected => isSelected;
   bool isSelected = false;
 
+  /// 描述
+  ///
+  /// 设计上是用于显示用的字段, 也可以自由发挥
+  String get description => toString();
+
   void reset() {
     isSelected = false;
   }
