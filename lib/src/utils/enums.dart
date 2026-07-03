@@ -34,7 +34,10 @@ enum Gender {
   }
 }
 
-enum Constellation {
+@Deprecated('请使用 Zodiac 代替')
+typedef Constellation = Zodiac;
+
+enum Zodiac {
   capricorn, // Capricorn 摩羯座（12月22日～1月20日）
   aquarius, // Aquarius 水瓶座（1月21日～2月19日）
   pisces, // Pisces 双鱼座（2月20日～3月20日）

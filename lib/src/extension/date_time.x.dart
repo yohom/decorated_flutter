@@ -85,56 +85,55 @@ extension DateTimeX on DateTime {
     return DateTime(month > 12 ? year + 1 : year, month > 12 ? 1 : month);
   }
 
-  /// 星座
-  Constellation get constellation {
+  @Deprecated('请使用 zodiac 代替')
+  Zodiac get constellation => zodiac;
+
+  /// Zodiac
+  Zodiac get zodiac {
     int month = this.month;
     int day = this.day;
-    Constellation constellation = Constellation.unknown;
+    Zodiac zodiac = Zodiac.unknown;
 
     switch (month) {
       case DateTime.january:
-        constellation =
-            day < 21 ? Constellation.capricorn : Constellation.aquarius;
+        zodiac = day < 21 ? Zodiac.capricorn : Zodiac.aquarius;
         break;
       case DateTime.february:
-        constellation =
-            day < 20 ? Constellation.aquarius : Constellation.pisces;
+        zodiac = day < 20 ? Zodiac.aquarius : Zodiac.pisces;
         break;
       case DateTime.march:
-        constellation = day < 21 ? Constellation.pisces : Constellation.aries;
+        zodiac = day < 21 ? Zodiac.pisces : Zodiac.aries;
         break;
       case DateTime.april:
-        constellation = day < 21 ? Constellation.aries : Constellation.taurus;
+        zodiac = day < 21 ? Zodiac.aries : Zodiac.taurus;
         break;
       case DateTime.may:
-        constellation = day < 22 ? Constellation.taurus : Constellation.gemini;
+        zodiac = day < 22 ? Zodiac.taurus : Zodiac.gemini;
         break;
       case DateTime.june:
-        constellation = day < 22 ? Constellation.gemini : Constellation.cancer;
+        zodiac = day < 22 ? Zodiac.gemini : Zodiac.cancer;
         break;
       case DateTime.july:
-        constellation = day < 23 ? Constellation.cancer : Constellation.leo;
+        zodiac = day < 23 ? Zodiac.cancer : Zodiac.leo;
         break;
       case DateTime.august:
-        constellation = day < 24 ? Constellation.leo : Constellation.virgo;
+        zodiac = day < 24 ? Zodiac.leo : Zodiac.virgo;
         break;
       case DateTime.september:
-        constellation = day < 24 ? Constellation.virgo : Constellation.libra;
+        zodiac = day < 24 ? Zodiac.virgo : Zodiac.libra;
         break;
       case DateTime.october:
-        constellation = day < 24 ? Constellation.libra : Constellation.scorpio;
+        zodiac = day < 24 ? Zodiac.libra : Zodiac.scorpio;
         break;
       case DateTime.november:
-        constellation =
-            day < 23 ? Constellation.scorpio : Constellation.sagittarius;
+        zodiac = day < 23 ? Zodiac.scorpio : Zodiac.sagittarius;
         break;
       case DateTime.december:
-        constellation =
-            day < 22 ? Constellation.sagittarius : Constellation.capricorn;
+        zodiac = day < 22 ? Zodiac.sagittarius : Zodiac.capricorn;
         break;
     }
 
-    return constellation;
+    return zodiac;
   }
 
   DateTime asDay() {
