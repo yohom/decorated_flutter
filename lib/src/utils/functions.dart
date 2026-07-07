@@ -459,3 +459,49 @@ double computeTextHeight(String text, TextStyle style, double maxWidth) {
   )..layout(minWidth: 0, maxWidth: maxWidth);
   return _heightCache[key] = textPainter.height;
 }
+
+/// 宽松类型转换
+T? safeAs<T>(Object? value) {
+  if (value == null) return null;
+
+  if (T == String) return value.toString() as T;
+
+  if (T == int) {
+    if (value is int) return value as T;
+    if (value is num) return value.toInt() as T;
+    return int.tryParse(value.toString()) as T?;
+  }
+
+  if (T == double) {
+    if (value is double) return value as T;
+    if (value is num) return value.toDouble() as T;
+    return double.tryParse(value.toString()) as T?;
+  }
+
+  if (T == bool) {
+    if (value is bool) return value as T;
+    final normalized = value.toString().trim().toLowerCase();
+    if (normalized == 'true' || normalized == '1') return true as T;
+    if (normalized == 'false' || normalized == '0') return false as T;
+    return null;
+  }
+
+  if (T == List<dynamic>) {
+    if (value is List) return value as T;
+    return null;
+  }
+
+  if (T == Map<String, dynamic>) {
+    if (value is Map<String, dynamic>) return value as T;
+    if (value is Map) {
+      return value.map((key, value) => MapEntry(key.toString(), value)) as T;
+    }
+    return null;
+  }
+
+  try {
+    return value as T;
+  } catch (_) {
+    return null;
+  }
+}
