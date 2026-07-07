@@ -8,6 +8,7 @@
 - [🚀] `AutoScrollBottomSheet`增加`backgroundColor`参数, 用于自定义背景颜色;
 - [🚀] `Selectable`增加`description`字段, 用于显示文本;
 - [🚀] 增加`StringSelectable`类, 用于显示文本;
+- [🚀] 增加`safeAs`方法, 用于更安全的as操作, 尽可能使as成功;
 
 ## 0.51.5
 - [🚀] `DateTimeX`的`isSameDay`扩展参数优化;
