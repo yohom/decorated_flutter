@@ -1,3 +1,6 @@
+## 0.52.2
+- [🔧] `DecoratedFlex`多余的key传入修正
+
 ## 0.52.1
 - [⚠️] 将`Constellation`枚举重命名为`Zodiac`, `constellation`getter重命名为`zodiac`, 旧术语保留deprecated别名;
 - [🚀] `AutoCloseKeyboard`支持局部配置覆盖外层配置, 包括局部禁用时屏蔽外层自动收起键盘逻辑;

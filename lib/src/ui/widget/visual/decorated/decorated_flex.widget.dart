@@ -621,7 +621,6 @@ class DecoratedFlex extends StatelessWidget {
         overflow != null) {
       final parent = DefaultTextStyle.of(context);
       result = DefaultTextStyle(
-        key: key,
         style: parent.style.merge(textStyle),
         textAlign: textAlign ?? parent.textAlign,
         softWrap: softWrap ?? parent.softWrap,
