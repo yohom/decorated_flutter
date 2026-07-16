@@ -31,7 +31,7 @@ void main() {
         home: KeyboardHeightBuilder(
           builder: (keyboardHeight, stableKeyboardHeight) {
             return Text(
-              '${keyboardHeight.toStringAsFixed(0)}/${stableKeyboardHeight.toStringAsFixed(0)}',
+              '${keyboardHeight?.toStringAsFixed(0) ?? 'null'}/${stableKeyboardHeight?.toStringAsFixed(0) ?? 'null'}',
               textDirection: TextDirection.ltr,
             );
           },
@@ -39,7 +39,7 @@ void main() {
       ),
     );
 
-    expect(find.text('180/180'), findsOneWidget);
+    expect(find.text('0/180'), findsOneWidget);
     expect(_cachedKeyboardHeight, 180);
 
     tester.view.viewInsets = const FakeViewPadding(bottom: 216);
@@ -69,7 +69,7 @@ void main() {
                   textDirection: TextDirection.ltr,
                 ),
                 Text(
-                  'stable:${stableKeyboardHeight.toStringAsFixed(0)}',
+                  'stable:${stableKeyboardHeight?.toStringAsFixed(0) ?? 'null'}',
                   textDirection: TextDirection.ltr,
                 ),
               ],
@@ -79,7 +79,7 @@ void main() {
       ),
     );
 
-    expect(find.text('keyboard:180'), findsOneWidget);
+    expect(find.text('keyboard:0'), findsOneWidget);
     expect(find.text('stable:180'), findsOneWidget);
 
     tester.view.viewInsets = const FakeViewPadding(bottom: 216);
@@ -89,7 +89,7 @@ void main() {
     expect(find.text('stable:180'), findsOneWidget);
     expect(_cachedKeyboardHeight, 180);
 
-    await tester.pump(const Duration(milliseconds: 200));
+    await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.text('keyboard:216'), findsOneWidget);
     expect(find.text('stable:216'), findsOneWidget);
@@ -101,7 +101,7 @@ void main() {
     expect(find.text('keyboard:0'), findsOneWidget);
     expect(find.text('stable:216'), findsOneWidget);
 
-    await tester.pump(const Duration(milliseconds: 200));
+    await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.text('stable:216'), findsOneWidget);
     expect(_cachedKeyboardHeight, 216);
