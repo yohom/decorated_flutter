@@ -1,5 +1,6 @@
 ## 0.52.2
 - [🔧] `DecoratedFlex`多余的key传入修正
+- [🚀] `ImageView`增加`cacheKey`参数透传
 
 ## 0.52.1
 - [⚠️] 将`Constellation`枚举重命名为`Zodiac`, `constellation`getter重命名为`zodiac`, 旧术语保留deprecated别名;

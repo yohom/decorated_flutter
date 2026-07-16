@@ -16,11 +16,15 @@ class ImageViewProvider extends ImageProvider {
     String uri, {
     int? maxHeight,
     int? maxWidth,
+    String? cacheKey,
+    Map<String, String>? headers,
   }) : _delegate = uri.startsWith('http')
             ? CachedNetworkImageProvider(
                 uri,
                 maxHeight: maxHeight,
                 maxWidth: maxHeight,
+                cacheKey: cacheKey,
+                headers: headers,
               )
             : (uri.startsWith('/') || uri.startsWith('file://'))
                 ? FileImage(File(uri)) as ImageProvider
@@ -90,6 +94,7 @@ class ImageView extends StatelessWidget {
     this.rotation,
     this.rotationAlignment = Alignment.center,
     this.alignment = Alignment.center,
+    this.cacheKey,
     this.fadeIn = true,
   })  : imagePath = imageUri.isUrl ? null : imageUri,
         imageUrl = imageUri.isUrl ? imageUri : null,
@@ -129,6 +134,7 @@ class ImageView extends StatelessWidget {
     this.rotation,
     this.rotationAlignment = Alignment.center,
     this.alignment = Alignment.center,
+    this.cacheKey,
     this.fadeIn = true,
   })  : imagePath = imageUri.isUrl ? null : imageUri,
         imageUrl = imageUri.isUrl ? imageUri : null,
@@ -169,6 +175,7 @@ class ImageView extends StatelessWidget {
     this.alignment = Alignment.center,
     this.fadeIn = true,
   })  : imageUrl = null,
+        cacheKey = null,
         assert(
           (darkImagePath != null && autoDarkMode == false) ||
               darkImagePath == null,
@@ -204,6 +211,7 @@ class ImageView extends StatelessWidget {
     this.rotation,
     this.rotationAlignment = Alignment.center,
     this.alignment = Alignment.center,
+    this.cacheKey,
     this.fadeIn = true,
   })  : imagePath = null,
         assert(
@@ -291,6 +299,9 @@ class ImageView extends StatelessWidget {
   /// 是否在图片加载完成后渐入
   final bool fadeIn;
 
+  /// 缓存key
+  final String? cacheKey;
+
   @override
   Widget build(BuildContext context) {
     final isDarkMode = context.isDarkMode;
@@ -341,6 +352,7 @@ class ImageView extends StatelessWidget {
                 colorBlendMode: colorBlendMode,
                 cacheWidth: _cacheWidth,
                 cacheHeight: _cacheHeight,
+                headers: headers,
                 errorBuilder: _errorBuilder,
                 alignment: alignment,
               )
@@ -435,6 +447,7 @@ class ImageView extends StatelessWidget {
                 memCacheWidth: _cacheWidth,
                 memCacheHeight: _cacheHeight,
                 alignment: alignment,
+                cacheKey: cacheKey,
                 fadeInDuration:
                     fadeIn ? const Duration(milliseconds: 500) : Duration.zero,
                 fadeOutDuration:
