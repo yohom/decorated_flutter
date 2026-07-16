@@ -31,7 +31,7 @@ void main() {
         home: KeyboardHeightBuilder(
           builder: (keyboardHeight, stableKeyboardHeight) {
             return Text(
-              '${keyboardHeight?.toStringAsFixed(0) ?? 'null'}/${stableKeyboardHeight?.toStringAsFixed(0) ?? 'null'}',
+              '${keyboardHeight.toStringAsFixed(0)}/${stableKeyboardHeight?.toStringAsFixed(0) ?? 'null'}',
               textDirection: TextDirection.ltr,
             );
           },
