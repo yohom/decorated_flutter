@@ -1,4 +1,5 @@
 ## 0.52.2
+- [🚀] 日志增加可拖拽、缩放和关闭的浮层查看能力
 - [🔧] `DecoratedFlex`多余的key传入修正
 - [🔧] 键盘高度没有获取到的时候, `stableHeight`使用null, 而不是0
 - [🚀] `ImageView`增加`cacheKey`参数透传
