@@ -19,7 +19,7 @@ class KeyboardHeightBuilder extends StatefulWidget {
     required this.builder,
   });
 
-  final Widget Function(double realtimeHeight, double stableHeight) builder;
+  final Widget Function(double realtimeHeight, double? stableHeight) builder;
 
   @override
   State<KeyboardHeightBuilder> createState() => _KeyboardHeightBuilderState();
@@ -28,13 +28,14 @@ class KeyboardHeightBuilder extends StatefulWidget {
 class _KeyboardHeightBuilderState extends State<KeyboardHeightBuilder>
     with WidgetsBindingObserver {
   Timer? _stableKeyboardHeightTimer;
-  double _pendingKeyboardHeight = 0;
-  late double _keyboardHeight = _cachedKeyboardHeight;
-  late double _stableKeyboardHeight = _cachedKeyboardHeight;
+  double? _pendingKeyboardHeight;
+  double _keyboardHeight = 0;
+  double? _stableKeyboardHeight;
 
   @override
   void initState() {
     super.initState();
+    _stableKeyboardHeight = _cachedKeyboardHeight;
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) {
@@ -86,8 +87,8 @@ class _KeyboardHeightBuilderState extends State<KeyboardHeightBuilder>
     });
   }
 
-  void _scheduleStableKeyboardHeight(double nextKeyboardHeight) {
-    if (nextKeyboardHeight <= 0) {
+  void _scheduleStableKeyboardHeight(double? nextKeyboardHeight) {
+    if (nextKeyboardHeight == null || nextKeyboardHeight <= 0) {
       _stableKeyboardHeightTimer?.cancel();
       return;
     }
@@ -106,6 +107,9 @@ class _KeyboardHeightBuilderState extends State<KeyboardHeightBuilder>
     }
 
     final nextStableKeyboardHeight = _pendingKeyboardHeight;
+    if (nextStableKeyboardHeight == null) {
+      return;
+    }
     if (nextStableKeyboardHeight == _stableKeyboardHeight) {
       return;
     }
@@ -125,7 +129,7 @@ class _KeyboardHeightBuilderState extends State<KeyboardHeightBuilder>
     });
   }
 
-  double get _cachedKeyboardHeight {
-    return gDecoratedStorage.getDouble(_kKeyboardHeightStorageKey) ?? 0;
+  double? get _cachedKeyboardHeight {
+    return gDecoratedStorage.getDouble(_kKeyboardHeightStorageKey);
   }
 }
