@@ -18,113 +18,199 @@ class LogOverlay extends StatefulWidget {
 
 class _LogOverlayState extends State<LogOverlay> {
   static const _minimumSize = Size(240, 180);
+  static const _minimizedSize = Size(52, 52);
+  static const _minimizedBottomMargin = 80.0;
   var _size = const Size(360, 480);
   var _offset = const Offset(16, 72);
+  Offset? _minimizedOffset;
+  var _isMinimized = true;
+  var _isDragging = false;
   var _showNetworkOnly = false;
+
+  Duration get _animationDuration =>
+      _isDragging ? Duration.zero : const Duration(milliseconds: 280);
 
   @override
   Widget build(BuildContext context) {
     final available = MediaQuery.sizeOf(context);
-    final size = Size(
-        min(_size.width, available.width), min(_size.height, available.height));
-    final offset = Offset(
-      _offset.dx.clamp(0, max(0, available.width - size.width)).toDouble(),
-      _offset.dy.clamp(0, max(0, available.height - size.height)).toDouble(),
+    final minimizedOffset = Offset(
+      available.width - _minimizedSize.width - 16,
+      available.height -
+          _minimizedSize.height -
+          MediaQuery.paddingOf(context).bottom -
+          _minimizedBottomMargin,
+    );
+    final expandedSize = Size(
+      min(_size.width, available.width),
+      min(_size.height, available.height),
+    );
+    final expandedOffset = Offset(
+      _offset.dx
+          .clamp(0, max(0, available.width - expandedSize.width))
+          .toDouble(),
+      _offset.dy
+          .clamp(0, max(0, available.height - expandedSize.height))
+          .toDouble(),
     );
     return Stack(
       children: [
-        Positioned(
-          left: offset.dx,
-          top: offset.dy,
-          width: size.width,
-          height: size.height,
-          child: DecoratedColumn(
+        AnimatedPositioned(
+          duration: _animationDuration,
+          curve: Curves.easeInOutCubic,
+          left: _isMinimized
+              ? (_minimizedOffset ?? minimizedOffset).dx
+              : expandedOffset.dx,
+          top: _isMinimized
+              ? (_minimizedOffset ?? minimizedOffset).dy
+              : expandedOffset.dy,
+          width: _isMinimized ? _minimizedSize.width : expandedSize.width,
+          height: _isMinimized ? _minimizedSize.height : expandedSize.height,
+          child: AnimatedContainer(
+            duration: _animationDuration,
+            curve: Curves.easeInOutCubic,
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
               color: const Color(0xCC171717),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(_isMinimized ? 26 : 12),
             ),
-            children: [
-              GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onPanUpdate: (details) => _move(details.delta, available, size),
-                child: DecoratedRow(
-                  color: const Color(0xE6000000),
-                  children: [
-                    DecoratedText(
-                      '本地日志',
-                      padding: EdgeInsets.symmetric(horizontal: 12),
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    const Spacer(),
-                    TextButton(
-                      onPressed: () => setState(() => _showNetworkOnly = false),
-                      child: Text(
-                        '全部',
-                        style: TextStyle(
-                          color:
-                              _showNetworkOnly ? Colors.white54 : Colors.white,
-                        ),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () => setState(() => _showNetworkOnly = true),
-                      child: Text(
-                        '网络',
-                        style: TextStyle(
-                          color:
-                              _showNetworkOnly ? Colors.white : Colors.white54,
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: widget.onClose,
-                      icon: const Icon(Icons.close, color: Colors.white),
-                      tooltip: '关闭日志',
-                    ),
-                  ],
-                ),
-              ),
-              DecoratedStack(
-                expanded: true,
-                children: [
-                  Positioned.fill(
-                    child: _LogList(
-                      talker: widget.talker,
-                      networkOnly: _showNetworkOnly,
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onPanUpdate: (details) =>
-                          _resize(details.delta, available),
-                      child: const Padding(
-                        padding: EdgeInsets.all(8),
-                        child: _ResizeHandleIcon(),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+            child: _isMinimized
+                ? _buildMinimized(available)
+                : _buildExpanded(available, expandedSize),
           ),
         ),
       ],
     );
   }
 
+  Widget _buildExpanded(Size available, Size size) {
+    return DecoratedColumn(
+      children: [
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onPanStart: (_) => setState(() => _isDragging = true),
+          onPanUpdate: (details) => _move(details.delta, available, size),
+          onPanEnd: (_) => setState(() => _isDragging = false),
+          child: DecoratedRow(
+            color: const Color(0xE6000000),
+            children: [
+              DecoratedText(
+                '本地日志',
+                padding: EdgeInsets.symmetric(horizontal: 12),
+                style: TextStyle(color: Colors.white),
+              ),
+              const Spacer(),
+              TextButton(
+                onPressed: () => setState(() => _showNetworkOnly = false),
+                child: Text(
+                  '全部',
+                  style: TextStyle(
+                    color: _showNetworkOnly ? Colors.white54 : Colors.white,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () => setState(() => _showNetworkOnly = true),
+                child: Text(
+                  '网络',
+                  style: TextStyle(
+                    color: _showNetworkOnly ? Colors.white : Colors.white54,
+                  ),
+                ),
+              ),
+              IconButton(
+                onPressed: () => _minimize(
+                  available,
+                  MediaQuery.paddingOf(context).bottom,
+                ),
+                icon: const Icon(Icons.minimize, color: Colors.white),
+                tooltip: '最小化日志',
+              ),
+              IconButton(
+                onPressed: widget.onClose,
+                icon: const Icon(Icons.close, color: Colors.white),
+                tooltip: '关闭日志',
+              ),
+            ],
+          ),
+        ),
+        DecoratedStack(
+          expanded: true,
+          children: [
+            Positioned.fill(
+              child: _LogList(
+                talker: widget.talker,
+                networkOnly: _showNetworkOnly,
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onPanStart: (_) => setState(() => _isDragging = true),
+                onPanUpdate: (details) => _resize(details.delta, available),
+                onPanEnd: (_) => setState(() => _isDragging = false),
+                child: const Padding(
+                  padding: EdgeInsets.all(8),
+                  child: _ResizeHandleIcon(),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildMinimized(Size available) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () => setState(() => _isMinimized = false),
+      onPanStart: (_) => setState(() => _isDragging = true),
+      onPanUpdate: (details) => _move(details.delta, available, _minimizedSize),
+      onPanEnd: (_) => setState(() => _isDragging = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 220),
+        curve: Curves.easeOutCubic,
+        decoration: BoxDecoration(
+          color: const Color(0xE6000000),
+          borderRadius: BorderRadius.circular(26),
+        ),
+        child: const Center(
+          child: Icon(Icons.article_outlined, color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  void _minimize(Size available, double bottomSafeArea) {
+    setState(() {
+      _minimizedOffset ??= Offset(
+        available.width - _minimizedSize.width - 16,
+        available.height -
+            _minimizedSize.height -
+            bottomSafeArea -
+            _minimizedBottomMargin,
+      );
+      _isMinimized = true;
+    });
+  }
+
   void _move(Offset delta, Size available, Size size) {
     setState(() {
-      _offset = Offset(
-        (_offset.dx + delta.dx)
-            .clamp(0, max(0, available.width - size.width))
-            .toDouble(),
-        (_offset.dy + delta.dy)
-            .clamp(0, max(0, available.height - size.height))
-            .toDouble(),
-      );
+      if (_isMinimized) {
+        final currentOffset = _minimizedOffset ??
+            Offset(
+              available.width - _minimizedSize.width - 16,
+              available.height - _minimizedSize.height - _minimizedBottomMargin,
+            );
+        _minimizedOffset = _clampOffset(
+          currentOffset + delta,
+          available,
+          size,
+        );
+        return;
+      }
+      _offset = _clampOffset(_offset + delta, available, size);
     });
   }
 
@@ -142,13 +228,34 @@ class _LogOverlayState extends State<LogOverlay> {
       );
     });
   }
+
+  Offset _clampOffset(Offset offset, Size available, Size size) {
+    return Offset(
+      offset.dx.clamp(0, max(0, available.width - size.width)).toDouble(),
+      offset.dy.clamp(0, max(0, available.height - size.height)).toDouble(),
+    );
+  }
 }
 
-class _LogList extends StatelessWidget {
+class _LogList extends StatefulWidget {
   const _LogList({required this.talker, required this.networkOnly});
 
   final Talker talker;
   final bool networkOnly;
+
+  @override
+  State<_LogList> createState() => _LogListState();
+}
+
+class _LogListState extends State<_LogList> {
+  final _scrollController = ScrollController();
+  TalkerData? _latestLog;
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -157,11 +264,11 @@ class _LogList extends StatelessWidget {
       cardColor: Color(0xB3292929),
     );
     return TalkerBuilder(
-      talker: talker,
+      talker: widget.talker,
       builder: (_, data) {
         final logs = data
             .where((item) {
-              if (!networkOnly) return true;
+              if (!widget.networkOnly) return true;
               return item.key == TalkerKey.httpRequest ||
                   item.key == TalkerKey.httpResponse ||
                   item.key == TalkerKey.httpError;
@@ -169,15 +276,47 @@ class _LogList extends StatelessWidget {
             .toList()
             .reversed
             .toList();
+        final latestLog = logs.isEmpty ? null : logs.first;
+        if (latestLog != null && !identical(latestLog, _latestLog)) {
+          _latestLog = latestLog;
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (_scrollController.hasClients &&
+                _scrollController.position.pixels > 0) {
+              _scrollController.animateTo(
+                0,
+                duration: const Duration(milliseconds: 280),
+                curve: Curves.easeOutCubic,
+              );
+            }
+          });
+        }
+
         return ListView.builder(
-          padding: EdgeInsets.only(top: 12),
+          controller: _scrollController,
+          padding: const EdgeInsets.only(top: 12),
           itemCount: logs.length,
           itemBuilder: (_, index) {
             final log = logs[index];
-            return TalkerDataCard(
+            final card = TalkerDataCard(
+              key: ValueKey(log),
               data: log,
               color: log.getFlutterColor(theme),
               backgroundColor: theme.cardColor,
+            );
+            if (index != 0) return card;
+            return TweenAnimationBuilder<double>(
+              key: ValueKey(log),
+              tween: Tween(begin: 0, end: 1),
+              duration: const Duration(milliseconds: 280),
+              curve: Curves.easeOutCubic,
+              builder: (_, value, child) => Opacity(
+                opacity: value,
+                child: Transform.translate(
+                  offset: Offset(0, -12 * (1 - value)),
+                  child: child,
+                ),
+              ),
+              child: card,
             );
           },
         );

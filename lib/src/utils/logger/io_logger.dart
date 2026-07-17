@@ -8,7 +8,7 @@ import 'package:talker_flutter/talker_flutter.dart';
 
 import '_log_overlay.widget.dart';
 
-final _kDivider = '\n${'-' * 100}\n';
+final _kDivider = '\n${'-' * 80}\n';
 
 class Logger extends ILogger {
   late final _talker = TalkerFlutter.init(
