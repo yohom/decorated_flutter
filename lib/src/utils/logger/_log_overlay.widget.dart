@@ -169,7 +169,7 @@ class _LogOverlayState extends State<LogOverlay> {
       onTap: () => setState(() => _isMinimized = false),
       onPanStart: (_) => setState(() => _isDragging = true),
       onPanUpdate: (details) => _move(details.delta, available, _minimizedSize),
-      onPanEnd: (_) => setState(() => _isDragging = false),
+      onPanEnd: (_) => _snapMinimizedToEdge(available),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 220),
         curve: Curves.easeOutCubic,
@@ -244,6 +244,18 @@ class _LogOverlayState extends State<LogOverlay> {
       offset.dx.clamp(0, max(0, available.width - size.width)).toDouble(),
       offset.dy.clamp(0, max(0, available.height - size.height)).toDouble(),
     );
+  }
+
+  void _snapMinimizedToEdge(Size available) {
+    setState(() {
+      _isDragging = false;
+      final offset = _minimizedOffset;
+      if (offset == null) return;
+
+      final maxLeft = available.width - _minimizedSize.width - 8;
+      final left = offset.dx < available.width / 2 ? 8.0 : maxLeft;
+      _minimizedOffset = Offset(left, offset.dy);
+    });
   }
 }
 
