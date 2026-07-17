@@ -1,18 +1,20 @@
+import 'dart:async';
+
 import 'package:decorated_flutter/decorated_flutter.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
-final _kDivider = '\n${'-' * 100}\n';
+import '_log_overlay.widget.dart';
+
+final _kDivider = '\n${'-' * 80}\n';
 
 class Logger extends ILogger {
-  final _talker = TalkerFlutter.init(
-    settings: TalkerSettings(
-      enabled: !kReleaseMode,
-    ),
+  late final _talker = TalkerFlutter.init(
+    settings: TalkerSettings(enabled: enabled),
   );
+  Completer<void>? _overlayCompleter;
 
   String get _context {
     try {
@@ -27,31 +29,31 @@ class Logger extends ILogger {
 
   @override
   void d(Object content) {
-    if (kReleaseMode) return;
+    if (!enabled) return;
     _talker.debug('$_context$_kDivider$content');
   }
 
   @override
   void w(Object content) {
-    if (kReleaseMode) return;
+    if (!enabled) return;
     _talker.warning('$_context$_kDivider$content');
   }
 
   @override
   void i(Object content) {
-    if (kReleaseMode) return;
+    if (!enabled) return;
     _talker.info('$_context$_kDivider$content');
   }
 
   @override
   void e(Object content) {
-    if (kReleaseMode) return;
+    if (!enabled) return;
     _talker.error('$_context$_kDivider$content');
   }
 
   @override
   void v(Object content) {
-    if (kReleaseMode) return;
+    if (!enabled) return;
     _talker.verbose('$_context$_kDivider$content');
   }
 
@@ -68,10 +70,34 @@ class Logger extends ILogger {
   }
 
   @override
+  Future<void> openOverlay() {
+    final currentCompleter = _overlayCompleter;
+    if (currentCompleter != null) return currentCompleter.future;
+
+    final overlay = gNavigatorKey.currentState?.overlay;
+    if (overlay == null) return Future.value();
+
+    final completer = Completer<void>();
+    late final OverlayEntry entry;
+    entry = OverlayEntry(
+      builder: (_) => LogOverlay(
+        talker: _talker,
+        onClose: () {
+          entry.remove();
+          _overlayCompleter = null;
+          completer.complete();
+        },
+      ),
+    );
+    _overlayCompleter = completer;
+    overlay.insert(entry);
+    return completer.future;
+  }
+
+  @override
   Interceptor get dioLogger {
-    return kReleaseMode
-        ? const Interceptor()
-        : TalkerDioLogger(
+    return enabled
+        ? TalkerDioLogger(
             talker: _talker,
             settings: const TalkerDioLoggerSettings(
               printRequestHeaders: true,
@@ -80,6 +106,10 @@ class Logger extends ILogger {
               printRequestData: true,
               printResponseData: true,
             ),
-          );
+          )
+        : const Interceptor();
   }
+
+  @override
+  NavigatorObserver get navigatorObserver => TalkerRouteObserver(_talker);
 }

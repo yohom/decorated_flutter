@@ -1,8 +1,9 @@
 @Deprecated('统一使用io_logger')
-library html_logger;
+library;
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
 import 'logger.dart';
@@ -62,4 +63,7 @@ class Logger extends ILogger {
             responseHeader: true,
           );
   }
+
+  @override
+  NavigatorObserver get navigatorObserver => TalkerRouteObserver(_talker);
 }

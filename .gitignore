@@ -282,3 +282,6 @@ playground.xcworkspace
 .idea/misc.xml
 .idea/modules.xml
 .flutter-plugins-dependencies
+
+# MiMoCode
+.mimocode/
