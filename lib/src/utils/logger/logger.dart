@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 import 'io_logger.dart';
 
@@ -33,4 +34,6 @@ abstract class ILogger {
   void dispose() {}
 
   Interceptor get dioLogger;
+
+  NavigatorObserver get navigatorObserver;
 }

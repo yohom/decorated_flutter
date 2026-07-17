@@ -109,4 +109,7 @@ class Logger extends ILogger {
           )
         : const Interceptor();
   }
+
+  @override
+  NavigatorObserver get navigatorObserver => TalkerRouteObserver(_talker);
 }
