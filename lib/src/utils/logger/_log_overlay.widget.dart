@@ -3,6 +3,9 @@ import 'dart:math';
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+// Talker 暂未公开导出日志文件分享控制器
+// ignore: implementation_imports
+import 'package:talker_flutter/src/controller/talker_view_controller.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
 @internal
@@ -93,29 +96,28 @@ class _LogOverlayState extends State<LogOverlay> {
           child: DecoratedRow(
             color: const Color(0xE6000000),
             children: [
-              DecoratedText(
-                '本地日志',
-                padding: EdgeInsets.symmetric(horizontal: 12),
-                style: TextStyle(color: Colors.white),
+              IconButton(
+                onPressed: () {
+                  widget.talker.cleanHistory();
+                  setState(() {});
+                },
+                icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
+                tooltip: '清空日志',
+              ),
+              IconButton(
+                onPressed: () => _shareLogs(),
+                icon: const Icon(Icons.ios_share_outlined, color: Colors.white),
+                tooltip: '分享日志',
               ),
               const Spacer(),
-              TextButton(
-                onPressed: () => setState(() => _showNetworkOnly = false),
-                child: Text(
-                  '全部',
-                  style: TextStyle(
-                    color: _showNetworkOnly ? Colors.white54 : Colors.white,
-                  ),
+              IconButton(
+                onPressed: () =>
+                    setState(() => _showNetworkOnly = !_showNetworkOnly),
+                icon: Icon(
+                  Icons.http,
+                  color: _showNetworkOnly ? Colors.white : Colors.white54,
                 ),
-              ),
-              TextButton(
-                onPressed: () => setState(() => _showNetworkOnly = true),
-                child: Text(
-                  '网络',
-                  style: TextStyle(
-                    color: _showNetworkOnly ? Colors.white : Colors.white54,
-                  ),
-                ),
+                tooltip: _showNetworkOnly ? '显示全部日志' : '仅显示网络日志',
               ),
               IconButton(
                 onPressed: () => _minimize(
@@ -193,6 +195,14 @@ class _LogOverlayState extends State<LogOverlay> {
       );
       _isMinimized = true;
     });
+  }
+
+  Future<void> _shareLogs() {
+    return TalkerViewController(talker: widget.talker).downloadLogsFile(
+      widget.talker.history.text(
+        timeFormat: widget.talker.settings.timeFormat,
+      ),
+    );
   }
 
   void _move(Offset delta, Size available, Size size) {
