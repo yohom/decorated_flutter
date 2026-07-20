@@ -20,7 +20,7 @@ extension AssetImageX on ImageProvider {
     } else if (_this is MemoryImage) {
       return _this.bytes;
     } else {
-      throw '暂未支持的Image类型';
+      throw '暂未支持的Image类型 ${_this.runtimeType}';
     }
   }
 }
