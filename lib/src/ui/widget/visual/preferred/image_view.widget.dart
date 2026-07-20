@@ -32,6 +32,9 @@ class ImageViewProvider extends ImageProvider {
 
   final ImageProvider _delegate;
 
+  /// 图片数据
+  Future<Uint8List> get imageData => _delegate.imageData;
+
   @override
   Future<Object> obtainKey(ImageConfiguration configuration) {
     return _delegate.obtainKey(configuration);
