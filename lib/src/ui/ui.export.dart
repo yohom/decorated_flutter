@@ -1,6 +1,7 @@
 export 'animation/fade_slide.transition.dart';
 export 'animation/show_up.transition.dart';
 export 'dialog/date.dialog.dart';
+export 'route/hero_dialog.route.dart';
 export 'misc/no_transition_page_builder.dart';
 export 'misc/uri_builder.dart';
 export 'route/custom_material.route.dart';
