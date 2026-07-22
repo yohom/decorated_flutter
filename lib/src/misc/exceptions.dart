@@ -11,3 +11,16 @@ class BizException {
     return 'BizException{code: $code, message: $message, cause: $cause}';
   }
 }
+
+class BizError extends Error {
+  BizError(this.code, this.message, {this.cause});
+
+  final String code;
+  final String message;
+  final Object? cause;
+
+  @override
+  String toString() {
+    return 'BizError{code: $code, message: $message, cause: $cause}';
+  }
+}
