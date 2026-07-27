@@ -1,4 +1,5 @@
 ## 0.52.2
+- [🚀] 增加`showHeroOverlay`，用于不切换路由且不打断当前手势的弹窗展示。
 - [🚀] 增加`HeroDialogRoute`, 解决`DialogRoute`不支持`Hero`的问题
 - [🚀] 日志增加可拖拽、缩放、最小化、筛选、清空和分享的浮层查看能力
 - [🔧] `DecoratedFlex`多余的key传入修正
