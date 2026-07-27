@@ -10,7 +10,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
-          body: HeroDialogScope(
+          body: HeroOverlayScope(
             child: Builder(
               builder: (context) {
                 return Column(

@@ -3,46 +3,44 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 /// Hero 弹窗共享元素飞行内容的构造器。
-typedef HeroDialogFlightBuilder = Widget Function(
-  BuildContext context,
-  Widget child,
-);
+typedef HeroOverlayFlightBuilder = Widget Function(
+    BuildContext context, Widget child);
 
 /// 为 [OverlayHero] 提供配对范围。
 ///
 /// 将源内容与 [showHeroOverlay] 的调用点置于同一个 Scope 中；弹窗内容会
 /// 自动复用该 Scope，因此拥有相同 [OverlayHero.tag] 的组件会执行共享元素飞行。
-class HeroDialogScope extends StatefulWidget {
+class HeroOverlayScope extends StatefulWidget {
   /// 创建 Hero 弹窗共享元素范围。
-  const HeroDialogScope({super.key, required this.child}) : _controller = null;
+  const HeroOverlayScope({super.key, required this.child}) : _controller = null;
 
-  const HeroDialogScope._shared({
-    required _HeroDialogHeroController controller,
+  const HeroOverlayScope._shared({
+    required _HeroOverlayController controller,
     required this.child,
   }) : _controller = controller;
 
   final Widget child;
-  final _HeroDialogHeroController? _controller;
+  final _HeroOverlayController? _controller;
 
   /// 取得最近的共享元素范围；没有时返回 `null`。
-  static HeroDialogScopeState? maybeOf(BuildContext context) {
-    return context.findAncestorStateOfType<HeroDialogScopeState>();
+  static HeroOverlayScopeState? maybeOf(BuildContext context) {
+    return context.findAncestorStateOfType<HeroOverlayScopeState>();
   }
 
   /// 取得最近的共享元素范围。
-  static HeroDialogScopeState of(BuildContext context) {
+  static HeroOverlayScopeState of(BuildContext context) {
     final state = maybeOf(context);
     assert(state != null, 'HeroDialogHero 必须位于 HeroDialogHeroScope 内。');
     return state!;
   }
 
   @override
-  State<HeroDialogScope> createState() => HeroDialogScopeState();
+  State<HeroOverlayScope> createState() => HeroOverlayScopeState();
 }
 
-/// [HeroDialogScope] 的状态。
-class HeroDialogScopeState extends State<HeroDialogScope> {
-  late final _controller = widget._controller ?? _HeroDialogHeroController();
+/// [HeroOverlayScope] 的状态。
+class HeroOverlayScopeState extends State<HeroOverlayScope> {
+  late final _controller = widget._controller ?? _HeroOverlayController();
 
   @override
   Widget build(BuildContext context) => widget.child;
@@ -68,20 +66,20 @@ class OverlayHero extends StatefulWidget {
   final Widget child;
 
   /// 飞行层内容；默认使用弹窗端的 [child]。
-  final HeroDialogFlightBuilder? flightBuilder;
+  final HeroOverlayFlightBuilder? flightBuilder;
 
   @override
   State<OverlayHero> createState() => _OverlayHeroState();
 }
 
 class _OverlayHeroState extends State<OverlayHero> {
-  HeroDialogScopeState? _scope;
+  HeroOverlayScopeState? _scope;
   var _visible = true;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final scope = HeroDialogScope.maybeOf(context);
+    final scope = HeroOverlayScope.maybeOf(context);
     if (_scope == scope) return;
 
     _scope?._controller.unregister(this);
@@ -120,7 +118,7 @@ class _OverlayHeroState extends State<OverlayHero> {
   }
 }
 
-final class _HeroDialogHeroController {
+final class _HeroOverlayController {
   final _sources = <Object, _OverlayHeroState>{};
   final _targets = <Object, _OverlayHeroState>{};
   var _isPresenting = false;
@@ -188,7 +186,7 @@ final class HeroOverlay<T> {
 /// 在当前页面的 [Overlay] 中打开 Hero 风格弹窗。
 ///
 /// 此方法不切换 [Navigator] 路由，因此不会取消正在识别的手势。若调用点位于
-/// [HeroDialogScope] 内，弹窗中相同 [OverlayHero.tag] 的组件会从源位置飞入；
+/// [HeroOverlayScope] 内，弹窗中相同 [OverlayHero.tag] 的组件会从源位置飞入；
 /// 关闭时反向飞回。未配置 Scope 或没有匹配组件时，弹窗仍会使用普通淡入位移动画。
 HeroOverlay<T> showHeroOverlay<T>(
   BuildContext context, {
@@ -205,7 +203,7 @@ HeroOverlay<T> showHeroOverlay<T>(
   Curve reverseCurve = Curves.easeIn,
 }) {
   assert(!barrierDismissible || barrierLabel != null);
-  final scope = HeroDialogScope.maybeOf(context);
+  final scope = HeroOverlayScope.maybeOf(context);
   final heroController = scope?._controller;
   final activeHeroController =
       heroController?.beginPresentation() ?? false ? heroController : null;
@@ -274,7 +272,7 @@ class _HeroOverlay<T> extends StatefulWidget {
   });
 
   final WidgetBuilder builder;
-  final _HeroDialogHeroController? heroController;
+  final _HeroOverlayController? heroController;
   final bool barrierDismissible;
   final Color? barrierColor;
   final String? barrierLabel;
@@ -337,7 +335,7 @@ class _HeroOverlayState<T> extends State<_HeroOverlay<T>>
     final dialog = Center(child: widget.builder(context));
     final child = widget.heroController == null
         ? dialog
-        : HeroDialogScope._shared(
+        : HeroOverlayScope._shared(
             controller: widget.heroController!,
             child: dialog,
           );
