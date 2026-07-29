@@ -22,7 +22,7 @@ class ImageViewProvider extends ImageProvider {
             ? CachedNetworkImageProvider(
                 uri,
                 maxHeight: maxHeight,
-                maxWidth: maxHeight,
+                maxWidth: maxWidth,
                 cacheKey: cacheKey,
                 headers: headers,
               )
