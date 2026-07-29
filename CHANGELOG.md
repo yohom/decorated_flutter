@@ -1,4 +1,5 @@
 ## 0.52.2
+- [🚀] `DecoratedRow` 和 `DecoratedColumn` 增加 `spacing` 参数，直接使用 Flutter 内置 Flex 间距；`itemSpacing` 保留为弃用兼容参数，最低 Flutter 版本提升至 3.27.0。
 - [🚀] 增加`OverflowText`，支持文本溢出时在最后一行尾部展示自定义组件。
 - [🚀] 增加`showHeroOverlay`，用于不切换路由且不打断当前手势的弹窗展示。
 - [🚀] 增加`HeroDialogRoute`, 解决`DialogRoute`不支持`Hero`的问题

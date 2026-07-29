@@ -32,7 +32,8 @@ class DecoratedRow extends DecoratedFlex {
     super.onEnter,
     super.onExit,
     super.behavior,
-    super.itemSpacing = 0,
+    super.spacing = 0,
+    @Deprecated('使用spacing代替') super.itemSpacing,
     super.divider,
     super.visible,
     super.expanded,
@@ -115,7 +116,8 @@ class DecoratedColumn extends DecoratedFlex {
     super.onEnter,
     super.onExit,
     super.behavior,
-    super.itemSpacing = 0,
+    super.spacing = 0,
+    @Deprecated('使用spacing代替') super.itemSpacing,
     super.divider,
     super.visible,
     super.expanded,
@@ -200,7 +202,8 @@ class DecoratedFlex extends StatelessWidget {
     this.onEnter,
     this.onExit,
     this.behavior,
-    this.itemSpacing = 0,
+    this.spacing = 0,
+    @Deprecated('使用spacing代替') this.itemSpacing,
     this.divider,
     this.visible,
     this.expanded,
@@ -250,7 +253,10 @@ class DecoratedFlex extends StatelessWidget {
     this.decoratedScrollableConfig,
     this.clipOverflow,
     this.children = const [],
-  });
+  }) : assert(
+          itemSpacing == null || spacing == 0,
+          'itemSpacing 与 spacing 不能同时设置',
+        );
 
   /// Container
   final EdgeInsets? padding;
@@ -293,9 +299,17 @@ class DecoratedFlex extends StatelessWidget {
   final double? heightFactor;
 
   /// 元素间距
+  ///
+  /// 直接透传给 Flutter [Flex.spacing]，不会再额外创建间隔控件。
+  final double spacing;
+
+  /// 元素间距
+  ///
+  /// 已弃用，请使用 [spacing]。
+  @Deprecated('使用spacing代替')
   final double? itemSpacing;
 
-  /// 分隔控件 与[itemSpacing]功能类似, 但是优先使用[divider]
+  /// 分隔控件 与[spacing]功能类似, 但是优先使用[divider]
   final Widget? divider;
 
   /// 是否可见
@@ -433,8 +447,8 @@ class DecoratedFlex extends StatelessWidget {
       ];
     }
 
-    if (itemSpacing != 0 || divider != null) {
-      _children = _addItemDivider(_children, itemSpacing!, divider);
+    if (divider != null) {
+      _children = _addItemDivider(_children, divider!);
     }
 
     // 如果有reverse, 则对start和end的场景做一下翻转
@@ -456,6 +470,7 @@ class DecoratedFlex extends StatelessWidget {
           ? TextBaseline.alphabetic
           : textBaseline,
       verticalDirection: verticalDirection ?? VerticalDirection.down,
+      spacing: divider == null ? (itemSpacing ?? spacing) : 0,
       children: _children,
     );
 
@@ -729,11 +744,7 @@ class DecoratedFlex extends StatelessWidget {
     return result;
   }
 
-  List<Widget> _addItemDivider(
-    List<Widget> children,
-    double itemSpacing,
-    Widget? divider,
-  ) {
+  List<Widget> _addItemDivider(List<Widget> children, Widget divider) {
     final result = List<Widget>.from(children);
 
     // 确认要往哪几个index(以最终的插入后的List为参考系)插空间
@@ -748,11 +759,11 @@ class DecoratedFlex extends StatelessWidget {
 
       if (direction == Axis.horizontal) {
         for (var index in indexes) {
-          result.insert(index, divider ?? SizedBox(width: itemSpacing));
+          result.insert(index, divider);
         }
       } else if (direction == Axis.vertical) {
         for (var index in indexes) {
-          result.insert(index, divider ?? SizedBox(height: itemSpacing));
+          result.insert(index, divider);
         }
       }
     }
