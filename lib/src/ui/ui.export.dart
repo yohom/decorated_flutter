@@ -74,6 +74,7 @@ export 'widget/visual/special_affect/keyboard_height_builder.widget.dart';
 export 'widget/visual/special_affect/modal_side_sheet.dart';
 export 'widget/visual/special_affect/multi_listenable_builder.widget.dart';
 export 'widget/visual/special_affect/no_clip_size_transition.widget.dart';
+export 'widget/visual/special_affect/overflow_text.widget.dart';
 export 'widget/visual/special_affect/runtime.widget.dart';
 export 'widget/visual/special_affect/show_more_text.widget.dart';
 export 'widget/visual/special_affect/snap_list.widget.dart';
