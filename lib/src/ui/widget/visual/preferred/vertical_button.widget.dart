@@ -30,7 +30,7 @@ class VerticalButton extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       onPressed: onPressed,
       onLongPressed: onLongPressed,
-      itemSpacing: spacing,
+      spacing: spacing,
       crossAxisAlignment: crossAxisAlignment,
       mainAxisAlignment: mainAxisAlignment,
       children: [
