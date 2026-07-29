@@ -1,245 +1,135 @@
-# 基于BLoC的通用框架
+# decorated_flutter
 
-## BLoC的各种元素
-### 什么是`IO`？
-`IO`即`Input/Output`，Input/Output是相对于BLoC来说的，Input即向BLoC输入数据，Output即从BLoC输出数据。
-一个BLoC中所有的属性都是IO，负责接收来自widget层的数据（供后续操作读取数据）或者向widget层输出数据。widget层**只对数据做读取操作**，即widget对数据是*READONLY*的。
-当widget需要对数据发起修改操作时，需要通过`BLoCProvider.of(BuildContext)`/`context.of<SomeBLoC>()`来获取当前widget所依附的BLoC实例，然后调用BLoC的对应方法来操作数据。
+`decorated_flutter` 是一组面向 Flutter 项目的 UI、布局、图片、路由与常用扩展工具。它的目标是减少重复的 Widget 包裹和样板代码，让页面能在保持原生 Flutter 语义的同时更紧凑地表达布局与交互。
 
-### BaseIO
-`BaseIO`是所有IO类型的祖宗类，存放了所有IO类型需要的公共属性和方法。
+库中仍保留早期的 BLoC / IO 实现以兼容已有项目，但它不再是推荐的架构入口。新项目可以按自己的状态管理方案使用本库的 Widget、扩展与工具，而无需依赖 BLoC。
 
-#### 构造器概览
-```dart
-BaseIO({
-  /// 初始值, 传递给内部的[_subject]
-  T seedValue,
+## 环境要求
 
-  /// IO代表的语义
-  String semantics,
+- Dart SDK `>=3.0.0 <4.0.0`
+- Flutter `>=3.27.0`
 
-  /// 是否同步发射数据, 传递给内部的[_subject]
-  bool sync = true,
+Flutter 3.27.0 是最低版本，因为 `DecoratedRow` 与 `DecoratedColumn` 使用 Flutter 内置的 `Flex.spacing` 实现元素间距。
 
-  /// 是否使用BehaviorSubject, 如果使用, 那么IO内部的[_subject]会保存最近一次的值
-  bool isBehavior = true,
-})  : _semantics = semantics,
-      _seedValue = seedValue,
-      latest = seedValue,
-      _subject = isBehavior
-          ? seedValue != null
-              ? BehaviorSubject<T>.seeded(seedValue, sync: sync)
-              : BehaviorSubject<T>(sync: sync)
-          : PublishSubject<T>(sync: sync) {
-    _subject.listen((data) {
-      latest = data;
-      L.d('[DECORATED_FLUTTER] 当前${semantics ??= data.runtimeType.toString()} latest: $latest'
-          '\n+++++++++++++++++++++++++++END+++++++++++++++++++++++++++++');
-    });
-  }
-```
-`BehaviorSubject`是`rxdart`的一个类，作为一个中转站，当有数据add到`BehaviorSubject`时，会转发给`BehaviorSubject`的订阅者。作用有些类似iOS里的`NotificationCenter`，Android中同RxJava中的`BehaviorSubject`。
+## 安装
 
-### Input
-`Input`表示只从widget接收数据，不对widget输出数据的业务单元。常见的使用场景为接收来自`TextFormField`的值。
+在 `pubspec.yaml` 中添加依赖。私有项目可使用本地路径或 Git 依赖：
 
-### Output
-`Output`表示只对widget输出数据，不从widget接收数据的业务单元。常见的使用场景为页面初始数据的加载，比如进入一个列表页，BLoC中的一个Output负责加载列表数据，widget层中的一个ListView绑定这个Output，进入页面前调用Output进行数据的加载，加载完成后刷新ListView。<br/>
-整个过程Output不会从widget接收数据，只会对widget输出数据。
-
-### IO
-语义上，IO是既可以输入数据又可以输出数据的业务单元；实现上，`IO`即`class IO<T> extends BaseIO<T> with InputMixin, OutputMixin<T, dynamic>`。<br/>
-常见的使用场景为勾选框，由于Flutter的哲学是widget本身不保存状态，所以像CheckBox这种widget的勾选状态是需要开发者自行维护的，CheckBox本身只负责通知开发者状态即将变化，当CheckBox的onChanged回调出发后，并不会真正的看到CheckBox被勾选，需要开发者自行更新CheckBox的`checked`的值之后才能看到被勾选。所以在这种场景下，数据流动就变成了`CheckBox(onChanged)`->`BLoC(更新状态值)`->`CheckBox(监听新的状态值)`。
-
-### 衍生IO
-#### ListIO
-`ListIO`是只接收列表类型的IO，在普通IO的基础上增加了如下方法：
-```dart
-/// 按条件过滤, 并发射过滤后的数据
-List<T> filterItem(bool test(T element));
-
-/// 追加, 并发射
-T append(T element, {bool fromHead = false});
-
-/// 追加一个list, 并发射
-List<T> appendAll(List<T> elements, {bool fromHead = false});
-
-/// 对list的item做变换之后重新组成list
-Stream<List<S>> flatMap<S>(S mapper(T value));
-
-/// 替换指定index的元素, 并发射
-T replace(int index, T element);
-
-/// 替换最后一个的元素, 并发射
-T replaceLast(T element);
-
-/// 替换第一个的元素, 并发射
-T replaceFirst(T element);
-
-/// 删除最后一个的元素, 并发射
-T removeLast();
-
-/// 删除一个的元素, 并发射
-T remove(T element);
-
-/// 删除第一个的元素, 并发射
-T removeFirst();
-
-/// 删除指定索引的元素, 并发射
-T removeAt(int index);
+```yaml
+dependencies:
+  decorated_flutter:
+    path: ../decorated_flutter
 ```
 
-#### BoolIO
-`BoolIO`是只接收布尔值的IO，增加了如下方法：
-```dart
-/// 翻转状态值
-bool toggle();
+然后执行：
+
+```sh
+flutter pub get
 ```
 
-#### PageIO
-`PageIO`在ListIO基础之上进一步封装了分页操作，在`PageIO`会自动维护当前页数，开发者只需要调用`nextPage`方法即可请求下一页数据，如果如要刷新数据，不能再调用IO提供的`update`方法，而是需要使用PageIO中提供的`refresh`方法。
+业务代码通常从统一入口导入：
 
-
-## 编码规范
-- 尽量减少嵌套；
-- 尽量让一个Widget长什么样只取决于构造器参数，减少来历不明的变化引起的Widget变化，例如：
-  ```dart
-  class SomeWidget extends StatelessWidget {
-    @override
-    Widget build(BuildContext context) {
-      return StreamBuilder(
-        stream: /* 某处获取来的stream */
-        builder: (context, snapshot) {
-          return AWidget(snapshot.data);
-        }
-      );
-    }
-  }
-  
-  class AWidget extends StatelessWidget {
-    AWidget(AVM vm, {Key key}): super(key: key);
-
-    @override
-    Widget build(BuildContext context) {
-      return /* 根据vm参数构造出widget */
-    }
-  }
-  ```
-  优于
-  ```dart
-  class SomeWidget extends StatelessWidget {
-    @override
-    Widget build(BuildContext context) {
-      return AWidget();
-    }
-  }
-
-  class AWidget extends StatelessWidget {
-    AWidget({Key key}): super(key: key);
-
-    @override
-    Widget build(BuildContext context) {
-      return StreamBuilder(
-        stream: /* 某处获取来的stream */
-        builder: (context, snapshot) {
-          return /* 根据snapshot构造widget */;
-        }
-      );
-    }
-  }
-  ```
-  第二种写法虽然看着代码更少，但是跟某个stream直接绑定，导致难以复用，而且AWidget长什么样不受AWidget类内部逻辑控制(被`某处获取来的stream`控制)，非常不直观。除非这是一个全局使用的widget，绑定的stream也是全局的事件，那么可以这样使用，否则必须要从构造器中传入参数。
-- 优先使用StatelessWidget+BLoC模式实现功能，只有功能比较简单时，可以使用StatefulWidget代替实现；
-- StatelessWidget类里应该只有
-    1. build方法；
-    2. override方法；
-    3. 事件处理(私有)方法；
-- StatefulWidget不做限制；
-- 测试文件禁止直接 `import 'package:decorated_flutter/decorated_flutter.dart';`，只按需导入待测试的类、扩展或方法，以及 `flutter_test`；
-  这样可以避免 `isTrue` 之类的符号和测试框架命名冲突，也能让测试依赖更清晰；
-- 更新 `CHANGELOG.md` 前先查看 `pubspec.yaml` 当前版本；如果版本是 `x.y.z-dev.n`，则把更新内容写到 `x.y.z` 段落下，不新增 `next`；
-- `CHANGELOG.md` 面向使用者，只记录用户可感知的功能、修复、行为变化，不记录测试规范、仓库约定等内部流程调整；
-
-## 名称
-- 在遵循规范的前提下，不要怕名字太长或者太啰嗦，清晰精确的名称好于莫名其妙的省略；
-- 除非是广泛通用的缩写（例如`http`等），否则不允许使用任何形式的缩写，无意义的缩写会让看代码的人困惑；
-
-### 文件名
-- 文件名使用下划线风格；
-- 页面类以`.screen.dart`结尾；
-- 普通widget类以`.widget.dart`结尾；
-- dialog类以`.dialog.dart`结尾；
-- bloc类以`.bloc.dart`结尾；
-- 类扩展(extension)以`.x.dart`结尾；
-- mixin以`.mixin.dart`结尾；
-- 其他文件目前直接以`.dart`结尾；
-
-### 类名
-- 页面类以`Screen`结尾；
-- 普通widget类根据业务属性命名即可；
-
-### 方法名
-- 方法名使用驼峰命名法；
-- BLoC中的action以`perform`开头，比如登录动作方法命名为`performLogin`；
-
-### 变量名
-- 变量名使用驼峰命名法；
-
-## Widget结构
-- widget树中**无状态变化**的部分，要抽离出单独的widget类，把以构造器参数形式传入需要的数据，并修饰构造器为`const`；
-
-## BLoC结构
-- 为了区分action和IO，IO的成员统一放在同文件内名为`_ComponentMixin`的`mixin`中，action方法放在原`BLoC`中，一个典型的例子：
 ```dart
-class LoginBLoC extends LocalBLoC with _ComponentMixin {
-  LoginBLoC() : super('登录 BLoC');
-
-  Future<bool> performLogin() async {
-    // 获取最新的account和password并执行登录动作
-  }
-}
-
-mixin _ComponentMixin on LocalBLoC {
-  @override
-  List<BaseIO> get disposeBag => [
-        account,
-        password,
-      ];
-
-  final account = Input<String>(semantics: '账户');
-
-  final password = Input<String>(semantics: '密码');
-}
+import 'package:decorated_flutter/decorated_flutter.dart';
 ```
 
-## 文件夹结构
-### ui相关文件组织
-- `ui`文件夹下分为`screen`文件夹和`widget`文件夹，`screen`文件夹存放所有的单页面，`widget`存放全局共用的控件；
-- `screen`下的文件分为主screen文件和其组成部分，当组成部分比较复杂时，可以再单独为其新建文件夹；
-- 在一个文件夹下，只允许存在两层关系的ui，如果超过两层的关系，则为较复杂的那部分新建文件夹；
+## 核心能力
 
-## 一些约定的写法
-### `Dialog`的使用
-Dialog本身不处理任何业务逻辑，它只负责采集数据，采集完成之后通过`Navigator.pop(data)`回传给宿主widget，并在宿主widget进行业务操作；
+### 布局与装饰
 
-### widget
-- 优先使用`StatelessWidget`，只有当`StatelessWidget`实在不方便的时候再启用`StatefulWidget`，比如说要mixin一些辅助；
-- 优先把IO放在局部BLoC，只有当局部BLoC无法满足需求时，再放到全局BLoC；
+`DecoratedRow`、`DecoratedColumn`、`DecoratedStack`、`DecoratedText`、`DecoratedList` 与 `DecoratedWrap` 在原生布局能力之上整合了常见的尺寸、边距、装饰、点击、安全区、滚动和弹性配置。
 
-## 框架模式
-项目的框架模式为`BLoC`(Business Logic Component)，是一种基于流(Stream)的模式。
-一"块"UI会搭配一个专属的`BLoC`，`BLoC`中存放着这一块UI所有的状态，以及所有操作数据的接口。
+```dart
+DecoratedColumn(
+  padding: const EdgeInsets.all(16),
+  spacing: 12,
+  crossAxisAlignment: CrossAxisAlignment.start,
+  children: [
+    const Text('订单信息'),
+    DecoratedRow(
+      spacing: 8,
+      children: const [
+        Icon(Icons.schedule),
+        Text('今天 19:30'),
+      ],
+    ),
+  ],
+)
+```
 
-## 全局结构图
-*矩形为widget，圆角矩形普通类*
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0723/071740_e4186103_944757.png "全局数据流向导图.png")
+`spacing` 直接传给 Flutter 的 `Flex.spacing`，不会额外插入间隔 Widget。旧的 `itemSpacing` 仍可用，但已标记为弃用，新的代码请使用 `spacing`。
 
-## 单页面结构图
-*矩形为widget，圆角矩形普通类*
+当多个子项需要统一弹性布局时，使用 `childrenFlex`：
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0722/085532_07d19a93_944757.png "单页数据流向导图.png")
+```dart
+DecoratedRow(
+  spacing: 12,
+  childrenFlex: FlexConfig.expanded([2, 1]),
+  children: const [
+    Placeholder(),
+    Placeholder(),
+  ],
+)
+```
 
-## 网络请求时序图
-以登录为例：
+### 图片与占位
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0724/085140_fcc8c24f_944757.png "Screen Shot 2020-07-24 at 08.51.12.png")
+`ImageView` 统一处理 asset、文件、网络图片和 SVG，并提供缓存尺寸、占位、错误展示、裁剪与装饰等常用能力。
+
+```dart
+ImageView(
+  avatarUrl,
+  size: 40,
+  cacheSize: 120,
+  fit: BoxFit.cover,
+  fadeIn: false,
+  decoration: const BoxDecoration(shape: BoxShape.circle),
+)
+```
+
+对于列表头像和缩略图，建议按实际显示尺寸传入 `cacheWidth`、`cacheHeight` 或 `cacheSize`，以减少解码和纹理上传成本。
+
+### 常用页面与交互组件
+
+库提供了可组合的页面辅助能力，包括：
+
+- 页面、路由与弹窗：`DecoratedApp`、`RuntimeScaffold`、`DecoratedRoute`、`TransparentRoute`、`HeroDialogRoute`
+- 列表、滚动与 Sliver：`DecoratedList`、`PreferredNestedScrollView`、`SliverStack`、`SliverClip`、`EdgeFade`
+- 状态与显隐：`AnimatedVisibility`、`VisibilityBuilder`、`MultiListenableBuilder`、`Subscriber`
+- 选择、输入与反馈：`DebouncedTextFormField`、`CircleCheckbox`、`Toggleable`、`GradientButton`、`AutoCloseKeyboard`
+- 展示效果：`AutoSizeText`、`ShowMoreText`、`OverflowText`、`Countdown`、`AnimatedInt`、`AnimatedDouble`
+
+请以 `lib/src/ui/ui.export.dart` 的导出内容为准；各组件的构造参数和行为在源码中有对应注释。
+
+### 扩展与工具
+
+`extension.export.dart` 导出了日期、时长、字符串、数字、集合、`BuildContext`、滚动控制器、输入控制器和 Widget 等常用扩展。常见用途包括：
+
+```dart
+final title = [name.trim(), '未命名'].fallback()!;
+final dateText = createdAt.format('yyyy-MM-dd');
+final timeout = 3.seconds;
+```
+
+此外还提供 `toast`、`retry`、`RouteLauncher`、坐标转换、编解码和空值处理等工具。新增同类 helper 前，建议先搜索现有扩展与工具出口。
+
+## 使用建议
+
+- 优先使用原生 Flutter 的布局语义；当同时需要布局、装饰或交互配置时，再使用对应的 `Decorated*` 组件减少包裹层级。
+- 保持业务状态管理与 UI 组件解耦；本库不要求使用特定状态管理方案。
+- 图片列表优先设置缓存尺寸，并避免在同一帧中批量解码大图。
+- 测试中请按需导入具体源码，不要直接导入 `package:decorated_flutter/decorated_flutter.dart`，以避免与 `flutter_test` 的符号冲突。
+
+## 兼容的 BLoC 能力
+
+`BLoC`、`LocalBLoC`、`GlobalBLoC`、`BLoCProvider` 与 IO 相关类型仍然保留并从主入口导出，供存量项目逐步维护和迁移。新功能不应为了使用本库而强制采用这套模式；请按项目既有架构选择合适的状态管理方式。
+
+## 开发与验证
+
+```sh
+flutter pub get
+flutter analyze
+flutter test
+```
+
+修改面向使用者的行为后，请同步更新 `CHANGELOG.md`。测试文件保持按需导入，以便明确依赖并避免符号冲突。
