@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show ItemExtentBuilder;
 
 import 'decorated_scrollable.widget.dart';
 import 'scrollable_top_divider.widget.dart';
@@ -20,6 +21,7 @@ class DecoratedList extends StatelessWidget {
     this.addRepaintBoundaries = true,
     this.addSemanticIndexes = true,
     this.itemExtent,
+    this.itemExtentBuilder,
     this.prototypeItem,
     this.controller,
     this.expanded,
@@ -30,7 +32,13 @@ class DecoratedList extends StatelessWidget {
     @Deprecated('使用decoratedScrollableConfig代替, 已无作用') this.topDivider,
     this.decoratedScrollableConfig,
     this.margin,
-  })  : _sliver = false,
+  })  : assert(
+          (itemExtent == null && prototypeItem == null) ||
+              (itemExtent == null && itemExtentBuilder == null) ||
+              (prototypeItem == null && itemExtentBuilder == null),
+          'You can only pass one of itemExtent, prototypeItem and itemExtentBuilder.',
+        ),
+        _sliver = false,
         separatorBuilder = null;
 
   const DecoratedList.boxSeparated({
@@ -61,6 +69,7 @@ class DecoratedList extends StatelessWidget {
         assert(separatorBuilder != null),
         _sliver = false,
         itemExtent = null,
+        itemExtentBuilder = null,
         prototypeItem = null,
         children = null;
 
@@ -76,8 +85,15 @@ class DecoratedList extends StatelessWidget {
     this.addRepaintBoundaries = true,
     this.addSemanticIndexes = true,
     this.itemExtent,
+    this.itemExtentBuilder,
     this.prototypeItem,
-  })  : _sliver = true,
+  })  : assert(
+          (itemExtent == null && prototypeItem == null) ||
+              (itemExtent == null && itemExtentBuilder == null) ||
+              (prototypeItem == null && itemExtentBuilder == null),
+          'You can only pass one of itemExtent, prototypeItem and itemExtentBuilder.',
+        ),
+        _sliver = true,
         shrinkWrap = false,
         scrollDirection = null,
         controller = null,
@@ -105,6 +121,7 @@ class DecoratedList extends StatelessWidget {
   final double? width, height;
   final bool addAutomaticKeepAlives, addRepaintBoundaries, addSemanticIndexes;
   final double? itemExtent;
+  final ItemExtentBuilder? itemExtentBuilder;
   final Widget? prototypeItem;
   final ScrollController? controller;
   final bool? expanded;
@@ -183,9 +200,15 @@ class DecoratedList extends StatelessWidget {
             delegate: delegate,
             prototypeItem: prototypeItem!,
           )
-        : itemExtent != null
-            ? SliverFixedExtentList(delegate: delegate, itemExtent: itemExtent!)
-            : SliverList(delegate: delegate);
+        : itemExtentBuilder != null
+            ? SliverVariedExtentList(
+                delegate: delegate,
+                itemExtentBuilder: itemExtentBuilder!,
+              )
+            : itemExtent != null
+                ? SliverFixedExtentList(
+                    delegate: delegate, itemExtent: itemExtent!)
+                : SliverList(delegate: delegate);
 
     if (padding != null) {
       result = SliverPadding(padding: padding!, sliver: result);
@@ -247,6 +270,7 @@ class DecoratedList extends StatelessWidget {
           scrollDirection: scrollDirection ?? Axis.vertical,
           clipBehavior: clipBehavior,
           itemExtent: itemExtent,
+          itemExtentBuilder: itemExtentBuilder,
           prototypeItem: prototypeItem,
           addAutomaticKeepAlives: addAutomaticKeepAlives,
           addRepaintBoundaries: addRepaintBoundaries,
