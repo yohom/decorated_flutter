@@ -46,6 +46,7 @@ class DecoratedText extends StatelessWidget {
     this.scrollDirection,
     this.scrollPadding,
     this.cursor,
+    this.gradient,
   })  : _data = data,
         _stream = null,
         initialData = null;
@@ -94,6 +95,7 @@ class DecoratedText extends StatelessWidget {
     this.scrollDirection,
     this.scrollPadding,
     this.cursor,
+    this.gradient,
   })  : _data = null,
         _stream = stream;
 
@@ -145,10 +147,13 @@ class DecoratedText extends StatelessWidget {
   final Axis? scrollDirection;
   final EdgeInsets? scrollPadding;
   final MouseCursor? cursor;
+  final Gradient? gradient;
 
   @override
   Widget build(BuildContext context) {
     final textStyle = style ?? DefaultTextStyle.of(context).style;
+    final effectiveTextStyle =
+        gradient != null ? textStyle.copyWith(foreground: null) : textStyle;
 
     Widget _buildText(String data) {
       TextSpan textSpan = TextSpan(text: data);
@@ -176,14 +181,14 @@ class DecoratedText extends StatelessWidget {
           ? SelectableText.rich(
               textSpan,
               maxLines: _maxLines,
-              style: textStyle,
+              style: effectiveTextStyle,
               strutStyle: strutStyle,
               textAlign: textAlign,
             )
           : Text.rich(
               textSpan,
               maxLines: _maxLines,
-              style: textStyle,
+              style: effectiveTextStyle,
               strutStyle: strutStyle,
               textAlign: textAlign,
               overflow: maxLines == 1
@@ -277,6 +282,14 @@ class DecoratedText extends StatelessWidget {
               onLongPressed != null ? () => onLongPressed!(context) : null,
           child: result,
         ),
+      );
+    }
+
+    if (gradient case final Gradient g) {
+      result = ShaderMask(
+        shaderCallback: (bounds) => g.createShader(bounds),
+        blendMode: BlendMode.srcIn,
+        child: result,
       );
     }
 

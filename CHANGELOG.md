@@ -7,6 +7,7 @@
 - [🔧] `DecoratedFlex`多余的key传入修正
 - [🔧] 键盘高度没有获取到的时候, `stableHeight`使用null, 而不是0
 - [🚀] `ImageView`增加`cacheKey`参数透传
+- [🚀] `DecoratedText`增加`gradient`参数, 实现渐变色渲染
 
 ## 0.52.1
 - [⚠️] 将`Constellation`枚举重命名为`Zodiac`, `constellation`getter重命名为`zodiac`, 旧术语保留deprecated别名;
