@@ -251,10 +251,10 @@ extension IterableFutureX<T> on Future<Iterable<T>> {
 
 extension NullableFutureX<T> on Future<T?> {
   /// 根据值是否为null判断是否要执行[action]
-  Future<T?> applyIfNonNull(VoidCallback action) {
+  Future<T?> applyIfNonNull(ValueChanged<T> action) {
     return then((value) {
       if (value != null) {
-        action();
+        action(value);
       }
       return value;
     });
