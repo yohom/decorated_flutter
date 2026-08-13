@@ -80,7 +80,7 @@ class DecoratedText extends StatelessWidget {
     this.rightWidget,
     this.softWrap = true,
     this.material,
-    this.mainAxisSize = MainAxisSize.max,
+    this.mainAxisSize = MainAxisSize.min,
     this.mainAxisAlignment,
     this.crossAxisAlignment,
     this.textBaseline,
