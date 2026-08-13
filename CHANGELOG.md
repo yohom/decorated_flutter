@@ -1,3 +1,6 @@
+## 0.52.3
+- [🚀] `DecoratedText`的`mainAxisSize`默认值改为min
+
 ## 0.52.2
 - [🚀] `DecoratedList`增加`itemExtentBuilder`参数, 支持按索引提供动态高度以减少列表项测量开销;
 - [🚀] `DecoratedRow` 和 `DecoratedColumn` 增加 `spacing` 参数，直接使用 Flutter 内置 Flex 间距；`itemSpacing` 保留为弃用兼容参数，最低 Flutter 版本提升至 3.27.0。
