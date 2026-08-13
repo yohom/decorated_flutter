@@ -147,6 +147,7 @@ class ImageView extends StatelessWidget {
           '不能同时设置darkImagePath和autoDarkMode',
         );
 
+  @Deprecated('请使用ImageView')
   const ImageView.local(
     this.imagePath, {
     super.key,
@@ -185,6 +186,7 @@ class ImageView extends StatelessWidget {
           '不能同时设置darkImagePath和autoDarkMode',
         );
 
+  @Deprecated('请使用ImageView')
   const ImageView.remote(
     this.imageUrl, {
     super.key,
