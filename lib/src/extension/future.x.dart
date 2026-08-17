@@ -166,18 +166,20 @@ extension FutureX<T> on Future<T> {
 
   /// 根据[condition]判断是否要执行[action]
   Future<T> thenIf(bool condition, VoidCallback action) {
-    if (condition) {
+    if (!condition) return this;
+    return then((value) {
       action();
-    }
-    return this;
+      return value;
+    });
   }
 
   /// 根据[condition]判断是否要执行[action]
   Future<T> thenIfNot(bool condition, VoidCallback action) {
-    if (!condition) {
+    if (condition) return this;
+    return then((value) {
       action();
-    }
-    return this;
+      return value;
+    });
   }
 
   /// 延迟一段时间
