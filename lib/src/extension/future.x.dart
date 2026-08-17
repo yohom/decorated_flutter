@@ -63,6 +63,7 @@ extension FutureX<T> on Future<T> {
 
     AnimationController? controller;
     OverlayEntry? entry;
+    bool entryInserted = false;
     bool removed = false;
 
     Future<void> __removeLoading() async {
@@ -80,9 +81,10 @@ extension FutureX<T> on Future<T> {
         L.w('[DECORATED_FLUTTER] Loading关闭动画出现异常: $e, 堆栈信息: $s');
       }
 
-      if (currentEntry?.mounted == true) {
-        currentEntry!.remove();
-      }
+      // OverlayEntry.remove() 在 entry mounted 前调用也是安全的。立即失败的
+      // Future 可能在下一帧前进入清理逻辑，此时检查 mounted 会留下透明的
+      // Overlay，内部 AbsorbPointer 仍会拦截用户输入。
+      if (currentEntry != null && entryInserted) currentEntry.remove();
       if (identical(_loadingEntry, currentEntry)) {
         _loadingEntry = null;
       }
@@ -139,6 +141,7 @@ extension FutureX<T> on Future<T> {
 
       try {
         overlay?.insert(loadingEntry);
+        entryInserted = overlay != null;
         loadingController.forward();
       } catch (e, s) {
         L.w('[DECORATED_FLUTTER] Loading时出现异常, 跳过此次Loading请求, 错误信息: $e, 堆栈信息: $s');
