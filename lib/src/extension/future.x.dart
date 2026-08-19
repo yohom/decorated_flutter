@@ -199,7 +199,7 @@ extension FutureX<T> on Future<T> {
     return then((_) {
       final navigator = context?.navigator ?? gNavigatorKey.currentState;
       until == null
-          ? navigator?.pop<R>(withValue)
+          ? navigator?.maybePop<R>(withValue)
           : navigator?.popUntil(ModalRoute.withName(until));
     });
   }
