@@ -82,7 +82,7 @@ class Line extends StatelessWidget {
     this.borderRadius,
     this.centered,
     this.padding = EdgeInsets.zero,
-    this.margin = const EdgeInsets.symmetric(vertical: 8),
+    this.margin = EdgeInsets.zero,
   });
 
   final double width, height;
