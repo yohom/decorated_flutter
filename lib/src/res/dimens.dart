@@ -235,6 +235,68 @@ const SLIVER_SPACE_64_VERTICAL = SliverToBoxAdapter(
   child: SizedBox(width: 0, height: 64),
 );
 
+const SPACE_ZERO_SPAN = WidgetSpan(child: SPACE_ZERO);
+
+const SPACE_1_SPAN = WidgetSpan(child: SPACE_1);
+const SPACE_1_HORIZONTAL_SPAN = WidgetSpan(child: SPACE_1_HORIZONTAL);
+const SPACE_1_VERTICAL_SPAN = WidgetSpan(child: SPACE_1_VERTICAL);
+
+const SPACE_2_SPAN = WidgetSpan(child: SPACE_2);
+const SPACE_2_HORIZONTAL_SPAN = WidgetSpan(child: SPACE_2_HORIZONTAL);
+const SPACE_2_VERTICAL_SPAN = WidgetSpan(child: SPACE_2_VERTICAL);
+
+const SPACE_4_SPAN = WidgetSpan(child: SPACE_4);
+const SPACE_4_HORIZONTAL_SPAN = WidgetSpan(child: SPACE_4_HORIZONTAL);
+const SPACE_4_VERTICAL_SPAN = WidgetSpan(child: SPACE_4_VERTICAL);
+
+const SPACE_6_SPAN = WidgetSpan(child: SPACE_6);
+const SPACE_6_HORIZONTAL_SPAN = WidgetSpan(child: SPACE_6_HORIZONTAL);
+const SPACE_6_VERTICAL_SPAN = WidgetSpan(child: SPACE_6_VERTICAL);
+
+const SPACE_8_SPAN = WidgetSpan(child: SPACE_8);
+const SPACE_8_HORIZONTAL_SPAN = WidgetSpan(child: SPACE_8_HORIZONTAL);
+const SPACE_8_VERTICAL_SPAN = WidgetSpan(child: SPACE_8_VERTICAL);
+
+const SPACE_10_SPAN = WidgetSpan(child: SPACE_10);
+const SPACE_10_HORIZONTAL_SPAN = WidgetSpan(child: SPACE_10_HORIZONTAL);
+const SPACE_10_VERTICAL_SPAN = WidgetSpan(child: SPACE_10_VERTICAL);
+
+const SPACE_12_SPAN = WidgetSpan(child: SPACE_12);
+const SPACE_12_HORIZONTAL_SPAN = WidgetSpan(child: SPACE_12_HORIZONTAL);
+const SPACE_12_VERTICAL_SPAN = WidgetSpan(child: SPACE_12_VERTICAL);
+
+const SPACE_16_SPAN = WidgetSpan(child: SPACE_16);
+const SPACE_16_HORIZONTAL_SPAN = WidgetSpan(child: SPACE_16_HORIZONTAL);
+const SPACE_16_VERTICAL_SPAN = WidgetSpan(child: SPACE_16_VERTICAL);
+
+const SPACE_20_SPAN = WidgetSpan(child: SPACE_20);
+const SPACE_20_HORIZONTAL_SPAN = WidgetSpan(child: SPACE_20_HORIZONTAL);
+const SPACE_20_VERTICAL_SPAN = WidgetSpan(child: SPACE_20_VERTICAL);
+
+const SPACE_24_SPAN = WidgetSpan(child: SPACE_24);
+const SPACE_24_HORIZONTAL_SPAN = WidgetSpan(child: SPACE_24_HORIZONTAL);
+const SPACE_24_VERTICAL_SPAN = WidgetSpan(child: SPACE_24_VERTICAL);
+
+const SPACE_32_SPAN = WidgetSpan(child: SPACE_32);
+const SPACE_32_HORIZONTAL_SPAN = WidgetSpan(child: SPACE_32_HORIZONTAL);
+const SPACE_32_VERTICAL_SPAN = WidgetSpan(child: SPACE_32_VERTICAL);
+
+const SPACE_40_SPAN = WidgetSpan(child: SPACE_40);
+const SPACE_40_HORIZONTAL_SPAN = WidgetSpan(child: SPACE_40_HORIZONTAL);
+const SPACE_40_VERTICAL_SPAN = WidgetSpan(child: SPACE_40_VERTICAL);
+
+const SPACE_48_SPAN = WidgetSpan(child: SPACE_48);
+const SPACE_48_HORIZONTAL_SPAN = WidgetSpan(child: SPACE_48_HORIZONTAL);
+const SPACE_48_VERTICAL_SPAN = WidgetSpan(child: SPACE_48_VERTICAL);
+
+const SPACE_56_SPAN = WidgetSpan(child: SPACE_56);
+const SPACE_56_HORIZONTAL_SPAN = WidgetSpan(child: SPACE_56_HORIZONTAL);
+const SPACE_56_VERTICAL_SPAN = WidgetSpan(child: SPACE_56_VERTICAL);
+
+const SPACE_64_SPAN = WidgetSpan(child: SPACE_64);
+const SPACE_64_HORIZONTAL_SPAN = WidgetSpan(child: SPACE_64_HORIZONTAL);
+const SPACE_64_VERTICAL_SPAN = WidgetSpan(child: SPACE_64_VERTICAL);
+
 const kDivider0 = Divider(height: 0);
 const kDivider1 = Divider(height: 1);
 const kDivider2 = Divider(height: 2);

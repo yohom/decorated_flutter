@@ -1,4 +1,5 @@
 ## 0.52.3
+- [🚀] 增加 `WidgetSpan` 间距常量，支持普通、横向和纵向间距;
 - [🚀] `DecoratedText`的`mainAxisSize`默认值改为min
 
 ## 0.52.2
