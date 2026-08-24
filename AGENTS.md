@@ -15,6 +15,11 @@ This file records repository-specific working rules for coding agents and automa
 - `CHANGELOG.md` is user-facing. Only record changes users can perceive, such as features, fixes, behavior changes, or compatibility changes.
 - Do not add internal-only notes such as test import rules, repository conventions, or other contributor-facing process updates to `CHANGELOG.md`.
 
+## Commits
+
+- Keep changes from different themes in separate commits; do not combine unrelated features or fixes.
+- Commit messages must be in Chinese and use `(bot)` in the type, for example `feat(bot): 增加时间范围格式化方法`.
+
 ## Notes
 
 - Prefer the narrowest possible imports in tests so dependencies stay explicit and failures are easier to reason about.
