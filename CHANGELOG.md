@@ -1,4 +1,6 @@
 ## 0.52.3
+- [🚀] 增加通用`LoadMore`组件及`LoadMoreConfig`，`DecoratedList`的box版本内置支持，`DecoratedScrollable`可集成到自定义滚动组件中;
+- [🔧] `DecoratedList.sliver`不再处理load-more状态及没有更多占位，由外层滚动组件负责;
 - [🚀] 增加 `WidgetSpan` 间距常量，支持普通、横向和纵向间距;
 - [🚀] `DecoratedText`的`mainAxisSize`默认值改为min
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show ItemExtentBuilder;
 
 import 'decorated_scrollable.widget.dart';
+import 'load_more.widget.dart';
 import 'scrollable_top_divider.widget.dart';
 
 class DecoratedList extends StatelessWidget {
@@ -32,6 +33,7 @@ class DecoratedList extends StatelessWidget {
     @Deprecated('使用decoratedScrollableConfig代替, 已无作用') this.topDivider,
     this.decoratedScrollableConfig,
     this.margin,
+    this.loadMoreConfig,
   })  : assert(
           (itemExtent == null && prototypeItem == null) ||
               (itemExtent == null && itemExtentBuilder == null) ||
@@ -65,6 +67,7 @@ class DecoratedList extends StatelessWidget {
     @Deprecated('使用decoratedScrollableConfig代替, 已无作用') this.topDivider,
     this.decoratedScrollableConfig,
     this.margin,
+    this.loadMoreConfig,
   })  : assert(itemCount != null),
         assert(separatorBuilder != null),
         _sliver = false,
@@ -107,7 +110,8 @@ class DecoratedList extends StatelessWidget {
         keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.onDrag,
         topDivider = null,
         decoratedScrollableConfig = null,
-        margin = null;
+        margin = null,
+        loadMoreConfig = null;
 
   final bool _sliver;
   final String? restorationId;
@@ -138,16 +142,15 @@ class DecoratedList extends StatelessWidget {
   /// 滚动decoration
   final DecoratedScrollableConfig? decoratedScrollableConfig;
 
+  /// box列表的加载更多配置。sliver版本不处理加载更多。
+  final LoadMoreConfig? loadMoreConfig;
+
   @override
   Widget build(BuildContext context) {
     Widget result = _sliver ? _sliverList() : _boxList();
 
     if (width != null || height != null) {
-      result = SizedBox(
-        width: width,
-        height: height,
-        child: result,
-      );
+      result = SizedBox(width: width, height: height, child: result);
     }
 
     if (decoration != null || margin != null) {
@@ -174,26 +177,19 @@ class DecoratedList extends StatelessWidget {
   }
 
   Widget _sliverList() {
-    SliverChildDelegate delegate;
+    final baseItemCount = _itemCount;
 
-    if (children != null) {
-      delegate = SliverChildListDelegate(
-        children!,
-        addAutomaticKeepAlives: addAutomaticKeepAlives,
-        addRepaintBoundaries: addRepaintBoundaries,
-        addSemanticIndexes: addSemanticIndexes,
-      );
-    } else if (itemBuilder != null) {
-      delegate = SliverChildBuilderDelegate(
-        itemBuilder!,
-        childCount: itemCount,
-        addAutomaticKeepAlives: addAutomaticKeepAlives,
-        addRepaintBoundaries: addRepaintBoundaries,
-        addSemanticIndexes: addSemanticIndexes,
-      );
-    } else {
-      throw '必须传入children或itemBuilder';
-    }
+    final delegate = SliverChildBuilderDelegate(
+      (context, index) {
+        if (children != null) return children![index];
+        if (itemBuilder != null) return itemBuilder!(context, index);
+        throw '必须传入children或itemBuilder';
+      },
+      childCount: baseItemCount,
+      addAutomaticKeepAlives: addAutomaticKeepAlives,
+      addRepaintBoundaries: addRepaintBoundaries,
+      addSemanticIndexes: addSemanticIndexes,
+    );
 
     Widget result = prototypeItem != null
         ? SliverPrototypeExtentList(
@@ -213,13 +209,29 @@ class DecoratedList extends StatelessWidget {
     if (padding != null) {
       result = SliverPadding(padding: padding!, sliver: result);
     }
-
     return result;
   }
 
   Widget _boxList() {
+    final config = loadMoreConfig;
+    if (config == null) return _boxListContent(hasMoreData: true);
+
+    return LoadMore(
+      config: config,
+      reverse: reverse,
+      builder: (_, hasMoreData) => _boxListContent(hasMoreData: hasMoreData),
+    );
+  }
+
+  Widget _boxListContent({required bool hasMoreData}) {
+    final showNoMoreData = !hasMoreData && _noMoreDataPlaceholder != null;
     Widget result;
+
     if (children != null) {
+      final listChildren = <Widget>[
+        ...children!,
+        if (showNoMoreData) _noMoreDataPlaceholder!,
+      ];
       result = ListView(
         padding: padding,
         keyboardDismissBehavior: keyboardDismissBehavior,
@@ -227,6 +239,11 @@ class DecoratedList extends StatelessWidget {
         controller: controller,
         shrinkWrap: shrinkWrap,
         itemExtent: itemExtent,
+        itemExtentBuilder: _itemExtentBuilderWithPlaceholder(
+          itemExtentBuilder,
+          baseItemCount: children!.length,
+          showNoMoreData: showNoMoreData,
+        ),
         physics: physics,
         reverse: reverse,
         scrollDirection: scrollDirection ?? Axis.vertical,
@@ -235,17 +252,28 @@ class DecoratedList extends StatelessWidget {
         addAutomaticKeepAlives: addAutomaticKeepAlives,
         addRepaintBoundaries: addRepaintBoundaries,
         addSemanticIndexes: addSemanticIndexes,
-        children: children!,
+        children: listChildren,
       );
     } else if (itemBuilder != null) {
+      final showPlaceholder = showNoMoreData && itemCount != null;
+      final listItemCount =
+          itemCount == null ? null : itemCount! + (showPlaceholder ? 1 : 0);
+
+      Widget listItemBuilder(BuildContext context, int index) {
+        if (showPlaceholder && index == itemCount) {
+          return _noMoreDataPlaceholder!;
+        }
+        return itemBuilder!(context, index);
+      }
+
       if (separatorBuilder != null && itemCount != null) {
         result = ListView.separated(
           padding: padding,
           restorationId: restorationId,
           separatorBuilder: separatorBuilder!,
           keyboardDismissBehavior: keyboardDismissBehavior,
-          itemBuilder: itemBuilder!,
-          itemCount: itemCount!,
+          itemBuilder: listItemBuilder,
+          itemCount: listItemCount!,
           shrinkWrap: shrinkWrap,
           physics: physics,
           reverse: reverse,
@@ -260,8 +288,8 @@ class DecoratedList extends StatelessWidget {
         result = ListView.builder(
           padding: padding,
           restorationId: restorationId,
-          itemBuilder: itemBuilder!,
-          itemCount: itemCount,
+          itemBuilder: listItemBuilder,
+          itemCount: listItemCount,
           shrinkWrap: shrinkWrap,
           controller: controller,
           physics: physics,
@@ -270,7 +298,11 @@ class DecoratedList extends StatelessWidget {
           scrollDirection: scrollDirection ?? Axis.vertical,
           clipBehavior: clipBehavior,
           itemExtent: itemExtent,
-          itemExtentBuilder: itemExtentBuilder,
+          itemExtentBuilder: _itemExtentBuilderWithPlaceholder(
+            itemExtentBuilder,
+            baseItemCount: itemCount,
+            showNoMoreData: showPlaceholder,
+          ),
           prototypeItem: prototypeItem,
           addAutomaticKeepAlives: addAutomaticKeepAlives,
           addRepaintBoundaries: addRepaintBoundaries,
@@ -282,5 +314,25 @@ class DecoratedList extends StatelessWidget {
     }
 
     return result;
+  }
+
+  Widget? get _noMoreDataPlaceholder {
+    return loadMoreConfig?.effectiveNoMoreDataPlaceholder;
+  }
+
+  int? get _itemCount => children?.length ?? itemCount;
+
+  ItemExtentBuilder? _itemExtentBuilderWithPlaceholder(
+    ItemExtentBuilder? builder, {
+    required int? baseItemCount,
+    required bool showNoMoreData,
+  }) {
+    if (builder == null || baseItemCount == null || !showNoMoreData) {
+      return builder;
+    }
+    return (index, dimensions) {
+      if (index >= baseItemCount) return 48;
+      return builder(index, dimensions);
+    };
   }
 }
