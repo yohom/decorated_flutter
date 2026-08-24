@@ -11,6 +11,11 @@ void main() {
     expect(range.duration, const Duration(hours: 8, minutes: 15));
   });
 
+  test('格式化时间范围', () {
+    expect(range.format(), '09:30~17:45');
+    expect(range.format(format: 'H:mm', divider: ' - '), '9:30 - 17:45');
+  });
+
   test('判断时间是否在范围内', () {
     expect(range.contains(start), isTrue);
     expect(range.contains(end), isFalse);
