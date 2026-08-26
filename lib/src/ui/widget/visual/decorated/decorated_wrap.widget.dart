@@ -21,6 +21,7 @@ class DecoratedWrap extends StatelessWidget {
     this.crossAxisCount,
     this.childAspectRatio,
     this.decoration,
+    this.sliver = false,
     this.foregroundDecoration,
     this.alignItemWidth = false,
     required this.children,
@@ -41,6 +42,7 @@ class DecoratedWrap extends StatelessWidget {
   final bool? expanded;
   final TextStyle? textStyle;
   final Clip clipBehavior;
+  final bool sliver;
   final double? childAspectRatio;
   final BoxDecoration? decoration;
   final BoxDecoration? foregroundDecoration;
@@ -128,6 +130,10 @@ class DecoratedWrap extends StatelessWidget {
 
     if (expanded == true) {
       result = Expanded(child: result);
+    }
+
+    if (sliver) {
+      result = SliverToBoxAdapter(child: result);
     }
 
     return result;
