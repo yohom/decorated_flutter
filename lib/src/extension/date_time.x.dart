@@ -16,6 +16,19 @@ extension DateTimeX on DateTime {
     return DateFormat(format, 'zh').format(this);
   }
 
+  /// 返回适合列表展示的相对时间文案
+  String get timeAgo {
+    final now = DateTime.now();
+    final elapsed = now.difference(this);
+
+    if (elapsed.inMinutes < 1) return '刚刚';
+    if (elapsed.inHours < 1) return '${elapsed.inMinutes}分钟前';
+    if (elapsed.inHours < 24) return '${elapsed.inHours}小时前';
+    if (isYesterday) return '昨天${format('HH:mm')}';
+    if (year == now.year) return format('MM-dd');
+    return format('yyyy-MM-dd');
+  }
+
   bool isSameDay(DateTime? other) {
     if (other == null) return false;
 

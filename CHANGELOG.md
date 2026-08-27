@@ -7,6 +7,7 @@
 - [🚀] `DecoratedText`的`mainAxisSize`默认值改为min
 - [🚀] `DecoratedWrap`增加`sliver`参数;
 - [🚀] `Line`增加`sliver`参数;
+- [🚀] `DateTimeX`增加`timeAgo`扩展;
 
 ## 0.52.2
 - [🚀] `DecoratedList`增加`itemExtentBuilder`参数, 支持按索引提供动态高度以减少列表项测量开销;
