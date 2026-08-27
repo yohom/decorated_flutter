@@ -81,6 +81,7 @@ class Line extends StatelessWidget {
     this.color,
     this.borderRadius,
     this.centered,
+    this.sliver = false,
     this.padding = EdgeInsets.zero,
     this.margin = EdgeInsets.zero,
   });
@@ -90,6 +91,7 @@ class Line extends StatelessWidget {
   final EdgeInsets padding, margin;
   final BorderRadius? borderRadius;
   final bool? centered;
+  final bool sliver;
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +108,10 @@ class Line extends StatelessWidget {
 
     if (centered == true) {
       result = Center(child: result);
+    }
+
+    if (sliver) {
+      result = SliverToBoxAdapter(child: result);
     }
 
     return result;

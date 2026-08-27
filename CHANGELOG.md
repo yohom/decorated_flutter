@@ -5,7 +5,8 @@
 - [🚀] 增加`TimeOfDayRange`，支持一天内的时间范围判断、时长计算和格式化;
 - [🚀] 增加 `WidgetSpan` 间距常量，支持普通、横向和纵向间距;
 - [🚀] `DecoratedText`的`mainAxisSize`默认值改为min
-- [🚀] `DecoratedWrap`增加`sliver`参数
+- [🚀] `DecoratedWrap`增加`sliver`参数;
+- [🚀] `Line`增加`sliver`参数;
 
 ## 0.52.2
 - [🚀] `DecoratedList`增加`itemExtentBuilder`参数, 支持按索引提供动态高度以减少列表项测量开销;
