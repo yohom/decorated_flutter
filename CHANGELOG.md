@@ -1,4 +1,5 @@
 ## 0.52.3
+- [🚀] `DecoratedList.sliver`支持`separatorBuilder`;
 - [🚀] 增加通用`LoadMore`组件及`LoadMoreConfig`，`DecoratedList`的box版本内置支持，`DecoratedScrollable`可集成到自定义滚动组件中;
 - [🔧] `DecoratedList.sliver`不再处理load-more状态及没有更多占位，由外层滚动组件负责;
 - [🚀] 增加`TimeOfDayRange`，支持一天内的时间范围判断、时长计算和格式化;

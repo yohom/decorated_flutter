@@ -82,6 +82,7 @@ class DecoratedList extends StatelessWidget {
     this.itemBuilder,
     this.itemCount,
     this.children,
+    this.separatorBuilder,
     this.width,
     this.height,
     this.addAutomaticKeepAlives = true,
@@ -96,11 +97,17 @@ class DecoratedList extends StatelessWidget {
               (prototypeItem == null && itemExtentBuilder == null),
           'You can only pass one of itemExtent, prototypeItem and itemExtentBuilder.',
         ),
+        assert(
+          separatorBuilder == null ||
+              (itemExtent == null &&
+                  itemExtentBuilder == null &&
+                  prototypeItem == null),
+          'separatorBuilder cannot be used with itemExtent, itemExtentBuilder or prototypeItem.',
+        ),
         _sliver = true,
         shrinkWrap = false,
         scrollDirection = null,
         controller = null,
-        separatorBuilder = null,
         restorationId = null,
         expanded = null,
         physics = null,
@@ -179,32 +186,46 @@ class DecoratedList extends StatelessWidget {
   Widget _sliverList() {
     final baseItemCount = _itemCount;
 
-    final delegate = SliverChildBuilderDelegate(
-      (context, index) {
-        if (children != null) return children![index];
-        if (itemBuilder != null) return itemBuilder!(context, index);
-        throw '必须传入children或itemBuilder';
-      },
-      childCount: baseItemCount,
-      addAutomaticKeepAlives: addAutomaticKeepAlives,
-      addRepaintBoundaries: addRepaintBoundaries,
-      addSemanticIndexes: addSemanticIndexes,
-    );
+    Widget buildItem(BuildContext context, int index) {
+      if (children != null) return children![index];
+      if (itemBuilder != null) return itemBuilder!(context, index);
+      throw '必须传入children或itemBuilder';
+    }
 
-    Widget result = prototypeItem != null
-        ? SliverPrototypeExtentList(
-            delegate: delegate,
-            prototypeItem: prototypeItem!,
-          )
-        : itemExtentBuilder != null
-            ? SliverVariedExtentList(
-                delegate: delegate,
-                itemExtentBuilder: itemExtentBuilder!,
-              )
-            : itemExtent != null
-                ? SliverFixedExtentList(
-                    delegate: delegate, itemExtent: itemExtent!)
-                : SliverList(delegate: delegate);
+    Widget result;
+    if (separatorBuilder != null) {
+      result = SliverList.separated(
+        itemBuilder: buildItem,
+        separatorBuilder: separatorBuilder!,
+        itemCount: baseItemCount,
+        addAutomaticKeepAlives: addAutomaticKeepAlives,
+        addRepaintBoundaries: addRepaintBoundaries,
+        addSemanticIndexes: addSemanticIndexes,
+      );
+    } else {
+      final delegate = SliverChildBuilderDelegate(
+        buildItem,
+        childCount: baseItemCount,
+        addAutomaticKeepAlives: addAutomaticKeepAlives,
+        addRepaintBoundaries: addRepaintBoundaries,
+        addSemanticIndexes: addSemanticIndexes,
+      );
+
+      result = prototypeItem != null
+          ? SliverPrototypeExtentList(
+              delegate: delegate,
+              prototypeItem: prototypeItem!,
+            )
+          : itemExtentBuilder != null
+              ? SliverVariedExtentList(
+                  delegate: delegate,
+                  itemExtentBuilder: itemExtentBuilder!,
+                )
+              : itemExtent != null
+                  ? SliverFixedExtentList(
+                      delegate: delegate, itemExtent: itemExtent!)
+                  : SliverList(delegate: delegate);
+    }
 
     if (padding != null) {
       result = SliverPadding(padding: padding!, sliver: result);

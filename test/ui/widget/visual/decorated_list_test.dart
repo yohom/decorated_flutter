@@ -70,6 +70,73 @@ void main() {
     expect(find.text('没有更多数据'), findsNothing);
   });
 
+  testWidgets('sliver列表支持separatorBuilder', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: SizedBox(
+          height: 300,
+          child: CustomScrollView(
+            slivers: [
+              DecoratedList.sliver(
+                itemCount: 3,
+                itemBuilder: (_, index) => SizedBox(
+                  height: 40,
+                  child: Text('item-$index'),
+                ),
+                separatorBuilder: (_, index) => SizedBox(
+                  key: ValueKey('separator-$index'),
+                  height: 8,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    await tester.pump();
+
+    expect(find.text('item-0'), findsOneWidget);
+    expect(find.text('item-1'), findsOneWidget);
+    expect(find.text('item-2'), findsOneWidget);
+    expect(find.byKey(const ValueKey('separator-0')), findsOneWidget);
+    expect(find.byKey(const ValueKey('separator-1')), findsOneWidget);
+    expect(find.byKey(const ValueKey('separator-2')), findsNothing);
+  });
+
+  testWidgets('sliver列表的children也支持separatorBuilder', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: SizedBox(
+          height: 300,
+          child: CustomScrollView(
+            slivers: [
+              DecoratedList.sliver(
+                children: const [
+                  SizedBox(height: 40, child: Text('item-0')),
+                  SizedBox(height: 40, child: Text('item-1')),
+                  SizedBox(height: 40, child: Text('item-2')),
+                ],
+                separatorBuilder: (_, index) => SizedBox(
+                  key: ValueKey('separator-$index'),
+                  height: 8,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    await tester.pump();
+
+    expect(find.text('item-0'), findsOneWidget);
+    expect(find.text('item-1'), findsOneWidget);
+    expect(find.text('item-2'), findsOneWidget);
+    expect(find.byKey(const ValueKey('separator-0')), findsOneWidget);
+    expect(find.byKey(const ValueKey('separator-1')), findsOneWidget);
+  });
+
   testWidgets('LoadMoreConfig使用全局没有更多占位', (tester) async {
     final originalPlaceholder = LoadMoreConfig.defaultNoMoreDataPlaceholder;
     addTearDown(
