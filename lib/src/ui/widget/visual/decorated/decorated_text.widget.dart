@@ -219,7 +219,9 @@ class DecoratedText extends StatelessWidget {
         mainAxisSize: mainAxisSize,
         mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.center,
         crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.center,
-        textBaseline: textBaseline,
+        textBaseline: crossAxisAlignment == CrossAxisAlignment.baseline
+            ? TextBaseline.alphabetic
+            : textBaseline,
         children: [
           if (leftWidget != null) leftWidget!,
           if (widgetPadding != null && leftWidget != null)
