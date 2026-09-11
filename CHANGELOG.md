@@ -8,6 +8,7 @@
 - [🚀] `DecoratedWrap`增加`sliver`参数;
 - [🚀] `Line`增加`sliver`参数;
 - [🚀] `DateTimeX`增加`timeAgo`扩展;
+- [🚀] 增加`PausableTimer`类, 支持暂停、继续、重置定时器;
 
 ## 0.52.2
 - [🚀] `DecoratedList`增加`itemExtentBuilder`参数, 支持按索引提供动态高度以减少列表项测量开销;
