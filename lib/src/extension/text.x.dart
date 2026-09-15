@@ -1,17 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 extension TextX on Text {
-  Text operator +(Object other) {
-    final otherSpan = switch (other) {
-      final Text text => _inlineSpan(text),
-      final InlineSpan span => span,
-      _ => throw ArgumentError.value(
-          other,
-          'other',
-          'must be a Text or InlineSpan',
-        ),
-    };
-
+  Text operator +(InlineSpan otherSpan) {
     return Text.rich(
       TextSpan(
         children: [
@@ -37,16 +27,4 @@ extension TextX on Text {
       selectionColor: selectionColor,
     );
   }
-}
-
-InlineSpan _inlineSpan(Text text) {
-  final span = text.textSpan;
-  return TextSpan(
-    text: text.data,
-    style: text.style,
-    locale: text.locale,
-    semanticsLabel: text.semanticsLabel,
-    semanticsIdentifier: text.semanticsIdentifier,
-    children: span == null ? null : [span],
-  );
 }

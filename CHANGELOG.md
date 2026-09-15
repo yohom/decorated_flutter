@@ -1,5 +1,5 @@
 ## 0.52.3
-- [🚀] `TextX`的`+`支持`Text`与`InlineSpan`拼接，保留文本样式继承和`Text`显示配置;
+- [🚀] `TextX`的`+`支持`InlineSpan`拼接，保留文本样式继承和`Text`显示配置;
 - [🔧] `SpringContainer`调整为更接近 iOS 的弹簧按压效果，支持移出取消和重新移入恢复;
 - [🚀] `DecoratedList.sliver`支持`separatorBuilder`;
 - [🚀] 增加通用`LoadMore`组件及`LoadMoreConfig`，`DecoratedList`的box版本内置支持，`DecoratedScrollable`可集成到自定义滚动组件中;
