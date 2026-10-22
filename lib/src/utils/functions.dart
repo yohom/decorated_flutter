@@ -462,23 +462,25 @@ double computeTextHeight(String text, TextStyle style, double maxWidth) {
 
 /// 宽松类型转换
 T? safeAs<T>(Object? value) {
+  Type __typeOf<X>() => X;
+
   if (value == null) return null;
 
-  if (T == String) return value.toString() as T;
+  if (T == String || T == __typeOf<String?>()) return value.toString() as T;
 
-  if (T == int) {
+  if (T == int || T == __typeOf<int?>()) {
     if (value is int) return value as T;
     if (value is num) return value.toInt() as T;
     return int.tryParse(value.toString()) as T?;
   }
 
-  if (T == double) {
+  if (T == double || T == __typeOf<double?>()) {
     if (value is double) return value as T;
     if (value is num) return value.toDouble() as T;
     return double.tryParse(value.toString()) as T?;
   }
 
-  if (T == bool) {
+  if (T == bool || T == __typeOf<bool?>()) {
     if (value is bool) return value as T;
     final normalized = value.toString().trim().toLowerCase();
     if (normalized == 'true' || normalized == '1') return true as T;
@@ -486,12 +488,13 @@ T? safeAs<T>(Object? value) {
     return null;
   }
 
-  if (T == List<dynamic>) {
+  if (T == __typeOf<List<dynamic>>() || T == __typeOf<List<dynamic>?>()) {
     if (value is List) return value as T;
     return null;
   }
 
-  if (T == Map<String, dynamic>) {
+  if (T == __typeOf<Map<String, dynamic>>() ||
+      T == __typeOf<Map<String, dynamic>?>()) {
     if (value is Map<String, dynamic>) return value as T;
     if (value is Map) {
       return value.map((key, value) => MapEntry(key.toString(), value)) as T;
