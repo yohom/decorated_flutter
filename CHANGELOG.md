@@ -1,4 +1,5 @@
 ## 0.52.4
+- [🔧] 修复 `safeAs` 在可空类型参数下跳过宽松转换分支的问题;
 - [🚀] `AnimatedVisibility.value`支持根据可空值显隐并通过builder构建内容;
 - [🚀] 增加 `HORIZONTAL_NIL` 和 `VERTICAL_NIL`，用于横向和纵向占位;
 
