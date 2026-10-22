@@ -1,3 +1,6 @@
+## 0.52.4
+- [🚀] 增加 `HORIZONTAL_NIL` 和 `VERTICAL_NIL`，用于横向和纵向占位;
+
 ## 0.52.3
 - [🚀] `TextX`的`+`支持`InlineSpan`拼接，保留文本样式继承和`Text`显示配置;
 - [🔧] `SpringContainer`调整为更接近 iOS 的弹簧按压效果，支持移出取消和重新移入恢复;
