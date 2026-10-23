@@ -40,6 +40,38 @@ DateTime nextYear([DateTime? date]) {
   return DateTime(now.year + 1);
 }
 
+/// 尝试解析日期
+///
+/// 如果解析出错, 就返回null, 否则返回解析后的日期
+DateTime? tryDate(dynamic raw) {
+  DateTime? date;
+
+  try {
+    int? timestamp;
+    if (raw is int) {
+      timestamp = raw;
+    } else if (raw is String) {
+      timestamp = int.tryParse(raw);
+    }
+
+    if (timestamp != null) {
+      // 先尝试直接按毫秒解析时间戳
+      date = DateTime.fromMillisecondsSinceEpoch(timestamp);
+      // 如果发现年是在1970年, 则有极大概率时间戳单位是秒, 这里乘以1000再次解析
+      if (date.year == 1970) {
+        date = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+      }
+      return date;
+    } else {
+      date = DateTime.tryParse(raw);
+      return date;
+    }
+  } catch (e) {
+    L.w('[DECORATED_FLUTTER] 解析日期出错($raw), 错误信息: $e');
+    return null;
+  }
+}
+
 /// 强制解析出一个日期
 ///
 /// 如果解析出错, 就根据[fallback]逻辑构造一个代替时间
