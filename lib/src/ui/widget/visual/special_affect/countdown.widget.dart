@@ -29,15 +29,25 @@ class _CountdownState extends State<Countdown> {
   void initState() {
     super.initState();
     isZeroed = false;
-    _countStream = Stream.periodic(
-      widget.interval,
-      (count) => widget.initialData - 1 - count,
-    ).take(widget.initialData);
+    _countStream = _createCountStream();
+  }
+
+  @override
+  void didUpdateWidget(covariant Countdown oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.initialData == widget.initialData &&
+        oldWidget.interval == widget.interval) {
+      return;
+    }
+
+    _countStream = _createCountStream();
+    if (widget.initialData > 0) isZeroed = false;
   }
 
   @override
   Widget build(BuildContext context) {
     Widget result = StreamBuilder<int>(
+      key: ObjectKey(_countStream),
       initialData: widget.initialData,
       stream: _countStream,
       builder: (context, snapshot) {
@@ -57,5 +67,12 @@ class _CountdownState extends State<Countdown> {
     }
 
     return result;
+  }
+
+  Stream<int> _createCountStream() {
+    return Stream.periodic(
+      widget.interval,
+      (count) => widget.initialData - 1 - count,
+    ).take(widget.initialData);
   }
 }
