@@ -178,6 +178,8 @@ class _PressGestureRecognizer extends OneSequenceGestureRecognizer {
   VoidCallback? onPressCancel;
 
   int? _pointer;
+  Offset? _upPosition;
+  bool _accepted = false;
 
   @override
   void addAllowedPointer(PointerDownEvent event) {
@@ -194,22 +196,40 @@ class _PressGestureRecognizer extends OneSequenceGestureRecognizer {
     if (event is PointerMoveEvent) {
       onPressMove?.call(event.localPosition);
     } else if (event is PointerUpEvent) {
-      resolve(GestureDisposition.accepted);
+      _upPosition = event.localPosition;
       stopTrackingPointer(event.pointer);
-      _pointer = null;
-      onPressEnd?.call(event.localPosition);
+      if (_accepted) _finishPress();
     } else if (event is PointerCancelEvent) {
       stopTrackingPointer(event.pointer);
       _pointer = null;
+      _upPosition = null;
+      _accepted = false;
       onPressCancel?.call();
       resolve(GestureDisposition.rejected);
     }
   }
 
   @override
+  void acceptGesture(int pointer) {
+    if (_pointer != pointer) return;
+    _accepted = true;
+    if (_upPosition != null) _finishPress();
+  }
+
+  void _finishPress() {
+    final position = _upPosition!;
+    _pointer = null;
+    _upPosition = null;
+    _accepted = false;
+    onPressEnd?.call(position);
+  }
+
+  @override
   void rejectGesture(int pointer) {
     if (_pointer == pointer) {
       _pointer = null;
+      _upPosition = null;
+      _accepted = false;
       onPressCancel?.call();
     }
     super.rejectGesture(pointer);
