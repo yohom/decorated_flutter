@@ -3,6 +3,45 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/widgets.dart';
 
 void main() {
+  testWidgets('内部按钮优先响应点击，点击其他区域触发容器', (tester) async {
+    var containerCount = 0;
+    var buttonCount = 0;
+    await tester.pumpWidget(
+      Directionality(
+        textDirection: TextDirection.ltr,
+        child: Center(
+          child: SpringContainer(
+            debounceDuration: Duration.zero,
+            onPressed: (_) => containerCount++,
+            child: SizedBox(
+              width: 200,
+              height: 100,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: GestureDetector(
+                  key: const Key('child'),
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => buttonCount++,
+                  child: const SizedBox(width: 80, height: 80),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    await tester.tap(find.byKey(const Key('child')));
+    await tester.pumpAndSettle();
+    expect(buttonCount, 1);
+    expect(containerCount, 0);
+
+    await tester.tapAt(
+        tester.getCenter(find.byType(SpringContainer)) + const Offset(60, 0));
+    await tester.pumpAndSettle();
+    expect(containerCount, 1);
+  });
+
   testWidgets('按下时缩小，松开后立即使用弹簧回弹并触发回调', (tester) async {
     var pressCount = 0;
     await tester.pumpWidget(
