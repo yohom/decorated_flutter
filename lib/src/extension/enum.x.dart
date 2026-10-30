@@ -1,17 +1,17 @@
-extension EnumX on Enum {
-  bool operator >(Enum other) {
+extension EnumX<T extends Enum> on T {
+  bool operator >(T other) {
     return index > other.index;
   }
 
-  bool operator >=(Enum other) {
+  bool operator >=(T other) {
     return index >= other.index;
   }
 
-  bool operator <(Enum other) {
+  bool operator <(T other) {
     return index < other.index;
   }
 
-  bool operator <=(Enum other) {
+  bool operator <=(T other) {
     return index <= other.index;
   }
 }

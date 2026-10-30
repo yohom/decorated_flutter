@@ -1,3 +1,4 @@
+import 'package:diffutil_dart/diffutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show ItemExtentBuilder;
 
@@ -5,7 +6,7 @@ import 'decorated_scrollable.widget.dart';
 import 'load_more.widget.dart';
 import 'scrollable_top_divider.widget.dart';
 
-class DecoratedList extends StatelessWidget {
+class DecoratedList<T> extends StatelessWidget {
   const DecoratedList.box({
     super.key,
     this.padding,
@@ -14,6 +15,9 @@ class DecoratedList extends StatelessWidget {
     this.itemBuilder,
     this.itemCount,
     this.children,
+    this.dataSource,
+    this.dataSourceItemBuilder,
+    this.dataSourceKey,
     this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.onDrag,
     this.scrollDirection,
     this.width,
@@ -40,6 +44,21 @@ class DecoratedList extends StatelessWidget {
               (prototypeItem == null && itemExtentBuilder == null),
           'You can only pass one of itemExtent, prototypeItem and itemExtentBuilder.',
         ),
+        assert((dataSource == null) == (dataSourceItemBuilder == null)),
+        assert(dataSource == null || children == null),
+        assert(dataSource == null || itemBuilder == null),
+        assert(
+          dataSource == null ||
+              itemCount == null ||
+              itemCount == dataSource.length,
+        ),
+        assert(
+          dataSource == null ||
+              (itemExtent == null &&
+                  itemExtentBuilder == null &&
+                  prototypeItem == null),
+          'Animated data sources cannot be combined with item extents.',
+        ),
         _sliver = false,
         separatorBuilder = null;
 
@@ -50,6 +69,9 @@ class DecoratedList extends StatelessWidget {
     this.shrinkWrap = false,
     this.itemBuilder,
     required this.itemCount,
+    this.dataSource,
+    this.dataSourceItemBuilder,
+    this.dataSourceKey,
     this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.onDrag,
     this.scrollDirection,
     this.width,
@@ -69,6 +91,11 @@ class DecoratedList extends StatelessWidget {
     this.margin,
     this.loadMoreConfig,
   })  : assert(itemCount != null),
+        assert((dataSource == null) == (dataSourceItemBuilder == null)),
+        assert(
+          dataSource == null || itemCount == dataSource.length,
+        ),
+        assert(dataSource == null || itemBuilder == null),
         assert(separatorBuilder != null),
         _sliver = false,
         itemExtent = null,
@@ -82,6 +109,9 @@ class DecoratedList extends StatelessWidget {
     this.itemBuilder,
     this.itemCount,
     this.children,
+    this.dataSource,
+    this.dataSourceItemBuilder,
+    this.dataSourceKey,
     this.separatorBuilder,
     this.width,
     this.height,
@@ -96,6 +126,21 @@ class DecoratedList extends StatelessWidget {
               (itemExtent == null && itemExtentBuilder == null) ||
               (prototypeItem == null && itemExtentBuilder == null),
           'You can only pass one of itemExtent, prototypeItem and itemExtentBuilder.',
+        ),
+        assert((dataSource == null) == (dataSourceItemBuilder == null)),
+        assert(dataSource == null || children == null),
+        assert(dataSource == null || itemBuilder == null),
+        assert(
+          dataSource == null ||
+              itemCount == null ||
+              itemCount == dataSource.length,
+        ),
+        assert(
+          dataSource == null ||
+              (itemExtent == null &&
+                  itemExtentBuilder == null &&
+                  prototypeItem == null),
+          'Animated data sources cannot be combined with item extents.',
         ),
         assert(
           separatorBuilder == null ||
@@ -129,6 +174,18 @@ class DecoratedList extends StatelessWidget {
   final ScrollViewKeyboardDismissBehavior keyboardDismissBehavior;
   final Axis? scrollDirection;
   final List<Widget>? children;
+  final List<T>? dataSource;
+
+  /// Builds an item from the animated data source and its current index.
+  ///
+  /// When provided with [dataSource], additions and removals are animated.
+  /// Items are matched by [dataSourceKey], or by `==` when it is omitted.
+  /// Reordering is animated as a removal followed by an insertion.
+  final Widget Function(BuildContext context, T item, int index)?
+      dataSourceItemBuilder;
+
+  /// Returns a stable identity for an item when model equality is not stable.
+  final Object? Function(T item)? dataSourceKey;
   final double? width, height;
   final bool addAutomaticKeepAlives, addRepaintBoundaries, addSemanticIndexes;
   final double? itemExtent;
@@ -193,7 +250,15 @@ class DecoratedList extends StatelessWidget {
     }
 
     Widget result;
-    if (separatorBuilder != null) {
+    if (dataSource != null) {
+      result = _ImplicitAnimatedDataList<T>(
+        dataSource: dataSource!,
+        itemBuilder: dataSourceItemBuilder!,
+        itemKey: dataSourceKey,
+        separatorBuilder: separatorBuilder,
+        sliver: true,
+      );
+    } else if (separatorBuilder != null) {
       result = SliverList.separated(
         itemBuilder: buildItem,
         separatorBuilder: separatorBuilder!,
@@ -248,7 +313,26 @@ class DecoratedList extends StatelessWidget {
     final showNoMoreData = !hasMoreData && _noMoreDataPlaceholder != null;
     Widget result;
 
-    if (children != null) {
+    if (dataSource != null) {
+      result = _ImplicitAnimatedDataList<T>(
+        dataSource: dataSource!,
+        itemBuilder: dataSourceItemBuilder!,
+        itemKey: dataSourceKey,
+        separatorBuilder: separatorBuilder,
+        sliver: false,
+        padding: padding,
+        controller: controller,
+        shrinkWrap: shrinkWrap,
+        physics: physics,
+        reverse: reverse,
+        scrollDirection: scrollDirection ?? Axis.vertical,
+        keyboardDismissBehavior: keyboardDismissBehavior,
+        restorationId: restorationId,
+        clipBehavior: clipBehavior,
+        showPlaceholder: showNoMoreData,
+        placeholder: _noMoreDataPlaceholder,
+      );
+    } else if (children != null) {
       final listChildren = <Widget>[
         ...children!,
         if (showNoMoreData) _noMoreDataPlaceholder!,
@@ -341,7 +425,7 @@ class DecoratedList extends StatelessWidget {
     return loadMoreConfig?.effectiveNoMoreDataPlaceholder;
   }
 
-  int? get _itemCount => children?.length ?? itemCount;
+  int? get _itemCount => dataSource?.length ?? children?.length ?? itemCount;
 
   ItemExtentBuilder? _itemExtentBuilderWithPlaceholder(
     ItemExtentBuilder? builder, {
@@ -355,5 +439,213 @@ class DecoratedList extends StatelessWidget {
       if (index >= baseItemCount) return 48;
       return builder(index, dimensions);
     };
+  }
+}
+
+class _AnimatedDataEntry<T> {
+  const _AnimatedDataEntry({
+    required this.identity,
+    this.item,
+    this.index = -1,
+    this.hasSeparator = false,
+    this.placeholder,
+  });
+
+  final Object? identity;
+  final T? item;
+  final int index;
+  final bool hasSeparator;
+  final Widget? placeholder;
+
+  bool get isPlaceholder => placeholder != null;
+}
+
+class _AnimatedPlaceholderIdentity {
+  const _AnimatedPlaceholderIdentity();
+}
+
+class _ImplicitAnimatedDataList<T> extends StatefulWidget {
+  const _ImplicitAnimatedDataList({
+    required this.dataSource,
+    required this.itemBuilder,
+    required this.itemKey,
+    required this.sliver,
+    this.separatorBuilder,
+    this.padding,
+    this.controller,
+    this.shrinkWrap = false,
+    this.physics,
+    this.reverse = false,
+    this.scrollDirection = Axis.vertical,
+    this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.onDrag,
+    this.restorationId,
+    this.clipBehavior = Clip.hardEdge,
+    this.showPlaceholder = false,
+    this.placeholder,
+  });
+
+  final List<T> dataSource;
+  final Widget Function(BuildContext context, T item, int index) itemBuilder;
+  final Object? Function(T item)? itemKey;
+  final IndexedWidgetBuilder? separatorBuilder;
+  final bool sliver;
+  final EdgeInsets? padding;
+  final ScrollController? controller;
+  final bool shrinkWrap;
+  final ScrollPhysics? physics;
+  final bool reverse;
+  final Axis scrollDirection;
+  final ScrollViewKeyboardDismissBehavior keyboardDismissBehavior;
+  final String? restorationId;
+  final Clip clipBehavior;
+  final bool showPlaceholder;
+  final Widget? placeholder;
+
+  @override
+  State<_ImplicitAnimatedDataList<T>> createState() =>
+      _ImplicitAnimatedDataListState<T>();
+}
+
+class _ImplicitAnimatedDataListState<T>
+    extends State<_ImplicitAnimatedDataList<T>> {
+  static const _duration = Duration(milliseconds: 300);
+  static const _placeholderIdentity = _AnimatedPlaceholderIdentity();
+
+  final _sliverListKey = GlobalKey<SliverAnimatedListState>();
+  late List<_AnimatedDataEntry<T>> _entries;
+
+  @override
+  void initState() {
+    super.initState();
+    _entries = _createEntries();
+  }
+
+  @override
+  void didUpdateWidget(covariant _ImplicitAnimatedDataList<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    final nextEntries = _createEntries();
+    final listState = _sliverListKey.currentState;
+    if (listState == null) {
+      _entries = nextEntries;
+      return;
+    }
+
+    final updates = calculateListDiff<_AnimatedDataEntry<T>>(
+      _entries,
+      nextEntries,
+      detectMoves: false,
+      equalityChecker: (a, b) => a.identity == b.identity,
+    ).getUpdatesWithData();
+    for (final update in updates) {
+      update.when<void>(
+        insert: _insertItem,
+        remove: _removeItem,
+        change: (index, _, newEntry) => _entries[index] = newEntry,
+        move: (_, __, ___) {},
+      );
+    }
+    _entries = nextEntries;
+  }
+
+  List<_AnimatedDataEntry<T>> _createEntries() {
+    final count = widget.dataSource.length;
+    final hasPlaceholder = widget.showPlaceholder && widget.placeholder != null;
+    final totalCount = count + (hasPlaceholder ? 1 : 0);
+    return [
+      for (var index = 0; index < count; index++)
+        _AnimatedDataEntry<T>(
+          identity: widget.itemKey == null
+              ? widget.dataSource[index]
+              : widget.itemKey!(widget.dataSource[index]),
+          item: widget.dataSource[index],
+          index: index,
+          hasSeparator:
+              widget.separatorBuilder != null && index < totalCount - 1,
+        ),
+      if (hasPlaceholder)
+        _AnimatedDataEntry<T>(
+          identity: _placeholderIdentity,
+          placeholder: widget.placeholder,
+        ),
+    ];
+  }
+
+  void _removeItem(int index, _AnimatedDataEntry<T> entry) {
+    Widget builder(BuildContext context, Animation<double> animation) =>
+        _buildEntry(context, entry, animation);
+
+    _sliverListKey.currentState!.removeItem(
+      index,
+      builder,
+      duration: _duration,
+    );
+    _entries.removeAt(index);
+  }
+
+  void _insertItem(int index, _AnimatedDataEntry<T> entry) {
+    _sliverListKey.currentState!.insertItem(index, duration: _duration);
+    _entries.insert(index, entry);
+  }
+
+  Widget _buildEntry(
+    BuildContext context,
+    _AnimatedDataEntry<T> entry,
+    Animation<double> animation,
+  ) {
+    final axis = widget.sliver ? _sliverAxis(context) : widget.scrollDirection;
+    Widget child = entry.isPlaceholder
+        ? entry.placeholder!
+        : widget.itemBuilder(context, entry.item as T, entry.index);
+    if (entry.hasSeparator) {
+      final separator = widget.separatorBuilder!(context, entry.index);
+      child = axis == Axis.horizontal
+          ? Row(mainAxisSize: MainAxisSize.min, children: [child, separator])
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [child, separator],
+            );
+    }
+    return FadeTransition(
+      opacity: animation,
+      child: SizeTransition(
+        axis: axis,
+        axisAlignment: -1,
+        sizeFactor: animation,
+        child: child,
+      ),
+    );
+  }
+
+  Axis _sliverAxis(BuildContext context) {
+    final direction = Scrollable.maybeOf(context)?.position.axisDirection;
+    return direction == AxisDirection.left || direction == AxisDirection.right
+        ? Axis.horizontal
+        : Axis.vertical;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Widget list = SliverAnimatedList(
+      key: _sliverListKey,
+      initialItemCount: _entries.length,
+      itemBuilder: (context, index, animation) =>
+          _buildEntry(context, _entries[index], animation),
+    );
+    if (widget.padding != null) {
+      list = SliverPadding(padding: widget.padding!, sliver: list);
+    }
+    if (widget.sliver) return list;
+    return CustomScrollView(
+      controller: widget.controller,
+      shrinkWrap: widget.shrinkWrap,
+      physics: widget.physics,
+      reverse: widget.reverse,
+      scrollDirection: widget.scrollDirection,
+      keyboardDismissBehavior: widget.keyboardDismissBehavior,
+      restorationId: widget.restorationId,
+      clipBehavior: widget.clipBehavior,
+      slivers: [list],
+    );
   }
 }
