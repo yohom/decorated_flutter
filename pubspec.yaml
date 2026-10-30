@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  diffutil_dart: ^5.0.0
   # 网络请求 https://pub.flutter-io.cn/packages/dio 5.2.0修改了CancelToken的行为, (至少)Stream类型的响应无法取消
   dio: "^5.0.0"
   # rx https://pub.flutter-io.cn/packages/rxdart

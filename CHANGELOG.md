@@ -1,4 +1,5 @@
 ## 0.52.4
+- [🚀] `DecoratedList`支持根据数据源变化自动播放列表项插入和删除动画;
 - [🔧] `Countdown` 在 `initialData` 或 `interval` 更新后重启倒计时;
 - [🚀] 增加 `tryDate` 日期解析方法，解析失败时返回 `null`;
 - [🔧] 修复 `safeAs` 在可空类型参数下跳过宽松转换分支的问题;
