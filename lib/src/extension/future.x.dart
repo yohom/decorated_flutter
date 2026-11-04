@@ -249,6 +249,10 @@ extension IterableFutureX<T> on Future<Iterable<T>> {
     return then((value) => value.take((count)).toList());
   }
 
+  Future<List<R>> thenMap<R>(R Function(T) mapper) {
+    return then((value) => value.map(mapper).toList());
+  }
+
   Future<List<T>> thenSkip(int count) {
     return then((value) => value.skip((count)).toList());
   }
