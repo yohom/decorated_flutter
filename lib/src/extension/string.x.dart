@@ -81,7 +81,9 @@ extension StringX on String {
     try {
       return num.parse(this).toInt();
     } catch (e, s) {
-      L.w('[DECORATED_FLUTTER] 字符串 $this 解析int过程出错, 要检查一下是否业务逻辑是否有问题! $s');
+      // shortcut: 只保留前三帧，若解析链路增加封装层时再扩展。
+      final stack = s.toString().split('\n').take(3).join('\n');
+      L.w('[DECORATED_FLUTTER] "$this" 解析为 int 失败: $e\n$stack');
       return null;
     }
   }
@@ -91,7 +93,9 @@ extension StringX on String {
       // 某些地区的数字键盘, 小数点是逗号
       return double.tryParse(replaceAll(',', '.'));
     } catch (e, s) {
-      L.w('[DECORATED_FLUTTER] 字符串 $this 解析double过程出错, 要检查一下是否业务逻辑是否有问题!, $s');
+      // shortcut: 只保留前三帧，若解析链路增加封装层时再扩展。
+      final stack = s.toString().split('\n').take(3).join('\n');
+      L.w('[DECORATED_FLUTTER] "$this" 解析为 double 失败: $e\n$stack');
       return null;
     }
   }
