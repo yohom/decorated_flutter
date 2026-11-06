@@ -115,6 +115,7 @@ class DecoratedWrap extends StatelessWidget {
         height: height,
         padding: padding,
         margin: margin,
+        clipBehavior: clipBehavior,
         decoration: decoration,
         foregroundDecoration: foregroundDecoration,
         child: result,
