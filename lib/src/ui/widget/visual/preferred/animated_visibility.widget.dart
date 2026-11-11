@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../nonvisual/nil.widget.dart';
+import '../../../../utils/empty_util.dart';
 
 class AnimatedVisibility<T> extends StatelessWidget {
   const AnimatedVisibility({
@@ -37,13 +38,16 @@ class AnimatedVisibility<T> extends StatelessWidget {
     this.duration = const Duration(milliseconds: 320),
     this.reverseDuration,
     this.margin,
+    bool showEmptyValue = false,
     this.alignment = Alignment.topCenter,
     this.clipBehavior = Clip.hardEdge,
     this.curve = Curves.ease,
     this.placeholder = HORIZONTAL_NIL,
-  })  : visible = value != null,
+  })  : visible = value != null && (showEmptyValue || !isEmpty(value)),
         visibleStream = null,
-        child = value == null ? HORIZONTAL_NIL : builder(value);
+        child = value == null || (!showEmptyValue && isEmpty(value))
+            ? HORIZONTAL_NIL
+            : builder(value);
 
   final bool visible;
   final Stream<bool>? visibleStream;

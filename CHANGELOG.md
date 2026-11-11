@@ -1,3 +1,6 @@
+## 0.52.5
+- [🚀] `AnimatedVisibility.value`新增`showEmptyValue`参数，支持控制空值显示;
+
 ## 0.52.4
 - [🚀] `IterableFutureX`增加`thenMap`，支持将异步`Iterable`映射为`List`;
 - [🚀] `DecoratedList`支持根据数据源变化自动播放列表项插入和删除动画;
