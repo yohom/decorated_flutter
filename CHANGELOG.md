@@ -1,5 +1,6 @@
 ## 0.53.0
 - [⚠️] `0.53.0-dev.0` 的 Material 和 Cupertino API 迁移至独立的 `material_ui` 与 `cupertino_ui` 包；使用相关 API 的项目需添加对应依赖并更新导入，最低要求 Dart 3.13、Flutter 3.47。
+- 将 `cached_network_image` 最低兼容版本提升至 `4.0.0`，该版本改用独立的 `material_ui` 包。
 
 ## 0.52.5
 - [🚀] `AnimatedVisibility.value`新增`showEmptyValue`参数，支持控制空值显示;
