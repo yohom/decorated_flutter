@@ -1,7 +1,6 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:material_ui/material_ui.dart';
 
 @optionalTypeArgs
 class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
@@ -212,9 +211,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
             debugShowCheckedModeBanner: debugShowCheckedModeBanner,
             localizationsDelegates: {
               ...localizationsDelegates,
-              GlobalCupertinoLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate
+              ...GlobalMaterialLocalizations.delegates,
             },
             locale: locale,
             supportedLocales: supportedLocales,
@@ -258,9 +255,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
             debugShowCheckedModeBanner: debugShowCheckedModeBanner,
             localizationsDelegates: {
               ...localizationsDelegates,
-              GlobalCupertinoLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate
+              ...GlobalMaterialLocalizations.delegates,
             },
             locale: locale,
             supportedLocales: supportedLocales,

@@ -1,5 +1,5 @@
 import 'package:decorated_flutter/src/utils/enums.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:intl/intl.dart';
 
 extension DateTimeX on DateTime {

@@ -1,8 +1,8 @@
 import 'package:decorated_flutter/src/extension/build_context.x.dart';
 import 'package:decorated_flutter/src/ui/ui.export.dart';
 import 'package:decorated_flutter/src/utils/utils.export.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
+import 'package:material_ui/material_ui.dart';
 
 class LoadingWidget extends StatelessWidget {
   const LoadingWidget({

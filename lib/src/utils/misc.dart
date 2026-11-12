@@ -5,7 +5,7 @@ import 'dart:math' as math;
 import 'package:decorated_flutter/src/misc/misc.export.dart';
 import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 
 const _kDioOther = 100002;

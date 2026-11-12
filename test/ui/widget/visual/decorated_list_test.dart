@@ -1,7 +1,7 @@
 import 'package:decorated_flutter/src/ui/widget/visual/decorated/decorated_list.widget.dart';
 import 'package:decorated_flutter/src/ui/widget/visual/decorated/decorated_scrollable.widget.dart';
 import 'package:decorated_flutter/src/ui/widget/visual/decorated/load_more.widget.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

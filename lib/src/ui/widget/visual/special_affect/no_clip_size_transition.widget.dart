@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// 内置的SizeTransition会带有ClipRect, 导致阴影被切, 这里去掉相关逻辑
 class NoClipSizeTransition extends AnimatedWidget {

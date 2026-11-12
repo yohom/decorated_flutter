@@ -1,5 +1,5 @@
 import 'package:decorated_flutter/src/extension/extension.export.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 @Deprecated('可以使用更通用的DecoratedScrollable代替, 默认效果兼容ScrollableTopDivider')
 final class TopDividerConfig {

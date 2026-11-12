@@ -1,5 +1,5 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class Toggleable extends StatelessWidget {
   const Toggleable({

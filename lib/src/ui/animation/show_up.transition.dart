@@ -1,5 +1,5 @@
 import 'package:decorated_flutter/src/mixin/mixin.export.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ShowUpTransition extends StatefulWidget {
   const ShowUpTransition({

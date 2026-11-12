@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 const _kDefaultWidth = 400.0;
 const _kDefaultThickness = 2.0;

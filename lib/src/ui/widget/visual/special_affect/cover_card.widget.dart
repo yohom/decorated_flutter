@@ -1,5 +1,5 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class CoverCard extends StatefulWidget {
   const CoverCard({

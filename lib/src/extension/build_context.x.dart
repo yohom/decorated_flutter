@@ -1,5 +1,5 @@
 import 'package:decorated_flutter/src/bloc/bloc.export.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../utils/utils.export.dart';
 

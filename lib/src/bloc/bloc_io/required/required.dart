@@ -47,7 +47,7 @@ class Input<T> extends BaseIO<T> with InputMixin<T> {
 /// 转发上游流的业务单元
 class StreamOutput<T> extends BaseIO<T> with OutputMixin<T, void> {
   static OptionalStreamOutput<T> optional<T>(
-    final Stream<T> source, {
+    Stream<T> source, {
     T? seedValue,
     required String semantics,
     bool sync = true,
@@ -71,7 +71,7 @@ class StreamOutput<T> extends BaseIO<T> with OutputMixin<T, void> {
   }
 
   StreamOutput(
-    final Stream<T> source, {
+    Stream<T> source, {
     required super.seedValue,
     required super.semantics,
     super.sync = true,

@@ -1,5 +1,5 @@
 import 'package:decorated_flutter/src/bloc/bloc.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 typedef ContextCallback = void Function(BuildContext context);
 typedef ContextValueChanged<T> = void Function(BuildContext context, T value);

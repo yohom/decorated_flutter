@@ -1,5 +1,5 @@
 import 'package:decorated_flutter/src/bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:rxdart/rxdart.dart';
 
 mixin DisposeBag<T extends StatefulWidget> on State<T> {
