@@ -9,7 +9,7 @@ import 'dart:ui' show lerpDouble;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart' show DragStartBehavior;
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/rendering.dart';
 
 const double _kTabHeight = 46.0;
@@ -275,7 +275,7 @@ class _IndicatorPainter extends CustomPainter {
     // https://github.com/flutter/flutter/issues/137435
     if (kFlutterMemoryAllocationsEnabled) {
       FlutterMemoryAllocations.instance.dispatchObjectCreated(
-        library: 'package:flutter/material.dart',
+        library: 'package:material_ui/material_ui.dart',
         className: '$_IndicatorPainter',
         object: this,
       );

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Hero 弹窗共享元素飞行内容的构造器。
 typedef HeroOverlayFlightBuilder = Widget Function(

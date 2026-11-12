@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// 使用primaryColor的Icon
 class PrimaryIcon extends StatelessWidget {

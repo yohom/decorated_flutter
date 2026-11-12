@@ -1,5 +1,5 @@
 import 'package:decorated_flutter/src/extension/date_time.x.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 extension DateTimeRangeX on DateTimeRange {
   static DateTimeRange? tryParse(String formatted, {String divider = '~'}) {

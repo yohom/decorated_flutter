@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// 支持 Hero 转场的透明弹窗路由
 class HeroDialogRoute<T> extends PageRoute<T> {

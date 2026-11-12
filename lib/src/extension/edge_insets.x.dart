@@ -1,5 +1,5 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
 
 extension EdgeInsetsX on EdgeInsets {
   EdgeInsets withSafeArea(

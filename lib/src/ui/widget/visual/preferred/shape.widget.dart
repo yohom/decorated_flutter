@@ -1,5 +1,5 @@
 import 'package:decorated_flutter/src/extension/extension.export.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class Circle extends StatelessWidget {
   const Circle({

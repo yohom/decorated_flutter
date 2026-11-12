@@ -6,10 +6,10 @@
 
 ## 环境要求
 
-- Dart SDK `>=3.0.0 <4.0.0`
-- Flutter `>=3.27.0`
+- Dart SDK `>=3.13.0 <4.0.0`
+- Flutter `>=3.47.0`
 
-Flutter 3.27.0 是最低版本，因为 `DecoratedRow` 与 `DecoratedColumn` 使用 Flutter 内置的 `Flex.spacing` 实现元素间距。
+Flutter 3.47.0 是最低版本，因为本库使用独立发布的 `material_ui` 和 `cupertino_ui` 包。
 
 ## 安装
 
@@ -19,6 +19,8 @@ Flutter 3.27.0 是最低版本，因为 `DecoratedRow` 与 `DecoratedColumn` 使
 dependencies:
   decorated_flutter:
     path: ../decorated_flutter
+  material_ui: ^1.0.0
+  cupertino_ui: ^1.0.0
 ```
 
 然后执行：

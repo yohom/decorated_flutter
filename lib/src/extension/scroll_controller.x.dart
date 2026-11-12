@@ -1,5 +1,5 @@
 import 'package:decorated_flutter/src/utils/utils.export.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
 
 extension ScrollControllerX on ScrollController {
   Future<void> animateToMax({

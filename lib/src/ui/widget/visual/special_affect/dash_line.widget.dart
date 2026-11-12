@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class DashedLine extends StatelessWidget {
   ///The height of the widget. Should be greater than 0 only for Axis.vertical.

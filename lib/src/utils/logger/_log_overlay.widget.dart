@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 // Talker 暂未公开导出日志文件分享控制器
 // ignore: implementation_imports
 import 'package:talker_flutter/src/controller/talker_view_controller.dart';

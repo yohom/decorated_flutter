@@ -1,6 +1,6 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class RuntimeScaffold<T extends LocalBLoC> extends StatelessWidget {
   const RuntimeScaffold({

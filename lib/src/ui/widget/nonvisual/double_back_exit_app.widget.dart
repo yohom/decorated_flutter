@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:decorated_flutter/src/utils/utils.export.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:rxdart/rxdart.dart';
 
 /// 连续点击返回按钮退出应用, 如果要使用默认的提示信息(由[SnackBar]实现)的话, 那么要放在[Scaffold]

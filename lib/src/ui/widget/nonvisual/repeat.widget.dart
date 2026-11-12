@@ -1,5 +1,5 @@
 import 'package:decorated_flutter/src/utils/utils.export.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class Repeat extends StatelessWidget {
   const Repeat({

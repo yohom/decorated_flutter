@@ -1,6 +1,6 @@
 // ignore_for_file: camel_case_extensions
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 extension MaterialStateProperty_TextStyleX on TextStyle {
   WidgetStateProperty<TextStyle> get asMaterial {

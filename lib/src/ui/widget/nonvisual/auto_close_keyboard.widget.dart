@@ -1,6 +1,6 @@
 import 'package:decorated_flutter/decorated_flutter.dart' hide Actions;
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// 参考实现 https://api.flutter.dev/flutter/widgets/EditableTextTapUpOutsideIntent-class.html
 class AutoCloseKeyboard extends StatefulWidget {

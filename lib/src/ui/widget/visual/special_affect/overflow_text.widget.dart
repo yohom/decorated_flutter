@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// 文本溢出时，在最后一行尾部展示自定义组件。
 class OverflowText extends StatefulWidget {

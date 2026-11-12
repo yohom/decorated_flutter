@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:decorated_flutter/src/utils/logger/logger.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/rendering.dart';
 
 extension GlobalKeyX on GlobalKey {

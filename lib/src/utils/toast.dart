@@ -1,5 +1,5 @@
 import 'package:decorated_flutter/src/utils/utils.export.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:toastification/toastification.dart';
 
 void toast(

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class LocalNavigator extends StatelessWidget {
   const LocalNavigator({super.key, required this.builder});
