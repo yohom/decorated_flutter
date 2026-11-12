@@ -103,7 +103,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialPageRoute<T> {
     Animation<double> secondaryAnimation,
   ) {
     if (onLateinit != null && _bloc != null && !_isInitialized) {
-      onLateinit!(_bloc!, context);
+      onLateinit!(_bloc, context);
       _isInitialized = true;
     }
 
@@ -128,7 +128,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialPageRoute<T> {
 
     if (_bloc != null) {
       result = BLoCProvider<B>(
-        bloc: _bloc!,
+        bloc: _bloc,
         init: init,
         onDispose: onDisposed,
         autoDispose: autoDispose,
@@ -213,7 +213,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialPageRoute<T> {
           onLateinit != null &&
           _bloc != null &&
           !_isInitialized) {
-        onLateinit!(_bloc!, context);
+        onLateinit!(_bloc, context);
         _isInitialized = true;
       }
     });
@@ -336,7 +336,7 @@ class DecoratedDialogRoute<B extends BLoC, T> extends DialogRoute<T> {
     Animation<double> secondaryAnimation,
   ) {
     if (onLateinit != null && _bloc != null && !_isInitialized) {
-      onLateinit!(_bloc!, context);
+      onLateinit!(_bloc, context);
       _isInitialized = true;
     }
 
@@ -361,7 +361,7 @@ class DecoratedDialogRoute<B extends BLoC, T> extends DialogRoute<T> {
 
     if (_bloc != null) {
       result = BLoCProvider<B>(
-        bloc: _bloc!,
+        bloc: _bloc,
         init: init,
         onDispose: onDisposed,
         autoDispose: autoDispose,
@@ -445,7 +445,7 @@ class DecoratedDialogRoute<B extends BLoC, T> extends DialogRoute<T> {
           onLateinit != null &&
           _bloc != null &&
           !_isInitialized) {
-        onLateinit!(_bloc!, context);
+        onLateinit!(_bloc, context);
         _isInitialized = true;
       }
     });
