@@ -199,7 +199,7 @@ class DecoratedText extends StatelessWidget {
     }
 
     Widget result = _data != null
-        ? _buildText(_data!)
+        ? _buildText(_data)
         : StreamBuilder<String>(
             stream: _stream!,
             initialData: initialData,

@@ -66,7 +66,7 @@ abstract class BaseIO<T> {
     _subject.listen(_handleUpdateMemoryData);
     // 处理持久层数据
     if (_persistConfig != null) {
-      final debounceTime = _persistConfig!.debounceDuration;
+      final debounceTime = _persistConfig.debounceDuration;
       Stream<T> stream = _subject.stream;
       if (debounceTime != null) {
         stream = _subject.debounceTime(debounceTime);
@@ -78,18 +78,18 @@ abstract class BaseIO<T> {
     if (isBehavior) {
       if (_persistConfig != null) {
         try {
-          final deserialized = gDecoratedStorage.getValue(_persistConfig!.key);
+          final deserialized = gDecoratedStorage.getValue(_persistConfig.key);
           // 只发射非空值
           if (deserialized == null) {
             L.w('[DECORATED_FLUTTER] 读取到 [$_semantics] null缓存值, 直接略过');
             return;
           }
 
-          final value = _persistConfig!.onDeserialize(deserialized);
+          final value = _persistConfig.onDeserialize(deserialized);
           if (value != null) _subject.add(value);
         } catch (e, s) {
-          L.w('[DECORATED_FLUTTER] 读取持久层数据发生异常 $e, 删除key: [${_persistConfig!.key}]\n调用栈: $s');
-          gDecoratedStorage.remove(_persistConfig!.key);
+          L.w('[DECORATED_FLUTTER] 读取持久层数据发生异常 $e, 删除key: [${_persistConfig.key}]\n调用栈: $s');
+          gDecoratedStorage.remove(_persistConfig.key);
         }
       }
     }
@@ -161,7 +161,7 @@ abstract class BaseIO<T> {
   void reset() {
     if (_subject.isClosed) return;
 
-    final _resetValue = _onReset != null ? _onReset!() : _seedValue;
+    final _resetValue = _onReset != null ? _onReset() : _seedValue;
 
     if (_printLog) {
       L.d('[DECORATED_FLUTTER] [$_semantics]事件 重置为 $_resetValue');
@@ -171,12 +171,12 @@ abstract class BaseIO<T> {
 
     if (_persistConfig != null) {
       if (_resetValue != null) {
-        final serialized = _persistConfig!.onSerialize(_resetValue);
+        final serialized = _persistConfig.onSerialize(_resetValue);
         assert(isJsonable(serialized), '序列化之后应是jsonable值!');
 
-        gDecoratedStorage.put(_persistConfig!.key, serialized);
+        gDecoratedStorage.put(_persistConfig.key, serialized);
       } else {
-        gDecoratedStorage.remove(_persistConfig!.key);
+        gDecoratedStorage.remove(_persistConfig.key);
       }
     }
   }
