@@ -10,9 +10,7 @@ import 'logger.dart';
 
 class Logger extends ILogger {
   final _talker = TalkerFlutter.init(
-    settings: TalkerSettings(
-      enabled: !kReleaseMode,
-    ),
+    settings: TalkerSettings(enabled: !kReleaseMode),
   );
 
   @override

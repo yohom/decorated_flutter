@@ -182,10 +182,9 @@ Future<T> retry<T>(
   int maxAttempts = 8,
   FutureOr<bool> Function(Object)? retryIf,
   FutureOr<bool> Function(Object)? onRetry,
-}) =>
-    RetryOptions(
-      delayFactor: delayFactor,
-      randomizationFactor: randomizationFactor,
-      maxDelay: maxDelay,
-      maxAttempts: maxAttempts,
-    ).retry(fn, retryIf: retryIf, onRetry: onRetry);
+}) => RetryOptions(
+  delayFactor: delayFactor,
+  randomizationFactor: randomizationFactor,
+  maxDelay: maxDelay,
+  maxAttempts: maxAttempts,
+).retry(fn, retryIf: retryIf, onRetry: onRetry);

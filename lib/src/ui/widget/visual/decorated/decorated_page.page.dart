@@ -25,8 +25,8 @@ class DecoratedPage<B extends BLoC, R> extends MaterialPage {
     required String routeName,
     super.fullscreenDialog,
     super.maintainState,
-  })  : _bloc = bloc,
-        super(child: screen);
+  }) : _bloc = bloc,
+       super(child: screen);
 
   final B? _bloc;
 

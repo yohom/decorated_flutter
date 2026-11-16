@@ -43,11 +43,11 @@ class AnimatedVisibility<T> extends StatelessWidget {
     this.clipBehavior = Clip.hardEdge,
     this.curve = Curves.ease,
     this.placeholder = HORIZONTAL_NIL,
-  })  : visible = value != null && (showEmptyValue || !isEmpty(value)),
-        visibleStream = null,
-        child = value == null || (!showEmptyValue && isEmpty(value))
-            ? HORIZONTAL_NIL
-            : builder(value);
+  }) : visible = value != null && (showEmptyValue || !isEmpty(value)),
+       visibleStream = null,
+       child = value == null || (!showEmptyValue && isEmpty(value))
+           ? HORIZONTAL_NIL
+           : builder(value);
 
   final bool visible;
   final Stream<bool>? visibleStream;
@@ -92,8 +92,9 @@ class AnimatedVisibility<T> extends StatelessWidget {
         firstCurve: curve,
         secondCurve: curve,
         sizeCurve: curve,
-        crossFadeState:
-            visible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+        crossFadeState: visible
+            ? CrossFadeState.showFirst
+            : CrossFadeState.showSecond,
         firstChild: child,
         secondChild: placeholder,
       );

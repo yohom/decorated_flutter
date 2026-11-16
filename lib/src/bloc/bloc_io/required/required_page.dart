@@ -87,12 +87,13 @@ class PageIO<T, ARG> extends ListIO<T> with PageMixin<T, ARG> {
     super.onReset,
     super.persistConfig,
   }) : super(
-          semantics: semantics,
-          onUpdate: (_) => Future.error('请使用onUpdatePage回调!'),
-        ) {
+         semantics: semantics,
+         onUpdate: (_) => Future.error('请使用onUpdatePage回调!'),
+       ) {
     _initPage = initPage ?? defaultInitialPage ?? 0;
     _currentPage = _initPage;
-    _onUpdatePage = onUpdatePage ??
+    _onUpdatePage =
+        onUpdatePage ??
         (_, __) =>
             throw '[$semantics] 在未设置onUpdatePage回调时调用了refresh/loadMore方法, 请检查业务逻辑是否正确!';
     _receiveFullData = receiveFullData;

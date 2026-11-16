@@ -120,10 +120,8 @@ class _LogOverlayState extends State<LogOverlay> {
                 tooltip: _showNetworkOnly ? '显示全部日志' : '仅显示网络日志',
               ),
               IconButton(
-                onPressed: () => _minimize(
-                  available,
-                  MediaQuery.paddingOf(context).bottom,
-                ),
+                onPressed: () =>
+                    _minimize(available, MediaQuery.paddingOf(context).bottom),
                 icon: const Icon(Icons.minimize, color: Colors.white),
                 tooltip: '最小化日志',
               ),
@@ -199,25 +197,20 @@ class _LogOverlayState extends State<LogOverlay> {
 
   Future<void> _shareLogs() {
     return TalkerViewController(talker: widget.talker).downloadLogsFile(
-      widget.talker.history.text(
-        timeFormat: widget.talker.settings.timeFormat,
-      ),
+      widget.talker.history.text(timeFormat: widget.talker.settings.timeFormat),
     );
   }
 
   void _move(Offset delta, Size available, Size size) {
     setState(() {
       if (_isMinimized) {
-        final currentOffset = _minimizedOffset ??
+        final currentOffset =
+            _minimizedOffset ??
             Offset(
               available.width - _minimizedSize.width - 16,
               available.height - _minimizedSize.height - _minimizedBottomMargin,
             );
-        _minimizedOffset = _clampOffset(
-          currentOffset + delta,
-          available,
-          size,
-        );
+        _minimizedOffset = _clampOffset(currentOffset + delta, available, size);
         return;
       }
       _offset = _clampOffset(_offset + delta, available, size);
@@ -228,12 +221,16 @@ class _LogOverlayState extends State<LogOverlay> {
     setState(() {
       _size = Size(
         (_size.width + delta.dx)
-            .clamp(_minimumSize.width,
-                max(_minimumSize.width, available.width - _offset.dx))
+            .clamp(
+              _minimumSize.width,
+              max(_minimumSize.width, available.width - _offset.dx),
+            )
             .toDouble(),
         (_size.height + delta.dy)
-            .clamp(_minimumSize.height,
-                max(_minimumSize.height, available.height - _offset.dy))
+            .clamp(
+              _minimumSize.height,
+              max(_minimumSize.height, available.height - _offset.dy),
+            )
             .toDouble(),
       );
     });

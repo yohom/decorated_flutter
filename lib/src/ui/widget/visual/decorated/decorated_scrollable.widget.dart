@@ -51,7 +51,8 @@ class _DecoratedScrollableState extends State<DecoratedScrollable> {
   Widget build(BuildContext context) {
     final BoxDecoration decoration;
     if (_showDecoration) {
-      decoration = widget.config.decoration ??
+      decoration =
+          widget.config.decoration ??
           BoxDecoration(
             border: Border(
               top: BorderSide(color: context.dividerColor, width: 1),
@@ -62,12 +63,12 @@ class _DecoratedScrollableState extends State<DecoratedScrollable> {
     }
     final decoratedChild =
         widget.config.customBuilder?.call(_showDecoration, widget.child) ??
-            AnimatedContainer(
-              duration: widget.config.duration,
-              curve: widget.config.curve,
-              foregroundDecoration: decoration,
-              child: widget.child,
-            );
+        AnimatedContainer(
+          duration: widget.config.duration,
+          curve: widget.config.curve,
+          foregroundDecoration: decoration,
+          child: widget.child,
+        );
     final result = widget.loadMoreConfig == null
         ? decoratedChild
         : LoadMore(

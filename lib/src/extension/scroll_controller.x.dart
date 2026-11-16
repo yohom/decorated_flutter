@@ -93,8 +93,8 @@ extension ScrollControllerX on ScrollController {
     final globalOffset = renderObject.localToGlobal(Offset.zero);
     final size = renderObject.size;
 
-    final scrollableBox =
-        positions.firstOrNull?.context.storageContext.findRenderObject();
+    final scrollableBox = positions.firstOrNull?.context.storageContext
+        .findRenderObject();
     if (scrollableBox is! RenderBox) {
       L.w('获取不到scrollableBox');
       return null;
@@ -126,11 +126,7 @@ extension ScrollControllerX on ScrollController {
     Curve curve = Curves.decelerate,
   }) {
     final target = position.pixels + offset;
-    return animateTo(
-      target,
-      duration: duration,
-      curve: curve,
-    );
+    return animateTo(target, duration: duration, curve: curve);
   }
 
   /// 滚动百分比

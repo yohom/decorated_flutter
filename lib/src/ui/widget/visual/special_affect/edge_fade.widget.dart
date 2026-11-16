@@ -17,18 +17,18 @@ class EdgeFade extends StatelessWidget {
     this.enabled = true,
     this.stops = const [0.9, 1.0],
     required this.child,
-  })  : begin = Alignment.topCenter,
-        end = Alignment.bottomCenter,
-        assert(stops.length == 2 || stops.length == 4);
+  }) : begin = Alignment.topCenter,
+       end = Alignment.bottomCenter,
+       assert(stops.length == 2 || stops.length == 4);
 
   const EdgeFade.horizontal({
     super.key,
     this.enabled = true,
     this.stops = const [0.9, 1.0],
     required this.child,
-  })  : begin = Alignment.centerLeft,
-        end = Alignment.centerRight,
-        assert(stops.length == 2 || stops.length == 4);
+  }) : begin = Alignment.centerLeft,
+       end = Alignment.centerRight,
+       assert(stops.length == 2 || stops.length == 4);
 
   final bool enabled;
   final List<double> stops;
@@ -74,18 +74,18 @@ class AnimatedEdgeFade extends StatelessWidget {
     this.stops = const [0.9, 1.0],
     this.enabled = true,
     required this.child,
-  })  : begin = Alignment.topCenter,
-        end = Alignment.bottomCenter,
-        assert(stops.length == 2 || stops.length == 4);
+  }) : begin = Alignment.topCenter,
+       end = Alignment.bottomCenter,
+       assert(stops.length == 2 || stops.length == 4);
 
   const AnimatedEdgeFade.horizontal({
     super.key,
     this.stops = const [0.9, 1.0],
     this.enabled = true,
     required this.child,
-  })  : begin = Alignment.centerLeft,
-        end = Alignment.centerRight,
-        assert(stops.length == 2 || stops.length == 4);
+  }) : begin = Alignment.centerLeft,
+       end = Alignment.centerRight,
+       assert(stops.length == 2 || stops.length == 4);
 
   final List<double> stops;
   final AlignmentGeometry begin;

@@ -105,8 +105,10 @@ extension FutureX<T> on Future<T> {
         vsync: Navigator.of(context),
       );
       controller = loadingController;
-      final opacityAnimation =
-          Tween<double>(begin: 0.0, end: 1.0).animate(loadingController);
+      final opacityAnimation = Tween<double>(
+        begin: 0.0,
+        end: 1.0,
+      ).animate(loadingController);
       final text = loadingText ?? defaultLoadingText;
       final isCancelable = cancelable ?? loadingCancelable;
       final loadingWidget =
@@ -126,10 +128,7 @@ extension FutureX<T> on Future<T> {
                   ),
                 ),
                 builder: (context, child) {
-                  return Opacity(
-                    opacity: opacityAnimation.value,
-                    child: child,
-                  );
+                  return Opacity(opacity: opacityAnimation.value, child: child);
                 },
               ),
             ),
@@ -144,7 +143,9 @@ extension FutureX<T> on Future<T> {
         entryInserted = overlay != null;
         loadingController.forward();
       } catch (e, s) {
-        L.w('[DECORATED_FLUTTER] Loading时出现异常, 跳过此次Loading请求, 错误信息: $e, 堆栈信息: $s');
+        L.w(
+          '[DECORATED_FLUTTER] Loading时出现异常, 跳过此次Loading请求, 错误信息: $e, 堆栈信息: $s',
+        );
         unawaited(__removeLoading());
       }
     }

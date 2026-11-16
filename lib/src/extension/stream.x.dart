@@ -24,13 +24,12 @@ extension ListStreamX<T> on Stream<List<T>> {
     Stream<String> keyword, {
     required SearchKeywordCallback<T> by,
   }) {
-    return Rx.combineLatest2<List<T>?, String, List<T>>(
-      this,
+    return Rx.combineLatest2<List<T>?, String, List<T>>(this, keyword, (
+      source,
       keyword,
-      (source, keyword) {
-        return source?.where((it) => by(it, keyword)).toList() ?? [];
-      },
-    );
+    ) {
+      return source?.where((it) => by(it, keyword)).toList() ?? [];
+    });
   }
 }
 

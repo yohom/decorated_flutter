@@ -3,8 +3,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('SliverClip stores and updates rounded clip configuration',
-      (tester) async {
+  testWidgets('SliverClip stores and updates rounded clip configuration', (
+    tester,
+  ) async {
     const key = ValueKey('sliver-clip');
 
     await tester.pumpWidget(
@@ -15,9 +16,7 @@ void main() {
             SliverClip(
               key: key,
               borderRadius: BorderRadius.all(Radius.circular(12)),
-              child: SliverToBoxAdapter(
-                child: SizedBox(height: 100),
-              ),
+              child: SliverToBoxAdapter(child: SizedBox(height: 100)),
             ),
           ],
         ),
@@ -40,9 +39,7 @@ void main() {
             SliverClip(
               key: key,
               clipBehavior: Clip.none,
-              child: SliverToBoxAdapter(
-                child: SizedBox(height: 100),
-              ),
+              child: SliverToBoxAdapter(child: SizedBox(height: 100)),
             ),
           ],
         ),
@@ -68,9 +65,7 @@ void main() {
               borderRadius: BorderRadiusDirectional.only(
                 topStart: Radius.circular(8),
               ),
-              child: SliverToBoxAdapter(
-                child: SizedBox(height: 100),
-              ),
+              child: SliverToBoxAdapter(child: SizedBox(height: 100)),
             ),
           ],
         ),

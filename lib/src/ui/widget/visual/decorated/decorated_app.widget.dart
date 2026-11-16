@@ -47,12 +47,12 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
     this.onNavigationNotification,
     this.routes = const {},
     this.autoCloseKeyboard = const CloseKeyboardConfig(),
-  })  : _isRouter = false,
-        routeInformationProvider = null,
-        routeInformationParser = null,
-        routerDelegate = null,
-        routerConfig = null,
-        backButtonDispatcher = null;
+  }) : _isRouter = false,
+       routeInformationProvider = null,
+       routeInformationParser = null,
+       routerDelegate = null,
+       routerConfig = null,
+       backButtonDispatcher = null;
 
   const DecoratedApp.router({
     super.key,
@@ -96,15 +96,15 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
     this.backButtonDispatcher,
     // ------------------ navigator2专有 ------------------//
     this.autoCloseKeyboard = const CloseKeyboardConfig(),
-  })  : _isRouter = true,
-        navigatorObservers = const [],
-        navigatorKey = null,
-        onGenerateRoute = null,
-        home = null,
-        onGenerateInitialRoutes = null,
-        onUnknownRoute = null,
-        routes = const {},
-        initialRoute = null;
+  }) : _isRouter = true,
+       navigatorObservers = const [],
+       navigatorKey = null,
+       onGenerateRoute = null,
+       home = null,
+       onGenerateInitialRoutes = null,
+       onUnknownRoute = null,
+       routes = const {},
+       initialRoute = null;
 
   final B? rootBLoC;
   final GenerateAppTitle? onGenerateTitle;
@@ -148,7 +148,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
   final Duration themeAnimationDuration;
   final AnimationStyle? themeAnimationStyle;
   final NotificationListenerCallback<NavigationNotification>?
-      onNavigationNotification;
+  onNavigationNotification;
   final Map<String, WidgetBuilder> routes;
   final GlobalKey<ScaffoldMessengerState>? scaffoldMessengerKey;
   final Map<ShortcutActivator, Intent>? shortcuts;
@@ -189,10 +189,7 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
       }
 
       if (autoCloseKeyboard != null) {
-        result = AutoCloseKeyboard(
-          config: autoCloseKeyboard!,
-          child: result,
-        );
+        result = AutoCloseKeyboard(config: autoCloseKeyboard!, child: result);
       }
       return result;
     }
@@ -202,10 +199,14 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
             title: title,
             builder: __builder,
             onGenerateTitle: onGenerateTitle,
-            theme: theme?.let((self) =>
-                kIsWeb ? self : self.useSystemChineseFont(Brightness.light)),
-            darkTheme: darkTheme?.let((self) =>
-                kIsWeb ? self : self.useSystemChineseFont(Brightness.dark)),
+            theme: theme?.let(
+              (self) =>
+                  kIsWeb ? self : self.useSystemChineseFont(Brightness.light),
+            ),
+            darkTheme: darkTheme?.let(
+              (self) =>
+                  kIsWeb ? self : self.useSystemChineseFont(Brightness.dark),
+            ),
             themeMode: themeMode,
             scrollBehavior: scrollBehavior,
             debugShowCheckedModeBanner: debugShowCheckedModeBanner,
@@ -243,10 +244,14 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
             builder: __builder,
             onGenerateTitle: onGenerateTitle,
             navigatorKey: navigatorKey ?? gNavigatorKey,
-            theme: theme?.let((self) =>
-                kIsWeb ? self : self.useSystemChineseFont(Brightness.light)),
-            darkTheme: darkTheme?.let((self) =>
-                kIsWeb ? self : self.useSystemChineseFont(Brightness.dark)),
+            theme: theme?.let(
+              (self) =>
+                  kIsWeb ? self : self.useSystemChineseFont(Brightness.light),
+            ),
+            darkTheme: darkTheme?.let(
+              (self) =>
+                  kIsWeb ? self : self.useSystemChineseFont(Brightness.dark),
+            ),
             themeMode: themeMode,
             scrollBehavior: scrollBehavior,
             onGenerateRoute: onGenerateRoute,

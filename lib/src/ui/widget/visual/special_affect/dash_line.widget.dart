@@ -88,7 +88,10 @@ class DashedLinePainter extends CustomPainter {
         ..strokeCap = strokeCap;
       while (startY < size.height) {
         canvas.drawLine(
-            Offset(0, startY), Offset(0, startY + dashHeight), paint);
+          Offset(0, startY),
+          Offset(0, startY + dashHeight),
+          paint,
+        );
         startY += dashHeight + dashSpace;
       }
     } else {
@@ -99,7 +102,10 @@ class DashedLinePainter extends CustomPainter {
         ..strokeCap = strokeCap;
       while (startX < size.width) {
         canvas.drawLine(
-            Offset(startX, 0), Offset(startX + dashWidth, 0), paint);
+          Offset(startX, 0),
+          Offset(startX + dashWidth, 0),
+          paint,
+        );
         startX += dashWidth + dashSpace;
       }
     }

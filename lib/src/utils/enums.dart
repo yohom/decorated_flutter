@@ -1,26 +1,13 @@
-enum ErrorLevel {
-  none,
-  warn,
-  severe,
-  fatal,
-}
+enum ErrorLevel { none, warn, severe, fatal }
 
-enum Actions {
-  cancel,
-  confirm,
-}
+enum Actions { cancel, confirm }
 
-enum Gravity {
-  start,
-  center,
-  end,
-}
+enum Gravity { start, center, end }
 
 enum Gender {
   male,
   female,
-  unknown,
-  ;
+  unknown;
 
   String get name {
     switch (this) {
@@ -50,7 +37,7 @@ enum Zodiac {
   libra, // Libra 天秤座（9月24日～10月23日）
   scorpio, // Scorpio 天蝎座（10月24日～11月22日）
   sagittarius, // Sagittarius 射手座（11月23日～12月21日）
-  unknown, // 未知
+  unknown // 未知
   ;
 
   String get name {

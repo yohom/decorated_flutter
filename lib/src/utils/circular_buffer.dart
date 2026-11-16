@@ -20,19 +20,19 @@ import 'dart:collection';
 class CircularBuffer<T> with ListMixin<T> {
   /// Creates a [CircularBuffer] with a `capacity`
   CircularBuffer(this.capacity)
-      : assert(capacity > 1, 'CircularBuffer must have a positive capacity.'),
-        _buf = [],
-        _len = 0;
+    : assert(capacity > 1, 'CircularBuffer must have a positive capacity.'),
+      _buf = [],
+      _len = 0;
 
   /// Creates a [CircularBuffer] based on another `list`
   CircularBuffer.of(List<T> list, [int? capacity])
-      : assert(
-          capacity == null || capacity >= list.length,
-          'The capacity must be at least as long as the existing list',
-        ),
-        capacity = capacity ?? list.length,
-        _buf = [...list],
-        _len = list.length;
+    : assert(
+        capacity == null || capacity >= list.length,
+        'The capacity must be at least as long as the existing list',
+      ),
+      capacity = capacity ?? list.length,
+      _buf = [...list],
+      _len = list.length;
 
   final List<dynamic> _buf;
 

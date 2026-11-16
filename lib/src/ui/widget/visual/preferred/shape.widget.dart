@@ -31,7 +31,8 @@ class Circle extends StatelessWidget {
       padding: padding,
       margin: margin,
       alignment: alignment,
-      decoration: decoration?.copyWith(shape: BoxShape.circle) ??
+      decoration:
+          decoration?.copyWith(shape: BoxShape.circle) ??
           BoxDecoration(color: color, shape: BoxShape.circle, border: border),
       child: child,
     );

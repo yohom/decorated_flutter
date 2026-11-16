@@ -22,9 +22,7 @@ void toast(
       title: Text(message!, style: textStyle),
       autoCloseDuration: duration,
       alignment: alignment,
-      callbacks: ToastificationCallbacks(
-        onDismissed: (_) => onDismiss?.call(),
-      ),
+      callbacks: ToastificationCallbacks(onDismissed: (_) => onDismiss?.call()),
       type: error ? ToastificationType.error : ToastificationType.info,
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       style: ToastificationStyle.flatColored,

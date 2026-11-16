@@ -239,74 +239,96 @@ class _AutoSizeTextState extends State<AutoSizeText> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, size) {
-      final defaultTextStyle = DefaultTextStyle.of(context);
+    return LayoutBuilder(
+      builder: (context, size) {
+        final defaultTextStyle = DefaultTextStyle.of(context);
 
-      var style = widget.style;
-      if (widget.style == null || widget.style!.inherit) {
-        style = defaultTextStyle.style.merge(widget.style);
-      }
-      if (style!.fontSize == null) {
-        style = style.copyWith(fontSize: AutoSizeText._defaultFontSize);
-      }
+        var style = widget.style;
+        if (widget.style == null || widget.style!.inherit) {
+          style = defaultTextStyle.style.merge(widget.style);
+        }
+        if (style!.fontSize == null) {
+          style = style.copyWith(fontSize: AutoSizeText._defaultFontSize);
+        }
 
-      final maxLines = widget.maxLines ?? defaultTextStyle.maxLines;
+        final maxLines = widget.maxLines ?? defaultTextStyle.maxLines;
 
-      _validateProperties(style, maxLines);
+        _validateProperties(style, maxLines);
 
-      final result = _calculateFontSize(size, style, maxLines);
-      final fontSize = result[0] as double;
-      final textFits = result[1] as bool;
+        final result = _calculateFontSize(size, style, maxLines);
+        final fontSize = result[0] as double;
+        final textFits = result[1] as bool;
 
-      Widget text;
+        Widget text;
 
-      if (widget.group != null) {
-        widget.group!._updateFontSize(this, fontSize);
-        text = _buildText(widget.group!._fontSize, style, maxLines);
-      } else {
-        text = _buildText(fontSize, style, maxLines);
-      }
+        if (widget.group != null) {
+          widget.group!._updateFontSize(this, fontSize);
+          text = _buildText(widget.group!._fontSize, style, maxLines);
+        } else {
+          text = _buildText(fontSize, style, maxLines);
+        }
 
-      if (widget.overflowReplacement != null && !textFits) {
-        return widget.overflowReplacement!;
-      } else {
-        return text;
-      }
-    });
+        if (widget.overflowReplacement != null && !textFits) {
+          return widget.overflowReplacement!;
+        } else {
+          return text;
+        }
+      },
+    );
   }
 
   void _validateProperties(TextStyle style, int? maxLines) {
-    assert(widget.overflow == null || widget.overflowReplacement == null,
-        'Either overflow or overflowReplacement must be null.');
-    assert(maxLines == null || maxLines > 0,
-        'MaxLines must be greater than or equal to 1.');
-    assert(widget.key == null || widget.key != widget.textKey,
-        'Key and textKey must not be equal.');
+    assert(
+      widget.overflow == null || widget.overflowReplacement == null,
+      'Either overflow or overflowReplacement must be null.',
+    );
+    assert(
+      maxLines == null || maxLines > 0,
+      'MaxLines must be greater than or equal to 1.',
+    );
+    assert(
+      widget.key == null || widget.key != widget.textKey,
+      'Key and textKey must not be equal.',
+    );
 
     if (widget.presetFontSizes == null) {
       assert(
-          widget.stepGranularity >= 0.1,
-          'StepGranularity must be greater than or equal to 0.1. It is not a '
-          'good idea to resize the font with a higher accuracy.');
-      assert(widget.minFontSize >= 0,
-          'MinFontSize must be greater than or equal to 0.');
+        widget.stepGranularity >= 0.1,
+        'StepGranularity must be greater than or equal to 0.1. It is not a '
+        'good idea to resize the font with a higher accuracy.',
+      );
+      assert(
+        widget.minFontSize >= 0,
+        'MinFontSize must be greater than or equal to 0.',
+      );
       assert(widget.maxFontSize > 0, 'MaxFontSize has to be greater than 0.');
-      assert(widget.minFontSize <= widget.maxFontSize,
-          'MinFontSize must be smaller or equal than maxFontSize.');
-      assert(widget.minFontSize / widget.stepGranularity % 1 == 0,
-          'MinFontSize must be a multiple of stepGranularity.');
+      assert(
+        widget.minFontSize <= widget.maxFontSize,
+        'MinFontSize must be smaller or equal than maxFontSize.',
+      );
+      assert(
+        widget.minFontSize / widget.stepGranularity % 1 == 0,
+        'MinFontSize must be a multiple of stepGranularity.',
+      );
       if (widget.maxFontSize != double.infinity) {
-        assert(widget.maxFontSize / widget.stepGranularity % 1 == 0,
-            'MaxFontSize must be a multiple of stepGranularity.');
+        assert(
+          widget.maxFontSize / widget.stepGranularity % 1 == 0,
+          'MaxFontSize must be a multiple of stepGranularity.',
+        );
       }
     } else {
-      assert(widget.presetFontSizes!.isNotEmpty,
-          'PresetFontSizes must not be empty.');
+      assert(
+        widget.presetFontSizes!.isNotEmpty,
+        'PresetFontSizes must not be empty.',
+      );
     }
   }
 
   List _calculateFontSize(
-      BoxConstraints size, TextStyle? style, int? maxLines) {
+    BoxConstraints size,
+    TextStyle? style,
+    int? maxLines,
+  ) {
     final span = TextSpan(
       style: widget.textSpan?.style ?? style,
       text: widget.textSpan?.text ?? widget.data,
@@ -322,8 +344,10 @@ class _AutoSizeTextState extends State<AutoSizeText> {
 
     final presetFontSizes = widget.presetFontSizes?.reversed.toList();
     if (presetFontSizes == null) {
-      final num defaultFontSize =
-          style!.fontSize!.clamp(widget.minFontSize, widget.maxFontSize);
+      final num defaultFontSize = style!.fontSize!.clamp(
+        widget.minFontSize,
+        widget.maxFontSize,
+      );
       final defaultScale = defaultFontSize * userScale / style.fontSize!;
       if (_checkTextFits(span, defaultScale, maxLines, size)) {
         return <Object>[defaultFontSize * userScale, true];
@@ -368,15 +392,16 @@ class _AutoSizeTextState extends State<AutoSizeText> {
   }
 
   bool _checkTextFits(
-      TextSpan text, double scale, int? maxLines, BoxConstraints constraints) {
+    TextSpan text,
+    double scale,
+    int? maxLines,
+    BoxConstraints constraints,
+  ) {
     if (!widget.wrapWords) {
       final words = text.toPlainText().split(RegExp('\\s+'));
 
       final wordWrapTextPainter = TextPainter(
-        text: TextSpan(
-          style: text.style,
-          text: words.join('\n'),
-        ),
+        text: TextSpan(style: text.style, text: words.join('\n')),
         textAlign: widget.textAlign ?? TextAlign.left,
         textDirection: widget.textDirection ?? TextDirection.ltr,
         textScaleFactor: scale,
@@ -511,7 +536,7 @@ class AutoSizeGroup {
 /// A Flutter widget that provides an [AutoSizeGroup] to its builder function.
 class AutoSizeGroupBuilder extends StatefulWidget {
   final Widget Function(BuildContext context, AutoSizeGroup autoSizeGroup)
-      builder;
+  builder;
 
   /// Creates an [AutoSizeGroupBuilder] widget.
   const AutoSizeGroupBuilder({super.key, required this.builder});

@@ -30,9 +30,9 @@ class DebouncedTextFormField extends StatefulWidget {
     this.onSaved,
     this.cursorColor,
     this.strutStyle,
-  })  : assert(maxLines > 0),
-        assert(maxLength == null || maxLength > 0),
-        keyboardType = maxLines == 1 ? keyboardType : TextInputType.multiline;
+  }) : assert(maxLines > 0),
+       assert(maxLength == null || maxLength > 0),
+       keyboardType = maxLines == 1 ? keyboardType : TextInputType.multiline;
 
   /// change触发方法
   final ValueChanged<String>? onChanged;

@@ -58,7 +58,8 @@ class OptionalPageIO<T, ARG> extends OptionalListIO<T>
   }) : super(semantics: semantics, onUpdate: (_) => Future.value([])) {
     _initPage = initPage ?? defaultInitialPage ?? 1;
     _currentPage = _initPage;
-    _onUpdatePage = onUpdatePage ??
+    _onUpdatePage =
+        onUpdatePage ??
         (_, __) =>
             throw '[$semantics] 在未设置onUpdatePage回调时调用了update方法, 请检查逻辑是否正确!';
     _receiveFullData = receiveFullData;

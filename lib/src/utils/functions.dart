@@ -409,12 +409,7 @@ Stream<(T1, T2, T3)> combine3<T1, T2, T3>(
   Stream<T2> streamB,
   Stream<T3> streamC,
 ) {
-  return Rx.combineLatest3(
-    streamA,
-    streamB,
-    streamC,
-    (a, b, c) => (a, b, c),
-  );
+  return Rx.combineLatest3(streamA, streamB, streamC, (a, b, c) => (a, b, c));
 }
 
 Stream<(T1, T2, T3, T4)> combine4<T1, T2, T3, T4>(

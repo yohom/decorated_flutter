@@ -33,11 +33,7 @@ class ShowMoreText extends StatelessWidget {
           textAlign: textAlign,
         ),
         itemBuilder: (context) {
-          return [
-            PopupMenuItem(
-              child: Text(text, style: showMoreStyle),
-            ),
-          ];
+          return [PopupMenuItem(child: Text(text, style: showMoreStyle))];
         },
       ),
     );

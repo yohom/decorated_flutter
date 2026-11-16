@@ -75,8 +75,7 @@ class DecoratedRow extends DecoratedFlex {
     super.systemOverlayStyle,
     super.ignorePointer,
     super.absorbPointer,
-    @Deprecated('已无效果，后续版本将移除')
-    super.enableFeedback,
+    @Deprecated('已无效果，后续版本将移除') super.enableFeedback,
     super.autofillGroup,
     super.aspectRatio,
     super.reverse,
@@ -162,8 +161,7 @@ class DecoratedColumn extends DecoratedFlex {
     super.systemOverlayStyle,
     super.ignorePointer,
     super.absorbPointer,
-    @Deprecated('已无效果，后续版本将移除')
-    super.enableFeedback,
+    @Deprecated('已无效果，后续版本将移除') super.enableFeedback,
     super.autofillGroup,
     super.aspectRatio,
     super.reverse,
@@ -249,8 +247,7 @@ class DecoratedFlex extends StatelessWidget {
     this.systemOverlayStyle,
     this.ignorePointer,
     this.absorbPointer,
-    @Deprecated('已无效果，后续版本将移除')
-    this.enableFeedback,
+    @Deprecated('已无效果，后续版本将移除') this.enableFeedback,
     this.autofillGroup,
     this.aspectRatio,
     this.reverse,
@@ -262,9 +259,9 @@ class DecoratedFlex extends StatelessWidget {
     this.clipOverflow,
     this.children = const [],
   }) : assert(
-          itemSpacing == null || spacing == 0,
-          'itemSpacing 与 spacing 不能同时设置',
-        );
+         itemSpacing == null || spacing == 0,
+         'itemSpacing 与 spacing 不能同时设置',
+       );
 
   /// Container
   final EdgeInsets? padding;
@@ -453,7 +450,7 @@ class DecoratedFlex extends StatelessWidget {
             Flexible(
               flex: childrenFlex!.flex.getOrNull(i) ?? 1,
               child: _children[i],
-            )
+            ),
       ];
     }
 
@@ -475,7 +472,8 @@ class DecoratedFlex extends StatelessWidget {
       mainAxisAlignment: _mainAxisAlignment,
       mainAxisSize: mainAxisSize,
       crossAxisAlignment: crossAxisAlignment,
-      textBaseline: (textBaseline == null &&
+      textBaseline:
+          (textBaseline == null &&
               crossAxisAlignment == CrossAxisAlignment.baseline)
           ? TextBaseline.alphabetic
           : textBaseline,
@@ -504,10 +502,12 @@ class DecoratedFlex extends StatelessWidget {
     }
 
     if (topRight != null) {
-      result = Stack(children: <Widget>[
-        result,
-        Positioned(top: 0, right: 0, child: topRight!),
-      ]);
+      result = Stack(
+        children: <Widget>[
+          result,
+          Positioned(top: 0, right: 0, child: topRight!),
+        ],
+      );
     }
 
     if (padding != null ||
@@ -595,8 +595,9 @@ class DecoratedFlex extends StatelessWidget {
         onVerticalDragEnd: onVerticalDragEnd,
         onVerticalDragStart: onVerticalDragStart,
         onHorizontalDragEnd: onHorizontalDragEnd,
-        onSecondaryTap:
-            onSecondaryTap == null ? null : () => onSecondaryTap!(context),
+        onSecondaryTap: onSecondaryTap == null
+            ? null
+            : () => onSecondaryTap!(context),
         onSecondaryTapDown: onSecondaryTapDown,
         onDoubleTap: onDoubleTap == null ? null : () => onDoubleTap!(context),
         child: result,
@@ -604,10 +605,7 @@ class DecoratedFlex extends StatelessWidget {
     }
 
     if (pressStyle == PressStyle.spring && onPressed != null) {
-      result = SpringContainer(
-        onPressed: onPressed!,
-        child: result,
-      );
+      result = SpringContainer(onPressed: onPressed!, child: result);
     }
 
     if (onHover != null || onEnter != null || onExit != null) {
@@ -712,18 +710,21 @@ class DecoratedFlex extends StatelessWidget {
     }
 
     if (iconColor != null) {
-      result = IconTheme(data: IconThemeData(color: iconColor), child: result);
+      result = IconTheme(
+        data: IconThemeData(color: iconColor),
+        child: result,
+      );
     }
 
     if (dividerThemeData case DividerThemeData data) {
       result = DividerTheme(
         data: Theme.of(context).dividerTheme.copyWith(
-              color: data.color,
-              space: data.space,
-              thickness: data.thickness,
-              indent: data.indent,
-              endIndent: data.endIndent,
-            ),
+          color: data.color,
+          space: data.space,
+          thickness: data.thickness,
+          indent: data.indent,
+          endIndent: data.endIndent,
+        ),
         child: result,
       );
     }

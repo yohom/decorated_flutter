@@ -24,10 +24,14 @@ class CoordConvert {
   }
 
   static Coordinate2D gcj02tobd09(Coordinate2D coords) {
-    final double z = sqrt(coords.longitude * coords.longitude +
-            coords.latitude * coords.latitude) +
+    final double z =
+        sqrt(
+          coords.longitude * coords.longitude +
+              coords.latitude * coords.latitude,
+        ) +
         0.00002 * sin(coords.latitude * _xPi);
-    final double theta = atan2(coords.latitude, coords.longitude) +
+    final double theta =
+        atan2(coords.latitude, coords.longitude) +
         0.000003 * cos(coords.longitude * _xPi);
     final double bdLng = z * cos(theta) + 0.0065;
     final double bdLat = z * sin(theta) + 0.006;
@@ -38,11 +42,11 @@ class CoordConvert {
     if (isOutOfChina(coords)) return coords;
     double dlat = _transformLat((
       latitude: coords.latitude - 35.0,
-      longitude: coords.longitude - 105.0
+      longitude: coords.longitude - 105.0,
     ));
     double dlng = _transformLng((
       latitude: coords.latitude - 35.0,
-      longitude: coords.longitude - 105.0
+      longitude: coords.longitude - 105.0,
     ));
     final double radlat = coords.latitude / 180.0 * pi;
     double magic = sin(radlat);
@@ -65,11 +69,11 @@ class CoordConvert {
     if (isOutOfChina(coords)) return coords;
     double dlat = _transformLat((
       latitude: coords.latitude - 35.0,
-      longitude: coords.longitude - 105.0
+      longitude: coords.longitude - 105.0,
     ));
     double dlng = _transformLng((
       latitude: coords.latitude - 35.0,
-      longitude: coords.longitude - 105.0
+      longitude: coords.longitude - 105.0,
     ));
     final double radlat = coords.latitude / 180.0 * pi;
     double magic = sin(radlat);
@@ -81,26 +85,30 @@ class CoordConvert {
     final double mglng = coords.longitude + dlng;
     return (
       latitude: coords.latitude * 2 - mglat,
-      longitude: coords.longitude * 2 - mglng
+      longitude: coords.longitude * 2 - mglng,
     );
   }
 
   static double _transformLat(Coordinate2D coords) {
-    double ret = -100.0 +
+    double ret =
+        -100.0 +
         2.0 * coords.longitude +
         3.0 * coords.latitude +
         0.2 * coords.latitude * coords.latitude +
         0.1 * coords.longitude * coords.latitude +
         0.2 * sqrt(coords.longitude.abs());
-    ret += (20.0 * sin(6.0 * coords.longitude * pi) +
+    ret +=
+        (20.0 * sin(6.0 * coords.longitude * pi) +
             20.0 * sin(2.0 * coords.longitude * pi)) *
         2.0 /
         3.0;
-    ret += (20.0 * sin(coords.latitude * pi) +
+    ret +=
+        (20.0 * sin(coords.latitude * pi) +
             40.0 * sin(coords.latitude / 3.0 * pi)) *
         2.0 /
         3.0;
-    ret += (160.0 * sin(coords.latitude / 12.0 * pi) +
+    ret +=
+        (160.0 * sin(coords.latitude / 12.0 * pi) +
             320 * sin(coords.latitude * pi / 30.0)) *
         2.0 /
         3.0;
@@ -108,29 +116,34 @@ class CoordConvert {
   }
 
   static double _transformLng(Coordinate2D coords) {
-    double ret = 300.0 +
+    double ret =
+        300.0 +
         coords.longitude +
         2.0 * coords.latitude +
         0.1 * coords.longitude * coords.longitude +
         0.1 * coords.longitude * coords.latitude +
         0.1 * sqrt(coords.longitude.abs());
-    ret += (20.0 * sin(6.0 * coords.longitude * pi) +
+    ret +=
+        (20.0 * sin(6.0 * coords.longitude * pi) +
             20.0 * sin(2.0 * coords.longitude * pi)) *
         2.0 /
         3.0;
-    ret += (20.0 * sin(coords.longitude * pi) +
+    ret +=
+        (20.0 * sin(coords.longitude * pi) +
             40.0 * sin(coords.longitude / 3.0 * pi)) *
         2.0 /
         3.0;
-    ret += (150.0 * sin(coords.longitude / 12.0 * pi) +
+    ret +=
+        (150.0 * sin(coords.longitude / 12.0 * pi) +
             300.0 * sin(coords.longitude / 30.0 * pi)) *
         2.0 /
         3.0;
     return ret;
   }
 
-  static bool isOutOfChina(Coordinate2D coords) => !(coords.longitude > 73.66 &&
-      coords.longitude < 135.05 &&
-      coords.latitude > 3.86 &&
-      coords.latitude < 53.55);
+  static bool isOutOfChina(Coordinate2D coords) =>
+      !(coords.longitude > 73.66 &&
+          coords.longitude < 135.05 &&
+          coords.latitude > 3.86 &&
+          coords.latitude < 53.55);
 }

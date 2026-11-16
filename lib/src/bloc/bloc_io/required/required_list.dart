@@ -142,9 +142,7 @@ class ListIO<T> extends IO<List<T>> with ListMixin<T> {
     super.onUpdate,
     super.onReset,
     super.persistConfig,
-  }) : super(
-          isSame: isSame ?? listEquals,
-        ) {
+  }) : super(isSame: isSame ?? listEquals) {
     _forceCapacity = forceCapacity;
   }
 
@@ -302,12 +300,9 @@ mixin ListMixin<T> on BaseIO<List<T>> {
     final copied = List.of(latest);
 
     if (latest.isNotEmpty) {
-      _subject.add(copied
-        ..replaceRange(
-          copied.length - 1,
-          copied.length,
-          [element],
-        ));
+      _subject.add(
+        copied..replaceRange(copied.length - 1, copied.length, [element]),
+      );
     }
     return element;
   }

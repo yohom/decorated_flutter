@@ -59,8 +59,8 @@ class LoadMore extends StatefulWidget {
     this.child,
     this.builder,
     this.reverse = false,
-  })  : assert(child != null || builder != null),
-        assert(child == null || builder == null);
+  }) : assert(child != null || builder != null),
+       assert(child == null || builder == null);
 
   final LoadMoreConfig config;
   final Widget? child;

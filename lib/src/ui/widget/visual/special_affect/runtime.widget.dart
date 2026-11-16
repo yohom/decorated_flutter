@@ -3,10 +3,7 @@ import 'package:material_ui/material_ui.dart';
 
 /// 显示运行时信息的widget
 class Runtime extends StatefulWidget {
-  const Runtime({
-    super.key,
-    this.runtimeInfo = const <BaseIO>[],
-  });
+  const Runtime({super.key, this.runtimeInfo = const <BaseIO>[]});
 
   static void registerGlobalBLoCList(List<GlobalBLoC> blocs) {
     _globalBLoCList = blocs;
@@ -65,25 +62,19 @@ class _RuntimeState extends State<Runtime> {
 
 /// ExpansionList的Header
 class _Header extends StatelessWidget {
-  const _Header({
-    required this.title,
-  });
+  const _Header({required this.title});
 
   final String title;
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(title),
-    );
+    return Center(child: Text(title));
   }
 }
 
 /// ExpansionList的Body
 class _Body extends StatelessWidget {
-  const _Body({
-    required this.ioList,
-  });
+  const _Body({required this.ioList});
 
   final List<BaseIO> ioList;
 

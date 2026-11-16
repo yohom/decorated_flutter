@@ -7,7 +7,9 @@ void main() {
   });
 
   test('Duration格式化', () {
-    expect(const Duration(milliseconds: 2345).format('HH:mm:ss.ms'),
-        '00:00:02.345');
+    expect(
+      const Duration(milliseconds: 2345).format('HH:mm:ss.ms'),
+      '00:00:02.345',
+    );
   });
 }

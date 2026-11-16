@@ -35,9 +35,12 @@ void main() {
   testWidgets('文本溢出时展示可点击的尾部组件', (tester) async {
     var pressed = false;
     await tester.pumpWidget(
-      buildApp('这是一段足够长的文本，用于验证自定义尾部组件是否会显示。', onPressed: () {
-        pressed = true;
-      }),
+      buildApp(
+        '这是一段足够长的文本，用于验证自定义尾部组件是否会显示。',
+        onPressed: () {
+          pressed = true;
+        },
+      ),
     );
     await tester.pump();
 

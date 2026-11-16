@@ -18,7 +18,7 @@ class PreferredNestedScrollView extends StatelessWidget {
       physics: physics,
       headerSliverBuilder: (context, innerBoxIsScrolled) {
         return [
-          for (final header in headers) SliverToBoxAdapter(child: header)
+          for (final header in headers) SliverToBoxAdapter(child: header),
         ];
       },
       body: body,

@@ -47,9 +47,9 @@ class DecoratedText extends StatelessWidget {
     this.scrollPadding,
     this.cursor,
     this.gradient,
-  })  : _data = data,
-        _stream = null,
-        initialData = null;
+  }) : _data = data,
+       _stream = null,
+       initialData = null;
 
   const DecoratedText.reactive(
     Stream<String> stream, {
@@ -96,8 +96,8 @@ class DecoratedText extends StatelessWidget {
     this.scrollPadding,
     this.cursor,
     this.gradient,
-  })  : _data = null,
-        _stream = stream;
+  }) : _data = null,
+       _stream = stream;
 
   final Stream<String>? _stream;
   final String? initialData;
@@ -152,8 +152,9 @@ class DecoratedText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textStyle = style ?? DefaultTextStyle.of(context).style;
-    final effectiveTextStyle =
-        gradient != null ? textStyle.copyWith(foreground: null) : textStyle;
+    final effectiveTextStyle = gradient != null
+        ? textStyle.copyWith(foreground: null)
+        : textStyle;
 
     Widget _buildText(String data) {
       TextSpan textSpan = TextSpan(text: data);
@@ -280,8 +281,9 @@ class DecoratedText extends StatelessWidget {
         child: GestureDetector(
           behavior: behavior ?? HitTestBehavior.opaque,
           onTap: onPressed != null ? () => onPressed!(context) : null,
-          onLongPress:
-              onLongPressed != null ? () => onLongPressed!(context) : null,
+          onLongPress: onLongPressed != null
+              ? () => onLongPressed!(context)
+              : null,
           child: result,
         ),
       );

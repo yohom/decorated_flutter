@@ -14,8 +14,9 @@ extension TextEditingControllerX on TextEditingController {
       final afterString = text.substring(selection.end);
 
       text = beforeString + appending + afterString;
-      selection =
-          TextSelection.collapsed(offset: (beforeString + appending).length);
+      selection = TextSelection.collapsed(
+        offset: (beforeString + appending).length,
+      );
     } else {
       // 如果没在文字内部, 就直接加到最后
       text += appending;

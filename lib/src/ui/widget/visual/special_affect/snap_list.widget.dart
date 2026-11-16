@@ -10,12 +10,12 @@ class SnapList extends StatelessWidget {
     int? itemCount,
     bool addAutomaticKeepAlive = true,
     bool addRepaintBoundaries = true,
-  })  : childrenDelegate = SliverChildBuilderDelegate(
-          itemBuilder,
-          childCount: itemCount,
-          addAutomaticKeepAlives: addAutomaticKeepAlive,
-          addRepaintBoundaries: addRepaintBoundaries,
-        );
+  }) : childrenDelegate = SliverChildBuilderDelegate(
+         itemBuilder,
+         childCount: itemCount,
+         addAutomaticKeepAlives: addAutomaticKeepAlive,
+         addRepaintBoundaries: addRepaintBoundaries,
+       );
 
   final int initialPage;
   final double viewportFraction;

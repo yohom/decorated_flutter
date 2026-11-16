@@ -8,9 +8,7 @@ import 'package:intl/intl.dart';
 @immutable
 class TimeOfDayRange {
   TimeOfDayRange({required this.start, required this.end})
-      : assert(
-          start.hour * 60 + start.minute <= end.hour * 60 + end.minute,
-        );
+    : assert(start.hour * 60 + start.minute <= end.hour * 60 + end.minute);
 
   /// 范围开始时间。
   final TimeOfDay start;

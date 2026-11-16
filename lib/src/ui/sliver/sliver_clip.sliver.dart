@@ -40,7 +40,9 @@ class SliverClip extends SingleChildRenderObjectWidget {
 
   @override
   void updateRenderObject(
-      BuildContext context, covariant _RenderSliverClip renderObject) {
+    BuildContext context,
+    covariant _RenderSliverClip renderObject,
+  ) {
     renderObject
       ..clipOverlap = clipOverlap
       ..borderRadius = borderRadius
@@ -55,10 +57,10 @@ class _RenderSliverClip extends RenderProxySliver {
     required BorderRadiusGeometry borderRadius,
     required Clip? clipBehavior,
     TextDirection? textDirection,
-  })  : _clipOverlap = clipOverlap,
-        _borderRadius = borderRadius,
-        _clipBehavior = clipBehavior,
-        _textDirection = textDirection;
+  }) : _clipOverlap = clipOverlap,
+       _borderRadius = borderRadius,
+       _clipBehavior = clipBehavior,
+       _textDirection = textDirection;
 
   bool _clipOverlap;
 
@@ -108,7 +110,9 @@ class _RenderSliverClip extends RenderProxySliver {
 
   Rect calculateClipRect() {
     final axisDirection = applyGrowthDirectionToAxisDirection(
-        constraints.axisDirection, constraints.growthDirection);
+      constraints.axisDirection,
+      constraints.growthDirection,
+    );
     Rect rect;
     final double overlapCorrection = (clipOverlap ? constraints.overlap : 0);
     switch (axisDirection) {
@@ -149,8 +153,11 @@ class _RenderSliverClip extends RenderProxySliver {
   }
 
   @override
-  bool hitTestChildren(SliverHitTestResult result,
-      {required double mainAxisPosition, required double crossAxisPosition}) {
+  bool hitTestChildren(
+    SliverHitTestResult result, {
+    required double mainAxisPosition,
+    required double crossAxisPosition,
+  }) {
     if (_effectiveClipBehavior(borderRadius.resolve(textDirection)) ==
         Clip.none) {
       return child != null &&
@@ -223,11 +230,7 @@ class _RenderSliverClip extends RenderProxySliver {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(
-      DiagnosticsProperty<bool>(
-        'clipOverlap',
-        clipOverlap,
-        defaultValue: true,
-      ),
+      DiagnosticsProperty<bool>('clipOverlap', clipOverlap, defaultValue: true),
     );
     properties.add(
       DiagnosticsProperty<BorderRadiusGeometry>(
@@ -237,11 +240,7 @@ class _RenderSliverClip extends RenderProxySliver {
       ),
     );
     properties.add(
-      EnumProperty<Clip?>(
-        'clipBehavior',
-        clipBehavior,
-        defaultValue: null,
-      ),
+      EnumProperty<Clip?>('clipBehavior', clipBehavior, defaultValue: null),
     );
   }
 }

@@ -75,8 +75,10 @@ extension DurationX on Duration {
   }
 
   Duration clamp(Duration lower, Duration upper) {
-    final result =
-        inMilliseconds.clamp(lower.inMilliseconds, upper.inMilliseconds);
+    final result = inMilliseconds.clamp(
+      lower.inMilliseconds,
+      upper.inMilliseconds,
+    );
     return Duration(milliseconds: result);
   }
 }

@@ -30,11 +30,11 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialPageRoute<T> {
     required String routeName,
     super.fullscreenDialog,
     super.maintainState,
-  })  : _bloc = bloc,
-        super(
-          builder: (context) => screen,
-          settings: RouteSettings(name: routeName),
-        );
+  }) : _bloc = bloc,
+       super(
+         builder: (context) => screen,
+         settings: RouteSettings(name: routeName),
+       );
 
   /// 直接传递的BLoC
   final B? _bloc;
@@ -264,12 +264,12 @@ class DecoratedDialogRoute<B extends BLoC, T> extends DialogRoute<T> {
     super.themes,
     super.useSafeArea,
     required String routeName,
-  })  : _bloc = bloc,
-        super(
-          context: gNavigatorKey.currentContext!,
-          builder: (context) => dialog,
-          settings: RouteSettings(name: routeName),
-        );
+  }) : _bloc = bloc,
+       super(
+         context: gNavigatorKey.currentContext!,
+         builder: (context) => dialog,
+         settings: RouteSettings(name: routeName),
+       );
 
   /// 直接传递的BLoC
   final B? _bloc;
@@ -371,10 +371,7 @@ class DecoratedDialogRoute<B extends BLoC, T> extends DialogRoute<T> {
 
     // 是否自动收起键盘
     if (autoCloseKeyboard != null) {
-      result = AutoCloseKeyboard(
-        config: autoCloseKeyboard!,
-        child: result,
-      );
+      result = AutoCloseKeyboard(config: autoCloseKeyboard!, child: result);
     }
 
     // 是否带有表单

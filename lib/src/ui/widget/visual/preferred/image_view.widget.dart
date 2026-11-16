@@ -19,16 +19,16 @@ class ImageViewProvider extends ImageProvider {
     String? cacheKey,
     Map<String, String>? headers,
   }) : _delegate = uri.startsWith('http')
-            ? CachedNetworkImageProvider(
-                uri,
-                maxHeight: maxHeight,
-                maxWidth: maxWidth,
-                cacheKey: cacheKey,
-                headers: headers,
-              )
-            : (uri.startsWith('/') || uri.startsWith('file://'))
-                ? FileImage(File(uri)) as ImageProvider
-                : AssetImage(uri);
+           ? CachedNetworkImageProvider(
+               uri,
+               maxHeight: maxHeight,
+               maxWidth: maxWidth,
+               cacheKey: cacheKey,
+               headers: headers,
+             )
+           : (uri.startsWith('/') || uri.startsWith('file://'))
+           ? FileImage(File(uri)) as ImageProvider
+           : AssetImage(uri);
 
   final ImageProvider _delegate;
 
@@ -99,13 +99,13 @@ class ImageView extends StatelessWidget {
     this.alignment = Alignment.center,
     this.cacheKey,
     this.fadeIn = true,
-  })  : imagePath = imageUri.isUrl ? null : imageUri,
-        imageUrl = imageUri.isUrl ? imageUri : null,
-        assert(
-          (darkImagePath != null && autoDarkMode == false) ||
-              darkImagePath == null,
-          '不能同时设置darkImagePath和autoDarkMode',
-        );
+  }) : imagePath = imageUri.isUrl ? null : imageUri,
+       imageUrl = imageUri.isUrl ? imageUri : null,
+       assert(
+         (darkImagePath != null && autoDarkMode == false) ||
+             darkImagePath == null,
+         '不能同时设置darkImagePath和autoDarkMode',
+       );
 
   /// 跟默认构造器的区别是icon构造器默认是BoxFit.contain
   ImageView.icon(
@@ -139,13 +139,13 @@ class ImageView extends StatelessWidget {
     this.alignment = Alignment.center,
     this.cacheKey,
     this.fadeIn = true,
-  })  : imagePath = imageUri.isUrl ? null : imageUri,
-        imageUrl = imageUri.isUrl ? imageUri : null,
-        assert(
-          (darkImagePath != null && autoDarkMode == false) ||
-              darkImagePath == null,
-          '不能同时设置darkImagePath和autoDarkMode',
-        );
+  }) : imagePath = imageUri.isUrl ? null : imageUri,
+       imageUrl = imageUri.isUrl ? imageUri : null,
+       assert(
+         (darkImagePath != null && autoDarkMode == false) ||
+             darkImagePath == null,
+         '不能同时设置darkImagePath和autoDarkMode',
+       );
 
   @Deprecated('请使用ImageView')
   const ImageView.local(
@@ -178,13 +178,13 @@ class ImageView extends StatelessWidget {
     this.rotationAlignment = Alignment.center,
     this.alignment = Alignment.center,
     this.fadeIn = true,
-  })  : imageUrl = null,
-        cacheKey = null,
-        assert(
-          (darkImagePath != null && autoDarkMode == false) ||
-              darkImagePath == null,
-          '不能同时设置darkImagePath和autoDarkMode',
-        );
+  }) : imageUrl = null,
+       cacheKey = null,
+       assert(
+         (darkImagePath != null && autoDarkMode == false) ||
+             darkImagePath == null,
+         '不能同时设置darkImagePath和autoDarkMode',
+       );
 
   @Deprecated('请使用ImageView')
   const ImageView.remote(
@@ -218,12 +218,12 @@ class ImageView extends StatelessWidget {
     this.alignment = Alignment.center,
     this.cacheKey,
     this.fadeIn = true,
-  })  : imagePath = null,
-        assert(
-          (darkImagePath != null && autoDarkMode == false) ||
-              darkImagePath == null,
-          '不能同时设置darkImagePath和autoDarkMode',
-        );
+  }) : imagePath = null,
+       assert(
+         (darkImagePath != null && autoDarkMode == false) ||
+             darkImagePath == null,
+         '不能同时设置darkImagePath和autoDarkMode',
+       );
 
   /// 本地图片路径
   final String? imagePath;
@@ -344,7 +344,8 @@ class ImageView extends StatelessWidget {
         }
       } else if (_imagePath.startsWith('/') ||
           _imagePath.startsWith('file://')) {
-        result = kIsWeb // web端的文件路径使用network加载
+        result =
+            kIsWeb // web端的文件路径使用network加载
             ? Image.network(
                 _imagePath,
                 key: autoApplyKey ? Key(_imagePath) : null,
@@ -446,17 +447,20 @@ class ImageView extends StatelessWidget {
                 color: _color,
                 httpHeaders: headers,
                 errorListener: (e) => L.e('加载图片时出现错误: $e'),
-                placeholder:
-                    _placeholder != null ? (_, __) => _placeholder : null,
+                placeholder: _placeholder != null
+                    ? (_, __) => _placeholder
+                    : null,
                 errorWidget: _errorBuilder,
                 memCacheWidth: _cacheWidth,
                 memCacheHeight: _cacheHeight,
                 alignment: alignment,
                 cacheKey: cacheKey,
-                fadeInDuration:
-                    fadeIn ? const Duration(milliseconds: 500) : Duration.zero,
-                fadeOutDuration:
-                    fadeIn ? const Duration(milliseconds: 1000) : Duration.zero,
+                fadeInDuration: fadeIn
+                    ? const Duration(milliseconds: 500)
+                    : Duration.zero,
+                fadeOutDuration: fadeIn
+                    ? const Duration(milliseconds: 1000)
+                    : Duration.zero,
               );
         if (logEnable) {
           L.d('[DECORATED_FLUTTER] 使用CachedNetworkImage: $imageUrl');
@@ -491,8 +495,9 @@ class ImageView extends StatelessWidget {
         padding: padding,
         margin: margin,
         transformAlignment: rotationAlignment,
-        transform:
-            rotation != null ? (Matrix4.identity()..rotateZ(rotation!)) : null,
+        transform: rotation != null
+            ? (Matrix4.identity()..rotateZ(rotation!))
+            : null,
         foregroundDecoration: foregroundDecoration,
         decoration: _decoration,
         child: result,
@@ -513,7 +518,9 @@ class ImageView extends StatelessWidget {
   ) {
     final _errorWidget = errorWidget ?? globalErrorWidget;
     if (!suppressError) {
-      L.e('[DECORATED_FLUTTER] 显示ImageView发生错误: $error, stacktrace: $stackTrace');
+      L.e(
+        '[DECORATED_FLUTTER] 显示ImageView发生错误: $error, stacktrace: $stackTrace',
+      );
     }
     return _errorWidget ?? (kReleaseMode ? NIL : ErrorWidget(error));
   }

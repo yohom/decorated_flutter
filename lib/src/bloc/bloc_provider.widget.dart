@@ -18,8 +18,8 @@ class BLoCProvider<T extends BLoC> extends StatefulWidget {
     required this.bloc,
     this.init,
     this.onDispose,
-  })  : autoDispose = false,
-        canDispose = returnFalse;
+  }) : autoDispose = false,
+       canDispose = returnFalse;
 
   final T bloc;
   final ValueChanged<T>? init;
@@ -33,9 +33,13 @@ class BLoCProvider<T extends BLoC> extends StatefulWidget {
   _BLoCProviderState<T> createState() => _BLoCProviderState<T>();
 
   static T? of<T extends BLoC>(BuildContext context) {
-    final provider = context
-        .getElementForInheritedWidgetOfExactType<_BLoCProviderInherited<T>>()
-        ?.widget as _BLoCProviderInherited<T>?;
+    final provider =
+        context
+                .getElementForInheritedWidgetOfExactType<
+                  _BLoCProviderInherited<T>
+                >()
+                ?.widget
+            as _BLoCProviderInherited<T>?;
     return provider?.bloc;
   }
 }

@@ -14,10 +14,7 @@ const _kKeyboardHeightZeroThreshold = 100.0;
 /// `EdgeInsets.fromViewPadding(View.of(context).viewInsets, View.of(context).devicePixelRatio).bottom`
 /// as a proxy for the height of the software keyboard.
 class KeyboardHeightBuilder extends StatefulWidget {
-  const KeyboardHeightBuilder({
-    super.key,
-    required this.builder,
-  });
+  const KeyboardHeightBuilder({super.key, required this.builder});
 
   final Widget Function(double realtimeHeight, double? stableHeight) builder;
 

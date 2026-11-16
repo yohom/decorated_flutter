@@ -6,9 +6,7 @@ class ThrottleInterceptor extends Interceptor {
   final Map<String, Timer> _requestTimers = {}; // 记录请求的节流状态
   final Duration duration; // 防抖间隔
 
-  ThrottleInterceptor({
-    this.duration = const Duration(milliseconds: 256),
-  });
+  ThrottleInterceptor({this.duration = const Duration(milliseconds: 256)});
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {

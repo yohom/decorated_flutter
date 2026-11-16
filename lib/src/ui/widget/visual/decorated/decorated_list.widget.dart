@@ -38,29 +38,29 @@ class DecoratedList<T> extends StatelessWidget {
     this.decoratedScrollableConfig,
     this.margin,
     this.loadMoreConfig,
-  })  : assert(
-          (itemExtent == null && prototypeItem == null) ||
-              (itemExtent == null && itemExtentBuilder == null) ||
-              (prototypeItem == null && itemExtentBuilder == null),
-          'You can only pass one of itemExtent, prototypeItem and itemExtentBuilder.',
-        ),
-        assert((dataSource == null) == (dataSourceItemBuilder == null)),
-        assert(dataSource == null || children == null),
-        assert(dataSource == null || itemBuilder == null),
-        assert(
-          dataSource == null ||
-              itemCount == null ||
-              itemCount == dataSource.length,
-        ),
-        assert(
-          dataSource == null ||
-              (itemExtent == null &&
-                  itemExtentBuilder == null &&
-                  prototypeItem == null),
-          'Animated data sources cannot be combined with item extents.',
-        ),
-        _sliver = false,
-        separatorBuilder = null;
+  }) : assert(
+         (itemExtent == null && prototypeItem == null) ||
+             (itemExtent == null && itemExtentBuilder == null) ||
+             (prototypeItem == null && itemExtentBuilder == null),
+         'You can only pass one of itemExtent, prototypeItem and itemExtentBuilder.',
+       ),
+       assert((dataSource == null) == (dataSourceItemBuilder == null)),
+       assert(dataSource == null || children == null),
+       assert(dataSource == null || itemBuilder == null),
+       assert(
+         dataSource == null ||
+             itemCount == null ||
+             itemCount == dataSource.length,
+       ),
+       assert(
+         dataSource == null ||
+             (itemExtent == null &&
+                 itemExtentBuilder == null &&
+                 prototypeItem == null),
+         'Animated data sources cannot be combined with item extents.',
+       ),
+       _sliver = false,
+       separatorBuilder = null;
 
   const DecoratedList.boxSeparated({
     super.key,
@@ -90,18 +90,16 @@ class DecoratedList<T> extends StatelessWidget {
     this.decoratedScrollableConfig,
     this.margin,
     this.loadMoreConfig,
-  })  : assert(itemCount != null),
-        assert((dataSource == null) == (dataSourceItemBuilder == null)),
-        assert(
-          dataSource == null || itemCount == dataSource.length,
-        ),
-        assert(dataSource == null || itemBuilder == null),
-        assert(separatorBuilder != null),
-        _sliver = false,
-        itemExtent = null,
-        itemExtentBuilder = null,
-        prototypeItem = null,
-        children = null;
+  }) : assert(itemCount != null),
+       assert((dataSource == null) == (dataSourceItemBuilder == null)),
+       assert(dataSource == null || itemCount == dataSource.length),
+       assert(dataSource == null || itemBuilder == null),
+       assert(separatorBuilder != null),
+       _sliver = false,
+       itemExtent = null,
+       itemExtentBuilder = null,
+       prototypeItem = null,
+       children = null;
 
   const DecoratedList.sliver({
     super.key,
@@ -121,49 +119,49 @@ class DecoratedList<T> extends StatelessWidget {
     this.itemExtent,
     this.itemExtentBuilder,
     this.prototypeItem,
-  })  : assert(
-          (itemExtent == null && prototypeItem == null) ||
-              (itemExtent == null && itemExtentBuilder == null) ||
-              (prototypeItem == null && itemExtentBuilder == null),
-          'You can only pass one of itemExtent, prototypeItem and itemExtentBuilder.',
-        ),
-        assert((dataSource == null) == (dataSourceItemBuilder == null)),
-        assert(dataSource == null || children == null),
-        assert(dataSource == null || itemBuilder == null),
-        assert(
-          dataSource == null ||
-              itemCount == null ||
-              itemCount == dataSource.length,
-        ),
-        assert(
-          dataSource == null ||
-              (itemExtent == null &&
-                  itemExtentBuilder == null &&
-                  prototypeItem == null),
-          'Animated data sources cannot be combined with item extents.',
-        ),
-        assert(
-          separatorBuilder == null ||
-              (itemExtent == null &&
-                  itemExtentBuilder == null &&
-                  prototypeItem == null),
-          'separatorBuilder cannot be used with itemExtent, itemExtentBuilder or prototypeItem.',
-        ),
-        _sliver = true,
-        shrinkWrap = false,
-        scrollDirection = null,
-        controller = null,
-        restorationId = null,
-        expanded = null,
-        physics = null,
-        reverse = false,
-        decoration = null,
-        clipBehavior = Clip.none,
-        keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.onDrag,
-        topDivider = null,
-        decoratedScrollableConfig = null,
-        margin = null,
-        loadMoreConfig = null;
+  }) : assert(
+         (itemExtent == null && prototypeItem == null) ||
+             (itemExtent == null && itemExtentBuilder == null) ||
+             (prototypeItem == null && itemExtentBuilder == null),
+         'You can only pass one of itemExtent, prototypeItem and itemExtentBuilder.',
+       ),
+       assert((dataSource == null) == (dataSourceItemBuilder == null)),
+       assert(dataSource == null || children == null),
+       assert(dataSource == null || itemBuilder == null),
+       assert(
+         dataSource == null ||
+             itemCount == null ||
+             itemCount == dataSource.length,
+       ),
+       assert(
+         dataSource == null ||
+             (itemExtent == null &&
+                 itemExtentBuilder == null &&
+                 prototypeItem == null),
+         'Animated data sources cannot be combined with item extents.',
+       ),
+       assert(
+         separatorBuilder == null ||
+             (itemExtent == null &&
+                 itemExtentBuilder == null &&
+                 prototypeItem == null),
+         'separatorBuilder cannot be used with itemExtent, itemExtentBuilder or prototypeItem.',
+       ),
+       _sliver = true,
+       shrinkWrap = false,
+       scrollDirection = null,
+       controller = null,
+       restorationId = null,
+       expanded = null,
+       physics = null,
+       reverse = false,
+       decoration = null,
+       clipBehavior = Clip.none,
+       keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.onDrag,
+       topDivider = null,
+       decoratedScrollableConfig = null,
+       margin = null,
+       loadMoreConfig = null;
 
   final bool _sliver;
   final String? restorationId;
@@ -182,7 +180,7 @@ class DecoratedList<T> extends StatelessWidget {
   /// Items are matched by [dataSourceKey], or by `==` when it is omitted.
   /// Reordering is animated as a removal followed by an insertion.
   final Widget Function(BuildContext context, T item, int index)?
-      dataSourceItemBuilder;
+  dataSourceItemBuilder;
 
   /// Returns a stable identity for an item when model equality is not stable.
   final Object? Function(T item)? dataSourceKey;
@@ -282,14 +280,13 @@ class DecoratedList<T> extends StatelessWidget {
               prototypeItem: prototypeItem!,
             )
           : itemExtentBuilder != null
-              ? SliverVariedExtentList(
-                  delegate: delegate,
-                  itemExtentBuilder: itemExtentBuilder!,
-                )
-              : itemExtent != null
-                  ? SliverFixedExtentList(
-                      delegate: delegate, itemExtent: itemExtent!)
-                  : SliverList(delegate: delegate);
+          ? SliverVariedExtentList(
+              delegate: delegate,
+              itemExtentBuilder: itemExtentBuilder!,
+            )
+          : itemExtent != null
+          ? SliverFixedExtentList(delegate: delegate, itemExtent: itemExtent!)
+          : SliverList(delegate: delegate);
     }
 
     if (padding != null) {
@@ -361,8 +358,9 @@ class DecoratedList<T> extends StatelessWidget {
       );
     } else if (itemBuilder != null) {
       final showPlaceholder = showNoMoreData && itemCount != null;
-      final listItemCount =
-          itemCount == null ? null : itemCount! + (showPlaceholder ? 1 : 0);
+      final listItemCount = itemCount == null
+          ? null
+          : itemCount! + (showPlaceholder ? 1 : 0);
 
       Widget listItemBuilder(BuildContext context, int index) {
         if (showPlaceholder && index == itemCount) {

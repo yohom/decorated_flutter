@@ -17,7 +17,9 @@ part 'required/required_page.dart';
 typedef OnUpdateCallback<R, T> = Future<R> Function(T arg);
 typedef OnUpdatePageCallback<R, T> = Future<R> Function(int page, T arg);
 typedef MergeListCallback<T> = List<T> Function(
-    List<T> current, List<T> newList);
+  List<T> current,
+  List<T> newList,
+);
 typedef NoMoreDataCallback<T> = bool Function(List<T> newList);
 typedef SerializeCallback<T> = dynamic Function(T data);
 typedef DeserializeCallback<T> = T Function(dynamic json);
@@ -50,18 +52,18 @@ abstract class BaseIO<T> {
     ///
     /// 在轮询场景有用
     bool skipError = false,
-  })  : _semantics = semantics,
-        _seedValue = seedValue,
-        _printLog = printLog,
-        latest = seedValue,
-        _onReset = onReset,
-        _persistConfig = persistConfig,
-        _skipError = skipError,
-        _subject = isBehavior
-            ? seedValue != null
-                ? BehaviorSubject<T>.seeded(seedValue, sync: sync)
-                : BehaviorSubject<T>(sync: sync)
-            : PublishSubject<T>(sync: sync) {
+  }) : _semantics = semantics,
+       _seedValue = seedValue,
+       _printLog = printLog,
+       latest = seedValue,
+       _onReset = onReset,
+       _persistConfig = persistConfig,
+       _skipError = skipError,
+       _subject = isBehavior
+           ? seedValue != null
+                 ? BehaviorSubject<T>.seeded(seedValue, sync: sync)
+                 : BehaviorSubject<T>(sync: sync)
+           : PublishSubject<T>(sync: sync) {
     // 处理内存数据
     _subject.listen(_handleUpdateMemoryData);
     // 处理持久层数据
@@ -88,7 +90,9 @@ abstract class BaseIO<T> {
           final value = _persistConfig.onDeserialize(deserialized);
           if (value != null) _subject.add(value);
         } catch (e, s) {
-          L.w('[DECORATED_FLUTTER] 读取持久层数据发生异常 $e, 删除key: [${_persistConfig.key}]\n调用栈: $s');
+          L.w(
+            '[DECORATED_FLUTTER] 读取持久层数据发生异常 $e, 删除key: [${_persistConfig.key}]\n调用栈: $s',
+          );
           gDecoratedStorage.remove(_persistConfig.key);
         }
       }
@@ -235,10 +239,10 @@ abstract class BaseIO<T> {
 /// 没有数据, 只发射信号的IO
 class Signal extends IO<dynamic> {
   Signal({required super.semantics, super.isBehavior = false})
-      : super(
-          seedValue: null,
-          onUpdate: (_) => throw '不能在 [$semantics] Signal中调用update方法',
-        );
+    : super(
+        seedValue: null,
+        onUpdate: (_) => throw '不能在 [$semantics] Signal中调用update方法',
+      );
 
   /// 是否有粘性信号可以处理
   bool get hasStickySignal {
@@ -274,11 +278,9 @@ class Computed<T, R> extends BaseIO<R> {
     required R Function(T) mapper,
     R? seedValue,
     super.persistConfig,
-  })  : _upstream = upstream,
-        _mapper = mapper,
-        super(
-          seedValue: seedValue ?? mapper(upstream._seedValue),
-        ) {
+  }) : _upstream = upstream,
+       _mapper = mapper,
+       super(seedValue: seedValue ?? mapper(upstream._seedValue)) {
     _subscription = upstream._subject.map(mapper).listen(_subject.add);
   }
 

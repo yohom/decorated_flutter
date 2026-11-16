@@ -123,10 +123,7 @@ class DecoratedWrap extends StatelessWidget {
     }
 
     if (textStyle != null) {
-      result = DefaultTextStyle(
-        style: textStyle!,
-        child: result,
-      );
+      result = DefaultTextStyle(style: textStyle!, child: result);
     }
 
     if (expanded == true) {

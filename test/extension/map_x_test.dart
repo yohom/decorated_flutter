@@ -6,8 +6,8 @@ void main() {
     expect(
       {
         'a': {
-          'b': {'c': 'd'}
-        }
+          'b': {'c': 'd'},
+        },
       }.valueFor(keyPath: 'a.b.c'),
       'd',
     );
@@ -17,8 +17,8 @@ void main() {
       {
         'a': {
           'b': {'c': 'd'},
-          'c': [1]
-        }
+          'c': [1],
+        },
       }.valueFor(keyPath: 'a.c.0'),
       1,
     );

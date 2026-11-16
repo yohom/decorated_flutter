@@ -60,10 +60,7 @@ class BackgroundBlur extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget result = BackdropFilter(
-      filter: ui.ImageFilter.blur(
-        sigmaX: sigmaX,
-        sigmaY: sigmaY,
-      ),
+      filter: ui.ImageFilter.blur(sigmaX: sigmaX, sigmaY: sigmaY),
       child: child,
     );
 

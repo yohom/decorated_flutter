@@ -62,8 +62,8 @@ class _OverflowTextState extends State<OverflowText> {
         }
         final textDirection =
             widget.textDirection ?? Directionality.of(context);
-        final textStyle =
-            DefaultTextStyle.of(context).style.merge(widget.style);
+        final textStyle = DefaultTextStyle.of(context).style
+            .merge(widget.style);
         final textScaler =
             widget.textScaler ?? MediaQuery.textScalerOf(context);
 
@@ -112,7 +112,7 @@ class _OverflowTextState extends State<OverflowText> {
         )..layout();
         final fitsWithEllipsis =
             ellipsisPainter.width + overflowWidgetSize.width <=
-                constraints.maxWidth;
+            constraints.maxWidth;
         ellipsisPainter.dispose();
         if (!fitsWithEllipsis) {
           return SizedBox(

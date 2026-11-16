@@ -2,10 +2,7 @@ import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 
-enum ZIndex {
-  top,
-  bottom,
-}
+enum ZIndex { top, bottom }
 
 class DecoratedStack extends StatelessWidget {
   const DecoratedStack({
@@ -229,8 +226,9 @@ class DecoratedStack extends StatelessWidget {
               ? null
               : (detail) => onTapDown!(context, detail),
           onTap: onPressed == null ? null : () => onPressed!(context),
-          onLongPress:
-              onLongPressed == null ? null : () => onLongPressed!(context),
+          onLongPress: onLongPressed == null
+              ? null
+              : () => onLongPressed!(context),
           onVerticalDragEnd: onVerticalDragEnd,
           onHorizontalDragEnd: onHorizontalDragEnd,
           child: result,

@@ -19,10 +19,10 @@ class SliverConfig {
   });
 
   const SliverConfig.placeholder({this.padding})
-      : error = true,
-        empty = true,
-        loading = true,
-        data = false;
+    : error = true,
+      empty = true,
+      loading = true,
+      data = false;
 
   final bool error;
   final bool empty;
@@ -53,13 +53,7 @@ class AnimationConfig {
   }
 }
 
-enum SnapshotType {
-  error,
-  empty,
-  loading,
-  data,
-  unknown,
-}
+enum SnapshotType { error, empty, loading, data, unknown }
 
 class SingleSubscriber<T> extends StatefulWidget {
   static Widget? _defaultEmptyPlaceholder;
@@ -146,13 +140,20 @@ class _SingleSubscriberState<T> extends State<SingleSubscriber<T>> {
       builder: (ctx, snapshot) {
         Widget? result;
         if (snapshot.hasError) {
-          L.e('[DECORATED_FLUTTER] Subscriber出现错误: ${snapshot.error}, 调用栈:\n ${snapshot.stackTrace}');
+          L.e(
+            '[DECORATED_FLUTTER] Subscriber出现错误: ${snapshot.error}, 调用栈:\n ${snapshot.stackTrace}',
+          );
           if (widget.errorPlaceholderBuilder != null) {
-            result ??=
-                widget.errorPlaceholderBuilder!(context, snapshot.error!);
+            result ??= widget.errorPlaceholderBuilder!(
+              context,
+              snapshot.error!,
+            );
           } else {
-            result ??= SingleSubscriber._defaultErrorPlaceholder
-                    ?.call(context, snapshot.error!) ??
+            result ??=
+                SingleSubscriber._defaultErrorPlaceholder?.call(
+                  context,
+                  snapshot.error!,
+                ) ??
                 ErrorPlaceholder(
                   error: snapshot.error,
                   stackTrace: snapshot.stackTrace,
@@ -162,7 +163,8 @@ class _SingleSubscriberState<T> extends State<SingleSubscriber<T>> {
 
         if (snapshot.hasData) {
           if (isEmpty(snapshot.data) && widget.handleEmpty) {
-            result ??= widget.emptyPlaceholder ??
+            result ??=
+                widget.emptyPlaceholder ??
                 SingleSubscriber._defaultEmptyPlaceholder ??
                 const EmptyPlaceholder();
           } else {
@@ -171,7 +173,8 @@ class _SingleSubscriberState<T> extends State<SingleSubscriber<T>> {
             result ??= widget.builder(snapshot.data as T);
           }
         } else if (widget.showLoading) {
-          result ??= widget.loadingPlaceholder ??
+          result ??=
+              widget.loadingPlaceholder ??
               SingleSubscriber._defaultLoadingPlaceholder ??
               const LoadingWidget();
         } else {
@@ -287,11 +290,14 @@ class Subscriber<T> extends StatelessWidget {
         Widget? result;
         if (snapshot.hasError) {
           final error = snapshot.error!;
-          L.e('[DECORATED_FLUTTER] Subscriber出现错误: $error, 调用栈:\n ${snapshot.stackTrace}');
+          L.e(
+            '[DECORATED_FLUTTER] Subscriber出现错误: $error, 调用栈:\n ${snapshot.stackTrace}',
+          );
           if (errorPlaceholderBuilder != null) {
             result ??= errorPlaceholderBuilder!(context, error);
           } else {
-            result ??= (_defaultErrorPlaceholder?.call(context, error) ??
+            result ??=
+                (_defaultErrorPlaceholder?.call(context, error) ??
                 ErrorPlaceholder(
                   error: snapshot.error,
                   stackTrace: snapshot.stackTrace,
@@ -310,7 +316,8 @@ class Subscriber<T> extends StatelessWidget {
 
         if (snapshot.hasData) {
           if (isEmpty(snapshot.data) && handleEmpty) {
-            result ??= emptyPlaceholder ??
+            result ??=
+                emptyPlaceholder ??
                 _defaultEmptyPlaceholder ??
                 const EmptyPlaceholder();
 
@@ -325,7 +332,8 @@ class Subscriber<T> extends StatelessWidget {
             snapshotType = SnapshotType.data;
           }
         } else if (showLoading) {
-          result ??= loadingPlaceholder ??
+          result ??=
+              loadingPlaceholder ??
               _defaultLoadingPlaceholder ??
               const LoadingWidget();
 

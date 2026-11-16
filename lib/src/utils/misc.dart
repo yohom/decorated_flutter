@@ -73,7 +73,8 @@ dynamic handleError(Object error, [StackTrace? trace]) {
 }
 
 Color highContrast(Color input) {
-  final grey = 0.2126 * math.pow(input.red / 255, 2.2) +
+  final grey =
+      0.2126 * math.pow(input.red / 255, 2.2) +
       0.7151 * math.pow(input.green / 255, 2.2) +
       0.0721 * math.pow(input.blue / 255, 2.2);
   Color output = Colors.black;

@@ -1,12 +1,12 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:rxdart/rxdart.dart';
 
-typedef _Builder = Widget Function(BuildContext context, AnimationController controller);
+typedef _Builder = Widget Function(
+  BuildContext context,
+  AnimationController controller,
+);
 
-enum SlideDirection {
-  vertical,
-  horizontal,
-}
+enum SlideDirection { vertical, horizontal }
 
 class FadeSlideTransition extends StatefulWidget {
   /// [builder]有两个参数, 一个是[BuildContext], 就是常规用法, 另一个是[_controller], 是
@@ -62,10 +62,7 @@ class _FadeInSlideTransitionState extends State<FadeSlideTransition>
 
   @override
   void initState() {
-    _controller = AnimationController(
-      vsync: this,
-      duration: widget.duration,
-    );
+    _controller = AnimationController(vsync: this, duration: widget.duration);
 
     _slideAnimation = CurvedAnimation(
       parent: _controller,

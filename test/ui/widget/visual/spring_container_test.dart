@@ -37,7 +37,8 @@ void main() {
     expect(containerCount, 0);
 
     await tester.tapAt(
-        tester.getCenter(find.byType(SpringContainer)) + const Offset(60, 0));
+      tester.getCenter(find.byType(SpringContainer)) + const Offset(60, 0),
+    );
     await tester.pumpAndSettle();
     expect(containerCount, 1);
   });

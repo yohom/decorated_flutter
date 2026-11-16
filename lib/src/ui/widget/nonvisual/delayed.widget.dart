@@ -22,7 +22,8 @@ class Delayed<T> extends StatelessWidget {
     if (duration == Duration.zero) return child;
     return SingleSubscriber(
       showLoading: showLoading,
-      loadingPlaceholder: loadingWidget ??
+      loadingPlaceholder:
+          loadingWidget ??
           Container(
             color: backgroundColor,
             child: const Center(child: CircularProgressIndicator()),

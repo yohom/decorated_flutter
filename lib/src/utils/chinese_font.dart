@@ -18,15 +18,10 @@ class SystemChineseFont {
   ];
 
   /// Chinese font family fallback, for xiaomi & redmi phone
-  static const List<String> xiaomiFontFamily = [
-    'miui',
-    'mipro',
-  ];
+  static const List<String> xiaomiFontFamily = ['miui', 'mipro'];
 
   /// Chinese font family fallback, for windows
-  static const List<String> windowsFontFamily = [
-    'Microsoft YaHei',
-  ];
+  static const List<String> windowsFontFamily = ['Microsoft YaHei'];
 
   static const systemFont = "system-font";
 
@@ -51,8 +46,9 @@ class SystemChineseFont {
       () async {
         final vivoFont = File("/system/fonts/VivoFont.ttf");
         if ((await vivoFont.exists()) &&
-            (await vivoFont.resolveSymbolicLinks())
-                .contains("DroidSansFallbackBBK")) {
+            (await vivoFont.resolveSymbolicLinks()).contains(
+              "DroidSansFallbackBBK",
+            )) {
           await vivoSystemFont.load();
         }
       }();
@@ -77,13 +73,13 @@ class SystemChineseFont {
   static TextTheme textTheme(Brightness brightness) {
     switch (brightness) {
       case Brightness.dark:
-        return Typography.material2021()
-            .white
-            .apply(fontFamilyFallback: fontFamilyFallback);
+        return Typography.material2021().white.apply(
+          fontFamilyFallback: fontFamilyFallback,
+        );
       case Brightness.light:
-        return Typography.material2021()
-            .black
-            .apply(fontFamilyFallback: fontFamilyFallback);
+        return Typography.material2021().black.apply(
+          fontFamilyFallback: fontFamilyFallback,
+        );
     }
   }
 }
@@ -125,8 +121,8 @@ extension ThemeDataUseSystemChineseFont on ThemeData {
       textTheme: textTheme.useSystemChineseFont(brightness),
       tabBarTheme: tabBarTheme.copyWith(
         labelStyle: tabBarTheme.labelStyle?.useSystemChineseFont(),
-        unselectedLabelStyle:
-            tabBarTheme.unselectedLabelStyle?.useSystemChineseFont(),
+        unselectedLabelStyle: tabBarTheme.unselectedLabelStyle
+            ?.useSystemChineseFont(),
       ),
     );
   }
@@ -141,13 +137,13 @@ class DynamicFont {
 
   /// Use the font from AssetBundle, [key] is the same as in [rootBundle.load]
   DynamicFont.asset({required this.fontFamily, required String key})
-      : _source = _FontSource.asset,
-        uri = key;
+    : _source = _FontSource.asset,
+      uri = key;
 
   /// Use the font from [filepath]
   DynamicFont.file({required this.fontFamily, required String filepath})
-      : _source = _FontSource.file,
-        uri = filepath;
+    : _source = _FontSource.file,
+      uri = filepath;
 
   bool? overwrite;
 

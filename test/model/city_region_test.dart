@@ -5,9 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('parse city picker data', () {
-    final source = File(
-      'assets/city_picker/china_regions.json',
-    ).readAsStringSync();
+    final source = File('assets/city_picker/china_regions.json')
+        .readAsStringSync();
     final data = CityRegion.listFromJsonString(source);
 
     expect(data.isNotEmpty, true);
