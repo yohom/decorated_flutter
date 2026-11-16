@@ -32,7 +32,7 @@ void main() {
             builder: (keyboardHeight, stableKeyboardHeight) {
               return Text(
                 '${keyboardHeight.toStringAsFixed(0)}/${stableKeyboardHeight?.toStringAsFixed(0) ?? 'null'}',
-                textDirection: TextDirection.ltr,
+                textDirection: .ltr,
               );
             },
           ),
@@ -67,11 +67,11 @@ void main() {
                 children: [
                   Text(
                     'keyboard:${keyboardHeight.toStringAsFixed(0)}',
-                    textDirection: TextDirection.ltr,
+                    textDirection: .ltr,
                   ),
                   Text(
                     'stable:${stableKeyboardHeight?.toStringAsFixed(0) ?? 'null'}',
-                    textDirection: TextDirection.ltr,
+                    textDirection: .ltr,
                   ),
                 ],
               );

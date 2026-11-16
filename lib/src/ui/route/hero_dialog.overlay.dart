@@ -98,11 +98,9 @@ class _OverlayHeroState extends State<OverlayHero> {
   Rect? rectIn(RenderBox overlayBox) {
     final box = context.findRenderObject();
     if (box is! RenderBox || !box.attached) return null;
-    return Rect.fromPoints(
-      overlayBox.globalToLocal(box.localToGlobal(Offset.zero)),
-      overlayBox.globalToLocal(
-        box.localToGlobal(box.size.bottomRight(Offset.zero)),
-      ),
+    return .fromPoints(
+      overlayBox.globalToLocal(box.localToGlobal(.zero)),
+      overlayBox.globalToLocal(box.localToGlobal(box.size.bottomRight(.zero))),
     );
   }
 
@@ -352,7 +350,7 @@ class _HeroOverlayState<T> extends State<_HeroOverlay<T>>
         final overlayBox = Overlay.of(context).context.findRenderObject();
         final isFlighting =
             _hasFlights &&
-            _animation.status != AnimationStatus.completed &&
+            _animation.status != .completed &&
             flights.isNotEmpty;
         return Stack(
           children: [
@@ -402,7 +400,7 @@ class _HeroOverlayState<T> extends State<_HeroOverlay<T>>
   }
 
   void _handleAnimationStatus(AnimationStatus status) {
-    if (status != AnimationStatus.completed || _isDismissing) return;
+    if (status != .completed || _isDismissing) return;
 
     for (final flight in widget.heroController?.flights ?? const []) {
       flight.target.setVisible(true);

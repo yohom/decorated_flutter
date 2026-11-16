@@ -44,7 +44,7 @@ class AnimationConfig {
   const AnimationConfig({
     this.duration = const Duration(milliseconds: 500),
     this.curve = Curves.decelerate,
-    this.alignment = Alignment.topLeft,
+    this.alignment = .topLeft,
   });
 
   @override
@@ -311,7 +311,7 @@ class Subscriber<T> extends StatelessWidget {
             );
           }
 
-          snapshotType = SnapshotType.error;
+          snapshotType = .error;
         }
 
         if (snapshot.hasData) {
@@ -325,11 +325,11 @@ class Subscriber<T> extends StatelessWidget {
               result = GestureDetector(onTap: onEmptyTapped, child: result);
             }
 
-            snapshotType = SnapshotType.empty;
+            snapshotType = .empty;
           } else {
             result ??= builder(snapshot.data as T);
 
-            snapshotType = SnapshotType.data;
+            snapshotType = .data;
           }
         } else if (showLoading) {
           result ??=
@@ -337,11 +337,11 @@ class Subscriber<T> extends StatelessWidget {
               _defaultLoadingPlaceholder ??
               const LoadingWidget();
 
-          snapshotType = SnapshotType.loading;
+          snapshotType = .loading;
         } else {
           result ??= SPACE_ZERO;
 
-          snapshotType = SnapshotType.unknown;
+          snapshotType = .unknown;
         }
 
         if (width != null || height != null || decoration != null) {
@@ -370,16 +370,16 @@ class Subscriber<T> extends StatelessWidget {
 
         if (sliver != null) {
           switch (snapshotType) {
-            case SnapshotType.error:
+            case .error:
               if (sliver!.error) result = SliverToBoxAdapter(child: result);
               break;
-            case SnapshotType.empty:
+            case .empty:
               if (sliver!.empty) result = SliverToBoxAdapter(child: result);
               break;
-            case SnapshotType.data:
+            case .data:
               if (sliver!.data) result = SliverToBoxAdapter(child: result);
               break;
-            case SnapshotType.loading:
+            case .loading:
               if (sliver!.loading) result = SliverToBoxAdapter(child: result);
               break;
             default:

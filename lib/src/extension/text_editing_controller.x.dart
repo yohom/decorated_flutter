@@ -14,13 +14,11 @@ extension TextEditingControllerX on TextEditingController {
       final afterString = text.substring(selection.end);
 
       text = beforeString + appending + afterString;
-      selection = TextSelection.collapsed(
-        offset: (beforeString + appending).length,
-      );
+      selection = .collapsed(offset: (beforeString + appending).length);
     } else {
       // 如果没在文字内部, 就直接加到最后
       text += appending;
-      selection = TextSelection.collapsed(offset: text.length);
+      selection = .collapsed(offset: text.length);
     }
   }
 
@@ -29,7 +27,7 @@ extension TextEditingControllerX on TextEditingController {
   /// 跟直接调用.text来设置文字的区别是会自动把光标移动到最后
   void setText(dynamic text) {
     this.text = text.toString();
-    selection = TextSelection.collapsed(offset: this.text.length);
+    selection = .collapsed(offset: this.text.length);
   }
 
   void backspace() {
@@ -40,12 +38,12 @@ extension TextEditingControllerX on TextEditingController {
     if (selection.isCollapsed) {
       final backspaced = beforeString.characters.skipLast(1);
       text = backspaced.string + afterString;
-      selection = TextSelection.collapsed(offset: backspaced.string.length);
+      selection = .collapsed(offset: backspaced.string.length);
     }
     // 删除选中的部分
     else if (selection.isNormalized) {
       text = beforeString + afterString;
-      selection = TextSelection.collapsed(offset: beforeString.length);
+      selection = .collapsed(offset: beforeString.length);
     }
   }
 }

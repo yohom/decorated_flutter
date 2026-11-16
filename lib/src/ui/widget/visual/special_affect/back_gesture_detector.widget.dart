@@ -8,7 +8,7 @@ class BackGestureDetector extends StatelessWidget {
     this.onBack,
     this.width = 24,
     this.velocityThreshold = 500,
-    this.behavior = HitTestBehavior.translucent,
+    this.behavior = .translucent,
   });
 
   /// 是否开启

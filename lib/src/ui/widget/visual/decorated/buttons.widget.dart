@@ -75,7 +75,7 @@ class _SpringContainerState extends State<SpringContainer>
         builder: (BuildContext context, Widget? child) {
           return Transform.scale(
             scale: _scaleController.value,
-            alignment: AlignmentDirectional.center,
+            alignment: .center,
             child: child,
           );
         },
@@ -83,7 +83,7 @@ class _SpringContainerState extends State<SpringContainer>
           cursor: SystemMouseCursors.click,
           child: RawGestureDetector(
             key: _interactionKey,
-            behavior: HitTestBehavior.opaque,
+            behavior: .opaque,
             gestures: <Type, GestureRecognizerFactory>{
               _PressGestureRecognizer:
                   GestureRecognizerFactoryWithHandlers<_PressGestureRecognizer>(
@@ -202,7 +202,7 @@ class _PressGestureRecognizer extends OneSequenceGestureRecognizer {
       _upPosition = null;
       _accepted = false;
       onPressCancel?.call();
-      resolve(GestureDisposition.rejected);
+      resolve(.rejected);
     }
   }
 

@@ -39,12 +39,12 @@ class DecoratedStack extends StatelessWidget {
     this.fill,
     this.sliver = false,
     this.aspectRatio,
-    this.childrenZIndex = ZIndex.bottom,
+    this.childrenZIndex = .bottom,
     this.transform,
     this.transformAlignment,
     this.animationDuration,
     this.animationCurve,
-    this.clipBehavior = Clip.none,
+    this.clipBehavior = .none,
     this.visible,
     this.systemUiOverlayStyle,
     this.repaintBoundaryKey,
@@ -107,11 +107,11 @@ class DecoratedStack extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget result = Stack(
-      alignment: alignment ?? AlignmentDirectional.topStart,
-      fit: stackFit ?? StackFit.loose,
+      alignment: alignment ?? .topStart,
+      fit: stackFit ?? .loose,
       clipBehavior: clipBehavior,
       children: <Widget>[
-        if (childrenZIndex == ZIndex.bottom) ...children,
+        if (childrenZIndex == .bottom) ...children,
         // 填满
         if (fill != null)
           Positioned(bottom: 0, right: 0, top: 0, left: 0, child: fill!),
@@ -144,7 +144,7 @@ class DecoratedStack extends StatelessWidget {
         // 右
         if (right != null)
           Positioned(bottom: 0, top: 0, right: 0, child: right!),
-        if (childrenZIndex == ZIndex.top) ...children,
+        if (childrenZIndex == .top) ...children,
       ],
     );
 
@@ -158,7 +158,7 @@ class DecoratedStack extends StatelessWidget {
         bottom: safeArea?.bottom ?? true,
         left: safeArea?.left ?? true,
         right: safeArea?.right ?? true,
-        minimum: safeArea?.minimum ?? EdgeInsets.zero,
+        minimum: safeArea?.minimum ?? .zero,
         child: result,
       );
     }
@@ -175,7 +175,7 @@ class DecoratedStack extends StatelessWidget {
         height != null ||
         transform != null ||
         constraints != null) {
-      if (animationDuration != null && animationDuration != Duration.zero) {
+      if (animationDuration != null && animationDuration != .zero) {
         result = AnimatedContainer(
           duration: animationDuration!,
           foregroundDecoration: foregroundDecoration,
@@ -242,7 +242,7 @@ class DecoratedStack extends StatelessWidget {
         bottom: safeArea?.bottom ?? true,
         left: safeArea?.left ?? true,
         right: safeArea?.right ?? true,
-        minimum: safeArea?.minimum ?? EdgeInsets.zero,
+        minimum: safeArea?.minimum ?? .zero,
         child: result,
       );
     }

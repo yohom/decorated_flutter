@@ -47,9 +47,9 @@ class BodyWithSideSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: .max,
+      mainAxisAlignment: .start,
+      crossAxisAlignment: .start,
       children: [
         Expanded(child: body),
         if (show)
@@ -120,7 +120,7 @@ class __ShrinkableSizeState extends State<_ShrinkableSize>
     widget.show ? controller.forward() : controller.reverse();
     return SizeTransition(
       sizeFactor: animation,
-      axis: Axis.horizontal,
+      axis: .horizontal,
       child: widget.child,
     );
   }
@@ -214,7 +214,7 @@ Future<T?> showModalSideSheet<T extends Object?>({
   var of = MediaQuery.of(context);
   var platform = Theme.of(context).platform;
   if (width == null) {
-    if (platform == TargetPlatform.android || platform == TargetPlatform.iOS) {
+    if (platform == .android || platform == .iOS) {
       width = of.size.width * 0.6;
     } else {
       width = of.size.width / 4;
@@ -237,7 +237,7 @@ Future<T?> showModalSideSheet<T extends Object?>({
     context: context,
     pageBuilder: (BuildContext context, _, __) {
       return Align(
-        alignment: Alignment.bottomRight,
+        alignment: .bottomRight,
         child: Material(
           elevation: elevation,
           color: backgroundColor ?? Colors.white,
@@ -249,7 +249,7 @@ Future<T?> showModalSideSheet<T extends Object?>({
       return SlideTransition(
         position: Tween<Offset>(
           begin: const Offset(1, 0),
-          end: Offset.zero,
+          end: .zero,
         ).animate(animation),
         child: child,
       );

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:material_ui/material_ui.dart';
 
 const _builtInNoMoreDataPlaceholder = Padding(
-  padding: EdgeInsets.all(12),
+  padding: .all(12),
   child: Center(child: Text('没有更多数据')),
 );
 

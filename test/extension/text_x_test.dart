@@ -8,7 +8,7 @@ void main() {
     'Text can concatenate InlineSpan without losing styles or recognizers',
     () {
       const leftStyle = TextStyle(fontSize: 20);
-      const rightStyle = TextStyle(fontWeight: FontWeight.bold);
+      const rightStyle = TextStyle(fontWeight: .bold);
       const leftSpan = TextSpan(text: 'left', style: leftStyle);
       final recognizer = TapGestureRecognizer()..onTap = () {};
       addTearDown(recognizer.dispose);

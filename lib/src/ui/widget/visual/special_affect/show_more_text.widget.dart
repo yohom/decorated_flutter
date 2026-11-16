@@ -8,7 +8,7 @@ class ShowMoreText extends StatelessWidget {
     this.style,
     this.showMoreStyle,
     this.textAlign,
-    this.overflow = TextOverflow.ellipsis,
+    this.overflow = .ellipsis,
     this.popupMenuTheme = const PopupMenuThemeData(),
   });
 

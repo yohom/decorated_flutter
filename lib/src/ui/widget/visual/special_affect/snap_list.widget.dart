@@ -5,7 +5,7 @@ class SnapList extends StatelessWidget {
     super.key,
     this.initialPage = 0,
     this.viewportFraction = 1.0,
-    this.padding = EdgeInsets.zero,
+    this.padding = .zero,
     required IndexedWidgetBuilder itemBuilder,
     int? itemCount,
     bool addAutomaticKeepAlive = true,
@@ -29,7 +29,7 @@ class SnapList extends StatelessWidget {
         final itemWidth =
             (constraints.maxWidth - padding.horizontal) * viewportFraction;
         return ListView.custom(
-          scrollDirection: Axis.horizontal,
+          scrollDirection: .horizontal,
           controller: PageController(
             initialPage: initialPage,
             viewportFraction: viewportFraction,

@@ -31,7 +31,7 @@ class _LogOverlayState extends State<LogOverlay> {
   var _showNetworkOnly = false;
 
   Duration get _animationDuration =>
-      _isDragging ? Duration.zero : const Duration(milliseconds: 280);
+      _isDragging ? .zero : const Duration(milliseconds: 280);
 
   @override
   Widget build(BuildContext context) {
@@ -71,10 +71,10 @@ class _LogOverlayState extends State<LogOverlay> {
           child: AnimatedContainer(
             duration: _animationDuration,
             curve: Curves.easeInOutCubic,
-            clipBehavior: Clip.hardEdge,
+            clipBehavior: .hardEdge,
             decoration: BoxDecoration(
               color: const Color(0xCC171717),
-              borderRadius: BorderRadius.circular(_isMinimized ? 26 : 12),
+              borderRadius: .circular(_isMinimized ? 26 : 12),
             ),
             child: _isMinimized
                 ? _buildMinimized(available)
@@ -89,7 +89,7 @@ class _LogOverlayState extends State<LogOverlay> {
     return DecoratedColumn(
       children: [
         GestureDetector(
-          behavior: HitTestBehavior.opaque,
+          behavior: .opaque,
           onPanStart: (_) => setState(() => _isDragging = true),
           onPanUpdate: (details) => _move(details.delta, available, size),
           onPanEnd: (_) => setState(() => _isDragging = false),
@@ -143,14 +143,14 @@ class _LogOverlayState extends State<LogOverlay> {
               ),
             ),
             Align(
-              alignment: Alignment.bottomRight,
+              alignment: .bottomRight,
               child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
+                behavior: .opaque,
                 onPanStart: (_) => setState(() => _isDragging = true),
                 onPanUpdate: (details) => _resize(details.delta, available),
                 onPanEnd: (_) => setState(() => _isDragging = false),
                 child: const Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: .all(8),
                   child: _ResizeHandleIcon(),
                 ),
               ),
@@ -163,7 +163,7 @@ class _LogOverlayState extends State<LogOverlay> {
 
   Widget _buildMinimized(Size available) {
     return GestureDetector(
-      behavior: HitTestBehavior.opaque,
+      behavior: .opaque,
       onTap: () => setState(() => _isMinimized = false),
       onPanStart: (_) => setState(() => _isDragging = true),
       onPanUpdate: (details) => _move(details.delta, available, _minimizedSize),
@@ -173,7 +173,7 @@ class _LogOverlayState extends State<LogOverlay> {
         curve: Curves.easeOutCubic,
         decoration: BoxDecoration(
           color: const Color(0xE6000000),
-          borderRadius: BorderRadius.circular(26),
+          borderRadius: .circular(26),
         ),
         child: const Center(
           child: Icon(Icons.article_outlined, color: Colors.white),
@@ -312,7 +312,7 @@ class _LogListState extends State<_LogList> {
 
         return ListView.builder(
           controller: _scrollController,
-          padding: const EdgeInsets.only(top: 12),
+          padding: const .only(top: 12),
           itemCount: logs.length,
           itemBuilder: (_, index) {
             final log = logs[index];
@@ -364,8 +364,8 @@ class _ResizeHandlePainter extends CustomPainter {
     final paint = Paint()
       ..color = Colors.white70
       ..strokeWidth = 1.6
-      ..strokeCap = StrokeCap.round
-      ..style = PaintingStyle.stroke;
+      ..strokeCap = .round
+      ..style = .stroke;
     canvas.drawPath(
       Path()
         ..moveTo(3, 13)

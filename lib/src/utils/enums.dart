@@ -11,11 +11,11 @@ enum Gender {
 
   String get name {
     switch (this) {
-      case Gender.male:
+      case .male:
         return '男';
-      case Gender.female:
+      case .female:
         return '女';
-      case Gender.unknown:
+      case .unknown:
         return '保密';
     }
   }

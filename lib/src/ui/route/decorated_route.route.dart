@@ -161,10 +161,10 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialPageRoute<T> {
       // 自动对暗黑模式做切换
       SystemUiOverlayStyle style = systemUiOverlayStyle!;
       if (context.isDarkMode) {
-        if (style == SystemUiOverlayStyle.dark) {
-          style = SystemUiOverlayStyle.light;
-        } else if (style == SystemUiOverlayStyle.light) {
-          style = SystemUiOverlayStyle.dark;
+        if (style == .dark) {
+          style = .light;
+        } else if (style == .light) {
+          style = .dark;
         }
       }
       result = AnnotatedRegion<SystemUiOverlayStyle>(
@@ -209,7 +209,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialPageRoute<T> {
   ) {
     animation.addStatusListener((status) {
       // 如果是懒加载, 那么动画结束时开始初始化
-      if (status == AnimationStatus.completed &&
+      if (status == .completed &&
           onLateinit != null &&
           _bloc != null &&
           !_isInitialized) {
@@ -399,10 +399,10 @@ class DecoratedDialogRoute<B extends BLoC, T> extends DialogRoute<T> {
       // 自动对暗黑模式做切换
       SystemUiOverlayStyle style = systemUiOverlayStyle!;
       if (context.isDarkMode) {
-        if (style == SystemUiOverlayStyle.dark) {
-          style = SystemUiOverlayStyle.light;
-        } else if (style == SystemUiOverlayStyle.light) {
-          style = SystemUiOverlayStyle.dark;
+        if (style == .dark) {
+          style = .light;
+        } else if (style == .light) {
+          style = .dark;
         }
       }
       result = AnnotatedRegion<SystemUiOverlayStyle>(
@@ -438,7 +438,7 @@ class DecoratedDialogRoute<B extends BLoC, T> extends DialogRoute<T> {
   ) {
     animation.addStatusListener((status) {
       // 如果是懒加载, 那么动画结束时开始初始化
-      if (status == AnimationStatus.completed &&
+      if (status == .completed &&
           onLateinit != null &&
           _bloc != null &&
           !_isInitialized) {

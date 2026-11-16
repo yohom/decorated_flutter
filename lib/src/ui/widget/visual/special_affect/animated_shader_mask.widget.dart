@@ -7,7 +7,7 @@ class AnimatedShaderMask extends ImplicitlyAnimatedWidget {
     super.key,
     required this.child,
     required this.gradient,
-    this.blendMode = BlendMode.dstIn,
+    this.blendMode = .dstIn,
     super.curve = Curves.linear,
     super.duration = const Duration(milliseconds: 300),
     super.onEnd,
@@ -61,7 +61,7 @@ class _GradientTween extends Tween<Gradient> {
         end: AlignmentGeometry.lerp(b.end, e.end, t)!,
         colors: List.generate(
           b.colors.length,
-          (i) => Color.lerp(b.colors[i], e.colors[i], t)!,
+          (i) => .lerp(b.colors[i], e.colors[i], t)!,
         ),
         stops: List.generate(
           b.stops!.length,

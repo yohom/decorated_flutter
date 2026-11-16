@@ -72,11 +72,11 @@ class SystemChineseFont {
   /// Text theme with updated fontFamilyFallback & fontVariations
   static TextTheme textTheme(Brightness brightness) {
     switch (brightness) {
-      case Brightness.dark:
+      case .dark:
         return Typography.material2021().white.apply(
           fontFamilyFallback: fontFamilyFallback,
         );
-      case Brightness.light:
+      case .light:
         return Typography.material2021().black.apply(
           fontFamilyFallback: fontFamilyFallback,
         );

@@ -41,7 +41,7 @@ class DashedLine extends StatelessWidget {
     this.dashWidth = 5,
     this.dashSpace = 3,
     this.strokeWidth = 1,
-    this.strokeCap = StrokeCap.round,
+    this.strokeCap = .round,
     this.dashColor = Colors.black,
   });
 
@@ -80,7 +80,7 @@ class DashedLinePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (axis == Axis.vertical) {
+    if (axis == .vertical) {
       double startY = 0;
       final paint = Paint()
         ..color = dashColor

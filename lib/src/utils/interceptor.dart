@@ -17,7 +17,7 @@ class ThrottleInterceptor extends Interceptor {
       handler.reject(
         DioException(
           requestOptions: options,
-          type: DioExceptionType.cancel,
+          type: .cancel,
           error: 'Throttle Request: $key',
         ),
       );

@@ -155,19 +155,19 @@ mixin LifecycleBLoCMixin on BLoC, WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
     switch (state) {
-      case AppLifecycleState.resumed:
+      case .resumed:
         onResumed();
         break;
-      case AppLifecycleState.inactive:
+      case .inactive:
         onInactive();
         break;
-      case AppLifecycleState.paused:
+      case .paused:
         onPaused();
         break;
-      case AppLifecycleState.detached:
+      case .detached:
         onDetached();
         break;
-      case AppLifecycleState.hidden:
+      case .hidden:
         onDetached();
         break;
     }

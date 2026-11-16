@@ -3,12 +3,12 @@ import 'package:flutter/widgets.dart';
 class LazyIndexedStack extends StatefulWidget {
   const LazyIndexedStack({
     super.key,
-    this.alignment = AlignmentDirectional.topStart,
+    this.alignment = .topStart,
     this.textDirection,
-    this.sizing = StackFit.loose,
+    this.sizing = .loose,
     required this.index,
     this.reuse = true,
-    this.clipBehavior = Clip.hardEdge,
+    this.clipBehavior = .hardEdge,
     required this.itemBuilder,
     required this.itemCount,
   });

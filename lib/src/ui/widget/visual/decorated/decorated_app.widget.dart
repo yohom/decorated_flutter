@@ -200,12 +200,10 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
             builder: __builder,
             onGenerateTitle: onGenerateTitle,
             theme: theme?.let(
-              (self) =>
-                  kIsWeb ? self : self.useSystemChineseFont(Brightness.light),
+              (self) => kIsWeb ? self : self.useSystemChineseFont(.light),
             ),
             darkTheme: darkTheme?.let(
-              (self) =>
-                  kIsWeb ? self : self.useSystemChineseFont(Brightness.dark),
+              (self) => kIsWeb ? self : self.useSystemChineseFont(.dark),
             ),
             themeMode: themeMode,
             scrollBehavior: scrollBehavior,
@@ -245,12 +243,10 @@ class DecoratedApp<B extends RootBLoC> extends StatelessWidget {
             onGenerateTitle: onGenerateTitle,
             navigatorKey: navigatorKey ?? gNavigatorKey,
             theme: theme?.let(
-              (self) =>
-                  kIsWeb ? self : self.useSystemChineseFont(Brightness.light),
+              (self) => kIsWeb ? self : self.useSystemChineseFont(.light),
             ),
             darkTheme: darkTheme?.let(
-              (self) =>
-                  kIsWeb ? self : self.useSystemChineseFont(Brightness.dark),
+              (self) => kIsWeb ? self : self.useSystemChineseFont(.dark),
             ),
             themeMode: themeMode,
             scrollBehavior: scrollBehavior,

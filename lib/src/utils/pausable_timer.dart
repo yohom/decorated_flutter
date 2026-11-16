@@ -21,7 +21,7 @@ class PausableTimer {
   Duration get remaining => _remaining;
 
   void start() {
-    if (isRunning || _remaining <= Duration.zero) return;
+    if (isRunning || _remaining <= .zero) return;
 
     _watch
       ..reset()
@@ -41,7 +41,7 @@ class PausableTimer {
     _watch.stop();
     final elapsed = _watch.elapsed;
 
-    _remaining = elapsed >= _remaining ? Duration.zero : _remaining - elapsed;
+    _remaining = elapsed >= _remaining ? .zero : _remaining - elapsed;
   }
 
   void resume() => start();
@@ -56,7 +56,7 @@ class PausableTimer {
     _watch.stop();
 
     if (!repeat) {
-      _remaining = Duration.zero;
+      _remaining = .zero;
       _timer = null;
       onDone();
       return;

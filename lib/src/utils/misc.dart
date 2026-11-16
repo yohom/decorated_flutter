@@ -22,15 +22,15 @@ dynamic handleError(Object error, [StackTrace? trace]) {
   if (error is DioException) {
     String? message = error.message;
     switch (error.type) {
-      case DioExceptionType.cancel:
+      case .cancel:
         message = isEnglish ? error.message : '取消请求';
         break;
-      case DioExceptionType.sendTimeout:
-      case DioExceptionType.connectionTimeout:
-      case DioExceptionType.receiveTimeout:
+      case .sendTimeout:
+      case .connectionTimeout:
+      case .receiveTimeout:
         message = isEnglish ? error.message : '网络连接超时，请稍后重试';
         break;
-      case DioExceptionType.badResponse:
+      case .badResponse:
         final statusCode = error.response?.statusCode;
         if (statusCode != null) {
           if (statusCode >= 400 && statusCode <= 417) {

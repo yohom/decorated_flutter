@@ -194,7 +194,7 @@ Future<void> runDecoratedApp({
         systemNavigationBarContrastEnforced != null ||
         systemStatusBarContrastEnforced != null) {
       SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle.dark.copyWith(
+        .dark.copyWith(
           statusBarColor: statusBarColor,
           statusBarBrightness: statusBarBrightness,
           statusBarIconBrightness: statusBarIconBrightness,
@@ -437,7 +437,7 @@ int computeLineCount(String text, TextStyle style, double maxWidth) {
 
   final textPainter = TextPainter(
     text: TextSpan(text: text, style: style),
-    textDirection: TextDirection.ltr,
+    textDirection: .ltr,
   )..layout(minWidth: 0, maxWidth: maxWidth);
   return _countCache[key] = textPainter.computeLineMetrics().length;
 }
@@ -450,7 +450,7 @@ double computeTextHeight(String text, TextStyle style, double maxWidth) {
 
   final textPainter = TextPainter(
     text: TextSpan(text: text, style: style),
-    textDirection: TextDirection.ltr,
+    textDirection: .ltr,
   )..layout(minWidth: 0, maxWidth: maxWidth);
   return _heightCache[key] = textPainter.height;
 }

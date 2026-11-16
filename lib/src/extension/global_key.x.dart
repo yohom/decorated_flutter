@@ -25,7 +25,7 @@ extension GlobalKeyX on GlobalKey {
       final image = await box.toImage(
         pixelRatio: pixelRatio ?? window.devicePixelRatio,
       );
-      final byteData = await image.toByteData(format: ImageByteFormat.png);
+      final byteData = await image.toByteData(format: .png);
       final imageData = byteData?.buffer.asUint8List();
 
       return imageData;

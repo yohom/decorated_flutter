@@ -18,7 +18,7 @@ class DecoratedList<T> extends StatelessWidget {
     this.dataSource,
     this.dataSourceItemBuilder,
     this.dataSourceKey,
-    this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.onDrag,
+    this.keyboardDismissBehavior = .onDrag,
     this.scrollDirection,
     this.width,
     this.height,
@@ -32,7 +32,7 @@ class DecoratedList<T> extends StatelessWidget {
     this.expanded,
     this.decoration,
     this.physics,
-    this.clipBehavior = Clip.hardEdge,
+    this.clipBehavior = .hardEdge,
     this.reverse = false,
     @Deprecated('使用decoratedScrollableConfig代替, 已无作用') this.topDivider,
     this.decoratedScrollableConfig,
@@ -72,7 +72,7 @@ class DecoratedList<T> extends StatelessWidget {
     this.dataSource,
     this.dataSourceItemBuilder,
     this.dataSourceKey,
-    this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.onDrag,
+    this.keyboardDismissBehavior = .onDrag,
     this.scrollDirection,
     this.width,
     this.height,
@@ -85,7 +85,7 @@ class DecoratedList<T> extends StatelessWidget {
     required this.separatorBuilder,
     this.physics,
     this.reverse = false,
-    this.clipBehavior = Clip.hardEdge,
+    this.clipBehavior = .hardEdge,
     @Deprecated('使用decoratedScrollableConfig代替, 已无作用') this.topDivider,
     this.decoratedScrollableConfig,
     this.margin,
@@ -156,8 +156,8 @@ class DecoratedList<T> extends StatelessWidget {
        physics = null,
        reverse = false,
        decoration = null,
-       clipBehavior = Clip.none,
-       keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.onDrag,
+       clipBehavior = .none,
+       keyboardDismissBehavior = .onDrag,
        topDivider = null,
        decoratedScrollableConfig = null,
        margin = null,
@@ -322,7 +322,7 @@ class DecoratedList<T> extends StatelessWidget {
         shrinkWrap: shrinkWrap,
         physics: physics,
         reverse: reverse,
-        scrollDirection: scrollDirection ?? Axis.vertical,
+        scrollDirection: scrollDirection ?? .vertical,
         keyboardDismissBehavior: keyboardDismissBehavior,
         restorationId: restorationId,
         clipBehavior: clipBehavior,
@@ -348,7 +348,7 @@ class DecoratedList<T> extends StatelessWidget {
         ),
         physics: physics,
         reverse: reverse,
-        scrollDirection: scrollDirection ?? Axis.vertical,
+        scrollDirection: scrollDirection ?? .vertical,
         prototypeItem: prototypeItem,
         clipBehavior: clipBehavior,
         addAutomaticKeepAlives: addAutomaticKeepAlives,
@@ -382,7 +382,7 @@ class DecoratedList<T> extends StatelessWidget {
           reverse: reverse,
           controller: controller,
           clipBehavior: clipBehavior,
-          scrollDirection: scrollDirection ?? Axis.vertical,
+          scrollDirection: scrollDirection ?? .vertical,
           addAutomaticKeepAlives: addAutomaticKeepAlives,
           addRepaintBoundaries: addRepaintBoundaries,
           addSemanticIndexes: addSemanticIndexes,
@@ -398,7 +398,7 @@ class DecoratedList<T> extends StatelessWidget {
           physics: physics,
           keyboardDismissBehavior: keyboardDismissBehavior,
           reverse: reverse,
-          scrollDirection: scrollDirection ?? Axis.vertical,
+          scrollDirection: scrollDirection ?? .vertical,
           clipBehavior: clipBehavior,
           itemExtent: itemExtent,
           itemExtentBuilder: _itemExtentBuilderWithPlaceholder(
@@ -474,10 +474,10 @@ class _ImplicitAnimatedDataList<T> extends StatefulWidget {
     this.shrinkWrap = false,
     this.physics,
     this.reverse = false,
-    this.scrollDirection = Axis.vertical,
-    this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.onDrag,
+    this.scrollDirection = .vertical,
+    this.keyboardDismissBehavior = .onDrag,
     this.restorationId,
-    this.clipBehavior = Clip.hardEdge,
+    this.clipBehavior = .hardEdge,
     this.showPlaceholder = false,
     this.placeholder,
   });
@@ -596,11 +596,11 @@ class _ImplicitAnimatedDataListState<T>
         : widget.itemBuilder(context, entry.item as T, entry.index);
     if (entry.hasSeparator) {
       final separator = widget.separatorBuilder!(context, entry.index);
-      child = axis == Axis.horizontal
-          ? Row(mainAxisSize: MainAxisSize.min, children: [child, separator])
+      child = axis == .horizontal
+          ? Row(mainAxisSize: .min, children: [child, separator])
           : Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: .stretch,
+              mainAxisSize: .min,
               children: [child, separator],
             );
     }
@@ -617,9 +617,7 @@ class _ImplicitAnimatedDataListState<T>
 
   Axis _sliverAxis(BuildContext context) {
     final direction = Scrollable.maybeOf(context)?.position.axisDirection;
-    return direction == AxisDirection.left || direction == AxisDirection.right
-        ? Axis.horizontal
-        : Axis.vertical;
+    return direction == .left || direction == .right ? .horizontal : .vertical;
   }
 
   @override

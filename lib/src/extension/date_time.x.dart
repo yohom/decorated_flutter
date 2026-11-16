@@ -105,44 +105,44 @@ extension DateTimeX on DateTime {
   Zodiac get zodiac {
     int month = this.month;
     int day = this.day;
-    Zodiac zodiac = Zodiac.unknown;
+    Zodiac zodiac = .unknown;
 
     switch (month) {
       case DateTime.january:
-        zodiac = day < 21 ? Zodiac.capricorn : Zodiac.aquarius;
+        zodiac = day < 21 ? .capricorn : .aquarius;
         break;
       case DateTime.february:
-        zodiac = day < 20 ? Zodiac.aquarius : Zodiac.pisces;
+        zodiac = day < 20 ? .aquarius : .pisces;
         break;
       case DateTime.march:
-        zodiac = day < 21 ? Zodiac.pisces : Zodiac.aries;
+        zodiac = day < 21 ? .pisces : .aries;
         break;
       case DateTime.april:
-        zodiac = day < 21 ? Zodiac.aries : Zodiac.taurus;
+        zodiac = day < 21 ? .aries : .taurus;
         break;
       case DateTime.may:
-        zodiac = day < 22 ? Zodiac.taurus : Zodiac.gemini;
+        zodiac = day < 22 ? .taurus : .gemini;
         break;
       case DateTime.june:
-        zodiac = day < 22 ? Zodiac.gemini : Zodiac.cancer;
+        zodiac = day < 22 ? .gemini : .cancer;
         break;
       case DateTime.july:
-        zodiac = day < 23 ? Zodiac.cancer : Zodiac.leo;
+        zodiac = day < 23 ? .cancer : .leo;
         break;
       case DateTime.august:
-        zodiac = day < 24 ? Zodiac.leo : Zodiac.virgo;
+        zodiac = day < 24 ? .leo : .virgo;
         break;
       case DateTime.september:
-        zodiac = day < 24 ? Zodiac.virgo : Zodiac.libra;
+        zodiac = day < 24 ? .virgo : .libra;
         break;
       case DateTime.october:
-        zodiac = day < 24 ? Zodiac.libra : Zodiac.scorpio;
+        zodiac = day < 24 ? .libra : .scorpio;
         break;
       case DateTime.november:
-        zodiac = day < 23 ? Zodiac.scorpio : Zodiac.sagittarius;
+        zodiac = day < 23 ? .scorpio : .sagittarius;
         break;
       case DateTime.december:
-        zodiac = day < 22 ? Zodiac.sagittarius : Zodiac.capricorn;
+        zodiac = day < 22 ? .sagittarius : .capricorn;
         break;
     }
 

@@ -128,10 +128,10 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
       // 自动对暗黑模式做切换
       SystemUiOverlayStyle style = systemUiOverlayStyle!;
       if (context.isDarkMode) {
-        if (style == SystemUiOverlayStyle.dark) {
-          style = SystemUiOverlayStyle.light;
-        } else if (style == SystemUiOverlayStyle.light) {
-          style = SystemUiOverlayStyle.dark;
+        if (style == .dark) {
+          style = .light;
+        } else if (style == .light) {
+          style = .dark;
         }
       }
       result = AnnotatedRegion<SystemUiOverlayStyle>(
@@ -159,7 +159,7 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
   ) {
     animation.addStatusListener((status) {
       // 如果是懒加载, 那么动画结束时开始初始化
-      if (status == AnimationStatus.completed &&
+      if (status == .completed &&
           onLateinit != null &&
           bloc != null &&
           !_inited) {
@@ -306,7 +306,7 @@ class SpringButton extends StatefulWidget {
     this.uiChild, {
     super.key,
     this.useCache = true,
-    this.alignment = Alignment.center,
+    this.alignment = .center,
     this.scaleCoefficient = 0.75,
     this.duration = 1000,
     this.onTapDown,
@@ -521,7 +521,7 @@ class SpringButtonState extends State<SpringButton>
 
   Widget wrapper() {
     return GestureDetector(
-      behavior: HitTestBehavior.translucent,
+      behavior: .translucent,
       onTapDown: !hasTap
           ? null
           : (details) {
@@ -787,7 +787,7 @@ class SpringButtonState extends State<SpringButton>
 
   @override
   Widget build(BuildContext context) {
-    if (springButtonType == SpringButtonType.withOpacity) {
+    if (springButtonType == .withOpacity) {
       return AnimatedBuilder(
         animation: animation,
         child: useCache ? uiChild : null,

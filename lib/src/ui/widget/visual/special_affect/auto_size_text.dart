@@ -402,8 +402,8 @@ class _AutoSizeTextState extends State<AutoSizeText> {
 
       final wordWrapTextPainter = TextPainter(
         text: TextSpan(style: text.style, text: words.join('\n')),
-        textAlign: widget.textAlign ?? TextAlign.left,
-        textDirection: widget.textDirection ?? TextDirection.ltr,
+        textAlign: widget.textAlign ?? .left,
+        textDirection: widget.textDirection ?? .ltr,
         textScaleFactor: scale,
         maxLines: words.length,
         locale: widget.locale,
@@ -420,8 +420,8 @@ class _AutoSizeTextState extends State<AutoSizeText> {
 
     final textPainter = TextPainter(
       text: text,
-      textAlign: widget.textAlign ?? TextAlign.left,
-      textDirection: widget.textDirection ?? TextDirection.ltr,
+      textAlign: widget.textAlign ?? .left,
+      textDirection: widget.textDirection ?? .ltr,
       textScaleFactor: scale,
       maxLines: maxLines,
       locale: widget.locale,

@@ -110,8 +110,8 @@ class _CityPickerDialogState extends State<_CityPickerDialog> {
       color: context.backgroundColor,
       children: [
         DecoratedRow(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          padding: const .symmetric(horizontal: 8),
+          mainAxisAlignment: .spaceBetween,
           children: <Widget>[
             TextButton(
               onPressed: () => context.rootNavigator.pop(),
@@ -191,11 +191,11 @@ class _CityPickerDialogState extends State<_CityPickerDialog> {
           for (final item in data)
             Center(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
+                padding: const .symmetric(horizontal: 4),
                 child: Text(
                   item.name,
                   maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                  overflow: .ellipsis,
                   style: context.textTheme.bodyMedium,
                 ),
               ),

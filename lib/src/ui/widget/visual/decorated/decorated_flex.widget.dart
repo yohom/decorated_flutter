@@ -18,9 +18,9 @@ class DecoratedRow extends DecoratedFlex {
     super.width,
     super.height,
     super.alignment,
-    super.mainAxisAlignment = MainAxisAlignment.start,
-    super.mainAxisSize = MainAxisSize.max,
-    super.crossAxisAlignment = CrossAxisAlignment.center,
+    super.mainAxisAlignment = .start,
+    super.mainAxisSize = .max,
+    super.crossAxisAlignment = .center,
     super.textBaseline,
     super.onPressed,
     super.pressStyle,
@@ -69,8 +69,8 @@ class DecoratedRow extends DecoratedFlex {
     super.center,
     super.sliver = false,
     super.verticalDirection,
-    super.clipBehavior = Clip.none,
-    super.scrollableClipBehavior = Clip.hardEdge,
+    super.clipBehavior = .none,
+    super.scrollableClipBehavior = .hardEdge,
     super.iconColor,
     super.systemOverlayStyle,
     super.ignorePointer,
@@ -86,7 +86,7 @@ class DecoratedRow extends DecoratedFlex {
     @Deprecated('使用decoratedScrollableConfig代替, 已无作用') super.topDividerConfig,
     super.decoratedScrollableConfig,
     super.children = const [],
-  }) : super(direction: Axis.horizontal);
+  }) : super(direction: .horizontal);
 }
 
 class DecoratedColumn extends DecoratedFlex {
@@ -103,9 +103,9 @@ class DecoratedColumn extends DecoratedFlex {
     super.width,
     super.height,
     super.alignment,
-    super.mainAxisAlignment = MainAxisAlignment.start,
-    super.mainAxisSize = MainAxisSize.max,
-    super.crossAxisAlignment = CrossAxisAlignment.center,
+    super.mainAxisAlignment = .start,
+    super.mainAxisSize = .max,
+    super.crossAxisAlignment = .center,
     super.textBaseline,
     super.onPressed,
     super.pressStyle,
@@ -155,8 +155,8 @@ class DecoratedColumn extends DecoratedFlex {
     super.center,
     super.sliver = false,
     super.verticalDirection,
-    super.clipBehavior = Clip.none,
-    super.scrollableClipBehavior = Clip.hardEdge,
+    super.clipBehavior = .none,
+    super.scrollableClipBehavior = .hardEdge,
     super.iconColor,
     super.systemOverlayStyle,
     super.ignorePointer,
@@ -172,7 +172,7 @@ class DecoratedColumn extends DecoratedFlex {
     @Deprecated('使用decoratedScrollableConfig代替, 已无作用') super.topDividerConfig,
     super.decoratedScrollableConfig,
     super.children = const [],
-  }) : super(direction: Axis.vertical);
+  }) : super(direction: .vertical);
 }
 
 class DecoratedFlex extends StatelessWidget {
@@ -190,12 +190,12 @@ class DecoratedFlex extends StatelessWidget {
     this.height,
     required this.direction,
     this.alignment,
-    this.mainAxisAlignment = MainAxisAlignment.start,
-    this.mainAxisSize = MainAxisSize.max,
-    this.crossAxisAlignment = CrossAxisAlignment.center,
+    this.mainAxisAlignment = .start,
+    this.mainAxisSize = .max,
+    this.crossAxisAlignment = .center,
     this.textBaseline,
     this.onPressed,
-    this.pressStyle = PressStyle.none,
+    this.pressStyle = .none,
     this.onLongPressed,
     this.onDoubleTap,
     this.onSecondaryTap,
@@ -224,7 +224,7 @@ class DecoratedFlex extends StatelessWidget {
     this.scrollController,
     this.scrollPhysics,
     this.scrollPadding,
-    this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
+    this.keyboardDismissBehavior = .manual,
     this.widthFactor,
     this.heightFactor,
     this.material = false,
@@ -241,8 +241,8 @@ class DecoratedFlex extends StatelessWidget {
     this.center,
     this.sliver = false,
     this.verticalDirection,
-    this.clipBehavior = Clip.none,
-    this.scrollableClipBehavior = Clip.hardEdge,
+    this.clipBehavior = .none,
+    this.scrollableClipBehavior = .hardEdge,
     this.iconColor,
     this.systemOverlayStyle,
     this.ignorePointer,
@@ -461,10 +461,10 @@ class DecoratedFlex extends StatelessWidget {
     // 如果有reverse, 则对start和end的场景做一下翻转
     MainAxisAlignment _mainAxisAlignment = mainAxisAlignment;
     if (reverse == true) {
-      if (_mainAxisAlignment == MainAxisAlignment.start) {
-        _mainAxisAlignment = MainAxisAlignment.end;
-      } else if (_mainAxisAlignment == MainAxisAlignment.end) {
-        _mainAxisAlignment = MainAxisAlignment.start;
+      if (_mainAxisAlignment == .start) {
+        _mainAxisAlignment = .end;
+      } else if (_mainAxisAlignment == .end) {
+        _mainAxisAlignment = .start;
       }
     }
     Widget result = Flex(
@@ -472,12 +472,10 @@ class DecoratedFlex extends StatelessWidget {
       mainAxisAlignment: _mainAxisAlignment,
       mainAxisSize: mainAxisSize,
       crossAxisAlignment: crossAxisAlignment,
-      textBaseline:
-          (textBaseline == null &&
-              crossAxisAlignment == CrossAxisAlignment.baseline)
-          ? TextBaseline.alphabetic
+      textBaseline: (textBaseline == null && crossAxisAlignment == .baseline)
+          ? .alphabetic
           : textBaseline,
-      verticalDirection: verticalDirection ?? VerticalDirection.down,
+      verticalDirection: verticalDirection ?? .down,
       spacing: divider == null ? (itemSpacing ?? spacing) : 0,
       children: _children,
     );
@@ -496,7 +494,7 @@ class DecoratedFlex extends StatelessWidget {
         bottom: safeArea?.bottom ?? true,
         left: safeArea?.left ?? true,
         right: safeArea?.right ?? true,
-        minimum: safeArea?.minimum ?? EdgeInsets.zero,
+        minimum: safeArea?.minimum ?? .zero,
         child: result,
       );
     }
@@ -520,7 +518,7 @@ class DecoratedFlex extends StatelessWidget {
         constraints != null ||
         transform != null ||
         alignment != null) {
-      if (animationDuration != null && animationDuration != Duration.zero) {
+      if (animationDuration != null && animationDuration != .zero) {
         result = AnimatedContainer(
           duration: animationDuration!,
           curve: animationCurve ?? Curves.linear,
@@ -577,7 +575,7 @@ class DecoratedFlex extends StatelessWidget {
         return null;
       }
     }();
-    if ((onPressed != null && pressStyle == PressStyle.none) ||
+    if ((onPressed != null && pressStyle == .none) ||
         onLongPressed != null ||
         onVerticalDragEnd != null ||
         onHorizontalDragEnd != null ||
@@ -585,8 +583,8 @@ class DecoratedFlex extends StatelessWidget {
         onSecondaryTapDown != null ||
         onDoubleTap != null) {
       result = GestureDetector(
-        behavior: behavior ?? HitTestBehavior.opaque,
-        onTap: onPressed == null || pressStyle == PressStyle.spring
+        behavior: behavior ?? .opaque,
+        onTap: onPressed == null || pressStyle == .spring
             ? null
             : () => onPressed!(context),
         onLongPress: onLongPressed == null
@@ -604,7 +602,7 @@ class DecoratedFlex extends StatelessWidget {
       );
     }
 
-    if (pressStyle == PressStyle.spring && onPressed != null) {
+    if (pressStyle == .spring && onPressed != null) {
       result = SpringContainer(onPressed: onPressed!, child: result);
     }
 
@@ -660,7 +658,7 @@ class DecoratedFlex extends StatelessWidget {
         bottom: safeArea?.bottom ?? true,
         left: safeArea?.left ?? true,
         right: safeArea?.right ?? true,
-        minimum: safeArea?.minimum ?? EdgeInsets.zero,
+        minimum: safeArea?.minimum ?? .zero,
         child: result,
       );
     }
@@ -765,11 +763,11 @@ class DecoratedFlex extends StatelessWidget {
         indexes.add(i);
       }
 
-      if (direction == Axis.horizontal) {
+      if (direction == .horizontal) {
         for (var index in indexes) {
           result.insert(index, divider);
         }
-      } else if (direction == Axis.vertical) {
+      } else if (direction == .vertical) {
         for (var index in indexes) {
           result.insert(index, divider);
         }

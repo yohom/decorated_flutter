@@ -18,7 +18,7 @@ class SliverStack extends MultiChildRenderObjectWidget {
     super.key,
     required super.children,
     this.textDirection,
-    this.positionedAlignment = Alignment.center,
+    this.positionedAlignment = .center,
     this.insetOnOverlap = false,
   });
 
@@ -168,11 +168,11 @@ class SliverPositioned extends ParentDataWidget<SliverStackParentData> {
     double? left;
     double? right;
     switch (textDirection) {
-      case TextDirection.rtl:
+      case .rtl:
         left = end;
         right = start;
         break;
-      case TextDirection.ltr:
+      case .ltr:
         left = start;
         right = end;
         break;
@@ -336,7 +336,7 @@ class SliverStackParentData extends ParentData
   double? height;
 
   /// Get or set the current values in terms of a RelativeRect object.
-  RelativeRect get rect => RelativeRect.fromLTRB(left!, top!, right!, bottom!);
+  RelativeRect get rect => .fromLTRB(left!, top!, right!, bottom!);
   set rect(RelativeRect value) {
     top = value.top;
     right = value.right;
@@ -344,7 +344,7 @@ class SliverStackParentData extends ParentData
     left = value.left;
   }
 
-  Offset paintOffset = Offset.zero;
+  Offset paintOffset = .zero;
 
   double mainAxisPosition = 0;
   double crossAxisPosition = 0;
@@ -533,7 +533,7 @@ class RenderSliverStack extends RenderSliver
     for (final child in _children.whereType<RenderSliver>()) {
       final parentData = child.parentData as SliverStackParentData;
       switch (axisDirection) {
-        case AxisDirection.up:
+        case .up:
           parentData.paintOffset = Offset(
             0,
             geometry!.paintExtent -
@@ -541,13 +541,13 @@ class RenderSliverStack extends RenderSliver
                 child.geometry!.paintExtent,
           );
           break;
-        case AxisDirection.right:
+        case .right:
           parentData.paintOffset = Offset(parentData.mainAxisPosition, 0);
           break;
-        case AxisDirection.down:
+        case .down:
           parentData.paintOffset = Offset(0, parentData.mainAxisPosition);
           break;
-        case AxisDirection.left:
+        case .left:
           parentData.paintOffset = Offset(
             geometry!.paintExtent -
                 parentData.mainAxisPosition -
@@ -558,7 +558,7 @@ class RenderSliverStack extends RenderSliver
       }
     }
 
-    final size = constraints.axis == Axis.vertical
+    final size = constraints.axis == .vertical
         ? Size(
             constraints.crossAxisExtent,
             max(
@@ -590,7 +590,7 @@ class RenderSliverStack extends RenderSliver
       child.parentData = parentData;
       final paintOffset = constraints.scrollOffset - overlapAndScroll;
       switch (axisDirection) {
-        case AxisDirection.up:
+        case .up:
           parentData.paintOffset = Offset(
             parentData.paintOffset.dx,
             -geometry!.maxPaintExtent +
@@ -606,19 +606,19 @@ class RenderSliverStack extends RenderSliver
               child.size.height;
           parentData.crossAxisPosition = parentData.paintOffset.dx;
           break;
-        case AxisDirection.right:
+        case .right:
           parentData.paintOffset =
               parentData.paintOffset - Offset(paintOffset, 0);
           parentData.mainAxisPosition = parentData.paintOffset.dx;
           parentData.crossAxisPosition = parentData.paintOffset.dy;
           break;
-        case AxisDirection.down:
+        case .down:
           parentData.paintOffset =
               parentData.paintOffset - Offset(0, paintOffset);
           parentData.mainAxisPosition = parentData.paintOffset.dy;
           parentData.crossAxisPosition = parentData.paintOffset.dx;
           break;
-        case AxisDirection.left:
+        case .left:
           parentData.paintOffset = Offset(
             -geometry!.maxPaintExtent +
                 min(

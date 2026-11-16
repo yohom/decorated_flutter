@@ -101,7 +101,7 @@ class RetryOptions {
   Duration delay(int attempt) {
     assert(attempt >= 0, 'attempt cannot be negative');
     if (attempt <= 0) {
-      return Duration.zero;
+      return .zero;
     }
     final rf = (randomizationFactor * (_rand.nextDouble() * 2 - 1) + 1);
     final exp = math.min(attempt, 31); // prevent overflows.

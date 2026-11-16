@@ -71,12 +71,12 @@ class ModalLoading extends StatelessWidget {
       color: Colors.black54,
       child: Center(
         child: DecoratedColumn(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          padding: const EdgeInsets.all(15),
+          mainAxisAlignment: .center,
+          mainAxisSize: .min,
+          padding: const .all(15),
           decoration: const BoxDecoration(
             color: Colors.black54,
-            borderRadius: BorderRadius.all(Radius.circular(8)),
+            borderRadius: .all(.circular(8)),
           ),
           children: <Widget>[
             CircularProgressIndicator(
@@ -89,8 +89,8 @@ class ModalLoading extends StatelessWidget {
             if (isNotEmpty(text))
               DecoratedText(
                 text,
-                margin: const EdgeInsets.only(top: 10),
-                textAlign: TextAlign.center,
+                margin: const .only(top: 10),
+                textAlign: .center,
                 style: const TextStyle(color: Colors.white),
               ),
           ],

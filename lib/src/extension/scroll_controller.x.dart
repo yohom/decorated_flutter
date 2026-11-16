@@ -71,12 +71,12 @@ extension ScrollControllerX on ScrollController {
     final renderObject = context.findRenderObject();
     if (renderObject is! RenderBox) return null;
 
-    final globalOffset = renderObject.localToGlobal(Offset.zero);
+    final globalOffset = renderObject.localToGlobal(.zero);
 
     final scrollableBox = position.context.storageContext.findRenderObject();
     if (scrollableBox is! RenderBox) return null;
 
-    final scrollableOffset = scrollableBox.localToGlobal(Offset.zero);
+    final scrollableOffset = scrollableBox.localToGlobal(.zero);
 
     // 计算最小偏移量：最近边缘的偏移量
     return Offset(
@@ -90,7 +90,7 @@ extension ScrollControllerX on ScrollController {
     final renderObject = context.findRenderObject();
     if (renderObject is! RenderBox) return null;
 
-    final globalOffset = renderObject.localToGlobal(Offset.zero);
+    final globalOffset = renderObject.localToGlobal(.zero);
     final size = renderObject.size;
 
     final scrollableBox = positions.firstOrNull?.context.storageContext
@@ -100,7 +100,7 @@ extension ScrollControllerX on ScrollController {
       return null;
     }
 
-    final scrollableOffset = scrollableBox.localToGlobal(Offset.zero);
+    final scrollableOffset = scrollableBox.localToGlobal(.zero);
 
     // 计算最大偏移量：最远边缘的偏移量
     final targetMaxOffsetX = globalOffset.dx + size.width;

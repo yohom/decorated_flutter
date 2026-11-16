@@ -10,12 +10,12 @@ void main() {
 
     await tester.pumpWidget(
       const Directionality(
-        textDirection: TextDirection.ltr,
+        textDirection: .ltr,
         child: CustomScrollView(
           slivers: [
             SliverClip(
               key: key,
-              borderRadius: BorderRadius.all(Radius.circular(12)),
+              borderRadius: .all(.circular(12)),
               child: SliverToBoxAdapter(child: SizedBox(height: 100)),
             ),
           ],
@@ -33,12 +33,12 @@ void main() {
 
     await tester.pumpWidget(
       const Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: .rtl,
         child: CustomScrollView(
           slivers: [
             SliverClip(
               key: key,
-              clipBehavior: Clip.none,
+              clipBehavior: .none,
               child: SliverToBoxAdapter(child: SizedBox(height: 100)),
             ),
           ],
@@ -57,13 +57,13 @@ void main() {
 
     await tester.pumpWidget(
       const Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: .rtl,
         child: CustomScrollView(
           slivers: [
             SliverClip(
               key: key,
               borderRadius: BorderRadiusDirectional.only(
-                topStart: Radius.circular(8),
+                topStart: .circular(8),
               ),
               child: SliverToBoxAdapter(child: SizedBox(height: 100)),
             ),
@@ -75,7 +75,7 @@ void main() {
     final dynamic renderObject = tester.renderObject(find.byKey(key));
     expect(
       renderObject.borderRadius.resolve(renderObject.textDirection),
-      const BorderRadius.only(topRight: Radius.circular(8)),
+      const BorderRadius.only(topRight: .circular(8)),
     );
   });
 }

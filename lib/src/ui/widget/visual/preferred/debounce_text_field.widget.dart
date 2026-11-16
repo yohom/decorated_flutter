@@ -15,9 +15,9 @@ class DebouncedTextFormField extends StatefulWidget {
     this.controller,
     this.focusNode,
     this.decoration = const InputDecoration(),
-    TextInputType keyboardType = TextInputType.text,
+    TextInputType keyboardType = .text,
     this.style,
-    this.textAlign = TextAlign.start,
+    this.textAlign = .start,
     this.autofocus = false,
     this.obscureText = false,
     this.autocorrect = true,
@@ -32,7 +32,7 @@ class DebouncedTextFormField extends StatefulWidget {
     this.strutStyle,
   }) : assert(maxLines > 0),
        assert(maxLength == null || maxLength > 0),
-       keyboardType = maxLines == 1 ? keyboardType : TextInputType.multiline;
+       keyboardType = maxLines == 1 ? keyboardType : .multiline;
 
   /// change触发方法
   final ValueChanged<String>? onChanged;

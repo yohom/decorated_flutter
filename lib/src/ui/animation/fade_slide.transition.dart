@@ -45,7 +45,7 @@ class FadeSlideTransition extends StatefulWidget {
     this.fadeCurve = Curves.easeOut,
     this.slideCurve = Curves.easeOut,
     this.slideReverseCurve = Curves.easeIn,
-    this.direction = SlideDirection.vertical,
+    this.direction = .vertical,
     this.immediately = true,
     required this.builder,
   });
@@ -92,10 +92,10 @@ class _FadeInSlideTransitionState extends State<FadeSlideTransition>
         builder: (context, child) {
           return Transform.translate(
             offset: Offset(
-              widget.direction == SlideDirection.horizontal
+              widget.direction == .horizontal
                   ? -_slideAnimation.value * widget.originOffset.dx
                   : 0.0,
-              widget.direction == SlideDirection.vertical
+              widget.direction == .vertical
                   ? -_slideAnimation.value * widget.originOffset.dy
                   : 0.0,
             ),

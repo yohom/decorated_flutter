@@ -74,7 +74,7 @@ extension FutureX<T> on Future<T> {
       final currentEntry = entry;
       try {
         if (currentController != null &&
-            currentController.status != AnimationStatus.dismissed) {
+            currentController.status != .dismissed) {
           await currentController.reverse();
         }
       } catch (e, s) {
