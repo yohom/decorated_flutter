@@ -194,7 +194,7 @@ Future<void> runDecoratedApp({
         systemNavigationBarContrastEnforced != null ||
         systemStatusBarContrastEnforced != null) {
       SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle.dark.copyWith(
+        .dark.copyWith(
           statusBarColor: statusBarColor,
           statusBarBrightness: statusBarBrightness,
           statusBarIconBrightness: statusBarIconBrightness,
@@ -409,12 +409,7 @@ Stream<(T1, T2, T3)> combine3<T1, T2, T3>(
   Stream<T2> streamB,
   Stream<T3> streamC,
 ) {
-  return Rx.combineLatest3(
-    streamA,
-    streamB,
-    streamC,
-    (a, b, c) => (a, b, c),
-  );
+  return Rx.combineLatest3(streamA, streamB, streamC, (a, b, c) => (a, b, c));
 }
 
 Stream<(T1, T2, T3, T4)> combine4<T1, T2, T3, T4>(
@@ -442,7 +437,7 @@ int computeLineCount(String text, TextStyle style, double maxWidth) {
 
   final textPainter = TextPainter(
     text: TextSpan(text: text, style: style),
-    textDirection: TextDirection.ltr,
+    textDirection: .ltr,
   )..layout(minWidth: 0, maxWidth: maxWidth);
   return _countCache[key] = textPainter.computeLineMetrics().length;
 }
@@ -455,7 +450,7 @@ double computeTextHeight(String text, TextStyle style, double maxWidth) {
 
   final textPainter = TextPainter(
     text: TextSpan(text: text, style: style),
-    textDirection: TextDirection.ltr,
+    textDirection: .ltr,
   )..layout(minWidth: 0, maxWidth: maxWidth);
   return _heightCache[key] = textPainter.height;
 }

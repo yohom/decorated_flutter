@@ -29,9 +29,7 @@ const SPACE_1 = SizedBox(width: 1, height: 1);
 const SPACE_1_HORIZONTAL = SizedBox(width: 1, height: 0);
 const SPACE_1_VERTICAL = SizedBox(width: 0, height: 1);
 
-const SLIVER_SPACE_1 = SliverToBoxAdapter(
-  child: SizedBox(width: 1, height: 1),
-);
+const SLIVER_SPACE_1 = SliverToBoxAdapter(child: SizedBox(width: 1, height: 1));
 const SLIVER_SPACE_1_HORIZONTAL = SliverToBoxAdapter(
   child: SizedBox(width: 1, height: 0),
 );
@@ -43,9 +41,7 @@ const SPACE_2 = SizedBox(width: 2, height: 2);
 const SPACE_2_HORIZONTAL = SizedBox(width: 2, height: 0);
 const SPACE_2_VERTICAL = SizedBox(width: 0, height: 2);
 
-const SLIVER_SPACE_2 = SliverToBoxAdapter(
-  child: SizedBox(width: 2, height: 2),
-);
+const SLIVER_SPACE_2 = SliverToBoxAdapter(child: SizedBox(width: 2, height: 2));
 const SLIVER_SPACE_2_HORIZONTAL = SliverToBoxAdapter(
   child: SizedBox(width: 2, height: 0),
 );
@@ -57,9 +53,7 @@ const SPACE_4 = SizedBox(width: 4, height: 4);
 const SPACE_4_HORIZONTAL = SizedBox(width: 4, height: 0);
 const SPACE_4_VERTICAL = SizedBox(width: 0, height: 4);
 
-const SLIVER_SPACE_4 = SliverToBoxAdapter(
-  child: SizedBox(width: 4, height: 4),
-);
+const SLIVER_SPACE_4 = SliverToBoxAdapter(child: SizedBox(width: 4, height: 4));
 const SLIVER_SPACE_4_HORIZONTAL = SliverToBoxAdapter(
   child: SizedBox(width: 4, height: 0),
 );
@@ -71,9 +65,7 @@ const SPACE_6 = SizedBox(width: 6, height: 6);
 const SPACE_6_HORIZONTAL = SizedBox(width: 6, height: 0);
 const SPACE_6_VERTICAL = SizedBox(width: 0, height: 6);
 
-const SLIVER_SPACE_6 = SliverToBoxAdapter(
-  child: SizedBox(width: 6, height: 6),
-);
+const SLIVER_SPACE_6 = SliverToBoxAdapter(child: SizedBox(width: 6, height: 6));
 const SLIVER_SPACE_6_HORIZONTAL = SliverToBoxAdapter(
   child: SizedBox(width: 6, height: 0),
 );
@@ -85,9 +77,7 @@ const SPACE_8 = SizedBox(width: 8, height: 8);
 const SPACE_8_HORIZONTAL = SizedBox(width: 8, height: 0);
 const SPACE_8_VERTICAL = SizedBox(width: 0, height: 8);
 
-const SLIVER_SPACE_8 = SliverToBoxAdapter(
-  child: SizedBox(width: 8, height: 8),
-);
+const SLIVER_SPACE_8 = SliverToBoxAdapter(child: SizedBox(width: 8, height: 8));
 const SLIVER_SPACE_8_HORIZONTAL = SliverToBoxAdapter(
   child: SizedBox(width: 8, height: 0),
 );

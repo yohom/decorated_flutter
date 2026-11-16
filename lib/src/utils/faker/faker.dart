@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'data.dart' as data;
 
 final _random = Random();

@@ -26,12 +26,12 @@ class _AutoCloseKeyboardState extends State<AutoCloseKeyboard> {
       actions: <Type, Action<Intent>>{
         EditableTextTapOutsideIntent:
             CallbackAction<EditableTextTapOutsideIntent>(
-          onInvoke: _handlePointerDown,
-        ),
+              onInvoke: _handlePointerDown,
+            ),
         EditableTextTapUpOutsideIntent:
             CallbackAction<EditableTextTapUpOutsideIntent>(
-          onInvoke: _handlePointerUp,
-        ),
+              onInvoke: _handlePointerUp,
+            ),
       },
       child: widget.child,
     );

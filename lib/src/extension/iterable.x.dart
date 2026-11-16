@@ -62,7 +62,7 @@ extension IterableX<T> on Iterable<T> {
 
   Iterable<(T?, T, T?)> get tripled {
     return [
-      for (int i = 0; i < length; i++) (this[i - 1], elementAt(i), this[i + 1])
+      for (int i = 0; i < length; i++) (this[i - 1], elementAt(i), this[i + 1]),
     ];
   }
 

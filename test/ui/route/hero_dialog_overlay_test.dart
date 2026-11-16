@@ -24,8 +24,9 @@ void main() {
                         overlay = showHeroOverlay<void>(
                           context,
                           transitionDuration: const Duration(milliseconds: 100),
-                          reverseTransitionDuration:
-                              const Duration(milliseconds: 100),
+                          reverseTransitionDuration: const Duration(
+                            milliseconds: 100,
+                          ),
                           builder: (_) => const OverlayHero(
                             tag: 'order',
                             child: SizedBox(

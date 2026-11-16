@@ -38,7 +38,7 @@ extension BuildContextX on BuildContext {
   }
 
   bool get isDarkMode {
-    return Theme.of(this).brightness == Brightness.dark;
+    return Theme.of(this).brightness == .dark;
   }
 
   void clearFocus() {
@@ -56,7 +56,7 @@ extension BuildContextX on BuildContext {
   /// BuildContext对应的全局坐标
   Offset get globalPosition {
     final renderBox = findRenderObject() as RenderBox;
-    return renderBox.localToGlobal(Offset.zero);
+    return renderBox.localToGlobal(.zero);
   }
 
   FormState get form {
@@ -109,11 +109,11 @@ extension BuildContextX on BuildContext {
   }
 
   bool get isPortrait {
-    return MediaQuery.orientationOf(this) == Orientation.portrait;
+    return MediaQuery.orientationOf(this) == .portrait;
   }
 
   bool get isLandscape {
-    return MediaQuery.orientationOf(this) == Orientation.landscape;
+    return MediaQuery.orientationOf(this) == .landscape;
   }
 
   TextTheme get textTheme {
@@ -156,14 +156,14 @@ extension BuildContextX on BuildContext {
   /// 获取相对矩形
   ///
   /// offset还不是很好用, 参考的PopupMenuButton, 但是效果不好
-  RelativeRect relativeRect([Offset offset = Offset.zero]) {
+  RelativeRect relativeRect([Offset offset = .zero]) {
     final self = findRenderObject()! as RenderBox;
     final overlay = navigator.overlay!.context.findRenderObject()! as RenderBox;
-    return RelativeRect.fromRect(
-      Rect.fromPoints(
+    return .fromRect(
+      .fromPoints(
         self.localToGlobal(offset, ancestor: overlay),
         self.localToGlobal(
-          self.size.bottomRight(Offset.zero) + offset,
+          self.size.bottomRight(.zero) + offset,
           ancestor: overlay,
         ),
       ),

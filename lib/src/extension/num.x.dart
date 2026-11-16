@@ -5,7 +5,7 @@ import '../model/model.export.dart';
 
 extension NumX on num {
   BorderRadius get radius {
-    return BorderRadius.circular(toDouble());
+    return .circular(toDouble());
   }
 
   bool isBetween(Range<num> range, {bool inclusive = true}) {

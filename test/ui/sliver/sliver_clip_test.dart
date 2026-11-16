@@ -3,21 +3,20 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('SliverClip stores and updates rounded clip configuration',
-      (tester) async {
+  testWidgets('SliverClip stores and updates rounded clip configuration', (
+    tester,
+  ) async {
     const key = ValueKey('sliver-clip');
 
     await tester.pumpWidget(
       const Directionality(
-        textDirection: TextDirection.ltr,
+        textDirection: .ltr,
         child: CustomScrollView(
           slivers: [
             SliverClip(
               key: key,
-              borderRadius: BorderRadius.all(Radius.circular(12)),
-              child: SliverToBoxAdapter(
-                child: SizedBox(height: 100),
-              ),
+              borderRadius: .all(.circular(12)),
+              child: SliverToBoxAdapter(child: SizedBox(height: 100)),
             ),
           ],
         ),
@@ -34,15 +33,13 @@ void main() {
 
     await tester.pumpWidget(
       const Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: .rtl,
         child: CustomScrollView(
           slivers: [
             SliverClip(
               key: key,
-              clipBehavior: Clip.none,
-              child: SliverToBoxAdapter(
-                child: SizedBox(height: 100),
-              ),
+              clipBehavior: .none,
+              child: SliverToBoxAdapter(child: SizedBox(height: 100)),
             ),
           ],
         ),
@@ -60,17 +57,15 @@ void main() {
 
     await tester.pumpWidget(
       const Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: .rtl,
         child: CustomScrollView(
           slivers: [
             SliverClip(
               key: key,
               borderRadius: BorderRadiusDirectional.only(
-                topStart: Radius.circular(8),
+                topStart: .circular(8),
               ),
-              child: SliverToBoxAdapter(
-                child: SizedBox(height: 100),
-              ),
+              child: SliverToBoxAdapter(child: SizedBox(height: 100)),
             ),
           ],
         ),
@@ -80,7 +75,7 @@ void main() {
     final dynamic renderObject = tester.renderObject(find.byKey(key));
     expect(
       renderObject.borderRadius.resolve(renderObject.textDirection),
-      const BorderRadius.only(topRight: Radius.circular(8)),
+      const BorderRadius.only(topRight: .circular(8)),
     );
   });
 }

@@ -57,16 +57,7 @@ void main() {
         millisecond: 1,
         microsecond: 1,
       ),
-      DateTime(
-        2022,
-        11,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-      ),
+      DateTime(2022, 11, 1, 1, 1, 1, 1, 1),
     );
   });
 
@@ -83,10 +74,7 @@ void main() {
   });
 
   test('一天内显示小时', () {
-    expect(
-      DateTime.now().subtract(const Duration(hours: 3)).timeAgo,
-      '3小时前',
-    );
+    expect(DateTime.now().subtract(const Duration(hours: 3)).timeAgo, '3小时前');
   });
 
   test('昨天显示昨天和时间', () {

@@ -5,15 +5,15 @@ class DecoratedWrap extends StatelessWidget {
     super.key,
     this.width,
     this.height,
-    this.direction = Axis.horizontal,
-    this.alignment = WrapAlignment.start,
-    this.runAlignment = WrapAlignment.start,
+    this.direction = .horizontal,
+    this.alignment = .start,
+    this.runAlignment = .start,
     this.spacing = 0.0,
     this.runSpacing = 0.0,
-    this.crossAxisAlignment = WrapCrossAlignment.start,
+    this.crossAxisAlignment = .start,
     this.textDirection,
-    this.verticalDirection = VerticalDirection.down,
-    this.clipBehavior = Clip.none,
+    this.verticalDirection = .down,
+    this.clipBehavior = .none,
     this.padding,
     this.margin,
     this.expanded,
@@ -123,10 +123,7 @@ class DecoratedWrap extends StatelessWidget {
     }
 
     if (textStyle != null) {
-      result = DefaultTextStyle(
-        style: textStyle!,
-        child: result,
-      );
+      result = DefaultTextStyle(style: textStyle!, child: result);
     }
 
     if (expanded == true) {

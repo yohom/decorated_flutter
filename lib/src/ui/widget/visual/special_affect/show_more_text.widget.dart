@@ -8,7 +8,7 @@ class ShowMoreText extends StatelessWidget {
     this.style,
     this.showMoreStyle,
     this.textAlign,
-    this.overflow = TextOverflow.ellipsis,
+    this.overflow = .ellipsis,
     this.popupMenuTheme = const PopupMenuThemeData(),
   });
 
@@ -33,11 +33,7 @@ class ShowMoreText extends StatelessWidget {
           textAlign: textAlign,
         ),
         itemBuilder: (context) {
-          return [
-            PopupMenuItem(
-              child: Text(text, style: showMoreStyle),
-            ),
-          ];
+          return [PopupMenuItem(child: Text(text, style: showMoreStyle))];
         },
       ),
     );

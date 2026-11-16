@@ -1,9 +1,7 @@
 import 'package:cupertino_ui/cupertino_ui.dart';
 
 class PrimaryScrollControllerConfig {
-  const PrimaryScrollControllerConfig({
-    this.controller,
-  });
+  const PrimaryScrollControllerConfig({this.controller});
 
   final ScrollController? controller;
 

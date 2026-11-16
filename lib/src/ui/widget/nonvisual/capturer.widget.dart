@@ -18,11 +18,9 @@ class Capturer extends StatefulWidget {
     double? pixelRatio,
   }) {
     if (_captureKey.currentState case _CapturerState state) {
-      return retry(() => state.capture(
-            widgetList,
-            delay: delay,
-            pixelRatio: pixelRatio,
-          ));
+      return retry(
+        () => state.capture(widgetList, delay: delay, pixelRatio: pixelRatio),
+      );
     } else {
       return Future.error(
         '未找到Capturer实例, 是否已经在DecoratedApp设置withCapturer为true? 或者在全局嵌套Capturer?',
@@ -68,14 +66,15 @@ class _CapturerState extends State<Capturer> {
 
     // 先挑出缓存放到结果列表, 没有缓存的位置为null
     final result = [for (final item in widgetList) cache[item.key]];
-    L.i('当前截图缓存情况: ${[
-      for (final (index, item) in result.indexed)
-        if (item == null) 'null' else '截图$index'
-    ].join(', ')}');
+    L.i(
+      '当前截图缓存情况: ${[for (final (index, item) in result.indexed)
+        if (item == null) 'null' else '截图$index'].join(', ')}',
+    );
 
     // 待截图的widget
-    final pendingWidgets =
-        widgetList.whereOrEmpty((it) => cache[it.key] == null);
+    final pendingWidgets = widgetList.whereOrEmpty(
+      (it) => cache[it.key] == null,
+    );
 
     // 已经没有待截图列表了, 直接返回结果
     if (pendingWidgets.isEmpty) {
@@ -87,9 +86,7 @@ class _CapturerState extends State<Capturer> {
 
     // 先在界面上绘制出要截图的内容
     setState(() {
-      _captureLayer = {
-        for (final item in pendingWidgets) GlobalKey(): item,
-      };
+      _captureLayer = {for (final item in pendingWidgets) GlobalKey(): item};
     });
 
     await Future.delayed(delay ?? const Duration(milliseconds: 64));

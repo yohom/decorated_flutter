@@ -8,7 +8,7 @@ class SliverClip extends SingleChildRenderObjectWidget {
     super.key,
     required Widget super.child,
     this.clipOverlap = true,
-    this.borderRadius = BorderRadius.zero,
+    this.borderRadius = .zero,
     this.clipBehavior,
   });
 
@@ -40,7 +40,9 @@ class SliverClip extends SingleChildRenderObjectWidget {
 
   @override
   void updateRenderObject(
-      BuildContext context, covariant _RenderSliverClip renderObject) {
+    BuildContext context,
+    covariant _RenderSliverClip renderObject,
+  ) {
     renderObject
       ..clipOverlap = clipOverlap
       ..borderRadius = borderRadius
@@ -55,10 +57,10 @@ class _RenderSliverClip extends RenderProxySliver {
     required BorderRadiusGeometry borderRadius,
     required Clip? clipBehavior,
     TextDirection? textDirection,
-  })  : _clipOverlap = clipOverlap,
-        _borderRadius = borderRadius,
-        _clipBehavior = clipBehavior,
-        _textDirection = textDirection;
+  }) : _clipOverlap = clipOverlap,
+       _borderRadius = borderRadius,
+       _clipBehavior = clipBehavior,
+       _textDirection = textDirection;
 
   bool _clipOverlap;
 
@@ -108,36 +110,38 @@ class _RenderSliverClip extends RenderProxySliver {
 
   Rect calculateClipRect() {
     final axisDirection = applyGrowthDirectionToAxisDirection(
-        constraints.axisDirection, constraints.growthDirection);
+      constraints.axisDirection,
+      constraints.growthDirection,
+    );
     Rect rect;
     final double overlapCorrection = (clipOverlap ? constraints.overlap : 0);
     switch (axisDirection) {
-      case AxisDirection.up:
-        rect = Rect.fromLTWH(
+      case .up:
+        rect = .fromLTWH(
           0,
           0,
           constraints.crossAxisExtent,
           geometry!.paintExtent - overlapCorrection,
         );
         break;
-      case AxisDirection.right:
-        rect = Rect.fromLTWH(
+      case .right:
+        rect = .fromLTWH(
           geometry!.paintOrigin + overlapCorrection,
           0,
           geometry!.paintExtent - overlapCorrection,
           constraints.crossAxisExtent,
         );
         break;
-      case AxisDirection.down:
-        rect = Rect.fromLTWH(
+      case .down:
+        rect = .fromLTWH(
           0,
           geometry!.paintOrigin + overlapCorrection,
           constraints.crossAxisExtent,
           geometry!.paintExtent - overlapCorrection,
         );
         break;
-      case AxisDirection.left:
-        rect = Rect.fromLTWH(
+      case .left:
+        rect = .fromLTWH(
           0,
           0,
           geometry!.paintExtent - overlapCorrection,
@@ -149,10 +153,12 @@ class _RenderSliverClip extends RenderProxySliver {
   }
 
   @override
-  bool hitTestChildren(SliverHitTestResult result,
-      {required double mainAxisPosition, required double crossAxisPosition}) {
-    if (_effectiveClipBehavior(borderRadius.resolve(textDirection)) ==
-        Clip.none) {
+  bool hitTestChildren(
+    SliverHitTestResult result, {
+    required double mainAxisPosition,
+    required double crossAxisPosition,
+  }) {
+    if (_effectiveClipBehavior(borderRadius.resolve(textDirection)) == .none) {
       return child != null &&
           child!.geometry!.hitTestExtent > 0 &&
           child!.hitTest(
@@ -170,7 +176,7 @@ class _RenderSliverClip extends RenderProxySliver {
         mainAxisPosition <
             (geometry!.paintOrigin +
                 overlapCorrection +
-                (constraints.axis == Axis.vertical
+                (constraints.axis == .vertical
                     ? clipRect!.height
                     : clipRect!.width)) &&
         child!.hitTest(
@@ -185,14 +191,14 @@ class _RenderSliverClip extends RenderProxySliver {
     final borderRadius = this.borderRadius.resolve(textDirection);
     final clipBehavior = _effectiveClipBehavior(borderRadius);
 
-    if (child == null || clipBehavior == Clip.none) {
+    if (child == null || clipBehavior == .none) {
       super.paint(context, offset);
       layer = null;
       return;
     }
 
     _clipRect = calculateClipRect();
-    if (borderRadius == BorderRadius.zero) {
+    if (borderRadius == .zero) {
       layer = context.pushClipRect(
         needsCompositing,
         offset,
@@ -215,19 +221,14 @@ class _RenderSliverClip extends RenderProxySliver {
   }
 
   Clip _effectiveClipBehavior(BorderRadius borderRadius) {
-    return clipBehavior ??
-        (borderRadius == BorderRadius.zero ? Clip.hardEdge : Clip.antiAlias);
+    return clipBehavior ?? (borderRadius == .zero ? .hardEdge : .antiAlias);
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(
-      DiagnosticsProperty<bool>(
-        'clipOverlap',
-        clipOverlap,
-        defaultValue: true,
-      ),
+      DiagnosticsProperty<bool>('clipOverlap', clipOverlap, defaultValue: true),
     );
     properties.add(
       DiagnosticsProperty<BorderRadiusGeometry>(
@@ -237,11 +238,7 @@ class _RenderSliverClip extends RenderProxySliver {
       ),
     );
     properties.add(
-      EnumProperty<Clip?>(
-        'clipBehavior',
-        clipBehavior,
-        defaultValue: null,
-      ),
+      EnumProperty<Clip?>('clipBehavior', clipBehavior, defaultValue: null),
     );
   }
 }

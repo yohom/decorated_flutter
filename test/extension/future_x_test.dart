@@ -5,9 +5,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('立即失败的 Future 清理 loading Overlay 后不再拦截点击', (
-    tester,
-  ) async {
+  testWidgets('立即失败的 Future 清理 loading Overlay 后不再拦截点击', (tester) async {
     var targetTapCount = 0;
     const triggerKey = Key('trigger_loading');
     const targetKey = Key('target_button');

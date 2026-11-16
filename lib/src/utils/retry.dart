@@ -101,7 +101,7 @@ class RetryOptions {
   Duration delay(int attempt) {
     assert(attempt >= 0, 'attempt cannot be negative');
     if (attempt <= 0) {
-      return Duration.zero;
+      return .zero;
     }
     final rf = (randomizationFactor * (_rand.nextDouble() * 2 - 1) + 1);
     final exp = math.min(attempt, 31); // prevent overflows.
@@ -182,10 +182,9 @@ Future<T> retry<T>(
   int maxAttempts = 8,
   FutureOr<bool> Function(Object)? retryIf,
   FutureOr<bool> Function(Object)? onRetry,
-}) =>
-    RetryOptions(
-      delayFactor: delayFactor,
-      randomizationFactor: randomizationFactor,
-      maxDelay: maxDelay,
-      maxAttempts: maxAttempts,
-    ).retry(fn, retryIf: retryIf, onRetry: onRetry);
+}) => RetryOptions(
+  delayFactor: delayFactor,
+  randomizationFactor: randomizationFactor,
+  maxDelay: maxDelay,
+  maxAttempts: maxAttempts,
+).retry(fn, retryIf: retryIf, onRetry: onRetry);

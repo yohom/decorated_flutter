@@ -22,9 +22,7 @@ void main() {
   }
 
   testWidgets('更新初始值和间隔后重启倒计时', (tester) async {
-    await tester.pumpWidget(
-      buildCountdown(5, const Duration(seconds: 1)),
-    );
+    await tester.pumpWidget(buildCountdown(5, const Duration(seconds: 1)));
     await tester.pump(const Duration(seconds: 1));
     expect(find.text('4'), findsOneWidget);
 

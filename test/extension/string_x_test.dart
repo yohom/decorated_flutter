@@ -25,10 +25,7 @@ void main() {
     expect(r'$MTS09' < r'$MTS14', true);
   });
   test('截取字符串', () {
-    expect(
-      '/test/to/path.zip'.substringAfterLast('.'),
-      'zip',
-    );
+    expect('/test/to/path.zip'.substringAfterLast('.'), 'zip');
     expect(
       '/test/to/path.zip'.substringAfterLast('.', includeSeparator: true),
       '.zip',

@@ -47,9 +47,9 @@ class BodyWithSideSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: .max,
+      mainAxisAlignment: .start,
+      crossAxisAlignment: .start,
       children: [
         Expanded(child: body),
         if (show)
@@ -60,20 +60,24 @@ class BodyWithSideSheet extends StatelessWidget {
                 width: _kDefaultThickness,
                 decoration: BoxDecoration(
                   border: Border(
-                    left: Divider.createBorderSide(context,
-                        color: Theme.of(context).dividerColor,
-                        width: _kDefaultThickness),
+                    left: Divider.createBorderSide(
+                      context,
+                      color: Theme.of(context).dividerColor,
+                      width: _kDefaultThickness,
+                    ),
                   ),
                 ),
               ),
             ),
           ),
         _ShrinkableSize(
-            show: show,
-            child: SizedBox(
-                width: sheetWidth,
-                height: MediaQuery.of(context).size.height,
-                child: sheetBody)),
+          show: show,
+          child: SizedBox(
+            width: sheetWidth,
+            height: MediaQuery.of(context).size.height,
+            child: sheetBody,
+          ),
+        ),
       ],
     );
   }
@@ -98,7 +102,9 @@ class __ShrinkableSizeState extends State<_ShrinkableSize>
   @override
   void initState() {
     controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 300));
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
     super.initState();
     animation = Tween<double>(begin: 0, end: 1).animate(controller);
   }
@@ -114,7 +120,7 @@ class __ShrinkableSizeState extends State<_ShrinkableSize>
     widget.show ? controller.forward() : controller.reverse();
     return SizeTransition(
       sizeFactor: animation,
-      axis: Axis.horizontal,
+      axis: .horizontal,
       child: widget.child,
     );
   }
@@ -208,7 +214,7 @@ Future<T?> showModalSideSheet<T extends Object?>({
   var of = MediaQuery.of(context);
   var platform = Theme.of(context).platform;
   if (width == null) {
-    if (platform == TargetPlatform.android || platform == TargetPlatform.iOS) {
+    if (platform == .android || platform == .iOS) {
       width = of.size.width * 0.6;
     } else {
       width = of.size.width / 4;
@@ -216,8 +222,8 @@ Future<T?> showModalSideSheet<T extends Object?>({
   }
   double exceptionalheight = !ignoreAppBar
       ? Scaffold.of(context).hasAppBar
-          ? Scaffold.of(context).appBarMaxHeight!
-          : 0
+            ? Scaffold.of(context).appBarMaxHeight!
+            : 0
       : 0;
   double height = of.size.height - exceptionalheight;
   assert(!barrierDismissible || barrierLabel != null);
@@ -231,7 +237,7 @@ Future<T?> showModalSideSheet<T extends Object?>({
     context: context,
     pageBuilder: (BuildContext context, _, __) {
       return Align(
-        alignment: Alignment.bottomRight,
+        alignment: .bottomRight,
         child: Material(
           elevation: elevation,
           color: backgroundColor ?? Colors.white,
@@ -241,8 +247,10 @@ Future<T?> showModalSideSheet<T extends Object?>({
     },
     transitionBuilder: (_, animation, __, child) {
       return SlideTransition(
-        position: Tween<Offset>(begin: const Offset(1, 0), end: Offset.zero)
-            .animate(animation),
+        position: Tween<Offset>(
+          begin: const Offset(1, 0),
+          end: .zero,
+        ).animate(animation),
         child: child,
       );
     },

@@ -4,7 +4,9 @@ import 'package:material_ui/material_ui.dart';
 
 /// Hero 弹窗共享元素飞行内容的构造器。
 typedef HeroOverlayFlightBuilder = Widget Function(
-    BuildContext context, Widget child);
+  BuildContext context,
+  Widget child,
+);
 
 /// 为 [OverlayHero] 提供配对范围。
 ///
@@ -96,10 +98,9 @@ class _OverlayHeroState extends State<OverlayHero> {
   Rect? rectIn(RenderBox overlayBox) {
     final box = context.findRenderObject();
     if (box is! RenderBox || !box.attached) return null;
-    return Rect.fromPoints(
-      overlayBox.globalToLocal(box.localToGlobal(Offset.zero)),
-      overlayBox
-          .globalToLocal(box.localToGlobal(box.size.bottomRight(Offset.zero))),
+    return .fromPoints(
+      overlayBox.globalToLocal(box.localToGlobal(.zero)),
+      overlayBox.globalToLocal(box.localToGlobal(box.size.bottomRight(.zero))),
     );
   }
 
@@ -205,8 +206,9 @@ HeroOverlay<T> showHeroOverlay<T>(
   assert(!barrierDismissible || barrierLabel != null);
   final scope = HeroOverlayScope.maybeOf(context);
   final heroController = scope?._controller;
-  final activeHeroController =
-      heroController?.beginPresentation() ?? false ? heroController : null;
+  final activeHeroController = heroController?.beginPresentation() ?? false
+      ? heroController
+      : null;
 
   final completer = Completer<T?>();
   final key = GlobalKey<_HeroOverlayState<T>>();
@@ -346,8 +348,9 @@ class _HeroOverlayState<T> extends State<_HeroOverlay<T>>
         final flights =
             widget.heroController?.flights ?? const <_HeroOverlayFlight>[];
         final overlayBox = Overlay.of(context).context.findRenderObject();
-        final isFlighting = _hasFlights &&
-            _animation.status != AnimationStatus.completed &&
+        final isFlighting =
+            _hasFlights &&
+            _animation.status != .completed &&
             flights.isNotEmpty;
         return Stack(
           children: [
@@ -371,8 +374,10 @@ class _HeroOverlayState<T> extends State<_HeroOverlay<T>>
                 if (flight.source.rectIn(overlayBox) case final sourceRect?)
                   if (flight.target.rectIn(overlayBox) case final targetRect?)
                     Positioned.fromRect(
-                      rect: RectTween(begin: sourceRect, end: targetRect)
-                          .transform(_animation.value)!,
+                      rect: RectTween(
+                        begin: sourceRect,
+                        end: targetRect,
+                      ).transform(_animation.value)!,
                       child: IgnorePointer(
                         child: HeroMode(
                           enabled: false,
@@ -395,7 +400,7 @@ class _HeroOverlayState<T> extends State<_HeroOverlay<T>>
   }
 
   void _handleAnimationStatus(AnimationStatus status) {
-    if (status != AnimationStatus.completed || _isDismissing) return;
+    if (status != .completed || _isDismissing) return;
 
     for (final flight in widget.heroController?.flights ?? const []) {
       flight.target.setVisible(true);

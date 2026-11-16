@@ -4,8 +4,9 @@ import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('inner disabled AutoCloseKeyboard blocks outer config',
-      (tester) async {
+  testWidgets('inner disabled AutoCloseKeyboard blocks outer config', (
+    tester,
+  ) async {
     final focusNode = FocusNode();
     addTearDown(focusNode.dispose);
 
@@ -47,8 +48,9 @@ void main() {
     expect(focusNode.hasFocus, isTrue);
   });
 
-  testWidgets('inner AutoCloseKeyboard config takes precedence over outer',
-      (tester) async {
+  testWidgets('inner AutoCloseKeyboard config takes precedence over outer', (
+    tester,
+  ) async {
     final focusNode = FocusNode();
     addTearDown(focusNode.dispose);
 

@@ -44,7 +44,7 @@ class _ScrollableTopDividerState extends State<ScrollableTopDivider> {
     return NotificationListener<ScrollUpdateNotification>(
       onNotification: (notification) {
         // 只处理y轴方向
-        if (notification.metrics.axis == Axis.horizontal) return false;
+        if (notification.metrics.axis == .horizontal) return false;
 
         if (notification.metrics.pixels > 0 && !_showTopDivider) {
           setState(() {

@@ -45,10 +45,7 @@ class _SpringContainerState extends State<SpringContainer>
   @override
   void initState() {
     super.initState();
-    _scaleController = AnimationController.unbounded(
-      vsync: this,
-      value: 1,
-    );
+    _scaleController = AnimationController.unbounded(vsync: this, value: 1);
   }
 
   @override
@@ -78,7 +75,7 @@ class _SpringContainerState extends State<SpringContainer>
         builder: (BuildContext context, Widget? child) {
           return Transform.scale(
             scale: _scaleController.value,
-            alignment: AlignmentDirectional.center,
+            alignment: .center,
             child: child,
           );
         },
@@ -86,19 +83,19 @@ class _SpringContainerState extends State<SpringContainer>
           cursor: SystemMouseCursors.click,
           child: RawGestureDetector(
             key: _interactionKey,
-            behavior: HitTestBehavior.opaque,
+            behavior: .opaque,
             gestures: <Type, GestureRecognizerFactory>{
               _PressGestureRecognizer:
                   GestureRecognizerFactoryWithHandlers<_PressGestureRecognizer>(
-                () => _PressGestureRecognizer(debugOwner: this),
-                (_PressGestureRecognizer instance) {
-                  instance
-                    ..onPressStart = _handlePressStart
-                    ..onPressMove = _handlePressMove
-                    ..onPressEnd = _handlePressEnd
-                    ..onPressCancel = _handlePressCancel;
-                },
-              ),
+                    () => _PressGestureRecognizer(debugOwner: this),
+                    (_PressGestureRecognizer instance) {
+                      instance
+                        ..onPressStart = _handlePressStart
+                        ..onPressMove = _handlePressMove
+                        ..onPressEnd = _handlePressEnd
+                        ..onPressCancel = _handlePressCancel;
+                    },
+                  ),
             },
             excludeFromSemantics: true,
             child: widget.child,
@@ -205,7 +202,7 @@ class _PressGestureRecognizer extends OneSequenceGestureRecognizer {
       _upPosition = null;
       _accepted = false;
       onPressCancel?.call();
-      resolve(GestureDisposition.rejected);
+      resolve(.rejected);
     }
   }
 
@@ -290,8 +287,8 @@ class _LoadingElevatedButtonState extends State<LoadingElevatedButton> {
       child: _isError && widget.errorChild != null
           ? widget.errorChild!
           : _isLoading
-              ? widget.loadingChild
-              : widget.child,
+          ? widget.loadingChild
+          : widget.child,
     );
   }
 }

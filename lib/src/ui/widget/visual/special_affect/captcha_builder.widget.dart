@@ -57,32 +57,32 @@ class _CaptchaBuilderState extends State<CaptchaBuilder> {
   @override
   Widget build(BuildContext context) {
     Widget result = StreamBuilder<CaptchaState>(
-      initialData: CaptchaState.init,
+      initialData: .init,
       stream: widget.stateIO.stream,
       builder: (_, snapshot) {
         final data = snapshot.requireData;
         switch (data) {
-          case CaptchaState.wait:
+          case .wait:
             return Countdown(
               key: Key('_CaptchaBuilderState_$_attempts'),
               initialData: widget.initValue,
               builder: widget.waitBuilder,
-              onZero: () => widget.stateIO.add(CaptchaState.retry),
+              onZero: () => widget.stateIO.add(.retry),
             );
-          case CaptchaState.retry:
+          case .retry:
             return GestureDetector(
               onTap: () => widget
                   .onFetchCaptcha(context)
-                  .then((_) => widget.stateIO.add(CaptchaState.wait))
+                  .then((_) => widget.stateIO.add(.wait))
                   .then((value) => setState(() => ++_attempts))
                   .catchError(handleError),
               child: widget.retryBuilder(context),
             );
-          case CaptchaState.init:
+          case .init:
             return GestureDetector(
               onTap: () => widget
                   .onFetchCaptcha(context)
-                  .then((_) => widget.stateIO.add(CaptchaState.wait))
+                  .then((_) => widget.stateIO.add(.wait))
                   .then((value) => setState(() => ++_attempts))
                   .catchError(handleError),
               child: widget.initBuilder(context),

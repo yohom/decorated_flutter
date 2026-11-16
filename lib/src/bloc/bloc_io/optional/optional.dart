@@ -63,7 +63,8 @@ class OptionalIO<T> extends IO<T?> {
   }) : super(semantics: semantics) {
     stream = _subject.stream;
 
-    _onUpdate = fetch ??
+    _onUpdate =
+        fetch ??
         (_) => throw '[$semantics] 在未设置fetch回调时调用了update方法, 请检查业务逻辑是否正确!';
   }
 }

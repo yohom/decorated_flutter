@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:material_ui/material_ui.dart';
 
 const _builtInNoMoreDataPlaceholder = Padding(
-  padding: EdgeInsets.all(12),
+  padding: .all(12),
   child: Center(child: Text('没有更多数据')),
 );
 
@@ -59,8 +59,8 @@ class LoadMore extends StatefulWidget {
     this.child,
     this.builder,
     this.reverse = false,
-  })  : assert(child != null || builder != null),
-        assert(child == null || builder == null);
+  }) : assert(child != null || builder != null),
+       assert(child == null || builder == null);
 
   final LoadMoreConfig config;
   final Widget? child;

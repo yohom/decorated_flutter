@@ -55,9 +55,7 @@ class OptionalListIO<T> extends IO<List<T>?> with OptionalListMixin {
     bool Function(List<T>?, List<T>?)? isSame,
     super.onReset,
     super.persistConfig,
-  }) : super(
-          isSame: isSame ?? listEquals,
-        ) {
+  }) : super(isSame: isSame ?? listEquals) {
     _forceCapacity = forceCapacity;
   }
 }
@@ -182,12 +180,9 @@ mixin OptionalListMixin<T> on BaseIO<List<T>?> {
     }
 
     if (latest!.isNotEmpty) {
-      _subject.add(latest
-        ?..replaceRange(
-          latest!.length - 1,
-          latest!.length,
-          [element],
-        ));
+      _subject.add(
+        latest?..replaceRange(latest!.length - 1, latest!.length, [element]),
+      );
     }
     return element;
   }

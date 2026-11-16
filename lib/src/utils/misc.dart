@@ -22,15 +22,15 @@ dynamic handleError(Object error, [StackTrace? trace]) {
   if (error is DioException) {
     String? message = error.message;
     switch (error.type) {
-      case DioExceptionType.cancel:
+      case .cancel:
         message = isEnglish ? error.message : '取消请求';
         break;
-      case DioExceptionType.sendTimeout:
-      case DioExceptionType.connectionTimeout:
-      case DioExceptionType.receiveTimeout:
+      case .sendTimeout:
+      case .connectionTimeout:
+      case .receiveTimeout:
         message = isEnglish ? error.message : '网络连接超时，请稍后重试';
         break;
-      case DioExceptionType.badResponse:
+      case .badResponse:
         final statusCode = error.response?.statusCode;
         if (statusCode != null) {
           if (statusCode >= 400 && statusCode <= 417) {
@@ -73,7 +73,8 @@ dynamic handleError(Object error, [StackTrace? trace]) {
 }
 
 Color highContrast(Color input) {
-  final grey = 0.2126 * math.pow(input.red / 255, 2.2) +
+  final grey =
+      0.2126 * math.pow(input.red / 255, 2.2) +
       0.7151 * math.pow(input.green / 255, 2.2) +
       0.0721 * math.pow(input.blue / 255, 2.2);
   Color output = Colors.black;

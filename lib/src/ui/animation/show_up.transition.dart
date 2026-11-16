@@ -4,7 +4,7 @@ import 'package:material_ui/material_ui.dart';
 class ShowUpTransition extends StatefulWidget {
   const ShowUpTransition({
     super.key,
-    this.delay = Duration.zero,
+    this.delay = .zero,
     this.duration = const Duration(milliseconds: 700),
     this.safeArea = false,
     required this.child,

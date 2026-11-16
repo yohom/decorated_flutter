@@ -4,7 +4,7 @@ import 'package:material_ui/material_ui.dart';
 class AutoScrollBottomSheet extends StatefulWidget {
   const AutoScrollBottomSheet({
     super.key,
-    this.duration = Duration.zero,
+    this.duration = .zero,
     this.curve = Curves.decelerate,
     this.backgroundColor,
     this.autoCloseKeyboard = const CloseKeyboardConfig(),
@@ -27,7 +27,7 @@ class _AutoScrollBottomSheetState extends State<AutoScrollBottomSheet> {
   @override
   void initState() {
     super.initState();
-    _padding = EdgeInsets.zero;
+    _padding = .zero;
   }
 
   @override

@@ -12,7 +12,7 @@ class OverflowText extends StatefulWidget {
     this.textDirection,
     this.textScaler,
     this.strutStyle,
-    this.textWidthBasis = TextWidthBasis.parent,
+    this.textWidthBasis = .parent,
     this.textHeightBehavior,
     this.locale,
   }) : assert(maxLines > 0);
@@ -62,8 +62,8 @@ class _OverflowTextState extends State<OverflowText> {
         }
         final textDirection =
             widget.textDirection ?? Directionality.of(context);
-        final textStyle =
-            DefaultTextStyle.of(context).style.merge(widget.style);
+        final textStyle = DefaultTextStyle.of(context).style
+            .merge(widget.style);
         final textScaler =
             widget.textScaler ?? MediaQuery.textScalerOf(context);
 
@@ -85,7 +85,7 @@ class _OverflowTextState extends State<OverflowText> {
         if (overflowWidgetSize == null) {
           _measureOverflowWidget();
           return Stack(
-            clipBehavior: Clip.none,
+            clipBehavior: .none,
             children: [
               _buildPlainText(textDirection, textScaler),
               Positioned(
@@ -112,14 +112,14 @@ class _OverflowTextState extends State<OverflowText> {
         )..layout();
         final fitsWithEllipsis =
             ellipsisPainter.width + overflowWidgetSize.width <=
-                constraints.maxWidth;
+            constraints.maxWidth;
         ellipsisPainter.dispose();
         if (!fitsWithEllipsis) {
           return SizedBox(
             width: constraints.maxWidth,
             child: FittedBox(
-              fit: BoxFit.scaleDown,
-              alignment: AlignmentDirectional.centerStart,
+              fit: .scaleDown,
+              alignment: .centerStart,
               child: widget.overflowWidget,
             ),
           );
@@ -138,17 +138,14 @@ class _OverflowTextState extends State<OverflowText> {
             children: [
               TextSpan(text: truncatedText),
               const TextSpan(text: '…'),
-              WidgetSpan(
-                alignment: PlaceholderAlignment.middle,
-                child: widget.overflowWidget,
-              ),
+              WidgetSpan(alignment: .middle, child: widget.overflowWidget),
             ],
           ),
-          textAlign: widget.textAlign ?? TextAlign.start,
+          textAlign: widget.textAlign ?? .start,
           textDirection: textDirection,
           textScaler: textScaler,
           maxLines: widget.maxLines,
-          overflow: TextOverflow.clip,
+          overflow: .clip,
           strutStyle: widget.strutStyle,
           textWidthBasis: widget.textWidthBasis,
           textHeightBehavior: widget.textHeightBehavior,
@@ -166,7 +163,7 @@ class _OverflowTextState extends State<OverflowText> {
       textDirection: textDirection,
       textScaler: textScaler,
       maxLines: widget.maxLines,
-      overflow: TextOverflow.ellipsis,
+      overflow: .ellipsis,
       strutStyle: widget.strutStyle,
       textWidthBasis: widget.textWidthBasis,
       textHeightBehavior: widget.textHeightBehavior,
@@ -182,7 +179,7 @@ class _OverflowTextState extends State<OverflowText> {
   }) {
     return TextPainter(
       text: text,
-      textAlign: widget.textAlign ?? TextAlign.start,
+      textAlign: widget.textAlign ?? .start,
       textDirection: textDirection,
       textScaler: textScaler,
       maxLines: widget.maxLines,
@@ -223,10 +220,7 @@ class _OverflowTextState extends State<OverflowText> {
         textDirection: textDirection,
         textScaler: textScaler,
         placeholderDimensions: [
-          PlaceholderDimensions(
-            size: overflowWidgetSize,
-            alignment: PlaceholderAlignment.middle,
-          ),
+          PlaceholderDimensions(size: overflowWidgetSize, alignment: .middle),
         ],
       )..layout(maxWidth: maxWidth);
       final fits = !painter.didExceedMaxLines;

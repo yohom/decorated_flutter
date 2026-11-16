@@ -10,8 +10,8 @@ class VerticalButton extends StatelessWidget {
     this.onLongPressed,
     this.spacing = 8,
     this.width,
-    this.mainAxisAlignment = MainAxisAlignment.start,
-    this.crossAxisAlignment = CrossAxisAlignment.center,
+    this.mainAxisAlignment = .start,
+    this.crossAxisAlignment = .center,
   });
 
   final Widget icon;
@@ -27,7 +27,7 @@ class VerticalButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedColumn(
       width: width,
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize: .min,
       onPressed: onPressed,
       onLongPressed: onLongPressed,
       spacing: spacing,

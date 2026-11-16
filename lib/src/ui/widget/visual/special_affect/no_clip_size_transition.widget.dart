@@ -9,9 +9,10 @@ class NoClipSizeTransition extends AnimatedWidget {
     required Animation<double> sizeFactor,
     this.fixedCrossAxisSizeFactor,
     this.child,
-  })  : assert(fixedCrossAxisSizeFactor == null ||
-            fixedCrossAxisSizeFactor >= 0.0),
-        super(listenable: sizeFactor);
+  }) : assert(
+         fixedCrossAxisSizeFactor == null || fixedCrossAxisSizeFactor >= 0.0,
+       ),
+       super(listenable: sizeFactor);
 
   Animation<double> get sizeFactor => listenable as Animation<double>;
 

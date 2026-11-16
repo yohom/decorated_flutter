@@ -7,13 +7,13 @@ class CoverCard extends StatefulWidget {
     this.background,
     this.foreground,
     this.overlay = const SizedBox.shrink(),
-    this.alignment = AlignmentDirectional.topCenter,
-    this.fit = StackFit.loose,
+    this.alignment = .topCenter,
+    this.fit = .loose,
     this.parallaxRate = 0.2,
     required this.cover,
     required this.card,
     required this.coverHeight,
-  })  : assert(parallaxRate > 0.0);
+  }) : assert(parallaxRate > 0.0);
 
   /// 背景
   final Widget? background;
@@ -69,10 +69,7 @@ class _CoverCardState extends State<CoverCard> {
       children: <Widget>[
         Transform.translate(
           offset: Offset(0.0, _parallaxOffset),
-          child: SizedBox(
-            height: widget.coverHeight,
-            child: widget.cover,
-          ),
+          child: SizedBox(height: widget.coverHeight, child: widget.cover),
         ),
         SingleChildScrollView(
           controller: _controller,

@@ -107,10 +107,10 @@ class _DecoratedWidgetState<B extends BLoC> extends State<DecoratedWidget<B>> {
       // 自动对暗黑模式做切换
       SystemUiOverlayStyle style = widget.systemUiOverlayStyle!;
       if (context.isDarkMode) {
-        if (style == SystemUiOverlayStyle.dark) {
-          style = SystemUiOverlayStyle.light;
-        } else if (style == SystemUiOverlayStyle.light) {
-          style = SystemUiOverlayStyle.dark;
+        if (style == .dark) {
+          style = .light;
+        } else if (style == .light) {
+          style = .dark;
         }
       }
       result = AnnotatedRegion<SystemUiOverlayStyle>(

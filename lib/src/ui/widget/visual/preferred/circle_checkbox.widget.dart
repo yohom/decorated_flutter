@@ -351,77 +351,83 @@ class _CircleCheckboxState extends State<CircleCheckbox>
     final ThemeData themeData = Theme.of(context);
     final MaterialTapTargetSize effectiveMaterialTapTargetSize =
         widget.materialTapTargetSize ??
-            themeData.checkboxTheme.materialTapTargetSize ??
-            themeData.materialTapTargetSize;
-    final VisualDensity effectiveVisualDensity = widget.visualDensity ??
+        themeData.checkboxTheme.materialTapTargetSize ??
+        themeData.materialTapTargetSize;
+    final VisualDensity effectiveVisualDensity =
+        widget.visualDensity ??
         themeData.checkboxTheme.visualDensity ??
         themeData.visualDensity;
     Size size;
     switch (effectiveMaterialTapTargetSize) {
-      case MaterialTapTargetSize.padded:
+      case .padded:
         size = const Size(kMinInteractiveDimension, kMinInteractiveDimension);
         break;
-      case MaterialTapTargetSize.shrinkWrap:
+      case .shrinkWrap:
         size = const Size(
-            kMinInteractiveDimension - 8.0, kMinInteractiveDimension - 8.0);
+          kMinInteractiveDimension - 8.0,
+          kMinInteractiveDimension - 8.0,
+        );
         break;
     }
     size += effectiveVisualDensity.baseSizeAdjustment;
 
     final MaterialStateProperty<MouseCursor> effectiveMouseCursor =
-        MaterialStateProperty.resolveWith<MouseCursor>(
-            (Set<MaterialState> states) {
-      return MaterialStateProperty.resolveAs<MouseCursor?>(
-              widget.mouseCursor, states) ??
-          themeData.checkboxTheme.mouseCursor?.resolve(states) ??
-          MaterialStateMouseCursor.clickable.resolve(states);
-    });
+        MaterialStateProperty.resolveWith<MouseCursor>((
+          Set<MaterialState> states,
+        ) {
+          return MaterialStateProperty.resolveAs<MouseCursor?>(
+                widget.mouseCursor,
+                states,
+              ) ??
+              themeData.checkboxTheme.mouseCursor?.resolve(states) ??
+              MaterialStateMouseCursor.clickable.resolve(states);
+        });
 
     // Colors need to be resolved in selected and non selected states separately
     // so that they can be lerped between.
-    final Set<MaterialState> activeStates = states..add(MaterialState.selected);
+    final Set<MaterialState> activeStates = states..add(.selected);
     final Set<MaterialState> inactiveStates = states
       ..remove(MaterialState.selected);
     final Color effectiveActiveColor =
         widget.fillColor?.resolve(activeStates) ??
-            _widgetFillColor.resolve(activeStates) ??
-            themeData.checkboxTheme.fillColor?.resolve(activeStates) ??
-            _defaultFillColor.resolve(activeStates);
+        _widgetFillColor.resolve(activeStates) ??
+        themeData.checkboxTheme.fillColor?.resolve(activeStates) ??
+        _defaultFillColor.resolve(activeStates);
     final Color effectiveInactiveColor =
         widget.fillColor?.resolve(inactiveStates) ??
-            _widgetFillColor.resolve(inactiveStates) ??
-            themeData.checkboxTheme.fillColor?.resolve(inactiveStates) ??
-            _defaultFillColor.resolve(inactiveStates);
+        _widgetFillColor.resolve(inactiveStates) ??
+        themeData.checkboxTheme.fillColor?.resolve(inactiveStates) ??
+        _defaultFillColor.resolve(inactiveStates);
 
-    final Set<MaterialState> focusedStates = states..add(MaterialState.focused);
+    final Set<MaterialState> focusedStates = states..add(.focused);
     final Color effectiveFocusOverlayColor =
         widget.overlayColor?.resolve(focusedStates) ??
-            widget.focusColor ??
-            themeData.checkboxTheme.overlayColor?.resolve(focusedStates) ??
-            themeData.focusColor;
+        widget.focusColor ??
+        themeData.checkboxTheme.overlayColor?.resolve(focusedStates) ??
+        themeData.focusColor;
 
-    final Set<MaterialState> hoveredStates = states..add(MaterialState.hovered);
+    final Set<MaterialState> hoveredStates = states..add(.hovered);
     final Color effectiveHoverOverlayColor =
         widget.overlayColor?.resolve(hoveredStates) ??
-            widget.hoverColor ??
-            themeData.checkboxTheme.overlayColor?.resolve(hoveredStates) ??
-            themeData.hoverColor;
+        widget.hoverColor ??
+        themeData.checkboxTheme.overlayColor?.resolve(hoveredStates) ??
+        themeData.hoverColor;
 
-    final Set<MaterialState> activePressedStates = activeStates
-      ..add(MaterialState.pressed);
-    final Color effectiveActivePressedOverlayColor = widget.overlayColor
-            ?.resolve(activePressedStates) ??
+    final Set<MaterialState> activePressedStates = activeStates..add(.pressed);
+    final Color effectiveActivePressedOverlayColor =
+        widget.overlayColor?.resolve(activePressedStates) ??
         themeData.checkboxTheme.overlayColor?.resolve(activePressedStates) ??
         effectiveActiveColor.withAlpha(kRadialReactionAlpha);
 
     final Set<MaterialState> inactivePressedStates = inactiveStates
-      ..add(MaterialState.pressed);
-    final Color effectiveInactivePressedOverlayColor = widget.overlayColor
-            ?.resolve(inactivePressedStates) ??
+      ..add(.pressed);
+    final Color effectiveInactivePressedOverlayColor =
+        widget.overlayColor?.resolve(inactivePressedStates) ??
         themeData.checkboxTheme.overlayColor?.resolve(inactivePressedStates) ??
         effectiveActiveColor.withAlpha(kRadialReactionAlpha);
 
-    final Color effectiveCheckColor = widget.checkColor ??
+    final Color effectiveCheckColor =
+        widget.checkColor ??
         themeData.checkboxTheme.checkColor?.resolve(states) ??
         const Color(0xFFFFFFFF);
 
@@ -441,7 +447,8 @@ class _CircleCheckboxState extends State<CircleCheckbox>
           ..reactionColor = effectiveActivePressedOverlayColor
           ..hoverColor = effectiveHoverOverlayColor
           ..focusColor = effectiveFocusOverlayColor
-          ..splashRadius = widget.splashRadius ??
+          ..splashRadius =
+              widget.splashRadius ??
               themeData.checkboxTheme.splashRadius ??
               kRadialReactionRadius
           ..downPosition = downPosition
@@ -452,12 +459,12 @@ class _CircleCheckboxState extends State<CircleCheckbox>
           ..checkColor = effectiveCheckColor
           ..value = value
           ..previousValue = _previousValue
-          ..shape = widget.shape ??
+          ..shape =
+              widget.shape ??
               themeData.checkboxTheme.shape ??
-              const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(1.0)),
-              )
-          ..side = _resolveSide(widget.side) ??
+              const RoundedRectangleBorder(borderRadius: .all(.circular(1.0)))
+          ..side =
+              _resolveSide(widget.side) ??
               _resolveSide(themeData.checkboxTheme.side),
       ),
     );
@@ -525,8 +532,12 @@ class _CheckboxPainter extends ToggleablePainter {
   Rect _outerRectAt(Offset origin, double t) {
     final double inset = 1.0 - (t - 0.5).abs() * 2.0;
     final double size = _kEdgeSize - inset * _kStrokeWidth;
-    final Rect rect =
-        Rect.fromLTWH(origin.dx + inset, origin.dy + inset, size, size);
+    final Rect rect = .fromLTWH(
+      origin.dx + inset,
+      origin.dy + inset,
+      size,
+      size,
+    );
     return rect;
   }
 
@@ -536,21 +547,26 @@ class _CheckboxPainter extends ToggleablePainter {
     // As t goes from 0.0 to 0.25, animate from the inactiveColor to activeColor.
     return t >= 0.25
         ? activeColor
-        : Color.lerp(inactiveColor, activeColor, t * 4.0)!;
+        : .lerp(inactiveColor, activeColor, t * 4.0)!;
   }
 
   // White stroke used to paint the check and dash.
   Paint _createStrokePaint() {
     return Paint()
       ..color = checkColor
-      ..style = PaintingStyle.stroke
+      ..style = .stroke
       // 2. 调整了拐弯处的链接方式
-      ..strokeCap = StrokeCap.round
+      ..strokeCap = .round
       ..strokeWidth = _kStrokeWidth;
   }
 
   void _drawBox(
-      Canvas canvas, Rect outer, Paint paint, BorderSide? side, bool fill) {
+    Canvas canvas,
+    Rect outer,
+    Paint paint,
+    BorderSide? side,
+    bool fill,
+  ) {
     if (fill) {
       canvas.drawPath(shape.getOuterPath(outer), paint);
     }
@@ -571,12 +587,12 @@ class _CheckboxPainter extends ToggleablePainter {
     const Offset end = Offset(_kEdgeSize * 0.75, _kEdgeSize * 0.35);
     if (t < 0.5) {
       final double strokeT = t * 2.0;
-      final Offset drawMid = Offset.lerp(start, mid, strokeT)!;
+      final Offset drawMid = .lerp(start, mid, strokeT)!;
       path.moveTo(origin.dx + start.dx, origin.dy + start.dy);
       path.lineTo(origin.dx + drawMid.dx, origin.dy + drawMid.dy);
     } else {
       final double strokeT = (t - 0.5) * 2.0;
-      final Offset drawEnd = Offset.lerp(mid, end, strokeT)!;
+      final Offset drawEnd = .lerp(mid, end, strokeT)!;
       path.moveTo(origin.dx + start.dx, origin.dy + start.dy);
       path.lineTo(origin.dx + mid.dx, origin.dy + mid.dy);
       path.lineTo(origin.dx + drawEnd.dx, origin.dy + drawEnd.dy);
@@ -591,23 +607,22 @@ class _CheckboxPainter extends ToggleablePainter {
     const Offset start = Offset(_kEdgeSize * 0.2, _kEdgeSize * 0.5);
     const Offset mid = Offset(_kEdgeSize * 0.5, _kEdgeSize * 0.5);
     const Offset end = Offset(_kEdgeSize * 0.8, _kEdgeSize * 0.5);
-    final Offset drawStart = Offset.lerp(start, mid, 1.0 - t)!;
-    final Offset drawEnd = Offset.lerp(mid, end, t)!;
+    final Offset drawStart = .lerp(start, mid, 1.0 - t)!;
+    final Offset drawEnd = .lerp(mid, end, t)!;
     canvas.drawLine(origin + drawStart, origin + drawEnd, paint);
   }
 
   @override
   void paint(Canvas canvas, Size size) {
-    paintRadialReaction(canvas: canvas, origin: size.center(Offset.zero));
+    paintRadialReaction(canvas: canvas, origin: size.center(.zero));
 
     final Paint strokePaint = _createStrokePaint();
     final Offset origin =
         size / 2.0 - const Size.square(_kEdgeSize) / 2.0 as Offset;
     final AnimationStatus status = position.status;
-    final double tNormalized =
-        status == AnimationStatus.forward || status == AnimationStatus.completed
-            ? position.value
-            : 1.0 - position.value;
+    final double tNormalized = status == .forward || status == .completed
+        ? position.value
+        : 1.0 - position.value;
 
     // Four cases: false to null, false to true, null to false, true to false
     if (previousValue == false || value == false) {

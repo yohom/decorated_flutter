@@ -8,19 +8,19 @@ void main() {
     var buttonCount = 0;
     await tester.pumpWidget(
       Directionality(
-        textDirection: TextDirection.ltr,
+        textDirection: .ltr,
         child: Center(
           child: SpringContainer(
-            debounceDuration: Duration.zero,
+            debounceDuration: .zero,
             onPressed: (_) => containerCount++,
             child: SizedBox(
               width: 200,
               height: 100,
               child: Align(
-                alignment: Alignment.centerLeft,
+                alignment: .centerLeft,
                 child: GestureDetector(
                   key: const Key('child'),
-                  behavior: HitTestBehavior.opaque,
+                  behavior: .opaque,
                   onTap: () => buttonCount++,
                   child: const SizedBox(width: 80, height: 80),
                 ),
@@ -37,7 +37,8 @@ void main() {
     expect(containerCount, 0);
 
     await tester.tapAt(
-        tester.getCenter(find.byType(SpringContainer)) + const Offset(60, 0));
+      tester.getCenter(find.byType(SpringContainer)) + const Offset(60, 0),
+    );
     await tester.pumpAndSettle();
     expect(containerCount, 1);
   });
@@ -46,10 +47,10 @@ void main() {
     var pressCount = 0;
     await tester.pumpWidget(
       Directionality(
-        textDirection: TextDirection.ltr,
+        textDirection: .ltr,
         child: Center(
           child: SpringContainer(
-            debounceDuration: Duration.zero,
+            debounceDuration: .zero,
             onPressed: (_) => pressCount++,
             child: const SizedBox(
               key: Key('spring-button'),
@@ -84,10 +85,10 @@ void main() {
     var pressCount = 0;
     await tester.pumpWidget(
       Directionality(
-        textDirection: TextDirection.ltr,
+        textDirection: .ltr,
         child: Center(
           child: SpringContainer(
-            debounceDuration: Duration.zero,
+            debounceDuration: .zero,
             onPressed: (_) => pressCount++,
             child: const SizedBox(
               key: Key('spring-button'),
@@ -122,10 +123,10 @@ void main() {
     var pressCount = 0;
     await tester.pumpWidget(
       Directionality(
-        textDirection: TextDirection.ltr,
+        textDirection: .ltr,
         child: Center(
           child: SpringContainer(
-            debounceDuration: Duration.zero,
+            debounceDuration: .zero,
             onPressed: (_) => pressCount++,
             child: const SizedBox(
               key: Key('spring-button'),
@@ -152,7 +153,7 @@ void main() {
     var pressCount = 0;
     await tester.pumpWidget(
       Directionality(
-        textDirection: TextDirection.ltr,
+        textDirection: .ltr,
         child: Center(
           child: SpringContainer(
             debounceDuration: const Duration(milliseconds: 800),

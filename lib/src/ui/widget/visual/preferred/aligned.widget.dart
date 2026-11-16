@@ -20,7 +20,7 @@ class AlignStart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget result = Align(
-      alignment: AlignmentDirectional.centerStart,
+      alignment: .centerStart,
       widthFactor: widthFactor,
       heightFactor: heightFactor,
       child: child,
@@ -57,7 +57,7 @@ class AlignLeft extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget result = Align(
-      alignment: Alignment.centerLeft,
+      alignment: .centerLeft,
       widthFactor: widthFactor,
       heightFactor: heightFactor,
       child: child,
@@ -101,7 +101,7 @@ class AlignEnd extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget result = Align(
-      alignment: AlignmentDirectional.centerEnd,
+      alignment: .centerEnd,
       widthFactor: widthFactor,
       heightFactor: heightFactor,
       child: child,
@@ -134,7 +134,7 @@ class AlignRight extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget result = Align(
-      alignment: Alignment.centerRight,
+      alignment: .centerRight,
       widthFactor: widthFactor,
       heightFactor: heightFactor,
       child: child,
@@ -169,7 +169,7 @@ class AlignTop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget result = Align(
-      alignment: AlignmentDirectional.topCenter,
+      alignment: .topCenter,
       widthFactor: widthFactor,
       heightFactor: heightFactor,
       child: child,
@@ -202,7 +202,7 @@ class AlignBottom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget result = Align(
-      alignment: AlignmentDirectional.bottomCenter,
+      alignment: .bottomCenter,
       widthFactor: widthFactor,
       heightFactor: heightFactor,
       child: child,

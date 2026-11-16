@@ -40,12 +40,12 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
     required String routeName,
     super.fullscreenDialog,
     super.maintainState,
-  })  : // 要么同时设置泛型B和bloc参数, 要么就都不设置
-        assert((B != BLoC && bloc != null) || (B == BLoC && bloc == null)),
-        super(
-          builder: (context) => screen,
-          settings: RouteSettings(name: routeName),
-        );
+  }) : // 要么同时设置泛型B和bloc参数, 要么就都不设置
+       assert((B != BLoC && bloc != null) || (B == BLoC && bloc == null)),
+       super(
+         builder: (context) => screen,
+         settings: RouteSettings(name: routeName),
+       );
 
   /// 直接传递的BLoC
   final B? bloc;
@@ -128,10 +128,10 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
       // 自动对暗黑模式做切换
       SystemUiOverlayStyle style = systemUiOverlayStyle!;
       if (context.isDarkMode) {
-        if (style == SystemUiOverlayStyle.dark) {
-          style = SystemUiOverlayStyle.light;
-        } else if (style == SystemUiOverlayStyle.light) {
-          style = SystemUiOverlayStyle.dark;
+        if (style == .dark) {
+          style = .light;
+        } else if (style == .light) {
+          style = .dark;
         }
       }
       result = AnnotatedRegion<SystemUiOverlayStyle>(
@@ -151,11 +151,15 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
   }
 
   @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
     animation.addStatusListener((status) {
       // 如果是懒加载, 那么动画结束时开始初始化
-      if (status == AnimationStatus.completed &&
+      if (status == .completed &&
           onLateinit != null &&
           bloc != null &&
           !_inited) {
@@ -170,10 +174,7 @@ class DecoratedCupertinoRoute<B extends BLoC, T extends Object>
 }
 
 @Deprecated('暂时无用')
-enum SpringButtonType {
-  onlyScale,
-  withOpacity,
-}
+enum SpringButtonType { onlyScale, withOpacity }
 
 @Deprecated('暂时无用')
 class SpringButton extends StatefulWidget {
@@ -305,7 +306,7 @@ class SpringButton extends StatefulWidget {
     this.uiChild, {
     super.key,
     this.useCache = true,
-    this.alignment = Alignment.center,
+    this.alignment = .center,
     this.scaleCoefficient = 0.75,
     this.duration = 1000,
     this.onTapDown,
@@ -348,11 +349,11 @@ class SpringButton extends StatefulWidget {
   @override
   // ignore: no_logic_in_create_state
   SpringButtonState createState() => SpringButtonState(
-        springButtonType,
-        useCache,
-        alignment,
-        scaleCoefficient,
-      );
+    springButtonType,
+    useCache,
+    alignment,
+    scaleCoefficient,
+  );
 }
 
 @Deprecated('暂时无用')
@@ -395,14 +396,8 @@ class SpringButtonState extends State<SpringButton>
       duration: Duration(milliseconds: widget.duration),
     );
     animationController.value = 1;
-    animation = Tween(
-      begin: scaleCoefficient,
-      end: 1.0,
-    ).animate(
-      CurvedAnimation(
-        parent: animationController,
-        curve: Curves.elasticOut,
-      ),
+    animation = Tween(begin: scaleCoefficient, end: 1.0).animate(
+      CurvedAnimation(parent: animationController, curve: Curves.elasticOut),
     );
   }
 
@@ -423,7 +418,7 @@ class SpringButtonState extends State<SpringButton>
       hasHorizontalDrag,
       hasForcePress,
       hasPan,
-      hasScale
+      hasScale,
     ];
     return list.where((bool b) => b).length > 1;
   }
@@ -526,12 +521,13 @@ class SpringButtonState extends State<SpringButton>
 
   Widget wrapper() {
     return GestureDetector(
-      behavior: HitTestBehavior.translucent,
+      behavior: .translucent,
       onTapDown: !hasTap
           ? null
           : (details) {
               springDown();
-              if (widget.onTapDown != null && isEnabled) widget.onTapDown!(details);
+              if (widget.onTapDown != null && isEnabled)
+                widget.onTapDown!(details);
             },
       onTapUp: !hasTap
           ? null
@@ -731,13 +727,15 @@ class SpringButtonState extends State<SpringButton>
       onPanDown: !hasPan
           ? null
           : (details) {
-              if (widget.onPanDown != null && isEnabled) widget.onPanDown!(details);
+              if (widget.onPanDown != null && isEnabled)
+                widget.onPanDown!(details);
             },
       onPanStart: !hasPan
           ? null
           : (details) {
               springDown();
-              if (widget.onPanStart != null && isEnabled) widget.onPanStart!(details);
+              if (widget.onPanStart != null && isEnabled)
+                widget.onPanStart!(details);
             },
       onPanUpdate: !hasPan
           ? null
@@ -750,7 +748,8 @@ class SpringButtonState extends State<SpringButton>
           ? null
           : (details) {
               spring();
-              if (widget.onPanEnd != null && isEnabled) widget.onPanEnd!(details);
+              if (widget.onPanEnd != null && isEnabled)
+                widget.onPanEnd!(details);
             },
       onPanCancel: !hasPan
           ? null
@@ -779,7 +778,8 @@ class SpringButtonState extends State<SpringButton>
           ? null
           : (details) {
               spring();
-              if (widget.onScaleEnd != null && isEnabled) widget.onScaleEnd!(details);
+              if (widget.onScaleEnd != null && isEnabled)
+                widget.onScaleEnd!(details);
             },
       child: widget.uiChild,
     );
@@ -787,7 +787,7 @@ class SpringButtonState extends State<SpringButton>
 
   @override
   Widget build(BuildContext context) {
-    if (springButtonType == SpringButtonType.withOpacity) {
+    if (springButtonType == .withOpacity) {
       return AnimatedBuilder(
         animation: animation,
         child: useCache ? uiChild : null,

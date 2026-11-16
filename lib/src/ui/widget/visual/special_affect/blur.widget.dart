@@ -23,9 +23,9 @@ class Blur extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: applyInsets
-          ? EdgeInsets.symmetric(horizontal: sigmaX * 3, vertical: sigmaY * 3)
-          : EdgeInsets.zero,
-      constraints: constraints ?? const BoxConstraints.expand(),
+          ? .symmetric(horizontal: sigmaX * 3, vertical: sigmaY * 3)
+          : .zero,
+      constraints: constraints ?? const .expand(),
       child: ImageFiltered(
         imageFilter: ui.ImageFilter.blur(sigmaX: sigmaX, sigmaY: sigmaY),
         child: child,
@@ -40,10 +40,10 @@ class BackgroundBlur extends StatelessWidget {
     super.key,
     this.background,
     required this.child,
-    this.alignment = AlignmentDirectional.center,
+    this.alignment = .center,
     this.sigmaX = 2,
     this.sigmaY = 2,
-    this.fit = StackFit.expand,
+    this.fit = .expand,
     this.clipped = false,
     this.preferredSize,
   });
@@ -60,10 +60,7 @@ class BackgroundBlur extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget result = BackdropFilter(
-      filter: ui.ImageFilter.blur(
-        sigmaX: sigmaX,
-        sigmaY: sigmaY,
-      ),
+      filter: ui.ImageFilter.blur(sigmaX: sigmaX, sigmaY: sigmaY),
       child: child,
     );
 
@@ -98,8 +95,8 @@ class BlurDialog extends StatelessWidget {
     this.elevation,
     this.insetAnimationDuration = const Duration(milliseconds: 100),
     this.insetAnimationCurve = Curves.decelerate,
-    this.insetPadding = const EdgeInsets.all(24),
-    this.clipBehavior = Clip.none,
+    this.insetPadding = const .all(24),
+    this.clipBehavior = .none,
     this.shape,
   });
 

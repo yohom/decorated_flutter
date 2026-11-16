@@ -6,7 +6,7 @@ extension WidgetX on Widget {
     return Text.rich(
       TextSpan(children: [widgetSpan, otherSpan]),
       softWrap: true,
-      overflow: TextOverflow.ellipsis,
+      overflow: .ellipsis,
     );
   }
 

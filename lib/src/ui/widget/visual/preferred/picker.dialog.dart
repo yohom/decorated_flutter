@@ -96,7 +96,7 @@ class _PickerDialogState<T> extends State<_PickerDialog<T>> {
             },
             itemExtent: widget.itemExtent,
             children: <Widget>[
-              for (final item in widget._dataList) widget.itemBuilder(item)
+              for (final item in widget._dataList) widget.itemBuilder(item),
             ],
           ),
         ),

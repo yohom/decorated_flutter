@@ -31,7 +31,7 @@ class DecoratedText extends StatelessWidget {
     this.rightWidget,
     this.softWrap = true,
     this.material,
-    this.mainAxisSize = MainAxisSize.min,
+    this.mainAxisSize = .min,
     this.mainAxisAlignment,
     this.crossAxisAlignment,
     this.textBaseline,
@@ -47,9 +47,9 @@ class DecoratedText extends StatelessWidget {
     this.scrollPadding,
     this.cursor,
     this.gradient,
-  })  : _data = data,
-        _stream = null,
-        initialData = null;
+  }) : _data = data,
+       _stream = null,
+       initialData = null;
 
   const DecoratedText.reactive(
     Stream<String> stream, {
@@ -80,7 +80,7 @@ class DecoratedText extends StatelessWidget {
     this.rightWidget,
     this.softWrap = true,
     this.material,
-    this.mainAxisSize = MainAxisSize.min,
+    this.mainAxisSize = .min,
     this.mainAxisAlignment,
     this.crossAxisAlignment,
     this.textBaseline,
@@ -96,8 +96,8 @@ class DecoratedText extends StatelessWidget {
     this.scrollPadding,
     this.cursor,
     this.gradient,
-  })  : _data = null,
-        _stream = stream;
+  }) : _data = null,
+       _stream = stream;
 
   final Stream<String>? _stream;
   final String? initialData;
@@ -152,8 +152,9 @@ class DecoratedText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textStyle = style ?? DefaultTextStyle.of(context).style;
-    final effectiveTextStyle =
-        gradient != null ? textStyle.copyWith(foreground: null) : textStyle;
+    final effectiveTextStyle = gradient != null
+        ? textStyle.copyWith(foreground: null)
+        : textStyle;
 
     Widget _buildText(String data) {
       TextSpan textSpan = TextSpan(text: data);
@@ -191,9 +192,7 @@ class DecoratedText extends StatelessWidget {
               style: effectiveTextStyle,
               strutStyle: strutStyle,
               textAlign: textAlign,
-              overflow: maxLines == 1
-                  ? (overflow ?? TextOverflow.ellipsis)
-                  : overflow,
+              overflow: maxLines == 1 ? (overflow ?? .ellipsis) : overflow,
               softWrap: softWrap,
             );
     }
@@ -209,7 +208,7 @@ class DecoratedText extends StatelessWidget {
     if (scrollable) {
       result = SingleChildScrollView(
         padding: scrollPadding,
-        scrollDirection: scrollDirection ?? Axis.vertical,
+        scrollDirection: scrollDirection ?? .vertical,
         child: result,
       );
     }
@@ -217,10 +216,10 @@ class DecoratedText extends StatelessWidget {
     if (rightWidget != null || leftWidget != null) {
       result = Row(
         mainAxisSize: mainAxisSize,
-        mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.center,
-        crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.center,
-        textBaseline: crossAxisAlignment == CrossAxisAlignment.baseline
-            ? TextBaseline.alphabetic
+        mainAxisAlignment: mainAxisAlignment ?? .center,
+        crossAxisAlignment: crossAxisAlignment ?? .center,
+        textBaseline: crossAxisAlignment == .baseline
+            ? .alphabetic
             : textBaseline,
         children: [
           if (leftWidget != null) leftWidget!,
@@ -258,7 +257,7 @@ class DecoratedText extends StatelessWidget {
         foregroundDecoration: foregroundDecoration,
         constraints: constraints,
         transform: transform,
-        alignment: alignment ?? (center == true ? Alignment.center : null),
+        alignment: alignment ?? (center == true ? .center : null),
         child: result,
       );
     }
@@ -269,7 +268,7 @@ class DecoratedText extends StatelessWidget {
         bottom: safeArea?.bottom ?? true,
         left: safeArea?.left ?? true,
         right: safeArea?.right ?? true,
-        minimum: safeArea?.minimum ?? EdgeInsets.zero,
+        minimum: safeArea?.minimum ?? .zero,
         child: result,
       );
     }
@@ -278,10 +277,11 @@ class DecoratedText extends StatelessWidget {
       result = MouseRegion(
         cursor: cursor ?? SystemMouseCursors.click,
         child: GestureDetector(
-          behavior: behavior ?? HitTestBehavior.opaque,
+          behavior: behavior ?? .opaque,
           onTap: onPressed != null ? () => onPressed!(context) : null,
-          onLongPress:
-              onLongPressed != null ? () => onLongPressed!(context) : null,
+          onLongPress: onLongPressed != null
+              ? () => onLongPressed!(context)
+              : null,
           child: result,
         ),
       );
@@ -290,7 +290,7 @@ class DecoratedText extends StatelessWidget {
     if (gradient case final Gradient g) {
       result = ShaderMask(
         shaderCallback: (bounds) => g.createShader(bounds),
-        blendMode: BlendMode.srcIn,
+        blendMode: .srcIn,
         child: result,
       );
     }

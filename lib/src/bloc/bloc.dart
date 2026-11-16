@@ -27,9 +27,11 @@ abstract class BLoC {
 
   @mustCallSuper
   void dispose() {
-    L.d('=============================================\n'
-        '[DECORATED_FLUTTER] $semantics closed '
-        '\n=============================================');
+    L.d(
+      '=============================================\n'
+      '[DECORATED_FLUTTER] $semantics closed '
+      '\n=============================================',
+    );
   }
 }
 
@@ -92,7 +94,9 @@ abstract class LocalBLoC extends BLoC {
       } else if (component is ChangeNotifier) {
         component.dispose();
       } else {
-        L.w('[DECORATED_FLUTTER] 未支持自动dispose的类型 ${component.runtimeType}, 请检查代码是否有bug!');
+        L.w(
+          '[DECORATED_FLUTTER] 未支持自动dispose的类型 ${component.runtimeType}, 请检查代码是否有bug!',
+        );
       }
     }
     if (!compositeSubscription.isDisposed) compositeSubscription.dispose();
@@ -126,7 +130,9 @@ abstract class GlobalBLoC extends BLoC {
         } else if (component is ChangeNotifier) {
           component.dispose();
         } else {
-          L.w('[DECORATED_FLUTTER] 未支持自动dispose的类型 ${component.runtimeType}, 请检查代码是否有bug!');
+          L.w(
+            '[DECORATED_FLUTTER] 未支持自动dispose的类型 ${component.runtimeType}, 请检查代码是否有bug!',
+          );
         }
       }
       if (!compositeSubscription.isDisposed) compositeSubscription.dispose();
@@ -149,19 +155,19 @@ mixin LifecycleBLoCMixin on BLoC, WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
     switch (state) {
-      case AppLifecycleState.resumed:
+      case .resumed:
         onResumed();
         break;
-      case AppLifecycleState.inactive:
+      case .inactive:
         onInactive();
         break;
-      case AppLifecycleState.paused:
+      case .paused:
         onPaused();
         break;
-      case AppLifecycleState.detached:
+      case .detached:
         onDetached();
         break;
-      case AppLifecycleState.hidden:
+      case .hidden:
         onDetached();
         break;
     }

@@ -11,7 +11,7 @@ Future<DateTime?> showDateDialog(
   DateTime? maximumDate,
   DateTime? minimumDate,
   Widget? title,
-  CupertinoDatePickerMode mode = CupertinoDatePickerMode.date,
+  CupertinoDatePickerMode mode = .date,
   String? cancelText,
   String? confirmText,
 }) async {
@@ -35,7 +35,7 @@ class _DatePickerDialog extends StatefulWidget {
     this.maximumDate,
     this.minimumDate,
     this.title,
-    this.mode = CupertinoDatePickerMode.date,
+    this.mode = .date,
     this.cancelText,
     this.confirmText,
   });
@@ -71,8 +71,8 @@ class __DatePickerDialogState extends State<_DatePickerDialog> {
       safeArea: SafeAreaConfig.bottom(),
       children: [
         DecoratedRow(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          padding: const .symmetric(horizontal: 8),
+          mainAxisAlignment: .spaceBetween,
           children: <Widget>[
             TextButton(
               onPressed: () => _handleCancel(context),

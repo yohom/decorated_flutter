@@ -8,7 +8,7 @@ class LocalNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: Theme.of(context).copyWith(platform: TargetPlatform.android),
+      data: Theme.of(context).copyWith(platform: .android),
       child: Navigator(
         onGenerateRoute: (settings) {
           return MaterialPageRoute(builder: builder);

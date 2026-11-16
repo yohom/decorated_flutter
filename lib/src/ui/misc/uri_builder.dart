@@ -9,20 +9,20 @@ class UriBuilder {
   String? userInfo;
 
   UriBuilder()
-      : fragment = '',
-        host = '',
-        path = '',
-        port = 0,
-        queryParameters = <String, String>{};
+    : fragment = '',
+      host = '',
+      path = '',
+      port = 0,
+      queryParameters = <String, String>{};
 
   UriBuilder.fromUri(Uri uri)
-      : fragment = uri.fragment,
-        host = uri.host,
-        path = uri.path,
-        port = uri.port,
-        queryParameters = Map<String, String>.from(uri.queryParameters),
-        scheme = uri.scheme,
-        userInfo = uri.userInfo;
+    : fragment = uri.fragment,
+      host = uri.host,
+      path = uri.path,
+      port = uri.port,
+      queryParameters = Map<String, String>.from(uri.queryParameters),
+      scheme = uri.scheme,
+      userInfo = uri.userInfo;
 
   Uri build() {
     return Uri(

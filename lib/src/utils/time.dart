@@ -75,10 +75,7 @@ DateTime? tryDate(dynamic raw) {
 /// 强制解析出一个日期
 ///
 /// 如果解析出错, 就根据[fallback]逻辑构造一个代替时间
-DateTime requireDate(
-  dynamic raw, {
-  DateTime Function()? fallback,
-}) {
+DateTime requireDate(dynamic raw, {DateTime Function()? fallback}) {
   final now = DateTime.now();
   if (raw == null) return now;
 

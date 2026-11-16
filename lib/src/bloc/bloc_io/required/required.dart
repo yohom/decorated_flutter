@@ -151,15 +151,14 @@ class IO<T> extends BaseIO<T> with InputMixin<T>, OutputMixin<T, dynamic> {
     OnUpdateCallback<T, dynamic>? onUpdate,
     super.onReset,
     super.persistConfig,
-  }) : super(
-          semantics: semantics,
-        ) {
+  }) : super(semantics: semantics) {
     stream = _subject.stream;
 
     _acceptEmpty = acceptEmpty;
     _isDistinct = isDistinct;
     if (isSame != null) _isSame = isSame;
-    _onUpdate = onUpdate ??
+    _onUpdate =
+        onUpdate ??
         (_) =>
             throw '[$semantics]在未设置onUpdate回调时调用了update方法, 请检查逻辑是否正确!\n${StackTrace.current}';
   }
@@ -209,7 +208,9 @@ mixin InputMixin<T> on BaseIO<T> {
 
     if (isEmpty(data) && !_acceptEmpty) {
       if (_printLog) {
-        L.w('[DECORATED_FLUTTER] [$_semantics]转发被拒绝! 原因: 需要非Empty值, 但是接收到Empty值');
+        L.w(
+          '[DECORATED_FLUTTER] [$_semantics]转发被拒绝! 原因: 需要非Empty值, 但是接收到Empty值',
+        );
       }
       return data;
     }
@@ -223,7 +224,9 @@ mixin InputMixin<T> on BaseIO<T> {
         _subject.add(data);
       } else {
         if (_printLog) {
-          L.w('[DECORATED_FLUTTER] [$_semantics]转发被拒绝! 原因: 需要唯一, 但是新数据 ($data) 与最新值 ($latest) 相同');
+          L.w(
+            '[DECORATED_FLUTTER] [$_semantics]转发被拒绝! 原因: 需要唯一, 但是新数据 ($data) 与最新值 ($latest) 相同',
+          );
         }
       }
     } else {
@@ -273,8 +276,9 @@ mixin OutputMixin<T, ARG> on BaseIO<T> {
       final completer = Completer<T>();
       final subscription = stream.listen((data) {
         if (_subject.isClosed) {
-          completer
-              .completeError(StateError('IO [$_semantics] 已被释放, 不能获取first值'));
+          completer.completeError(
+            StateError('IO [$_semantics] 已被释放, 不能获取first值'),
+          );
         } else {
           completer.complete(data);
         }
@@ -307,12 +311,14 @@ mixin OutputMixin<T, ARG> on BaseIO<T> {
 
   /// 使用内部的trigger获取数据
   Future<T> update([ARG? arg]) async {
-    return _onUpdate(arg).apply((data) {
-      if (!_subject.isClosed) _subject.add(data);
-    }).catchError((error) {
-      if (!_subject.isClosed && !_skipError) _subject.addError(error);
-      // 这里不知道这样处理合不合适
-      return null as T;
-    });
+    return _onUpdate(arg)
+        .apply((data) {
+          if (!_subject.isClosed) _subject.add(data);
+        })
+        .catchError((error) {
+          if (!_subject.isClosed && !_skipError) _subject.addError(error);
+          // 这里不知道这样处理合不合适
+          return null as T;
+        });
   }
 }

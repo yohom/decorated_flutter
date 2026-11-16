@@ -1,11 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 class EmptyPlaceholder extends StatelessWidget {
-  const EmptyPlaceholder({
-    super.key,
-    this.sliver = false,
-    this.child,
-  });
+  const EmptyPlaceholder({super.key, this.sliver = false, this.child});
 
   final bool sliver;
   final Widget? child;

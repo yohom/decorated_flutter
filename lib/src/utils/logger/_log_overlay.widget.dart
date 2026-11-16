@@ -31,7 +31,7 @@ class _LogOverlayState extends State<LogOverlay> {
   var _showNetworkOnly = false;
 
   Duration get _animationDuration =>
-      _isDragging ? Duration.zero : const Duration(milliseconds: 280);
+      _isDragging ? .zero : const Duration(milliseconds: 280);
 
   @override
   Widget build(BuildContext context) {
@@ -71,10 +71,10 @@ class _LogOverlayState extends State<LogOverlay> {
           child: AnimatedContainer(
             duration: _animationDuration,
             curve: Curves.easeInOutCubic,
-            clipBehavior: Clip.hardEdge,
+            clipBehavior: .hardEdge,
             decoration: BoxDecoration(
               color: const Color(0xCC171717),
-              borderRadius: BorderRadius.circular(_isMinimized ? 26 : 12),
+              borderRadius: .circular(_isMinimized ? 26 : 12),
             ),
             child: _isMinimized
                 ? _buildMinimized(available)
@@ -89,7 +89,7 @@ class _LogOverlayState extends State<LogOverlay> {
     return DecoratedColumn(
       children: [
         GestureDetector(
-          behavior: HitTestBehavior.opaque,
+          behavior: .opaque,
           onPanStart: (_) => setState(() => _isDragging = true),
           onPanUpdate: (details) => _move(details.delta, available, size),
           onPanEnd: (_) => setState(() => _isDragging = false),
@@ -120,10 +120,8 @@ class _LogOverlayState extends State<LogOverlay> {
                 tooltip: _showNetworkOnly ? '显示全部日志' : '仅显示网络日志',
               ),
               IconButton(
-                onPressed: () => _minimize(
-                  available,
-                  MediaQuery.paddingOf(context).bottom,
-                ),
+                onPressed: () =>
+                    _minimize(available, MediaQuery.paddingOf(context).bottom),
                 icon: const Icon(Icons.minimize, color: Colors.white),
                 tooltip: '最小化日志',
               ),
@@ -145,14 +143,14 @@ class _LogOverlayState extends State<LogOverlay> {
               ),
             ),
             Align(
-              alignment: Alignment.bottomRight,
+              alignment: .bottomRight,
               child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
+                behavior: .opaque,
                 onPanStart: (_) => setState(() => _isDragging = true),
                 onPanUpdate: (details) => _resize(details.delta, available),
                 onPanEnd: (_) => setState(() => _isDragging = false),
                 child: const Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: .all(8),
                   child: _ResizeHandleIcon(),
                 ),
               ),
@@ -165,7 +163,7 @@ class _LogOverlayState extends State<LogOverlay> {
 
   Widget _buildMinimized(Size available) {
     return GestureDetector(
-      behavior: HitTestBehavior.opaque,
+      behavior: .opaque,
       onTap: () => setState(() => _isMinimized = false),
       onPanStart: (_) => setState(() => _isDragging = true),
       onPanUpdate: (details) => _move(details.delta, available, _minimizedSize),
@@ -175,7 +173,7 @@ class _LogOverlayState extends State<LogOverlay> {
         curve: Curves.easeOutCubic,
         decoration: BoxDecoration(
           color: const Color(0xE6000000),
-          borderRadius: BorderRadius.circular(26),
+          borderRadius: .circular(26),
         ),
         child: const Center(
           child: Icon(Icons.article_outlined, color: Colors.white),
@@ -199,25 +197,20 @@ class _LogOverlayState extends State<LogOverlay> {
 
   Future<void> _shareLogs() {
     return TalkerViewController(talker: widget.talker).downloadLogsFile(
-      widget.talker.history.text(
-        timeFormat: widget.talker.settings.timeFormat,
-      ),
+      widget.talker.history.text(timeFormat: widget.talker.settings.timeFormat),
     );
   }
 
   void _move(Offset delta, Size available, Size size) {
     setState(() {
       if (_isMinimized) {
-        final currentOffset = _minimizedOffset ??
+        final currentOffset =
+            _minimizedOffset ??
             Offset(
               available.width - _minimizedSize.width - 16,
               available.height - _minimizedSize.height - _minimizedBottomMargin,
             );
-        _minimizedOffset = _clampOffset(
-          currentOffset + delta,
-          available,
-          size,
-        );
+        _minimizedOffset = _clampOffset(currentOffset + delta, available, size);
         return;
       }
       _offset = _clampOffset(_offset + delta, available, size);
@@ -228,12 +221,16 @@ class _LogOverlayState extends State<LogOverlay> {
     setState(() {
       _size = Size(
         (_size.width + delta.dx)
-            .clamp(_minimumSize.width,
-                max(_minimumSize.width, available.width - _offset.dx))
+            .clamp(
+              _minimumSize.width,
+              max(_minimumSize.width, available.width - _offset.dx),
+            )
             .toDouble(),
         (_size.height + delta.dy)
-            .clamp(_minimumSize.height,
-                max(_minimumSize.height, available.height - _offset.dy))
+            .clamp(
+              _minimumSize.height,
+              max(_minimumSize.height, available.height - _offset.dy),
+            )
             .toDouble(),
       );
     });
@@ -315,7 +312,7 @@ class _LogListState extends State<_LogList> {
 
         return ListView.builder(
           controller: _scrollController,
-          padding: const EdgeInsets.only(top: 12),
+          padding: const .only(top: 12),
           itemCount: logs.length,
           itemBuilder: (_, index) {
             final log = logs[index];
@@ -367,8 +364,8 @@ class _ResizeHandlePainter extends CustomPainter {
     final paint = Paint()
       ..color = Colors.white70
       ..strokeWidth = 1.6
-      ..strokeCap = StrokeCap.round
-      ..style = PaintingStyle.stroke;
+      ..strokeCap = .round
+      ..style = .stroke;
     canvas.drawPath(
       Path()
         ..moveTo(3, 13)

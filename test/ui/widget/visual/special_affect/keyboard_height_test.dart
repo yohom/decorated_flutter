@@ -17,93 +17,95 @@ void main() {
   });
 
   testWidgets(
-      'KeyboardHeightBuilder uses cached height first and updates to realtime value',
-      (tester) async {
-    tester.view.devicePixelRatio = 1;
-    tester.view.viewInsets = const FakeViewPadding(bottom: 0);
-    addTearDown(() {
+    'KeyboardHeightBuilder uses cached height first and updates to realtime value',
+    (tester) async {
+      tester.view.devicePixelRatio = 1;
       tester.view.viewInsets = const FakeViewPadding(bottom: 0);
-      tester.view.resetDevicePixelRatio();
-    });
+      addTearDown(() {
+        tester.view.viewInsets = const FakeViewPadding(bottom: 0);
+        tester.view.resetDevicePixelRatio();
+      });
 
-    await tester.pumpWidget(
-      MaterialApp(
-        home: KeyboardHeightBuilder(
-          builder: (keyboardHeight, stableKeyboardHeight) {
-            return Text(
-              '${keyboardHeight.toStringAsFixed(0)}/${stableKeyboardHeight?.toStringAsFixed(0) ?? 'null'}',
-              textDirection: TextDirection.ltr,
-            );
-          },
+      await tester.pumpWidget(
+        MaterialApp(
+          home: KeyboardHeightBuilder(
+            builder: (keyboardHeight, stableKeyboardHeight) {
+              return Text(
+                '${keyboardHeight.toStringAsFixed(0)}/${stableKeyboardHeight?.toStringAsFixed(0) ?? 'null'}',
+                textDirection: .ltr,
+              );
+            },
+          ),
         ),
-      ),
-    );
+      );
 
-    expect(find.text('0/180'), findsOneWidget);
-    expect(_cachedKeyboardHeight, 180);
+      expect(find.text('0/180'), findsOneWidget);
+      expect(_cachedKeyboardHeight, 180);
 
-    tester.view.viewInsets = const FakeViewPadding(bottom: 216);
-    await tester.pump();
+      tester.view.viewInsets = const FakeViewPadding(bottom: 216);
+      await tester.pump();
 
-    expect(find.text('216/180'), findsOneWidget);
-  });
+      expect(find.text('216/180'), findsOneWidget);
+    },
+  );
 
   testWidgets(
-      'KeyboardHeightBuilder updates stableKeyboardHeight after debounce and persists it',
-      (tester) async {
-    tester.view.devicePixelRatio = 1;
-    tester.view.viewInsets = const FakeViewPadding(bottom: 0);
-    addTearDown(() {
+    'KeyboardHeightBuilder updates stableKeyboardHeight after debounce and persists it',
+    (tester) async {
+      tester.view.devicePixelRatio = 1;
       tester.view.viewInsets = const FakeViewPadding(bottom: 0);
-      tester.view.resetDevicePixelRatio();
-    });
+      addTearDown(() {
+        tester.view.viewInsets = const FakeViewPadding(bottom: 0);
+        tester.view.resetDevicePixelRatio();
+      });
 
-    await tester.pumpWidget(
-      MaterialApp(
-        home: KeyboardHeightBuilder(
-          builder: (keyboardHeight, stableKeyboardHeight) {
-            return Column(
-              children: [
-                Text(
-                  'keyboard:${keyboardHeight.toStringAsFixed(0)}',
-                  textDirection: TextDirection.ltr,
-                ),
-                Text(
-                  'stable:${stableKeyboardHeight?.toStringAsFixed(0) ?? 'null'}',
-                  textDirection: TextDirection.ltr,
-                ),
-              ],
-            );
-          },
+      await tester.pumpWidget(
+        MaterialApp(
+          home: KeyboardHeightBuilder(
+            builder: (keyboardHeight, stableKeyboardHeight) {
+              return Column(
+                children: [
+                  Text(
+                    'keyboard:${keyboardHeight.toStringAsFixed(0)}',
+                    textDirection: .ltr,
+                  ),
+                  Text(
+                    'stable:${stableKeyboardHeight?.toStringAsFixed(0) ?? 'null'}',
+                    textDirection: .ltr,
+                  ),
+                ],
+              );
+            },
+          ),
         ),
-      ),
-    );
+      );
 
-    expect(find.text('keyboard:0'), findsOneWidget);
-    expect(find.text('stable:180'), findsOneWidget);
+      expect(find.text('keyboard:0'), findsOneWidget);
+      expect(find.text('stable:180'), findsOneWidget);
 
-    tester.view.viewInsets = const FakeViewPadding(bottom: 216);
-    await tester.pump();
+      tester.view.viewInsets = const FakeViewPadding(bottom: 216);
+      await tester.pump();
 
-    expect(find.text('keyboard:216'), findsOneWidget);
-    expect(find.text('stable:180'), findsOneWidget);
-    expect(_cachedKeyboardHeight, 180);
+      expect(find.text('keyboard:216'), findsOneWidget);
+      expect(find.text('stable:180'), findsOneWidget);
+      expect(_cachedKeyboardHeight, 180);
 
-    await tester.pump(const Duration(milliseconds: 300));
+      await tester.pump(const Duration(milliseconds: 300));
 
-    expect(find.text('keyboard:216'), findsOneWidget);
-    expect(find.text('stable:216'), findsOneWidget);
-    expect(_cachedKeyboardHeight, 216);
+      expect(find.text('keyboard:216'), findsOneWidget);
+      expect(find.text('stable:216'), findsOneWidget);
+      expect(_cachedKeyboardHeight, 216);
 
-    tester.view.viewInsets = const FakeViewPadding(bottom: 0.4);
-    await tester.pump();
+      tester.view.viewInsets = const FakeViewPadding(bottom: 0.4);
+      await tester.pump();
 
-    expect(find.text('keyboard:0'), findsOneWidget);
-    expect(find.text('stable:216'), findsOneWidget);
+      expect(find.text('keyboard:0'), findsOneWidget);
+      expect(find.text('stable:216'), findsOneWidget);
 
-    await tester.pump(const Duration(milliseconds: 300));
+      await tester.pump(const Duration(milliseconds: 300));
 
-    expect(find.text('stable:216'), findsOneWidget);
-    expect(_cachedKeyboardHeight, 216);
-  });
+      expect(find.text('stable:216'), findsOneWidget);
+      expect(_cachedKeyboardHeight, 216);
+    },
+  );
 }

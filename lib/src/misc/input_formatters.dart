@@ -5,10 +5,7 @@ class RangeTextInputFormatter extends TextInputFormatter {
   final num min;
   final num max;
 
-  RangeTextInputFormatter({
-    required this.min,
-    required this.max,
-  });
+  RangeTextInputFormatter({required this.min, required this.max});
 
   @override
   TextEditingValue formatEditUpdate(

@@ -9,11 +9,11 @@ void toast(
   TextStyle textStyle = const TextStyle(color: Colors.black),
   VoidCallback? onDismiss,
   @Deprecated('已无作用') bool dismissOtherToast = true,
-  @Deprecated('已无作用') TextAlign textAlign = TextAlign.center,
+  @Deprecated('已无作用') TextAlign textAlign = .center,
   Duration duration = const Duration(seconds: 3),
   Color backgroundColor = Colors.white,
   bool error = false,
-  Alignment alignment = Alignment.center,
+  Alignment alignment = .center,
   bool showIcon = true,
 }) {
   if (isNotEmpty(message)) {
@@ -22,19 +22,17 @@ void toast(
       title: Text(message!, style: textStyle),
       autoCloseDuration: duration,
       alignment: alignment,
-      callbacks: ToastificationCallbacks(
-        onDismissed: (_) => onDismiss?.call(),
-      ),
-      type: error ? ToastificationType.error : ToastificationType.info,
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      style: ToastificationStyle.flatColored,
+      callbacks: ToastificationCallbacks(onDismissed: (_) => onDismiss?.call()),
+      type: error ? .error : .info,
+      padding: .symmetric(horizontal: 16, vertical: 12),
+      style: .flatColored,
       animationBuilder: (_, animation, alignment, child) {
         return FadeTransition(opacity: animation, child: child);
       },
       showIcon: showIcon,
-      closeButtonShowType: CloseButtonShowType.none,
+      closeButtonShowType: .none,
       backgroundColor: backgroundColor,
-      borderRadius: BorderRadius.circular(radius),
+      borderRadius: .circular(radius),
     );
   } else {
     L.w('[DECORATED_FLUTTER] toast传入null值, 略过');

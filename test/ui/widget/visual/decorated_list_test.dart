@@ -14,10 +14,8 @@ void main() {
           height: 100,
           child: DecoratedList.box(
             itemCount: 3,
-            itemBuilder: (_, index) => SizedBox(
-              height: 60,
-              child: Text('$index'),
-            ),
+            itemBuilder: (_, index) =>
+                SizedBox(height: 60, child: Text('$index')),
             loadMoreConfig: LoadMoreConfig(
               onLoadMore: () async {
                 loadMoreCount++;
@@ -55,10 +53,8 @@ void main() {
             slivers: [
               DecoratedList.sliver(
                 itemCount: 3,
-                itemBuilder: (_, index) => SizedBox(
-                  height: 60,
-                  child: Text('$index'),
-                ),
+                itemBuilder: (_, index) =>
+                    SizedBox(height: 60, child: Text('$index')),
               ),
             ],
           ),
@@ -79,14 +75,10 @@ void main() {
             slivers: [
               DecoratedList.sliver(
                 itemCount: 3,
-                itemBuilder: (_, index) => SizedBox(
-                  height: 40,
-                  child: Text('item-$index'),
-                ),
-                separatorBuilder: (_, index) => SizedBox(
-                  key: ValueKey('separator-$index'),
-                  height: 8,
-                ),
+                itemBuilder: (_, index) =>
+                    SizedBox(height: 40, child: Text('item-$index')),
+                separatorBuilder: (_, index) =>
+                    SizedBox(key: ValueKey('separator-$index'), height: 8),
               ),
             ],
           ),
@@ -117,10 +109,8 @@ void main() {
                   SizedBox(height: 40, child: Text('item-1')),
                   SizedBox(height: 40, child: Text('item-2')),
                 ],
-                separatorBuilder: (_, index) => SizedBox(
-                  key: ValueKey('separator-$index'),
-                  height: 8,
-                ),
+                separatorBuilder: (_, index) =>
+                    SizedBox(key: ValueKey('separator-$index'), height: 8),
               ),
             ],
           ),
@@ -152,13 +142,9 @@ void main() {
           height: 100,
           child: DecoratedList.box(
             itemCount: 3,
-            itemBuilder: (_, index) => SizedBox(
-              height: 60,
-              child: Text('$index'),
-            ),
-            loadMoreConfig: LoadMoreConfig(
-              onLoadMore: () async => false,
-            ),
+            itemBuilder: (_, index) =>
+                SizedBox(height: 60, child: Text('$index')),
+            loadMoreConfig: LoadMoreConfig(onLoadMore: () async => false),
           ),
         ),
       ),

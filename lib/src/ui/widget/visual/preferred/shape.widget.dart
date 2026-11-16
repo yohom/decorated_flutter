@@ -6,8 +6,8 @@ class Circle extends StatelessWidget {
     super.key,
     required this.radius,
     this.color = Colors.transparent,
-    this.padding = EdgeInsets.zero,
-    this.margin = EdgeInsets.zero,
+    this.padding = .zero,
+    this.margin = .zero,
     this.border,
     this.alignment,
     this.decoration,
@@ -31,8 +31,9 @@ class Circle extends StatelessWidget {
       padding: padding,
       margin: margin,
       alignment: alignment,
-      decoration: decoration?.copyWith(shape: BoxShape.circle) ??
-          BoxDecoration(color: color, shape: BoxShape.circle, border: border),
+      decoration:
+          decoration?.copyWith(shape: .circle) ??
+          BoxDecoration(color: color, shape: .circle, border: border),
       child: child,
     );
   }
@@ -43,8 +44,8 @@ class Square extends StatelessWidget {
     super.key,
     required this.side,
     this.color = Colors.transparent,
-    this.padding = EdgeInsets.zero,
-    this.margin = EdgeInsets.zero,
+    this.padding = .zero,
+    this.margin = .zero,
     this.border,
     this.child,
   });
@@ -65,7 +66,7 @@ class Square extends StatelessWidget {
       margin: margin,
       decoration: BoxDecoration(
         color: color,
-        shape: BoxShape.rectangle,
+        shape: .rectangle,
         border: border,
       ),
       child: child,
@@ -82,8 +83,8 @@ class Line extends StatelessWidget {
     this.borderRadius,
     this.centered,
     this.sliver = false,
-    this.padding = EdgeInsets.zero,
-    this.margin = EdgeInsets.zero,
+    this.padding = .zero,
+    this.margin = .zero,
   });
 
   final double width, height;

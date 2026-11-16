@@ -1,5 +1,3 @@
-
-
 import 'package:material_ui/material_ui.dart';
 
 class GradientButton extends StatelessWidget {
@@ -40,9 +38,7 @@ class GradientButton extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: onPressed as void Function()?,
-          child: Center(
-            child: child,
-          ),
+          child: Center(child: child),
         ),
       ),
     );

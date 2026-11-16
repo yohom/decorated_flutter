@@ -35,8 +35,10 @@ Future<T?> replaceRoute<T extends Object?, TO extends Object?>(
   final navigator = gNavigatorKey.currentState ?? context?.navigator;
   if (navigator == null) throw _kNoNav;
 
-  return navigator.pushReplacementNamed<T, TO>(_routeName(path, query),
-      arguments: body);
+  return navigator.pushReplacementNamed<T, TO>(
+    _routeName(path, query),
+    arguments: body,
+  );
 }
 
 /// push一个路由并弹出指定路由
@@ -64,10 +66,12 @@ String _routeName(String path, Map<String, String?>? query) {
   final routeName = StringBuffer(path);
   if (query != null) {
     routeName.write('?');
-    routeName.write(query.entries
-        .where((e) => e.value != null)
-        .map((e) => '${e.key}=${e.value}')
-        .join('&'));
+    routeName.write(
+      query.entries
+          .where((e) => e.value != null)
+          .map((e) => '${e.key}=${e.value}')
+          .join('&'),
+    );
   }
 
   L.d('[DECORATED_FLUTTER] 合成跳转路由: $routeName');

@@ -10,8 +10,8 @@ class AnimatedVisibility<T> extends StatelessWidget {
     this.duration = const Duration(milliseconds: 320),
     this.reverseDuration,
     this.margin,
-    this.alignment = Alignment.topCenter,
-    this.clipBehavior = Clip.hardEdge,
+    this.alignment = .topCenter,
+    this.clipBehavior = .hardEdge,
     this.curve = Curves.ease,
     required this.child,
     this.placeholder = const SizedBox(width: double.infinity, height: 0),
@@ -24,8 +24,8 @@ class AnimatedVisibility<T> extends StatelessWidget {
     this.duration = const Duration(milliseconds: 320),
     this.reverseDuration,
     this.margin,
-    this.alignment = Alignment.topCenter,
-    this.clipBehavior = Clip.hardEdge,
+    this.alignment = .topCenter,
+    this.clipBehavior = .hardEdge,
     this.curve = Curves.ease,
     required this.child,
     this.placeholder = const SizedBox(width: double.infinity, height: 0),
@@ -39,15 +39,15 @@ class AnimatedVisibility<T> extends StatelessWidget {
     this.reverseDuration,
     this.margin,
     bool showEmptyValue = false,
-    this.alignment = Alignment.topCenter,
-    this.clipBehavior = Clip.hardEdge,
+    this.alignment = .topCenter,
+    this.clipBehavior = .hardEdge,
     this.curve = Curves.ease,
     this.placeholder = HORIZONTAL_NIL,
-  })  : visible = value != null && (showEmptyValue || !isEmpty(value)),
-        visibleStream = null,
-        child = value == null || (!showEmptyValue && isEmpty(value))
-            ? HORIZONTAL_NIL
-            : builder(value);
+  }) : visible = value != null && (showEmptyValue || !isEmpty(value)),
+       visibleStream = null,
+       child = value == null || (!showEmptyValue && isEmpty(value))
+           ? HORIZONTAL_NIL
+           : builder(value);
 
   final bool visible;
   final Stream<bool>? visibleStream;
@@ -76,9 +76,7 @@ class AnimatedVisibility<T> extends StatelessWidget {
             firstCurve: curve,
             secondCurve: curve,
             sizeCurve: curve,
-            crossFadeState: snapshot.data == true
-                ? CrossFadeState.showFirst
-                : CrossFadeState.showSecond,
+            crossFadeState: snapshot.data == true ? .showFirst : .showSecond,
             firstChild: child,
             secondChild: placeholder,
           );
@@ -92,8 +90,7 @@ class AnimatedVisibility<T> extends StatelessWidget {
         firstCurve: curve,
         secondCurve: curve,
         sizeCurve: curve,
-        crossFadeState:
-            visible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+        crossFadeState: visible ? .showFirst : .showSecond,
         firstChild: child,
         secondChild: placeholder,
       );

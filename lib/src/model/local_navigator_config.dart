@@ -5,10 +5,7 @@ class LocalNavigatorConfig {
   final RouteFactory onGenerateRoute;
   final TargetPlatform? targetPlatform;
 
-  LocalNavigatorConfig({
-    required this.onGenerateRoute,
-    this.targetPlatform,
-  });
+  LocalNavigatorConfig({required this.onGenerateRoute, this.targetPlatform});
 
   @override
   String toString() =>

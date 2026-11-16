@@ -19,10 +19,11 @@ class Delayed<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (duration == Duration.zero) return child;
+    if (duration == .zero) return child;
     return SingleSubscriber(
       showLoading: showLoading,
-      loadingPlaceholder: loadingWidget ??
+      loadingPlaceholder:
+          loadingWidget ??
           Container(
             color: backgroundColor,
             child: const Center(child: CircularProgressIndicator()),

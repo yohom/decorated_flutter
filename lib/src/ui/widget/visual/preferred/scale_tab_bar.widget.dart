@@ -1,5 +1,6 @@
 /// 处理tabbar汉字缩放抖动 代码参考 https://github.com/flutter/flutter/issues/24505#issuecomment-601624396
 library;
+
 // Copyright 2014 The Flutter Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -46,7 +47,8 @@ class _TabStyle extends AnimatedWidget {
     // labelStyle.color (and tabBarTheme.labelStyle.color) is not considered
     // as it'll be a breaking change without a possible migration plan. for
     // details: https://github.com/flutter/flutter/pull/109541#issuecomment-1294241417
-    Color selectedColor = labelColor ??
+    Color selectedColor =
+        labelColor ??
         tabBarTheme.labelColor ??
         labelStyle?.color ??
         tabBarTheme.labelStyle?.color ??
@@ -56,12 +58,12 @@ class _TabStyle extends AnimatedWidget {
 
     if (selectedColor is WidgetStateColor) {
       unselectedColor = selectedColor.resolve(const <WidgetState>{});
-      selectedColor =
-          selectedColor.resolve(const <WidgetState>{WidgetState.selected});
+      selectedColor = selectedColor.resolve(const <WidgetState>{.selected});
     } else {
       // unselectedLabelColor and tabBarTheme.unselectedLabelColor are ignored
       // when labelColor is a MaterialStateColor.
-      unselectedColor = unselectedLabelColor ??
+      unselectedColor =
+          unselectedLabelColor ??
           tabBarTheme.unselectedLabelColor ??
           unselectedLabelStyle?.color ??
           tabBarTheme.unselectedLabelStyle?.color ??
@@ -72,9 +74,9 @@ class _TabStyle extends AnimatedWidget {
 
     return WidgetStateColor.resolveWith((Set<WidgetState> states) {
       if (states.contains(WidgetState.selected)) {
-        return Color.lerp(selectedColor, unselectedColor, animation.value)!;
+        return .lerp(selectedColor, unselectedColor, animation.value)!;
       }
-      return Color.lerp(unselectedColor, selectedColor, animation.value)!;
+      return .lerp(unselectedColor, selectedColor, animation.value)!;
     });
   }
 
@@ -84,22 +86,24 @@ class _TabStyle extends AnimatedWidget {
     final Animation<double> animation = listenable as Animation<double>;
 
     final Set<WidgetState> states = isSelected
-        ? const <WidgetState>{WidgetState.selected}
+        ? const <WidgetState>{.selected}
         : const <WidgetState>{};
 
     // To enable TextStyle.lerp(style1, style2, value), both styles must have
     // the same value of inherit. Force that to be inherit=true here.
     final TextStyle selectedStyle =
-        (labelStyle ?? tabBarTheme.labelStyle ?? defaults.labelStyle!)
+        (labelStyle ?? tabBarTheme.labelStyle ?? defaults.labelStyle!).copyWith(
+          inherit: true,
+        );
+    final TextStyle unselectedStyle =
+        (unselectedLabelStyle ??
+                tabBarTheme.unselectedLabelStyle ??
+                labelStyle ??
+                defaults.unselectedLabelStyle!)
             .copyWith(inherit: true);
-    final TextStyle unselectedStyle = (unselectedLabelStyle ??
-            tabBarTheme.unselectedLabelStyle ??
-            labelStyle ??
-            defaults.unselectedLabelStyle!)
-        .copyWith(inherit: true);
     final TextStyle textStyle = isSelected
-        ? TextStyle.lerp(selectedStyle, unselectedStyle, animation.value)!
-        : TextStyle.lerp(unselectedStyle, selectedStyle, animation.value)!;
+        ? .lerp(selectedStyle, unselectedStyle, animation.value)!
+        : .lerp(unselectedStyle, selectedStyle, animation.value)!;
     final Color color = _resolveWithLabelColor(context).resolve(states);
 
     ///根据前后字体大小计算缩放倍率
@@ -115,10 +119,7 @@ class _TabStyle extends AnimatedWidget {
         fontSize: unselectedStyle.fontSize ?? 14,
       ),
       child: IconTheme.merge(
-        data: IconThemeData(
-          size: 24.0,
-          color: color,
-        ),
+        data: IconThemeData(size: 24.0, color: color),
 
         ///添加一个缩放外壳
         child: Transform.scale(scale: _scale, child: child),
@@ -128,7 +129,10 @@ class _TabStyle extends AnimatedWidget {
 }
 
 typedef _LayoutCallback = void Function(
-    List<double> xOffsets, TextDirection textDirection, double width);
+  List<double> xOffsets,
+  TextDirection textDirection,
+  double width,
+);
 
 class _TabLabelBarRenderer extends RenderFlex {
   _TabLabelBarRenderer({
@@ -161,9 +165,9 @@ class _TabLabelBarRenderer extends RenderFlex {
     }
     assert(textDirection != null);
     switch (textDirection!) {
-      case TextDirection.rtl:
+      case .rtl:
         xOffsets.insert(0, size.width);
-      case TextDirection.ltr:
+      case .ltr:
         xOffsets.add(size.width);
     }
     onPerformLayout(xOffsets, textDirection!, size.width);
@@ -179,11 +183,11 @@ class _TabLabelBar extends Flex {
     required this.onPerformLayout,
     required super.mainAxisSize,
   }) : super(
-          direction: Axis.horizontal,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          verticalDirection: VerticalDirection.down,
-        );
+         direction: .horizontal,
+         mainAxisAlignment: .start,
+         crossAxisAlignment: .center,
+         verticalDirection: .down,
+       );
 
   final _LayoutCallback onPerformLayout;
 
@@ -202,7 +206,9 @@ class _TabLabelBar extends Flex {
 
   @override
   void updateRenderObject(
-      BuildContext context, _TabLabelBarRenderer renderObject) {
+    BuildContext context,
+    _TabLabelBarRenderer renderObject,
+  ) {
     super.updateRenderObject(context, renderObject);
     renderObject.onPerformLayout = onPerformLayout;
   }
@@ -225,10 +231,7 @@ double _indexChangeProgress(TabController controller) {
 }
 
 class _DividerPainter extends CustomPainter {
-  _DividerPainter({
-    required this.dividerColor,
-    required this.dividerHeight,
-  });
+  _DividerPainter({required this.dividerColor, required this.dividerHeight});
 
   final Color dividerColor;
   final double dividerHeight;
@@ -342,17 +345,17 @@ class _IndicatorPainter extends CustomPainter {
     assert(tabIndex <= maxTabIndex);
     double tabLeft, tabRight;
     (tabLeft, tabRight) = switch (_currentTextDirection!) {
-      TextDirection.rtl => (
-          _currentTabOffsets![tabIndex + 1],
-          _currentTabOffsets![tabIndex]
-        ),
-      TextDirection.ltr => (
-          _currentTabOffsets![tabIndex],
-          _currentTabOffsets![tabIndex + 1]
-        ),
+      .rtl => (
+        _currentTabOffsets![tabIndex + 1],
+        _currentTabOffsets![tabIndex],
+      ),
+      .ltr => (
+        _currentTabOffsets![tabIndex],
+        _currentTabOffsets![tabIndex + 1],
+      ),
     };
 
-    if (indicatorSize == TabBarIndicatorSize.label) {
+    if (indicatorSize == .label) {
       final double tabWidth = tabKeys[tabIndex].currentContext!.size!.width;
       final EdgeInsetsGeometry labelPadding = labelPaddings[tabIndex];
       final EdgeInsets insets = labelPadding.resolve(_currentTextDirection);
@@ -363,8 +366,12 @@ class _IndicatorPainter extends CustomPainter {
     }
 
     final EdgeInsets insets = indicatorPadding.resolve(_currentTextDirection);
-    final Rect rect =
-        Rect.fromLTWH(tabLeft, 0.0, tabRight - tabLeft, tabBarSize.height);
+    final Rect rect = .fromLTWH(
+      tabLeft,
+      0.0,
+      tabRight - tabLeft,
+      tabBarSize.height,
+    );
 
     if (!(rect.size >= insets.collapsedSize)) {
       throw FlutterError(
@@ -387,12 +394,12 @@ class _IndicatorPainter extends CustomPainter {
     final int to = (ltr ? from + 1 : from - 1).clamp(0, maxTabIndex);
     final Rect fromRect = indicatorRect(size, from);
     final Rect toRect = indicatorRect(size, to);
-    _currentRect = Rect.lerp(fromRect, toRect, (value - from).abs());
+    _currentRect = .lerp(fromRect, toRect, (value - from).abs());
 
     _currentRect = switch (indicatorSize) {
-      TabBarIndicatorSize.label => _applyStretchEffect(_currentRect!),
+      .label => _applyStretchEffect(_currentRect!),
       // Do nothing.
-      TabBarIndicatorSize.tab => _currentRect,
+      .tab => _currentRect,
     };
 
     assert(_currentRect != null);
@@ -406,10 +413,14 @@ class _IndicatorPainter extends CustomPainter {
       final Paint dividerPaint = Paint()
         ..color = dividerColor!
         ..strokeWidth = dividerHeight!;
-      final Offset dividerP1 =
-          Offset(0, size.height - (dividerPaint.strokeWidth / 2));
-      final Offset dividerP2 =
-          Offset(size.width, size.height - (dividerPaint.strokeWidth / 2));
+      final Offset dividerP1 = Offset(
+        0,
+        size.height - (dividerPaint.strokeWidth / 2),
+      );
+      final Offset dividerP2 = Offset(
+        size.width,
+        size.height - (dividerPaint.strokeWidth / 2),
+      );
       canvas.drawLine(dividerP1, dividerP2, dividerPaint);
     }
     _painter!.paint(canvas, _currentRect!.topLeft, configuration);
@@ -477,7 +488,7 @@ class _IndicatorPainter extends CustomPainter {
 
   /// Same as [Rect.inflate], but only inflates in the horizontal direction.
   Rect _inflateRectHorizontally(Rect r, double delta) {
-    return Rect.fromLTRB(r.left - delta, r.top, r.right + delta, r.bottom);
+    return .fromLTRB(r.left - delta, r.top, r.right + delta, r.bottom);
   }
 
   @override
@@ -546,8 +557,11 @@ class _DragAnimation extends Animation<double>
   double get value {
     assert(!controller.indexIsChanging);
     final double controllerMaxValue = (controller.length - 1).toDouble();
-    final double controllerValue =
-        clampDouble(controller.animation!.value, 0.0, controllerMaxValue);
+    final double controllerValue = clampDouble(
+      controller.animation!.value,
+      0.0,
+      controllerMaxValue,
+    );
     return clampDouble((controllerValue - index.toDouble()).abs(), 0.0, 1.0);
   }
 }
@@ -562,9 +576,7 @@ class _TabBarScrollPosition extends ScrollPositionWithSingleContext {
     required super.context,
     required super.oldPosition,
     required this.tabBar,
-  }) : super(
-          initialPixels: null,
-        );
+  }) : super(initialPixels: null);
 
   final _ScaleTabBarState tabBar;
 
@@ -587,8 +599,13 @@ class _TabBarScrollPosition extends ScrollPositionWithSingleContext {
     // guard because the super call below would start a ballistic scroll activity.
     if (!_viewportDimensionWasNonZero || _needsPixelsCorrection) {
       _needsPixelsCorrection = false;
-      correctPixels(tabBar._initialScrollOffset(
-          viewportDimension, minScrollExtent, maxScrollExtent));
+      correctPixels(
+        tabBar._initialScrollOffset(
+          viewportDimension,
+          minScrollExtent,
+          maxScrollExtent,
+        ),
+      );
       result = false;
     }
     return super.applyContentDimensions(minScrollExtent, maxScrollExtent) &&
@@ -608,8 +625,11 @@ class _TabBarScrollController extends ScrollController {
   final _ScaleTabBarState tabBar;
 
   @override
-  ScrollPosition createScrollPosition(ScrollPhysics physics,
-      ScrollContext context, ScrollPosition? oldPosition) {
+  ScrollPosition createScrollPosition(
+    ScrollPhysics physics,
+    ScrollContext context,
+    ScrollPosition? oldPosition,
+  ) {
     return _TabBarScrollPosition(
       physics: physics,
       context: context,
@@ -692,7 +712,7 @@ class ScaleTabBar extends StatefulWidget implements PreferredSizeWidget {
     this.indicatorColor,
     this.automaticIndicatorColorAdjustment = true,
     this.indicatorWeight = 2.0,
-    this.indicatorPadding = EdgeInsets.zero,
+    this.indicatorPadding = .zero,
     this.indicator,
     this.indicatorSize,
     this.dividerColor,
@@ -702,7 +722,7 @@ class ScaleTabBar extends StatefulWidget implements PreferredSizeWidget {
     this.labelPadding,
     this.unselectedLabelColor,
     this.unselectedLabelStyle,
-    this.dragStartBehavior = DragStartBehavior.start,
+    this.dragStartBehavior = .start,
     this.overlayColor,
     this.mouseCursor,
     this.enableFeedback,
@@ -712,8 +732,8 @@ class ScaleTabBar extends StatefulWidget implements PreferredSizeWidget {
     this.splashBorderRadius,
     this.tabAlignment,
     this.textScaler,
-  })  : _isPrimary = true,
-        assert(indicator != null || (indicatorWeight > 0.0));
+  }) : _isPrimary = true,
+       assert(indicator != null || (indicatorWeight > 0.0));
 
   /// Creates a Material Design secondary tab bar.
   ///
@@ -744,7 +764,7 @@ class ScaleTabBar extends StatefulWidget implements PreferredSizeWidget {
     this.indicatorColor,
     this.automaticIndicatorColorAdjustment = true,
     this.indicatorWeight = 2.0,
-    this.indicatorPadding = EdgeInsets.zero,
+    this.indicatorPadding = .zero,
     this.indicator,
     this.indicatorSize,
     this.dividerColor,
@@ -754,7 +774,7 @@ class ScaleTabBar extends StatefulWidget implements PreferredSizeWidget {
     this.labelPadding,
     this.unselectedLabelColor,
     this.unselectedLabelStyle,
-    this.dragStartBehavior = DragStartBehavior.start,
+    this.dragStartBehavior = .start,
     this.overlayColor,
     this.mouseCursor,
     this.enableFeedback,
@@ -764,8 +784,8 @@ class ScaleTabBar extends StatefulWidget implements PreferredSizeWidget {
     this.splashBorderRadius,
     this.tabAlignment,
     this.textScaler,
-  })  : _isPrimary = false,
-        assert(indicator != null || (indicatorWeight > 0.0));
+  }) : _isPrimary = false,
+       assert(indicator != null || (indicatorWeight > 0.0));
 
   /// Typically a list of two or more [Tab] widgets.
   ///
@@ -1121,7 +1141,7 @@ class ScaleTabBar extends StatefulWidget implements PreferredSizeWidget {
         maxHeight = math.max(itemHeight, maxHeight);
       }
     }
-    return Size.fromHeight(maxHeight + indicatorWeight);
+    return .fromHeight(maxHeight + indicatorWeight);
   }
 
   /// Returns whether the [ScaleTabBar] contains a tab with both text and icon.
@@ -1166,8 +1186,10 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
     // the width of tab widget i. See _IndicatorPainter.indicatorRect().
     _tabKeys = widget.tabs.map((Widget tab) => GlobalKey()).toList();
     _labelPaddings = List<EdgeInsetsGeometry>.filled(
-        widget.tabs.length, EdgeInsets.zero,
-        growable: true);
+      widget.tabs.length,
+      .zero,
+      growable: true,
+    );
   }
 
   TabBarTheme get _defaults {
@@ -1191,7 +1213,8 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
       return tabBarTheme.indicator!;
     }
 
-    Color color = widget.indicatorColor ??
+    Color color =
+        widget.indicatorColor ??
         tabBarTheme.indicatorColor ??
         _defaults.indicatorColor!;
     // ThemeData tries to avoid this by having indicatorColor avoid being the
@@ -1214,26 +1237,23 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
     }
 
     final double effectiveIndicatorWeight = theme.useMaterial3
-        ? math.max(
-            widget.indicatorWeight,
-            switch (widget._isPrimary) {
-              true => _TabsPrimaryDefaultsM3.indicatorWeight(indicatorSize),
-              false => _TabsSecondaryDefaultsM3.indicatorWeight,
-            },
-          )
+        ? math.max(widget.indicatorWeight, switch (widget._isPrimary) {
+            true => _TabsPrimaryDefaultsM3.indicatorWeight(indicatorSize),
+            false => _TabsSecondaryDefaultsM3.indicatorWeight,
+          })
         : widget.indicatorWeight;
     // Only Material 3 primary TabBar with label indicatorSize should be rounded.
     final bool primaryWithLabelIndicator = switch (indicatorSize) {
-      TabBarIndicatorSize.label => widget._isPrimary,
-      TabBarIndicatorSize.tab => false,
+      .label => widget._isPrimary,
+      .tab => false,
     };
     final BorderRadius? effectiveBorderRadius =
         theme.useMaterial3 && primaryWithLabelIndicator
-            ? BorderRadius.only(
-                topLeft: Radius.circular(effectiveIndicatorWeight),
-                topRight: Radius.circular(effectiveIndicatorWeight),
-              )
-            : null;
+        ? .only(
+            topLeft: .circular(effectiveIndicatorWeight),
+            topRight: .circular(effectiveIndicatorWeight),
+          )
+        : null;
     return UnderlineTabIndicator(
       borderRadius: effectiveBorderRadius,
       borderSide: BorderSide(
@@ -1287,7 +1307,8 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
   void _initIndicatorPainter() {
     final ThemeData theme = Theme.of(context);
     final tabBarTheme = TabBarTheme.of(context);
-    final TabBarIndicatorSize indicatorSize = widget.indicatorSize ??
+    final TabBarIndicatorSize indicatorSize =
+        widget.indicatorSize ??
         tabBarTheme.indicatorSize ??
         _defaults.indicatorSize!;
 
@@ -1304,10 +1325,12 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
             // Passing old painter so that the constructor can copy some values from it.
             old: oldPainter,
             labelPaddings: _labelPaddings,
-            dividerColor: widget.dividerColor ??
+            dividerColor:
+                widget.dividerColor ??
                 tabBarTheme.dividerColor ??
                 _defaults.dividerColor,
-            dividerHeight: widget.dividerHeight ??
+            dividerHeight:
+                widget.dividerHeight ??
                 tabBarTheme.dividerHeight ??
                 _defaults.dividerHeight,
             showDivider: theme.useMaterial3 && !widget.isScrollable,
@@ -1351,8 +1374,7 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
     if (widget.tabs.length > _tabKeys.length) {
       final int delta = widget.tabs.length - _tabKeys.length;
       _tabKeys.addAll(List<GlobalKey>.generate(delta, (int n) => GlobalKey()));
-      _labelPaddings
-          .addAll(List<EdgeInsetsGeometry>.filled(delta, EdgeInsets.zero));
+      _labelPaddings.addAll(List<EdgeInsetsGeometry>.filled(delta, .zero));
     } else if (widget.tabs.length < _tabKeys.length) {
       _tabKeys.removeRange(widget.tabs.length, _tabKeys.length);
       _labelPaddings.removeRange(widget.tabs.length, _tabKeys.length);
@@ -1375,40 +1397,61 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
   int get maxTabIndex => _indicatorPainter!.maxTabIndex;
 
   double _tabScrollOffset(
-      int index, double viewportWidth, double minExtent, double maxExtent) {
+    int index,
+    double viewportWidth,
+    double minExtent,
+    double maxExtent,
+  ) {
     if (!widget.isScrollable) {
       return 0.0;
     }
     double tabCenter = _indicatorPainter!.centerOf(index);
     double paddingStart;
     switch (Directionality.of(context)) {
-      case TextDirection.rtl:
-        paddingStart = widget.padding?.resolve(TextDirection.rtl).right ?? 0;
+      case .rtl:
+        paddingStart = widget.padding?.resolve(.rtl).right ?? 0;
         tabCenter = _tabStripWidth - tabCenter;
-      case TextDirection.ltr:
-        paddingStart = widget.padding?.resolve(TextDirection.ltr).left ?? 0;
+      case .ltr:
+        paddingStart = widget.padding?.resolve(.ltr).left ?? 0;
     }
 
     return clampDouble(
-        tabCenter + paddingStart - viewportWidth / 2.0, minExtent, maxExtent);
+      tabCenter + paddingStart - viewportWidth / 2.0,
+      minExtent,
+      maxExtent,
+    );
   }
 
   double _tabCenteredScrollOffset(int index) {
     final ScrollPosition position = _scrollController!.position;
-    return _tabScrollOffset(index, position.viewportDimension,
-        position.minScrollExtent, position.maxScrollExtent);
+    return _tabScrollOffset(
+      index,
+      position.viewportDimension,
+      position.minScrollExtent,
+      position.maxScrollExtent,
+    );
   }
 
   double _initialScrollOffset(
-      double viewportWidth, double minExtent, double maxExtent) {
+    double viewportWidth,
+    double minExtent,
+    double maxExtent,
+  ) {
     return _tabScrollOffset(
-        _currentIndex!, viewportWidth, minExtent, maxExtent);
+      _currentIndex!,
+      viewportWidth,
+      minExtent,
+      maxExtent,
+    );
   }
 
   void _scrollToCurrentIndex() {
     final double offset = _tabCenteredScrollOffset(_currentIndex!);
-    _scrollController!
-        .animateTo(offset, duration: kTabScrollDuration, curve: Curves.ease);
+    _scrollController!.animateTo(
+      offset,
+      duration: kTabScrollDuration,
+      curve: Curves.ease,
+    );
   }
 
   void _scrollToControllerValue() {
@@ -1426,12 +1469,14 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
       -1.0 => leadingPosition ?? middlePosition,
       1.0 => trailingPosition ?? middlePosition,
       0 => middlePosition,
-      < 0 => leadingPosition == null
-          ? middlePosition
-          : lerpDouble(middlePosition, leadingPosition, index - value)!,
-      _ => trailingPosition == null
-          ? middlePosition
-          : lerpDouble(middlePosition, trailingPosition, value - index)!,
+      < 0 =>
+        leadingPosition == null
+            ? middlePosition
+            : lerpDouble(middlePosition, leadingPosition, index - value)!,
+      _ =>
+        trailingPosition == null
+            ? middlePosition
+            : lerpDouble(middlePosition, trailingPosition, value - index)!,
     };
 
     _scrollController!.jumpTo(offset);
@@ -1461,7 +1506,10 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
 
   // Called each time layout completes.
   void _saveTabOffsets(
-      List<double> tabOffsets, TextDirection textDirection, double width) {
+    List<double> tabOffsets,
+    TextDirection textDirection,
+    double width,
+  ) {
     _tabStripWidth = width;
     _indicatorPainter?.saveTabOffsets(tabOffsets, textDirection);
   }
@@ -1472,8 +1520,12 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
     widget.onTap?.call(index);
   }
 
-  Widget _buildStyledTab(Widget child, bool isSelected,
-      Animation<double> animation, TabBarTheme defaults) {
+  Widget _buildStyledTab(
+    Widget child,
+    bool isSelected,
+    Animation<double> animation,
+    TabBarTheme defaults,
+  ) {
     return _TabStyle(
       animation: animation,
       isSelected: isSelected,
@@ -1512,14 +1564,13 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
 
   bool _debugTabAlignmentIsValid(TabAlignment tabAlignment) {
     assert(() {
-      if (widget.isScrollable && tabAlignment == TabAlignment.fill) {
+      if (widget.isScrollable && tabAlignment == .fill) {
         throw FlutterError(
           '$tabAlignment is only valid for non-scrollable tab bars.',
         );
       }
       if (!widget.isScrollable &&
-          (tabAlignment == TabAlignment.start ||
-              tabAlignment == TabAlignment.startOffset)) {
+          (tabAlignment == .start || tabAlignment == .startOffset)) {
         throw FlutterError(
           '$tabAlignment is only valid for scrollable tab bars.',
         );
@@ -1535,21 +1586,22 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
     assert(_debugScheduleCheckHasValidTabsCount());
     final ThemeData theme = Theme.of(context);
     final tabBarTheme = TabBarTheme.of(context);
-    final TabAlignment effectiveTabAlignment = widget.tabAlignment ??
+    final TabAlignment effectiveTabAlignment =
+        widget.tabAlignment ??
         tabBarTheme.tabAlignment ??
         _defaults.tabAlignment!;
     assert(_debugTabAlignmentIsValid(effectiveTabAlignment));
 
-    final MaterialLocalizations localizations =
-        MaterialLocalizations.of(context);
+    final MaterialLocalizations localizations = MaterialLocalizations.of(
+      context,
+    );
     if (_controller!.length == 0) {
-      return Container(
-        height: _kTabHeight + widget.indicatorWeight,
-      );
+      return Container(height: _kTabHeight + widget.indicatorWeight);
     }
 
-    final List<Widget> wrappedTabs =
-        List<Widget>.generate(widget.tabs.length, (int index) {
+    final List<Widget> wrappedTabs = List<Widget>.generate(widget.tabs.length, (
+      int index,
+    ) {
       const double verticalAdjustment =
           (_kTextAndIconTabHeight - _kTabHeight) / 2.0;
       EdgeInsetsGeometry? adjustedPadding;
@@ -1561,15 +1613,18 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
             tab.preferredSize.height == _kTabHeight) {
           if (widget.labelPadding != null || tabBarTheme.labelPadding != null) {
             adjustedPadding = (widget.labelPadding ?? tabBarTheme.labelPadding!)
-                .add(const EdgeInsets.symmetric(vertical: verticalAdjustment));
+                .add(const .symmetric(vertical: verticalAdjustment));
           } else {
-            adjustedPadding = const EdgeInsets.symmetric(
-                vertical: verticalAdjustment, horizontal: 16.0);
+            adjustedPadding = const .symmetric(
+              vertical: verticalAdjustment,
+              horizontal: 16.0,
+            );
           }
         }
       }
 
-      _labelPaddings[index] = adjustedPadding ??
+      _labelPaddings[index] =
+          adjustedPadding ??
           widget.labelPadding ??
           tabBarTheme.labelPadding ??
           kTabLabelPadding;
@@ -1578,10 +1633,7 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
         heightFactor: 1.0,
         child: Padding(
           padding: _labelPaddings[index],
-          child: KeyedSubtree(
-            key: _tabKeys[index],
-            child: widget.tabs[index],
-          ),
+          child: KeyedSubtree(key: _tabKeys[index], child: widget.tabs[index]),
         ),
       );
     });
@@ -1597,29 +1649,53 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
         assert(_currentIndex != previousIndex);
         final Animation<double> animation = _ChangeAnimation(_controller!);
         wrappedTabs[_currentIndex!] = _buildStyledTab(
-            wrappedTabs[_currentIndex!], true, animation, _defaults);
+          wrappedTabs[_currentIndex!],
+          true,
+          animation,
+          _defaults,
+        );
         wrappedTabs[previousIndex] = _buildStyledTab(
-            wrappedTabs[previousIndex], false, animation, _defaults);
+          wrappedTabs[previousIndex],
+          false,
+          animation,
+          _defaults,
+        );
       } else {
         // The user is dragging the TabBarView's PageView left or right.
         final int tabIndex = _currentIndex!;
-        final Animation<double> centerAnimation =
-            _DragAnimation(_controller!, tabIndex);
+        final Animation<double> centerAnimation = _DragAnimation(
+          _controller!,
+          tabIndex,
+        );
         wrappedTabs[tabIndex] = _buildStyledTab(
-            wrappedTabs[tabIndex], true, centerAnimation, _defaults);
+          wrappedTabs[tabIndex],
+          true,
+          centerAnimation,
+          _defaults,
+        );
         if (_currentIndex! > 0) {
           final int tabIndex = _currentIndex! - 1;
-          final Animation<double> previousAnimation =
-              ReverseAnimation(_DragAnimation(_controller!, tabIndex));
+          final Animation<double> previousAnimation = ReverseAnimation(
+            _DragAnimation(_controller!, tabIndex),
+          );
           wrappedTabs[tabIndex] = _buildStyledTab(
-              wrappedTabs[tabIndex], false, previousAnimation, _defaults);
+            wrappedTabs[tabIndex],
+            false,
+            previousAnimation,
+            _defaults,
+          );
         }
         if (_currentIndex! < widget.tabs.length - 1) {
           final int tabIndex = _currentIndex! + 1;
-          final Animation<double> nextAnimation =
-              ReverseAnimation(_DragAnimation(_controller!, tabIndex));
+          final Animation<double> nextAnimation = ReverseAnimation(
+            _DragAnimation(_controller!, tabIndex),
+          );
           wrappedTabs[tabIndex] = _buildStyledTab(
-              wrappedTabs[tabIndex], false, nextAnimation, _defaults);
+            wrappedTabs[tabIndex],
+            false,
+            nextAnimation,
+            _defaults,
+          );
         }
       }
     }
@@ -1630,23 +1706,23 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
     final int tabCount = widget.tabs.length;
     for (int index = 0; index < tabCount; index += 1) {
       final Set<WidgetState> selectedState = <WidgetState>{
-        if (index == _currentIndex) WidgetState.selected,
+        if (index == _currentIndex) .selected,
       };
 
       final MouseCursor effectiveMouseCursor =
           WidgetStateProperty.resolveAs<MouseCursor?>(
-                  widget.mouseCursor, selectedState) ??
-              tabBarTheme.mouseCursor?.resolve(selectedState) ??
-              WidgetStateMouseCursor.clickable.resolve(selectedState);
+            widget.mouseCursor,
+            selectedState,
+          ) ??
+          tabBarTheme.mouseCursor?.resolve(selectedState) ??
+          WidgetStateMouseCursor.clickable.resolve(selectedState);
 
       final WidgetStateProperty<Color?> defaultOverlay =
-          WidgetStateProperty.resolveWith<Color?>(
-        (Set<WidgetState> states) {
-          final Set<WidgetState> effectiveStates = selectedState
-            ..addAll(states);
-          return _defaults.overlayColor?.resolve(effectiveStates);
-        },
-      );
+          WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {
+            final Set<WidgetState> effectiveStates = selectedState
+              ..addAll(states);
+            return _defaults.overlayColor?.resolve(effectiveStates);
+          });
       wrappedTabs[index] = InkWell(
         mouseCursor: effectiveMouseCursor,
         onTap: () {
@@ -1655,25 +1731,28 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
         enableFeedback: widget.enableFeedback ?? true,
         overlayColor:
             widget.overlayColor ?? tabBarTheme.overlayColor ?? defaultOverlay,
-        splashFactory: widget.splashFactory ??
+        splashFactory:
+            widget.splashFactory ??
             tabBarTheme.splashFactory ??
             _defaults.splashFactory,
         borderRadius: widget.splashBorderRadius,
         child: Padding(
-          padding: EdgeInsets.only(bottom: widget.indicatorWeight),
+          padding: .only(bottom: widget.indicatorWeight),
           child: Stack(
             children: <Widget>[
               wrappedTabs[index],
               Semantics(
                 selected: index == _currentIndex,
                 label: localizations.tabLabel(
-                    tabIndex: index + 1, tabCount: tabCount),
+                  tabIndex: index + 1,
+                  tabCount: tabCount,
+                ),
               ),
             ],
           ),
         ),
       );
-      if (!widget.isScrollable && effectiveTabAlignment == TabAlignment.fill) {
+      if (!widget.isScrollable && effectiveTabAlignment == .fill) {
         wrappedTabs[index] = Expanded(child: wrappedTabs[index]);
       }
     }
@@ -1691,9 +1770,7 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
         defaults: _defaults,
         child: _TabLabelBar(
           onPerformLayout: _saveTabOffsets,
-          mainAxisSize: effectiveTabAlignment == TabAlignment.fill
-              ? MainAxisSize.max
-              : MainAxisSize.min,
+          mainAxisSize: effectiveTabAlignment == .fill ? .max : .min,
           children: wrappedTabs,
         ),
       ),
@@ -1701,17 +1778,17 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
 
     if (widget.isScrollable) {
       final EdgeInsetsGeometry? effectivePadding =
-          effectiveTabAlignment == TabAlignment.startOffset
-              ? const EdgeInsetsDirectional.only(start: _kStartOffset)
-                  .add(widget.padding ?? EdgeInsets.zero)
-              : widget.padding;
+          effectiveTabAlignment == .startOffset
+          ? const EdgeInsetsDirectional.only(start: _kStartOffset)
+                .add(widget.padding ?? .zero)
+          : widget.padding;
       _scrollController ??= _TabBarScrollController(this);
       tabBar = ScrollConfiguration(
         // The scrolling tabs should not show an overscroll indicator.
         behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
         child: SingleChildScrollView(
           dragStartBehavior: widget.dragStartBehavior,
-          scrollDirection: Axis.horizontal,
+          scrollDirection: .horizontal,
           controller: _scrollController,
           padding: effectivePadding,
           physics: widget.physics,
@@ -1721,17 +1798,16 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
       if (theme.useMaterial3) {
         final AlignmentGeometry effectiveAlignment =
             switch (effectiveTabAlignment) {
-          TabAlignment.center => Alignment.center,
-          TabAlignment.start ||
-          TabAlignment.startOffset ||
-          TabAlignment.fill =>
-            AlignmentDirectional.centerStart,
-        };
+              .center => .center,
+              .start || .startOffset || .fill => .centerStart,
+            };
 
-        final Color dividerColor = widget.dividerColor ??
+        final Color dividerColor =
+            widget.dividerColor ??
             tabBarTheme.dividerColor ??
             _defaults.dividerColor!;
-        final double dividerHeight = widget.dividerHeight ??
+        final double dividerHeight =
+            widget.dividerHeight ??
             tabBarTheme.dividerHeight ??
             _defaults.dividerHeight!;
 
@@ -1746,7 +1822,8 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
           tabBar = CustomPaint(
             painter: _DividerPainter(
               dividerColor: dividerColor,
-              dividerHeight: widget.dividerHeight ??
+              dividerHeight:
+                  widget.dividerHeight ??
                   tabBarTheme.dividerHeight ??
                   _defaults.dividerHeight!,
             ),
@@ -1755,10 +1832,7 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
         }
       }
     } else if (widget.padding != null) {
-      tabBar = Padding(
-        padding: widget.padding!,
-        child: tabBar,
-      );
+      tabBar = Padding(padding: widget.padding!, child: tabBar);
     }
 
     return MediaQuery(
@@ -1772,7 +1846,7 @@ class _ScaleTabBarState extends State<ScaleTabBar> {
 // Hand coded defaults based on Material Design 2.
 class _TabsDefaultsM2 extends TabBarTheme {
   const _TabsDefaultsM2(this.context, this.isScrollable)
-      : super(indicatorSize: TabBarIndicatorSize.tab);
+    : super(indicatorSize: .tab);
 
   final BuildContext context;
   final bool isScrollable;
@@ -1795,8 +1869,7 @@ class _TabsDefaultsM2 extends TabBarTheme {
       Theme.of(context).splashFactory;
 
   @override
-  TabAlignment? get tabAlignment =>
-      isScrollable ? TabAlignment.start : TabAlignment.fill;
+  TabAlignment? get tabAlignment => isScrollable ? .start : .fill;
 }
 
 // BEGIN GENERATED TOKEN PROPERTIES - Tabs
@@ -1808,7 +1881,7 @@ class _TabsDefaultsM2 extends TabBarTheme {
 
 class _TabsPrimaryDefaultsM3 extends TabBarTheme {
   _TabsPrimaryDefaultsM3(this.context, this.isScrollable)
-      : super(indicatorSize: TabBarIndicatorSize.label);
+    : super(indicatorSize: .label);
 
   final BuildContext context;
   late final ColorScheme _colors = Theme.of(context).colorScheme;
@@ -1871,20 +1944,19 @@ class _TabsPrimaryDefaultsM3 extends TabBarTheme {
       Theme.of(context).splashFactory;
 
   @override
-  TabAlignment? get tabAlignment =>
-      isScrollable ? TabAlignment.startOffset : TabAlignment.fill;
+  TabAlignment? get tabAlignment => isScrollable ? .startOffset : .fill;
 
   static double indicatorWeight(TabBarIndicatorSize indicatorSize) {
     return switch (indicatorSize) {
-      TabBarIndicatorSize.label => 3.0,
-      TabBarIndicatorSize.tab => 2.0,
+      .label => 3.0,
+      .tab => 2.0,
     };
   }
 }
 
 class _TabsSecondaryDefaultsM3 extends TabBarTheme {
   _TabsSecondaryDefaultsM3(this.context, this.isScrollable)
-      : super(indicatorSize: TabBarIndicatorSize.tab);
+    : super(indicatorSize: .tab);
 
   final BuildContext context;
   late final ColorScheme _colors = Theme.of(context).colorScheme;
@@ -1947,8 +2019,7 @@ class _TabsSecondaryDefaultsM3 extends TabBarTheme {
       Theme.of(context).splashFactory;
 
   @override
-  TabAlignment? get tabAlignment =>
-      isScrollable ? TabAlignment.startOffset : TabAlignment.fill;
+  TabAlignment? get tabAlignment => isScrollable ? .startOffset : .fill;
 
   static double indicatorWeight = 2.0;
 }
