@@ -1,6 +1,8 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
+import 'package:material_ui/material_ui.dart';
+
+enum PressStyle { none, spring }
 
 class DecoratedRow extends DecoratedFlex {
   const DecoratedRow({
@@ -21,6 +23,7 @@ class DecoratedRow extends DecoratedFlex {
     super.crossAxisAlignment = CrossAxisAlignment.center,
     super.textBaseline,
     super.onPressed,
+    super.pressStyle,
     super.onLongPressed,
     super.onDoubleTap,
     super.onSecondaryTap,
@@ -72,6 +75,7 @@ class DecoratedRow extends DecoratedFlex {
     super.systemOverlayStyle,
     super.ignorePointer,
     super.absorbPointer,
+    @Deprecated('已无效果，后续版本将移除')
     super.enableFeedback,
     super.autofillGroup,
     super.aspectRatio,
@@ -105,6 +109,7 @@ class DecoratedColumn extends DecoratedFlex {
     super.crossAxisAlignment = CrossAxisAlignment.center,
     super.textBaseline,
     super.onPressed,
+    super.pressStyle,
     super.onLongPressed,
     super.onSecondaryTap,
     super.onDoubleTap,
@@ -157,6 +162,7 @@ class DecoratedColumn extends DecoratedFlex {
     super.systemOverlayStyle,
     super.ignorePointer,
     super.absorbPointer,
+    @Deprecated('已无效果，后续版本将移除')
     super.enableFeedback,
     super.autofillGroup,
     super.aspectRatio,
@@ -191,6 +197,7 @@ class DecoratedFlex extends StatelessWidget {
     this.crossAxisAlignment = CrossAxisAlignment.center,
     this.textBaseline,
     this.onPressed,
+    this.pressStyle = PressStyle.none,
     this.onLongPressed,
     this.onDoubleTap,
     this.onSecondaryTap,
@@ -242,6 +249,7 @@ class DecoratedFlex extends StatelessWidget {
     this.systemOverlayStyle,
     this.ignorePointer,
     this.absorbPointer,
+    @Deprecated('已无效果，后续版本将移除')
     this.enableFeedback,
     this.autofillGroup,
     this.aspectRatio,
@@ -281,6 +289,7 @@ class DecoratedFlex extends StatelessWidget {
 
   /// GestureDetector
   final ContextCallback? onPressed, onLongPressed, onDoubleTap, onSecondaryTap;
+  final PressStyle pressStyle;
   final GestureTapDownCallback? onSecondaryTapDown;
   final GestureDragStartCallback? onVerticalDragStart;
   final GestureDragEndCallback? onVerticalDragEnd;
@@ -385,6 +394,7 @@ class DecoratedFlex extends StatelessWidget {
   /// 是否吸收指针事件(本身响应事件, 但是阻止子Widget响应事件)
   final bool? absorbPointer;
 
+  @Deprecated('已无效果，后续版本将移除')
   final bool? enableFeedback;
 
   /// 自动填充组
@@ -567,19 +577,7 @@ class DecoratedFlex extends StatelessWidget {
         return null;
       }
     }();
-    if (enableFeedback == true) {
-      if (onSecondaryTap != null) {
-        L.w('[DECORATED_FLUTTER] enableFeedback模式下不支持onSecondaryTap!');
-      }
-      result = InkWell(
-        borderRadius: borderRadius,
-        splashFactory: NoSplash.splashFactory,
-        onTap: onPressed != null ? () => onPressed!(context) : null,
-        onLongPress:
-            onLongPressed == null ? null : () => onLongPressed!(context),
-        child: result,
-      );
-    } else if (onPressed != null ||
+    if ((onPressed != null && pressStyle == PressStyle.none) ||
         onLongPressed != null ||
         onVerticalDragEnd != null ||
         onHorizontalDragEnd != null ||
@@ -588,9 +586,12 @@ class DecoratedFlex extends StatelessWidget {
         onDoubleTap != null) {
       result = GestureDetector(
         behavior: behavior ?? HitTestBehavior.opaque,
-        onTap: onPressed == null ? null : () => onPressed!(context),
-        onLongPress:
-            onLongPressed == null ? null : () => onLongPressed!(context),
+        onTap: onPressed == null || pressStyle == PressStyle.spring
+            ? null
+            : () => onPressed!(context),
+        onLongPress: onLongPressed == null
+            ? null
+            : () => onLongPressed!(context),
         onVerticalDragEnd: onVerticalDragEnd,
         onVerticalDragStart: onVerticalDragStart,
         onHorizontalDragEnd: onHorizontalDragEnd,
@@ -598,6 +599,13 @@ class DecoratedFlex extends StatelessWidget {
             onSecondaryTap == null ? null : () => onSecondaryTap!(context),
         onSecondaryTapDown: onSecondaryTapDown,
         onDoubleTap: onDoubleTap == null ? null : () => onDoubleTap!(context),
+        child: result,
+      );
+    }
+
+    if (pressStyle == PressStyle.spring && onPressed != null) {
+      result = SpringContainer(
+        onPressed: onPressed!,
         child: result,
       );
     }
@@ -619,8 +627,7 @@ class DecoratedFlex extends StatelessWidget {
       );
     }
 
-    // material要放在InkWell的上方, 否则没有波纹
-    if (enableFeedback == true || material || elevation != null) {
+    if (material || elevation != null) {
       result = Material(
         borderRadius: borderRadius,
         elevation: elevation ?? 0,
