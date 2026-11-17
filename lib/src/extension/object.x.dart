@@ -1,5 +1,7 @@
 import 'dart:developer' as devtools show log;
 
+import 'package:decorated_flutter/src/utils/empty_util.dart';
+
 extension ObjectX on Object {
   void log([String? prefix]) => devtools.log('$prefix${toString()}');
 
@@ -47,4 +49,7 @@ extension KtStandardExtension<T> on T {
       return null;
     }
   }
+
+  // shortcut: 不判断自定义类型的空状态，需要时扩展 isEmpty。
+  T? takeIfNotEmpty() => isEmpty(this) ? null : this;
 }

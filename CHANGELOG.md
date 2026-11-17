@@ -1,4 +1,5 @@
 ## 0.53.0
+- [🚀] 增加 `takeIfNotEmpty` 扩展，null、空字符串和空集合返回 null。
 - [⚠️] `DecoratedFlex.enableFeedback` 已弃用且不再生效，参数暂时保留以兼容现有调用。
 - [🚀] `DecoratedFlex`支持配置弹簧按压样式;
 - [⚠️] `0.53.0-dev.0` 的 Material 和 Cupertino API 迁移至独立的 `material_ui` 与 `cupertino_ui` 包；使用相关 API 的项目需添加对应依赖并更新导入，最低要求 Dart 3.13、Flutter 3.47。
