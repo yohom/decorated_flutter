@@ -1,4 +1,5 @@
 ## 0.53.0
+- [🚀] `SelectableListX`增加`selectedOrFirst`扩展，无选中元素时返回首个元素。
 - [🚀] 增加 `takeIfNotEmpty` 扩展，null、空字符串和空集合返回 null。
 - [⚠️] `DecoratedFlex.enableFeedback` 已弃用且不再生效，参数暂时保留以兼容现有调用。
 - [🚀] `DecoratedFlex`支持配置弹簧按压样式;

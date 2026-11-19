@@ -333,6 +333,9 @@ extension SelectableListX<T extends Selectable> on List<T> {
   /// 获取被选中的元素
   T? get selected => find((it) => it.isSelected);
 
+  /// 获取被选中的元素, 如果没有选中的元素, 则取第一个
+  T get selectedOrFirst => find((it) => it.isSelected) ?? first;
+
   /// 是否有选中的元素
   bool get isAnySelected => any((it) => it.isSelected);
 
