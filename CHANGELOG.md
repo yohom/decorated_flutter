@@ -1,4 +1,5 @@
 ## 0.53.0
+- [🚀] `showCityPickerDialog` 支持配置弹窗圆角和两个按钮的样式，默认跟随宿主 App 的底部弹窗和文字按钮主题。
 - [⚠️] `enumName()` 已弃用，请改用枚举值的 `name` 属性。
 - [🔧] 修复 `RangeTextInputFormatter` 的数值范围限制，并允许清空输入。
 - [🚀] `BackgroundBlur`增加`borderRadius`参数，支持圆角裁剪。

@@ -1,5 +1,5 @@
-import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:cupertino_ui/cupertino_ui.dart';
+import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:material_ui/material_ui.dart';
 
 Future<CityPickerResult?> showCityPickerDialog(
@@ -13,6 +13,9 @@ Future<CityPickerResult?> showCityPickerDialog(
   String? cancelText,
   String? confirmText,
   double itemExtent = 36,
+  BorderRadiusGeometry? borderRadius,
+  ButtonStyle? cancelButtonStyle,
+  ButtonStyle? confirmButtonStyle,
 }) async {
   final regions = data ?? await CityPickerData.load();
   if (regions.isEmpty) return null;
@@ -20,7 +23,11 @@ Future<CityPickerResult?> showCityPickerDialog(
   if (!context.mounted) return null;
   return showModalBottomSheet<CityPickerResult>(
     context: context,
-    builder: (context) => _CityPickerDialog(
+    shape: borderRadius == null
+        ? context.theme.bottomSheetTheme.shape
+        : RoundedRectangleBorder(borderRadius: borderRadius),
+    clipBehavior: Clip.hardEdge,
+    builder: (context) => CityPickerDialog(
       data: regions,
       initialValue: initialValue,
       initialProvinceCode: initialProvinceCode,
@@ -30,12 +37,15 @@ Future<CityPickerResult?> showCityPickerDialog(
       cancelText: cancelText,
       confirmText: confirmText,
       itemExtent: itemExtent,
+      cancelButtonStyle: cancelButtonStyle,
+      confirmButtonStyle: confirmButtonStyle,
     ),
   );
 }
 
-class _CityPickerDialog extends StatefulWidget {
-  const _CityPickerDialog({
+class CityPickerDialog extends StatefulWidget {
+  const CityPickerDialog({
+    super.key,
     required this.data,
     this.initialValue,
     this.initialProvinceCode,
@@ -45,6 +55,9 @@ class _CityPickerDialog extends StatefulWidget {
     this.cancelText,
     this.confirmText,
     required this.itemExtent,
+    this.cancelButtonStyle,
+    this.confirmButtonStyle,
+    this.backgroundColor,
   });
 
   final List<CityRegion> data;
@@ -56,12 +69,15 @@ class _CityPickerDialog extends StatefulWidget {
   final String? cancelText;
   final String? confirmText;
   final double itemExtent;
+  final ButtonStyle? cancelButtonStyle;
+  final ButtonStyle? confirmButtonStyle;
+  final Color? backgroundColor;
 
   @override
-  State<_CityPickerDialog> createState() => _CityPickerDialogState();
+  State<CityPickerDialog> createState() => _CityPickerDialogState();
 }
 
-class _CityPickerDialogState extends State<_CityPickerDialog> {
+class _CityPickerDialogState extends State<CityPickerDialog> {
   late int _provinceIndex;
   late int _cityIndex;
   late int _areaIndex;
@@ -107,22 +123,21 @@ class _CityPickerDialogState extends State<_CityPickerDialog> {
     return DecoratedColumn(
       height: 288 + context.padding.bottom,
       safeArea: SafeAreaConfig.bottom(),
-      color: context.backgroundColor,
+      color: widget.backgroundColor ?? context.backgroundColor,
       children: [
         DecoratedRow(
           padding: const .symmetric(horizontal: 8),
           mainAxisAlignment: .spaceBetween,
           children: <Widget>[
             TextButton(
-              onPressed: () => context.rootNavigator.pop(),
-              child: Text(
-                widget.cancelText ?? '取消',
-                style: const TextStyle(color: Colors.red),
-              ),
+              onPressed: () => context.navigator.pop(),
+              style: widget.cancelButtonStyle,
+              child: Text(widget.cancelText ?? '取消'),
             ),
             if (widget.title != null) widget.title!,
             TextButton(
-              onPressed: () => context.rootNavigator.pop(_result),
+              onPressed: () => context.navigator.pop(_result),
+              style: widget.confirmButtonStyle,
               child: Text(widget.confirmText ?? '确定'),
             ),
           ],
