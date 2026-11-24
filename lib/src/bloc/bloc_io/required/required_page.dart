@@ -94,7 +94,7 @@ class PageIO<T, ARG> extends ListIO<T> with PageMixin<T, ARG> {
     _currentPage = _initPage;
     _onUpdatePage =
         onUpdatePage ??
-        (_, __) =>
+        (_, _) =>
             throw '[$semantics] 在未设置onUpdatePage回调时调用了refresh/loadMore方法, 请检查业务逻辑是否正确!';
     _receiveFullData = receiveFullData;
     _pageSize = pageSize;

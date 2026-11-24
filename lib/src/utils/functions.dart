@@ -9,11 +9,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:uuid/uuid.dart';
 
-bool notEqual(prev, next) => prev != next;
+bool notEqual(dynamic prev, dynamic next) => prev != next;
 
-bool notNull(data) => data != null;
+bool notNull(dynamic data) => data != null;
 
-bool isNull(data) => data == null;
+bool isNull(dynamic data) => data == null;
 
 bool isTrue(bool? data) => data == true;
 
@@ -29,7 +29,7 @@ void doNothing() {}
 
 void doNothing1(_) {}
 
-void doNothing2(_, __) {}
+void doNothing2(_, _) {}
 
 /// 透传
 T passthrough<T>(T data) => data;

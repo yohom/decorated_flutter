@@ -1,10 +1,10 @@
 import 'package:decorated_flutter/decorated_flutter.dart';
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
+import 'package:material_ui/material_ui.dart';
 
 class DecoratedPage<B extends BLoC, R> extends MaterialPage {
   const DecoratedPage({
-    B? bloc,
+    this._bloc,
     required Widget screen,
     this.autoCloseKeyboard = const CloseKeyboardConfig(),
     this.init,
@@ -25,8 +25,7 @@ class DecoratedPage<B extends BLoC, R> extends MaterialPage {
     required String routeName,
     super.fullscreenDialog,
     super.maintainState,
-  }) : _bloc = bloc,
-       super(child: screen);
+  }) : super(child: screen);
 
   final B? _bloc;
 

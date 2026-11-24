@@ -235,7 +235,7 @@ Future<T?> showModalSideSheet<T extends Object?>({
     useRootNavigator: useRootNavigator,
     routeSettings: routeSettings,
     context: context,
-    pageBuilder: (BuildContext context, _, __) {
+    pageBuilder: (BuildContext context, _, _) {
       return Align(
         alignment: .bottomRight,
         child: Material(
@@ -245,7 +245,7 @@ Future<T?> showModalSideSheet<T extends Object?>({
         ),
       );
     },
-    transitionBuilder: (_, animation, __, child) {
+    transitionBuilder: (_, animation, _, child) {
       return SlideTransition(
         position: Tween<Offset>(
           begin: const Offset(1, 0),

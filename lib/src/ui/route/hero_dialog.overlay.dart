@@ -17,9 +17,9 @@ class HeroOverlayScope extends StatefulWidget {
   const HeroOverlayScope({super.key, required this.child}) : _controller = null;
 
   const HeroOverlayScope._shared({
-    required _HeroOverlayController controller,
+    required _HeroOverlayController this._controller,
     required this.child,
-  }) : _controller = controller;
+  });
 
   final Widget child;
   final _HeroOverlayController? _controller;
@@ -170,10 +170,7 @@ final class _HeroOverlayFlight {
 
 /// 不切换路由的 Hero 风格弹窗控制器。
 final class HeroOverlay<T> {
-  const HeroOverlay._({
-    required this.closed,
-    required void Function(T? result) dismiss,
-  }) : _dismiss = dismiss;
+  const HeroOverlay._({required this.closed, required this._dismiss});
 
   /// 弹窗关闭后返回的结果。
   final Future<T?> closed;
@@ -344,7 +341,7 @@ class _HeroOverlayState<T> extends State<_HeroOverlay<T>>
 
     return AnimatedBuilder(
       animation: _animation,
-      builder: (_, __) {
+      builder: (_, _) {
         final flights =
             widget.heroController?.flights ?? const <_HeroOverlayFlight>[];
         final overlayBox = Overlay.of(context).context.findRenderObject();

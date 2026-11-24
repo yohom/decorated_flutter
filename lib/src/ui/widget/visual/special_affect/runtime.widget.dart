@@ -45,13 +45,13 @@ class _RuntimeState extends State<Runtime> {
           // 全局BLoC运行时信息
           ExpansionPanel(
             isExpanded: _globalBLoCExpanded,
-            headerBuilder: (_, __) => const _Header(title: 'Global BLoCs'),
+            headerBuilder: (_, _) => const _Header(title: 'Global BLoCs'),
             body: _Body(ioList: globalIOList),
           ),
           // 局部BLoC运行时信息
           ExpansionPanel(
             isExpanded: _localBLoCExpanded,
-            headerBuilder: (_, __) => const _Header(title: 'Local BLoC'),
+            headerBuilder: (_, _) => const _Header(title: 'Local BLoC'),
             body: _Body(ioList: widget.runtimeInfo),
           ),
         ],

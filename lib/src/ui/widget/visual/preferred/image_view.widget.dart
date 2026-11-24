@@ -4,8 +4,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:decorated_flutter/src/extension/extension.export.dart';
 import 'package:decorated_flutter/src/ui/ui.export.dart';
 import 'package:flutter/foundation.dart';
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../utils/utils.export.dart';
 
@@ -448,7 +448,7 @@ class ImageView extends StatelessWidget {
                 httpHeaders: headers,
                 errorListener: (e) => L.e('加载图片时出现错误: $e'),
                 placeholder: _placeholder != null
-                    ? (_, __) => _placeholder
+                    ? (_, _) => _placeholder
                     : null,
                 errorWidget: _errorBuilder,
                 memCacheWidth: _cacheWidth,

@@ -67,7 +67,7 @@ extension StringStream on Stream<String> {
     // 显示loading
     showGeneralDialog(
       context: context,
-      pageBuilder: (context, _, __) {
+      pageBuilder: (context, _, _) {
         return Theme(
           data: theme,
           child: WillPopScope(

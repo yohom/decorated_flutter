@@ -222,7 +222,7 @@ class DecoratedText extends StatelessWidget {
             ? .alphabetic
             : textBaseline,
         children: [
-          if (leftWidget != null) leftWidget!,
+          ?leftWidget,
           if (widgetPadding != null && leftWidget != null)
             SizedBox(width: widgetPadding!),
           if (textExpanded)
@@ -233,7 +233,7 @@ class DecoratedText extends StatelessWidget {
             result,
           if (widgetPadding != null && rightWidget != null)
             SizedBox(width: widgetPadding!),
-          if (rightWidget != null) rightWidget!,
+          ?rightWidget,
         ],
       );
     }

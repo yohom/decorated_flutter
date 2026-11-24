@@ -1,14 +1,14 @@
-import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:cupertino_ui/cupertino_ui.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/services.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// [B]是指定的BLoC, [T]是Route的返回类型
 class DecoratedRoute<B extends BLoC, T> extends MaterialPageRoute<T> {
   DecoratedRoute({
     Key? key,
     required this.screen,
-    B? bloc,
+    this._bloc,
     @Deprecated('已无作用, 在app.builder中使用即可, 不需要每个route设置')
     this.autoCloseKeyboard = const CloseKeyboardConfig(),
     this.init,
@@ -30,8 +30,7 @@ class DecoratedRoute<B extends BLoC, T> extends MaterialPageRoute<T> {
     required String routeName,
     super.fullscreenDialog,
     super.maintainState,
-  }) : _bloc = bloc,
-       super(
+  }) : super(
          builder: (context) => screen,
          settings: RouteSettings(name: routeName),
        );
@@ -240,7 +239,7 @@ class DecoratedDialogRoute<B extends BLoC, T> extends DialogRoute<T> {
   DecoratedDialogRoute({
     Key? key,
     required this.dialog,
-    B? bloc,
+    this._bloc,
     this.autoCloseKeyboard = const CloseKeyboardConfig(),
     this.init,
     this.onLateinit,
@@ -264,8 +263,7 @@ class DecoratedDialogRoute<B extends BLoC, T> extends DialogRoute<T> {
     super.themes,
     super.useSafeArea,
     required String routeName,
-  }) : _bloc = bloc,
-       super(
+  }) : super(
          context: gNavigatorKey.currentContext!,
          builder: (context) => dialog,
          settings: RouteSettings(name: routeName),

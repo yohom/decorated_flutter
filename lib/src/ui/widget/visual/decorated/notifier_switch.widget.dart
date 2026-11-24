@@ -11,7 +11,7 @@ class NotifierSwitch extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueListenableBuilder<bool>(
       valueListenable: _notifier,
-      builder: (_, value, __) {
+      builder: (_, value, _) {
         return CupertinoSwitch(
           value: value,
           onChanged: (value) => _notifier.value = value,
