@@ -22,3 +22,27 @@ class RangeTextInputFormatter extends TextInputFormatter {
     return oldValue;
   }
 }
+
+/// 仅保留已提交的汉字，允许输入法暂时保留组字内容
+class ChineseTextFormatter extends TextInputFormatter {
+  /// 创建汉字输入格式化器
+  const ChineseTextFormatter();
+
+  static final _chineseCharacters = RegExp(r'\p{Script=Han}', unicode: true);
+  static final _filter = FilteringTextInputFormatter.allow(_chineseCharacters);
+
+  /// 检查文本是否只含汉字，空字符串也有效
+  static bool isValid(String text) {
+    return text.replaceAll(_chineseCharacters, '').isEmpty;
+  }
+
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    if (!newValue.composing.isCollapsed) return newValue;
+
+    return _filter.formatEditUpdate(oldValue, newValue);
+  }
+}
