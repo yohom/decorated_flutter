@@ -257,6 +257,21 @@ extension IterableFutureX<T> on Future<Iterable<T>> {
   Future<List<T>> thenSkip(int count) {
     return then((value) => value.skip((count)).toList());
   }
+
+  Future<List<T>> thenDistinct({Object Function(T e)? by}) {
+    return then((value) {
+      if (by == null) return value.toSet().toList();
+
+      final keys = <Object>{};
+      return value.where((element) => keys.add(by(element))).toList();
+    });
+  }
+}
+
+extension List2DFutureX<T> on Future<List<List<T>>> {
+  Future<List<T>> thenExpand() {
+    return then((value) => value.expand((e) => e).toList());
+  }
 }
 
 extension NullableFutureX<T> on Future<T?> {
