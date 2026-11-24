@@ -1,11 +1,11 @@
 // ignore_for_file: no_wildcard_variable_uses
 
+import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:decorated_flutter/src/extension/extension.export.dart';
 import 'package:decorated_flutter/src/ui/ui.export.dart';
 import 'package:decorated_flutter/src/utils/utils.export.dart';
-import 'package:cupertino_ui/cupertino_ui.dart';
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'bloc/bloc.export.dart';
 import 'model/model.export.dart';
@@ -526,8 +526,9 @@ class SpringButtonState extends State<SpringButton>
           ? null
           : (details) {
               springDown();
-              if (widget.onTapDown != null && isEnabled)
+              if (widget.onTapDown != null && isEnabled) {
                 widget.onTapDown!(details);
+              }
             },
       onTapUp: !hasTap
           ? null
@@ -727,15 +728,17 @@ class SpringButtonState extends State<SpringButton>
       onPanDown: !hasPan
           ? null
           : (details) {
-              if (widget.onPanDown != null && isEnabled)
+              if (widget.onPanDown != null && isEnabled) {
                 widget.onPanDown!(details);
+              }
             },
       onPanStart: !hasPan
           ? null
           : (details) {
               springDown();
-              if (widget.onPanStart != null && isEnabled)
+              if (widget.onPanStart != null && isEnabled) {
                 widget.onPanStart!(details);
+              }
             },
       onPanUpdate: !hasPan
           ? null
@@ -748,8 +751,9 @@ class SpringButtonState extends State<SpringButton>
           ? null
           : (details) {
               spring();
-              if (widget.onPanEnd != null && isEnabled)
+              if (widget.onPanEnd != null && isEnabled) {
                 widget.onPanEnd!(details);
+              }
             },
       onPanCancel: !hasPan
           ? null
@@ -778,8 +782,9 @@ class SpringButtonState extends State<SpringButton>
           ? null
           : (details) {
               spring();
-              if (widget.onScaleEnd != null && isEnabled)
+              if (widget.onScaleEnd != null && isEnabled) {
                 widget.onScaleEnd!(details);
+              }
             },
       child: widget.uiChild,
     );

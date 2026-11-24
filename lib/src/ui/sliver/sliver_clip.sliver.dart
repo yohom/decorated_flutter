@@ -53,14 +53,11 @@ class SliverClip extends SingleChildRenderObjectWidget {
 
 class _RenderSliverClip extends RenderProxySliver {
   _RenderSliverClip({
-    required bool clipOverlap,
-    required BorderRadiusGeometry borderRadius,
-    required Clip? clipBehavior,
-    TextDirection? textDirection,
-  }) : _clipOverlap = clipOverlap,
-       _borderRadius = borderRadius,
-       _clipBehavior = clipBehavior,
-       _textDirection = textDirection;
+    required this._clipOverlap,
+    required this._borderRadius,
+    required this._clipBehavior,
+    this._textDirection,
+  });
 
   bool _clipOverlap;
 

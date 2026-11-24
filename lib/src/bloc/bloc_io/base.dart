@@ -30,35 +30,19 @@ abstract class BaseIO<T> {
     required T seedValue,
 
     /// Event代表的语义
-    required String semantics,
+    required this._semantics,
 
     /// 是否同步发射数据, 传递给内部的[_subject]
     bool sync = true,
-
-    /// 是否打印日志, 有些IO add比较频繁时, 影响日志观看
-    bool printLog = true,
+    this._printLog = true,
 
     /// 是否使用BehaviorSubject, 如果使用, 那么Event内部的[_subject]会保存最近一次的值
     bool isBehavior = true,
-
-    /// 重置回调方法, 如果设置了, 则调用reset的时候会优先使用此回调的返回值
-    T Function()? onReset,
-
-    /// 是否持久化数据, 如果是持久化数据, 则数据变化时便会持久化, 且如果是BehaviorSubject
-    /// 则下次构造时会发射上一次持久化的数据
-    PersistConfig<T>? persistConfig,
-
-    /// 直接略过错误, 不发射内容
-    ///
-    /// 在轮询场景有用
-    bool skipError = false,
-  }) : _semantics = semantics,
-       _seedValue = seedValue,
-       _printLog = printLog,
+    this._onReset,
+    this._persistConfig,
+    this._skipError = false,
+  }) : _seedValue = seedValue,
        latest = seedValue,
-       _onReset = onReset,
-       _persistConfig = persistConfig,
-       _skipError = skipError,
        _subject = isBehavior
            ? seedValue != null
                  ? BehaviorSubject<T>.seeded(seedValue, sync: sync)

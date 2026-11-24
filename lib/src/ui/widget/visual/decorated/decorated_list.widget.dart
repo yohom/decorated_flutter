@@ -1,6 +1,6 @@
 import 'package:diffutil_dart/diffutil.dart';
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter/rendering.dart' show ItemExtentBuilder;
+import 'package:material_ui/material_ui.dart';
 
 import 'decorated_scrollable.widget.dart';
 import 'load_more.widget.dart';
@@ -539,7 +539,7 @@ class _ImplicitAnimatedDataListState<T>
         insert: _insertItem,
         remove: _removeItem,
         change: (index, _, newEntry) => _entries[index] = newEntry,
-        move: (_, __, ___) {},
+        move: (_, _, _) {},
       );
     }
     _entries = nextEntries;
