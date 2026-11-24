@@ -1,4 +1,5 @@
 ## 0.53.0
+- [🔧] 修复 `RangeTextInputFormatter` 的数值范围限制，并允许清空输入。
 - [🚀] `BackgroundBlur`增加`borderRadius`参数，支持圆角裁剪。
 - [🚀] `IterableFutureX.thenDistinct`支持按元素相等性或`by`指定的键去重，保留首次出现的元素并返回`List<T>`。
 - [🚀] `SelectableListX`增加`selectedOrFirst`扩展，无选中元素时返回首个元素。
