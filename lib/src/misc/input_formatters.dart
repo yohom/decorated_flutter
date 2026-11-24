@@ -1,25 +1,34 @@
 import 'package:flutter/services.dart';
 
-// TODO 暂时没起作用 可以参考 https://stackoverflow.com/questions/58836681/how-to-make-range-number-value-on-textfield-flutter
 class RangeTextInputFormatter extends TextInputFormatter {
   final num min;
   final num max;
 
-  RangeTextInputFormatter({required this.min, required this.max});
+  RangeTextInputFormatter({required this.min, required this.max})
+    : assert(min <= max);
 
   @override
   TextEditingValue formatEditUpdate(
     TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
+    if (!newValue.composing.isCollapsed) return newValue;
+    if (newValue.text.isEmpty) return newValue;
+
     final newNumber = num.tryParse(newValue.text);
-    // 如果输入的不是数字, 则返回空的字符
-    if (newNumber == null) return const TextEditingValue();
+    if (newNumber == null || !newNumber.isFinite) return oldValue;
 
-    if (newNumber < min) return TextEditingValue(text: min.toString());
-    if (newNumber > max) return TextEditingValue(text: max.toString());
+    if (newNumber < min || newNumber > max) {
+      // shortcut: nonzero min clamps partial input, validate later for gradual entry.
+      final text = newNumber.clamp(min, max).toString();
+      return newValue.copyWith(
+        text: text,
+        selection: TextSelection.collapsed(offset: text.length),
+        composing: TextRange.empty,
+      );
+    }
 
-    return oldValue;
+    return newValue;
   }
 }
 
