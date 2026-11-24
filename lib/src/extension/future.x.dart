@@ -268,6 +268,12 @@ extension IterableFutureX<T> on Future<Iterable<T>> {
   }
 }
 
+extension List2DFutureX<T> on Future<List<List<T>>> {
+  Future<List<T>> thenExpand() {
+    return then((value) => value.expand((e) => e).toList());
+  }
+}
+
 extension NullableFutureX<T> on Future<T?> {
   /// 根据值是否为null判断是否要执行[action]
   Future<T?> applyIfNonNull(ValueChanged<T> action) {
