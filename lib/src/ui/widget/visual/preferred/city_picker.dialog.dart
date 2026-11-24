@@ -2,6 +2,7 @@ import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:material_ui/material_ui.dart';
 
+/// [showArea] 为 false 时只显示省、市两列，结果使用所选城市的首个区县。
 Future<CityPickerResult?> showCityPickerDialog(
   BuildContext context, {
   List<CityRegion>? data,
@@ -13,6 +14,7 @@ Future<CityPickerResult?> showCityPickerDialog(
   String? cancelText,
   String? confirmText,
   double itemExtent = 36,
+  bool showArea = true,
   BorderRadiusGeometry? borderRadius,
   ButtonStyle? cancelButtonStyle,
   ButtonStyle? confirmButtonStyle,
@@ -37,6 +39,7 @@ Future<CityPickerResult?> showCityPickerDialog(
       cancelText: cancelText,
       confirmText: confirmText,
       itemExtent: itemExtent,
+      showArea: showArea,
       cancelButtonStyle: cancelButtonStyle,
       confirmButtonStyle: confirmButtonStyle,
     ),
@@ -58,6 +61,7 @@ class CityPickerDialog extends StatefulWidget {
     this.cancelButtonStyle,
     this.confirmButtonStyle,
     this.backgroundColor,
+    this.showArea = true,
   });
 
   final List<CityRegion> data;
@@ -72,6 +76,9 @@ class CityPickerDialog extends StatefulWidget {
   final ButtonStyle? cancelButtonStyle;
   final ButtonStyle? confirmButtonStyle;
   final Color? backgroundColor;
+
+  /// 是否显示区县列。隐藏时，返回结果使用该城市的首个区县。
+  final bool showArea;
 
   @override
   State<CityPickerDialog> createState() => _CityPickerDialogState();
@@ -95,7 +102,7 @@ class _CityPickerDialogState extends State<CityPickerDialog> {
     return CityPickerResult(
       province: _provinces[_provinceIndex],
       city: _cities[_cityIndex],
-      area: _areas[_areaIndex],
+      area: widget.showArea ? _areas[_areaIndex] : _areas.first,
     );
   }
 
@@ -156,13 +163,14 @@ class _CityPickerDialogState extends State<CityPickerDialog> {
                 data: _cities,
                 onSelectedItemChanged: _handleCityChanged,
               ),
-              _buildPicker(
-                controller: _areaController,
-                data: _areas,
-                onSelectedItemChanged: (value) {
-                  setState(() => _areaIndex = value);
-                },
-              ),
+              if (widget.showArea)
+                _buildPicker(
+                  controller: _areaController,
+                  data: _areas,
+                  onSelectedItemChanged: (value) {
+                    setState(() => _areaIndex = value);
+                  },
+                ),
             ],
           ),
         ),
@@ -226,7 +234,7 @@ class _CityPickerDialogState extends State<CityPickerDialog> {
       _cityIndex = 0;
       _areaIndex = 0;
       _cityController.jumpToItem(0);
-      _areaController.jumpToItem(0);
+      if (_areaController.hasClients) _areaController.jumpToItem(0);
     });
   }
 
@@ -234,7 +242,7 @@ class _CityPickerDialogState extends State<CityPickerDialog> {
     setState(() {
       _cityIndex = value;
       _areaIndex = 0;
-      _areaController.jumpToItem(0);
+      if (_areaController.hasClients) _areaController.jumpToItem(0);
     });
   }
 }
