@@ -5,8 +5,8 @@ import 'dart:math' as math;
 import 'package:decorated_flutter/src/misc/misc.export.dart';
 import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:dio/dio.dart';
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
+import 'package:material_ui/material_ui.dart';
 
 const _kDioOther = 100002;
 const _kSocketException = 100001;
@@ -84,7 +84,8 @@ Color highContrast(Color input) {
   return output;
 }
 
-String enumName(enumValue) {
+@Deprecated('请改用枚举值的 name 属性')
+String enumName(dynamic enumValue) {
   var s = enumValue.toString();
   return s.substring(s.indexOf('.') + 1);
 }
