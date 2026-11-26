@@ -383,6 +383,14 @@ extension SelectableListX<T extends Selectable> on List<T> {
     }
   }
 
+  /// 选中指定条件的元素
+  void selectFirstWhere(bool Function(T item) test) {
+    for (final item in this) {
+      item.isSelected = test(item);
+      if (item.isSelected) break;
+    }
+  }
+
   /// 被选中的元素的索引
   int get selectedIndex {
     if (selected == null) {
