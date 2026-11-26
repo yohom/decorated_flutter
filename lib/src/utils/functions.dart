@@ -475,6 +475,23 @@ T? safeAs<T>(Object? value) {
     return double.tryParse(value.toString()) as T?;
   }
 
+  if (T == DateTime || T == __typeOf<DateTime?>()) {
+    if (value is DateTime) return value as T;
+
+    final millis = switch (value) {
+      int timestamp => timestamp,
+      String text => int.tryParse(text.trim()),
+      _ => null,
+    };
+    if (millis != null) {
+      if (millis < -8640000000000000 || millis > 8640000000000000) {
+        return null;
+      }
+      return DateTime.fromMillisecondsSinceEpoch(millis) as T;
+    }
+    return value is String ? DateTime.tryParse(value.trim()) as T? : null;
+  }
+
   if (T == bool || T == __typeOf<bool?>()) {
     if (value is bool) return value as T;
     final normalized = value.toString().trim().toLowerCase();
