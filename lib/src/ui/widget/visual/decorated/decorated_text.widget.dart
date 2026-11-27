@@ -1,4 +1,7 @@
 import 'package:decorated_flutter/src/model/model.export.dart';
+import 'package:decorated_flutter/src/ui/widget/visual/decorated/buttons.widget.dart';
+import 'package:decorated_flutter/src/ui/widget/visual/decorated/decorated_flex.widget.dart'
+    show PressStyle;
 import 'package:decorated_flutter/src/utils/utils.export.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -14,6 +17,7 @@ class DecoratedText extends StatelessWidget {
     this.strutStyle = const StrutStyle(),
     this.safeArea,
     this.onPressed,
+    this.pressStyle = .none,
     this.onLongPressed,
     this.maxLines,
     this.textAlign,
@@ -63,6 +67,7 @@ class DecoratedText extends StatelessWidget {
     this.strutStyle = const StrutStyle(),
     this.safeArea,
     this.onPressed,
+    this.pressStyle = .none,
     this.onLongPressed,
     this.maxLines,
     this.textAlign,
@@ -116,6 +121,7 @@ class DecoratedText extends StatelessWidget {
   final String? _data;
   final SafeAreaConfig? safeArea;
   final ContextCallback? onPressed;
+  final PressStyle pressStyle;
   final ContextCallback? onLongPressed;
   final int? maxLines;
   final TextAlign? textAlign;
@@ -273,17 +279,27 @@ class DecoratedText extends StatelessWidget {
       );
     }
 
+    if ((onPressed != null && pressStyle == .none) || onLongPressed != null) {
+      result = GestureDetector(
+        behavior: behavior ?? .opaque,
+        onTap: onPressed == null || pressStyle == .spring
+            ? null
+            : () => onPressed!(context),
+        onLongPress: onLongPressed != null
+            ? () => onLongPressed!(context)
+            : null,
+        child: result,
+      );
+    }
+
+    if (pressStyle == .spring && onPressed != null) {
+      result = SpringContainer(onPressed: onPressed!, child: result);
+    }
+
     if (onPressed != null || onLongPressed != null) {
       result = MouseRegion(
         cursor: cursor ?? SystemMouseCursors.click,
-        child: GestureDetector(
-          behavior: behavior ?? .opaque,
-          onTap: onPressed != null ? () => onPressed!(context) : null,
-          onLongPress: onLongPressed != null
-              ? () => onLongPressed!(context)
-              : null,
-          child: result,
-        ),
+        child: result,
       );
     }
 
