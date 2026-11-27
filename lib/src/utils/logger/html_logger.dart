@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
+import '_dio_logger_filter.dart';
 import 'logger.dart';
 
 class Logger extends ILogger {
@@ -49,16 +50,19 @@ class Logger extends ILogger {
   }
 
   @override
-  Interceptor get dioLogger {
+  Interceptor dioLogger({List<String>? whitelist, List<String>? blacklist}) {
+    final filter = DioLoggerFilter(whitelist: whitelist, blacklist: blacklist);
     return kReleaseMode
         ? const Interceptor()
-        : LogInterceptor(
-            error: true,
-            request: true,
-            requestBody: true,
-            requestHeader: true,
-            responseBody: true,
-            responseHeader: true,
+        : filter.wrap(
+            LogInterceptor(
+              error: true,
+              request: true,
+              requestBody: true,
+              requestHeader: true,
+              responseBody: true,
+              responseHeader: true,
+            ),
           );
   }
 

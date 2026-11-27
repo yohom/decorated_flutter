@@ -33,7 +33,9 @@ abstract class ILogger {
 
   void dispose() {}
 
-  Interceptor get dioLogger;
+  /// Filters Dio logs by request path; `*` matches any sequence of characters.
+  /// Configure either [whitelist] or [blacklist], not both.
+  Interceptor dioLogger({List<String>? whitelist, List<String>? blacklist});
 
   NavigatorObserver get navigatorObserver;
 }
