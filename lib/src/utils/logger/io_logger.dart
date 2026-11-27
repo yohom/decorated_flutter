@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
+import '_dio_logger_filter.dart';
 import '_log_overlay.widget.dart';
 
 final _kDivider = '\n${'-' * 80}\n';
@@ -95,16 +96,19 @@ class Logger extends ILogger {
   }
 
   @override
-  Interceptor get dioLogger {
+  Interceptor dioLogger({List<String>? whitelist, List<String>? blacklist}) {
+    final filter = DioLoggerFilter(whitelist: whitelist, blacklist: blacklist);
     return enabled
-        ? TalkerDioLogger(
-            talker: _talker,
-            settings: const TalkerDioLoggerSettings(
-              printRequestHeaders: true,
-              printResponseHeaders: true,
-              printResponseMessage: true,
-              printRequestData: true,
-              printResponseData: true,
+        ? filter.wrap(
+            TalkerDioLogger(
+              talker: _talker,
+              settings: const TalkerDioLoggerSettings(
+                printRequestHeaders: true,
+                printResponseHeaders: true,
+                printResponseMessage: true,
+                printRequestData: true,
+                printResponseData: true,
+              ),
             ),
           )
         : const Interceptor();
