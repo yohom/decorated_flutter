@@ -1,3 +1,5 @@
+
+
 # decorated_flutter
 
 `decorated_flutter` 是一组面向 Flutter 项目的 UI、布局、图片、路由与常用扩展工具。它的目标是减少重复的 Widget 包裹和样板代码，让页面能在保持原生 Flutter 语义的同时更紧凑地表达布局与交互。
@@ -21,6 +23,15 @@ dependencies:
     path: ../decorated_flutter
   material_ui: ^1.0.0
   cupertino_ui: ^1.0.0
+```
+
+或者使用 Git 依赖：
+
+```yaml
+dependencies:
+  decorated_flutter:
+    git:
+      url: https://github.com/yohom/decorated_flutter.git
 ```
 
 然后执行：
